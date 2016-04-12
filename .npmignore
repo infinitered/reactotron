@@ -1,0 +1,7 @@
+.babelrc
+.gitignore
+.jsdoc.json
+gulpfile.js
+docs/
+lib/
+test/
