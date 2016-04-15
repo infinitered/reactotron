@@ -54,9 +54,13 @@ client.connect = (server = 'localhost', port = 3334) => {
   Log out something to the server.
  */
 client.log = (message) => {
-  const payload = {type: 'log', message}
+  client.sendCommand('log', message)
+}
+
+client.sendCommand = (type, message) => {
+  const payload = {type, message}
   if (socket) {
-    socket.emit('event', JSON.stringify(payload))
+    socket.emit('command', JSON.stringify(payload))
   }
 }
 
@@ -77,9 +81,11 @@ client.addReduxStore = (store) => {
     const path = action.payload.path
     const state = store.getState()
     if (RS.isNilOrEmpty(path)) {
-      client.log(R.keys(state))
+      client.sendCommand('redux.keys', {path: '', keys: R.keys(state)})
     } else {
-      client.log(R.keys(RS.dotPath(path, state)))
+      const keys = R.keys(RS.dotPath(path, state))
+      const fullKeys = R.map((k) => `${path}.${k}`, keys)
+      client.sendCommand('redux.keys', {path, keys: fullKeys})
     }
   })
 

@@ -1,78 +1,146 @@
-import TerminalKit from 'terminal-kit'
-import prettyJson from 'prettyjson'
 import R from 'ramda'
+import RS from 'ramdasauce'
 import SocketIO from 'socket.io'
+import blessed from 'blessed'
+import moment from 'moment'
 
-const term = TerminalKit.terminal
-term.clear()
+const screen = blessed.screen({
+  smartCSR: true
+})
+screen.title = 'Replsauce'
 
-const doc = term.createDocument({
-  backgroundAttr: {
-    dim: false
+const prompt = blessed.prompt({
+  parent: screen,
+  top: 'center',
+  left: 'center',
+  height: 'shrink',
+  width: 'shrink',
+  border: 'line',
+  label: ' {blue-fg}Prompt{/} ',
+  tags: true,
+  keys: true,
+  mouse: true,
+  hidden: true
+})
+
+const box = blessed.box({
+  parent: screen,
+  bottom: 0,
+  right: 0,
+  height: 1,
+  width: 'shrink',
+  content: 'Hello {bold}world{/}!',
+  tags: true,
+  style: {
+    bg: 'grey'
+  }
+})
+// screen.append(box)
+
+const connectionBox = blessed.box({
+  parent: screen,
+  top: 0,
+  right: 0,
+  height: 1,
+  width: 'shrink',
+  content: 'Offline',
+  tags: true,
+  style: {
+    bg: 'grey'
+  }
+})
+screen.append(connectionBox)
+
+const logBox = blessed.log({
+  parent: screen,
+  scrollable: true,
+  left: 0,
+  bottom: 0,
+  width: '50%',
+  height: '100%',
+  border: 'line',
+  tags: true,
+  keys: true,
+  vi: true,
+  mouse: true,
+  scrollback: 400,
+  label: ' {white-fg}Log{/} ',
+  scrollbar: {
+    ch: ' ',
+    inverse: true
   }
 })
 
-const layout = TerminalKit.Layout.create({
-  parent: doc,
-  boxChars: 'double',
-  layout: {
-    id: 'main',
-    y: 3,
-    rows: [
-      {
-        id: 'rowtop',
-        height: 4,
-        columns: [
-          {id: 'commandPanel', widthPercent: 100}
-        ]
-      },
-      {
-        id: 'row1',
-        columns: [
-          {id: 'logPanel', widthPercent: 50},
-          {id: 'statusPanel', widthPercent: 50}
-        ]
-      }
-    ]
-  }
+const listReduxKeys = blessed.list({
+  parent: logBox,
+  align: 'screen',
+  mouse: true,
+  keys: true,
+  hidden: true,
+  vi: true,
+  width: 'shrink',
+  bottom: 4,
+  height: 10,
+  style: {
+    fg: 'blue',
+    bg: 'default',
+    selected: {
+      bg: 'blue',
+      fg: 'white'
+    }
+  },
+  items: ['one', 'two', 'three']
+})
+listReduxKeys.on('select', (item) => {
+  const text = item.getText()
+  box.setContent(text)
+  listReduxKeys.select()
+  reduxValues(text)
+  listReduxKeys.hide()
+  screen.focusPop()
+  screen.render()
 })
 
-const loggingWindow = TerminalKit.Text.create({
-  parent: doc.elements.logPanel,
-  content: '',
-  attr: {
-    // color: 'brightMagenta',
-    // bold: true
-  }
+box.key('enter', (ch, key) => {
+  box.setContent('{right}Even different {black-fg}content{/}.{/}\n')
+  box.setLine(1, 'bar')
+  box.insertLine(1, 'foo')
+  screen.render()
 })
 
+box.key('escape', (ch, key) => {
+  box.setContent('no more focus')
+  screen.focusPop()
+  screen.render()
+})
 
 const PORT = 3334
 const io = SocketIO(PORT)
 
 io.on('connection', (socket) => {
-  socket.on('event', (data) => {
+  connectionBox.setContent('{green-fg}Online{/}')
+  screen.render()
+  socket.on('command', (data) => {
     const action = JSON.parse(data)
-    // console.log('event', json)
-    const guts = JSON.stringify(action.message, null, 2)
-    term.saveCursor()
-    loggingWindow.setContent(guts + '\n\n' + loggingWindow.getContent())
-    term.restoreCursor()
-    // term.white(`${new Date()}`)
-    // term.cyan(`[${action.type}] `)
-    // term()
-    // console.log(prettyJson.render(action.message, {
-    //   keysColor: 'red',
-    //   dashColor: 'magenta',
-    //   stringColor: 'white'
-    // }))
-    // term('\n\n')
+    const {type, message} = action
+    const time = moment().format('HH:mm:ss.SSS')
+    if (type === 'log') {
+      logBox.log(`{white-fg}${time}{/} - {blue-fg}${type}{/}`)
+      logBox.log(message)
+      logBox.log('')
+    } else if (type === 'redux.keys') {
+      listReduxKeys.show()
+      listReduxKeys.setItems(message.keys)
+      listReduxKeys.focus()
+    }
+    screen.render()
   })
 
   socket.on('disconnect', () => {
+    connectionBox.setContent('{red-fg}Offline{/}')
+    screen.render()
   })
 })
-
 
 const sendCommand = (type, payload) => {
   const body = { type, payload }
@@ -81,11 +149,8 @@ const sendCommand = (type, payload) => {
 }
 
 const die = (exitCode = 0) => {
-  term.white('\nYou are eaten by a grue.\n')
-  term.grabInput(false)
-  term.hideCursor(false)
-  term.styleReset()
-  process.exit()
+  screen.destroy()
+  process.exit(exitCode)
 }
 
 const reduxValues = (path) => {
@@ -100,42 +165,37 @@ const dispatch = (type, params = {}) => {
   sendCommand('redux.dispatch', {action: {type, ...params}})
 }
 
+const promptEval = () => {
+  prompt.input('Object to dispatch to TEMPERATURE_REQUEST', '', (errInput, value) => {
+    let x = null
+    eval('x = ' + value)  // lulz
+    dispatch('TEMPERATURE_REQUEST', x)
+    screen.render()
+  })
+}
+
 const commmandSwitch = (input) => {
   switch (input) {
     case 'q': return die()
     case 'r': return reduxValues('weather')
     case 't': return reduxValues('login')
     case 'k': return reduxKeys('')
+    case 'p': return promptEval()
     case '1': return dispatch('TEMPERATURE_REQUEST', {city: 'Los Angeles'})
     case '2': return dispatch('TEMPERATURE_REQUEST', {city: 'New York'})
     case '3': return dispatch('TEMPERATURE_REQUEST', {city: 'San Francisco'})
   }
-  commandField.inputTextBuffer.backDelete(10000)
 }
 
-const commandField = TerminalKit.TextInput.create({
-  parent: doc.elements.commandPanel,
-  label: '> ',
-  width: 100
+screen.key(['C-c', 'q'], (ch, key) => die(0))
+screen.key('space', (ch, key) => {
+  prompt.setFront()
+  screen.render()
+  prompt.input('Whats up?', '', (errInput, value) => {
+    commmandSwitch(value)
+    screen.render()
+  })
 })
-commandField.on('submit', commmandSwitch)
-doc.focusNext()
-
-term.on('key', (name, matches, data) => {
-  if (name === 'CTRL_C') return die(0)
-})
-
-const replLoop = () => {
-  // term.moveTo(1, 2)
-  // term.blue('> ')
-  // term.inputField({}, (error, input) => {
-  //   if (error) {
-  //     term.red(error)
-  //     die(1)
-  //   }
-  //   commmandSwitch(input)
-  //   replLoop()
-  // })
-}
-
-replLoop()
+screen.key([''], (ch, key) => console.log('random key', key))
+box.focus()
+screen.render()

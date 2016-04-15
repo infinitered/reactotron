@@ -9,7 +9,7 @@
     "dist": "npm run clean && gulp build && npm run docs",
     "clean": "rm -rf dist docs",
     "gulp": "gulp build",
-    "server": "babel-node lib/server.js"
+    "start": "babel-node lib/server.js"
   },
   "repository": {
     "type": "git",
@@ -21,10 +21,11 @@
     "dist/server.js"
   ],
   "dependencies": {
-    "prettyjson": "^1.1.3",
+    "blessed": "^0.1.81",
+    "moment": "^2.12.0",
     "ramda": "^0.21.0",
-    "socket.io": "^1.4.5",
-    "terminal-kit": "^0.24.1"
+    "ramdasauce": "^1.0.0",
+    "socket.io": "^1.4.5"
   },
   "devDependencies": {
     "ava": "^0.14.0",
