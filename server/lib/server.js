@@ -142,7 +142,7 @@ io.on('connection', (socket) => {
   })
 })
 
-const sendCommand = (type, payload) => {
+const send = (type, payload) => {
   const body = { type, payload }
   const bodyJson = JSON.stringify(body)
   io.sockets.emit('command', bodyJson)
@@ -154,15 +154,15 @@ const die = (exitCode = 0) => {
 }
 
 const reduxValues = (path) => {
-  sendCommand('redux.store', {path})
+  send('redux.store', {path})
 }
 
 const reduxKeys = (path) => {
-  sendCommand('redux.keys', {path})
+  send('redux.keys', {path})
 }
 
 const dispatch = (type, params = {}) => {
-  sendCommand('redux.dispatch', {action: {type, ...params}})
+  send('redux.dispatch', {action: {type, ...params}})
 }
 
 const promptEval = () => {
