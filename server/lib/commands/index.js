@@ -10,6 +10,7 @@ import die from './die'
 import log from './log'
 import apiLog from './apiLog'
 import menuPush from './menuPush'
+import menuPop from './menuPop'
 import menuMain from './menuMain'
 import menuRedux from './menuRedux'
 
@@ -25,6 +26,7 @@ export default [
   apiLog,
   log,
   menuPush,
+  menuPop,
   menuMain,
   menuRedux,
   die
