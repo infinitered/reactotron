@@ -4,8 +4,8 @@ const process = (context, action) => {
   const menu = {
     name: 'main',
     commands: [
-      {key: 'r', name: 'redux', command: {type: 'menu.redux'}},
-      {key: 'q', name: 'quit', command: {type: 'die'}}
+      {key: 'r', name: 'redux', commands: [{type: 'menu.redux'}]},
+      {key: 'q', name: 'quit', commands: [{type: 'die'}]}
     ]
   }
 

@@ -17,7 +17,9 @@ const process = (context, action) => {
   }
 
   R.forEach((item) => {
-    screen.key(item.key, () => context.post(item.command))
+    screen.key(item.key, () => {
+      R.forEach((command) => context.post(command), item.commands)
+    })
   }, commands)
 
   menuStack.push(menu)

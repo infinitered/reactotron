@@ -25,7 +25,9 @@ const process = (context, action) => {
 
   // bind the keys to our next menu
   R.forEach((item) => {
-    screen.key(item.key, () => context.post(item.command))
+    screen.key(item.key, () => {
+      R.forEach((command) => context.post(command), item.commands)
+    })
   }, nextMenu.commands)
 
   // assemble the name
