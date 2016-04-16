@@ -13,6 +13,7 @@ import menuPush from './menuPush'
 import menuPop from './menuPop'
 import menuMain from './menuMain'
 import menuRedux from './menuRedux'
+import commandRepeat from './commandRepeat'
 
 export default [
   reduxDispatch,
@@ -29,5 +30,6 @@ export default [
   menuPop,
   menuMain,
   menuRedux,
+  commandRepeat,
   die
 ]

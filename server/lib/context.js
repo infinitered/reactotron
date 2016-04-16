@@ -1,4 +1,5 @@
 import R from 'ramda'
+import RS from 'ramdasauce'
 import moment from 'moment'
 import Router from './router'
 
@@ -14,6 +15,7 @@ export default class Context {
     this.reduxBox = parts.reduxBox
     this.instructionsBox = parts.instructionsBox
     this.menuStack = []
+    this.lastRepeatableMessage = null
   }
 
   die (exitCode = 0) {
@@ -33,7 +35,15 @@ export default class Context {
     if (R.isNil(message) || !Router.isValidMessage(message)) return false
     // send each command the message
     const command = this.router.commands[message.type]
-    command && command.process(this, message)
+    if (command) {
+      // kick off the command
+      command.process(this, message)
+
+      // unless this is a command to repeat, then record the command
+      if (command.repeatable) {
+        this.lastRepeatableMessage = message
+      }
+    }
   }
 
   prompt (title, callback) {

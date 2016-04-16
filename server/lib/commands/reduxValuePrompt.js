@@ -13,5 +13,6 @@ const process = (context, action) => {
 
 export default {
   name: COMMAND,
+  repeatable: true,
   process
 }

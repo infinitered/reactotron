@@ -160,6 +160,9 @@ io.on('connection', (socket) => {
 // always control-c to die
 screen.key('C-c', () => context.post({type: 'die'}))
 
+// . to replay
+screen.key('.', () => context.post({type: 'command.repeat'}))
+
 // let's start with the main menu
 context.post({type: 'menu.main'})
 
