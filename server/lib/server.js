@@ -1,4 +1,5 @@
 import R from 'ramda'
+import RS from 'ramdasauce'
 import SocketIO from 'socket.io'
 import blessed from 'blessed'
 import Context from './context'
@@ -10,7 +11,7 @@ const screen = blessed.screen({
   title: 'Replsauce'
 })
 
-const prompt = blessed.prompt({
+const promptBox = blessed.prompt({
   parent: screen,
   top: 'center',
   left: 'center',
@@ -23,20 +24,6 @@ const prompt = blessed.prompt({
   mouse: true,
   hidden: true
 })
-
-const box = blessed.box({
-  parent: screen,
-  bottom: 0,
-  right: 0,
-  height: 1,
-  width: 'shrink',
-  content: 'Hello {bold}world{/}!',
-  tags: true,
-  style: {
-    bg: 'grey'
-  }
-})
-// screen.append(box)
 
 const connectionBox = blessed.box({
   parent: screen,
@@ -72,67 +59,25 @@ const logBox = blessed.log({
   }
 })
 
-const listReduxKeys = blessed.list({
-  parent: logBox,
-  align: 'screen',
-  mouse: true,
-  keys: true,
-  hidden: true,
-  vi: true,
-  width: 'shrink',
-  bottom: 4,
-  height: 10,
-  style: {
-    fg: 'blue',
-    bg: 'default',
-    selected: {
-      bg: 'blue',
-      fg: 'white'
-    }
-  },
-  items: ['one', 'two', 'three']
-})
-listReduxKeys.on('select', (item) => {
-  const text = item.getText()
-  box.setContent(text)
-  listReduxKeys.select()
-  return router.post({type: 'redux.value.request', path: text})
-  listReduxKeys.hide()
-  screen.focusPop()
-  screen.render()
-})
-
-box.key('enter', (ch, key) => {
-  box.setContent('{right}Even different {black-fg}content{/}.{/}\n')
-  box.setLine(1, 'bar')
-  box.insertLine(1, 'foo')
-  screen.render()
-})
-
-box.key('escape', (ch, key) => {
-  box.setContent('no more focus')
-  screen.focusPop()
-  screen.render()
-})
-
 const PORT = 3334
 const io = SocketIO(PORT)
 
-const context = Context({
+const router = Router.createRouter()
+R.forEach((command) => router.register(command), commands)
+const context = new Context({
   screen,
   io,
-  logBox
+  logBox,
+  promptBox,
+  router
 })
-
-const router = Router.createRouter(context)
-R.forEach((command) => router.register(command), commands)
 
 io.on('connection', (socket) => {
   connectionBox.setContent('{green-fg}Online{/}')
   screen.render()
   socket.on('command', (data) => {
     const action = JSON.parse(data)
-    router.post(action)
+    context.post(action)
     screen.render()
   })
 
@@ -142,43 +87,9 @@ io.on('connection', (socket) => {
   })
 })
 
-const die = (exitCode = 0) => {
-  screen.destroy()
-  process.exit(exitCode)
-}
+screen.key('v', () => context.post({type: 'redux.value.prompt'}))
+screen.key('k', () => context.post({type: 'redux.key.prompt'}))
+screen.key('d', () => context.post({type: 'redux.dispatch.prompt'}))
+screen.key(['C-c', 'q', 'escape'], () => context.post({type: 'die'}))
 
-const promptEval = () => {
-  prompt.input('Object to dispatch to TEMPERATURE_REQUEST', '', (errInput, value) => {
-    let params = null
-    eval('params = ' + value) // lulz
-    router.post({type: 'redux.dispatch', action: {type: 'TEMPERATURE_REQUEST', ...params}})
-    screen.render()
-  })
-}
-
-const commmandSwitch = (input) => {
-  switch (input) {
-    case 'q': return die()
-    case 'w': return router.post({type: 'redux.value.request', path: null})
-    case 'e': return router.post({type: 'redux.value.request', path: 'weather'})
-    case 'r': return router.post({type: 'redux.value.request', path: 'weather.temperature'})
-    case 'k': return router.post({type: 'redux.key.request', path: null})
-    case 'p': return promptEval()
-    case '1': return router.post({type: 'redux.dispatch', action: {type: 'TEMPERATURE_REQUEST', city: 'Los Angeles'}})
-    case '2': return router.post({type: 'redux.dispatch', action: {type: 'TEMPERATURE_REQUEST', city: 'New York'}})
-    case '3': return router.post({type: 'redux.dispatch', action: {type: 'TEMPERATURE_REQUEST', city: 'San Francisco'}})
-  }
-}
-
-screen.key(['C-c', 'q'], (ch, key) => die(0))
-screen.key('space', (ch, key) => {
-  prompt.setFront()
-  screen.render()
-  prompt.input('Whats up?', '', (errInput, value) => {
-    commmandSwitch(value)
-    screen.render()
-  })
-})
-screen.key([''], (ch, key) => console.log('random key', key))
-box.focus()
 screen.render()

@@ -18,8 +18,7 @@ const isValidMessage = R.allPass([
   R.propSatisfies((x) => R.not(R.isEmpty(x)), 'type')
 ])
 
-const createRouter = (context) => {
-  if (R.isNil(context)) throw new Error('Router requires a context.')
+const createRouter = () => {
   // holds the list of commands
   const commands = []
 
@@ -35,7 +34,7 @@ const createRouter = (context) => {
   }
 
   // posts a message
-  const post = (message) => {
+  const post = (context, message) => {
     // sanity
     if (R.isNil(message) || !isValidMessage(message)) return false
     // send each command the message
