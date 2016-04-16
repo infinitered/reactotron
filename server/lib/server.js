@@ -95,6 +95,16 @@ const statusBox = blessed.box({
   tags: true
 })
 
+const instructionsBox = blessed.box({
+  parent:statusBox,
+  left: 0,
+  top: 0,
+  height: '100%',
+  width: '100%',
+  tags: true,
+  content: '{center}{white-fg}ctrl-c{/} = quit | {white-fg}v{/} = redux value | {white-fg}k{/} = redux key | {white-fg}d{/} = redux dispatch{/}'
+})
+
 const welcomeBox = blessed.box({
   parent: statusBox,
   width: 'shrink',
@@ -102,22 +112,20 @@ const welcomeBox = blessed.box({
   left: 0,
   top: 0,
   tags: true,
-  content: 'REPLsauce'
+  content: '{yellow-fg}react-native-puppeteer{/}'
 })
 
 const OFFLINE = '{right}{black-bg}{red-fg}Offline{/}{/}{/}'
 const ONLINE = '{right}{black-bg}{green-fg}Online{/}{/}{/}'
 
 const connectionBox = blessed.box({
-  parent: screen,
+  parent: statusBox,
   top: 0,
-  right: 1,
-  height: 1,
+  right: 0,
+  height: '100%',
   width: 'shrink',
   content: OFFLINE,
-  tags: true,
-  style: {
-  }
+  tags: true
 })
 
 const PORT = 3334

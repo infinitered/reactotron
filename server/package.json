@@ -41,9 +41,9 @@
     "xyz": "^0.5.0"
   },
   "ava": {
-     "require": [
-       "babel-core/register"
-     ],
-     "babel": "inherit"
-   }
+    "require": [
+      "babel-core/register"
+    ],
+    "babel": "inherit"
+  }
 }
