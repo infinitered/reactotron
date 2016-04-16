@@ -10,9 +10,9 @@ const process = (context, action) => {
   const {path, values} = action.message
 
   if (RS.isNilOrEmpty(path)) {
-    context.log('Redux Response', values)
+    context.reduxLog('Redux Response', values)
   } else {
-    context.log('Redux Response | path = ' + path, values)
+    context.reduxLog('Redux Response | path = ' + path, values)
   }
 }
 

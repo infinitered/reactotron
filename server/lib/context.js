@@ -10,6 +10,8 @@ export default class Context {
     this.logBox = parts.logBox
     this.promptBox = parts.promptBox
     this.router = parts.router
+    this.apiBox = parts.apiBox
+    this.reduxBox = parts.reduxBox
   }
 
   die (exitCode = 0) {
@@ -38,8 +40,27 @@ export default class Context {
     this.promptBox.input(title, '', (err, value) => {
       if (!err) {
         callback(value)
+        this.screen.render()
       }
     })
+  }
+
+  apiLog (title, message) {
+    const time = moment().format('HH:mm:ss.SSS')
+
+    this.apiBox.log(`{white-fg}${time}{/} - {blue-fg}${title}{/}`)
+    this.apiBox.log(message)
+    this.apiBox.log('')
+    this.screen.render()
+  }
+
+  reduxLog (title, message) {
+    const time = moment().format('HH:mm:ss.SSS')
+
+    this.reduxBox.log(`{white-fg}${time}{/} - {blue-fg}${title}{/}`)
+    this.reduxBox.log(message)
+    this.reduxBox.log('')
+    this.screen.render()
   }
 
   log (title, message) {

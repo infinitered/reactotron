@@ -8,6 +8,7 @@ import reduxKeyPrompt from './reduxKeyPrompt'
 import reduxDispatchPrompt from './reduxDispatchPrompt'
 import die from './die'
 import log from './log'
+import apiLog from './apiLog'
 
 export default [
   reduxDispatch,
@@ -18,6 +19,7 @@ export default [
   reduxValuePrompt,
   reduxKeyPrompt,
   reduxDispatchPrompt,
+  apiLog,
   log,
   die
 ]

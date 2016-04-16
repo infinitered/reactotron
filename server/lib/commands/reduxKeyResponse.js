@@ -11,9 +11,9 @@ const process = (context, action) => {
   const {path, keys} = action.message
 
   if (RS.isNilOrEmpty(path)) {
-    context.log('Redux Keys', keys)
+    context.reduxLog('Redux Keys', keys)
   } else {
-    context.log('Redux Keys | path = ' + path, keys)
+    context.reduxLog('Redux Keys | path = ' + path, keys)
   }
 }
 

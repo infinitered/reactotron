@@ -36,7 +36,7 @@ client.connect = (server = 'localhost', port = 3334) => {
     transports: ['websocket']
   })
   socket.on('connect', () => {
-    console.log('connected')
+    client.log('connected')
   })
   socket.on('command', (data) => {
     console.log('command data: ', data)
@@ -55,6 +55,13 @@ client.connect = (server = 'localhost', port = 3334) => {
  */
 client.log = (message) => {
   client.sendCommand('log', message)
+}
+
+/**
+  Log out something to the server.
+ */
+client.apiLog = (response, title) => {
+  client.sendCommand('api.log', {response, title})
 }
 
 client.sendCommand = (type, message) => {
