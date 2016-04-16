@@ -5,7 +5,7 @@ import rootReducer from '../Reducers/'
 import sagaMiddleware from 'redux-saga'
 import sagas from '../Sagas/'
 import R from 'ramda'
-import repl from '../../client'
+import pp from '../../client'
 import actions from '../Actions/Creators'
 
 // the logger master switch
@@ -27,8 +27,8 @@ export default () => {
     )
   )
 
-  repl.addReduxStore(store)
-  repl.addReduxActionCreators(actions)
+  pp.addReduxStore(store)
+  pp.addReduxActionCreators(actions)
 
   return store
 }

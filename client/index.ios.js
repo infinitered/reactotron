@@ -1,9 +1,9 @@
 import React, { AppRegistry, Component } from 'react-native'
 import ReduxContainer from './App/Containers/ReduxContainer'
-import repl from './client'
+import pp from './client'
 
-repl.connect()
-repl.log('initialized')
+pp.connect()
+pp.log('initialized')
 
 class TestClient extends Component {
   render () {

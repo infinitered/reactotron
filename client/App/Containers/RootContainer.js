@@ -2,7 +2,7 @@ import React, { View, Text, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import Styles from './Styles/RootContainerStyles'
-import repl from '../../client'
+import pp from '../../client'
 
 export default class RootContainer extends React.Component {
 
@@ -12,7 +12,7 @@ export default class RootContainer extends React.Component {
   }
 
   handlePress () {
-    repl.log('press.')
+    pp.log('press.')
   }
 
   componentWillMount () {
