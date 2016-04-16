@@ -1,5 +1,4 @@
 import R from 'ramda'
-import RS from 'ramdasauce'
 import SocketIO from 'socket.io'
 import blessed from 'blessed'
 import Context from './context'
@@ -104,7 +103,7 @@ const instructionsBox = blessed.box({
   tags: true
 })
 
-const welcomeBox = blessed.box({
+blessed.box({
   parent: statusBox,
   width: 'shrink',
   height: '100%',
@@ -158,6 +157,11 @@ io.on('connection', (socket) => {
   })
 })
 
+// always control-c to die
+screen.key('C-c', () => context.post({type: 'die'}))
+
+// let's start with the main menu
 context.post({type: 'menu.main'})
 
+// initial render
 screen.render()
