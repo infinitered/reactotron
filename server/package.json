@@ -1,7 +1,7 @@
 {
-  "name": "replsauce",
+  "name": "react-native-puppeteer",
   "version": "0.1.0",
-  "description": "a repl for react native",
+  "description": "A console-based remote control for React Native.",
   "main": "./dist/server.js",
   "scripts": {
     "test": "ava",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/skellock/replsauce.git"
+    "url": "https://github.com/skellock/react-native-puppeteer.git"
   },
   "author": "Steve Kellock <steve@kellock.ca>",
   "license": "MIT",

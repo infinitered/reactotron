@@ -8,7 +8,7 @@ import commands from './commands/index'
 
 const screen = blessed.screen({
   smartCSR: true,
-  title: 'Replsauce'
+  title: 'react-native-puppeteer'
 })
 
 const promptBox = blessed.prompt({
