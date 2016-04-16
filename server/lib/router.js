@@ -20,7 +20,7 @@ const isValidMessage = R.allPass([
 
 const createRouter = () => {
   // holds the list of commands
-  const commands = []
+  const commands = {}
 
   // registers a command
   const register = (command) => {
@@ -30,15 +30,17 @@ const createRouter = () => {
     }
 
     // add the command
-    commands.push(command)
+    commands[command.name] = command
   }
 
   // posts a message
   const post = (context, message) => {
     // sanity
     if (R.isNil(message) || !isValidMessage(message)) return false
-    // send each command the message
-    R.forEach((command) => command.process(context, message), commands)
+
+    const command = commands[message.type]
+    command && command.process(context, message)
+
     return true
   }
 

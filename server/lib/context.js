@@ -12,6 +12,7 @@ export default class Context {
     this.router = parts.router
     this.apiBox = parts.apiBox
     this.reduxBox = parts.reduxBox
+    this.instructionsBox = parts.instructionsBox
   }
 
   die (exitCode = 0) {
@@ -30,8 +31,8 @@ export default class Context {
     // sanity
     if (R.isNil(message) || !Router.isValidMessage(message)) return false
     // send each command the message
-    R.forEach((command) => command.process(this, message), this.router.commands)
-    return true
+    const command = this.router.commands[message.type]
+    command && command.process(this, message)
   }
 
   prompt (title, callback) {

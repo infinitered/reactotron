@@ -1,12 +1,11 @@
 import RS from 'ramdasauce'
 
 const COMMAND = 'redux.value.response'
+
 /**
  Receives some values inside redux.
  */
 const process = (context, action) => {
-  if (action.type !== COMMAND) return
-
   const {path, values} = action.message
 
   if (RS.isNilOrEmpty(path)) {
@@ -16,4 +15,7 @@ const process = (context, action) => {
   }
 }
 
-export default {process}
+export default {
+  name: COMMAND,
+  process
+}

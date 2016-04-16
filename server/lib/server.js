@@ -96,13 +96,12 @@ const statusBox = blessed.box({
 })
 
 const instructionsBox = blessed.box({
-  parent:statusBox,
+  parent: statusBox,
   left: 0,
   top: 0,
   height: '100%',
   width: '100%',
-  tags: true,
-  content: '{center}{white-fg}ctrl-c{/} = quit | {white-fg}v{/} = redux value | {white-fg}k{/} = redux key | {white-fg}d{/} = redux dispatch{/}'
+  tags: true
 })
 
 const welcomeBox = blessed.box({
@@ -140,7 +139,8 @@ const context = new Context({
   promptBox,
   router,
   apiBox,
-  reduxBox
+  reduxBox,
+  instructionsBox
 })
 
 io.on('connection', (socket) => {
@@ -158,9 +158,6 @@ io.on('connection', (socket) => {
   })
 })
 
-screen.key('v', () => context.post({type: 'redux.value.prompt'}))
-screen.key('k', () => context.post({type: 'redux.key.prompt'}))
-screen.key('d', () => context.post({type: 'redux.dispatch.prompt'}))
-screen.key('C-c', () => context.post({type: 'die'}))
+context.post({type: 'menu.main'})
 
 screen.render()

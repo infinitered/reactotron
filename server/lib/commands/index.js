@@ -9,6 +9,9 @@ import reduxDispatchPrompt from './reduxDispatchPrompt'
 import die from './die'
 import log from './log'
 import apiLog from './apiLog'
+import menuPush from './menuPush'
+import menuMain from './menuMain'
+import menuRedux from './menuRedux'
 
 export default [
   reduxDispatch,
@@ -21,5 +24,8 @@ export default [
   reduxDispatchPrompt,
   apiLog,
   log,
+  menuPush,
+  menuMain,
+  menuRedux,
   die
 ]
