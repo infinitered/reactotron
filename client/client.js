@@ -66,33 +66,32 @@ client.sendCommand = (type, message) => {
 
 client.addReduxStore = (store) => {
   // return the store at the given path
-  client.onCommand('redux.store', (action, client) => {
-    const path = action.payload.path
+  client.onCommand('redux.value.request', (action, client) => {
+    const path = action.path
     const state = store.getState()
     if (RS.isNilOrEmpty(path)) {
-      client.log(state)
+      client.sendCommand('redux.value.response', {path: null, values: state})
     } else {
-      client.log(RS.dotPath(path, state))
+      client.sendCommand('redux.value.response', {path: path, values: RS.dotPath(path, state)})
     }
   })
 
   // return the keys at the given path
-  client.onCommand('redux.keys', (action, client) => {
-    const path = action.payload.path
+  client.onCommand('redux.key.request', (action, client) => {
+    const path = action.path
     const state = store.getState()
     if (RS.isNilOrEmpty(path)) {
-      client.sendCommand('redux.keys', {path: '', keys: R.keys(state)})
+      client.sendCommand('redux.key.response', {path: null, keys: R.keys(state)})
     } else {
       const keys = R.keys(RS.dotPath(path, state))
       const fullKeys = R.map((k) => `${path}.${k}`, keys)
-      client.sendCommand('redux.keys', {path, keys: fullKeys})
+      client.sendCommand('redux.key.response', {path, keys: fullKeys})
     }
   })
 
   // dispatch an action
   client.onCommand('redux.dispatch', (action, client) => {
-    console.log({action})
-    store.dispatch(action.payload.action)
+    store.dispatch(action.action)
   })
 
 }

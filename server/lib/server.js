@@ -1,13 +1,14 @@
 import R from 'ramda'
-import RS from 'ramdasauce'
 import SocketIO from 'socket.io'
 import blessed from 'blessed'
-import moment from 'moment'
+import Context from './context'
+import Router from './router'
+import commands from './commands/index'
 
 const screen = blessed.screen({
-  smartCSR: true
+  smartCSR: true,
+  title: 'Replsauce'
 })
-screen.title = 'Replsauce'
 
 const prompt = blessed.prompt({
   parent: screen,
@@ -95,7 +96,7 @@ listReduxKeys.on('select', (item) => {
   const text = item.getText()
   box.setContent(text)
   listReduxKeys.select()
-  reduxValues(text)
+  return router.post({type: 'redux.value.request', path: text})
   listReduxKeys.hide()
   screen.focusPop()
   screen.render()
@@ -117,22 +118,21 @@ box.key('escape', (ch, key) => {
 const PORT = 3334
 const io = SocketIO(PORT)
 
+const context = Context({
+  screen,
+  io,
+  logBox
+})
+
+const router = Router.createRouter(context)
+R.forEach((command) => router.register(command), commands)
+
 io.on('connection', (socket) => {
   connectionBox.setContent('{green-fg}Online{/}')
   screen.render()
   socket.on('command', (data) => {
     const action = JSON.parse(data)
-    const {type, message} = action
-    const time = moment().format('HH:mm:ss.SSS')
-    if (type === 'log') {
-      logBox.log(`{white-fg}${time}{/} - {blue-fg}${type}{/}`)
-      logBox.log(message)
-      logBox.log('')
-    } else if (type === 'redux.keys') {
-      listReduxKeys.show()
-      listReduxKeys.setItems(message.keys)
-      listReduxKeys.focus()
-    }
+    router.post(action)
     screen.render()
   })
 
@@ -142,34 +142,16 @@ io.on('connection', (socket) => {
   })
 })
 
-const send = (type, payload) => {
-  const body = { type, payload }
-  const bodyJson = JSON.stringify(body)
-  io.sockets.emit('command', bodyJson)
-}
-
 const die = (exitCode = 0) => {
   screen.destroy()
   process.exit(exitCode)
 }
 
-const reduxValues = (path) => {
-  send('redux.store', {path})
-}
-
-const reduxKeys = (path) => {
-  send('redux.keys', {path})
-}
-
-const dispatch = (type, params = {}) => {
-  send('redux.dispatch', {action: {type, ...params}})
-}
-
 const promptEval = () => {
   prompt.input('Object to dispatch to TEMPERATURE_REQUEST', '', (errInput, value) => {
-    let x = null
-    eval('x = ' + value)  // lulz
-    dispatch('TEMPERATURE_REQUEST', x)
+    let params = null
+    eval('params = ' + value) // lulz
+    router.post({type: 'redux.dispatch', action: {type: 'TEMPERATURE_REQUEST', ...params}})
     screen.render()
   })
 }
@@ -177,13 +159,14 @@ const promptEval = () => {
 const commmandSwitch = (input) => {
   switch (input) {
     case 'q': return die()
-    case 'r': return reduxValues('weather')
-    case 't': return reduxValues('login')
-    case 'k': return reduxKeys('')
+    case 'w': return router.post({type: 'redux.value.request', path: null})
+    case 'e': return router.post({type: 'redux.value.request', path: 'weather'})
+    case 'r': return router.post({type: 'redux.value.request', path: 'weather.temperature'})
+    case 'k': return router.post({type: 'redux.key.request', path: null})
     case 'p': return promptEval()
-    case '1': return dispatch('TEMPERATURE_REQUEST', {city: 'Los Angeles'})
-    case '2': return dispatch('TEMPERATURE_REQUEST', {city: 'New York'})
-    case '3': return dispatch('TEMPERATURE_REQUEST', {city: 'San Francisco'})
+    case '1': return router.post({type: 'redux.dispatch', action: {type: 'TEMPERATURE_REQUEST', city: 'Los Angeles'}})
+    case '2': return router.post({type: 'redux.dispatch', action: {type: 'TEMPERATURE_REQUEST', city: 'New York'}})
+    case '3': return router.post({type: 'redux.dispatch', action: {type: 'TEMPERATURE_REQUEST', city: 'San Francisco'}})
   }
 }
 
