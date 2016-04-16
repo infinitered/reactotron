@@ -13,6 +13,7 @@ export default class Context {
     this.apiBox = parts.apiBox
     this.reduxBox = parts.reduxBox
     this.instructionsBox = parts.instructionsBox
+    this.menuStack = []
   }
 
   die (exitCode = 0) {
