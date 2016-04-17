@@ -9,12 +9,11 @@ A console program to monitor & control React Native apps as they get built.
 * [] Allow a .puppeteer sub-folder for project-specific things
 * [] Allow commands to be extended on client & server
 * [] Redux watches - add, remove, clear all
-* [] Api short display mode
 * [] Packaging strategy
-* [] Does router need to exist?
 
 # Wishlist
 
+* [] Does router need to exist anymore?
 * [] Api timing and size metrics
 * [] Pages for logging
 * [] Hook `console.*` on client for crazy shenanigans
