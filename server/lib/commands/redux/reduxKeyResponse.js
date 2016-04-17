@@ -1,4 +1,5 @@
 import RS from 'ramdasauce'
+import R from 'ramda'
 
 const COMMAND = 'redux.key.response'
 
@@ -7,12 +8,20 @@ const COMMAND = 'redux.key.response'
  */
 const process = (context, action) => {
   const {path, keys} = action.message
+  const time = context.timeStamp()
 
-  if (RS.isNilOrEmpty(path)) {
-    context.reduxLog('', keys)
-  } else {
-    context.reduxLog(path, keys)
-  }
+  const sayKeys = RS.isNilOrEmpty(keys)
+    ? '{red-fg}(none){/}'
+    : R.join(', ', R.map((k) => `{yellow-fg}${k}{/}`, keys || []))
+
+  const title = RS.isNilOrEmpty(path)
+    ? '{blue-fg}keys{/}'
+    : `{blue-fg}keys{/} {bold}{white-fg}${path}{/}{/}`
+
+  const fullMessage = `{white-fg}${time}{/} - ${title} ${sayKeys}`
+
+  context.reduxBox.log(fullMessage)
+  context.screen.render()
 }
 
 export default {

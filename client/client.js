@@ -104,8 +104,7 @@ client.addReduxStore = (store) => {
       client.sendCommand('redux.key.response', {path: null, keys: R.keys(state)})
     } else {
       const keys = R.keys(RS.dotPath(path, state))
-      const fullKeys = R.map((k) => `${path}.${k}`, keys)
-      client.sendCommand('redux.key.response', {path, keys: fullKeys})
+      client.sendCommand('redux.key.response', {path, keys})
     }
   })
 

@@ -65,6 +65,10 @@ export default class Context {
     this.screen.render()
   }
 
+  timeStamp () {
+    return moment().format('HH:mm:ss.SSS')
+  }
+
   reduxLog (title, message) {
     const time = moment().format('HH:mm:ss.SSS')
 
