@@ -1,5 +1,5 @@
 const COMMAND = 'content.score'
-const SCORE = '-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-'
+const SCORE = '\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n'
 
 const process = (context, action) => {
   context.logBox.log(SCORE)

@@ -1,5 +1,4 @@
 import R from 'ramda'
-import RS from 'ramdasauce'
 import moment from 'moment'
 import Router from './router'
 
@@ -17,12 +16,6 @@ export default class Context {
     this.menuStack = []
     this.lastRepeatableMessage = null
     this.reduxActionLoggingStyle = 'short'
-  }
-
-  die (exitCode = 0) {
-    this.screen.destroy()
-    console.log('> You are eaten by a grue.')
-    process.exit(exitCode)
   }
 
   send (action) {

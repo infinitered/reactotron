@@ -1,7 +1,7 @@
-const COMMAND = 'die'
+const COMMAND = 'content.log'
 
 const process = (context, action) => {
-  context.die()
+  context.log(action.message)
 }
 
 export default {

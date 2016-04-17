@@ -1,23 +1,35 @@
-import reduxDispatch from './reduxDispatch'
-import reduxValueRequest from './reduxValueRequest'
-import reduxKeyRequest from './reduxKeyRequest'
-import reduxValueResponse from './reduxValueResponse'
-import reduxKeyResponse from './reduxKeyResponse'
-import reduxValuePrompt from './reduxValuePrompt'
-import reduxKeyPrompt from './reduxKeyPrompt'
-import reduxDispatchPrompt from './reduxDispatchPrompt'
-import die from './die'
-import log from './log'
-import apiLog from './apiLog'
-import menuPush from './menuPush'
-import menuPop from './menuPop'
-import menuMain from './menuMain'
-import menuRedux from './menuRedux'
-import commandRepeat from './commandRepeat'
-import reduxActionDone from './reduxActionDone'
-import contentClear from './contentClear'
-import contentScore from './contentScore'
+// redux things
+import reduxDispatch from './redux/reduxDispatch'
+import reduxValueRequest from './redux/reduxValueRequest'
+import reduxKeyRequest from './redux/reduxKeyRequest'
+import reduxValueResponse from './redux/reduxValueResponse'
+import reduxKeyResponse from './redux/reduxKeyResponse'
+import reduxValuePrompt from './redux/reduxValuePrompt'
+import reduxKeyPrompt from './redux/reduxKeyPrompt'
+import reduxDispatchPrompt from './redux/reduxDispatchPrompt'
+import reduxActionDone from './redux/reduxActionDone'
 
+// program things
+import die from './program/die'
+
+// api things
+import apiLog from './api/apiLog'
+
+// command things
+import commandRepeat from './commands/commandRepeat'
+
+// content things
+import contentLog from './content/contentLog'
+import contentClear from './content/contentClear'
+import contentScore from './content/contentScore'
+
+// menu things
+import menuPush from './menus/menuPush'
+import menuPop from './menus/menuPop'
+import menuMain from './menus/menuMain'
+import menuRedux from './menus/menuRedux'
+
+// come together. right now. over me.
 export default [
   reduxDispatch,
   reduxValueRequest,
@@ -29,7 +41,7 @@ export default [
   reduxDispatchPrompt,
   reduxActionDone,
   apiLog,
-  log,
+  contentLog,
   contentClear,
   contentScore,
   menuPush,

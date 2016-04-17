@@ -34,7 +34,7 @@ client.onCommand = (event, handler) => {
 }
 
 // add a sample log handler
-client.onCommand('log', (action, client) => {
+client.onCommand('content.log', (action, client) => {
   console.log(action)
 })
 
@@ -67,7 +67,7 @@ client.connect = (server = 'localhost', port = 3334) => {
   Log out something to the server.
  */
 client.log = (message) => {
-  client.sendCommand('log', message)
+  client.sendCommand('content.log', message)
 }
 
 /**

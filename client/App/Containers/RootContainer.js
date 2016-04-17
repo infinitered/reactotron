@@ -13,7 +13,7 @@ export default class RootContainer extends React.Component {
 
   handlePress () {
     const {dispatch} = this.props
-    pp.log('press.')
+    pp.log('A touchable was pressed.')
     dispatch(Actions.requestTemperature('Toronto'))
   }
 
@@ -28,7 +28,7 @@ export default class RootContainer extends React.Component {
       <View style={Styles.container}>
         <TouchableOpacity onPress={this.handlePress}>
           <Text style={Styles.welcome}>
-            {`The weather in ${city} is ${ fetching ? 'loading' : temperature}.`}
+            {`The weather in ${city} is ${fetching ? 'loading' : temperature}.`}
           </Text>
         </TouchableOpacity>
       </View>

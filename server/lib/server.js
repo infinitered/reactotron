@@ -158,7 +158,7 @@ io.on('connection', (socket) => {
 })
 
 // always control-c to die
-screen.key('C-c', () => context.post({type: 'die'}))
+screen.key('C-c', () => context.post({type: 'program.die'}))
 
 // . to replay
 screen.key('.', () => context.post({type: 'command.repeat'}))
