@@ -39,13 +39,21 @@ const logBox = blessed.log({
   }
 })
 
-const reduxBox = blessed.log({
+const reduxContainer = blessed.box({
   parent: screen,
+  left: 'center',
+  width: '34%',
+  top: 0,
+  height: '100%-1'
+})
+
+const reduxBox = blessed.log({
+  parent: reduxContainer,
   scrollable: true,
   left: 'center',
   top: 0,
-  height: '50%-1',
-  width: '34%',
+  height: 'half',
+  width: '100%',
   border: 'line',
   tags: true,
   keys: true,
@@ -60,12 +68,12 @@ const reduxBox = blessed.log({
 })
 
 const reduxActionBox = blessed.log({
-  parent: screen,
+  parent: reduxContainer,
   scrollable: true,
   left: 'center',
-  top: '50%-1',
-  height: '50%',
-  width: '34%',
+  top: '50%',
+  height: 'half',
+  width: '100%',
   border: 'line',
   tags: true,
   keys: true,
