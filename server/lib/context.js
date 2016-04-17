@@ -11,6 +11,7 @@ export default class Context {
     this.menuStack = []
     this.lastRepeatableMessage = null
     this.reduxActionLoggingStyle = 'short'
+    this.apiLoggingStyle = 'short'
   }
 
   send (action) {
@@ -44,15 +45,6 @@ export default class Context {
         this.ui.screen.render()
       }
     })
-  }
-
-  apiLog (title, message) {
-    const time = moment().format('HH:mm:ss.SSS')
-
-    this.ui.apiBox.log(`{white-fg}${time}{/} - {blue-fg}${title}{/}`)
-    this.ui.apiBox.log(message)
-    this.ui.apiBox.log('')
-    this.ui.screen.render()
   }
 
   reduxLogRaw (message) {
