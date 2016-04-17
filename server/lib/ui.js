@@ -44,7 +44,7 @@ const reduxBox = blessed.log({
   scrollable: true,
   left: 'center',
   top: 0,
-  height: '100%-1',
+  height: '50%-1',
   width: '34%',
   border: 'line',
   tags: true,
@@ -53,6 +53,26 @@ const reduxBox = blessed.log({
   mouse: true,
   scrollback: 400,
   label: ' {white-fg}Redux{/} ',
+  scrollbar: {
+    ch: ' ',
+    inverse: true
+  }
+})
+
+const reduxActionBox = blessed.log({
+  parent: screen,
+  scrollable: true,
+  left: 'center',
+  top: '50%-1',
+  height: '50%',
+  width: '34%',
+  border: 'line',
+  tags: true,
+  keys: true,
+  vi: true,
+  mouse: true,
+  scrollback: 400,
+  label: ' {white-fg}Completed Redux Actions{/} ',
   scrollbar: {
     ch: ' ',
     inverse: true
@@ -127,6 +147,7 @@ export default {
   promptBox,
   logBox,
   reduxBox,
+  reduxActionBox,
   apiBox,
   instructionsBox,
   statusBox,
