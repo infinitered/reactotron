@@ -1,36 +1,23 @@
 import R from 'ramda'
+import {unregisterKeys, registerKeys, drawInstructions} from './menuHelpers'
 
 const COMMAND = 'menu.push'
 
-const unkeyMenu = (screen, menu) => {
-  R.forEach((item) => { screen.unkey(item.key) }, menu.commands)
-}
-
+/**
+  Installs a new menu.
+ */
 const process = (context, action) => {
   const menu = action.menu
-  const commands = menu.commands
-  const {screen, menuStack} = context
+  const {menuStack} = context
 
+  // unregister the old menu if possible
   const previousMenu = R.last(menuStack)
-  if (previousMenu) {
-    unkeyMenu(screen, previousMenu)
-  }
+  previousMenu && unregisterKeys(context, previousMenu)
 
-  R.forEach((item) => {
-    screen.key(item.key, () => {
-      R.forEach((command) => context.post(command), item.commands)
-    })
-  }, commands)
-
+  // register and draw the new menu
   menuStack.push(menu)
-
-  const content = R.pipe(
-    R.map((item) => `{white-fg}${item.key}{/} = ${item.name}`),
-    R.join(' | ')
-  )(menu.commands)
-
-  context.instructionsBox.setContent(`{center}${content}{/}`)
-  screen.render()
+  registerKeys(context, menu)
+  drawInstructions(context, menu)
 }
 
 export default {
