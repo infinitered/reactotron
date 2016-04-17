@@ -4,17 +4,20 @@ A console program to monitor & control React Native apps as they get built.
 
 # Before Showing Anyone Checklist
 
-* [] Refactor clients to organize commands
 * [] Get the vocab right (everything is a "command")
+* [] Refactor clients to organize commands
 * [] Allow a .puppeteer sub-folder for project-specific things
 * [] Allow commands to be extended on client & server
 * [] Redux watches - add, remove, clear all
 * [] Api short display mode
-* [] Api timing and size metrics
-* [] Pages for logging
+* [] Organize & create all UI elements in a single place outside the server
+* [] Packaging strategy
+* [] Does router need to exist?
 
 # Wishlist
 
+* [] Api timing and size metrics
+* [] Pages for logging
 * [] Hook `console.*` on client for crazy shenanigans
 * [] Show what redbox & yellow box shows
 * [] Show what the profile shows
