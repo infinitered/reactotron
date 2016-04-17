@@ -1,7 +1,7 @@
 const COMMAND = 'log'
 
 const process = (context, action) => {
-  context.log('Log Message', action.message)
+  context.log(action.message)
 }
 
 export default {

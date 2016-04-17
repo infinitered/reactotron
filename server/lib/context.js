@@ -81,12 +81,16 @@ export default class Context {
     this.screen.render()
   }
 
-  log (title, message) {
+  log (message) {
     const time = moment().format('HH:mm:ss.SSS')
+    if (R.is(Object, message)) {
+      this.logBox.log(`{white-fg}${time}{/}`)
+      this.logBox.log(message)
+      this.logBox.log('')
+    } else {
+      this.logBox.log(`{white-fg}${time}{/} - ${message}`)
+    }
 
-    this.logBox.log(`{white-fg}${time}{/} - {blue-fg}${title}{/}`)
-    this.logBox.log(message)
-    this.logBox.log('')
     this.screen.render()
   }
 
