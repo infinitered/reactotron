@@ -23,6 +23,7 @@ export default () => {
     rootReducer,
     applyMiddleware(
       logger,
+      pp.reduxMiddleware,
       sagaMiddleware(...sagas)
     )
   )

@@ -12,7 +12,9 @@ export default class RootContainer extends React.Component {
   }
 
   handlePress () {
+    const {dispatch} = this.props
     pp.log('press.')
+    dispatch(Actions.requestTemperature('Toronto'))
   }
 
   componentWillMount () {

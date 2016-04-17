@@ -16,6 +16,7 @@ export default class Context {
     this.instructionsBox = parts.instructionsBox
     this.menuStack = []
     this.lastRepeatableMessage = null
+    this.reduxActionLoggingStyle = 'short'
   }
 
   die (exitCode = 0) {
@@ -63,6 +64,11 @@ export default class Context {
     this.apiBox.log(`{white-fg}${time}{/} - {blue-fg}${title}{/}`)
     this.apiBox.log(message)
     this.apiBox.log('')
+    this.screen.render()
+  }
+
+  reduxLogRaw (message) {
+    this.reduxBox.log(message)
     this.screen.render()
   }
 

@@ -117,7 +117,19 @@ client.addReduxStore = (store) => {
 }
 
 client.addReduxActionCreators = (creators) => {
+}
 
+const MIDDLEWARE_ACTION_IGNORE = ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'EFFECT_REJECTED']
+
+client.reduxMiddleware = (store) => (next) => (action) => {
+  const {type} = action
+  const start = performance.now()
+  const result = next(action)
+  const ms = (performance.now() - start).toFixed(2)
+  if (!R.contains(action.type, MIDDLEWARE_ACTION_IGNORE)) {
+    client.sendCommand('redux.action.done', {type, ms, action})
+  }
+  return result
 }
 
 export default client

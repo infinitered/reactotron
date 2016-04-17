@@ -14,6 +14,7 @@ import menuPop from './menuPop'
 import menuMain from './menuMain'
 import menuRedux from './menuRedux'
 import commandRepeat from './commandRepeat'
+import reduxActionDone from './reduxActionDone'
 
 export default [
   reduxDispatch,
@@ -24,6 +25,7 @@ export default [
   reduxValuePrompt,
   reduxKeyPrompt,
   reduxDispatchPrompt,
+  reduxActionDone,
   apiLog,
   log,
   menuPush,
