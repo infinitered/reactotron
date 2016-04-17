@@ -71,7 +71,7 @@ const reduxActionBox = blessed.log({
   parent: reduxContainer,
   scrollable: true,
   left: 'center',
-  top: '50%',
+  bottom: 0,
   height: 'half',
   width: '100%',
   border: 'line',
