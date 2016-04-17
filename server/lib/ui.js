@@ -51,7 +51,7 @@ const reduxBox = blessed.log({
   parent: reduxContainer,
   scrollable: true,
   left: 'center',
-  top: 0,
+  bottom: 0,
   height: 'half',
   width: '100%',
   border: 'line',
@@ -59,7 +59,6 @@ const reduxBox = blessed.log({
   keys: true,
   vi: true,
   mouse: true,
-  scrollback: 400,
   label: ' {white-fg}Redux{/} ',
   scrollbar: {
     ch: ' ',
@@ -71,7 +70,7 @@ const reduxActionBox = blessed.log({
   parent: reduxContainer,
   scrollable: true,
   left: 'center',
-  bottom: 0,
+  top: 0,
   height: 'half',
   width: '100%',
   border: 'line',
@@ -79,7 +78,6 @@ const reduxActionBox = blessed.log({
   keys: true,
   vi: true,
   mouse: true,
-  scrollback: 400,
   label: ' {white-fg}Completed Redux Actions{/} ',
   scrollbar: {
     ch: ' ',
