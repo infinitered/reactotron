@@ -11,6 +11,7 @@ import reduxActionDone from './redux/reduxActionDone'
 import reduxSubscribeRequest from './redux/reduxSubscribeRequest'
 import reduxSubscribeValues from './redux/reduxSubscribeValues'
 import reduxSubscribeAddPrompt from './redux/reduxSubscribeAddPrompt'
+import reduxSubscribeClear from './redux/reduxSubscribeClear'
 
 // program things
 import die from './program/die'
@@ -31,6 +32,7 @@ import menuPush from './menus/menuPush'
 import menuPop from './menus/menuPop'
 import menuMain from './menus/menuMain'
 import menuRedux from './menus/menuRedux'
+import menuReduxSubscribe from './menus/menuReduxSubscribe'
 
 // come together. right now. over me.
 export default [
@@ -46,6 +48,7 @@ export default [
   reduxSubscribeRequest,
   reduxSubscribeValues,
   reduxSubscribeAddPrompt,
+  reduxSubscribeClear,
   apiLog,
   contentLog,
   contentClear,
@@ -54,6 +57,7 @@ export default [
   menuPop,
   menuMain,
   menuRedux,
+  menuReduxSubscribe,
   commandRepeat,
   die
 ]

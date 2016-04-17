@@ -7,7 +7,7 @@ const process = (context, action) => {
       {key: 'v', name: 'values', commands: [{type: 'redux.value.prompt'}, {type: 'menu.pop'}]},
       {key: 'k', name: 'keys', commands: [{type: 'redux.key.prompt'}, {type: 'menu.pop'}]},
       {key: 'd', name: 'dispatch', commands: [{type: 'redux.dispatch.prompt'}, {type: 'menu.pop'}]},
-      {key: 's', name: 'subscribe', commands: [{type: 'redux.subscribe.add.prompt'}, {type: 'menu.pop'}]},
+      {key: 's', name: 'subscribe', commands: [{type: 'menu.redux.subscribe'}]},
       {key: 'escape', name: 'back', commands: [{type: 'menu.pop'}]}
     ]
   }
