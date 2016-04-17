@@ -15,6 +15,8 @@ import menuMain from './menuMain'
 import menuRedux from './menuRedux'
 import commandRepeat from './commandRepeat'
 import reduxActionDone from './reduxActionDone'
+import contentClear from './contentClear'
+import contentScore from './contentScore'
 
 export default [
   reduxDispatch,
@@ -28,6 +30,8 @@ export default [
   reduxActionDone,
   apiLog,
   log,
+  contentClear,
+  contentScore,
   menuPush,
   menuPop,
   menuMain,

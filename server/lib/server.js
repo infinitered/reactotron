@@ -163,6 +163,12 @@ screen.key('C-c', () => context.post({type: 'die'}))
 // . to replay
 screen.key('.', () => context.post({type: 'command.repeat'}))
 
+// - to score
+screen.key('-', () => context.post({type: 'content.score'}))
+
+// del to clear
+screen.key(['delete', 'backspace'], () => context.post({type: 'content.clear'}))
+
 // let's start with the main menu
 context.post({type: 'menu.main'})
 
