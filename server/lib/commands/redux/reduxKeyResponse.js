@@ -12,11 +12,11 @@ const process = (context, action) => {
 
   const sayKeys = RS.isNilOrEmpty(keys)
     ? '{red-fg}(none){/}'
-    : R.join(', ', R.map((k) => `{yellow-fg}${k}{/}`, keys || []))
+    : R.join(', ', R.map((k) => `${k}`, keys || []))
 
   const title = RS.isNilOrEmpty(path)
-    ? '{blue-fg}keys{/}'
-    : `{blue-fg}keys{/} {bold}{white-fg}${path}{/}{/}`
+    ? '{blue-fg}keys in /{/}'
+    : `{blue-fg}keys in ${path}{/}`
 
   const fullMessage = `{white-fg}${time}{/} - ${title} ${sayKeys}`
 
