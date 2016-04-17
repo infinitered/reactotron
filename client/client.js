@@ -1,6 +1,19 @@
+// --- Begin Awkware Hackzorz ---
+
+// First we import React Native.
 import React from 'react-native'
-import './useragent' // needs to be included before socket.io!
-import io from 'socket.io-client/socket.io'
+
+// Then we set a userAgent so socket.io works.
+if (window.navigator && Object.keys(window.navigator).length === 0) {
+  window = Object.assign(window, {navigator: {userAgent: 'react-native-puppeteer'}})
+}
+
+// Finally, we load socket.io. This has to be done as a require to preserve
+// the order of user agent being set first.
+const io = require('socket.io-client/socket.io')
+
+// --- End Awkward Hackzorz ---
+
 import R from 'ramda'
 import RS from 'ramdasauce'
 
