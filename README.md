@@ -10,7 +10,6 @@ A console program to monitor & control React Native apps as they get built.
 * [] Allow commands to be extended on client & server
 * [] Redux watches - add, remove, clear all
 * [] Api short display mode
-* [] Organize & create all UI elements in a single place outside the server
 * [] Packaging strategy
 * [] Does router need to exist?
 
