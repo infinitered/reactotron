@@ -1,4 +1,3 @@
-import R from 'ramda'
 import RS from 'ramdasauce'
 const COMMAND = 'redux.dispatch.prompt'
 

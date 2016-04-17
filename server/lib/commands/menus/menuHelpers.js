@@ -4,7 +4,7 @@ import R from 'ramda'
  Remove any key events bound to the items in this menu.
  */
 export const unregisterKeys = (context, menu) => {
-  R.forEach((item) => { context.screen.unkey(item.key) }, menu.commands)
+  R.forEach((item) => { context.ui.screen.unkey(item.key) }, menu.commands)
 }
 
 /**
@@ -12,7 +12,7 @@ export const unregisterKeys = (context, menu) => {
  */
 export const registerKeys = (context, menu) => {
   R.forEach((item) => {
-    context.screen.key(item.key, () => {
+    context.ui.screen.key(item.key, () => {
       R.forEach((command) => context.post(command), item.commands)
     })
   }, menu.commands)
@@ -27,6 +27,6 @@ export const drawInstructions = (context, menu) => {
     R.join(' | ')
   )(menu.commands)
 
-  context.instructionsBox.setContent(`{center}${content}{/}`)
-  context.screen.render()
+  context.ui.instructionsBox.setContent(`{center}${content}{/}`)
+  context.ui.screen.render()
 }

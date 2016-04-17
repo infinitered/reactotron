@@ -6,13 +6,8 @@ export default class Context {
 
   constructor (parts) {
     this.io = parts.io
-    this.screen = parts.screen
-    this.logBox = parts.logBox
-    this.promptBox = parts.promptBox
+    this.ui = parts.ui
     this.router = parts.router
-    this.apiBox = parts.apiBox
-    this.reduxBox = parts.reduxBox
-    this.instructionsBox = parts.instructionsBox
     this.menuStack = []
     this.lastRepeatableMessage = null
     this.reduxActionLoggingStyle = 'short'
@@ -41,12 +36,12 @@ export default class Context {
   }
 
   prompt (title, callback) {
-    this.promptBox.setFront()
-    this.screen.render()
-    this.promptBox.input(title, '', (err, value) => {
+    this.ui.promptBox.setFront()
+    this.ui.screen.render()
+    this.ui.promptBox.input(title, '', (err, value) => {
       if (!err) {
         callback(value)
-        this.screen.render()
+        this.ui.screen.render()
       }
     })
   }
@@ -54,15 +49,15 @@ export default class Context {
   apiLog (title, message) {
     const time = moment().format('HH:mm:ss.SSS')
 
-    this.apiBox.log(`{white-fg}${time}{/} - {blue-fg}${title}{/}`)
-    this.apiBox.log(message)
-    this.apiBox.log('')
-    this.screen.render()
+    this.ui.apiBox.log(`{white-fg}${time}{/} - {blue-fg}${title}{/}`)
+    this.ui.apiBox.log(message)
+    this.ui.apiBox.log('')
+    this.ui.screen.render()
   }
 
   reduxLogRaw (message) {
-    this.reduxBox.log(message)
-    this.screen.render()
+    this.ui.reduxBox.log(message)
+    this.ui.screen.render()
   }
 
   timeStamp () {
@@ -72,23 +67,23 @@ export default class Context {
   reduxLog (title, message) {
     const time = moment().format('HH:mm:ss.SSS')
 
-    this.reduxBox.log(`{white-fg}${time}{/} - {blue-fg}${title}{/}`)
-    this.reduxBox.log(message)
-    this.reduxBox.log('')
-    this.screen.render()
+    this.ui.reduxBox.log(`{white-fg}${time}{/} - {blue-fg}${title}{/}`)
+    this.ui.reduxBox.log(message)
+    this.ui.reduxBox.log('')
+    this.ui.screen.render()
   }
 
   log (message) {
     const time = moment().format('HH:mm:ss.SSS')
     if (R.is(Object, message)) {
-      this.logBox.log(`{white-fg}${time}{/}`)
-      this.logBox.log(message)
-      this.logBox.log('')
+      this.ui.logBox.log(`{white-fg}${time}{/}`)
+      this.ui.logBox.log(message)
+      this.ui.logBox.log('')
     } else {
-      this.logBox.log(`{white-fg}${time}{/} - ${message}`)
+      this.ui.logBox.log(`{white-fg}${time}{/} - ${message}`)
     }
 
-    this.screen.render()
+    this.ui.screen.render()
   }
 
 }

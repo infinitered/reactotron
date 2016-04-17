@@ -1,10 +1,10 @@
 const COMMAND = 'content.clear'
 
 const process = (context, action) => {
-  context.logBox.setContent('')
-  context.apiBox.setContent('')
-  context.reduxBox.setContent('')
-  context.screen.render()
+  context.ui.logBox.setContent('')
+  context.ui.apiBox.setContent('')
+  context.ui.reduxBox.setContent('')
+  context.ui.screen.render()
 }
 
 export default {

@@ -1,4 +1,3 @@
-import moment from 'moment'
 const COMMAND = 'redux.action.done'
 
 /**
@@ -6,7 +5,7 @@ const COMMAND = 'redux.action.done'
  */
 const process = (context, action) => {
   const {type, ms} = action.message
-  const time = moment().format('HH:mm:ss.SSS')
+  const time = context.timeStamp()
   context.reduxLogRaw(`{white-fg}${time}{/} - {yellow-fg}${type}{/}{|}{white-fg}${ms}ms{/}`)
   if (context.reduxActionLoggingStyle === 'full') {
     context.reduxLogRaw(action.message.action)
