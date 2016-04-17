@@ -12,6 +12,8 @@ import reduxSubscribeRequest from './redux/reduxSubscribeRequest'
 import reduxSubscribeValues from './redux/reduxSubscribeValues'
 import reduxSubscribeAdd from './redux/reduxSubscribeAdd'
 import reduxSubscribeAddPrompt from './redux/reduxSubscribeAddPrompt'
+import reduxSubscribeDelete from './redux/reduxSubscribeDelete'
+import reduxSubscribeDeletePrompt from './redux/reduxSubscribeDeletePrompt'
 import reduxSubscribeClear from './redux/reduxSubscribeClear'
 
 // program things
@@ -50,6 +52,8 @@ export default [
   reduxSubscribeValues,
   reduxSubscribeAdd,
   reduxSubscribeAddPrompt,
+  reduxSubscribeDelete,
+  reduxSubscribeDeletePrompt,
   reduxSubscribeClear,
   apiLog,
   contentLog,
