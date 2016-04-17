@@ -35,7 +35,6 @@ client.onCommand = (event, handler) => {
 
 // add a sample log handler
 client.onCommand('content.log', (action, client) => {
-  console.log(action)
 })
 
 /**
@@ -52,7 +51,7 @@ client.connect = (server = 'localhost', port = 3334) => {
     client.log('connected')
   })
   socket.on('command', (data) => {
-    console.log('command data: ', data)
+    // console.log('command data: ', data)
     const action = JSON.parse(data)
     const {type} = action
     const handlers = commandHandlers[type] || []
@@ -90,7 +89,24 @@ client.addReduxStore = (store) => {
   // send the subscriptions to the client
   const sendSubscriptions = () => {
     const state = store.getState()
-    const values = R.map((key) => [key, RS.dotPath(key, state)], R.flatten(subscriptions))
+    const expanded = R.pipe(
+      R.filter(RS.endsWith('.*')),
+      R.map((key) => {
+        const keyMinusWildcard = R.slice(0, -2, key)
+        const value = RS.dotPath(keyMinusWildcard, state)
+        if (R.is(Object, value) && !RS.isNilOrEmpty(value)) {
+          return R.pipe(
+            R.keys,
+            R.map((key) => `${keyMinusWildcard}.${key}`)
+          )(value)
+        }
+        return null
+      }),
+      R.flatten,
+      R.reject(RS.endsWith('.*'))
+    )(subscriptions)
+
+    const values = R.map((key) => [key, RS.dotPath(key, state)], expanded)
     client.sendCommand('redux.subscribe.values', {values})
   }
 
