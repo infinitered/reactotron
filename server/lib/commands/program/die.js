@@ -1,6 +1,9 @@
 const COMMAND = 'program.die'
 
-const process = (context, action) => {
+/**
+  Shuts the program down.
+ */
+const execute = (context, action) => {
   const exitCode = action.exitCode || 0
   context.screen.destroy()
   console.log('> You are eaten by a grue.')
@@ -9,5 +12,5 @@ const process = (context, action) => {
 
 export default {
   name: COMMAND,
-  process
+  process: execute // remapped because of a node.js global variable collision
 }
