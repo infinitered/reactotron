@@ -8,7 +8,6 @@ A console program to monitor & control React Native apps as they get built.
 * [] Refactor clients to organize commands
 * [] Allow a .puppeteer sub-folder for project-specific things
 * [] Allow commands to be extended on client & server
-* [] Redux watches - add, remove, clear all
 * [] Packaging strategy
 
 # Wishlist
