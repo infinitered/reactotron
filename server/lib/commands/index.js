@@ -10,6 +10,7 @@ import reduxDispatchPrompt from './redux/reduxDispatchPrompt'
 import reduxActionDone from './redux/reduxActionDone'
 import reduxSubscribeRequest from './redux/reduxSubscribeRequest'
 import reduxSubscribeValues from './redux/reduxSubscribeValues'
+import reduxSubscribeAdd from './redux/reduxSubscribeAdd'
 import reduxSubscribeAddPrompt from './redux/reduxSubscribeAddPrompt'
 import reduxSubscribeClear from './redux/reduxSubscribeClear'
 
@@ -47,6 +48,7 @@ export default [
   reduxActionDone,
   reduxSubscribeRequest,
   reduxSubscribeValues,
+  reduxSubscribeAdd,
   reduxSubscribeAddPrompt,
   reduxSubscribeClear,
   apiLog,
