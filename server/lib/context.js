@@ -12,6 +12,7 @@ export default class Context {
     this.lastRepeatableMessage = null
     this.reduxActionLoggingStyle = 'short'
     this.apiLoggingStyle = 'short'
+    this.config = {}
   }
 
   send (action) {

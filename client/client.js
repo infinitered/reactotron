@@ -85,6 +85,22 @@ client.sendCommand = (type, message) => {
 }
 
 client.addReduxStore = (store) => {
+  let subscriptions = []
+
+  // send the subscriptions to the client
+  const sendSubscriptions = () => {
+    const state = store.getState()
+    const values = R.map((key) => [key, RS.dotPath(key, state)], R.flatten(subscriptions))
+    client.sendCommand('redux.subscribe.values', {values})
+  }
+
+  client.onCommand('redux.subscribe.request', (action, client) => {
+    subscriptions = R.flatten(R.clone(action.paths || []))
+    sendSubscriptions()
+  })
+
+  store.subscribe(sendSubscriptions)
+
   // return the store at the given path
   client.onCommand('redux.value.request', (action, client) => {
     const path = action.path

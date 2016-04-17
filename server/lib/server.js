@@ -17,6 +17,8 @@ const context = new Context({
 
 io.on('connection', (socket) => {
   ui.connectionBox.setContent(ui.ONLINE)
+  // new connects need the subscribe redux
+  context.post({type: 'redux.subscribe.request'})
   ui.screen.render()
   socket.on('command', (data) => {
     const action = JSON.parse(data)

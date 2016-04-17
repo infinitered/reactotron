@@ -8,6 +8,9 @@ import reduxValuePrompt from './redux/reduxValuePrompt'
 import reduxKeyPrompt from './redux/reduxKeyPrompt'
 import reduxDispatchPrompt from './redux/reduxDispatchPrompt'
 import reduxActionDone from './redux/reduxActionDone'
+import reduxSubscribeRequest from './redux/reduxSubscribeRequest'
+import reduxSubscribeValues from './redux/reduxSubscribeValues'
+import reduxSubscribeAddPrompt from './redux/reduxSubscribeAddPrompt'
 
 // program things
 import die from './program/die'
@@ -40,6 +43,9 @@ export default [
   reduxKeyPrompt,
   reduxDispatchPrompt,
   reduxActionDone,
+  reduxSubscribeRequest,
+  reduxSubscribeValues,
+  reduxSubscribeAddPrompt,
   apiLog,
   contentLog,
   contentClear,
