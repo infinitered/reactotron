@@ -4,7 +4,7 @@
 import React from 'react-native'
 
 // Then we set a userAgent so socket.io works.
-if (window.navigator && Object.keys(window.navigator).length === 0) {
+if (!window.navigator || !window.navigator.userAgent) {
   window = Object.assign(window, {navigator: {userAgent: 'reactotron'}})
 }
 
