@@ -48,22 +48,8 @@ export default class Context {
     })
   }
 
-  reduxLogRaw (message) {
-    this.ui.reduxBox.log(message)
-    this.ui.screen.render()
-  }
-
   timeStamp () {
     return moment().format('HH:mm:ss.SSS')
-  }
-
-  reduxLog (title, message) {
-    const time = moment().format('HH:mm:ss.SSS')
-
-    this.ui.reduxBox.log(`{white-fg}${time}{/} - {blue-fg}${title}{/}`)
-    this.ui.reduxBox.log(message)
-    this.ui.reduxBox.log('')
-    this.ui.screen.render()
   }
 
   log (message) {

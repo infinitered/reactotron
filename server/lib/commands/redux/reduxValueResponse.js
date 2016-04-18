@@ -7,12 +7,15 @@ const COMMAND = 'redux.value.response'
  */
 const process = (context, action) => {
   const {path, values} = action.message
-
+  const time = context.timeStamp()
   if (RS.isNilOrEmpty(path)) {
-    context.reduxLog('values in /', values)
+    context.ui.logBox.log(`{white-fg}${time}{/} - {blue-fg}values in /{/}`)
   } else {
-    context.reduxLog(`values in ${path}`, values)
+    context.ui.logBox.log(`{white-fg}${time}{/} - {blue-fg}values in ${path}{/}`)
   }
+  context.ui.logBox.log(values)
+  context.ui.logBox.log('')
+  context.ui.screen.render()
 }
 
 export default {

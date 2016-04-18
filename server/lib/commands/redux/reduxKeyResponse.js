@@ -20,7 +20,7 @@ const process = (context, action) => {
 
   const fullMessage = `{white-fg}${time}{/} - ${title} ${sayKeys}`
 
-  context.ui.reduxBox.log(fullMessage)
+  context.ui.logBox.log(fullMessage)
   context.ui.screen.render()
 }
 

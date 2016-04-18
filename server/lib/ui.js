@@ -53,7 +53,7 @@ const reduxActionBox = blessed.log({
   scrollable: true,
   left: '0',
   top: 0,
-  height: '30%',
+  height: '50%',
   width: '100%',
   border: 'line',
   tags: true,
@@ -67,32 +67,13 @@ const reduxActionBox = blessed.log({
   }
 })
 
-const reduxBox = blessed.log({
-  parent: reduxContainer,
-  scrollable: true,
-  left: '0',
-  top: '30%',
-  height: '40%',
-  width: '100%',
-  border: 'line',
-  tags: true,
-  keys: true,
-  vi: true,
-  mouse: true,
-  label: ' {white-fg}Redux Log{/} ',
-  scrollbar: {
-    ch: ' ',
-    inverse: true
-  }
-})
-
 const reduxWatchBox = blessed.log({
   parent: reduxContainer,
   scrollable: true,
   left: 0,
   width: '100%',
-  top: '70%',
-  height: '30%+1',
+  bottom: 0,
+  height: '50%',
   border: 'line',
   tags: true,
   keys: false,
@@ -172,7 +153,6 @@ export default {
   connectionBox,
   promptBox,
   logBox,
-  reduxBox,
   reduxActionBox,
   reduxWatchBox,
   apiBox,
