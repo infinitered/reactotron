@@ -5,6 +5,7 @@ const process = (context, action) => {
   context.ui.apiBox.setContent('')
   context.ui.reduxBox.setContent('')
   context.ui.reduxActionBox.setContent('')
+  context.ui.reduxWatchBox.setContent('')
   context.ui.screen.render()
 }
 
