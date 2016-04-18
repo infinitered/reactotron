@@ -2,7 +2,8 @@ import blessed from 'blessed'
 
 const screen = blessed.screen({
   smartCSR: true,
-  title: 'reactotron'
+  title: 'reactotron',
+  dockBorders: false
 })
 
 const promptBox = blessed.prompt({
@@ -42,36 +43,17 @@ const logBox = blessed.log({
 const reduxContainer = blessed.box({
   parent: screen,
   left: 'center',
-  width: '34%',
+  width: '33%',
   top: 0,
   height: '100%-1'
-})
-
-const reduxBox = blessed.log({
-  parent: reduxContainer,
-  scrollable: true,
-  left: 'center',
-  bottom: 0,
-  height: 'half',
-  width: '100%',
-  border: 'line',
-  tags: true,
-  keys: true,
-  vi: true,
-  mouse: true,
-  label: ' {white-fg}Redux{/} ',
-  scrollbar: {
-    ch: ' ',
-    inverse: true
-  }
 })
 
 const reduxActionBox = blessed.log({
   parent: reduxContainer,
   scrollable: true,
-  left: 'center',
+  left: '0',
   top: 0,
-  height: 'half',
+  height: '30%',
   width: '100%',
   border: 'line',
   tags: true,
@@ -79,6 +61,44 @@ const reduxActionBox = blessed.log({
   vi: true,
   mouse: true,
   label: ' {white-fg}Redux Actions{/} ',
+  scrollbar: {
+    ch: ' ',
+    inverse: true
+  }
+})
+
+const reduxBox = blessed.log({
+  parent: reduxContainer,
+  scrollable: true,
+  left: '0',
+  top: '30%',
+  height: '40%',
+  width: '100%',
+  border: 'line',
+  tags: true,
+  keys: true,
+  vi: true,
+  mouse: true,
+  label: ' {white-fg}Redux Log{/} ',
+  scrollbar: {
+    ch: ' ',
+    inverse: true
+  }
+})
+
+const reduxWatchBox = blessed.log({
+  parent: reduxContainer,
+  scrollable: true,
+  left: 0,
+  width: '100%',
+  top: '70%',
+  height: '30%+1',
+  border: 'line',
+  tags: true,
+  keys: false,
+  vi: false,
+  mouse: true,
+  label: ' {white-fg}Redux Subscriptions{/}',
   scrollbar: {
     ch: ' ',
     inverse: true
@@ -154,6 +174,7 @@ export default {
   logBox,
   reduxBox,
   reduxActionBox,
+  reduxWatchBox,
   apiBox,
   instructionsBox,
   statusBox,
