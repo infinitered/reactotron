@@ -1,4 +1,4 @@
-# Puppeteer
+# Reactotron
 
 A console program to monitor & control React Native apps as they get built.
 
@@ -6,7 +6,7 @@ A console program to monitor & control React Native apps as they get built.
 
 * [] Get the vocab right (everything is a "command")
 * [] Refactor clients to organize commands
-* [] Allow a .puppeteer sub-folder for project-specific things
+* [] Allow a .reactotron sub-folder for project-specific things
 * [] Allow commands to be extended on client & server
 * [] Packaging strategy
 

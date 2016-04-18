@@ -2,7 +2,7 @@ import blessed from 'blessed'
 
 const screen = blessed.screen({
   smartCSR: true,
-  title: 'react-native-puppeteer'
+  title: 'reactotron'
 })
 
 const promptBox = blessed.prompt({
@@ -131,7 +131,7 @@ blessed.box({
   left: 0,
   top: 0,
   tags: true,
-  content: '{yellow-fg}react-native-puppeteer{/}'
+  content: '{yellow-fg}reactotron{/}'
 })
 
 const OFFLINE = '{right}{black-bg}{red-fg}Offline{/}{/}{/}'

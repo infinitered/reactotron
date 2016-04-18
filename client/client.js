@@ -5,7 +5,7 @@ import React from 'react-native'
 
 // Then we set a userAgent so socket.io works.
 if (window.navigator && Object.keys(window.navigator).length === 0) {
-  window = Object.assign(window, {navigator: {userAgent: 'react-native-puppeteer'}})
+  window = Object.assign(window, {navigator: {userAgent: 'reactotron'}})
 }
 
 // Finally, we load socket.io. This has to be done as a require to preserve

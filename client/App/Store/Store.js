@@ -5,7 +5,7 @@ import rootReducer from '../Reducers/'
 import sagaMiddleware from 'redux-saga'
 import sagas from '../Sagas/'
 import R from 'ramda'
-import puppeteer from '../../client'
+import reactotron from '../../client'
 
 // the logger master switch
 const USE_LOGGING = Config.sagas.logging
@@ -23,12 +23,12 @@ export default () => {
     rootReducer,
     applyMiddleware(
       logger,
-      puppeteer.reduxMiddleware,
+      reactotron.reduxMiddleware,
       sagaMiddleware(...sagas)
     )
   )
 
-  puppeteer.addReduxStore(store)
+  reactotron.addReduxStore(store)
 
   return store
 }
