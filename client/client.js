@@ -1,4 +1,4 @@
-// --- Begin Awkware Hackzorz ---
+// --- Begin Awkward Hackzorz ---
 
 // First we import React Native.
 import React from 'react-native'

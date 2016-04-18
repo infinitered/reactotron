@@ -1,9 +1,8 @@
 import React, { AppRegistry, Component } from 'react-native'
 import ReduxContainer from './App/Containers/ReduxContainer'
-import pp from './client'
+import puppeteer from './client'
 
-pp.connect()
-pp.log('initialized')
+puppeteer.connect()
 
 class TestClient extends Component {
   render () {
