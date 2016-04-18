@@ -102,8 +102,11 @@ client.addReduxStore = (store) => {
         }
         return null
       }),
+      R.concat(subscriptions),
       R.flatten,
-      R.reject(RS.endsWith('.*'))
+      R.reject(RS.endsWith('.*')),
+      R.uniq,
+      R.sortBy(R.identity)
     )(subscriptions)
 
     const values = R.map((key) => [key, RS.dotPath(key, state)], expanded)
