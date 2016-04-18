@@ -78,7 +78,7 @@ const reduxActionBox = blessed.log({
   keys: true,
   vi: true,
   mouse: true,
-  label: ' {white-fg}Completed Redux Actions{/} ',
+  label: ' {white-fg}Redux Actions{/} ',
   scrollbar: {
     ch: ' ',
     inverse: true

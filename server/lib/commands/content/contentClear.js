@@ -4,6 +4,7 @@ const process = (context, action) => {
   context.ui.logBox.setContent('')
   context.ui.apiBox.setContent('')
   context.ui.reduxBox.setContent('')
+  context.ui.reduxActionBox.setContent('')
   context.ui.screen.render()
 }
 
