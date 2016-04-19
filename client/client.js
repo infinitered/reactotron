@@ -16,6 +16,7 @@ const io = require('socket.io-client/socket.io')
 
 import R from 'ramda'
 import RS from 'ramdasauce'
+const performanceNow = require('fbjs/lib/performanceNow')
 
 // me?  not much, just creating some
 // global mutable variables.
@@ -157,9 +158,9 @@ const MIDDLEWARE_ACTION_IGNORE = ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'EFFECT
 
 client.reduxMiddleware = (store) => (next) => (action) => {
   const {type} = action
-  const start = performance.now()
+  const start = performanceNow()
   const result = next(action)
-  const ms = (performance.now() - start).toFixed(2)
+  const ms = (performanceNow() - start).toFixed(2)
   if (!R.contains(action.type, MIDDLEWARE_ACTION_IGNORE)) {
     client.sendCommand('redux.action.done', {type, ms, action})
   }
