@@ -49,17 +49,18 @@ export default class Context {
   }
 
   timeStamp () {
-    return moment().format('HH:mm:ss.SSS')
+    const t = moment()
+    return `${t.format('HH:mm:')}{white-fg}${t.format('ss.SS')}{/}`
   }
 
   log (message) {
-    const time = moment().format('HH:mm:ss.SSS')
+    const time = this.timeStamp()
     if (R.is(Object, message)) {
-      this.ui.logBox.log(`{white-fg}${time}{/}`)
+      this.ui.logBox.log(time)
       this.ui.logBox.log(message)
       this.ui.logBox.log('')
     } else {
-      this.ui.logBox.log(`{white-fg}${time}{/} ${message}`)
+      this.ui.logBox.log(`${time} ${message}`)
     }
 
     this.ui.screen.render()
