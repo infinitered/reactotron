@@ -59,7 +59,7 @@ export default class Context {
       this.ui.logBox.log(message)
       this.ui.logBox.log('')
     } else {
-      this.ui.logBox.log(`{white-fg}${time}{/} - ${message}`)
+      this.ui.logBox.log(`{white-fg}${time}{/} ${message}`)
     }
 
     this.ui.screen.render()

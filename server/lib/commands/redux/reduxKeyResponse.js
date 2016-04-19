@@ -18,7 +18,7 @@ const process = (context, action) => {
     ? '{blue-fg}keys in /{/}'
     : `{blue-fg}keys in ${path}{/}`
 
-  const fullMessage = `{white-fg}${time}{/} - ${title} ${sayKeys}`
+  const fullMessage = `{white-fg}${time}{/} ${title} ${sayKeys}`
 
   context.ui.logBox.log(fullMessage)
   context.ui.screen.render()

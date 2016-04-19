@@ -52,14 +52,10 @@ client.connect = (server = 'localhost', port = 3334) => {
     client.log('connected')
   })
   socket.on('command', (data) => {
-    // console.log('command data: ', data)
     const action = JSON.parse(data)
     const {type} = action
     const handlers = commandHandlers[type] || []
-    R.forEach((handler) => {
-      handler(action, client)
-    }, handlers)
-    // console.log({type, payload})
+    R.forEach((handler) => { handler(action, client) }, handlers)
   })
 }
 
