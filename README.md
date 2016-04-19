@@ -13,10 +13,8 @@ A console program to monitor & control React Native apps as they get built.
 # Wishlist
 
 * [] Does router need to exist anymore?
-* [] Api timing and size metrics
+* [] Api size metrics
 * [] Pages for logging
-* [] Hook `console.*` on client for crazy shenanigans
-* [] Show what redbox & yellow box shows
 * [] Show what the profile shows
 * [] Track saga effect chains
 * [] Provide a way to drive the navigator
