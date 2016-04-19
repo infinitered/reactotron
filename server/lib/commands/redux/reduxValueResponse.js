@@ -9,9 +9,9 @@ const process = (context, action) => {
   const {path, values} = action.message
   const time = context.timeStamp()
   if (RS.isNilOrEmpty(path)) {
-    context.ui.logBox.log(`{white-fg}${time}{/} {blue-fg}values in /{/}`)
+    context.ui.logBox.log(`{white-fg}${time}{/} {blue-fg}values in{/} {cyan-fg}/{/}`)
   } else {
-    context.ui.logBox.log(`{white-fg}${time}{/} {blue-fg}values in ${path}{/}`)
+    context.ui.logBox.log(`{white-fg}${time}{/} {blue-fg}values in{/} {cyan-fg}${path}{/}`)
   }
   context.ui.logBox.log(values)
   context.ui.logBox.log('')
