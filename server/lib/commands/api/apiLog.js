@@ -27,8 +27,8 @@ const process = (context, action) => {
     [R.T, R.identity]
   ])(status)
   const durationMs = RS.dotPath('response.duration', action.message)
-  const duration = `{white-fg}${durationMs}ms{/}`
-  context.ui.apiBox.log(`{white-fg}${time}{/} {blue-fg}${method}{/} ${path}{|}${duration} ${statusMessage}`)
+  const duration = `{white-fg}${durationMs}{/}ms`
+  context.ui.apiBox.log(`{white-fg}${time}{/} ${statusMessage} {blue-fg}${method}{/} ${path}{|}${duration}`)
   if (context.apiLoggingStyle === 'full') {
     const data = RS.dotPath('response.data', action.message)
     if (R.is(Object, data)) {
