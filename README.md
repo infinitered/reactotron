@@ -20,3 +20,14 @@ A console program to monitor & control React Native apps as they get built.
 * [] Provide a way to drive the navigator
 * [] Allow simple scripts to be written that send commands
 * [] Strategy for dealing with multiple apps connecting
+
+# Getting Started
+
+1. Copy client/client.js into your project
+1. Import reactotron in your index.ios.js and index.android.js and add `reactotron.connect()`
+1. Navigate to your reactotron/server directory in your terminal
+1. npm install
+1. npm start
+
+*Hint:* Add an alias to your .bashrc and/or .zshrc to start your reactotron server from anywhere:
+`alias reactotron='cd /path/to/reactotron/server && npm start'`
