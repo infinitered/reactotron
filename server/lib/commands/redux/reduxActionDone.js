@@ -6,7 +6,7 @@ const COMMAND = 'redux.action.done'
 const process = (context, action) => {
   const {type, ms} = action.message
   const time = context.timeStamp()
-  context.ui.reduxActionBox.log(`${time} {blue-fg}action{/} ${type}{|}{white-fg}${ms}{/}ms`)
+  context.ui.reduxActionBox.log(`${time} {cyan-fg}${type}{/}{|}{white-fg}${ms}{/}ms`)
   if (context.reduxActionLoggingStyle === 'full') {
     context.ui.reduxActionBox.log(action.message.action)
     context.ui.reduxActionBox.log('')
