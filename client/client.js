@@ -156,7 +156,7 @@ client.reduxMiddleware = (store) => (next) => (action) => {
   const {type} = action
   const start = performanceNow()
   const result = next(action)
-  const ms = (performanceNow() - start).toFixed(2)
+  const ms = (performanceNow() - start).toFixed(0)
   if (!R.contains(action.type, MIDDLEWARE_ACTION_IGNORE)) {
     client.sendCommand('redux.action.done', {type, ms, action})
   }
