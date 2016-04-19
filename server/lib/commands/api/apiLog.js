@@ -2,6 +2,10 @@ import RS from 'ramdasauce'
 import R from 'ramda'
 const COMMAND = 'api.log'
 
+// const pad = (value, length) => {
+//   return (value.toString().length < length) ? pad(' ' + value, length) : value
+// }
+
 const process = (context, action) => {
   const time = context.timeStamp()
   const problem = RS.dotPath('response.problem', action.message)
@@ -22,7 +26,9 @@ const process = (context, action) => {
     [RS.isWithin(400, 599), R.always(`{red-fg}${status}{/}`)],
     [R.T, R.identity]
   ])(status)
-  context.ui.apiBox.log(`{white-fg}${time}{/} - {blue-fg}${method}{/} ${path}{|}${statusMessage}`)
+  const durationMs = RS.dotPath('response.duration', action.message)
+  const duration = `{white-fg}${durationMs}ms{/}`
+  context.ui.apiBox.log(`{white-fg}${time}{/} - {blue-fg}${method}{/} ${path}{|}${duration} ${statusMessage}`)
   if (context.apiLoggingStyle === 'full') {
     const data = RS.dotPath('response.data', action.message)
     if (R.is(Object, data)) {
