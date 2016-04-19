@@ -15,6 +15,7 @@ import reduxSubscribeAddPrompt from './redux/reduxSubscribeAddPrompt'
 import reduxSubscribeDelete from './redux/reduxSubscribeDelete'
 import reduxSubscribeDeletePrompt from './redux/reduxSubscribeDeletePrompt'
 import reduxSubscribeClear from './redux/reduxSubscribeClear'
+import devMenuReload from './devMenu/devMenuReload'
 
 // program things
 import die from './program/die'
@@ -36,6 +37,7 @@ import menuPop from './menus/menuPop'
 import menuMain from './menus/menuMain'
 import menuRedux from './menus/menuRedux'
 import menuReduxSubscribe from './menus/menuReduxSubscribe'
+import menuDevMenu from './menus/menuDevMenu'
 
 // come together. right now. over me.
 export default [
@@ -64,6 +66,8 @@ export default [
   menuMain,
   menuRedux,
   menuReduxSubscribe,
+  menuDevMenu,
   commandRepeat,
+  devMenuReload,
   die
 ]

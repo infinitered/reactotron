@@ -38,6 +38,10 @@ client.onCommand = (event, handler) => {
 client.onCommand('content.log', (action, client) => {
 })
 
+client.onCommand('devMenu.reload', (action, client) => {
+  React.NativeModules.DevMenu.reload()
+})
+
 /**
   Connect to the server.
   @param {String} server The server to connect to.
@@ -144,7 +148,6 @@ client.addReduxStore = (store) => {
   client.onCommand('redux.dispatch', (action, client) => {
     store.dispatch(action.action)
   })
-
 }
 
 client.addReduxActionCreators = (creators) => {
