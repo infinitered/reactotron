@@ -38,6 +38,7 @@ import menuMain from './menus/menuMain'
 import menuRedux from './menus/menuRedux'
 import menuReduxSubscribe from './menus/menuReduxSubscribe'
 import menuDevMenu from './menus/menuDevMenu'
+import consoleError from './console/consoleError'
 
 // come together. right now. over me.
 export default [
@@ -69,5 +70,6 @@ export default [
   menuDevMenu,
   commandRepeat,
   devMenuReload,
+  consoleError,
   die
 ]

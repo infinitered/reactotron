@@ -61,6 +61,7 @@ client.connect = (server = 'localhost', port = 3334) => {
     const handlers = commandHandlers[type] || []
     R.forEach((handler) => { handler(action, client) }, handlers)
   })
+  client.hookErrors()
 }
 
 /**
@@ -148,6 +149,28 @@ client.addReduxStore = (store) => {
   client.onCommand('redux.dispatch', (action, client) => {
     store.dispatch(action.action)
   })
+}
+
+client.hookErrors = () => {
+  // prevent double assignments
+  if (console._swizzledFromReactotron) {
+    return
+  }
+
+  // remember the previous one
+  console._swizzledFromReactotron = console.error.bind(console)
+
+  // swizzle and go straight to hell
+  console.error = function reactotronConsoleOnError () {
+    // always call the previous one
+    console._swizzledFromReactotron.apply(null, arguments)
+    const message = arguments[0]
+    const stack = message && message.stack
+    // if we have a message, pass it along
+    if (message) {
+      client.sendCommand('console.error', {message, stack})
+    }
+  }
 }
 
 client.addReduxActionCreators = (creators) => {
