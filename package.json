@@ -26,7 +26,8 @@
   "files": [
     "index.js",
     "client/reactotron/**/*.js",
-    "server/**/*.js"
+    "server/**/*.js",
+    "bin/reactotron.js"
   ],
   "dependencies": {
     "blessed": "^0.1.81",
