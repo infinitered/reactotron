@@ -35,7 +35,6 @@ Control, monitor, and instrument your React Native apps.  From the comfort of yo
 
 Might be worth creating an alias or adding it to your script section of your `package.json`.
 
-
 # How To Use
 
 Remember, this is a development tool.  It'll help you build your app.  But you don't want to ship
@@ -129,6 +128,21 @@ import Reactotron from 'reactotron'
 // with your existing api object, add a monitor
 api.addMonitor(Reactotron.apiLog)
 ```
+
+# Tips
+
+##### Using With Android
+
+If you're using an Android sim and it's running 5.x or higher, you can use `adb` to port forward
+the right TCP port to the `reactotron` server.
+
+`$ANDROID_HOME/platform-tools/adb reverse tcp:3334 tcp:3334`
+
+##### Using On A Device
+
+When you initialize the `reactotron` you can tell it the server location when you connect:
+
+`Reactotron.connect('10.0.1.109')`
 
 
 # Next Steps
