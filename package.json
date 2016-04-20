@@ -25,9 +25,8 @@
   "license": "MIT",
   "files": [
     "index.js",
+    "README.md",
     "client/reactotron/**/*.js",
-    "server/**/*.js",
-    "dist/server.js",
     "bin/reactotron.js"
   ],
   "dependencies": {
