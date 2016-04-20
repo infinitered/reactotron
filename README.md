@@ -189,10 +189,19 @@ You want to start extending this?
 
 # Random Pics
 
-
 <img src='./images/MainInterface.jpg' alt="Hello!" />
 
 <img src='./images/Dispatch.jpg' alt="Hello!" />
+
+# Special Thanks
+
+A shout out to my teammates at [Infinite Red](https://infinite.red) who encourage this type of open-source hacking & sharing.  
+
+[<img src='https://infinite.red/images/ir-logo-7ebf9ed9d02e2805bb2c94309efa5176.svg' />](https://infinite.red)
+
+Also, to [Kevin VanGelder](https://github.com/kevinvangelder),
+who spawned the idea for this library by saying, "Hey, you know what would
+be cool? A REPL. We should do that."
 
 # Change Log
 
