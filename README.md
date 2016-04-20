@@ -4,6 +4,17 @@ Control, monitor, and instrument your React Native apps.  From the comfort of yo
 
 <img src='./images/Reactotron.gif' alt="Hello!" />
 
+##### Great For:
+
+* sending logging commands as text or objects
+* relaying all redbox errors and yellowbox warnings
+* watching the flow of actions as they get dispatched
+* tracking performance of each action watching for hotspots
+* querying your global state like a database
+* subscribing to values in your state and be notified when they change
+* dispatching your custom actions
+* watching your HTTP calls to servers and track timing
+
 # Requirements
 
 * React Native 0.23+
@@ -31,12 +42,12 @@ Depending on how much support you'd like, there's a few different places you'll 
 
 <img src='./images/Yellowbox.jpg' alt="Hello!" />
 
-Great For:
+##### Great For:
 
 * sending logging commands as text or objects
 * relaying all redbox errors and yellowbox warnings
 
-How To Hook:
+##### How To Hook:
 
 If you have `index.ios.js` or `index.android.js`, you can place this code somewhere near the top:
 
@@ -73,9 +84,9 @@ Reactotron.addReduxStore(store) // <--- here i am!
 
 Great For:
 
-* query your global state like a database
-* subscribe to values in your state and be notified when they change
-* dispatch your custom actions
+* querying your global state like a database
+* subscribing to values in your state and be notified when they change
+* dispatching your custom actions
 
 Hook To Hook:
 
