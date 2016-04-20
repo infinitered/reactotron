@@ -2,6 +2,8 @@
 
 A console program to monitor & control React Native apps as they get built.
 
+<img src='./images/Reactotron.gif' alt="Hello!" />
+
 
 # Requirements
 
@@ -28,6 +30,8 @@ Depending on how much support you'd like, there's a few different places you'll 
 
 ### Your Entry Point (required)
 
+<img src='./images/Yellowbox.jpg' alt="Hello!" />
+
 Great For:
 
 * sending logging commands as text or objects
@@ -47,6 +51,8 @@ if (__DEV__) {
 
 ### Redux Middleware (optional)
 
+<img src='./images/ReduxActions.jpg' alt="Hello!" />
+
 Great For:
 
 * watching the flow of actions as they get dispatched
@@ -63,6 +69,8 @@ Reactotron.addReduxStore(store) // <--- here i am!
 ```
 
 ### Redux Store (optional)
+
+<img src='./images/ReduxSubscriptions.jpg' alt="Hello!" />
 
 Great For:
 
@@ -86,6 +94,8 @@ const store = createStore(
 ```
 
 ### API Tracking (optional)
+
+<img src='./images/Api.jpg' alt="Hello!" />
 
 Great For:
 
@@ -142,3 +152,9 @@ You want to start extending this?
 * [ ] Provide a way to drive the navigator
 * [ ] Allow simple scripts to be written that send commands
 * [ ] Strategy for dealing with multiple apps connecting
+
+# Random Pics
+
+
+<img src='./images/MainInterface.jpg' alt="Hello!" />
+<img src='./images/Dispatch.jpg' alt="Hello!" />
