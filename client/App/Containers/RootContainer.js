@@ -2,7 +2,7 @@ import React, { View, Text, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import Styles from './Styles/RootContainerStyles'
-import pp from '../../client'
+import reactotron from '../../reactotron/client'
 
 export default class RootContainer extends React.Component {
 
@@ -13,7 +13,7 @@ export default class RootContainer extends React.Component {
 
   handlePress () {
     const {dispatch} = this.props
-    pp.log('A touchable was pressed.')
+    reactotron.log('A touchable was pressed.')
     dispatch(Actions.requestTemperature('Toronto'))
   }
 

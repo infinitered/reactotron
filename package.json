@@ -1,24 +1,33 @@
 {
   "name": "reactotron",
-  "version": "2999.1.0",
+  "version": "0.1.0",
   "description": "A console-based remote control for React Native.",
-  "main": "./dist/server.js",
+  "main": "index.js",
+  "bin": {
+    "reactotron": "./bin/reactotron.js"
+  },
   "scripts": {
     "test": "ava",
     "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json",
-    "dist": "npm run clean && gulp build && npm run docs",
-    "clean": "rm -rf dist docs",
+    "dist": "npm run clean && mkdir bin && echo '#!/usr/bin/env node\n' > ./bin/reactotron.js && gulp build && cat dist/index.js >> ./bin/reactotron.js",
+    "clean": "rm -rf bin dist",
     "gulp": "gulp build",
-    "start": "babel-node lib/server.js"
+    "start": "babel-node server/index.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/skellock/reactotron.git"
   },
-  "author": "Steve Kellock <steve@kellock.ca>",
+  "author": {
+    "name": "Steve Kellock",
+    "email": "steve@kellock.ca"
+  },
   "license": "MIT",
   "files": [
-    "dist/server.js"
+    "index.js",
+    "README.md",
+    "client/reactotron/**/*.js",
+    "bin/reactotron.js"
   ],
   "dependencies": {
     "blessed": "^0.1.81",
