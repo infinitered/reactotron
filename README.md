@@ -174,6 +174,6 @@ You want to start extending this?
 
 # Change Log
 
-##### April 20, 2016
+##### April 20, 2016 - 0.1.0
 
 * Initial release
