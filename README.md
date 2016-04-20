@@ -171,3 +171,9 @@ You want to start extending this?
 <img src='./images/MainInterface.jpg' alt="Hello!" />
 
 <img src='./images/Dispatch.jpg' alt="Hello!" />
+
+# Change Log
+
+##### April 20, 2016
+
+* Initial release
