@@ -1,9 +1,8 @@
 # Reactotron
 
-A console program to monitor & control React Native apps as they get built.
+Control, monitor, and instrument your React Native apps.  From the comfort of your TTY.
 
 <img src='./images/Reactotron.gif' alt="Hello!" />
-
 
 # Requirements
 
@@ -122,6 +121,8 @@ A couple things are highest priority on my plate:
 * support a `.reactotron` project-specific directory for plugins and stuff
 * documentation on how to create and extend
 
+This project is a week old, so there's some rough edges.  I'm already using this on my project and hopefully you can too!
+
 
 # Getting Involved
 
@@ -157,4 +158,5 @@ You want to start extending this?
 
 
 <img src='./images/MainInterface.jpg' alt="Hello!" />
+
 <img src='./images/Dispatch.jpg' alt="Hello!" />
