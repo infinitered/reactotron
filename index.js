@@ -1,7 +1,3 @@
-import Client from 'client/reactotron/client'
-import Server from 'server/index'
+import Client from './client/reactotron/client'
 
-export default {
-  Client,
-  Server
-}
+export default Client
