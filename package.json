@@ -9,7 +9,7 @@
     "dist": "npm run clean && gulp build && npm run docs",
     "clean": "rm -rf dist docs",
     "gulp": "gulp build",
-    "start": "babel-node lib/server.js"
+    "start": "babel-node src/server.js"
   },
   "repository": {
     "type": "git",
