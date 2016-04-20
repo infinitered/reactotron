@@ -34,12 +34,11 @@ client.onCommand = (event, handler) => {
   commandHandlers[event].push(handler)
 }
 
-// add a sample log handler
-client.onCommand('content.log', (action, client) => {
-})
-
+// handles requests to reload the app (current iOS only)
 client.onCommand('devMenu.reload', (action, client) => {
-  React.NativeModules.DevMenu.reload()
+  // doesn't seem to work on android.
+  const devMenu = RS.dotPath('NativeModules.DevMenu', React)
+  devMenu && devMenu.reload()
 })
 
 /**
@@ -171,9 +170,6 @@ client.hookErrors = () => {
       client.sendCommand('console.error', {message, stack})
     }
   }
-}
-
-client.addReduxActionCreators = (creators) => {
 }
 
 const MIDDLEWARE_ACTION_IGNORE = ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'EFFECT_REJECTED']
