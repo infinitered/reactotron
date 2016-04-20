@@ -9,8 +9,8 @@
   "scripts": {
     "test": "ava",
     "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json",
-    "dist": "npm run clean && gulp build && npm run docs",
-    "clean": "rm -rf dist docs",
+    "dist": "npm run clean && mkdir bin && echo '#!/usr/bin/env node\n' > ./bin/reactotron.js && gulp build && cat dist/index.js >> ./bin/reactotron.js",
+    "clean": "rm -rf bin dist",
     "gulp": "gulp build",
     "start": "babel-node server/index.js"
   },
@@ -27,6 +27,7 @@
     "index.js",
     "client/reactotron/**/*.js",
     "server/**/*.js",
+    "dist/server.js",
     "bin/reactotron.js"
   ],
   "dependencies": {
