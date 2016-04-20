@@ -75,26 +75,6 @@ if (__DEV__) {
 * watching the flow of actions as they get dispatched
 * tracking performance of each action watching for hotspots
 
-##### How To Hook:
-
-```js
-// wherever you create your Redux store
-import Reactotron from 'reactotron'
-
-const store = createStore(...)  // however you create your store
-Reactotron.addReduxStore(store) // <--- here i am!
-```
-
-### Redux Store (optional)
-
-<img src='./images/ReduxSubscriptions.jpg' alt="Hello!" />
-
-##### Great For:
-
-* querying your global state like a database
-* subscribing to values in your state and be notified when they change
-* dispatching your custom actions
-
 ##### Hook To Hook:
 
 ```js
@@ -108,6 +88,27 @@ const store = createStore(
   )
 )
 
+```
+
+### Redux Store (optional)
+
+<img src='./images/ReduxSubscriptions.jpg' alt="Hello!" />
+
+##### Great For:
+
+* querying your global state like a database
+* subscribing to values in your state and be notified when they change
+* dispatching your custom actions
+
+
+##### How To Hook:
+
+```js
+// wherever you create your Redux store
+import Reactotron from 'reactotron'
+
+const store = createStore(...)  // however you create your store
+Reactotron.addReduxStore(store) // <--- here i am!
 ```
 
 ### API Tracking (optional)
