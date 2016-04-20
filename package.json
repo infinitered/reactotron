@@ -1,8 +1,8 @@
 {
   "name": "reactotron",
-  "version": "2999.1.0",
+  "version": "0.1.0",
   "description": "A console-based remote control for React Native.",
-  "main": "./dist/server.js",
+  "main": "index.js",
   "scripts": {
     "test": "ava",
     "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json",
@@ -18,7 +18,8 @@
   "author": "Steve Kellock <steve@kellock.ca>",
   "license": "MIT",
   "files": [
-    "dist/server.js"
+    "dist/reactotron-server.js",
+    "dist/reactotron-client.js"
   ],
   "dependencies": {
     "blessed": "^0.1.81",
