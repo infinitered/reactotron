@@ -63,12 +63,12 @@ if (__DEV__) {
 
 <img src='./images/ReduxActions.jpg' alt="Hello!" />
 
-Great For:
+##### Great For:
 
 * watching the flow of actions as they get dispatched
 * tracking performance of each action watching for hotspots
 
-How To Hook:
+##### How To Hook:
 
 ```js
 // wherever you create your Redux store
@@ -82,13 +82,13 @@ Reactotron.addReduxStore(store) // <--- here i am!
 
 <img src='./images/ReduxSubscriptions.jpg' alt="Hello!" />
 
-Great For:
+##### Great For:
 
 * querying your global state like a database
 * subscribing to values in your state and be notified when they change
 * dispatching your custom actions
 
-Hook To Hook:
+##### Hook To Hook:
 
 ```js
 // wherever you create your Redux store, add the Reactotron middleware:
@@ -107,12 +107,12 @@ const store = createStore(
 
 <img src='./images/Api.jpg' alt="Hello!" />
 
-Great For:
+##### Great For:
 
 * watching your HTTP calls to servers and track timing
 * currently supports [apisauce](https://github.com/skellock/apisauce)
 
-How To Hook:
+##### How To Hook:
 
 ```js
 // wherever you create your API
