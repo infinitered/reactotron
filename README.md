@@ -31,10 +31,15 @@ Control, monitor, and instrument your React Native apps.  From the comfort of yo
 
 `node_modules/bin/reactotron`
 
-Might be worth creating an alias or adding it to your npm script.
+Might be worth creating an alias or adding it to your script section of your `package.json`.
 
 
-# Injection Points
+# How To Use
+
+Remember, this is a development tool.  It'll help you build your app.  But you don't want to ship
+your product with this left on.  :)
+
+To use this, you need to add a few lines of code to your app.
 
 Depending on how much support you'd like, there's a few different places you'll want to hook in.
 
