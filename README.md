@@ -210,6 +210,11 @@ be cool? A REPL. We should do that."
 
 # Change Log
 
+##### April 21, 2016 - 0.2.0
+
+* Supports React DOM
+* Supports React Native Web - thx @necolas
+
 ##### April 20, 2016 - 0.1.0
 
 * Initial release
