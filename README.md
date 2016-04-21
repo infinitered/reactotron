@@ -2,7 +2,7 @@
 
 [![npm module](https://badge.fury.io/js/reactotron.svg)](https://www.npmjs.org/package/reactotron)
 
-Control, monitor, and instrument your React Native apps.  From the comfort of your TTY.
+Control, monitor, and instrument your React DOM and React Native apps.  From the comfort of your TTY.
 
 <img src='./images/Reactotron.gif' alt="Hello!" />
 
