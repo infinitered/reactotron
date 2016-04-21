@@ -693,7 +693,9 @@ var COMMAND$25 = 'menu.main';
 var process$25 = function process$25(context, action) {
   var menu = {
     name: 'main',
-    commands: [{ key: 'r', name: 'redux', commands: [{ type: 'menu.redux' }] }, { key: 'd', name: 'dev menu', commands: [{ type: 'menu.devMenu' }] }, { key: 'q', name: 'quit', commands: [{ type: 'program.die' }] }]
+    commands: [{ key: 'r', name: 'redux', commands: [{ type: 'menu.redux' }] },
+    // {key: 'd', name: 'dev menu', commands: [{type: 'menu.devMenu'}]},
+    { key: 'q', name: 'quit', commands: [{ type: 'program.die' }] }]
   };
 
   context.post({ type: 'menu.push', menu: menu });
