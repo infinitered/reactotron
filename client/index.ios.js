@@ -1,5 +1,5 @@
 import React, { AppRegistry, Component } from 'react-native'
-import ReduxContainer from './App/Containers/ReduxContainer'
+import ReduxContainer from './Native/Containers/ReduxContainer'
 import reactotron from './reactotron/client'
 
 reactotron.connect()

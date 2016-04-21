@@ -6,7 +6,13 @@ Control, monitor, and instrument your React Native apps.  From the comfort of yo
 
 <img src='./images/Reactotron.gif' alt="Hello!" />
 
-##### Great For:
+### Platforms Supported
+
+* React Native 0.23+
+* React DOM 15+
+* [React Native Web](https://github.com/necolas/react-native-web) 0.0.15+
+
+### Great For
 
 * sending logging commands as text or objects
 * relaying all redbox errors and yellowbox warnings
@@ -19,7 +25,6 @@ Control, monitor, and instrument your React Native apps.  From the comfort of yo
 
 # Requirements
 
-* React Native 0.23+
 * Node 4.x+
 * Abnormal love for all things console
 
@@ -46,7 +51,7 @@ Depending on how much support you'd like, there's a few different places you'll 
 
 ### Your Entry Point (required)
 
-<img src='./images/Yellowbox.jpg' alt="Hello!" />
+<img src='./images/Yellowbox.png' alt="Hello!" />
 
 ##### Great For:
 
@@ -67,7 +72,7 @@ if (__DEV__) {
 
 ### Redux Middleware (optional)
 
-<img src='./images/ReduxActions.jpg' alt="Hello!" />
+<img src='./images/ReduxActions.png' alt="Hello!" />
 
 ##### Great For:
 
@@ -91,7 +96,7 @@ const store = createStore(
 
 ### Redux Store (optional)
 
-<img src='./images/ReduxSubscriptions.jpg' alt="Hello!" />
+<img src='./images/ReduxSubscriptions.png' alt="Hello!" />
 
 ##### Great For:
 
@@ -112,7 +117,7 @@ Reactotron.addReduxStore(store) // <--- here i am!
 
 ### API Tracking (optional)
 
-<img src='./images/Api.jpg' alt="Hello!" />
+<img src='./images/Api.png' alt="Hello!" />
 
 ##### Great For:
 
@@ -149,7 +154,6 @@ When you initialize the `reactotron` you can tell it the server location when yo
 
 A couple things are highest priority on my plate:
 
-* support React DOM (web)
 * refactor the client to be modular
 * support a `.reactotron` project-specific directory for plugins and stuff
 * documentation on how to create and extend
@@ -166,14 +170,13 @@ You want to start extending this?
 * fork it
 * `npm install`
 * run the server with `npm start`
-* to develop the client: `cd client && npm install && react-native ios`
+* to develop the client: `cd client && npm install`
 
 `npm link` doesn't work well because symlinks and React Native don't play well.  `watchman` doesn't like them.
 
 
 # Wishlist
 
-* [ ] Support React DOM
 * [ ] Get the vocab right (current everything is a "command")
 * [ ] Refactor clients to organize commands
 * [ ] Allow commands to be extended on client & server
@@ -189,9 +192,11 @@ You want to start extending this?
 
 # Random Pics
 
-<img src='./images/MainInterface.jpg' alt="Hello!" />
+<img src='./images/AllThreePlatforms.png' alt="Hello!" />
 
-<img src='./images/Dispatch.jpg' alt="Hello!" />
+<img src='./images/MainInterface.png' alt="Hello!" />
+
+<img src='./images/Dispatch.png' alt="Hello!" />
 
 # Special Thanks
 

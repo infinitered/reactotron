@@ -1,7 +1,8 @@
 // --- Begin Awkward Hackzorz ---
 
 // First we import React Native.
-import React from 'react-native'
+// const React = require('React').default
+// import React from 'react-native'
 
 // Then we set a userAgent so socket.io works.
 if (!window.navigator || !window.navigator.userAgent) {
@@ -14,8 +15,10 @@ const io = require('socket.io-client/socket.io')
 
 // --- End Awkward Hackzorz ---
 
-import R from 'ramda'
-import RS from 'ramdasauce'
+const R = require('ramda')
+const RS = require('ramdasauce')
+// import R from 'ramda'
+// import RS from 'ramdasauce'
 const performanceNow = require('fbjs/lib/performanceNow')
 
 // me?  not much, just creating some
@@ -37,8 +40,8 @@ client.onCommand = (event, handler) => {
 // handles requests to reload the app (current iOS only)
 client.onCommand('devMenu.reload', (action, client) => {
   // doesn't seem to work on android.
-  const devMenu = RS.dotPath('NativeModules.DevMenu', React)
-  devMenu && devMenu.reload()
+  // const devMenu = RS.dotPath('NativeModules.DevMenu', React)
+  // devMenu && devMenu.reload()
 })
 
 /**
@@ -185,5 +188,5 @@ client.reduxMiddleware = (store) => (next) => (action) => {
   return result
 }
 
-export default client
-module.export = client
+// export default client
+module.exports = client
