@@ -1,9 +1,5 @@
 // --- Begin Awkward Hackzorz ---
 
-// First we import React Native.
-// const React = require('React').default
-// import React from 'react-native'
-
 // Then we set a userAgent so socket.io works.
 if (!window.navigator || !window.navigator.userAgent) {
   window = Object.assign(window, {navigator: {userAgent: 'reactotron'}})
@@ -17,8 +13,6 @@ const io = require('socket.io-client/socket.io')
 
 const R = require('ramda')
 const RS = require('ramdasauce')
-// import R from 'ramda'
-// import RS from 'ramdasauce'
 const performanceNow = require('fbjs/lib/performanceNow')
 
 // me?  not much, just creating some
@@ -188,5 +182,4 @@ client.reduxMiddleware = (store) => (next) => (action) => {
   return result
 }
 
-// export default client
 module.exports = client
