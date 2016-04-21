@@ -81,6 +81,72 @@ client.sendCommand = (type, message) => {
   }
 }
 
+client.addImmutableReduxStore = (store) => {
+  let subscriptions = []
+
+  // send the subscriptions to the client
+  const sendSubscriptions = () => {
+    const state = store.getState()
+    const expanded = R.pipe(
+      R.filter(RS.endsWith('.*')),
+      R.map((key) => {
+        const keyMinusWildcard = R.slice(0, -2, key).split('.')
+        const value = state.getIn(keyMinusWildcard)
+        if (R.is(Object, value) && !RS.isNilOrEmpty(value)) {
+          value.keySeq().map((key) => `${keyMinusWildcard}.${key}`)
+        }
+        return null
+      }),
+      R.concat(subscriptions),
+      R.flatten,
+      R.reject(RS.endsWith('.*')),
+      R.uniq,
+      R.sortBy(R.identity)
+    )(subscriptions)
+
+    const values = R.map((key) => [key, state.getIn(key.split('.'))], expanded)
+    client.sendCommand('redux.subscribe.values', {values})
+  }
+
+  client.onCommand('redux.subscribe.request', (action, client) => {
+    subscriptions = R.flatten(R.clone(action.paths || []))
+    sendSubscriptions()
+  })
+
+  store.subscribe(sendSubscriptions)
+
+  // return the store at the given path
+  client.onCommand('redux.value.request', (action, client) => {
+    const path = action.path
+    const state = store.getState()
+    if (RS.isNilOrEmpty(path)) {
+      client.sendCommand('redux.value.response', {path: null, values: state})
+    } else {
+      client.sendCommand('redux.value.response', {path: path, values: state.getIn(path.split('.'))})
+    }
+  })
+
+  // return the keys at the given path
+  client.onCommand('redux.key.request', (action, client) => {
+    const path = action.path
+    const state = store.getState()
+    if (RS.isNilOrEmpty(path)) {
+      client.sendCommand('redux.key.response', {path: null, keys: state.keySeq()})
+    } else {
+      const value = state.getIn(path.split('.'))
+      const keys = R.is(Object, value) ? value.keySeq() : []
+      client.sendCommand('redux.key.response', {path, keys})
+    }
+  })
+
+  // dispatch an action
+  client.onCommand('redux.dispatch', (action, client) => {
+    store.dispatch(action.action)
+  })
+
+  return store
+}
+
 client.addReduxStore = (store) => {
   let subscriptions = []
 
