@@ -145,6 +145,8 @@ client.addReduxStore = (store) => {
   client.onCommand('redux.dispatch', (action, client) => {
     store.dispatch(action.action)
   })
+
+  return store
 }
 
 client.hookErrors = () => {
