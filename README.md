@@ -51,14 +51,14 @@ To use this, you need to add a few lines of code to your app.
 
 Depending on how much support you'd like, there's a few different places you'll want to hook in.
 
-### Your Entry Point (required)
+### Entry Point (required)
 
-<img src='./images/Yellowbox.png' alt="Hello!" />
-
-##### Great For:
+##### Provides:
 
 * sending logging commands as text or objects
 * relaying all redbox errors and yellowbox warnings
+
+<img src='./images/Yellowbox.png' alt="Hello!" />
 
 ##### How To Hook:
 
@@ -149,6 +149,11 @@ When you initialize the `reactotron` you can tell it the server location when yo
 
 `Reactotron.connect('10.0.1.109')`
 
+##### Useful shortcuts
+
+You can clear your reactotron by hitting backspace/delete OR you can insert a separator by pressing the "-" key.
+
+For some commands, like dispatching an action, you can repeat previous by pressing the "." key.
 
 # Next Steps
 
