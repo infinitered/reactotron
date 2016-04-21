@@ -1,5 +1,5 @@
 export default {
   sagas: {
-    logging: true
+    logging: false
   }
 }

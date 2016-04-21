@@ -1,6 +1,6 @@
 import React, { View, Text, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import Actions from '../Actions/Creators'
+import Actions from '../../Shared/Actions/Creators'
 import Styles from './Styles/RootContainerStyles'
 import reactotron from '../../reactotron/client'
 

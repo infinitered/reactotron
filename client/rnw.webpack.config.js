@@ -14,7 +14,7 @@ module.exports = {
     }
   },
   devtool: 'cheap-module-source-map',
-  entry: ['babel-polyfill', './index.web.js'],
+  entry: ['babel-polyfill', './index.rnw.js'],
   module: {
     loaders: [
       {
@@ -35,8 +35,8 @@ module.exports = {
   plugins: [
     // creates the static HTML page
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'web-html.ejs'),
-      title: 'title'
+      template: path.join(__dirname, 'rnw-html.ejs'),
+      title: 'Reactotron Demo'
     }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin()
