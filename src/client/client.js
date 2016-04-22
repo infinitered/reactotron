@@ -42,24 +42,32 @@ client.onCommand('devMenu.reload', (action, client) => {
 
 /**
   Connect to the server.
-  @param {String} server The server to connect to.
-  @param {Number} port The port to use (default 3334)
+  @param {Object} [{server: 'localhost', port: 3334, enabled: true}]
  */
-client.connect = (server = 'localhost', port = 3334) => {
-  socket = io(`ws://${server}:${port}`, {
-    jsonp: false,
-    transports: ['websocket']
-  })
-  socket.on('connect', () => {
-    client.log('connected')
-  })
-  socket.on('command', (data) => {
-    const action = JSON.parse(data)
-    const {type} = action
-    const handlers = commandHandlers[type] || []
-    R.forEach((handler) => { handler(action, client) }, handlers)
-  })
-  client.hookErrors()
+client.connect = (c = {}) => {
+  const defaults = {server: 'localhost', port: 3334, enabled: true}
+  // merge user input with defaults
+  const config = {
+    ...defaults,
+    ...c
+  }
+
+  if (config.enabled) {
+    socket = io(`ws://${config.server}:${config.port}`, {
+      jsonp: false,
+      transports: ['websocket']
+    })
+    socket.on('connect', () => {
+      client.log('connected')
+    })
+    socket.on('command', (data) => {
+      const action = JSON.parse(data)
+      const {type} = action
+      const handlers = commandHandlers[type] || []
+      R.forEach((handler) => { handler(action, client) }, handlers)
+    })
+    client.hookErrors()
+  }
 }
 
 /**
