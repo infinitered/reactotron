@@ -44,12 +44,12 @@ client.onCommand('devMenu.reload', (action, client) => {
   Connect to the server.
   @param {Object} [{server: 'localhost', port: 3334, enabled: true}]
  */
-client.connect = (c = {}) => {
+client.connect = (userConfigurations = {}) => {
   const defaults = {server: 'localhost', port: 3334, enabled: true}
   // merge user input with defaults
   const config = {
     ...defaults,
-    ...c
+    ...userConfigurations
   }
 
   if (config.enabled) {
