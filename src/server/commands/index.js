@@ -36,6 +36,7 @@ import menuPush from './menus/menuPush'
 import menuPop from './menus/menuPop'
 import menuMain from './menus/menuMain'
 import menuRedux from './menus/menuRedux'
+import menuHelp from './menus/menuHelp'
 import menuReduxSubscribe from './menus/menuReduxSubscribe'
 import menuDevMenu from './menus/menuDevMenu'
 import consoleError from './console/consoleError'
@@ -66,6 +67,7 @@ export default [
   menuPop,
   menuMain,
   menuRedux,
+  menuHelp,
   menuReduxSubscribe,
   menuDevMenu,
   commandRepeat,
