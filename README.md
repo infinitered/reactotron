@@ -83,6 +83,7 @@ Reactotron.connect()
 
 ```js
 // wherever you create your Redux store, add the Reactotron middleware:
+
 import Reactotron from 'reactotron'
 
 const store = createStore(
@@ -91,6 +92,19 @@ const store = createStore(
     logger,
     Reactotron.reduxMiddleware // <--- here i am!
   )
+)
+
+// Or you can use the Reactotron storeEnhancer!
+
+const enhancer = compose(
+  // If you have other enhancers..
+  Reactotron.storeEnhancer()
+)
+
+const store = createStore(
+  rootReducer,
+  initialState,
+  enhancer
 )
 
 ```
@@ -113,6 +127,9 @@ import Reactotron from 'reactotron'
 
 const store = createStore(...)  // however you create your store
 Reactotron.addReduxStore(store) // <--- here i am!
+
+// If you're using the Reactotron.storeEnhance(), it's already
+// setup for you!
 ```
 
 ### API Tracking (optional)
