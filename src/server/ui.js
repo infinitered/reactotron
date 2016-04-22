@@ -20,6 +20,20 @@ const promptBox = blessed.prompt({
   hidden: true
 })
 
+const messageBox = blessed.message({
+  parent: screen,
+  top: 'center',
+  left: 'center',
+  height: 'shrink',
+  width: 'shrink',
+  border: 'line',
+  label: ' {blue-fg}Message{/} ',
+  tags: true,
+  keys: true,
+  mouse: true,
+  hidden: true
+})
+
 const logBox = blessed.log({
   parent: screen,
   scrollable: true,
@@ -152,6 +166,7 @@ export default {
   screen,
   connectionBox,
   promptBox,
+  messageBox,
   logBox,
   reduxActionBox,
   reduxWatchBox,

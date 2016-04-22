@@ -48,6 +48,17 @@ export default class Context {
     })
   }
 
+  message (displayText, callback) {
+    this.ui.messageBox.setFront()
+    this.ui.screen.render()
+    this.ui.messageBox.display(displayText, 0, (err, value) => {
+      if (!err) {
+        callback(value)
+        this.ui.screen.render()
+      }
+    })
+  }
+
   timeStamp () {
     const t = moment()
     return `${t.format('HH:mm:')}{white-fg}${t.format('ss.SS')}{/}`
