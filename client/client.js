@@ -96,10 +96,9 @@ client.sendCommand = (type, message) => {
   }
 }
 
-client.addReduxStore = (store) => {
+client.createSubscriptionListener = (store) => {
   // shortcircuit if disabled
   if (!reactotronEnabled) return store
-
   let subscriptions = []
 
   // send the subscriptions to the client
@@ -134,7 +133,11 @@ client.addReduxStore = (store) => {
     sendSubscriptions()
   })
 
-  store.subscribe(sendSubscriptions)
+  return sendSubscriptions
+}
+
+client.addReduxStore = (store) => {
+  store.subscribe(client.createSubscriptionListener(store))
 
   // return the store at the given path
   client.onCommand('redux.value.request', (action, client) => {
@@ -189,19 +192,60 @@ client.hookErrors = () => {
   }
 }
 
-const MIDDLEWARE_ACTION_IGNORE = ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'EFFECT_REJECTED']
+// Returns a function that can track performance.
+client.trackPerformance = (action) => {
+  const {type} = action
+  const start = performanceNow()
 
-client.reduxMiddleware = (store) => (next) => (action) => {
-  const result = next(action)
-
-  if (reactotronEnabled) {
-    const {type} = action
-    const start = performanceNow()
+  const stopTracking = () => {
     const ms = (performanceNow() - start).toFixed(0)
+
     if (!R.contains(action.type, MIDDLEWARE_ACTION_IGNORE)) {
       client.sendCommand('redux.action.done', {type, ms, action})
     }
   }
+
+  return stopTracking
+}
+
+const MIDDLEWARE_ACTION_IGNORE = ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'EFFECT_REJECTED']
+
+// Enhances the store by wrapping the main reducer
+// with our own reduxReducer, as well as setting up
+// the store listener.
+client.storeEnhancer = () => {
+  return next => (reducer, initialState, enhancer) => {
+    const wrappedReducer = (state, action) => {
+      // Begin tracking performance.
+      const performanceTracker = client.trackPerformance(action)
+
+      // Run the main reducer.
+      const result = reducer(state, action)
+
+      // Stop tracking performance.
+      performanceTracker()
+
+      return result
+    }
+
+    const store = next(wrappedReducer, initialState, enhancer)
+
+    return client.addReduxStore(store)
+  }
+}
+
+client.reduxMiddleware = (store) => (next) => (action) => {
+  if (!reactotronEnabled) {
+    return next(action)
+  }
+
+  // Begin tracking performance.
+  const performanceTracker = client.trackPerformance(action)
+
+  const result = next(action)
+
+  // Stop tracking performance.
+  performanceTracker()
 
   return result
 }
