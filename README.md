@@ -53,14 +53,14 @@ Depending on how much support you'd like, there's a few different places you'll 
 
 ### Entry Point (required)
 
-##### Provides:
+##### Provides
 
 * sending logging commands as text or objects
 * relaying all redbox errors and yellowbox warnings
 
 <img src='./images/Yellowbox.png' alt="Hello!" />
 
-##### How To Hook:
+##### How To Hook
 
 If you have `index.ios.js` or `index.android.js`, you can place this code somewhere near the top:
 
@@ -74,12 +74,12 @@ Reactotron.connect()
 
 <img src='./images/ReduxActions.png' alt="Hello!" />
 
-##### Great For:
+##### Provides
 
 * watching the flow of actions as they get dispatched
 * tracking performance of each action watching for hotspots
 
-##### Hook To Hook:
+##### Hook To Hook
 
 ```js
 // wherever you create your Redux store, add the Reactotron middleware:
@@ -99,14 +99,13 @@ const store = createStore(
 
 <img src='./images/ReduxSubscriptions.png' alt="Hello!" />
 
-##### Great For:
+##### Provides
 
 * querying your global state like a database
 * subscribing to values in your state and be notified when they change
 * dispatching your custom actions
 
-
-##### How To Hook:
+##### How To Hook
 
 ```js
 // wherever you create your Redux store
@@ -120,12 +119,12 @@ Reactotron.addReduxStore(store) // <--- here i am!
 
 <img src='./images/Api.png' alt="Hello!" />
 
-##### Great For:
+##### Provides
 
 * watching your HTTP calls to servers and track timing
 * currently supports [apisauce](https://github.com/skellock/apisauce)
 
-##### How To Hook:
+##### How To Hook
 
 ```js
 // wherever you create your API
@@ -173,12 +172,26 @@ PRs and bug reports are welcome!
 
 You want to start extending this?
 
-* fork it
-* `npm install`
-* run the server with `npm start`
-* to develop the client: `cd client && npm install`
+### Run the console program
 
-`npm link` doesn't work well because symlinks and React Native don't play well.  `watchman` doesn't like them.
+```
+cd src
+npm install
+npm start
+```
+
+### Pick an example app and run it
+
+```
+cd examples/ReactNativeExample
+npm install
+cp ../../src/client.js .
+react-native run-ios
+```
+
+Then hack around.  Hack around.  Hack up hack up and hack down.
+
+Be sure to read the silly `examples/README.md` file for more details.
 
 
 # Wishlist
