@@ -22,6 +22,14 @@ export default class RootContainer extends React.Component {
     dispatch(Actions.startup())
   }
 
+//  componentDidMount () {
+//    navigator.geolocation.getCurrentPosition(
+//      (position) => Reactotron.log(position),
+//      (error) => alert(error.message),
+//      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+//    )
+//  }
+
   render () {
     const {city, temperature, fetching} = this.props
     return (
