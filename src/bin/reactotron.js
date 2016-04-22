@@ -26,6 +26,10 @@ var _blessed = require('blessed');
 
 var _blessed2 = _interopRequireDefault(_blessed);
 
+var _gemoji = require('gemoji');
+
+var _gemoji2 = _interopRequireDefault(_gemoji);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -128,6 +132,39 @@ var Context = function () {
         if (!err) {
           callback(value);
           _this.ui.screen.render();
+        }
+      });
+    }
+  }, {
+    key: 'message',
+    value: function message(displayText) {
+      var _this2 = this;
+
+      var callback = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+
+      this.ui.messageBox.setFront();
+      this.ui.screen.render();
+      this.ui.messageBox.display(displayText, 0, function (err, value) {
+        if (!err) {
+          if (callback) callback(value);
+          _this2.ui.screen.render();
+        }
+      });
+    }
+  }, {
+    key: 'info',
+    value: function info(title, displayText) {
+      var _this3 = this;
+
+      var callback = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+
+      this.ui.infoBox.setFront();
+      this.ui.screen.render();
+      this.ui.infoBox.setLabel(title);
+      this.ui.infoBox.display(displayText, 0, function (err, value) {
+        if (!err) {
+          if (callback) callback(value);
+          _this3.ui.screen.render();
         }
       });
     }
@@ -695,7 +732,7 @@ var COMMAND$25 = 'menu.main';
 var process$25 = function process$25(context, action) {
   var menu = {
     name: 'main',
-    commands: [{ key: 'r', name: 'redux', commands: [{ type: 'menu.redux' }] },
+    commands: [{ key: 'r', name: 'redux', commands: [{ type: 'menu.redux' }] }, { key: 'h', name: 'help', commands: [{ type: 'menu.help' }] },
     // {key: 'd', name: 'dev menu', commands: [{type: 'menu.devMenu'}]},
     { key: 'q', name: 'quit', commands: [{ type: 'program.die' }] }]
   };
@@ -724,9 +761,23 @@ var menuRedux = {
   process: process$26
 };
 
-var COMMAND$27 = 'menu.redux.subscribe';
+var COMMAND$27 = 'menu.help';
 
 var process$27 = function process$27(context, action) {
+
+  var messageText = '\n\n    {bold}Hotkeys{/bold}\n    ---------------------------------\n      {bold}.{/bold}       Repeat last command\n      {bold}-{/bold}       Insert separator\n      {bold}del{/bold}     Clear reactotron\n      {bold}ctrl-c{/bold}  Quit\n\n  ';
+
+  context.info(' {yellow-fg}reactotron{/} {blue-fg}help{/} ', messageText);
+};
+
+var menuHelp = {
+  name: COMMAND$27,
+  process: process$27
+};
+
+var COMMAND$28 = 'menu.redux.subscribe';
+
+var process$28 = function process$28(context, action) {
   var menu = {
     name: 'subscribe',
     commands: [{ key: 'a', name: 'add', commands: [{ type: 'redux.subscribe.add.prompt' }, { type: 'menu.pop' }, { type: 'menu.pop' }] }, { key: 'd', name: 'delete', commands: [{ type: 'redux.subscribe.delete.prompt' }, { type: 'menu.pop' }, { type: 'menu.pop' }] }, { key: 'c', name: 'clear', commands: [{ type: 'redux.subscribe.clear' }, { type: 'menu.pop' }, { type: 'menu.pop' }] }, { key: 'escape', name: 'back', commands: [{ type: 'menu.pop' }] }]
@@ -736,13 +787,13 @@ var process$27 = function process$27(context, action) {
 };
 
 var menuReduxSubscribe = {
-  name: COMMAND$27,
-  process: process$27
+  name: COMMAND$28,
+  process: process$28
 };
 
-var COMMAND$28 = 'menu.devMenu';
+var COMMAND$29 = 'menu.devMenu';
 
-var process$28 = function process$28(context, action) {
+var process$29 = function process$29(context, action) {
   var menu = {
     name: 'Dev Menu',
     commands: [{ key: 'r', name: 'reload', commands: [{ type: 'devMenu.reload' }, { type: 'menu.pop' }] }, { key: 'escape', name: 'back', commands: [{ type: 'menu.pop' }] }]
@@ -752,16 +803,16 @@ var process$28 = function process$28(context, action) {
 };
 
 var menuDevMenu = {
-  name: COMMAND$28,
-  process: process$28
+  name: COMMAND$29,
+  process: process$29
 };
 
-var COMMAND$29 = 'console.error';
+var COMMAND$30 = 'console.error';
 
 /**
   Receives a console.error from the app.
  */
-var process$29 = function process$29(context, action) {
+var process$30 = function process$30(context, action) {
   var _action$message4 = action.message;
   var message = _action$message4.message;
   var stack = _action$message4.stack;
@@ -777,17 +828,18 @@ var process$29 = function process$29(context, action) {
 };
 
 var consoleError = {
-  name: COMMAND$29,
-  process: process$29
+  name: COMMAND$30,
+  process: process$30
 };
 
 // come together. right now. over me.
-var commands = [reduxDispatch, reduxValueRequest, reduxKeyRequest, reduxValueResponse, reduxKeyResponse, reduxValuePrompt, reduxKeyPrompt, reduxDispatchPrompt, reduxActionDone, reduxSubscribeRequest, reduxSubscribeValues, reduxSubscribeAdd, reduxSubscribeAddPrompt, reduxSubscribeDelete, reduxSubscribeDeletePrompt, reduxSubscribeClear, apiLog, contentLog, contentClear, contentScore, menuPush, menuPop, menuMain, menuRedux, menuReduxSubscribe, menuDevMenu, commandRepeat, devMenuReload, consoleError, die];
+var commands = [reduxDispatch, reduxValueRequest, reduxKeyRequest, reduxValueResponse, reduxKeyResponse, reduxValuePrompt, reduxKeyPrompt, reduxDispatchPrompt, reduxActionDone, reduxSubscribeRequest, reduxSubscribeValues, reduxSubscribeAdd, reduxSubscribeAddPrompt, reduxSubscribeDelete, reduxSubscribeDeletePrompt, reduxSubscribeClear, apiLog, contentLog, contentClear, contentScore, menuPush, menuPop, menuMain, menuRedux, menuHelp, menuReduxSubscribe, menuDevMenu, commandRepeat, devMenuReload, consoleError, die];
 
 var screen = _blessed2.default.screen({
   smartCSR: true,
   title: 'reactotron',
-  dockBorders: false
+  dockBorders: false,
+  fullUnicode: true
 });
 
 var promptBox = _blessed2.default.prompt({
@@ -804,6 +856,41 @@ var promptBox = _blessed2.default.prompt({
   hidden: true
 });
 
+var messageBox = _blessed2.default.message({
+  parent: screen,
+  top: 'center',
+  left: 'center',
+  height: 'shrink',
+  width: 'shrink',
+  border: 'line',
+  label: ' {blue-fg}Message{/} ',
+  tags: true,
+  keys: true,
+  mouse: true,
+  hidden: true
+});
+
+var infoBox = _blessed2.default.message({
+  parent: screen,
+  top: 'center',
+  left: 'center',
+  height: 'shrink',
+  width: '40%',
+  // width: 'shrink',
+  border: 'line',
+  label: ' {blue-fg}Info{/} ',
+  tags: true,
+  keys: true,
+  mouse: true,
+  hidden: true,
+  style: {
+    bg: '#023f00',
+    border: {
+      fg: '#f0f0f0'
+    }
+  }
+});
+
 var logBox = _blessed2.default.log({
   parent: screen,
   scrollable: true,
@@ -817,7 +904,7 @@ var logBox = _blessed2.default.log({
   vi: true,
   mouse: true,
   scrollback: 400,
-  label: ' {white-fg}Log{/} ',
+  label: ' {white-fg} Log {/} ',
   scrollbar: {
     ch: ' ',
     inverse: true
@@ -936,6 +1023,8 @@ var ui = {
   screen: screen,
   connectionBox: connectionBox,
   promptBox: promptBox,
+  messageBox: messageBox,
+  infoBox: infoBox,
   logBox: logBox,
   reduxActionBox: reduxActionBox,
   reduxWatchBox: reduxWatchBox,
@@ -944,6 +1033,17 @@ var ui = {
   statusBox: statusBox,
   OFFLINE: OFFLINE,
   ONLINE: ONLINE
+};
+
+// A way to add extra spacing for emoji characters. As it
+// turns out, the emojis are double-wide code points, but
+// the terminal renders it as a single slot.  I literally
+// understand nothing anymore.  Seems to work great tho!
+var keys = _ramda2.default.keys(_gemoji2.default.unicode);
+var emojiPattern = '(' + keys.join('|') + ')+';
+var emojiRegex = new RegExp(emojiPattern, 'g');
+var addSpaceForEmoji = function addSpaceForEmoji(str) {
+  return str.replace(emojiRegex, '$1 ');
 };
 
 var PORT = 3334;
@@ -964,7 +1064,7 @@ io.on('connection', function (socket) {
   context.post({ type: 'redux.subscribe.request' });
   ui.screen.render();
   socket.on('command', function (data) {
-    var action = JSON.parse(data);
+    var action = JSON.parse(addSpaceForEmoji(data));
     context.post(action);
     ui.screen.render();
   });
