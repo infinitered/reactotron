@@ -13,7 +13,7 @@ export default class RootContainer extends React.Component {
 
   handlePress () {
     const {dispatch} = this.props
-    Reactotron.log('A touchable was pressed.')
+    Reactotron.log('A touchable was pressed.🔥🦄')
     dispatch(Actions.requestTemperature('Toronto'))
   }
 
@@ -46,3 +46,4 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(RootContainer)
+

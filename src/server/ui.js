@@ -3,7 +3,8 @@ import blessed from 'blessed'
 const screen = blessed.screen({
   smartCSR: true,
   title: 'reactotron',
-  dockBorders: false
+  dockBorders: false,
+  fullUnicode: true
 })
 
 const promptBox = blessed.prompt({
@@ -20,6 +21,7 @@ const promptBox = blessed.prompt({
   hidden: true
 })
 
+
 const logBox = blessed.log({
   parent: screen,
   scrollable: true,
@@ -33,7 +35,7 @@ const logBox = blessed.log({
   vi: true,
   mouse: true,
   scrollback: 400,
-  label: ' {white-fg}Log{/} ',
+  label: ` {white-fg} Log {/} `,
   scrollbar: {
     ch: ' ',
     inverse: true

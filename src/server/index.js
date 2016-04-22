@@ -4,6 +4,16 @@ import Context from './context'
 import Router from './router'
 import commands from './commands/index'
 import ui from './ui'
+import gemoji from 'gemoji'
+
+// A way to add extra spacing for emoji characters. As it
+// turns out, the emojis are double-wide code points, but
+// the terminal renders it as a single slot.  I literally
+// understand nothing anymore.  Seems to work great tho!
+const keys = R.keys(gemoji.unicode)
+const emojiPattern = '(' + keys.join('|') + ')+'
+const emojiRegex = new RegExp(emojiPattern, 'g')
+const addSpaceForEmoji = (str) => str.replace(emojiRegex, '$1 ')
 
 const PORT = 3334
 const io = SocketIO(PORT)
@@ -21,7 +31,7 @@ io.on('connection', (socket) => {
   context.post({type: 'redux.subscribe.request'})
   ui.screen.render()
   socket.on('command', (data) => {
-    const action = JSON.parse(data)
+    const action = JSON.parse(addSpaceForEmoji(data))
     context.post(action)
     ui.screen.render()
   })
