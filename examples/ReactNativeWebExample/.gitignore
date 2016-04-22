@@ -40,5 +40,5 @@ android/app/libs
 android/keystores/debug.keystore
 
 # Can't find a way around the symlinking issue
-./client.js
+client.js
 
