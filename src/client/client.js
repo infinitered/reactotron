@@ -2,6 +2,9 @@
 
 const R = require('ramda')
 
+// client enabled flag
+let reactotronEnabled = true
+
 // Then we set a userAgent so socket.io works.
 if (!window.navigator || !window.navigator.userAgent) {
   const newNav = R.merge(window.navigator, {userAgent: 'reactotron'})
@@ -51,6 +54,9 @@ client.connect = (userConfigurations = {}) => {
     ...defaults,
     ...userConfigurations
   }
+
+  // keep track for all ops
+  reactotronEnabled = config.enabled
 
   if (config.enabled) {
     socket = io(`ws://${config.server}:${config.port}`, {
@@ -184,13 +190,17 @@ client.hookErrors = () => {
 const MIDDLEWARE_ACTION_IGNORE = ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'EFFECT_REJECTED']
 
 client.reduxMiddleware = (store) => (next) => (action) => {
-  const {type} = action
-  const start = performanceNow()
   const result = next(action)
-  const ms = (performanceNow() - start).toFixed(0)
-  if (!R.contains(action.type, MIDDLEWARE_ACTION_IGNORE)) {
-    client.sendCommand('redux.action.done', {type, ms, action})
+
+  if (reactotronEnabled) {
+    const {type} = action
+    const start = performanceNow()
+    const ms = (performanceNow() - start).toFixed(0)
+    if (!R.contains(action.type, MIDDLEWARE_ACTION_IGNORE)) {
+      client.sendCommand('redux.action.done', {type, ms, action})
+    }
   }
+
   return result
 }
 
