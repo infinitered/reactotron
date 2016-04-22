@@ -9,6 +9,7 @@ const process = (context, action) => {
       // {key: '-', name: 'score', commands: []},
       // {key: '.', name: 'repeat', commands: []},
       {key: 'h', name: 'help', commands: [{type: 'menu.help'}]},
+      // {key: 'h', name: 'help', commands: [{type: 'menu.help'}, {type: 'menu.pop'}]},
       // {key: 'd', name: 'dev menu', commands: [{type: 'menu.devMenu'}]},
       {key: 'q', name: 'quit', commands: [{type: 'program.die'}]}
     ]
