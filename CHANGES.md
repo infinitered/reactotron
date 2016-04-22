@@ -8,10 +8,10 @@
 
 ### April 21, 2016 - 0.2.0
 
-* `NEW` Supports React DOM
-* `NEW` Supports React Native Web - thx [@necolas](https://github.com/necolas)
+* `NEW` supports React DOM
+* `NEW` supports React Native Web - thx [@necolas](https://github.com/necolas)
 
 ### April 20, 2016 - 0.1.0
 
-* `NEW` Initial release
+* `NEW` initial release
 
