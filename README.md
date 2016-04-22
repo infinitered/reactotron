@@ -83,6 +83,7 @@ Reactotron.connect()
 
 ```js
 // wherever you create your Redux store, add the Reactotron middleware:
+import Reactotron from 'reactotron'
 
 const store = createStore(
   rootReducer,
