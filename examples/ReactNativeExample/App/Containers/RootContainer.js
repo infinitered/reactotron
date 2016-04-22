@@ -13,7 +13,7 @@ export default class RootContainer extends React.Component {
 
   handlePress () {
     const {dispatch} = this.props
-    Reactotron.log('A touchable was pressed.')
+    Reactotron.log('A touchable was pressed.🔥🦄')
     dispatch(Actions.requestTemperature('Toronto'))
   }
 
@@ -21,6 +21,14 @@ export default class RootContainer extends React.Component {
     const { dispatch } = this.props
     dispatch(Actions.startup())
   }
+
+//  componentDidMount () {
+//    navigator.geolocation.getCurrentPosition(
+//      (position) => Reactotron.log(position),
+//      (error) => alert(error.message),
+//      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+//    )
+//  }
 
   render () {
     const {city, temperature, fetching} = this.props
@@ -46,3 +54,4 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(RootContainer)
+
