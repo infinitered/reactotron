@@ -98,6 +98,9 @@ client.sendCommand = (type, message) => {
 }
 
 client.addReduxStore = (store) => {
+  // shortcircuit if disabled
+  if (!reactotronEnabled) return store
+
   let subscriptions = []
 
   // send the subscriptions to the client
