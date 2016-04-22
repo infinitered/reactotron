@@ -219,5 +219,5 @@ be cool? A REPL. We should do that."
 
 # Change Log
 
-See the full [CHANGES.md](changes.md) file.
+See the full [CHANGES.md](CHANGES.md) file.
 
