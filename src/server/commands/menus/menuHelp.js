@@ -13,9 +13,7 @@ const process = (context, action) => {
 
   `
 
-  context.info(' reactotron {blue-fg}help{/} ', messageText, (value) => {
-    // context.log('callback done')
-  })
+  context.info(' reactotron {blue-fg}help{/} ', messageText)
 }
 
 export default {

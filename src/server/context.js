@@ -48,24 +48,24 @@ export default class Context {
     })
   }
 
-  message (displayText, callback) {
+  message (displayText, callback=null) {
     this.ui.messageBox.setFront()
     this.ui.screen.render()
     this.ui.messageBox.display(displayText, 0, (err, value) => {
       if (!err) {
-        callback(value)
+        if (callback) callback(value)
         this.ui.screen.render()
       }
     })
   }
 
-  info (title, displayText, callback) {
+  info (title, displayText, callback=null) {
     this.ui.infoBox.setFront()
     this.ui.screen.render()
     this.ui.infoBox.setLabel(title)
     this.ui.infoBox.display(displayText, 0, (err, value) => {
       if (!err) {
-        callback(value)
+        if (callback) callback(value)
         this.ui.screen.render()
       }
     })
