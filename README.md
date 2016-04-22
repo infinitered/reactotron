@@ -114,6 +114,10 @@ import Reactotron from 'reactotron'
 
 const store = createStore(...)  // however you create your store
 Reactotron.addReduxStore(store) // <--- here i am!
+
+// Or if you're using ImmutableJS
+
+Reactotron.addImmutableReduxStore(store) // <--- It's immutable!
 ```
 
 ### API Tracking (optional)
