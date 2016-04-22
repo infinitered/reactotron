@@ -1,4 +1,4 @@
-### April 22, 2016 - 0.3.0 - Not Yet Released
+### April 22, 2016 - 0.3.0
 
 * `NEW` a help menu to show key commands - thx [@gantman](https://github.com/gantman)
 * `NEW` emoji logging 🎉
