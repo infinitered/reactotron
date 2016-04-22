@@ -155,16 +155,6 @@ You can clear your reactotron by hitting backspace/delete OR you can insert a se
 
 For some commands, like dispatching an action, you can repeat previous by pressing the "." key.
 
-# Next Steps
-
-A couple things are highest priority on my plate:
-
-* refactor the client to be modular
-* support a `.reactotron` project-specific directory for plugins and stuff
-* documentation on how to create and extend
-
-This project is a week old, so there's some rough edges.  I'm already using this on my project and hopefully you can too!
-
 
 # Getting Involved
 
@@ -229,11 +219,5 @@ be cool? A REPL. We should do that."
 
 # Change Log
 
-##### April 21, 2016 - 0.2.0
+See the full [CHANGES.md](changes.md) file.
 
-* Supports React DOM
-* Supports React Native Web - thx @necolas
-
-##### April 20, 2016 - 0.1.0
-
-* Initial release
