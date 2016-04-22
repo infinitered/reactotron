@@ -52,7 +52,7 @@ ui.screen.key('.', () => context.post({type: 'command.repeat'}))
 ui.screen.key('-', () => context.post({type: 'content.score'}))
 
 // del to clear
-ui.screen.key(['delete', 'backspace', 'c'], () => context.post({type: 'content.clear'}))
+ui.screen.key(['delete', 'backspace'], () => context.post({type: 'content.clear'}))
 
 // let's start with the main menu
 context.post({type: 'menu.main'})
