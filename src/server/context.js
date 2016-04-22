@@ -59,9 +59,10 @@ export default class Context {
     })
   }
 
-  info (displayText, callback) {
+  info (title, displayText, callback) {
     this.ui.infoBox.setFront()
     this.ui.screen.render()
+    this.ui.infoBox.setLabel(title)
     this.ui.infoBox.display(displayText, 0, (err, value) => {
       if (!err) {
         callback(value)
