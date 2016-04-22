@@ -147,7 +147,7 @@ the right TCP port to the `reactotron` server.
 
 When you initialize the `reactotron` you can tell it the server location when you connect:
 
-`Reactotron.connect('10.0.1.109')`
+`Reactotron.connect({server: '10.0.1.109'})`
 
 ##### Useful shortcuts
 
@@ -209,7 +209,7 @@ Be sure to read the silly `examples/README.md` file for more details.
 
 # Special Thanks
 
-A shout out to my teammates at [Infinite Red](https://infinite.red) who encourage this type of open-source hacking & sharing.  
+A shout out to my teammates at [Infinite Red](https://infinite.red) who encourage this type of open-source hacking & sharing.
 
 [<img src='https://infinite.red/images/ir-logo-7ebf9ed9d02e2805bb2c94309efa5176.svg' />](https://infinite.red)
 
