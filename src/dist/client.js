@@ -11,8 +11,7 @@ var reactotronEnabled = true;
 
 // Then we set a userAgent so socket.io works.
 if (!window.navigator || !window.navigator.userAgent) {
-  var newNav = R.merge(window.navigator, { userAgent: 'reactotron' });
-  window = R.merge(window, { navigator: newNav });
+  window.navigator.userAgent = 'react-native';
 }
 
 // Finally, we load socket.io. This has to be done as a require to preserve
