@@ -1,3 +1,7 @@
+### NEXT
+
+* `NEW` a simpler way to integrate redux with an enhancer - thx [@andrewvy](https://github.com/andrewvy)
+
 ### April 23, 2016 - 0.4.0
 
 * `NEW` a way to configure options on the client - thx [@gantman](https://github.com/gantman)
