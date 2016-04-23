@@ -1,6 +1,8 @@
 ### NEXT
 
 * `NEW` a simpler way to integrate redux with an enhancer - thx [@andrewvy](https://github.com/andrewvy)
+* `FIX` adds a .babelrc to the react native example app
+* `MOD` adds a working Android example app
 
 ### April 23, 2016 - 0.4.0
 
