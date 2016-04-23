@@ -13,7 +13,7 @@ if (!window.navigator || !window.navigator.userAgent) {
 
 // Finally, we load socket.io. This has to be done as a require to preserve
 // the order of user agent being set first.
-var io = require('socket.io-client/lib/index')
+var io = require('socket.io-client/socket.io')
 
 // --- End Awkward Hackzorz ---
 
@@ -72,7 +72,7 @@ client.connect = (userConfigurations = {}) => {
   if (config.enabled) {
     socket = io(`ws://${config.server}:${config.port}`, {
       jsonp: false,
-      transports: ['websocket'],
+      transports: ['websocket']
     })
 
     socket.on('connect', () => {

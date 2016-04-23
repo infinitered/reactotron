@@ -216,7 +216,7 @@ const connectionBox = blessed.box({
   right: 0,
   height: '100%',
   width: 'shrink',
-  content: clientCount(0),
+  content: clientCount(),
   tags: true
 })
 
