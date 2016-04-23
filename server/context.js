@@ -9,6 +9,7 @@ export default class Context {
     this.ui = parts.ui
     this.router = parts.router
     this.menuStack = []
+    this.clients = {}
     this.lastRepeatableMessage = null
     this.reduxActionLoggingStyle = 'short'
     this.apiLoggingStyle = 'short'

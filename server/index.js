@@ -26,10 +26,29 @@ const context = new Context({
 })
 
 io.on('connection', (socket) => {
-  ui.connectionBox.setContent(ui.ONLINE)
-  // new connects need the subscribe redux
-  context.post({type: 'redux.subscribe.request'})
+  // When a socket connects, we also want to wait for
+  // additional context about the client.
+  socket.on('ready', (clientConfig) => {
+    const socketInfo = {
+      socket: socket,
+      ip: socket.request.connection.remoteAddress == '::1' ? 'localhost' : socket.request.connection.remoteAddress,
+      userAgent: socket.request.headers['user-agent'] || 'Unknown'
+    }
+
+    const clientInfo = {
+      ...socketInfo,
+      ...clientConfig
+    }
+
+    // Add new client
+    context.post({type: 'client.add', client: clientInfo})
+
+    // new connects need the subscribe redux
+    context.post({type: 'redux.subscribe.request'})
+  })
+
   ui.screen.render()
+
   socket.on('command', (data) => {
     const action = JSON.parse(addSpaceForEmoji(data))
     context.post(action)
@@ -37,7 +56,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('disconnect', () => {
-    ui.connectionBox.setContent(ui.OFFLINE)
+    context.post({type: 'client.remove', socket})
     ui.screen.render()
   })
 })

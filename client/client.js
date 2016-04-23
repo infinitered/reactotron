@@ -1,5 +1,6 @@
 // --- Begin Awkward Hackzorz ---
 
+const REACTOTRON_VERSION = '0.4.0'
 const R = require('ramda')
 
 // client enabled flag
@@ -44,10 +45,21 @@ client.onCommand('devMenu.reload', (action, client) => {
 
 /**
   Connect to the server.
-  @param {Object} [{server: 'localhost', port: 3334, enabled: true}]
+  @param userConfigurations Client configuration for connecting to Reactotron
+  @param {string} userConfigurations.name Name of the client, displayed in the dashboard
+  @param {string} userConfigurations.server IP of the server to connect to
+  @param {number} userConfigurations.port Port of the server to connect to
+  @param {boolean} userConfigurations.enabled Whether or not Reactotron is enabled.
  */
 client.connect = (userConfigurations = {}) => {
-  const defaults = {server: 'localhost', port: 3334, enabled: true}
+  const defaults = {
+    name: 'React',
+    version: REACTOTRON_VERSION,
+    server: 'localhost',
+    port: 3334,
+    enabled: true
+  }
+
   // merge user input with defaults
   const config = {
     ...defaults,
@@ -62,15 +74,19 @@ client.connect = (userConfigurations = {}) => {
       jsonp: false,
       transports: ['websocket']
     })
+
     socket.on('connect', () => {
       client.log('connected')
+      socket.emit('ready', config)
     })
+
     socket.on('command', (data) => {
       const action = JSON.parse(data)
       const {type} = action
       const handlers = commandHandlers[type] || []
       R.forEach((handler) => { handler(action, client) }, handlers)
     })
+
     client.hookErrors()
   }
 }

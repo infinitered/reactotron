@@ -56,13 +56,41 @@ const infoBox = blessed.message({
   }
 })
 
-const logBox = blessed.log({
+const logContainer = blessed.box({
   parent: screen,
   scrollable: true,
   left: 0,
   top: 0,
   width: '33%',
-  height: '100%-1',
+  height: '100%-1'
+})
+
+const clientsBox = blessed.box({
+  parent: logContainer,
+  scrollable: true,
+  left: 0,
+  top: 0,
+  width: '100%',
+  height: '20%',
+  border: 'line',
+  tags: true,
+  keys: true,
+  vi: true,
+  mouse: true,
+  label: ' {white-fg} Clients {/} ',
+  scrollbar: {
+    ch: ' ',
+    inverse: true
+  }
+})
+
+const logBox = blessed.log({
+  parent: logContainer,
+  scrollable: true,
+  left: 0,
+  bottom: 0,
+  width: '100%',
+  height: '80%',
   border: 'line',
   tags: true,
   keys: true,
@@ -174,13 +202,21 @@ blessed.box({
 const OFFLINE = '{right}{black-bg}{red-fg}Offline{/}{/}{/}'
 const ONLINE = '{right}{black-bg}{green-fg}Online{/}{/}{/}'
 
+const clientCount = (numberOfClients = 0) => {
+  if (numberOfClients > 0) {
+    return `{right}{black-bg}{green-fg}${numberOfClients} Online{/}{/}{/}`
+  } else {
+    return `{right}{black-bg}{red-fg}${numberOfClients} Online{/}{/}{/}`
+  }
+}
+
 const connectionBox = blessed.box({
   parent: statusBox,
   top: 0,
   right: 0,
   height: '100%',
   width: 'shrink',
-  content: OFFLINE,
+  content: clientCount(),
   tags: true
 })
 
@@ -191,11 +227,11 @@ export default {
   messageBox,
   infoBox,
   logBox,
+  clientsBox,
   reduxActionBox,
   reduxWatchBox,
   apiBox,
   instructionsBox,
   statusBox,
-  OFFLINE,
-  ONLINE
+  clientCount
 }
