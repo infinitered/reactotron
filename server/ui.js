@@ -69,7 +69,7 @@ const logBox = blessed.log({
   vi: true,
   mouse: true,
   scrollback: 400,
-  label: ` {white-fg} Log {/} `,
+  label: ' {white-fg} Log {/} ',
   scrollbar: {
     ch: ' ',
     inverse: true

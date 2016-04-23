@@ -1,10 +1,7 @@
 import RS from 'ramdasauce'
 import R from 'ramda'
-const COMMAND = 'api.log'
 
-// const pad = (value, length) => {
-//   return (value.toString().length < length) ? pad(' ' + value, length) : value
-// }
+const COMMAND = 'api.log'
 
 const process = (context, action) => {
   const time = context.timeStamp()

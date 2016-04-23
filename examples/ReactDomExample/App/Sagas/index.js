@@ -4,7 +4,7 @@ import WeatherSaga from './WeatherSaga'
 import Reactotron from '../../client'
 
 const api = ApiSauce.create({
-  baseURL: 'http://openweathermap.org/data/2.1',
+  baseURL: 'http://openweathermap.org/data/2.1'
 })
 api.addMonitor((response) => {
   Reactotron.apiLog(response)

@@ -214,7 +214,7 @@ client.trackPerformance = (action) => {
 // with our own reduxReducer, as well as setting up
 // the store listener.
 client.storeEnhancer = () => {
-  return next => (reducer, initialState, enhancer) => {
+  return (next) => (reducer, initialState, enhancer) => {
     const wrappedReducer = (state, action) => {
       // escape route when the master switch is off
       if (!reactotronEnabled) {

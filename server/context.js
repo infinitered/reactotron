@@ -48,7 +48,7 @@ export default class Context {
     })
   }
 
-  message (displayText, callback=null) {
+  message (displayText, callback = null) {
     this.ui.messageBox.setFront()
     this.ui.screen.render()
     this.ui.messageBox.display(displayText, 0, (err, value) => {
@@ -59,7 +59,7 @@ export default class Context {
     })
   }
 
-  info (title, displayText, callback=null) {
+  info (title, displayText, callback = null) {
     this.ui.infoBox.setFront()
     this.ui.screen.render()
     this.ui.infoBox.setLabel(title)

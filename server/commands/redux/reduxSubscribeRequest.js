@@ -1,6 +1,8 @@
 import R from 'ramda'
 import RS from 'ramdasauce'
+
 const COMMAND = 'redux.subscribe.request'
+
 /**
  Sends a request to get the keys at the path in redux.
  */

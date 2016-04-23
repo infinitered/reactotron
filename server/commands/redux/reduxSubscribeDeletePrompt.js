@@ -2,7 +2,7 @@ import RS from 'ramdasauce'
 const COMMAND = 'redux.subscribe.delete.prompt'
 
 /**
-Prompts for a path to grab some redux keys from.
+ Prompts for a path to grab some redux keys from.
  */
 const process = (context, action) => {
   context.prompt('Enter a redux path:  eg. weather.temperature', (value) => {
