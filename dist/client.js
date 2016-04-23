@@ -102,10 +102,9 @@ client.sendCommand = function (type, message) {
   }
 };
 
-client.addReduxStore = function (store) {
+client.createSubscriptionListener = function (store) {
   // shortcircuit if disabled
   if (!reactotronEnabled) return store;
-
   var subscriptions = [];
 
   // send the subscriptions to the client
@@ -133,7 +132,11 @@ client.addReduxStore = function (store) {
     sendSubscriptions();
   });
 
-  store.subscribe(sendSubscriptions);
+  return sendSubscriptions;
+};
+
+client.addReduxStore = function (store) {
+  store.subscribe(client.createSubscriptionListener(store));
 
   // return the store at the given path
   client.onCommand('redux.value.request', function (action, client) {
@@ -190,20 +193,68 @@ client.hookErrors = function () {
 
 var MIDDLEWARE_ACTION_IGNORE = ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'EFFECT_REJECTED'];
 
+// Returns a function that can track performance.
+client.trackPerformance = function (action) {
+  var type = action.type;
+
+  var start = performanceNow();
+
+  var stopTracking = function stopTracking() {
+    var ms = (performanceNow() - start).toFixed(0);
+
+    if (!R.contains(action.type, MIDDLEWARE_ACTION_IGNORE)) {
+      client.sendCommand('redux.action.done', { type: type, ms: ms, action: action });
+    }
+  };
+
+  return stopTracking;
+};
+
+// Enhances the store by wrapping the main reducer
+// with our own reduxReducer, as well as setting up
+// the store listener.
+client.storeEnhancer = function () {
+  return function (next) {
+    return function (reducer, initialState, enhancer) {
+      var wrappedReducer = function wrappedReducer(state, action) {
+        // escape route when the master switch is off
+        if (!reactotronEnabled) {
+          return reducer(state, action);
+        }
+
+        // Begin tracking performance.
+        var performanceTracker = client.trackPerformance(action);
+
+        // Run the main reducer.
+        var result = reducer(state, action);
+
+        // Stop tracking performance.
+        performanceTracker();
+
+        return result;
+      };
+
+      var store = next(wrappedReducer, initialState, enhancer);
+
+      return client.addReduxStore(store);
+    };
+  };
+};
+
 client.reduxMiddleware = function (store) {
   return function (next) {
     return function (action) {
+      if (!reactotronEnabled) {
+        return next(action);
+      }
+
+      // Begin tracking performance.
+      var performanceTracker = client.trackPerformance(action);
+
       var result = next(action);
 
-      if (reactotronEnabled) {
-        var type = action.type;
-
-        var start = performanceNow();
-        var ms = (performanceNow() - start).toFixed(0);
-        if (!R.contains(action.type, MIDDLEWARE_ACTION_IGNORE)) {
-          client.sendCommand('redux.action.done', { type: type, ms: ms, action: action });
-        }
-      }
+      // Stop tracking performance.
+      performanceTracker();
 
       return result;
     };

@@ -192,6 +192,8 @@ client.hookErrors = () => {
   }
 }
 
+const MIDDLEWARE_ACTION_IGNORE = ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'EFFECT_REJECTED']
+
 // Returns a function that can track performance.
 client.trackPerformance = (action) => {
   const {type} = action
@@ -208,14 +210,17 @@ client.trackPerformance = (action) => {
   return stopTracking
 }
 
-const MIDDLEWARE_ACTION_IGNORE = ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'EFFECT_REJECTED']
-
 // Enhances the store by wrapping the main reducer
 // with our own reduxReducer, as well as setting up
 // the store listener.
 client.storeEnhancer = () => {
   return next => (reducer, initialState, enhancer) => {
     const wrappedReducer = (state, action) => {
+      // escape route when the master switch is off
+      if (!reactotronEnabled) {
+        return reducer(state, action)
+      }
+
       // Begin tracking performance.
       const performanceTracker = client.trackPerformance(action)
 

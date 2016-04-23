@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux'
+import {createStore, applyMiddleware, compose} from 'redux'
 import Config from '../Config/Config'
 import createLogger from 'redux-logger'
 import rootReducer from '../Reducers/'
@@ -19,16 +19,17 @@ const logger = createLogger({
 
 // a function which can create our store and auto-persist the data
 export default () => {
+
+  const enhancer = compose(Reactotron.storeEnhancer())
+
   const store = createStore(
     rootReducer,
     applyMiddleware(
       logger,
-      Reactotron.reduxMiddleware,
       sagaMiddleware(...sagas)
-    )
+    ),
+    enhancer
   )
-
-  Reactotron.addReduxStore(store)
 
   return store
 }
