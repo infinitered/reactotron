@@ -23,6 +23,10 @@ import die from './program/die'
 // api things
 import apiLog from './api/apiLog'
 
+// client things
+import clientAdd from './client/clientAdd'
+import clientRemove from './client/clientRemove'
+
 // command things
 import commandRepeat from './commands/commandRepeat'
 
@@ -43,6 +47,8 @@ import consoleError from './console/consoleError'
 
 // come together. right now. over me.
 export default [
+  clientAdd,
+  clientRemove,
   reduxDispatch,
   reduxValueRequest,
   reduxKeyRequest,
