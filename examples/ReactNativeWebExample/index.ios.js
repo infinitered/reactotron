@@ -4,7 +4,6 @@ import Reactotron from './client' // in a real app, you would use 'reactotron'
 
 Reactotron.connect()
 
-
 class ReactNativeExample extends Component {
   render () {
     return <ReduxContainer />

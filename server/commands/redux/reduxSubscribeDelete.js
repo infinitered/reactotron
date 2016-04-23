@@ -2,7 +2,7 @@ import R from 'ramda'
 const COMMAND = 'redux.subscribe.delete'
 
 /**
-Prompts for a path to grab some redux keys from.
+ Prompts for a path to grab some redux keys from.
  */
 const process = (context, action) => {
   const path = action.path

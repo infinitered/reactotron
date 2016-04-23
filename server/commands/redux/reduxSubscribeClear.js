@@ -1,6 +1,7 @@
 const COMMAND = 'redux.subscribe.clear'
+
 /**
-  Clears the subscriptions being watched.
+ Clears the subscriptions being watched.
  */
 const process = (context, action) => {
   context.config.subscriptions = []

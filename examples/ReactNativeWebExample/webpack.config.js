@@ -1,6 +1,6 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
-const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   devServer: {
@@ -46,4 +46,4 @@ module.exports = {
       'react-native': 'react-native-web'
     }
   }
-};
+}

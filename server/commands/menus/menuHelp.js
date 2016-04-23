@@ -1,7 +1,6 @@
 const COMMAND = 'menu.help'
 
 const process = (context, action) => {
-
   const messageText = `
 
     {bold}Hotkeys{/bold}
