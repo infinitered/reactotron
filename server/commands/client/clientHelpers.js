@@ -1,7 +1,7 @@
 import R from 'ramda'
 
 export const formatClient = (client) => {
-  return `- {green-fg}[${client.ip}]{/} ${client.name} <${client.version}>`
+  return `- {green-fg}[${client.ip}]{/} ${client.name} <${client.userAgent}> <${client.version}>`
 }
 
 export const updateClients = (context) => {

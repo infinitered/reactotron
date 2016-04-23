@@ -32,7 +32,7 @@ io.on('connection', (socket) => {
     const socketInfo = {
       socket: socket,
       ip: socket.request.connection.remoteAddress == '::1' ? 'localhost' : socket.request.connection.remoteAddress,
-      userAgent: socket.request.headers['user-agent']
+      userAgent: socket.request.headers['user-agent'] || 'Unknown'
     }
 
     const clientInfo = {
