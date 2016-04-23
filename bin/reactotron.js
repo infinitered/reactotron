@@ -91,6 +91,7 @@ var Context = function () {
     this.ui = parts.ui;
     this.router = parts.router;
     this.menuStack = [];
+    this.clients = {};
     this.lastRepeatableMessage = null;
     this.reduxActionLoggingStyle = 'short';
     this.apiLoggingStyle = 'short';
@@ -316,7 +317,7 @@ var reduxValuePrompt = {
 var COMMAND$6 = 'redux.key.prompt';
 
 /**
-Prompts for a path to grab some redux keys from.
+ Prompts for a path to grab some redux keys from.
  */
 var process$7 = function process$7(context, action) {
   context.prompt('Enter a redux path:  eg. weather.temperature', function (value) {
@@ -383,6 +384,7 @@ var reduxActionDone = {
 };
 
 var COMMAND$9 = 'redux.subscribe.request';
+
 /**
  Sends a request to get the keys at the path in redux.
  */
@@ -425,7 +427,7 @@ var reduxSubscribeValues = {
 var COMMAND$11 = 'redux.subscribe.add';
 
 /**
-Prompts for a path to grab some redux keys from.
+ Prompts for a path to grab some redux keys from.
  */
 var process$12 = function process$12(context, action) {
   var path = action.path;
@@ -448,7 +450,7 @@ var reduxSubscribeAdd = {
 var COMMAND$12 = 'redux.subscribe.add.prompt';
 
 /**
-Prompts for a path to grab some redux keys from.
+ Prompts for a path to grab some redux keys from.
  */
 var process$13 = function process$13(context, action) {
   context.prompt('Enter a redux path:  eg. weather.temperature', function (value) {
@@ -466,7 +468,7 @@ var reduxSubscribeAddPrompt = {
 var COMMAND$13 = 'redux.subscribe.delete';
 
 /**
-Prompts for a path to grab some redux keys from.
+ Prompts for a path to grab some redux keys from.
  */
 var process$14 = function process$14(context, action) {
   var path = action.path;
@@ -488,7 +490,7 @@ var reduxSubscribeDelete = {
 var COMMAND$14 = 'redux.subscribe.delete.prompt';
 
 /**
-Prompts for a path to grab some redux keys from.
+ Prompts for a path to grab some redux keys from.
  */
 var process$15 = function process$15(context, action) {
   context.prompt('Enter a redux path:  eg. weather.temperature', function (value) {
@@ -504,8 +506,9 @@ var reduxSubscribeDeletePrompt = {
 };
 
 var COMMAND$15 = 'redux.subscribe.clear';
+
 /**
-  Clears the subscriptions being watched.
+ Clears the subscriptions being watched.
  */
 var process$16 = function process$16(context, action) {
   context.config.subscriptions = [];
@@ -550,10 +553,6 @@ var die = {
 
 var COMMAND$18 = 'api.log';
 
-// const pad = (value, length) => {
-//   return (value.toString().length < length) ? pad(' ' + value, length) : value
-// }
-
 var process$18 = function process$18(context, action) {
   var time = context.timeStamp();
   var problem = _ramdasauce2.default.dotPath('response.problem', action.message);
@@ -587,9 +586,55 @@ var apiLog = {
   process: process$18
 };
 
-var COMMAND$19 = 'command.repeat';
+var formatClient = function formatClient(client) {
+  return '- {green-fg}[' + client.ip + ']{/} ' + client.name + ' <' + client.userAgent + '> <' + client.version + '>';
+};
+
+var updateClients = function updateClients(context) {
+  var clients = _ramda2.default.map(formatClient, _ramda2.default.values(context.clients));
+
+  context.ui.clientsBox.setContent(_ramda2.default.join('\n', clients));
+  context.ui.connectionBox.setContent(context.ui.clientCount(clients.length));
+
+  context.ui.screen.render();
+};
+
+var COMMAND$19 = 'client.add';
 
 var process$19 = function process$19(context, action) {
+  var clients = context.clients;
+
+  var clientInfo = action.client;
+
+  clients[clientInfo.socket.id] = clientInfo;
+
+  updateClients(context);
+};
+
+var clientAdd = {
+  name: COMMAND$19,
+  process: process$19
+};
+
+var COMMAND$20 = 'client.remove';
+
+var process$20 = function process$20(context, action) {
+  var clients = context.clients;
+  var socket = action.socket;
+
+
+  delete clients[socket.id];
+  updateClients(context);
+};
+
+var clientRemove = {
+  name: COMMAND$20,
+  process: process$20
+};
+
+var COMMAND$21 = 'command.repeat';
+
+var process$21 = function process$21(context, action) {
   var lastRepeatableMessage = context.lastRepeatableMessage;
   if (lastRepeatableMessage) {
     context.post(lastRepeatableMessage);
@@ -597,24 +642,24 @@ var process$19 = function process$19(context, action) {
 };
 
 var commandRepeat = {
-  name: COMMAND$19,
-  process: process$19
+  name: COMMAND$21,
+  process: process$21
 };
 
-var COMMAND$20 = 'content.log';
+var COMMAND$22 = 'content.log';
 
-var process$20 = function process$20(context, action) {
+var process$22 = function process$22(context, action) {
   context.log(action.message);
 };
 
 var contentLog = {
-  name: COMMAND$20,
-  process: process$20
+  name: COMMAND$22,
+  process: process$22
 };
 
-var COMMAND$21 = 'content.clear';
+var COMMAND$23 = 'content.clear';
 
-var process$21 = function process$21(context, action) {
+var process$23 = function process$23(context, action) {
   context.ui.logBox.setContent('');
   context.ui.apiBox.setContent('');
   context.ui.reduxActionBox.setContent('');
@@ -623,14 +668,14 @@ var process$21 = function process$21(context, action) {
 };
 
 var contentClear = {
-  name: COMMAND$21,
-  process: process$21
+  name: COMMAND$23,
+  process: process$23
 };
 
-var COMMAND$22 = 'content.score';
+var COMMAND$24 = 'content.score';
 var SCORE = '\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n';
 
-var process$22 = function process$22(context, action) {
+var process$24 = function process$24(context, action) {
   context.ui.logBox.log(SCORE);
   context.ui.apiBox.log(SCORE);
   context.ui.reduxActionBox.log(SCORE);
@@ -639,8 +684,8 @@ var process$22 = function process$22(context, action) {
 };
 
 var contentScore = {
-  name: COMMAND$22,
-  process: process$22
+  name: COMMAND$24,
+  process: process$24
 };
 
 /**
@@ -677,12 +722,12 @@ var drawInstructions = function drawInstructions(context, menu) {
   context.ui.screen.render();
 };
 
-var COMMAND$23 = 'menu.push';
+var COMMAND$25 = 'menu.push';
 
 /**
   Installs a new menu.
  */
-var process$23 = function process$23(context, action) {
+var process$25 = function process$25(context, action) {
   var menu = action.menu;
   var menuStack = context.menuStack;
 
@@ -698,16 +743,16 @@ var process$23 = function process$23(context, action) {
 };
 
 var menuPush = {
-  name: COMMAND$23,
-  process: process$23
+  name: COMMAND$25,
+  process: process$25
 };
 
-var COMMAND$24 = 'menu.pop';
+var COMMAND$26 = 'menu.pop';
 
 /**
   Installs the previous menu from the menu stack.
  */
-var process$24 = function process$24(context, action) {
+var process$26 = function process$26(context, action) {
   // unbind our current menu
   var currentMenu = _ramda2.default.last(context.menuStack);
   unregisterKeys(context, currentMenu);
@@ -723,31 +768,29 @@ var process$24 = function process$24(context, action) {
 };
 
 var menuPop = {
-  name: COMMAND$24,
-  process: process$24
+  name: COMMAND$26,
+  process: process$26
 };
 
-var COMMAND$25 = 'menu.main';
+var COMMAND$27 = 'menu.main';
 
-var process$25 = function process$25(context, action) {
+var process$27 = function process$27(context, action) {
   var menu = {
     name: 'main',
-    commands: [{ key: 'r', name: 'redux', commands: [{ type: 'menu.redux' }] }, { key: 'h', name: 'help', commands: [{ type: 'menu.help' }] },
-    // {key: 'd', name: 'dev menu', commands: [{type: 'menu.devMenu'}]},
-    { key: 'q', name: 'quit', commands: [{ type: 'program.die' }] }]
+    commands: [{ key: 'r', name: 'redux', commands: [{ type: 'menu.redux' }] }, { key: 'h', name: 'help', commands: [{ type: 'menu.help' }] }, { key: 'q', name: 'quit', commands: [{ type: 'program.die' }] }]
   };
 
   context.post({ type: 'menu.push', menu: menu });
 };
 
 var menuMain = {
-  name: COMMAND$25,
-  process: process$25
+  name: COMMAND$27,
+  process: process$27
 };
 
-var COMMAND$26 = 'menu.redux';
+var COMMAND$28 = 'menu.redux';
 
-var process$26 = function process$26(context, action) {
+var process$28 = function process$28(context, action) {
   var menu = {
     name: 'redux',
     commands: [{ key: 'v', name: 'values', commands: [{ type: 'redux.value.prompt' }, { type: 'menu.pop' }] }, { key: 'k', name: 'keys', commands: [{ type: 'redux.key.prompt' }, { type: 'menu.pop' }] }, { key: 'd', name: 'dispatch', commands: [{ type: 'redux.dispatch.prompt' }, { type: 'menu.pop' }] }, { key: 's', name: 'subscribe', commands: [{ type: 'menu.redux.subscribe' }] }, { key: 'escape', name: 'back', commands: [{ type: 'menu.pop' }] }]
@@ -757,27 +800,26 @@ var process$26 = function process$26(context, action) {
 };
 
 var menuRedux = {
-  name: COMMAND$26,
-  process: process$26
+  name: COMMAND$28,
+  process: process$28
 };
 
-var COMMAND$27 = 'menu.help';
+var COMMAND$29 = 'menu.help';
 
-var process$27 = function process$27(context, action) {
-
+var process$29 = function process$29(context, action) {
   var messageText = '\n\n    {bold}Hotkeys{/bold}\n    ---------------------------------\n      {bold}.{/bold}       Repeat last command\n      {bold}-{/bold}       Insert separator\n      {bold}del{/bold}     Clear reactotron\n      {bold}ctrl-c{/bold}  Quit\n\n  ';
 
   context.info(' {yellow-fg}reactotron{/} {blue-fg}help{/} ', messageText);
 };
 
 var menuHelp = {
-  name: COMMAND$27,
-  process: process$27
+  name: COMMAND$29,
+  process: process$29
 };
 
-var COMMAND$28 = 'menu.redux.subscribe';
+var COMMAND$30 = 'menu.redux.subscribe';
 
-var process$28 = function process$28(context, action) {
+var process$30 = function process$30(context, action) {
   var menu = {
     name: 'subscribe',
     commands: [{ key: 'a', name: 'add', commands: [{ type: 'redux.subscribe.add.prompt' }, { type: 'menu.pop' }, { type: 'menu.pop' }] }, { key: 'd', name: 'delete', commands: [{ type: 'redux.subscribe.delete.prompt' }, { type: 'menu.pop' }, { type: 'menu.pop' }] }, { key: 'c', name: 'clear', commands: [{ type: 'redux.subscribe.clear' }, { type: 'menu.pop' }, { type: 'menu.pop' }] }, { key: 'escape', name: 'back', commands: [{ type: 'menu.pop' }] }]
@@ -787,13 +829,13 @@ var process$28 = function process$28(context, action) {
 };
 
 var menuReduxSubscribe = {
-  name: COMMAND$28,
-  process: process$28
+  name: COMMAND$30,
+  process: process$30
 };
 
-var COMMAND$29 = 'menu.devMenu';
+var COMMAND$31 = 'menu.devMenu';
 
-var process$29 = function process$29(context, action) {
+var process$31 = function process$31(context, action) {
   var menu = {
     name: 'Dev Menu',
     commands: [{ key: 'r', name: 'reload', commands: [{ type: 'devMenu.reload' }, { type: 'menu.pop' }] }, { key: 'escape', name: 'back', commands: [{ type: 'menu.pop' }] }]
@@ -803,37 +845,32 @@ var process$29 = function process$29(context, action) {
 };
 
 var menuDevMenu = {
-  name: COMMAND$29,
-  process: process$29
+  name: COMMAND$31,
+  process: process$31
 };
 
-var COMMAND$30 = 'console.error';
+var COMMAND$32 = 'console.error';
 
 /**
   Receives a console.error from the app.
  */
-var process$30 = function process$30(context, action) {
-  var _action$message4 = action.message;
-  var message = _action$message4.message;
-  var stack = _action$message4.stack;
+var process$32 = function process$32(context, action) {
+  var message = action.message.message;
 
   var time = context.timeStamp();
   var isWarning = _ramdasauce2.default.startsWith('Warning: ', message);
   var color = isWarning ? 'yellow' : 'red';
   context.ui.logBox.log(time + ' {' + color + '-fg}' + message + '{/}');
-  // if (stack) {
-  //   context.ui.logBox.log(stack)
-  // }
   context.ui.screen.render();
 };
 
 var consoleError = {
-  name: COMMAND$30,
-  process: process$30
+  name: COMMAND$32,
+  process: process$32
 };
 
 // come together. right now. over me.
-var commands = [reduxDispatch, reduxValueRequest, reduxKeyRequest, reduxValueResponse, reduxKeyResponse, reduxValuePrompt, reduxKeyPrompt, reduxDispatchPrompt, reduxActionDone, reduxSubscribeRequest, reduxSubscribeValues, reduxSubscribeAdd, reduxSubscribeAddPrompt, reduxSubscribeDelete, reduxSubscribeDeletePrompt, reduxSubscribeClear, apiLog, contentLog, contentClear, contentScore, menuPush, menuPop, menuMain, menuRedux, menuHelp, menuReduxSubscribe, menuDevMenu, commandRepeat, devMenuReload, consoleError, die];
+var commands = [clientAdd, clientRemove, reduxDispatch, reduxValueRequest, reduxKeyRequest, reduxValueResponse, reduxKeyResponse, reduxValuePrompt, reduxKeyPrompt, reduxDispatchPrompt, reduxActionDone, reduxSubscribeRequest, reduxSubscribeValues, reduxSubscribeAdd, reduxSubscribeAddPrompt, reduxSubscribeDelete, reduxSubscribeDeletePrompt, reduxSubscribeClear, apiLog, contentLog, contentClear, contentScore, menuPush, menuPop, menuMain, menuRedux, menuHelp, menuReduxSubscribe, menuDevMenu, commandRepeat, devMenuReload, consoleError, die];
 
 var screen = _blessed2.default.screen({
   smartCSR: true,
@@ -891,13 +928,41 @@ var infoBox = _blessed2.default.message({
   }
 });
 
-var logBox = _blessed2.default.log({
+var logContainer = _blessed2.default.box({
   parent: screen,
   scrollable: true,
   left: 0,
   top: 0,
   width: '33%',
-  height: '100%-1',
+  height: '100%-1'
+});
+
+var clientsBox = _blessed2.default.box({
+  parent: logContainer,
+  scrollable: true,
+  left: 0,
+  top: 0,
+  width: '100%',
+  height: '20%',
+  border: 'line',
+  tags: true,
+  keys: true,
+  vi: true,
+  mouse: true,
+  label: ' {white-fg} Clients {/} ',
+  scrollbar: {
+    ch: ' ',
+    inverse: true
+  }
+});
+
+var logBox = _blessed2.default.log({
+  parent: logContainer,
+  scrollable: true,
+  left: 0,
+  bottom: 0,
+  width: '100%',
+  height: '80%',
   border: 'line',
   tags: true,
   keys: true,
@@ -1006,8 +1071,15 @@ _blessed2.default.box({
   content: '{yellow-fg}reactotron{/}'
 });
 
-var OFFLINE = '{right}{black-bg}{red-fg}Offline{/}{/}{/}';
-var ONLINE = '{right}{black-bg}{green-fg}Online{/}{/}{/}';
+var clientCount = function clientCount() {
+  var numberOfClients = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+
+  if (numberOfClients > 0) {
+    return '{right}{black-bg}{green-fg}' + numberOfClients + ' Online{/}{/}{/}';
+  } else {
+    return '{right}{black-bg}{red-fg}' + numberOfClients + ' Online{/}{/}{/}';
+  }
+};
 
 var connectionBox = _blessed2.default.box({
   parent: statusBox,
@@ -1015,7 +1087,7 @@ var connectionBox = _blessed2.default.box({
   right: 0,
   height: '100%',
   width: 'shrink',
-  content: OFFLINE,
+  content: clientCount(),
   tags: true
 });
 
@@ -1026,13 +1098,13 @@ var ui = {
   messageBox: messageBox,
   infoBox: infoBox,
   logBox: logBox,
+  clientsBox: clientsBox,
   reduxActionBox: reduxActionBox,
   reduxWatchBox: reduxWatchBox,
   apiBox: apiBox,
   instructionsBox: instructionsBox,
   statusBox: statusBox,
-  OFFLINE: OFFLINE,
-  ONLINE: ONLINE
+  clientCount: clientCount
 };
 
 // A way to add extra spacing for emoji characters. As it
@@ -1059,10 +1131,30 @@ var context = new Context({
 });
 
 io.on('connection', function (socket) {
-  ui.connectionBox.setContent(ui.ONLINE);
-  // new connects need the subscribe redux
-  context.post({ type: 'redux.subscribe.request' });
+  // When a socket connects, we also want to wait for
+  // additional context about the client.
+  socket.on('ready', function (clientConfig) {
+    var socketInfo = {
+      socket: socket,
+      ip: socket.request.connection.remoteAddress === '::1' ? 'localhost' : socket.request.connection.remoteAddress,
+      userAgent: socket.request.headers['user-agent'] || 'Unknown'
+    };
+
+    var clientInfo = _ramda2.default.merge(socketInfo, clientConfig);
+    // const clientInfo = {
+    //   ...socketInfo,
+    //   ...clientConfig
+    // }
+
+    // Add new client
+    context.post({ type: 'client.add', client: clientInfo });
+
+    // new connects need the subscribe redux
+    context.post({ type: 'redux.subscribe.request' });
+  });
+
   ui.screen.render();
+
   socket.on('command', function (data) {
     var action = JSON.parse(addSpaceForEmoji(data));
     context.post(action);
@@ -1070,7 +1162,7 @@ io.on('connection', function (socket) {
   });
 
   socket.on('disconnect', function () {
-    ui.connectionBox.setContent(ui.OFFLINE);
+    context.post({ type: 'client.remove', socket: socket });
     ui.screen.render();
   });
 });
