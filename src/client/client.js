@@ -2,6 +2,9 @@
 
 const R = require('ramda')
 
+// client enabled flag
+let reactotronEnabled = true
+
 // Then we set a userAgent so socket.io works.
 if (!window.navigator || !window.navigator.userAgent) {
   const newNav = R.merge(window.navigator, {userAgent: 'reactotron'})
@@ -42,24 +45,35 @@ client.onCommand('devMenu.reload', (action, client) => {
 
 /**
   Connect to the server.
-  @param {String} server The server to connect to.
-  @param {Number} port The port to use (default 3334)
+  @param {Object} [{server: 'localhost', port: 3334, enabled: true}]
  */
-client.connect = (server = 'localhost', port = 3334) => {
-  socket = io(`ws://${server}:${port}`, {
-    jsonp: false,
-    transports: ['websocket']
-  })
-  socket.on('connect', () => {
-    client.log('connected')
-  })
-  socket.on('command', (data) => {
-    const action = JSON.parse(data)
-    const {type} = action
-    const handlers = commandHandlers[type] || []
-    R.forEach((handler) => { handler(action, client) }, handlers)
-  })
-  client.hookErrors()
+client.connect = (userConfigurations = {}) => {
+  const defaults = {server: 'localhost', port: 3334, enabled: true}
+  // merge user input with defaults
+  const config = {
+    ...defaults,
+    ...userConfigurations
+  }
+
+  // keep track for all ops
+  reactotronEnabled = config.enabled
+
+  if (config.enabled) {
+    socket = io(`ws://${config.server}:${config.port}`, {
+      jsonp: false,
+      transports: ['websocket']
+    })
+    socket.on('connect', () => {
+      client.log('connected')
+    })
+    socket.on('command', (data) => {
+      const action = JSON.parse(data)
+      const {type} = action
+      const handlers = commandHandlers[type] || []
+      R.forEach((handler) => { handler(action, client) }, handlers)
+    })
+    client.hookErrors()
+  }
 }
 
 /**
@@ -84,6 +98,9 @@ client.sendCommand = (type, message) => {
 }
 
 client.addReduxStore = (store) => {
+  // shortcircuit if disabled
+  if (!reactotronEnabled) return store
+
   let subscriptions = []
 
   // send the subscriptions to the client
@@ -176,13 +193,17 @@ client.hookErrors = () => {
 const MIDDLEWARE_ACTION_IGNORE = ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'EFFECT_REJECTED']
 
 client.reduxMiddleware = (store) => (next) => (action) => {
-  const {type} = action
-  const start = performanceNow()
   const result = next(action)
-  const ms = (performanceNow() - start).toFixed(0)
-  if (!R.contains(action.type, MIDDLEWARE_ACTION_IGNORE)) {
-    client.sendCommand('redux.action.done', {type, ms, action})
+
+  if (reactotronEnabled) {
+    const {type} = action
+    const start = performanceNow()
+    const ms = (performanceNow() - start).toFixed(0)
+    if (!R.contains(action.type, MIDDLEWARE_ACTION_IGNORE)) {
+      client.sendCommand('redux.action.done', {type, ms, action})
+    }
   }
+
   return result
 }
 

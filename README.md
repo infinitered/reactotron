@@ -44,9 +44,6 @@ Might be worth creating an alias or adding it to your script section of your `pa
 
 # How To Use
 
-Remember, this is a development tool.  It'll help you build your app.  But you don't want to ship
-your product with this left on.  :)
-
 To use this, you need to add a few lines of code to your app.
 
 Depending on how much support you'd like, there's a few different places you'll want to hook in.
@@ -67,7 +64,14 @@ If you have `index.ios.js` or `index.android.js`, you can place this code somewh
 ```js
 import Reactotron from 'reactotron'
 
+// connect with defaults
 Reactotron.connect()
+```
+
+I'd recommend using the following for connect in React Native so that release builds will disable reactotron.
+
+```js
+Reactotron.connect({enabled: __DEV__})
 ```
 
 ### Redux Middleware (optional)
@@ -147,7 +151,7 @@ the right TCP port to the `reactotron` server.
 
 When you initialize the `reactotron` you can tell it the server location when you connect:
 
-`Reactotron.connect('10.0.1.109')`
+`Reactotron.connect({server: '10.0.1.109'})`
 
 ##### Useful shortcuts
 
@@ -209,7 +213,7 @@ Be sure to read the silly `examples/README.md` file for more details.
 
 # Special Thanks
 
-A shout out to my teammates at [Infinite Red](https://infinite.red) who encourage this type of open-source hacking & sharing.  
+A shout out to my teammates at [Infinite Red](https://infinite.red) who encourage this type of open-source hacking & sharing.
 
 [<img src='https://infinite.red/images/ir-logo-7ebf9ed9d02e2805bb2c94309efa5176.svg' />](https://infinite.red)
 
