@@ -1,8 +1,13 @@
 'use strict';
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 // --- Begin Awkward Hackzorz ---
 
 var R = require('ramda');
+
+// client enabled flag
+var reactotronEnabled = true;
 
 // Then we set a userAgent so socket.io works.
 if (!window.navigator || !window.navigator.userAgent) {
@@ -44,30 +49,37 @@ client.onCommand('devMenu.reload', function (action, client) {
 
 /**
   Connect to the server.
-  @param {String} server The server to connect to.
-  @param {Number} port The port to use (default 3334)
+  @param {Object} [{server: 'localhost', port: 3334, enabled: true}]
  */
 client.connect = function () {
-  var server = arguments.length <= 0 || arguments[0] === undefined ? 'localhost' : arguments[0];
-  var port = arguments.length <= 1 || arguments[1] === undefined ? 3334 : arguments[1];
+  var userConfigurations = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-  socket = io('ws://' + server + ':' + port, {
-    jsonp: false,
-    transports: ['websocket']
-  });
-  socket.on('connect', function () {
-    client.log('connected');
-  });
-  socket.on('command', function (data) {
-    var action = JSON.parse(data);
-    var type = action.type;
+  var defaults = { server: 'localhost', port: 3334, enabled: true };
+  // merge user input with defaults
+  var config = _extends({}, defaults, userConfigurations);
 
-    var handlers = commandHandlers[type] || [];
-    R.forEach(function (handler) {
-      handler(action, client);
-    }, handlers);
-  });
-  client.hookErrors();
+  // keep track for all ops
+  reactotronEnabled = config.enabled;
+
+  if (config.enabled) {
+    socket = io('ws://' + config.server + ':' + config.port, {
+      jsonp: false,
+      transports: ['websocket']
+    });
+    socket.on('connect', function () {
+      client.log('connected');
+    });
+    socket.on('command', function (data) {
+      var action = JSON.parse(data);
+      var type = action.type;
+
+      var handlers = commandHandlers[type] || [];
+      R.forEach(function (handler) {
+        handler(action, client);
+      }, handlers);
+    });
+    client.hookErrors();
+  }
 };
 
 /**
@@ -92,6 +104,9 @@ client.sendCommand = function (type, message) {
 };
 
 client.addReduxStore = function (store) {
+  // shortcircuit if disabled
+  if (!reactotronEnabled) return store;
+
   var subscriptions = [];
 
   // send the subscriptions to the client
@@ -179,14 +194,18 @@ var MIDDLEWARE_ACTION_IGNORE = ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'EFFECT_R
 client.reduxMiddleware = function (store) {
   return function (next) {
     return function (action) {
-      var type = action.type;
-
-      var start = performanceNow();
       var result = next(action);
-      var ms = (performanceNow() - start).toFixed(0);
-      if (!R.contains(action.type, MIDDLEWARE_ACTION_IGNORE)) {
-        client.sendCommand('redux.action.done', { type: type, ms: ms, action: action });
+
+      if (reactotronEnabled) {
+        var type = action.type;
+
+        var start = performanceNow();
+        var ms = (performanceNow() - start).toFixed(0);
+        if (!R.contains(action.type, MIDDLEWARE_ACTION_IGNORE)) {
+          client.sendCommand('redux.action.done', { type: type, ms: ms, action: action });
+        }
       }
+
       return result;
     };
   };

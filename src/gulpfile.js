@@ -8,16 +8,17 @@ gulp.task('build-server', () => {
   return gulp.src('server/index.js')
     .pipe(rollup({}))
     .pipe(babel({
-      presets: ['es2015', 'stage-0']
+      presets: ['es2015', 'stage-0'],
+      plugins: ['transform-object-rest-spread']
     }))
     .pipe(gulp.dest('./dist'))
 })
 
 gulp.task('build-client', () => {
   return gulp.src('client/client.js')
-    .pipe(rollup({}))
     .pipe(babel({
-      presets: ['es2015', 'stage-0']
+      presets: ['es2015', 'stage-0'],
+      plugins: ['transform-object-rest-spread']
     }))
     .pipe(gulp.dest('./dist'))
 })
