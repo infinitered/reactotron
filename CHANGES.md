@@ -1,4 +1,4 @@
-### April 23, 2016 - 0.4.0 - UNRELEASED
+### April 23, 2016 - 0.4.0
 
 * `NEW` a way to configure options on the client - thx [@gantman](https://github.com/gantman)
 * `NEW` a master switch to turn off everything in 1 spot - thx [@gantman](https://github.com/gantman)
