@@ -31,14 +31,15 @@ io.on('connection', (socket) => {
   socket.on('ready', (clientConfig) => {
     const socketInfo = {
       socket: socket,
-      ip: socket.request.connection.remoteAddress == '::1' ? 'localhost' : socket.request.connection.remoteAddress,
+      ip: socket.request.connection.remoteAddress === '::1' ? 'localhost' : socket.request.connection.remoteAddress,
       userAgent: socket.request.headers['user-agent'] || 'Unknown'
     }
 
-    const clientInfo = {
-      ...socketInfo,
-      ...clientConfig
-    }
+    const clientInfo = R.merge(socketInfo, clientConfig)
+    // const clientInfo = {
+    //   ...socketInfo,
+    //   ...clientConfig
+    // }
 
     // Add new client
     context.post({type: 'client.add', client: clientInfo})

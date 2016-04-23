@@ -7,7 +7,7 @@ export const formatClient = (client) => {
 export const updateClients = (context) => {
   const clients = R.map(
     formatClient,
-    R.values(context.clients),
+    R.values(context.clients)
   )
 
   context.ui.clientsBox.setContent(R.join('\n', clients))
