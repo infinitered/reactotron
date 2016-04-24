@@ -43,6 +43,7 @@ import menuRedux from './menus/menuRedux'
 import menuHelp from './menus/menuHelp'
 import menuReduxSubscribe from './menus/menuReduxSubscribe'
 import menuDevMenu from './menus/menuDevMenu'
+import menuClients from './menus/menuClients'
 import consoleError from './console/consoleError'
 
 // come together. right now. over me.
@@ -76,6 +77,7 @@ export default [
   menuHelp,
   menuReduxSubscribe,
   menuDevMenu,
+  menuClients,
   commandRepeat,
   devMenuReload,
   consoleError,
