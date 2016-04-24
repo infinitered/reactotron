@@ -13,7 +13,7 @@
     "clean": "rm -rf bin dist",
     "gulp": "gulp build",
     "start": "babel-node server/index.js",
-    "cpc2ex": "cp dist/client.js examples/ReactDomExample/ && cp dist/client.js examples/ReactNativeExample/ && cp dist/client.js examples/ReactNativeWebExample/"
+    "cpc2ex": "rm examples/ReactDomExample/client.js && cp dist/client.js examples/ReactDomExample/ && rm examples/ReactNativeExample/client.js && cp dist/client.js examples/ReactNativeExample/ && rm examples/ReactNativeWebExample/client.js && cp dist/client.js examples/ReactNativeWebExample/"
   },
   "repository": {
     "type": "git",

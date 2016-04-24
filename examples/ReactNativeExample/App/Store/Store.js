@@ -19,16 +19,13 @@ const logger = createLogger({
 
 // a function which can create our store and auto-persist the data
 export default () => {
-  const enhancer = compose(Reactotron.storeEnhancer())
-
-  const store = createStore(
-    rootReducer,
+  const enhancer = compose(
     applyMiddleware(
       logger,
       sagaMiddleware(...sagas)
     ),
-    enhancer
+    Reactotron.storeEnhancer()
   )
 
-  return store
+  return createStore(rootReducer, enhancer)
 }
