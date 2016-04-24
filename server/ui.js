@@ -122,20 +122,45 @@ const reduxWatchBox = blessed.log({
   }
 })
 
-const apiBox = blessed.log({
+const rightContainer = blessed.box({
   parent: screen,
-  scrollable: true,
   right: 0,
   top: 0,
   height: '100%-1',
-  width: '33%',
+  width: '33%'
+})
+
+const apiBox = blessed.log({
+  parent: rightContainer,
+  scrollable: true,
   border: 'line',
+  height: '75%',
+  width: '100%',
   tags: true,
   keys: true,
   vi: true,
   mouse: true,
   scrollback: 400,
   label: ' {white-fg}Api{/} ',
+  scrollbar: {
+    ch: ' ',
+    inverse: true
+  }
+})
+
+const benchBox = blessed.log({
+  parent: rightContainer,
+  scrollable: true,
+  border: 'line',
+  height: '25%',
+  bottom: 0,
+  width: '100%',
+  tags: true,
+  keys: true,
+  vi: true,
+  mouse: true,
+  scrollback: 400,
+  label: ' {white-fg}Benchmark{/} ',
   scrollbar: {
     ch: ' ',
     inverse: true
@@ -199,6 +224,7 @@ export default {
   reduxActionBox,
   reduxWatchBox,
   apiBox,
+  benchBox,
   instructionsBox,
   statusBox,
   clientCount

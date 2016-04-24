@@ -271,4 +271,15 @@ client.reduxMiddleware = (store) => (next) => (action) => {
   return result
 }
 
+client.bench = (title) => {
+  const steps = []
+  const step = (stepTitle) => steps.push({title: stepTitle, time: performanceNow()})
+  step(title)
+  const stop = (stopTitle) => {
+    step(stopTitle)
+    client.sendCommand('bench.report', {title, steps})
+  }
+  return {step, stop}
+}
+
 module.exports = client
