@@ -5,6 +5,7 @@ const process = (context, action) => {
     name: 'main',
     commands: [
       {key: 'r', name: 'redux', commands: [{type: 'menu.redux'}]},
+      {key: 'c', name: 'clients', commands: [{type: 'menu.clients'}]},
       {key: 'h', name: 'help', commands: [{type: 'menu.help'}]},
       {key: 'q', name: 'quit', commands: [{type: 'program.die'}]}
     ]
