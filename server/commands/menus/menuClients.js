@@ -8,7 +8,8 @@ const process = (context, action) => {
   const messageText = `
     {bold}Clients{/bold}
     ---------------------------------
-` + clients
+${clients}
+`
 
   context.info(' {yellow-fg}reactotron{/} {blue-fg}clients{/} ', messageText)
 }
