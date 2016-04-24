@@ -1,6 +1,6 @@
-### NEXT
+### April 23, 2016 - 0.5.0
 
-* `NEW` additional details about the client are now shown - thx [@andrewvy](https://github.com/andrewvy)
+* `NEW` additional details about the client are now shown when connecting - thx [@andrewvy](https://github.com/andrewvy)
 * `NEW` client count is shown in status bar - thx [@andrewvy](https://github.com/andrewvy)
 * `NEW` a simpler way to integrate redux with an enhancer - thx [@andrewvy](https://github.com/andrewvy)
 * `FIX` adds a .babelrc to the react native example app
