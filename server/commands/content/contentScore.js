@@ -5,7 +5,7 @@ const process = (context, action) => {
   context.ui.logBox.log(SCORE)
   context.ui.apiBox.log(SCORE)
   context.ui.reduxActionBox.log(SCORE)
-  context.ui.reduxWatchBox.log(SCORE)
+  context.ui.benchBox.log(SCORE)
   context.ui.screen.render()
 }
 
