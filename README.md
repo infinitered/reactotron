@@ -6,9 +6,9 @@ Control, monitor, and instrument your React DOM and React Native apps.  From the
 
 [What's New](CHANGES.md)
 
-<img src='./images/Reactotron.gif' alt="Hello!" />
+<img src='./images/Reactotron.gif' alt="Demo" />
 
-<img src='./images/0.2.0.gif' alt="Hello!" />
+<img src='./images/0.6.0.gif' alt="Version 0.6.0" />
 
 ### Platforms Supported
 
