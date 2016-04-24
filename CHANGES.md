@@ -1,3 +1,7 @@
+### NEXT VERSION
+
+* `NEW` press `c` to see connected clients - thx [@andrewvy](https://github.com/andrewvy)
+
 ### April 23, 2016 - 0.5.0
 
 * `NEW` additional details about the client are now shown when connecting - thx [@andrewvy](https://github.com/andrewvy)
