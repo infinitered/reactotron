@@ -4,7 +4,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 // --- Begin Awkward Hackzorz ---
 
-var REACTOTRON_VERSION = '0.5.0';
+var REACTOTRON_VERSION = '@@REACTOTRON_VERSION@@';
 var R = require('ramda');
 
 // client enabled flag

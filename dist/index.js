@@ -732,6 +732,7 @@ var process$24 = function process$24(context, action) {
   context.ui.apiBox.setContent('');
   context.ui.reduxActionBox.setContent('');
   context.ui.reduxWatchBox.setContent('');
+  context.ui.benchBox.setContent('');
   context.ui.screen.render();
 };
 
@@ -747,7 +748,7 @@ var process$25 = function process$25(context, action) {
   context.ui.logBox.log(SCORE);
   context.ui.apiBox.log(SCORE);
   context.ui.reduxActionBox.log(SCORE);
-  context.ui.reduxWatchBox.log(SCORE);
+  context.ui.benchBox.log(SCORE);
   context.ui.screen.render();
 };
 
