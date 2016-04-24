@@ -271,4 +271,15 @@ client.reduxMiddleware = (store) => (next) => (action) => {
   return result
 }
 
+client.measure = (title) => {
+  const times = []
+  const step = () => times.push(performanceNow())
+  step()
+  const stop = () => {
+    step()
+    client.log({title, times})
+  }
+  return {step, stop}
+}
+
 module.exports = client
