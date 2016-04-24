@@ -4,6 +4,8 @@
 
 Control, monitor, and instrument your React DOM and React Native apps.  From the comfort of your TTY.
 
+[What's New](CHANGES.md)
+
 <img src='./images/Reactotron.gif' alt="Hello!" />
 
 <img src='./images/0.2.0.gif' alt="Hello!" />
