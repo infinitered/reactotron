@@ -8,7 +8,7 @@ Control, monitor, and instrument your React DOM and React Native apps.  From the
 
 <img src='./images/Reactotron.gif' alt="Demo" />
 
-<img src='./images/0.6.0.gif' alt="Version 0.6.0" />
+<img src='./images/0.6.0.png' alt="Version 0.6.0" />
 
 ### Platforms Supported
 
