@@ -175,6 +175,29 @@ import Reactotron from 'reactotron'
 api.addMonitor(Reactotron.apiLog)
 ```
 
+# Other Features
+
+##### Log
+
+Call `Reactotron.log()` and pass a string or object to have it log.  Emojis are supported.
+
+##### Bench
+
+You can use Reactotron for unscientific benchmarks.
+
+```javascript
+  const bench = Reactotron.bench('Here I Go')
+  bench.stop()
+```
+
+You can also register steps if you're timing a sequence.
+```javascript
+  const bench = Reactotron.bench('Lets Go')
+  bench.step('After long operation')
+  bench.step('After one more thing')
+  bench.stop()
+```
+
 # Tips
 
 ##### Using With Android
