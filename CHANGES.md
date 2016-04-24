@@ -4,7 +4,9 @@
 * `NEW` client count is shown in status bar - thx [@andrewvy](https://github.com/andrewvy)
 * `NEW` a simpler way to integrate redux with an enhancer - thx [@andrewvy](https://github.com/andrewvy)
 * `FIX` adds a .babelrc to the react native example app
+* `FIX` the redux action timer is showing the correct times again
 * `MOD` adds a working Android example app
+* `DOC` made a note about ensuring `connect()` gets triggered first in your app
 
 ### April 23, 2016 - 0.4.0
 

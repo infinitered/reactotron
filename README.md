@@ -85,6 +85,15 @@ I'd recommend using the following for connect in React Native so that release bu
 Reactotron.connect({enabled: __DEV__})
 ```
 
+##### Ensure `connect()` Happens First
+
+It is important that your `Reactotron.connect()` happens before your redux store gets created.  Especially
+if you're using the `{enabled: false}` option.
+
+To make this happen, you can create a `ReactotronConfig.js` file and `import` that as your first import in
+the entry point of your application.  Check out the 3 projects under `examples` to see that in action.
+
+
 ### Redux Middleware (optional)
 
 <img src='./images/ReduxActions.png' alt="Hello!" />
