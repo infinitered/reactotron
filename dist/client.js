@@ -277,4 +277,17 @@ client.reduxMiddleware = function (store) {
   };
 };
 
+client.bench = function (title) {
+  var steps = [];
+  var step = function step(stepTitle) {
+    return steps.push({ title: stepTitle, time: performanceNow() });
+  };
+  step(title);
+  var stop = function stop(stopTitle) {
+    step(stopTitle);
+    client.sendCommand('bench.report', { title: title, steps: steps });
+  };
+  return { step: step, stop: stop };
+};
+
 module.exports = client;
