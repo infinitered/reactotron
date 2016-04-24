@@ -1,10 +1,9 @@
+// imported from a file to ensure the connect statement gets run first!
+import './Config/ReactotronConfig'
 import { AppContainer } from 'react-hot-loader'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import Reactotron from '../client'
-
-Reactotron.connect()
 
 const rootEl = document.getElementById('root')
 ReactDOM.render(

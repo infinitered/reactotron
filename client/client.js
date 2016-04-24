@@ -230,28 +230,29 @@ client.trackPerformance = (action) => {
 // with our own reduxReducer, as well as setting up
 // the store listener.
 client.storeEnhancer = () => {
-  return (next) => (reducer, initialState, enhancer) => {
-    const wrappedReducer = (state, action) => {
-      // escape route when the master switch is off
-      if (!reactotronEnabled) {
-        return reducer(state, action)
-      }
+  return (createStore) => (reducer, initialState, enhancer) => {
+    // create this store
+    const store = createStore(reducer, initialState, enhancer)
 
-      // Begin tracking performance.
-      const performanceTracker = client.trackPerformance(action)
+    // jet with what we got if the master switch is off
+    if (!reactotronEnabled) return store
 
-      // Run the main reducer.
-      const result = reducer(state, action)
+    // fish out the previous dispatch
+    const previousDispatch = store.dispatch
 
-      // Stop tracking performance.
-      performanceTracker()
-
+    // create a new dispatch that times & calls the previous one
+    const dispatch = (action) => {
+      const stopTracking = client.trackPerformance(action)
+      const result = previousDispatch(action)
+      stopTracking()
       return result
     }
 
-    const store = next(wrappedReducer, initialState, enhancer)
+    // attach the subscription to the store
+    client.addReduxStore(store)
 
-    return client.addReduxStore(store)
+    // return the store but with our new dispatcher
+    return R.merge(store, {dispatch})
   }
 }
 

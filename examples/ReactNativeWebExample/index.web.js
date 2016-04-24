@@ -1,8 +1,7 @@
+// imported from a file to ensure the connect statement gets run first!
+import './App/Config/ReactotronConfig'
 import React, { AppRegistry, Component } from 'react-native'
 import ReduxContainer from './App/Containers/ReduxContainer'
-import reactotron from './client'
-
-reactotron.connect()
 
 class TestClient extends Component {
   render () {
