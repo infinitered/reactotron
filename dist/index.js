@@ -584,15 +584,16 @@ var apiLog = {
   process: process$18
 };
 
-var formatClient = function formatClient(client) {
-  return '- {green-fg}[' + client.ip + ']{/} ' + client.name + ' <' + client.userAgent + '> <' + client.version + '>';
+// displays a message in the log when this client connects
+var displayConnectedMessage = function displayConnectedMessage(context, client) {
+  var message = '- {green-fg}[' + client.ip + ']{/} ' + client.name + ' <' + client.userAgent + '> <' + client.version + '>';
+  context.log(message);
+  context.ui.screen.render();
 };
 
+// updates the connected client count
 var updateClients = function updateClients(context) {
-  var clients = _ramda2.default.map(formatClient, _ramda2.default.values(context.clients));
-
-  context.ui.clientsBox.setContent(_ramda2.default.join('\n', clients));
-  context.ui.connectionBox.setContent(context.ui.clientCount(clients.length));
+  context.ui.connectionBox.setContent(context.ui.clientCount(_ramda2.default.values(context.clients).length));
 
   context.ui.screen.render();
 };
@@ -606,6 +607,7 @@ var process$19 = function process$19(context, action) {
 
   clients[clientInfo.socket.id] = clientInfo;
 
+  displayConnectedMessage(context, clientInfo);
   updateClients(context);
 };
 
@@ -926,41 +928,13 @@ var infoBox = _blessed2.default.message({
   }
 });
 
-var logContainer = _blessed2.default.box({
+var logBox = _blessed2.default.log({
   parent: screen,
   scrollable: true,
   left: 0,
   top: 0,
   width: '33%',
-  height: '100%-1'
-});
-
-var clientsBox = _blessed2.default.box({
-  parent: logContainer,
-  scrollable: true,
-  left: 0,
-  top: 0,
-  width: '100%',
-  height: '20%',
-  border: 'line',
-  tags: true,
-  keys: true,
-  vi: true,
-  mouse: true,
-  label: ' {white-fg} Clients {/} ',
-  scrollbar: {
-    ch: ' ',
-    inverse: true
-  }
-});
-
-var logBox = _blessed2.default.log({
-  parent: logContainer,
-  scrollable: true,
-  left: 0,
-  bottom: 0,
-  width: '100%',
-  height: '80%',
+  height: '100%-1',
   border: 'line',
   tags: true,
   keys: true,
@@ -1096,7 +1070,6 @@ var ui = {
   messageBox: messageBox,
   infoBox: infoBox,
   logBox: logBox,
-  clientsBox: clientsBox,
   reduxActionBox: reduxActionBox,
   reduxWatchBox: reduxWatchBox,
   apiBox: apiBox,

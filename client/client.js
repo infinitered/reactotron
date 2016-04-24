@@ -76,7 +76,6 @@ client.connect = (userConfigurations = {}) => {
     })
 
     socket.on('connect', () => {
-      client.log('connected')
       socket.emit('ready', config)
     })
 

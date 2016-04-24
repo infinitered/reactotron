@@ -79,7 +79,6 @@ client.connect = function () {
     });
 
     socket.on('connect', function () {
-      client.log('connected');
       socket.emit('ready', config);
     });
 

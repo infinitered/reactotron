@@ -2,13 +2,10 @@ import { take, call, put } from 'redux-saga/effects'
 import RS from 'ramdasauce'
 import Types from '../Actions/Types'
 import Actions from '../Actions/Creators'
-import Reactotron from '../../client'
 
 const SCALE = 'C'
 
 export function * getWeather (api, city) {
-  Reactotron.log(city)
-
   const response = yield call(api.get, '/find/name', { q: city })
   if (response.ok) {
     const kelvin = RS.dotPath('data.list.0.main.temp', response)

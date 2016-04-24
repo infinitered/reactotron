@@ -1,4 +1,4 @@
-import {updateClients} from './clientHelpers'
+import {displayConnectedMessage, updateClients} from './clientHelpers'
 
 const COMMAND = 'client.add'
 
@@ -8,6 +8,7 @@ const process = (context, action) => {
 
   clients[clientInfo.socket.id] = clientInfo
 
+  displayConnectedMessage(context, clientInfo)
   updateClients(context)
 }
 
