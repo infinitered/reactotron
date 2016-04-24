@@ -1,5 +1,6 @@
 ### NEXT VERSION
 
+* `NEW` adds a way to do benchmarks
 * `NEW` press `c` to see connected clients - thx [@andrewvy](https://github.com/andrewvy)
 
 ### April 23, 2016 - 0.5.0
