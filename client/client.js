@@ -1,6 +1,6 @@
 // --- Begin Awkward Hackzorz ---
 
-const REACTOTRON_VERSION = '0.6.0'
+const REACTOTRON_VERSION = '@@REACTOTRON_VERSION@@'
 const R = require('ramda')
 
 // client enabled flag

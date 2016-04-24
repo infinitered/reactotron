@@ -14,7 +14,9 @@
     "gulp": "gulp build",
     "start": "babel-node server/index.js",
     "cpdistc": "rm examples/ReactDomExample/client.js && cp dist/client.js examples/ReactDomExample/ && rm examples/ReactNativeExample/client.js && cp dist/client.js examples/ReactNativeExample/ && rm examples/ReactNativeWebExample/client.js && cp dist/client.js examples/ReactNativeWebExample/",
-    "cprawc": "rm examples/ReactDomExample/client.js && cp client/client.js examples/ReactDomExample/ && rm examples/ReactNativeExample/client.js && cp client/client.js examples/ReactNativeExample/ && rm examples/ReactNativeWebExample/client.js && cp client/client.js examples/ReactNativeWebExample/"
+    "cprawc": "rm examples/ReactDomExample/client.js && cp client/client.js examples/ReactDomExample/ && rm examples/ReactNativeExample/client.js && cp client/client.js examples/ReactNativeExample/ && rm examples/ReactNativeWebExample/client.js && cp client/client.js examples/ReactNativeWebExample/",
+    "build:minor": "npm run dist && xyz -i minor -s bump_client.sh",
+    "build:patch": "npm run dist && xyz -i patch -s bump_client.sh"
   },
   "repository": {
     "type": "git",
