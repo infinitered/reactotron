@@ -4,7 +4,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 // --- Begin Awkward Hackzorz ---
 
-var REACTOTRON_VERSION = '0.6.0';
+var REACTOTRON_VERSION = '0.6.1';
 var R = require('ramda');
 
 // client enabled flag
@@ -22,7 +22,14 @@ var io = require('socket.io-client/socket.io');
 // --- End Awkward Hackzorz ---
 
 var RS = require('ramdasauce');
-var performanceNow = require('fbjs/lib/performanceNow');
+var defaultPerformanceNow = function defaultPerformanceNow() {
+  return Date.now();
+};
+var nativePerformance = window && (window.performance || window.msPerformance || window.webkitPerformance);
+var nativePerformanceNow = function nativePerformanceNow() {
+  return nativePerformance.now();
+};
+var performanceNow = nativePerformance ? nativePerformanceNow : defaultPerformanceNow;
 
 // me?  not much, just creating some
 // global mutable variables.

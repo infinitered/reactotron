@@ -18,7 +18,10 @@ var io = require('socket.io-client/socket.io')
 // --- End Awkward Hackzorz ---
 
 const RS = require('ramdasauce')
-const performanceNow = require('fbjs/lib/performanceNow')
+const defaultPerformanceNow = () => Date.now()
+const nativePerformance = window && (window.performance || window.msPerformance || window.webkitPerformance)
+const nativePerformanceNow = () => nativePerformance.now()
+const performanceNow = nativePerformance ? nativePerformanceNow : defaultPerformanceNow
 
 // me?  not much, just creating some
 // global mutable variables.
