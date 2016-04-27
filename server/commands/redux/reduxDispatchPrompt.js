@@ -5,7 +5,7 @@ const COMMAND = 'redux.dispatch.prompt'
 Prompts for a path to grab some redux keys from.
  */
 const process = (context, action) => {
-  context.prompt('Action to dispatch', (value) => {
+  context.prompt('Action to dispatch (e.g. {type: \'MY_ACTION\'})', (value) => {
     let action = null
 
     // try not to blow up the frame
