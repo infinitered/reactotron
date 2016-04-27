@@ -1,6 +1,6 @@
 {
   "name": "reactotron",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "A console-based remote control for React and React Native.",
   "main": "index.js",
   "bin": {
