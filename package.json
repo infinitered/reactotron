@@ -1,7 +1,7 @@
 {
   "name": "reactotron",
   "version": "0.6.0",
-  "description": "A console-based remote control for React Native.",
+  "description": "A console-based remote control for React and React Native.",
   "main": "index.js",
   "bin": {
     "reactotron": "./bin/reactotron.js"
