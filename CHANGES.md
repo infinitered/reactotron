@@ -1,4 +1,4 @@
-### April 24, 2016 - 0.6.1
+### April 27, 2016 - 0.6.1
 * `FIX` adds compatibility with Node 4.x and npm 2.x - thx [@skellock](https://github.com/skellock) - found by [@maraujop](https://github.com/maraujop) and [@avioli](https://github.com/avioli)
 * `MOD` no longer using `fbjs` for `performanceNow()` - thx [@skellock](https://github.com/skellock) - found by [@avioli](https://github.com/avioli)
 
