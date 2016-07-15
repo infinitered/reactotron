@@ -202,13 +202,6 @@ You can also register steps if you're timing a sequence.
 
 # Tips
 
-##### Using With Android
-
-If you're using an Android sim and it's running 5.x or higher, you can use `adb` to port forward
-the right TCP port to the `reactotron` server.
-
-`$ANDROID_HOME/platform-tools/adb reverse tcp:3334 tcp:3334`
-
 ##### Using On A Device
 
 When you initialize the `reactotron` you can tell it the server location when you connect:
