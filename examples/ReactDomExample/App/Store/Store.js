@@ -1,9 +1,9 @@
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import Config from '../Config/Config'
 import createLogger from 'redux-logger'
 import rootReducer from '../Reducers/'
-import sagaMiddleware from 'redux-saga'
-import sagas from '../Sagas/'
+import createSagaMiddleware from 'redux-saga'
+import rootSaga from '../Sagas/'
 import R from 'ramda'
 import Reactotron from '../../client'
 
@@ -17,18 +17,14 @@ const logger = createLogger({
   stateTransformer: (state) => R.map((v) => v.asMutable({deep: true}), state)
 })
 
+const sagaMiddleware = createSagaMiddleware()
+const middleware = [sagaMiddleware, Reactotron.reduxMiddleware, logger]
+
 // a function which can create our store and auto-persist the data
 export default () => {
-  const store = createStore(
-    rootReducer,
-    applyMiddleware(
-      logger,
-      Reactotron.reduxMiddleware,
-      sagaMiddleware(...sagas)
-    )
-  )
-
+  const enhancers = compose(applyMiddleware(...middleware))
+  const store = createStore(rootReducer, enhancers)
+  sagaMiddleware.run(rootSaga)
   Reactotron.addReduxStore(store)
-
   return store
 }

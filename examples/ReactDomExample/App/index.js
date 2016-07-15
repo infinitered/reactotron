@@ -7,14 +7,19 @@ import App from './App'
 
 const rootEl = document.getElementById('root')
 ReactDOM.render(
-  <AppContainer component={App} />,
+  <AppContainer>
+    <App />
+  </AppContainer>,
   rootEl
 )
 
 if (module.hot) {
   module.hot.accept('./App', () => {
+    const App = require('./App').default
     ReactDOM.render(
-      <AppContainer component={require('./App').default} />,
+      <AppContainer>
+        <App />
+      </AppContainer>,
       rootEl
     )
   })

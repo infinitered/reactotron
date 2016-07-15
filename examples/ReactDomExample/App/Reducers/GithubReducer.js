@@ -3,41 +3,33 @@ import Immutable from 'seamless-immutable'
 import createReducer from './CreateReducer'
 
 export const INITIAL_STATE = Immutable({
-  temperature: null,
+  message: null,
   fetching: false,
-  error: null,
-  city: null
+  error: null
 })
 
-// request temp
 const request = (state, action) =>
-  state.merge({
-    fetching: true,
-    city: action.city,
-    temperature: null
-  })
+  state.merge({ fetching: true, message: null, error: null })
 
-// receive temp
 const receive = (state, action) =>
   state.merge({
     fetching: false,
     error: null,
-    temperature: action.temperature
+    message: action.message
   })
 
-// temp failure
 const failure = (state, action) =>
   state.merge({
     fetching: false,
     error: true,
-    temperature: null
+    message: null
   })
 
 // map our types to our handlers
 const ACTION_HANDLERS = {
-  [Types.TEMPERATURE_REQUEST]: request,
-  [Types.TEMPERATURE_RECEIVE]: receive,
-  [Types.TEMPERATURE_FAILURE]: failure
+  [Types.GITHUB_REQUEST]: request,
+  [Types.GITHUB_RECEIVE]: receive,
+  [Types.GITHUB_FAILURE]: failure
 }
 
 export default createReducer(INITIAL_STATE, ACTION_HANDLERS)

@@ -1,19 +1,25 @@
+import { fork } from 'redux-saga/effects'
 import ApiSauce from 'apisauce'
 import { watchStartup } from './StartupSaga'
-import WeatherSaga from './WeatherSaga'
+import GithubSaga from './GithubSaga'
 import Reactotron from '../../client'
 
 const api = ApiSauce.create({
-  baseURL: 'http://openweathermap.org/data/2.1'
+  baseURL: 'https://api.github.com',
+  headers: {
+    'Accept': 'application/vnd.github.v3+json'
+  }
 })
+
 api.addMonitor((response) => {
   Reactotron.apiLog(response)
 })
 
-const {watchWeatherRequest} = WeatherSaga(api)
+const {watchGithubRequest} = GithubSaga(api)
 
-// start the daemons
-export default [
-  watchStartup,
-  watchWeatherRequest
-]
+function * rootSaga () {
+  yield fork(watchStartup)
+  yield fork(watchGithubRequest)
+}
+
+export default rootSaga

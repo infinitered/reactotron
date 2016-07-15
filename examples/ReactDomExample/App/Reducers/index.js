@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
-import WeatherReducer from './WeatherReducer'
+import GithubReducer from './GithubReducer'
 
 // glue all the reducers together into 1 root reducer
 export default combineReducers({
-  weather: WeatherReducer
+  github: GithubReducer
 })
