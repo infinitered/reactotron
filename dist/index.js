@@ -338,7 +338,7 @@ var COMMAND$7 = 'redux.dispatch.prompt';
 Prompts for a path to grab some redux keys from.
  */
 var process$8 = function process$8(context, action) {
-  context.prompt('Action to dispatch', function (value) {
+  context.prompt('Action to dispatch (e.g. {type: \'MY_ACTION\'})', function (value) {
     var action = null;
 
     // try not to blow up the frame

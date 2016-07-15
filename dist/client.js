@@ -4,7 +4,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 // --- Begin Awkward Hackzorz ---
 
-var REACTOTRON_VERSION = '0.6.1';
+var REACTOTRON_VERSION = '0.7.0';
 var R = require('ramda');
 
 // client enabled flag
@@ -54,6 +54,21 @@ client.onCommand('devMenu.reload', function (action, client) {
   // devMenu && devMenu.reload()
 });
 
+/*
+ * Get React Native server IP if hostname is `localhost`
+ * On Android emulator, the IP of host is `10.0.2.2` (Genymotion: 10.0.3.2)
+ */
+function getHost(hostname) {
+  if ((hostname === 'localhost' || hostname === '127.0.0.1') && typeof window !== 'undefined' && window.__fbBatchedBridge && window.__fbBatchedBridge.RemoteModules && window.__fbBatchedBridge.RemoteModules.AndroidConstants) {
+    var _window$__fbBatchedBr = window.__fbBatchedBridge.RemoteModules.AndroidConstants.ServerHost;
+    var ServerHost = _window$__fbBatchedBr === undefined ? hostname : _window$__fbBatchedBr;
+
+    return ServerHost.split(':')[0];
+  }
+
+  return hostname;
+}
+
 /**
   Connect to the server.
   @param userConfigurations Client configuration for connecting to Reactotron
@@ -74,7 +89,9 @@ client.connect = function () {
   };
 
   // merge user input with defaults
-  var config = _extends({}, defaults, userConfigurations);
+  var config = _extends({}, defaults, userConfigurations, {
+    server: getHost(userConfigurations.server || defaults.server)
+  });
 
   // keep track for all ops
   reactotronEnabled = config.enabled;
