@@ -236,13 +236,18 @@ const MIDDLEWARE_ACTION_IGNORE = ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'EFFECT
 
 // Returns a function that can track performance.
 client.trackPerformance = (action) => {
-  const {type} = action
+  let {type} = action
   const start = performanceNow()
 
   const stopTracking = () => {
     const ms = (performanceNow() - start).toFixed(0)
 
     if (!R.contains(action.type, MIDDLEWARE_ACTION_IGNORE)) {
+      // Transform Symbol to Text
+      if (typeof type === 'symbol') {
+        type = type.toString().replace(/^Symbol\(/, '').replace(/\)$/, '');
+      }
+
       client.sendCommand('redux.action.done', {type, ms, action})
     }
   }

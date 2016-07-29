@@ -1,10 +1,12 @@
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 // --- Begin Awkward Hackzorz ---
 
-var REACTOTRON_VERSION = '0.7.0';
+var REACTOTRON_VERSION = '@@REACTOTRON_VERSION@@';
 var R = require('ramda');
 
 // client enabled flag
@@ -242,6 +244,11 @@ client.trackPerformance = function (action) {
     var ms = (performanceNow() - start).toFixed(0);
 
     if (!R.contains(action.type, MIDDLEWARE_ACTION_IGNORE)) {
+      // Transform Symbol to Text
+      if ((typeof type === 'undefined' ? 'undefined' : _typeof(type)) === 'symbol') {
+        type = type.toString().replace(/^Symbol\(/, '').replace(/\)$/, '');
+      }
+
       client.sendCommand('redux.action.done', { type: type, ms: ms, action: action });
     }
   };
