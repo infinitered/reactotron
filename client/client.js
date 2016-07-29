@@ -236,7 +236,7 @@ const MIDDLEWARE_ACTION_IGNORE = ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'EFFECT
 
 // Returns a function that can track performance.
 client.trackPerformance = (action) => {
-  const {type} = action
+  let {type} = action
   const start = performanceNow()
 
   const stopTracking = () => {
