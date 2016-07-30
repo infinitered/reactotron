@@ -28,7 +28,8 @@ if (!window.navigator || !window.navigator.userAgent) {
 // Only then do we load socket.io. This has to be done as a require to preserve
 // the order of user agent being set first.  Also, it's a var so it doesn't get
 // hoisted.
-var io = require('socket.io-client')
+
+var io = require('socket.io-client/socket.io')
 
 // ---------------------
 // DEFAULT CONFIGURATION
