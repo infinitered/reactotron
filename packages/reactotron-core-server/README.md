@@ -13,6 +13,11 @@ import { createServer } from 'reactotron-core-server'
 const server = createServer({
   port: 9090, // default
 
+  onStart: () => null, // fires when we start the server
+  onStop: () => null, // fires when we stop the server
+  onConnect: ({ id, address }) => null, // fires when a client connects
+  onDisconnect: ({ id, address }) => null, // fires when a client disconnects
+
   // a handler that fires whenever a message is received
   onCommand: ({type, payload, messageId, date}) => {
     switch (type) {
