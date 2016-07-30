@@ -3,10 +3,10 @@ import {updateClients} from './clientHelpers'
 const COMMAND = 'client.remove'
 
 const process = (context, action) => {
-  const {clients} = context
-  const {socket} = action
+  const { clients } = context
+  const { client } = action
 
-  delete clients[socket.id]
+  delete clients[client.id]
   updateClients(context)
 }
 
