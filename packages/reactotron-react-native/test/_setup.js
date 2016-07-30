@@ -15,3 +15,5 @@ mockery.enable()
 // the norm.  We want to opt-in instead of opt-out because not everything
 // will be mocked.
 mockery.warnOnUnregistered(false)
+
+mockery.registerMock('socket.io-client/socket.io', require('socket.io-client'))

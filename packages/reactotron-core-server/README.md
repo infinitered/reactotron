@@ -2,7 +2,7 @@
 
 This provides the core functionality of the servers allowing it talk to talk to the client.
 
-It is used by `reactotron-app` and `reactotron-terminal`.
+It is used by `reactotron-app` and `reactotron-cli`.
 
 # Usage
 
