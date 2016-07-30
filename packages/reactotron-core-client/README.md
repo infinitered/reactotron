@@ -18,6 +18,13 @@ const client = createClient({
   port: 9090,
   name: 'I am a client!',
 
+  // fires when we get connected to a server
+  onConnect: () => console.log('hi'),
+
+  // fires when we get disconnected from the server
+  onDisconnect: () => console.log('bye'),
+
+  // fires when the server is telling us something
   onCommand: ({type, payload}) => {
     switch (type) {
       case 'hello.server':

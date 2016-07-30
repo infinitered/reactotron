@@ -6,7 +6,9 @@ const DEFAULTS = {
   host: 'localhost', // the server to connect (required)
   port: 9090, // the port to connect (required)
   name: 'reactotron-core-client', // some human-friendly session name
-  onCommand: R.identity // the function called when we receive a command
+  onCommand: cmd => null, // the function called when we receive a command
+  onConnect: () => null, // fires when we connect
+  onDisconnect: () => null // fires when we disconnect
 }
 
 export class Client {
@@ -33,7 +35,8 @@ export class Client {
    */
   connect () {
     this.connected = true
-    const { io, host, port, onCommand } = this.options
+    const { io, host, port } = this.options
+    const { onCommand, onConnect, onDisconnect } = this.options
 
     // establish a socket.io connection to the server
     const socket = io(`ws://${host}:${port}`, {
@@ -43,7 +46,16 @@ export class Client {
 
     // fires when we talk to the server
     socket.on('connect', () => {
+      // fire our optional onConnect handler
+      onConnect && onConnect()
+
+      // introduce ourselves
       socket.emit('hello.client', this.options)
+    })
+
+    // fires when we disconnect
+    socket.on('disconnect', () => {
+      onDisconnect && onDisconnect()
     })
 
     // fires when we receive a command, just forward it off
