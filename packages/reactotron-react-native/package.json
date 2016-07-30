@@ -21,7 +21,7 @@
     "LICENSE",
     "README.md"
   ],
-  "peerDependenciese": {
+  "peerDependencies": {
     "react-native": ">=0.30.0"
   },
   "devDependencies": {
