@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "copy-internal-deps": "./copy-internal-deps.sh"
   },
   "dependencies": {
     "apisauce": "^0.3.0",
@@ -12,11 +13,12 @@
     "react": "15.2.1",
     "react-native": "0.30.0",
     "react-redux": "^4.4.5",
-    "reactotron-core-client": "file:///Users/steve/src/reactotron/packages/reactotron-core-client",
-    "reactotron-react-native": "file:///Users/steve/src/reactotron/packages/reactotron-react-native",
     "redux": "^3.5.1",
     "redux-logger": "^2.6.1",
     "redux-saga": "^0.11.0",
-    "seamless-immutable": "^6.0.1"
+    "seamless-immutable": "^6.0.1",
+    "socket.io": "^1.4.8",
+    "reactotron-core-client": "^0.0.1",
+    "reactotron-react-native": "^0.0.1"
   }
 }
