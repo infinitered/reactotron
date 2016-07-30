@@ -77,7 +77,9 @@ class Reactotron {
       name: this.options.name,
       host: this.options.host,
       port: this.options.port,
-      onCommand: this.onCommand.bind(this)
+      onCommand: this.onCommand.bind(this),
+      onConnect: this.options.onConnect,
+      onDisconnect: this.options.onDisconnect
     })
 
     // let's connect
