@@ -165,7 +165,9 @@ client.createSubscriptionListener = (store) => {
     )(subscriptions)
 
     const values = R.map((key) => [key, RS.dotPath(key, state)], expanded)
-    client.sendCommand('redux.subscribe.values', {values})
+    if (R.length(values) > 0) {
+      client.sendCommand('redux.subscribe.values', {values})
+    }
   }
 
   client.onCommand('redux.subscribe.request', (action, client) => {
