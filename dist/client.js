@@ -6,7 +6,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 // --- Begin Awkward Hackzorz ---
 
-var REACTOTRON_VERSION = '@@REACTOTRON_VERSION@@';
+var REACTOTRON_VERSION = '0.8.0';
 var R = require('ramda');
 
 // client enabled flag
@@ -165,7 +165,9 @@ client.createSubscriptionListener = function (store) {
     var values = R.map(function (key) {
       return [key, RS.dotPath(key, state)];
     }, expanded);
-    client.sendCommand('redux.subscribe.values', { values: values });
+    if (R.length(values) > 0) {
+      client.sendCommand('redux.subscribe.values', { values: values });
+    }
   };
 
   client.onCommand('redux.subscribe.request', function (action, client) {
