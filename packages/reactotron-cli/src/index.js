@@ -18,8 +18,20 @@ const addSpaceForEmoji = (str) => str.replace(emojiRegex, '$1 ')
 const PORT = 9090
 const server = createServer({
   port: PORT,
-  onCommand: (command) => {
-    console.log(command)
+  onCommand: command => {
+    context.log(command)
+  },
+  onStart: () => {
+    context.log(`Started on port ${PORT}`)
+  },
+  onStop: () => {
+    context.log('stopped')
+  },
+  onConnect: client => {
+    context.post({ type: 'client.add', client })
+  },
+  onDisconnect: client => {
+    context.post({ type: 'client.remove', client })
   }
 })
 
@@ -85,3 +97,5 @@ context.post({type: 'menu.main'})
 
 // initial render
 ui.screen.render()
+
+server.start()

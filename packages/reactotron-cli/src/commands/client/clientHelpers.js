@@ -1,10 +1,10 @@
 import R from 'ramda'
 
-export const formatClient = (client = {}, prefix = "-") => {
-  return `${prefix} {green-fg}[${client.ip}]{/} ${client.name} <${client.userAgent}> <${client.version}>`
+export const formatClient = (client = {}, prefix = '-') => {
+  return `${prefix} {green-fg}[${client.address}]{/} <${client.userAgent}> <${client.version}>`
 }
 
-export const formatClients = (clients = {}, prefix = "-") => {
+export const formatClients = (clients = {}, prefix = '-') => {
   return R.pipe(
     R.values,
     R.map((c) => formatClient(c, prefix)),
