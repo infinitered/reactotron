@@ -1,3 +1,9 @@
+### July 29, 2016 - 0.8.0
+
+* `NEW` support Symbol as Redux action types - [@fantasywind](https://github.com/fantasywind) [#66](https://github.com/skellock/reactotron/pull/66)
+* `FIX` prevents sending empty subscription messages - [@skellock](https://github.com/skellock) [#67](https://github.com/skellock/reactotron/pull/67)
+
+
 ### July 15, 2016 - 0.7.0
 
 * `NEW` android ip auto-detection support! - [@jhen0409](https://github.com/jhen0409)
