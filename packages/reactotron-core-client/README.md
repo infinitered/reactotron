@@ -1,0 +1,363 @@
+# reactotron-core-client
+
+This provides the core functionality of the clients allowing it talk to talk to the server.
+
+It is used by `reactotron-react-dom` and `reactotron-react-native`.
+
+# Usage
+
+```js
+import { createClient } from 'reactotron-core-client'
+import io from 'socket.io-client'
+
+// setup a reactotron client
+const client = createClient({
+  io,
+
+  host: 'localhost',
+  port: 9090,
+  name: 'I am a client!',
+
+  onCommand: ({type, payload}) => {
+    switch (type) {
+      case 'hello.server':
+        break
+
+      case 'state.values.request':
+        const { path } = payload // the path to the state
+        break
+
+      case 'state.keys.request':
+        const { path } = payload // the path to the state
+        break
+
+      case 'state.values.subscribe':
+        const { paths } = payload // string array of state paths
+        break
+
+
+    }
+    console.log(`I just received a ${type} command`)
+    console.log(payload)
+  }
+})
+
+// connect to the server
+client.connect()
+
+// send a log message as a string
+client.send('log', { level: 'debug', message: 'hello!' })
+
+// sending an object log message
+client.send('log', {
+  level: 'debug',
+  message: {
+    nested: [1,2, {hello: 'there'}],
+    fun: true
+  }
+})
+
+// send a warning
+client.send('log', { level: 'warn', message: 'oops' })
+
+// send an error with an optional stack trace
+client.send('log', {
+  level: 'error',
+  message: 'crap',
+  stackTrace: []
+})
+
+// report that an action is complete
+client.send('state.action.complete', {
+  'name': 'LOGIN_REQUEST',
+  'action': {
+    'type': 'LOGIN_REQUEST',
+    'email': 'steve@kellock.ca',
+    'password': 'secret...shhh....'
+  }
+})
+
+// report that values have changed
+client.send('state.values.response', {
+  path: 'user.givenName',
+  value: 'Steve',
+  valid: true
+})
+
+// list the keys at a given path in state
+client.send('state.keys.response', {
+  path: 'user',
+  keys: ['givenName', 'familyName'],
+  valid: true
+})
+
+// let the server know the state values they're subscribed to have changed
+client.send('state.values.change', {
+  changes: [
+    { path: 'user.givenName', value: 'Steve' },
+    {
+      path: 'user',
+      value: { givenName: 'Steve', familyName: 'Kellock' }
+    }
+  ]
+})
+
+// report any API activity
+client.send('api.response', {
+  request: {
+    url: 'https://api.example.com/v1/people',
+    method: 'POST',
+    data: {
+      user: { givenName: 'Steve', familyName: 'Kellock' }
+    },
+    headers: {
+      'Accept': 'application/json',
+      'Cookie': '__ispy=mylittleye; __something=blue'
+    }
+  },
+  response: {
+    body: {result: 'ok'},
+    status: 200,
+    headers: {
+      'Connection': 'keep-alive',
+      'Server': 'cloudflare-nginx'
+    }
+  },
+  duration: 150.0
+})
+
+// send a benchmark report up to the server
+client.send('bench.report', {
+  title: 'My Fast Algorithmz',
+  steps: [
+    { title: 'Step 1', time: 0 },
+    { title: 'Step 2', time: 123 },
+    { title: 'Step 3', time: 1024 }    
+  ]
+})
+
+```
+
+# Why are we passing socket.io down?
+
+It might seem wierd to pass the `io` function in.  The problem I'm trying to solve here
+is that React Native and React have really different initialization patterns.
+
+On React Native, we have to patch the `User-Agent`.  On React JS, we have to make
+sure the require happens a certain way or we suffer the wrath of WebPack warnings.
+
+I don't want to worry about that at this library, so we pass it down and assume
+the environment is sane.
+
+Not unlike how `window` or `console` might work on their respective platforms.
+
+For the record.  I don't like this.  But the rest of socket.io is stellar!
+
+# Messages
+
+### hello.client
+
+The client sends this message to the server when it first connects.  It contains
+all the configuration information used to configure the client.
+
+For example:
+
+```json
+{
+  "host": "localhost",
+  "port": 9090,
+  "name": "reactotron-core-client"
+}
+```
+
+### hello.server
+
+The client receives this message from the server once connected.  It contains
+configuration information used by the server.
+
+Right now the payload is empty because I haven't even created the server!
+
+It'll probably have things like directory, version... I really don't know yet.
+
+```json
+{}
+```
+
+### log
+
+The client sends this to the server to log a message, warning or error.  For
+warnings and errors, we pass through an optional stackTrace array.
+
+Log:
+
+```json
+{
+  "value": "hello!",
+  "level": "debug"
+}
+```
+
+Warn:
+
+```json
+{
+  "value": "hello!",
+  "level": "warn",
+  "stackTrace": null
+}
+```
+
+Error:
+
+```json
+{
+  "value": "hello!",
+  "level": "error",
+  "stackTrace": [
+    {"lineNo": 1, "file": "foo.js"}
+  ]
+}
+```
+
+TBD: The actual stack trace format.  I've seen a couple of formats unfortunately
+and I need to research what these will look like.
+
+Also, how is source maps going to factor in?
+
+### state.action.complete
+
+Sent from the client to the server when an action is complete.  It's up to you
+to decide what an action is.  For Redux, these are actions dispatched.  For MobX,
+these are the results of `spy`.
+
+```json
+{
+  "name": "MY_ACTION",
+  "value": {}
+}
+```
+
+### state.values.request
+
+Sent from the server to the client to ask for the values of state.
+
+```json
+{
+  "path": "account"
+}
+```
+
+### state.values.response
+
+Sent from the client to the server in response to `state.values.request`.
+
+```json
+{
+  "path": "account",
+  "valid": true,
+  "value": {
+    "givenName": "Steve",
+    "familyName": "Kellock"
+  }
+}
+```
+
+### state.values.subscribe
+
+Sent from the server to the client to ask for notification when something
+in the state changes.
+
+```json
+{
+  "paths": [ "account", "cart.total" ]
+}
+```
+
+### state.values.change
+
+Sent from the client to the server when one of the subscriptions found in
+`state.values.subscribe` has changed.
+
+```json
+{
+  "changes": [
+    {
+      "path": "account",
+      "value": {
+        "email": "steve@kellock.ca"
+      }
+    },
+    {
+      "path": "cart.total",
+      "value": 100.01
+    }
+  ]
+}
+```
+
+### state.keys.request
+
+Sent from the server to the client to enumerate the keys inside state.
+
+```json
+{
+  "path": "account"
+}
+```
+
+### state.keys.response
+
+Sent from the client to server in response to `state.keys.request`.
+
+```json
+{
+  "path": "account",
+  "valid": true,
+  "keys": ["givenName", "familyName"]
+}
+```
+
+### api.response
+
+Sent from the client to server when an API has finished a request.
+
+```json
+{
+  "request": {
+    "url": "https://api.example.com/people/1",
+    "method": "PUT",
+    "data": {
+      "firstName": "Steve",
+      "lastName": "Kellock"
+    },
+    "headers": {
+      "Accept": "application/json",
+      "Cookie": "__ispy=mylittleye; __something=blue"
+    }
+  },
+  "response": {
+    "body": {},
+    "status": 200,
+    "headers": {
+      "Connection": "keep-alive",
+      "Server": "cloudflare-nginx"
+    }
+  },
+  "duration": 120.0
+}
+```
+
+### bench.report
+
+Sent from the client to server when it's time to report some performance details.
+
+```json
+{
+  "title": "My Sorting Algorithm",
+  "steps": [
+    { "title": "start", "time": 0 },
+    { "title": "lookup tables", "time": 123 },
+    { "title": "randomize", "time": 422 }
+  ]
+}
+```
