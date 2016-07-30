@@ -21,6 +21,9 @@
     "LICENSE",
     "README.md"
   ],
+  "peerDependenciese": {
+    "react-native": ">=0.30.0"
+  },
   "devDependencies": {
     "ava": "^0.15.2",
     "babel-core": "^6.11.4",
