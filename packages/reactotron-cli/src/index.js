@@ -15,10 +15,11 @@ const emojiPattern = '(' + keys.join('|') + ')+'
 const emojiRegex = new RegExp(emojiPattern, 'g')
 const addSpaceForEmoji = (str) => str.replace(emojiRegex, '$1 ')
 
-const PORT = 3334
+const PORT = 9090
 const server = createServer({
   port: PORT,
   onCommand: (command) => {
+    console.log(command)
   }
 })
 
