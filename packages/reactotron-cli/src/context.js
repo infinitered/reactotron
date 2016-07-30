@@ -5,7 +5,7 @@ import Router from './router'
 export default class Context {
 
   constructor (parts) {
-    this.io = parts.io
+    this.send = parts.send
     this.ui = parts.ui
     this.router = parts.router
     this.menuStack = []
@@ -16,10 +16,8 @@ export default class Context {
     this.config = {}
   }
 
-  send (action) {
-    const body = action
-    const bodyJson = JSON.stringify(body)
-    this.io.sockets.emit('command', bodyJson)
+  send (type, payload) {
+    this.send.emit('command', {type, payload})
   }
 
   post (message) {
