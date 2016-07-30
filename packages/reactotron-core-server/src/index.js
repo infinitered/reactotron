@@ -4,7 +4,11 @@ import socketIO from 'socket.io'
 
 const DEFAULTS = {
   port: 9090, // the port to live (required)
-  onCommand: R.identity // handles inbound commands
+  onCommand: command => null, // handles inbound commands
+  onStart: () => null, // handles inbound commands
+  onStop: () => null, // handles inbound commands
+  onConnect: socket => null, // notify connections
+  onDisconnect: socket => null // notify disconnections
 }
 
 const isPortValid = R.allPass([R.complement(R.isNil), R.is(Number), RS.isWithin(1, 65535)])
@@ -46,16 +50,29 @@ export class Server {
    * Configures the socket.io server with our behaviours.
    */
   registerCallbacks () {
-    const { onCommand } = this.options
+    const { onCommand, onConnect, onDisconnect } = this.options
+
     // when we get new clients
     this.io.on('connection', socket => {
       // remember them
       this.openSockets.push(socket)
 
+      // details about who has connected
+      const clientDetails = {
+        id: socket.id,
+        address: socket.request.connection.remoteAddress
+      }
+
+      // trigger event
+      onConnect && onConnect(clientDetails)
+
       // when this client disconnects
       socket.on('disconnect', () => {
         // remove them from the list
         this.openSockets = R.without([socket], this.openSockets)
+
+        // trigger event
+        onDisconnect && onDisconnect(clientDetails)
       })
 
       // when we receive a command from the client
@@ -72,13 +89,16 @@ export class Server {
    */
   start () {
     this.started = true
-    const { port } = this.options
+    const { port, onStart } = this.options
 
     // start listening
     this.io = socketIO(port)
 
     // configure socket.io to do its thing
     this.registerCallbacks()
+
+    // trigger the start message
+    onStart && onStart()
 
     return this
   }
@@ -87,9 +107,14 @@ export class Server {
    * Stops the server.
    */
   stop () {
+    const { onStop } = this.options
     this.started = false
     R.forEach(s => s.connected && s.disconnect(), this.openSockets)
     this.io.close()
+
+    // trigger the stop message
+    onStop && onStop()
+
     return this
   }
 
