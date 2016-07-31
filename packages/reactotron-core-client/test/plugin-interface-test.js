@@ -28,15 +28,17 @@ test('plugins are invoke and return an object', t => {
 
 test('plugins can literally do nothing', t => {
   const client = createClient({ io })
-  const empty = send => ({})
+  const empty = config => ({})
   client.addPlugin(empty)
   t.is(client.plugins.length, 1)
 })
 
-test.cb('initialized with a send function', t => {
+test.cb('initialized with the config object', t => {
   const client = createClient({ io })
-  client.addPlugin(send => {
-    t.true(typeof send === 'function')
+  client.addPlugin(config => {
+    t.is(typeof config, 'object')
+    t.is(config.ref, client)
+    t.is(typeof config.send, 'function')
     t.end()
     return {}
   })
@@ -44,7 +46,7 @@ test.cb('initialized with a send function', t => {
 })
 
 test('can be added in createClient', t => {
-  const createPlugin = (name, value) => send => ({ features: { [name]: () => value } })
+  const createPlugin = (name, value) => config => ({ features: { [name]: () => value } })
   const client = createClient({
     io,
     plugins: [
