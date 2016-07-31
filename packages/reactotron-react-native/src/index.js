@@ -8,7 +8,7 @@
 // SECOND PARTY
 // ------------
 
-import { createClient } from 'reactotron-core-client'
+import { createClient, CorePlugins } from 'reactotron-core-client'
 
 // -----------
 // THIRD PARTY
@@ -39,7 +39,8 @@ const DEFAULTS = {
   io,
   host: 'localhost',
   port: 9090,
-  name: 'reactotron-react-native'
+  name: 'reactotron-react-native',
+  plugins: CorePlugins
 }
 
 // -----------
