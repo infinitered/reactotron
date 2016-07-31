@@ -1,5 +1,6 @@
 import R from 'ramda'
 import validate from './validate'
+import pluginLog from './plugin-log'
 
 const DEFAULTS = {
   io: null, // the socket.io function to create a socket
@@ -10,6 +11,10 @@ const DEFAULTS = {
   onConnect: () => null, // fires when we connect
   onDisconnect: () => null // fires when we disconnect
 }
+
+export const CorePlugins = [
+  pluginLog
+]
 
 // these are not for you.
 const isReservedFeature = R.contains(R.__, [

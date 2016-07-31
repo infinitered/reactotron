@@ -1,7 +1,8 @@
-const COMMAND = 'content.log'
+const COMMAND = 'log'
 
 const process = (context, action) => {
-  context.log(action.message)
+  const { message, level } = action.payload
+  context.log(message, level)
 }
 
 export default {

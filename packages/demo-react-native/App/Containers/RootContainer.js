@@ -4,12 +4,16 @@ import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import Styles from './Styles/RootContainerStyles'
 import Reactotron from 'reactotron-react-native'
+import Button from '../Components/Button'
 
 export default class RootContainer extends Component {
 
   constructor (props) {
     super(props)
     this.handlePress = this.handlePress.bind(this)
+    this.handlePressDebug = () => Reactotron.debug('This is a debug message')
+    this.handlePressWarn = () => Reactotron.warn('This is a warn message')
+    this.handlePressError = () => Reactotron.error('This is a error message')
   }
 
   handlePress () {
@@ -23,14 +27,6 @@ export default class RootContainer extends Component {
     dispatch(Actions.startup())
   }
 
-//  componentDidMount () {
-//    navigator.geolocation.getCurrentPosition(
-//      (position) => Reactotron.log(position),
-//      (error) => alert(error.message),
-//      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-//    )
-//  }
-
   render () {
     const {city, temperature, fetching} = this.props
     return (
@@ -40,6 +36,12 @@ export default class RootContainer extends Component {
             {`The weather in ${city} is ${fetching ? 'loading' : temperature}.`}
           </Text>
         </TouchableOpacity>
+        <Text style={Styles.logTitle}>Logging</Text>
+        <View style={Styles.logButtons}>
+          <Button text='.debug()' onPress={this.handlePressDebug} />
+          <Button text='.warn()' onPress={this.handlePressWarn} />
+          <Button text='.error()' onPress={this.handlePressError} />
+        </View>
       </View>
     )
   }
