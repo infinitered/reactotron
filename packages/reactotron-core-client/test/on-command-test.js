@@ -3,9 +3,15 @@ import { createClient } from '../src'
 import socketServer from 'socket.io'
 import socketClient from 'socket.io-client'
 import getFreePort from './_get-free-port'
+import io from './_fake-io'
 
 const mockType = 'TEST'
 const mockPayload = [1, 2, 'three', { four: true }]
+
+test('the default onCommand does nothing', t => {
+  const client = createClient({ io })
+  t.falsy(client.options.onCommand())
+})
 
 test.cb('receives a valid command', t => {
   getFreePort(port => {

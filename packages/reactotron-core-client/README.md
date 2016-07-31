@@ -368,3 +368,71 @@ Sent from the client to server when it's time to report some performance details
   ]
 }
 ```
+
+
+# Plugins
+
+Reactotron is extensible via plugins.  You add plugins by calling the `addPlugin`
+function on the the client.
+
+A plugin is a function with 1 parameter: a function called send.  It returns an
+object.
+
+Should the object have certain keynames, then those functions will get invoked
+at the right time.
+
+```js
+// counter-plugin.js
+export default send => {
+  let commandCounter = 0
+  return {
+    onCommand: command => {
+      commandCounter++
+      if (commandCounter === 69) console.log('tee hee')
+    }
+  }
+}
+```
+
+Here's what a plugin can do.
+
+```js
+{
+  // Fires whenever a command is received from the server.
+  //
+  // command is an object with:
+  //   .type - String - the name of the command
+  //   .payload - anything - maybe null, maybe a string, maybe an object, not a function
+  //                         its whatever the server sent.
+  onCommand: command => {
+    const { type, payload } = command
+  },
+
+  // Fires when we connect to the server.  Will only be called if the plugin
+  // is setup before connecting to the server.
+  onConnect: () => {},
+
+  // Fires when we disconnect from the server.
+  onDisconnect: () => {},
+
+  // This is an object (not a function).  The keys are strings.  The values are functions.
+  // Every entry in here will become a method on the Reactotron client object.
+  // Collisions are handled on a first-come first-serve basis.
+  //
+  // These functions are reserved (sorry):  connect, configure, send, addPlugin,
+  // options, connected, plugins, and socket.
+  //
+  // Sorry.
+  //
+  // I went with this mixin approach because the interface feels nice from the
+  // calling code point-of-view.
+  features: {
+    // Reacotron.log('hello!')
+    log: (message) => send('log', { level: 'debug', message } ),
+
+    // Reacotron.warn('look out!  falling rocks!')
+    warn: (message) => send('log', { level: 'warn', message } ),
+  }
+
+}
+```
