@@ -52,8 +52,8 @@ export class Client {
 
     // establish a socket.io connection to the server
     const socket = io(`ws://${host}:${port}`, {
-      // jsonp: false,
-      // transports: ['websocket', 'polling']
+      jsonp: false,
+      transports: ['websocket', 'polling']
     })
 
     // fires when we talk to the server
