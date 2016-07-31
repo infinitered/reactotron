@@ -2,8 +2,6 @@ import test from 'ava'
 import { createClient } from '../src'
 import io from './_fake-io'
 
-const onCommand = (type, payload) => true
-
 test('has defaults', t => {
   const client = createClient({io})
   t.is(client.options.host, 'localhost')
