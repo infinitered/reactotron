@@ -1,7 +1,7 @@
 import test from 'ava'
 import { createClient } from '../src'
 import socketClient from 'socket.io-client'
-import plugin from '../src/plugin-log'
+import plugin from '../src/plugins/logger'
 
 test('the 4 functions send the right data', t => {
   const client = createClient({ io: socketClient })

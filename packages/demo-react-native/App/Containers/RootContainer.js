@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import Styles from './Styles/RootContainerStyles'
-import Reactotron from 'reactotron-react-native'
+// import Reactotron from 'reactotron-react-native'
 import Button from '../Components/Button'
 
 export default class RootContainer extends Component {
@@ -11,14 +11,14 @@ export default class RootContainer extends Component {
   constructor (props) {
     super(props)
     this.handlePress = this.handlePress.bind(this)
-    this.handlePressDebug = () => Reactotron.debug('This is a debug message')
-    this.handlePressWarn = () => Reactotron.warn('This is a warn message')
-    this.handlePressError = () => Reactotron.error('This is a error message')
+    this.handlePressDebug = () => console.tron.debug('This is a debug message')
+    this.handlePressWarn = () => console.tron.warn('This is a warn message')
+    this.handlePressError = () => console.tron.error('This is a error message')
   }
 
   handlePress () {
     const {dispatch} = this.props
-    Reactotron.log('A touchable was pressed.🔥🦄')
+    console.tron.log('A touchable was pressed.🔥🦄')
     dispatch(Actions.requestTemperature('Toronto'))
   }
 
