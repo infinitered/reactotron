@@ -1,6 +1,6 @@
 import R from 'ramda'
 import validate from './validate'
-import pluginLog from './plugin-log'
+import logger from './plugins/logger'
 import { start } from './stopwatch'
 
 const DEFAULTS = {
@@ -14,7 +14,7 @@ const DEFAULTS = {
 }
 
 export const CorePlugins = [
-  pluginLog
+  logger
 ]
 
 // these are not for you.
@@ -144,6 +144,9 @@ export class Client {
 
     // add it to the list
     this.plugins.push(plugin)
+
+    // call the plugins onPlugin
+    plugin.onPlugin && typeof plugin.onPlugin === 'function' && plugin.onPlugin.bind(this)(this)
 
     // chain-friendly
     return this
