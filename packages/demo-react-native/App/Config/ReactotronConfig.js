@@ -4,7 +4,6 @@ import decorate from 'reactotron-core-client/plugins/decorator'
 Reactotron
   .configure({
     name: 'Demo Time',
-    host: '10.0.1.19',
     onConnect: () => console.log('connected'),
     onDisconnect: () => console.log('disconnected')
   })
