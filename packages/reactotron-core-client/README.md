@@ -46,7 +46,7 @@ const client = createClient({
     }
     console.log(`I just received a ${type} command`)
     console.log(payload)
-  }
+  }  
 })
 
 // connect to the server
@@ -424,6 +424,9 @@ Here's what a plugin can do.
 
   // Fires when we disconnect from the server.
   onDisconnect: () => {},
+
+  // fires when the plugin is attached (this only happens once at initialization)
+  onPlugin: client => console.log('I have been attached to ', client),
 
   // This is an object (not a function).  The keys are strings.  The values are functions.
   // Every entry in here will become a method on the Reactotron client object.
