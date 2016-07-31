@@ -7,8 +7,10 @@ import Reactotron from 'reactotron-react-native'
 const SCALE = 'C'
 
 export function * getWeather (api, city) {
+  const elapsed = Reactotron.startTimer()
   // const bench = Reactotron.bench('weather check')
   const response = yield call(api.get, '/find/name', { q: city })
+  Reactotron.log(`api call took ${elapsed()} ms`)
   // bench.step('after api')
   if (response.ok) {
     const kelvin = RS.dotPath('data.list.0.main.temp', response)
