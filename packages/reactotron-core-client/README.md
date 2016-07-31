@@ -380,15 +380,20 @@ Sent from the client to server when it's time to report some performance details
 Reactotron is extensible via plugins.  You add plugins by calling the `addPlugin`
 function on the the client.
 
-A plugin is a function with 1 parameter: a function called send.  It returns an
+A plugin is a function with 1 parameter: a configuration object.  It returns an
 object.
+
+The inbound object has two keys:
+
+* send - call this function to send messages
+* ref - a reference to the client (danger... it's not bound properly, use send instead)
 
 Should the object have certain keynames, then those functions will get invoked
 at the right time.
 
 ```js
 // counter-plugin.js
-export default send => {
+export default config => {
   let commandCounter = 0
   return {
     onCommand: command => {

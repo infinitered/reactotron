@@ -110,7 +110,10 @@ export class Client {
     if (typeof pluginCreator !== 'function') throw new Error('plugins must be a function')
 
     // execute it immediately passing the send function
-    const plugin = pluginCreator(this.send.bind(this))
+    const plugin = pluginCreator({
+      send: this.send.bind(this),
+      ref: this
+    })
 
     // ensure we get an Object-like creature back
     if (!R.is(Object, plugin)) throw new Error('plugins must return an object')

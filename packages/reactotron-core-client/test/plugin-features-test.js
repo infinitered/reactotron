@@ -5,12 +5,12 @@ import R from 'ramda'
 
 test('features must be an object if they appear', t => {
   const client = createClient({ io })
-  t.throws(() => client.addPlugin(send => ({ features: 1 })))
+  t.throws(() => client.addPlugin(config => ({ features: 1 })))
 })
 
 test('some names are not allowed', t => {
   const client = createClient({ io })
-  const createPlugin = features => send => ({features})
+  const createPlugin = features => config => ({features})
 
   const badPlugins = R.map(
     name => createPlugin({ [name]: R.identity }),
@@ -24,7 +24,7 @@ test('some names are not allowed', t => {
 
 test('features can be added and called', t => {
   const client = createClient({ io })
-  const plugin = send => {
+  const plugin = config => {
     const features = {
       magic: () => 42
     }
@@ -37,7 +37,7 @@ test('features can be added and called', t => {
 
 test('you can overwrite other feature names', t => {
   const client = createClient({ io })
-  const createPlugin = number => send => ({ features: { hello: () => number } })
+  const createPlugin = number => config => ({ features: { hello: () => number } })
   client.addPlugin(createPlugin(69))
   t.is(client.hello(), 69)
   client.addPlugin(createPlugin(9001))
