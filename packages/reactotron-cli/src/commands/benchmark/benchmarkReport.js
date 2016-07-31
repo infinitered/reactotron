@@ -1,7 +1,7 @@
 import R from 'ramda'
-import {leftPad} from 'strman'
+import { leftPad } from 'strman'
 
-const COMMAND = 'bench.report'
+const COMMAND = 'benchmark.report'
 
 const drawStep = (step) => {
   const elapsed = leftPad(step.time.toFixed(0), 7, ' ')
@@ -11,7 +11,7 @@ const drawStep = (step) => {
 
 const process = (context, action) => {
   const timeStamp = context.timeStamp()
-  const {title, steps} = action.message
+  const {title, steps} = action.payload
   const first = R.head(steps)
 
   if (steps.length === 2) {
@@ -45,4 +45,3 @@ export default {
   name: COMMAND,
   process
 }
-
