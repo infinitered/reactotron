@@ -4,22 +4,12 @@ import Context from './context'
 import Router from './router'
 import commands from './commands/index'
 import ui from './ui'
-import gemoji from 'gemoji'
-
-// A way to add extra spacing for emoji characters. As it
-// turns out, the emojis are double-wide code points, but
-// the terminal renders it as a single slot.  I literally
-// understand nothing anymore.  Seems to work great tho!
-const keys = R.keys(gemoji.unicode)
-const emojiPattern = '(' + keys.join('|') + ')+'
-const emojiRegex = new RegExp(emojiPattern, 'g')
-const addSpaceForEmoji = (str) => str.replace(emojiRegex, '$1 ')
 
 const PORT = 9090
 const server = createServer({
   port: PORT,
   onCommand: command => {
-    context.log(command)
+    context.post(command)
   },
   onStart: () => {
     context.log(`Started on port ${PORT}`)
@@ -42,43 +32,6 @@ const context = new Context({
   send: server.send,
   router
 })
-//
-// io.on('connection', (socket) => {
-//   // When a socket connects, we also want to wait for
-//   // additional context about the client.
-//   socket.on('ready', (clientConfig) => {
-//     const socketInfo = {
-//       socket: socket,
-//       ip: socket.request.connection.remoteAddress === '::1' ? 'localhost' : socket.request.connection.remoteAddress,
-//       userAgent: socket.request.headers['user-agent'] || 'Unknown'
-//     }
-//
-//     const clientInfo = R.merge(socketInfo, clientConfig)
-//     // const clientInfo = {
-//     //   ...socketInfo,
-//     //   ...clientConfig
-//     // }
-//
-//     // Add new client
-//     context.post({type: 'client.add', client: clientInfo})
-//
-//     // new connects need the subscribe redux
-//     context.post({type: 'redux.subscribe.request'})
-//   })
-//
-//   ui.screen.render()
-//
-//   socket.on('command', (data) => {
-//     const action = JSON.parse(addSpaceForEmoji(data))
-//     context.post(action)
-//     ui.screen.render()
-//   })
-//
-//   socket.on('disconnect', () => {
-//     context.post({type: 'client.remove', socket})
-//     ui.screen.render()
-//   })
-// })
 
 // always control-c to die
 ui.screen.key('C-c', () => context.post({type: 'program.die'}))
