@@ -143,6 +143,11 @@ client.send('bench.report', {
   ]
 })
 
+// a utility to time things
+const elapsed = client.startTimer()
+// do something you want to time
+const ms = elapsed()  // the number of ms it took.  ish.
+
 ```
 
 # Why are we passing socket.io down?

@@ -14,7 +14,7 @@ test('some names are not allowed', t => {
 
   const badPlugins = R.map(
     name => createPlugin({ [name]: R.identity }),
-    ['options', 'connected', 'socket', 'plugins', 'configure', 'connect', 'send', 'addPlugin']
+    ['options', 'connected', 'socket', 'plugins', 'configure', 'connect', 'send', 'addPlugin', 'startTimer']
   )
 
   R.forEach(plugin => {

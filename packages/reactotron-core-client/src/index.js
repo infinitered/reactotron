@@ -1,6 +1,7 @@
 import R from 'ramda'
 import validate from './validate'
 import pluginLog from './plugin-log'
+import { start } from './stopwatch'
 
 const DEFAULTS = {
   io: null, // the socket.io function to create a socket
@@ -19,7 +20,8 @@ export const CorePlugins = [
 // these are not for you.
 const isReservedFeature = R.contains(R.__, [
   'options', 'connected', 'socket', 'plugins',
-  'configure', 'connect', 'send', 'addPlugin'
+  'configure', 'connect', 'send', 'addPlugin',
+  'startTimer'
 ])
 
 export class Client {
@@ -29,6 +31,8 @@ export class Client {
   connected = false
   socket = null
   plugins = []
+
+  startTimer = () => start()
 
   /**
    * Set the configuration options.
