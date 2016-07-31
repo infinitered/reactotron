@@ -1,8 +1,9 @@
 import Reactotron from 'reactotron-react-native'
-import {Platform} from 'react-native'
 
-Reactotron.connect({
-  // enabled: true,
-  name: 'Demo Time'
-  // userAgent: Platform.OS
-})
+Reactotron
+  .configure({
+    name: 'Demo Time',
+    onConnect: () => console.log('connected'),
+    onDisconnect: () => console.log('disconnected')
+  })
+  .connect()
