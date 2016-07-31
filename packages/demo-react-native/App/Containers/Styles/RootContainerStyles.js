@@ -10,5 +10,8 @@ export default StyleSheet.create({
     textAlign: 'center',
     padding: 50,
     fontSize: 25
+  },
+  logButtons: {
+    flexDirection: 'row'
   }
 })
