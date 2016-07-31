@@ -16,7 +16,7 @@ import reduxSubscribeDelete from './redux/reduxSubscribeDelete'
 import reduxSubscribeDeletePrompt from './redux/reduxSubscribeDeletePrompt'
 import reduxSubscribeClear from './redux/reduxSubscribeClear'
 import devMenuReload from './devMenu/devMenuReload'
-import benchReport from './bench/benchReport'
+import benchmarkReport from './benchmark/benchmarkReport'
 
 // program things
 import die from './program/die'
@@ -82,6 +82,6 @@ export default [
   commandRepeat,
   devMenuReload,
   consoleError,
-  benchReport,
+  benchmarkReport,
   die
 ]

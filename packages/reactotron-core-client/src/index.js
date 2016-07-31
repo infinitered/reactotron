@@ -1,6 +1,7 @@
 import R from 'ramda'
 import validate from './validate'
 import logger from './plugins/logger'
+import benchmark from './plugins/benchmark'
 import { start } from './stopwatch'
 
 const DEFAULTS = {
@@ -14,7 +15,8 @@ const DEFAULTS = {
 }
 
 export const CorePlugins = [
-  logger
+  logger,
+  benchmark
 ]
 
 // these are not for you.

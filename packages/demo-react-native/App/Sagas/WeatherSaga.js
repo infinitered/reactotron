@@ -8,16 +8,16 @@ const SCALE = 'C'
 
 export function * getWeather (api, city) {
   const elapsed = Reactotron.startTimer()
-  // const bench = Reactotron.bench('weather check')
+  const benchmark = Reactotron.benchmark('weather check')
   const response = yield call(api.get, '/find/name', { q: city })
   Reactotron.log(`api call took ${elapsed()} ms`)
-  // bench.step('after api')
+  benchmark.step('after api')
   if (response.ok) {
     const kelvin = RS.dotPath('data.list.0.main.temp', response)
     const celcius = kelvin - 273.15
     const farenheit = (celcius * 1.8000) + 32
 
-    // bench.step('after mathy things')
+    benchmark.step('after mathy things')
     if (SCALE === 'F') {
       yield put(Actions.receiveTemperature(Math.round(farenheit)))
     } else {
@@ -26,7 +26,7 @@ export function * getWeather (api, city) {
   } else {
     yield put(Actions.receiveTemperatureFailure())
   }
-  // bench.stop()
+  benchmark.stop()
 }
 
 export default (api) => {
