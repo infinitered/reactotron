@@ -3,6 +3,7 @@ import validate from './validate'
 import logger from './plugins/logger'
 import benchmark from './plugins/benchmark'
 import { start } from './stopwatch'
+export { start } from './stopwatch'
 
 const DEFAULTS = {
   io: null, // the socket.io function to create a socket
@@ -101,7 +102,7 @@ export class Client {
    * Sends a command to the server
    */
   send (type, payload) {
-    this.socket.emit('command', { type, payload })
+    this.socket && this.socket.emit('command', { type, payload })
   }
 
   /**
