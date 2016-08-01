@@ -12,7 +12,7 @@ export default class Context {
     this.menuStack = []
     this.clients = {}
     this.lastRepeatableMessage = null
-    this.reduxActionLoggingStyle = 'short'
+    this.reduxActionLoggingStyle = 'full'
     this.apiLoggingStyle = 'short'
     this.config = {}
   }
