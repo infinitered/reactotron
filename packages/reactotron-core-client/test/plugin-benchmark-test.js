@@ -18,7 +18,7 @@ test('adds benchmarks to a report', async t => {
   }
 
   //  register
-  client.use(plugin)
+  client.use(plugin())
 
   t.is(client.plugins.length, 1)
   t.is(typeof client.benchmark, 'function')

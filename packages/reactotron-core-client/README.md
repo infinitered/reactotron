@@ -380,20 +380,37 @@ Sent from the client to server when it's time to report some performance details
 Reactotron is extensible via plugins.  You add plugins by calling the `use`
 function on the the client.
 
-A plugin is a function with 1 parameter: a configuration object.  It returns an
-object.
+A plugin looks like this:
 
-The inbound object has two keys:
+```js
+export default () => reactotron => {}
+```
 
-* send - call this function to send messages
-* ref - a reference to the client (danger... it's not bound properly, use send instead)
+* A function that:
+  * returns a function with 1 parameter (reactotron) that:
+    * returns an object
 
-Should the object have certain keynames, then those functions will get invoked
-at the right time.
+
+### The 1st Function
+
+You use the first function to configure your plugin.  If you don't have any
+configuration required for your plugin, just leave it empty like above.
+
+### The 2nd function
+
+The 2nd function gets called with the reactotron object.  Among other things,
+it contains (most importantly) a function called `send()`.
+
+### The return object
+
+This contains hooks into reactotron.  By naming the keys certain things, you're
+able to hook into guts to do stuff.  Most importantly `onCommand` to receive
+events from the server and `features` to define extra functions on reactotron.
+
 
 ```js
 // counter-plugin.js
-export default config => {
+export default () => reactotron => {
   let commandCounter = 0
   return {
     onCommand: command => {
@@ -426,24 +443,24 @@ Here's what a plugin can do.
   onDisconnect: () => {},
 
   // fires when the plugin is attached (this only happens once at initialization)
-  onPlugin: client => console.log('I have been attached to ', client),
+  onPlugin: reactotron => console.log('I have been attached to ', reactotron),
 
   // This is an object (not a function).  The keys are strings.  The values are functions.
   // Every entry in here will become a method on the Reactotron client object.
   // Collisions are handled on a first-come first-serve basis.
   //
-  // These functions are reserved (sorry):  connect, configure, send, use,
-  // options, connected, plugins, and socket.
+  // These names are reserved:  
+  //   connect, configure, send, use, options, connected, plugins, and socket.
   //
   // Sorry.
   //
   // I went with this mixin approach because the interface feels nice from the
   // calling code point-of-view.
   features: {
-    // Reacotron.log('hello!')
+    // Reactotron.log('hello!')
     log: (message) => send('log', { level: 'debug', message } ),
 
-    // Reacotron.warn('look out!  falling rocks!')
+    // Reactotron.warn('look out!  falling rocks!')
     warn: (message) => send('log', { level: 'warn', message } ),
   }
 

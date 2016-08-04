@@ -5,7 +5,8 @@
     "clean": "lerna clean",
     "test": "lerna run test",
     "copy-internal-deps": "lerna run copy-internal-deps",
-    "welcome": "./scripts/welcome.sh"
+    "welcome": "./scripts/welcome.sh",
+    "e2e": "npm run bootstrap && npm run build && npm run copy-internal-deps && npm run test"
   },
   "devDependencies": {
     "lerna": "2.0.0-beta.24"
