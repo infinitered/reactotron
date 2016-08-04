@@ -12,7 +12,7 @@ import R from 'ramda'
  *
  * Because I hate writing import `Reactotron` when I'm doing quick debugging
  */
-export default (victim, alias = 'reactotron') => () => {
+export default (victim, alias = 'reactotron') => reactotron => {
   if (!R.is(Object, victim)) throw new Error('must provide an object to attach to')
   return {
     onPlugin: (client) => {

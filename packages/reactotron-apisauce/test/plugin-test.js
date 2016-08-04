@@ -22,12 +22,10 @@ test.cb('parses responses', t => {
     let duration
 
     const plugin = createPlugin({
-      ref: {
-        apiResponse: (a, b, c) => {
-          request = a
-          response = b
-          duration = c
-        }
+      apiResponse: (a, b, c) => {
+        request = a
+        response = b
+        duration = c
       }
     })
 

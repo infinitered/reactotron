@@ -383,10 +383,7 @@ function on the the client.
 A plugin is a function with 1 parameter: a configuration object.  It returns an
 object.
 
-The inbound object has two keys:
-
-* send - call this function to send messages
-* ref - a reference to the client (danger... it's not bound properly, use send instead)
+The inbound parameter is the reactotron client.  So you can call `.send()` on it.
 
 Should the object have certain keynames, then those functions will get invoked
 at the right time.
@@ -426,7 +423,7 @@ Here's what a plugin can do.
   onDisconnect: () => {},
 
   // fires when the plugin is attached (this only happens once at initialization)
-  onPlugin: client => console.log('I have been attached to ', client),
+  onPlugin: reactotron => console.log('I have been attached to ', reactotron),
 
   // This is an object (not a function).  The keys are strings.  The values are functions.
   // Every entry in here will become a method on the Reactotron client object.

@@ -3,7 +3,7 @@ import RS from 'ramdasauce'
 /**
  * Sends an apisauce response to the server.
  */
-export default config => {
+export default reactotron => {
   return {
     features: {
       apisauce: (source) => {
@@ -19,7 +19,7 @@ export default config => {
         const request = { url, method, data: requestData, headers: requestHeaders }
         const response = { body, status, headers: responseHeaders }
 
-        config.ref.apiResponse(request, response, duration)
+        reactotron.apiResponse(request, response, duration)
       }
     }
   }

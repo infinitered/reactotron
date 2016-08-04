@@ -1,20 +1,20 @@
 /**
  * Provides helper functions for send state responses.
  */
-export default config => {
+export default reactotron => {
   return {
     features: {
       stateActionComplete: (name, action) =>
-        config.send('state.action.complete', { name, action }),
+        reactotron.send('state.action.complete', { name, action }),
 
       stateValuesResponse: (path, value, valid = true) =>
-        config.send('state.values.response', { path, value, valid }),
+        reactotron.send('state.values.response', { path, value, valid }),
 
       stateKeysResponse: (path, keys, valid = true) =>
-        config.send('state.keys.response', { path, keys, valid }),
+        reactotron.send('state.keys.response', { path, keys, valid }),
 
       stateValuesChange: changes =>
-        config.send('state.values.change', { changes })
+        reactotron.send('state.values.change', { changes })
     }
   }
 }

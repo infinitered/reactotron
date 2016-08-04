@@ -12,8 +12,8 @@ test.cb('plugins support send', t => {
   let capturedSend
 
   // the plugin to extract the send function
-  const plugin = config => {
-    capturedSend = config.send
+  const plugin = reactotron => {
+    capturedSend = reactotron.send
     return {}
   }
 
