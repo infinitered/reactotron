@@ -13,7 +13,7 @@ test('stateActionComplete', t => {
     name = y.name
     action = y.action
   }
-  client.addPlugin(plugin)
+  client.use(plugin)
   t.is(client.plugins.length, 1)
   t.is(typeof client.stateActionComplete, 'function')
   client.stateActionComplete('name', { action: 123 })
@@ -34,7 +34,7 @@ test('stateValuesResponse', t => {
     value = y.value
     valid = y.valid
   }
-  client.addPlugin(plugin)
+  client.use(plugin)
   t.is(client.plugins.length, 1)
   t.is(typeof client.stateValuesResponse, 'function')
   client.stateValuesResponse('user.password', 'password', false)
@@ -56,7 +56,7 @@ test('stateKeysResponse', t => {
     keys = y.keys
     valid = y.valid
   }
-  client.addPlugin(plugin)
+  client.use(plugin)
   t.is(client.plugins.length, 1)
   t.is(typeof client.stateKeysResponse, 'function')
   client.stateKeysResponse('user', ['name', 'password'], false)
@@ -74,7 +74,7 @@ test('stateValuesChange', t => {
     type = x
     changes = y.changes
   }
-  client.addPlugin(plugin)
+  client.use(plugin)
   t.is(client.plugins.length, 1)
   t.is(typeof client.stateValuesChange, 'function')
   client.stateValuesChange([{ path: 'a', value: 1 }, { path: 'b', value: 2 }])

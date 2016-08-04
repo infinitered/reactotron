@@ -10,32 +10,32 @@ test('client accepts plugins', t => {
 
 test('plugins are functions', t => {
   const client = createClient({ io })
-  t.throws(() => client.addPlugin())
-  t.throws(() => client.addPlugin(null))
-  t.throws(() => client.addPlugin(''))
-  t.throws(() => client.addPlugin(1))
+  t.throws(() => client.use())
+  t.throws(() => client.use(null))
+  t.throws(() => client.use(''))
+  t.throws(() => client.use(1))
 })
 
 test('plugins are invoke and return an object', t => {
   const client = createClient({ io })
-  t.throws(() => client.addPlugin(() => null))
-  t.throws(() => client.addPlugin(() => 1))
-  t.throws(() => client.addPlugin(() => ''))
-  t.throws(() => client.addPlugin(() => undefined))
-  client.addPlugin(() => ({}))
-  client.addPlugin(() => () => true)
+  t.throws(() => client.use(() => null))
+  t.throws(() => client.use(() => 1))
+  t.throws(() => client.use(() => ''))
+  t.throws(() => client.use(() => undefined))
+  client.use(() => ({}))
+  client.use(() => () => true)
 })
 
 test('plugins can literally do nothing', t => {
   const client = createClient({ io })
   const empty = config => ({})
-  client.addPlugin(empty)
+  client.use(empty)
   t.is(client.plugins.length, 1)
 })
 
 test.cb('initialized with the config object', t => {
   const client = createClient({ io })
-  client.addPlugin(config => {
+  client.use(config => {
     t.is(typeof config, 'object')
     t.is(config.ref, client)
     t.is(typeof config.send, 'function')

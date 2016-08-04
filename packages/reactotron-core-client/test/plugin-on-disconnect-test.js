@@ -16,7 +16,7 @@ test.cb('plugins support onDisconnect', t => {
     })
 
     createClient({ io: socketClient, port })
-      .addPlugin(plugin)
+      .use(plugin)
       .connect()
   })
 })

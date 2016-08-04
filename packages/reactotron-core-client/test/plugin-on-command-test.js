@@ -34,7 +34,7 @@ test.cb('plugins support send', t => {
 
     // create the client, add the plugin, and connect
     createClient({ io: socketClient, port: port })
-      .addPlugin(plugin)
+      .use(plugin)
       .connect()
   })
 })

@@ -377,7 +377,7 @@ Sent from the client to server when it's time to report some performance details
 
 # Plugins
 
-Reactotron is extensible via plugins.  You add plugins by calling the `addPlugin`
+Reactotron is extensible via plugins.  You add plugins by calling the `use`
 function on the the client.
 
 A plugin is a function with 1 parameter: a configuration object.  It returns an
@@ -432,7 +432,7 @@ Here's what a plugin can do.
   // Every entry in here will become a method on the Reactotron client object.
   // Collisions are handled on a first-come first-serve basis.
   //
-  // These functions are reserved (sorry):  connect, configure, send, addPlugin,
+  // These functions are reserved (sorry):  connect, configure, send, use,
   // options, connected, plugins, and socket.
   //
   // Sorry.

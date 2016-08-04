@@ -25,7 +25,7 @@ export const CorePlugins = [
 // these are not for you.
 const isReservedFeature = R.contains(R.__, [
   'options', 'connected', 'socket', 'plugins',
-  'configure', 'connect', 'send', 'addPlugin',
+  'configure', 'connect', 'send', 'use',
   'startTimer'
 ])
 
@@ -50,7 +50,7 @@ export class Client {
 
     // if we have plugins, let's add them here
     if (R.isArrayLike(this.options.plugins)) {
-      R.forEach(this.addPlugin.bind(this), this.options.plugins)
+      R.forEach(this.use.bind(this), this.options.plugins)
     }
 
     return this
@@ -110,7 +110,7 @@ export class Client {
   /**
    * Adds a plugin to the system
    */
-  addPlugin (pluginCreator) {
+  use (pluginCreator) {
     // we're supposed to be given a function
     if (typeof pluginCreator !== 'function') throw new Error('plugins must be a function')
 
