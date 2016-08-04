@@ -92,7 +92,13 @@ export class Client {
     })
 
     // fires when we receive a command, just forward it off
-    socket.on('command', command => onCommand && onCommand(command))
+    socket.on('command', command => {
+      // trigger our own command handler
+      onCommand && onCommand(command)
+
+      // trigger our plugins onCommand
+      R.forEach(plugin => plugin.onCommand && plugin.onCommand(command), this.plugins)
+    })
 
     // assign the socket to the instance
     this.socket = socket
