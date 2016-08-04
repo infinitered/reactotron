@@ -3,6 +3,7 @@ import validate from './validate'
 import logger from './plugins/logger'
 import benchmark from './plugins/benchmark'
 import stateResponses from './plugins/state-responses'
+import apiResponse from './plugins/api-response'
 import { start } from './stopwatch'
 export { start } from './stopwatch'
 
@@ -19,7 +20,8 @@ const DEFAULTS = {
 export const CorePlugins = [
   logger,
   benchmark,
-  stateResponses
+  stateResponses,
+  apiResponse
 ]
 
 // these are not for you.

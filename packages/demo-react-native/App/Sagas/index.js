@@ -8,9 +8,7 @@ const api = ApiSauce.create({
   baseURL: 'http://openweathermap.org/data/2.1'
 })
 
-api.addMonitor((response) => {
-  Reactotron.apiLog(response)
-})
+api.addMonitor(Reactotron.apisauce)
 
 export default function * rootSaga () {
   yield fork(watchStartup)
