@@ -22,7 +22,7 @@ import benchmarkReport from './benchmark/benchmarkReport'
 import die from './program/die'
 
 // api things
-import apiLog from './api/apiLog'
+import apiResponse from './api/apiResponse'
 
 // client things
 import clientAdd from './client/clientAdd'
@@ -67,7 +67,7 @@ export default [
   reduxSubscribeDelete,
   reduxSubscribeDeletePrompt,
   reduxSubscribeClear,
-  apiLog,
+  apiResponse,
   contentLog,
   contentClear,
   contentScore,
