@@ -9,7 +9,7 @@ test.cb('plugins support command', t => {
   const mockPayload = 'payload'
 
   // the plugin to capture the command
-  const plugin = config => {
+  const plugin = () => config => {
     return {
       onCommand: command => {
         t.is(command.type, mockType)
@@ -28,7 +28,7 @@ test.cb('plugins support command', t => {
 
     // create the client, add the plugin, and connect
     const client = createClient({ io: socketClient, port: port })
-    client.use(plugin)
+    client.use(plugin())
     client.connect()
   })
 })

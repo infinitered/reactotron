@@ -5,12 +5,12 @@ import R from 'ramda'
 
 test('features must be an object if they appear', t => {
   const client = createClient({ io })
-  t.throws(() => client.use(config => ({ features: 1 })))
+  t.throws(() => client.use(reactotron => ({ features: 1 })))
 })
 
 test('some names are not allowed', t => {
   const client = createClient({ io })
-  const createPlugin = features => config => ({features})
+  const createPlugin = features => reactotron => ({features})
 
   const badPlugins = R.map(
     name => createPlugin({ [name]: R.identity }),
@@ -24,20 +24,20 @@ test('some names are not allowed', t => {
 
 test('features can be added and called', t => {
   const client = createClient({ io })
-  const plugin = config => {
+  const plugin = () => reactotron => {
     const features = {
       magic: () => 42
     }
     return { features }
   }
-  client.use(plugin)
+  client.use(plugin())
   t.is(typeof client.magic, 'function')
   t.is(client.magic(), 42)
 })
 
 test('you can overwrite other feature names', t => {
   const client = createClient({ io })
-  const createPlugin = number => config => ({ features: { hello: () => number } })
+  const createPlugin = number => reactotron => ({ features: { hello: () => number } })
   client.use(createPlugin(69))
   t.is(client.hello(), 69)
   client.use(createPlugin(9001))

@@ -18,10 +18,10 @@ const DEFAULTS = {
 }
 
 export const CorePlugins = [
-  logger,
-  benchmark,
-  stateResponses,
-  apiResponse
+  logger(),
+  benchmark(),
+  stateResponses(),
+  apiResponse()
 ]
 
 // these are not for you.
@@ -40,6 +40,11 @@ export class Client {
   plugins = []
 
   startTimer = () => start()
+
+  constructor () {
+    // we will be invoking send from callbacks other than inside this file
+    this.send = this.send.bind(this)
+  }
 
   /**
    * Set the configuration options.
@@ -123,10 +128,7 @@ export class Client {
     if (typeof pluginCreator !== 'function') throw new Error('plugins must be a function')
 
     // execute it immediately passing the send function
-    const plugin = pluginCreator({
-      send: this.send.bind(this),
-      ref: this
-    })
+    const plugin = pluginCreator.bind(this)(this)
 
     // ensure we get an Object-like creature back
     if (!R.is(Object, plugin)) throw new Error('plugins must return an object')

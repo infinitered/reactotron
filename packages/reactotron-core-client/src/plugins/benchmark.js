@@ -1,8 +1,8 @@
 /**
  * Runs small high-unscientific benchmarks for you.
  */
-export default ({ send, ref }) => {
-  const { startTimer } = ref
+export default () => reactotron => {
+  const { startTimer } = reactotron
 
   const benchmark = title => {
     const steps = []
@@ -11,7 +11,7 @@ export default ({ send, ref }) => {
     steps.push({ title, time: 0 })
     const stop = stopTitle => {
       step(stopTitle)
-      send('benchmark.report', { title, steps })
+      reactotron.send('benchmark.report', { title, steps })
     }
     return { step, stop }
   }

@@ -12,8 +12,8 @@ test.cb('plugins support send', t => {
   let capturedSend
 
   // the plugin to extract the send function
-  const plugin = config => {
-    capturedSend = config.send
+  const plugin = () => reactotron => {
+    capturedSend = reactotron.send
     return {}
   }
 
@@ -34,7 +34,7 @@ test.cb('plugins support send', t => {
 
     // create the client, add the plugin, and connect
     createClient({ io: socketClient, port: port })
-      .use(plugin)
+      .use(plugin())
       .connect()
   })
 })

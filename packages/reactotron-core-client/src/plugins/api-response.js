@@ -1,11 +1,11 @@
 /**
  * Sends API request/response information.
  */
-export default config => {
+export default () => reactotron => {
   return {
     features: {
       apiResponse: (request, response, duration) =>
-        config.send('api.response', { request, response, duration })
+        reactotron.send('api.response', { request, response, duration })
     }
   }
 }

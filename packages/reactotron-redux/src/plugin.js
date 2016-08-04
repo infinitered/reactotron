@@ -27,16 +27,16 @@ const createPlugin = store => {
   let capturedSend
 
   // here's the plugin
-  const plugin = config => {
+  const plugin = reactotron => {
     // remember the plugin
-    capturedSend = config.send
+    capturedSend = reactotron.send
     return {
       onCommand: ({type, payload}) => {
         switch (type) {
           case 'state.keys.request':
-            return handleKeysRequest(store.getState(), config.ref, payload)
+            return handleKeysRequest(store.getState(), reactotron, payload)
           case 'state.values.request':
-            return handleValuesRequest(store.getState(), config.ref, payload)
+            return handleValuesRequest(store.getState(), reactotron, payload)
         }
       }
     }
