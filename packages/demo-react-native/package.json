@@ -22,5 +22,11 @@
     "redux-saga": "^0.11.0",
     "seamless-immutable": "^6.0.1",
     "socket.io": "^1.4.8"
+  },
+  "globals": [
+    "__DEV__"
+  ],
+  "standard": {
+    "parser": "eslint"
   }
 }
