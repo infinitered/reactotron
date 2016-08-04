@@ -18,7 +18,7 @@ export default class Context {
   }
 
   send (type, payload) {
-    this.send.emit('command', {type, payload})
+    this.send(type, {payload})
   }
 
   post (message) {
