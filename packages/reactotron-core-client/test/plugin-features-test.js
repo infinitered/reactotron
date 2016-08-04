@@ -5,7 +5,7 @@ import R from 'ramda'
 
 test('features must be an object if they appear', t => {
   const client = createClient({ io })
-  t.throws(() => client.addPlugin(config => ({ features: 1 })))
+  t.throws(() => client.use(config => ({ features: 1 })))
 })
 
 test('some names are not allowed', t => {
@@ -14,11 +14,11 @@ test('some names are not allowed', t => {
 
   const badPlugins = R.map(
     name => createPlugin({ [name]: R.identity }),
-    ['options', 'connected', 'socket', 'plugins', 'configure', 'connect', 'send', 'addPlugin', 'startTimer']
+    ['options', 'connected', 'socket', 'plugins', 'configure', 'connect', 'send', 'use', 'startTimer']
   )
 
   R.forEach(plugin => {
-    t.throws(() => { client.addPlugin(plugin) })
+    t.throws(() => { client.use(plugin) })
   }, badPlugins)
 })
 
@@ -30,7 +30,7 @@ test('features can be added and called', t => {
     }
     return { features }
   }
-  client.addPlugin(plugin)
+  client.use(plugin)
   t.is(typeof client.magic, 'function')
   t.is(client.magic(), 42)
 })
@@ -38,8 +38,8 @@ test('features can be added and called', t => {
 test('you can overwrite other feature names', t => {
   const client = createClient({ io })
   const createPlugin = number => config => ({ features: { hello: () => number } })
-  client.addPlugin(createPlugin(69))
+  client.use(createPlugin(69))
   t.is(client.hello(), 69)
-  client.addPlugin(createPlugin(9001))
+  client.use(createPlugin(9001))
   t.is(client.hello(), 9001)
 })

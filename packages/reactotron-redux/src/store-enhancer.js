@@ -13,7 +13,7 @@ const DEFAULTS = {
  */
 const createReactotronStoreEnhancer = (reactotron, enhancerOptions = {}) => {
   // verify reactotron
-  if (!(R.is(Object, reactotron) && typeof reactotron.addPlugin === 'function')) {
+  if (!(R.is(Object, reactotron) && typeof reactotron.use === 'function')) {
     throw new Error('invalid reactotron passed')
   }
 
@@ -25,7 +25,7 @@ const createReactotronStoreEnhancer = (reactotron, enhancerOptions = {}) => {
     // the store to create
     const store = createStore(reducer, initialState, enhancer)
     const plugin = createPlugin(store)
-    reactotron.addPlugin(plugin)
+    reactotron.use(plugin)
 
     // swizzle the current dispatch
     const originalDispatch = store.dispatch

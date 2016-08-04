@@ -19,7 +19,7 @@ test.cb('plugins support onConnect', t => {
 
     // create a client & add the plugin
     createClient({ io: socketClient, port })
-      .addPlugin(plugin)
+      .use(plugin)
       .connect()
   })
 })

@@ -39,7 +39,7 @@ test.cb('plugins support onPlugin', t => {
       })
 
     // add the plugin
-    client.addPlugin(plugin)
+    client.use(plugin)
 
     // kick it off
     client.connect()

@@ -8,7 +8,7 @@ test('it\'s an object', t => {
 test('spot check some of the functions', t => {
   t.is(typeof reactotron.configure, 'function')
   t.is(typeof reactotron.connect, 'function')
-  t.is(typeof reactotron.addPlugin, 'function')
+  t.is(typeof reactotron.use, 'function')
 })
 
 test('has the right name', t => {
