@@ -1,13 +1,13 @@
 import RS from 'ramdasauce'
 import R from 'ramda'
 
-const COMMAND = 'redux.key.response'
+const COMMAND = 'state.keys.response'
 
 /**
  Receives a list of keys from the server.
  */
 const process = (context, action) => {
-  const {path, keys} = action.message
+  const {path, keys} = action.payload
   const time = context.timeStamp()
 
   const keyPrefix = RS.isNilOrEmpty(path) ? '' : `${path}.`

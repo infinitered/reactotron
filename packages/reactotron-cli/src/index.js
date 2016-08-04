@@ -29,7 +29,7 @@ const router = Router.createRouter()
 R.forEach((command) => router.register(command), commands)
 const context = new Context({
   ui,
-  send: server.send,
+  send: server.send.bind(server),
   router
 })
 
