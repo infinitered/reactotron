@@ -2,6 +2,7 @@ import R from 'ramda'
 import validate from './validate'
 import logger from './plugins/logger'
 import benchmark from './plugins/benchmark'
+import stateResponses from './plugins/state-responses'
 import { start } from './stopwatch'
 export { start } from './stopwatch'
 
@@ -17,7 +18,8 @@ const DEFAULTS = {
 
 export const CorePlugins = [
   logger,
-  benchmark
+  benchmark,
+  stateResponses
 ]
 
 // these are not for you.
