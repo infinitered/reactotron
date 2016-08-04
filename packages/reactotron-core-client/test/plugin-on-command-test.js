@@ -4,37 +4,31 @@ import getFreePort from './_get-free-port'
 import socketClient from 'socket.io-client'
 import socketServer from 'socket.io'
 
-test.cb('plugins support send', t => {
+test.cb('plugins support command', t => {
   const mockType = 'type'
   const mockPayload = 'payload'
 
-  // odd way to hold on to the plugin's send function
-  let capturedSend
-
-  // the plugin to extract the send function
+  // the plugin to capture the command
   const plugin = config => {
-    capturedSend = config.send
-    return {}
+    return {
+      onCommand: command => {
+        t.is(command.type, mockType)
+        t.deepEqual(command.payload, mockPayload)
+        t.end()
+      }
+    }
   }
 
   getFreePort(port => {
     // the server waits for the command
     socketServer(port)
       .on('connection', socket => {
-        // send through the one we recieved in the plugin
-        capturedSend(mockType, mockPayload)
-
-        // fires the server receives a command
-        socket.on('command', ({type, payload}) => {
-          t.is(type, mockType)
-          t.deepEqual(payload, mockPayload)
-          t.end()
-        })
+        socket.emit('command', {type: mockType, payload: mockPayload})
       })
 
     // create the client, add the plugin, and connect
-    createClient({ io: socketClient, port: port })
-      .use(plugin)
-      .connect()
+    const client = createClient({ io: socketClient, port: port })
+    client.use(plugin)
+    client.connect()
   })
 })
