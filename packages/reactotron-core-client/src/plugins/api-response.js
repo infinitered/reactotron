@@ -1,7 +1,7 @@
 /**
  * Sends API request/response information.
  */
-export default reactotron => {
+export default () => reactotron => {
   return {
     features: {
       apiResponse: (request, response, duration) =>

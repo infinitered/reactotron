@@ -10,7 +10,7 @@ test('features must be an object if they appear', t => {
 
 test('some names are not allowed', t => {
   const client = createClient({ io })
-  const createPlugin = features => config => ({features})
+  const createPlugin = features => reactotron => ({features})
 
   const badPlugins = R.map(
     name => createPlugin({ [name]: R.identity }),
@@ -24,13 +24,13 @@ test('some names are not allowed', t => {
 
 test('features can be added and called', t => {
   const client = createClient({ io })
-  const plugin = reactotron => {
+  const plugin = () => reactotron => {
     const features = {
       magic: () => 42
     }
     return { features }
   }
-  client.use(plugin)
+  client.use(plugin())
   t.is(typeof client.magic, 'function')
   t.is(client.magic(), 42)
 })

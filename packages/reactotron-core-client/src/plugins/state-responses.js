@@ -1,7 +1,7 @@
 /**
  * Provides helper functions for send state responses.
  */
-export default reactotron => {
+export default () => reactotron => {
   return {
     features: {
       stateActionComplete: (name, action) =>

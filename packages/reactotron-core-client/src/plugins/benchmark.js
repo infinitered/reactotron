@@ -1,7 +1,7 @@
 /**
  * Runs small high-unscientific benchmarks for you.
  */
-export default (reactotron) => {
+export default () => reactotron => {
   const { startTimer } = reactotron
 
   const benchmark = title => {

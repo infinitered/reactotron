@@ -8,7 +8,7 @@ test.cb('plugins support onDisconnect', t => {
   getFreePort(port => {
     socketServer(port).on('connection', socket => socket.disconnect())
 
-    const plugin = send => ({
+    const plugin = () => send => ({
       onDisconnect: () => {
         t.pass()
         t.end()
@@ -16,7 +16,7 @@ test.cb('plugins support onDisconnect', t => {
     })
 
     createClient({ io: socketClient, port })
-      .use(plugin)
+      .use(plugin())
       .connect()
   })
 })

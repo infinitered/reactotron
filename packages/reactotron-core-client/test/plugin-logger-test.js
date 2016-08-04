@@ -7,7 +7,7 @@ test('the 4 functions send the right data', t => {
   const client = createClient({ io: socketClient })
   const results = []
   client.send = (type, payload) => { results.push({type, payload}) }
-  client.use(plugin)
+  client.use(plugin())
   t.is(client.plugins.length, 1)
   t.is(typeof client.log, 'function')
   t.is(typeof client.debug, 'function')

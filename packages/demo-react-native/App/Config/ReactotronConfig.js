@@ -9,5 +9,5 @@ Reactotron
     onDisconnect: () => console.log('disconnected')
   })
   .use(decorate(console, 'tron'))
-  .use(tronsauce)
+  .use(tronsauce())
   .connect()

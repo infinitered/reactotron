@@ -17,7 +17,7 @@ test.cb('plugins support onPlugin', t => {
     let capturedInstance
 
     // make a plugin to capture onPlugin
-    const plugin = send => ({
+    const plugin = () => send => ({
       onPlugin: (instance) => {
         t.is(instance, client)
         capturedInstance = instance
@@ -39,7 +39,7 @@ test.cb('plugins support onPlugin', t => {
       })
 
     // add the plugin
-    client.use(plugin)
+    client.use(plugin())
 
     // kick it off
     client.connect()

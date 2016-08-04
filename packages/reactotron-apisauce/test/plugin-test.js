@@ -17,11 +17,13 @@ test.cb('parses responses', t => {
     // start listening
     server.listen(port)
 
+    // captured these guys from our fake plugin
     let request
     let response
     let duration
 
-    const plugin = createPlugin({
+    // create a fake plugin to receive the real plugin's functionality
+    const plugin = createPlugin()({
       apiResponse: (a, b, c) => {
         request = a
         response = b
@@ -49,6 +51,5 @@ test.cb('parses responses', t => {
         t.true(duration > 0)
         t.end()
       })
-
   })
 })

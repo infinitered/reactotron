@@ -1,7 +1,7 @@
 /**
  * Provides 4 features for logging.  log & debug are the same.
  */
-export default (reactotron) => {
+export default () => reactotron => {
   return {
     features: {
       log: (message) => reactotron.send('log', { level: 'debug', message }),
