@@ -7,5 +7,5 @@ Reactotron
     onConnect: () => console.log('connected'),
     onDisconnect: () => console.log('disconnected')
   })
-  .addPlugin(decorate(console, 'tron'))
+  .use(decorate(console, 'tron'))
   .connect()

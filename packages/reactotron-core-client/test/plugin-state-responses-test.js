@@ -15,7 +15,7 @@ test('apiResponse', t => {
     response = y.response
     duration = y.duration
   }
-  client.addPlugin(plugin)
+  client.use(plugin)
   t.is(client.plugins.length, 1)
   t.is(typeof client.apiResponse, 'function')
   client.apiResponse(
