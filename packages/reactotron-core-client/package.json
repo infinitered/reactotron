@@ -7,7 +7,8 @@
     "test": "ava",
     "watch": "ava --watch",
     "coverage": "nyc ava",
-    "build": "rollup -c rollup.config.js"
+    "build": "rollup -c rollup.config.js",
+    "send": "babel-node scripts/send.js"
   },
   "repository": "https://github.com/skellock/reactotron/tree/master/packages/reactotron-core-client",
   "author": "Steve Kellock",
@@ -23,6 +24,7 @@
   ],
   "devDependencies": {
     "ava": "^0.15.2",
+    "babel-cli": "^6.11.4",
     "babel-core": "^6.11.4",
     "babel-eslint": "^6.1.2",
     "babel-preset-es2015": "^6.9.0",
