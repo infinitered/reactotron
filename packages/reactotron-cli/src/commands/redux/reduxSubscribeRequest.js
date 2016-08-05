@@ -8,7 +8,7 @@ const COMMAND = 'redux.subscribe.request'
  */
 const process = (context, action) => {
   const paths = R.without([null], RS.dotPath('config.subscriptions', context) || [])
-  context.send(R.merge(action, {paths}))
+  context.send('state.values.subscribe', {paths})
 }
 
 export default {

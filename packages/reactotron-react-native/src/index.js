@@ -39,8 +39,7 @@ const DEFAULTS = {
   io,
   host: 'localhost',
   port: 9090,
-  name: 'reactotron-react-native',
-  plugins: CorePlugins
+  name: 'reactotron-react-native'
 }
 
 // -----------

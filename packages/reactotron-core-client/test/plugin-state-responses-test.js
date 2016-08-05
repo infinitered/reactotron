@@ -1,5 +1,5 @@
 import test from 'ava'
-import { createClient } from '../src'
+import { createClient, CorePlugins } from '../src'
 import socketClient from 'socket.io-client'
 import plugin from '../src/plugins/api-response'
 
@@ -16,7 +16,7 @@ test('apiResponse', t => {
     duration = y.duration
   }
   client.use(plugin())
-  t.is(client.plugins.length, 1)
+  t.is(client.plugins.length, CorePlugins.length + 1)
   t.is(typeof client.apiResponse, 'function')
   client.apiResponse(
     {a: 1},
