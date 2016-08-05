@@ -26,8 +26,8 @@ export default () => {
     except: [Types.STARTUP]
   })
   const enhancers = compose(
-    applyMiddleware(logger, sagaMiddleware),
-    tracker
+    tracker,
+    applyMiddleware(logger, sagaMiddleware)
   )
 
   const store = createStore(rootReducer, enhancers)

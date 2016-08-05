@@ -42,6 +42,9 @@ const client = createClient({
         const { paths } = payload // string array of state paths
         break
 
+      case 'state.action.dispatch':
+        const { action } = payload // an object to be dispatch through the state plugin
+        break
 
     }
     console.log(`I just received a ${type} command`)
@@ -246,6 +249,17 @@ these are the results of `spy`.
 {
   "name": "MY_ACTION",
   "value": {}
+}
+```
+
+### state.action.dispatch
+
+Sent from the client to the server in order to dispatch this action through the
+state system.
+
+```json
+{
+  "action": { "type": "LOGIN_REQUEST", "password": "s3cr3t@g3ntm@n" }
 }
 ```
 

@@ -44,6 +44,12 @@ const createPlugin = store => {
             subscriptions = R.pipe(R.flatten, R.uniq)(payload.paths)
             sendSubscriptionsIfNeeded()
             return
+
+          // server is asking to dispatch this action
+          case 'state.action.dispatch':
+            store.dispatch(payload.action)
+            return
+
         }
       }
     }
