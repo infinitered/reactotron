@@ -1,5 +1,5 @@
 import test from 'ava'
-import { createClient } from '../src'
+import { createClient, CorePlugins } from '../src'
 import socketClient from 'socket.io-client'
 import plugin from '../src/plugins/benchmark'
 
@@ -20,7 +20,7 @@ test('adds benchmarks to a report', async t => {
   //  register
   client.use(plugin())
 
-  t.is(client.plugins.length, 1)
+  t.is(client.plugins.length, CorePlugins.length + 1)
   t.is(typeof client.benchmark, 'function')
 
   // use the benchmark feature

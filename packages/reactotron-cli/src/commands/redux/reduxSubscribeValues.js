@@ -1,13 +1,14 @@
 import R from 'ramda'
 
-const COMMAND = 'redux.subscribe.values'
+const COMMAND = 'state.values.change'
 
 /**
   Receive the subscribed key paths.
  */
 const process = (context, action) => {
-  const {values} = action.message
-  const each = R.map(([k, v]) => `{cyan-fg}${k}{/}{|}{white-fg}${v}{/}`, values)
+  context.log(action.payload)
+  const { changes } = action.payload
+  const each = R.map(change => `{cyan-fg}${change.path}{/}{|}{white-fg}${change.value}{/}`, changes)
   const message = R.join('\n', each)
   context.ui.reduxWatchBox.setContent(message)
   context.ui.screen.render()

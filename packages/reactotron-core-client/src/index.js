@@ -7,22 +7,23 @@ import apiResponse from './plugins/api-response'
 import { start } from './stopwatch'
 export { start } from './stopwatch'
 
-const DEFAULTS = {
-  io: null, // the socket.io function to create a socket
-  host: 'localhost', // the server to connect (required)
-  port: 9090, // the port to connect (required)
-  name: 'reactotron-core-client', // some human-friendly session name
-  onCommand: cmd => null, // the function called when we receive a command
-  onConnect: () => null, // fires when we connect
-  onDisconnect: () => null // fires when we disconnect
-}
-
 export const CorePlugins = [
   logger(),
   benchmark(),
   stateResponses(),
   apiResponse()
 ]
+
+const DEFAULTS = {
+  io: null, // the socket.io function to create a socket
+  host: 'localhost', // the server to connect (required)
+  port: 9090, // the port to connect (required)
+  name: 'reactotron-core-client', // some human-friendly session name
+  plugins: CorePlugins, // needed to make society function
+  onCommand: cmd => null, // the function called when we receive a command
+  onConnect: () => null, // fires when we connect
+  onDisconnect: () => null // fires when we disconnect
+}
 
 // these are not for you.
 const isReservedFeature = R.contains(R.__, [

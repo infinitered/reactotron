@@ -1,5 +1,5 @@
 import test from 'ava'
-import { createClient } from '../src'
+import { createClient, CorePlugins } from '../src'
 import socketClient from 'socket.io-client'
 import plugin from '../src/plugins/state-responses'
 
@@ -14,7 +14,7 @@ test('stateActionComplete', t => {
     action = y.action
   }
   client.use(plugin())
-  t.is(client.plugins.length, 1)
+  t.is(client.plugins.length, CorePlugins.length + 1)
   t.is(typeof client.stateActionComplete, 'function')
   client.stateActionComplete('name', { action: 123 })
   t.is(type, 'state.action.complete')
@@ -35,7 +35,7 @@ test('stateValuesResponse', t => {
     valid = y.valid
   }
   client.use(plugin())
-  t.is(client.plugins.length, 1)
+  t.is(client.plugins.length, CorePlugins.length + 1)
   t.is(typeof client.stateValuesResponse, 'function')
   client.stateValuesResponse('user.password', 'password', false)
   t.is(type, 'state.values.response')
@@ -57,7 +57,7 @@ test('stateKeysResponse', t => {
     valid = y.valid
   }
   client.use(plugin())
-  t.is(client.plugins.length, 1)
+  t.is(client.plugins.length, CorePlugins.length + 1)
   t.is(typeof client.stateKeysResponse, 'function')
   client.stateKeysResponse('user', ['name', 'password'], false)
   t.is(type, 'state.keys.response')
@@ -75,7 +75,7 @@ test('stateValuesChange', t => {
     changes = y.changes
   }
   client.use(plugin())
-  t.is(client.plugins.length, 1)
+  t.is(client.plugins.length, CorePlugins.length + 1)
   t.is(typeof client.stateValuesChange, 'function')
   client.stateValuesChange([{ path: 'a', value: 1 }, { path: 'b', value: 2 }])
   t.is(type, 'state.values.change')

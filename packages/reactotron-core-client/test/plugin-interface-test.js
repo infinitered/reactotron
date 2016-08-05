@@ -1,11 +1,11 @@
 import test from 'ava'
-import { createClient } from '../src'
+import { createClient, CorePlugins } from '../src'
 import io from './_fake-io'
 
 test('client accepts plugins', t => {
   const client = createClient({ io })
   t.truthy(client.plugins)
-  t.is(client.plugins.length, 0)
+  t.is(client.plugins.length, CorePlugins.length)
 })
 
 test('plugins are functions', t => {
@@ -30,7 +30,7 @@ test('plugins can literally do nothing', t => {
   const client = createClient({ io })
   const empty = reactotron => ({})
   client.use(empty)
-  t.is(client.plugins.length, 1)
+  t.is(client.plugins.length, CorePlugins.length + 1)
 })
 
 test.cb('initialized with the config object', t => {
@@ -42,7 +42,7 @@ test.cb('initialized with the config object', t => {
     t.end()
     return {}
   })
-  t.is(client.plugins.length, 1)
+  t.is(client.plugins.length, CorePlugins.length + 1)
 })
 
 test('can be added in createClient', t => {
