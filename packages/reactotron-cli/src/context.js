@@ -1,4 +1,5 @@
 import R from 'ramda'
+import RS from 'ramdasauce'
 import moment from 'moment'
 import Router from './router'
 import { addSpaceForEmoji } from './emoji'
@@ -77,13 +78,14 @@ export default class Context {
   }
 
   log (message, level = 'debug') {
-    message = addSpaceForEmoji(message)
     const time = this.timeStamp()
     if (R.is(Object, message)) {
       this.ui.logBox.log(time)
       this.ui.logBox.log(message)
       this.ui.logBox.log('')
     } else {
+      if (!RS.isNilOrEmpty(message))
+        message = addSpaceForEmoji(message)
       switch (level) {
         case 'debug':
           this.ui.logBox.log(`${time} ${message}`)
