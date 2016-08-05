@@ -1,6 +1,6 @@
 {
   "name": "reactotron-cli",
-  "version": "0.0.1",
+  "version": "0.90.1",
   "description": "Reactotron terminal mode engage!",
   "bin": {
     "reactotron": "./dist/reactotron.js"
@@ -39,7 +39,7 @@
     "gemoji": "^1.0.0",
     "moment": "^2.12.0",
     "strman": "^1.0.1",
-    "reactotron-core-server": "^0.0.1"
+    "reactotron-core-server": "^0.90.1"
   },
   "ava": {
     "require": [
