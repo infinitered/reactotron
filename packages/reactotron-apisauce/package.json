@@ -1,6 +1,6 @@
 {
   "name": "reactotron-apisauce",
-  "version": "0.0.1",
+  "version": "0.90.1",
   "description": "A Reactotron plugin for Apisauce.",
   "main": "dist/index.js",
   "scripts": {
@@ -58,6 +58,6 @@
   "dependencies": {
     "ramda": "^0.21.0",
     "ramdasauce": "^1.1.0",
-    "reactotron-core-client": "^0.0.1"
+    "reactotron-core-client": "^0.90.1"
   }
 }
