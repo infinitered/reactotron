@@ -19,6 +19,7 @@ const server = createServer({
   },
   onConnect: client => {
     context.post({ type: 'client.add', client })
+    context.post({ type: 'redux.subscribe.request' })
   },
   onDisconnect: client => {
     context.post({ type: 'client.remove', client })
