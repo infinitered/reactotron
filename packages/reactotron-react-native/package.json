@@ -22,7 +22,7 @@
     "README.md"
   ],
   "peerDependencies": {
-    "react-native": ">=0.30.0"
+    "react-native": ">=0.31.0"
   },
   "devDependencies": {
     "ava": "^0.15.2",
@@ -58,8 +58,8 @@
   "dependencies": {
     "ramda": "^0.21.0",
     "ramdasauce": "^1.1.0",
-    "react": "^15.2.1",
-    "react-native": "^0.30.0",
+    "react": "15.2.1",
+    "react-native": "0.31.0",
     "reactotron-core-client": "^0.90.1",
     "socket.io": "^1.4.8"
   }
