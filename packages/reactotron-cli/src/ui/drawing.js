@@ -6,6 +6,7 @@ import createDrawApiResponse from './draw-api-response'
 import createDrawBenchmarkReport from './draw-benchmark-report'
 import createDrawStateKeysResponse from './draw-state-keys-response'
 import createDrawStateValuesResponse from './draw-state-values-response'
+import createDrawStateValuesChange from './draw-state-values-change'
 
 export default (layout, config) => {
   const drawPort = port => {
@@ -61,6 +62,7 @@ export default (layout, config) => {
   const drawBenchmarkReport = createDrawBenchmarkReport(layout)
   const drawStateKeysResponse = createDrawStateKeysResponse(layout, log)
   const drawStateValuesResponse = createDrawStateValuesResponse(layout, log)
+  const drawStateValuesChange = createDrawStateValuesChange(layout)
 
   const drawStateActionComplete = payload => {
     const {name, ms, action} = payload
@@ -83,6 +85,7 @@ export default (layout, config) => {
     drawStateActionComplete,
     drawStateKeysResponse,
     drawStateValuesResponse,
+    drawStateValuesChange,
     log
   }
 }

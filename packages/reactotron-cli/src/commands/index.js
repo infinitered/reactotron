@@ -6,7 +6,6 @@ import reduxValuePrompt from './redux/reduxValuePrompt'
 import reduxKeyPrompt from './redux/reduxKeyPrompt'
 import reduxDispatchPrompt from './redux/reduxDispatchPrompt'
 import reduxSubscribeRequest from './redux/reduxSubscribeRequest'
-import reduxSubscribeValues from './redux/reduxSubscribeValues'
 import reduxSubscribeAdd from './redux/reduxSubscribeAdd'
 import reduxSubscribeAddPrompt from './redux/reduxSubscribeAddPrompt'
 import reduxSubscribeDelete from './redux/reduxSubscribeDelete'
@@ -43,7 +42,6 @@ export default [
   reduxKeyPrompt,
   reduxDispatchPrompt,
   reduxSubscribeRequest,
-  reduxSubscribeValues,
   reduxSubscribeAdd,
   reduxSubscribeAddPrompt,
   reduxSubscribeDelete,

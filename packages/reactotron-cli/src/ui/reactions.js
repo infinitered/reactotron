@@ -23,7 +23,8 @@ export default (context) => {
     { command: 'benchmark.report', handler: ui.drawBenchmarkReport },
     { command: 'state.action.complete', handler: ui.drawStateActionComplete },
     { command: 'state.keys.response', handler: ui.drawStateKeysResponse },
-    { command: 'state.values.response', handler: ui.drawStateValuesResponse }
+    { command: 'state.values.response', handler: ui.drawStateValuesResponse },
+    { command: 'state.values.change', handler: ui.drawStateValuesChange }
   ]
 
   // how we hook that up
