@@ -14,6 +14,7 @@ export default class Context {
     this.apiLoggingStyle = 'short'
     this.config = {}
     this.server = parts.server
+    this.send = this.server.send.bind(this.server)
   }
 
   send (type, payload) {

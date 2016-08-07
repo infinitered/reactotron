@@ -10,10 +10,6 @@ const PORT = 9090
 const server = createServer({
   port: PORT,
   onCommand: command => {
-    if (command.payload.keys) {
-      context.ui.log(command.payload.keys)
-      context.ui.log(`command.payload.keys is a ${typeof command.payload.keys} and ${Array.isArray(command.payload.keys)} `)
-    }
     context.post(command)
   },
   onConnect: client => {
@@ -23,12 +19,7 @@ const server = createServer({
 
 const router = Router.createRouter()
 R.forEach((command) => router.register(command), commands)
-const context = new Context({
-  ui,
-  send: server.send.bind(server),
-  router,
-  server
-})
+const context = new Context({ ui, router, server })
 
 // some parts of the ui can react to mobx changes.  they go in here.  so awesome.
 // i'd love to move more in here.
