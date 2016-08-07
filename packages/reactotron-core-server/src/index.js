@@ -1,6 +1,7 @@
 import R from 'ramda'
-import RS from 'ramdasauce'
 import socketIO from 'socket.io'
+import Commands from './commands'
+import validate from './validation'
 
 const DEFAULTS = {
   port: 9090, // the port to live (required)
@@ -11,21 +12,6 @@ const DEFAULTS = {
   onDisconnect: socket => null // notify disconnections
 }
 
-const isPortValid = R.allPass([R.complement(R.isNil), R.is(Number), RS.isWithin(1, 65535)])
-const onCommandValid = R.allPass([R.complement(R.isNil)])
-/**
- * Ensures the options are sane to run this baby.  Throw if not.  These
- * are basically sanity checks.
- */
-const validate = (options) => {
-  const { port, onCommand } = options
-
-  if (!isPortValid(port)) throw new Error('invalid port')
-  if (!onCommandValid(onCommand)) throw new Error('onCommand is required')
-
-  return this
-}
-
 export class Server {
 
   // the configuration options
@@ -34,6 +20,7 @@ export class Server {
   io = null
   openSockets = []
   messageId = 0
+  commands = new Commands()
 
   /**
    * Set the configuration options.
@@ -76,10 +63,12 @@ export class Server {
       })
 
       // when we receive a command from the client
-      socket.on('command', ({type, payload}) => {
+      socket.on('command', ({ type, payload }) => {
         this.messageId++
         const date = new Date()
-        onCommand({ type, payload, messageId: this.messageId, date })
+        const fullCommand = { type, payload, messageId: this.messageId, date }
+        onCommand(fullCommand)
+        this.commands.addCommand(fullCommand)
       })
     })
   }
