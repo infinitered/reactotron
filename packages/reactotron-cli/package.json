@@ -28,18 +28,19 @@
     "ava": "^0.15.2",
     "babel-core": "^6.11.4",
     "babel-eslint": "^6.1.2",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-es2015-rollup": "^1.1.1",
     "babel-preset-stage-1": "^6.5.0",
-    "nyc": "^7.1.0",
-    "rollup": "^0.34.1",
-    "rollup-plugin-babel": "^2.6.1",
-    "standard": "^7.1.2",
     "blessed": "^0.1.81",
     "gemoji": "^1.0.0",
     "moment": "^2.12.0",
-    "strman": "^1.0.1",
-    "reactotron-core-server": "^0.90.1"
+    "nyc": "^7.1.0",
+    "reactotron-core-server": "^0.90.1",
+    "rollup": "^0.34.1",
+    "rollup-plugin-babel": "^2.6.1",
+    "standard": "^7.1.2",
+    "strman": "^1.0.1"
   },
   "ava": {
     "require": [
@@ -51,6 +52,7 @@
     "parser": "babel-eslint"
   },
   "dependencies": {
+    "mobx": "^2.4.2",
     "ramda": "^0.21.0",
     "ramdasauce": "^1.1.0"
   }

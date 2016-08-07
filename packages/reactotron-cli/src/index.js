@@ -4,6 +4,7 @@ import Context from './context'
 import Router from './router'
 import commands from './commands/index'
 import ui from './ui'
+import uiReactions from './uiReactions'
 
 const PORT = 9090
 const server = createServer({
@@ -18,11 +19,11 @@ const server = createServer({
     context.log('stopped')
   },
   onConnect: client => {
-    context.post({ type: 'client.add', client })
+    // context.post({ type: 'client.add', client })
     context.post({ type: 'redux.subscribe.request' })
   },
   onDisconnect: client => {
-    context.post({ type: 'client.remove', client })
+    // context.post({ type: 'client.remove', client })
   }
 })
 
@@ -31,8 +32,11 @@ R.forEach((command) => router.register(command), commands)
 const context = new Context({
   ui,
   send: server.send.bind(server),
-  router
+  router,
+  server
 })
+
+context.uiReactions = uiReactions(context)
 
 // always control-c to die
 ui.screen.key('C-c', () => context.post({type: 'program.die'}))

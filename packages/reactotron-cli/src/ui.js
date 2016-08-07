@@ -186,14 +186,14 @@ const instructionsBox = blessed.box({
   tags: true
 })
 
-blessed.box({
+const brandingBox = blessed.box({
   parent: statusBox,
   width: 'shrink',
   height: '100%',
   left: 0,
   top: 0,
   tags: true,
-  content: '{yellow-fg}reactotron{/}'
+  content: ''
 })
 
 const clientCount = (numberOfClients = 0) => {
@@ -204,13 +204,24 @@ const clientCount = (numberOfClients = 0) => {
   }
 }
 
+const drawPort = port => {
+  brandingBox.setContent(`{yellow-fg}Reactotron{/} port ${port || '?'}`)
+  screen.render()
+}
+
+// draw the client count in the appropriate box
+const drawClientCount = count => {
+  connectionBox.setContent(clientCount(count))
+  screen.render()
+}
+
 const connectionBox = blessed.box({
   parent: statusBox,
   top: 0,
   right: 0,
   height: '100%',
   width: 'shrink',
-  content: clientCount(),
+  content: '',
   tags: true
 })
 
@@ -227,5 +238,7 @@ export default {
   benchBox,
   instructionsBox,
   statusBox,
-  clientCount
+  clientCount,
+  drawClientCount,
+  drawPort
 }

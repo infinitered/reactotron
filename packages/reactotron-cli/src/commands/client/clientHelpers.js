@@ -18,12 +18,3 @@ export const displayConnectedMessage = (context, client) => {
   context.log(message)
   context.ui.screen.render()
 }
-
-// updates the connected client count
-export const updateClients = (context) => {
-  context.ui.connectionBox.setContent(
-    context.ui.clientCount(R.values(context.clients).length)
-  )
-
-  context.ui.screen.render()
-}

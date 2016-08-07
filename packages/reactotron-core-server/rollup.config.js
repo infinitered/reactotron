@@ -6,7 +6,8 @@ export default {
   plugins: [
     babel({
       babelrc: false,
-      presets: ['es2015-rollup', 'stage-1']
+      presets: ['es2015-rollup', 'stage-1'],
+      plugins: ['transform-decorators-legacy']
     })
   ],
   dest: 'dist/index.js'

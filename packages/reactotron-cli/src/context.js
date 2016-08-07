@@ -16,6 +16,7 @@ export default class Context {
     this.reduxActionLoggingStyle = 'full'
     this.apiLoggingStyle = 'short'
     this.config = {}
+    this.server = parts.server
   }
 
   send (type, payload) {

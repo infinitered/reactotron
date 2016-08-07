@@ -2,6 +2,7 @@ import R from 'ramda'
 import socketIO from 'socket.io'
 import Commands from './commands'
 import validate from './validation'
+import { autorun, reaction, observable } from 'mobx'
 
 const DEFAULTS = {
   port: 9090, // the port to live (required)
@@ -12,15 +13,26 @@ const DEFAULTS = {
   onDisconnect: socket => null // notify disconnections
 }
 
-export class Server {
+
+class Server {
 
   // the configuration options
-  options = R.merge({}, DEFAULTS)
+  @observable options = R.merge({}, DEFAULTS)
   started = false
   io = null
-  openSockets = []
   messageId = 0
+
+  /**
+   * Holds the commands the client has sent.
+   */
   commands = new Commands()
+
+  /**
+   * Holds the currently connected clients.
+   */
+  @observable connections = []
+
+  findBySocket = socket => R.find(R.propEq('socket', socket), this.connections)
 
   /**
    * Set the configuration options.
@@ -41,25 +53,25 @@ export class Server {
 
     // when we get new clients
     this.io.on('connection', socket => {
-      // remember them
-      this.openSockets.push(socket)
-
       // details about who has connected
-      const clientDetails = {
+      const connection = {
+        socket,
         id: socket.id,
         address: socket.request.connection.remoteAddress
       }
 
+      this.connections.push(connection)
+
       // trigger event
-      onConnect && onConnect(clientDetails)
+      onConnect && onConnect(connection)
 
       // when this client disconnects
       socket.on('disconnect', () => {
         // remove them from the list
-        this.openSockets = R.without([socket], this.openSockets)
+        this.connections = R.without([this.findBySocket(socket)], this.connections)
 
         // trigger event
-        onDisconnect && onDisconnect(clientDetails)
+        onDisconnect && onDisconnect(connection)
       })
 
       // when we receive a command from the client
@@ -98,7 +110,7 @@ export class Server {
   stop () {
     const { onStop } = this.options
     this.started = false
-    R.forEach(s => s.connected && s.disconnect(), this.openSockets)
+    R.forEach(s => s.connected && s.disconnect(), R.pluck('socket', this.connections))
     this.io.close()
 
     // trigger the stop message
@@ -115,6 +127,8 @@ export class Server {
   }
 
 }
+
+export default Server
 
 // convenience factory function
 export const createServer = (options) => {
