@@ -7,30 +7,31 @@ export default (context) => {
   // when the connection count changes, update the connected total
   reaction(() => server.connections.length, ui.drawClientCount, true)
 
+  // when port changes
+  reaction(() => server.options.port, ui.drawPort, true)
+
   // when clients come & go
   observe(server.connections, ({added, removed}) => {
     R.forEach(ui.drawConnection, added)
     R.forEach(ui.drawDisconnection, removed)
   })
 
-  // when the log commands change, send the new ones to the ui
-  observe(server.commands['log'], ({added}) => {
-    const draw = ({payload}) => ui.log(payload.message, payload.level)
-    R.forEach(draw, added)
-  })
+  // a list of commands & functions to call when we see 'em'
+  const subscriptions = [
+    { command: 'log', handler: ({ message, level }) => ui.log(message, level) },
+    { command: 'api.response', handler: ui.drawApiResponse },
+    { command: 'benchmark.report', handler: ui.drawBenchmarkReport },
+    { command: 'state.action.complete', handler: ui.drawStateActionComplete }
+  ]
 
-  // log new api responses
-  observe(server.commands['api.response'], ({added}) => {
-    const draw = ({payload}) => ui.drawApiResponse(payload)
-    R.forEach(draw, added)
-  })
+  // how we hook that up
+  const subscribe = ({command, handler}) => {
+    observe(server.commands[command], ({added}) => {
+      const draw = ({payload}) => handler(payload)
+      R.forEach(draw, added)
+    })
+  }
 
-  // log new benchmark reports
-  observe(server.commands['benchmark.report'], ({added}) => {
-    const draw = ({payload}) => ui.drawBenchmarkReport(payload)
-    R.forEach(draw, added)
-  })
-
-  // when port changes
-  reaction(() => server.options.port, ui.drawPort, true)
+  // let's hook it up now
+  R.forEach(subscribe, subscriptions)
 }

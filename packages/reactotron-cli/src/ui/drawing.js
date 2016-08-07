@@ -58,6 +58,16 @@ export default (layout, config) => {
   const drawApiResponse = createDrawApiResponse(layout, config)
   const drawBenchmarkReport = createDrawBenchmarkReport(layout)
 
+  const drawStateActionComplete = payload => {
+    const {name, ms, action} = payload
+    const time = timeStamp()
+    layout.reduxActionBox.log(`${time} {cyan-fg}${name}{/}{|}{white-fg}${ms}{/}ms`)
+    if (config.reduxActionLoggingStyle === 'full') {
+      layout.reduxActionBox.log(action)
+      layout.reduxActionBox.log('')
+    }
+  }
+
   return {
     drawClientCount,
     drawPort,
@@ -66,6 +76,7 @@ export default (layout, config) => {
     drawDisconnection,
     drawApiResponse,
     drawBenchmarkReport,
+    drawStateActionComplete,
     log
   }
 }
