@@ -1,8 +1,7 @@
-import moment from 'moment'
 import { addSpaceForEmoji } from './emoji'
 import R from 'ramda'
 import RS from 'ramdasauce'
-import { clientCount, timeStamp, formatClient } from './uiFormatting'
+import { clientCount, timeStamp, formatClient } from './formatting'
 
 export default (layout) => {
   const drawPort = port => {
