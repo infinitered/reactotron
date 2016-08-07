@@ -3,6 +3,7 @@ import R from 'ramda'
 import RS from 'ramdasauce'
 import { clientCount, timeStamp, formatClient } from './formatting'
 import createDrawApiResponse from './draw-api-response'
+import createDrawBenchmarkReport from './draw-benchmark-report'
 
 export default (layout, config) => {
   const drawPort = port => {
@@ -55,6 +56,7 @@ export default (layout, config) => {
   }
 
   const drawApiResponse = createDrawApiResponse(layout, config)
+  const drawBenchmarkReport = createDrawBenchmarkReport(layout)
 
   return {
     drawClientCount,
@@ -63,6 +65,7 @@ export default (layout, config) => {
     drawConnection,
     drawDisconnection,
     drawApiResponse,
+    drawBenchmarkReport,
     log
   }
 }

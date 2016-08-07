@@ -19,9 +19,15 @@ export default (context) => {
     R.forEach(draw, added)
   })
 
-  // when the log commands change, send the new ones to the ui
+  // log new api responses
   observe(server.commands['api.response'], ({added}) => {
     const draw = ({payload}) => ui.drawApiResponse(payload)
+    R.forEach(draw, added)
+  })
+
+  // log new benchmark reports
+  observe(server.commands['benchmark.report'], ({added}) => {
+    const draw = ({payload}) => ui.drawBenchmarkReport(payload)
     R.forEach(draw, added)
   })
 
