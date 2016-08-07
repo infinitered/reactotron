@@ -36,13 +36,4 @@ export default class Context {
     }
   }
 
-
-  timeStamp () {
-    return this.ui.timeStamp()
-  }
-
-  log (message, level = 'debug') {
-    return this.ui.log(message, level)
-  }
-
 }

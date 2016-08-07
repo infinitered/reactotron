@@ -5,7 +5,7 @@ const COMMAND = 'redux.value.prompt'
  Prompts for a path to grab some redux values from.
  */
 const process = (context, action) => {
-  context.prompt('Enter a redux path', (value) => {
+  context.ui.prompt('Enter a redux path', (value) => {
     const path = RS.isNilOrEmpty(value) ? null : value
     context.post({type: 'redux.value.request', path})
   })

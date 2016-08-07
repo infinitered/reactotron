@@ -1,4 +1,4 @@
-import { observable, action, extendObservable } from 'mobx'
+import { observable, action, extendObservable, asFlat } from 'mobx'
 import R from 'ramda'
 import CommandTypes from './types'
 
@@ -24,7 +24,7 @@ class Commands {
     // create an observable list for each (named after the type)
     R.forEach(type => {
       extendObservable(this, {
-        [type]: []
+        [type]: asFlat([])
       })
       // this[type] = observable([])
     }, CommandTypes)

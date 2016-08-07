@@ -2,8 +2,6 @@
 import reduxDispatch from './redux/reduxDispatch'
 import reduxValueRequest from './redux/reduxValueRequest'
 import reduxKeyRequest from './redux/reduxKeyRequest'
-import reduxValueResponse from './redux/reduxValueResponse'
-import reduxKeyResponse from './redux/reduxKeyResponse'
 import reduxValuePrompt from './redux/reduxValuePrompt'
 import reduxKeyPrompt from './redux/reduxKeyPrompt'
 import reduxDispatchPrompt from './redux/reduxDispatchPrompt'
@@ -41,8 +39,6 @@ export default [
   reduxDispatch,
   reduxValueRequest,
   reduxKeyRequest,
-  reduxValueResponse,
-  reduxKeyResponse,
   reduxValuePrompt,
   reduxKeyPrompt,
   reduxDispatchPrompt,

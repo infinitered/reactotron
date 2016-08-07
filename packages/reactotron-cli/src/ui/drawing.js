@@ -4,6 +4,8 @@ import RS from 'ramdasauce'
 import { clientCount, timeStamp, formatClient } from './formatting'
 import createDrawApiResponse from './draw-api-response'
 import createDrawBenchmarkReport from './draw-benchmark-report'
+import createDrawStateKeysResponse from './draw-state-keys-response'
+import createDrawStateValuesResponse from './draw-state-values-response'
 
 export default (layout, config) => {
   const drawPort = port => {
@@ -57,6 +59,8 @@ export default (layout, config) => {
 
   const drawApiResponse = createDrawApiResponse(layout, config)
   const drawBenchmarkReport = createDrawBenchmarkReport(layout)
+  const drawStateKeysResponse = createDrawStateKeysResponse(layout, log)
+  const drawStateValuesResponse = createDrawStateValuesResponse(layout, log)
 
   const drawStateActionComplete = payload => {
     const {name, ms, action} = payload
@@ -77,6 +81,8 @@ export default (layout, config) => {
     drawApiResponse,
     drawBenchmarkReport,
     drawStateActionComplete,
+    drawStateKeysResponse,
+    drawStateValuesResponse,
     log
   }
 }

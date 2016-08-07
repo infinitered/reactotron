@@ -10,6 +10,10 @@ const PORT = 9090
 const server = createServer({
   port: PORT,
   onCommand: command => {
+    if (command.payload.keys) {
+      context.ui.log(command.payload.keys)
+      context.ui.log(`command.payload.keys is a ${typeof command.payload.keys} and ${Array.isArray(command.payload.keys)} `)
+    }
     context.post(command)
   },
   onConnect: client => {

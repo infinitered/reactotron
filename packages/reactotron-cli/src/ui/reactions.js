@@ -21,7 +21,9 @@ export default (context) => {
     { command: 'log', handler: ({ message, level }) => ui.log(message, level) },
     { command: 'api.response', handler: ui.drawApiResponse },
     { command: 'benchmark.report', handler: ui.drawBenchmarkReport },
-    { command: 'state.action.complete', handler: ui.drawStateActionComplete }
+    { command: 'state.action.complete', handler: ui.drawStateActionComplete },
+    { command: 'state.keys.response', handler: ui.drawStateKeysResponse },
+    { command: 'state.values.response', handler: ui.drawStateValuesResponse }
   ]
 
   // how we hook that up
