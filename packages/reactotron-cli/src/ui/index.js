@@ -6,7 +6,9 @@ import createInteractions from './interactions'
 const layout = createLayout()
 
 // helper drawer
-const drawing = createDrawing(layout)
+const drawing = createDrawing(layout, {
+  apiLoggingStyle: 'short' // short | full
+})
 const interactions = createInteractions(layout, drawing)
 
 // glue them together like a superband and hope they don't clobber each other

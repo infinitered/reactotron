@@ -1,4 +1,4 @@
-import { reaction, observe, toJS } from 'mobx'
+import { reaction, observe } from 'mobx'
 import R from 'ramda'
 
 export default (context) => {
@@ -15,8 +15,14 @@ export default (context) => {
 
   // when the log commands change, send the new ones to the ui
   observe(server.commands['log'], ({added}) => {
-    const sendToLog = ({payload}) => ui.log(payload.message, payload.level)
-    R.forEach(sendToLog, added)
+    const draw = ({payload}) => ui.log(payload.message, payload.level)
+    R.forEach(draw, added)
+  })
+
+  // when the log commands change, send the new ones to the ui
+  observe(server.commands['api.response'], ({added}) => {
+    const draw = ({payload}) => ui.drawApiResponse(payload)
+    R.forEach(draw, added)
   })
 
   // when port changes

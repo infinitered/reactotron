@@ -21,9 +21,6 @@ import benchmarkReport from './benchmark/benchmarkReport'
 // program things
 import die from './program/die'
 
-// api things
-import apiResponse from './api/apiResponse'
-
 // command things
 import commandRepeat from './commands/commandRepeat'
 
@@ -59,7 +56,6 @@ export default [
   reduxSubscribeDelete,
   reduxSubscribeDeletePrompt,
   reduxSubscribeClear,
-  apiResponse,
   contentClear,
   contentScore,
   menuPush,

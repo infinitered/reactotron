@@ -2,8 +2,9 @@ import { addSpaceForEmoji } from './emoji'
 import R from 'ramda'
 import RS from 'ramdasauce'
 import { clientCount, timeStamp, formatClient } from './formatting'
+import createDrawApiResponse from './draw-api-response'
 
-export default (layout) => {
+export default (layout, config) => {
   const drawPort = port => {
     layout.brandingBox.setContent(`{yellow-fg}Reactotron{/} port ${port || '?'}`)
     layout.screen.render()
@@ -53,12 +54,15 @@ export default (layout) => {
     layout.screen.render()
   }
 
+  const drawApiResponse = createDrawApiResponse(layout, config)
+
   return {
     drawClientCount,
     drawPort,
     timeStamp,
     drawConnection,
     drawDisconnection,
+    drawApiResponse,
     log
   }
 }
