@@ -205,7 +205,7 @@ const connectionBox = blessed.box({
   tags: true
 })
 
-export default {
+export default () => ({
   screen,
   connectionBox,
   promptBox,
@@ -219,4 +219,4 @@ export default {
   instructionsBox,
   statusBox,
   brandingBox
-}
+})

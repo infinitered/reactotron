@@ -36,39 +36,6 @@ export default class Context {
     }
   }
 
-  prompt (title, callback) {
-    this.ui.promptBox.setFront()
-    this.ui.screen.render()
-    this.ui.promptBox.input(title, '', (err, value) => {
-      if (!err) {
-        callback(value)
-        this.ui.screen.render()
-      }
-    })
-  }
-
-  message (displayText, callback = null) {
-    this.ui.messageBox.setFront()
-    this.ui.screen.render()
-    this.ui.messageBox.display(displayText, 0, (err, value) => {
-      if (!err) {
-        if (callback) callback(value)
-        this.ui.screen.render()
-      }
-    })
-  }
-
-  info (title, displayText, callback = null) {
-    this.ui.infoBox.setFront()
-    this.ui.screen.render()
-    this.ui.infoBox.setLabel(title)
-    this.ui.infoBox.display(displayText, 0, (err, value) => {
-      if (!err) {
-        if (callback) callback(value)
-        this.ui.screen.render()
-      }
-    })
-  }
 
   timeStamp () {
     return this.ui.timeStamp()

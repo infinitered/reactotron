@@ -1,7 +1,19 @@
-import layout from './layout'
-import drawing from './drawing'
+import createLayout from './layout'
+import createDrawing from './drawing'
+import createInteractions from './interactions'
 
-export default {
+// little boxes on the hillside, little boxes made of ticky tacky
+const layout = createLayout()
+
+// helper drawer
+const drawing = createDrawing(layout)
+const interactions = createInteractions(layout, drawing)
+
+// glue them together like a superband and hope they don't clobber each other
+const ui = {
   ...layout,
-  ...drawing(layout)
+  ...drawing,
+  ...interactions
 }
+
+export default ui
