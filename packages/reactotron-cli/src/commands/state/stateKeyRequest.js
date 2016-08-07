@@ -1,7 +1,7 @@
-const COMMAND = 'redux.key.request'
+const COMMAND = 'state.key.request'
 
 /**
- Sends a request to get the keys at the path in redux.
+ Sends a request to get the keys at the path in state.
  */
 const process = (context, action) => {
   context.send('state.keys.request', {path: action.path})

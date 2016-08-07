@@ -1,8 +1,8 @@
 import R from 'ramda'
-const COMMAND = 'redux.subscribe.add'
+const COMMAND = 'state.subscribe.delete'
 
 /**
- Prompts for a path to grab some redux keys from.
+ Prompts for a path to grab some state keys from.
  */
 const process = (context, action) => {
   const path = action.path
@@ -10,11 +10,10 @@ const process = (context, action) => {
   if (R.isNil(context.config.subscriptions)) {
     context.config.subscriptions = []
   }
-  // subscribe
-  if (!R.contains(path, context.config.subscriptions)) {
-    context.config.subscriptions.push(path)
-    context.post({type: 'redux.subscribe.request'})
-  }
+  // remove
+  context.config.subscriptions = R.without([path], context.config.subscriptions)
+  // refresh
+  context.post({type: 'state.subscribe.request'})
 }
 
 export default {

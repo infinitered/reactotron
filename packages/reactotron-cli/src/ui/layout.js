@@ -75,7 +75,7 @@ const logBox = blessed.log({
   }
 })
 
-const reduxContainer = blessed.box({
+const stateContainer = blessed.box({
   parent: screen,
   left: 'center',
   width: '33%',
@@ -83,8 +83,8 @@ const reduxContainer = blessed.box({
   height: '100%-1'
 })
 
-const reduxActionBox = blessed.log({
-  parent: reduxContainer,
+const stateActionBox = blessed.log({
+  parent: stateContainer,
   scrollable: true,
   left: '0',
   top: 0,
@@ -95,15 +95,15 @@ const reduxActionBox = blessed.log({
   keys: true,
   vi: true,
   mouse: true,
-  label: ' {white-fg}Redux Actions{/} ',
+  label: ' {white-fg}State Actions{/} ',
   scrollbar: {
     ch: ' ',
     inverse: true
   }
 })
 
-const reduxWatchBox = blessed.log({
-  parent: reduxContainer,
+const stateWatchBox = blessed.log({
+  parent: stateContainer,
   scrollable: true,
   left: 0,
   width: '100%',
@@ -114,7 +114,7 @@ const reduxWatchBox = blessed.log({
   keys: false,
   vi: false,
   mouse: true,
-  label: ' {white-fg}Redux Subscriptions{/}',
+  label: ' {white-fg}State Subscriptions{/}',
   scrollbar: {
     ch: ' ',
     inverse: true
@@ -212,8 +212,8 @@ export default () => ({
   messageBox,
   infoBox,
   logBox,
-  reduxActionBox,
-  reduxWatchBox,
+  stateActionBox,
+  stateWatchBox,
   apiBox,
   benchBox,
   instructionsBox,

@@ -17,7 +17,7 @@ const server = createServer({
     context.post(command)
   },
   onConnect: client => {
-    context.post({ type: 'redux.subscribe.request' })
+    context.post({ type: 'state.subscribe.request' })
   }
 })
 

@@ -1,13 +1,13 @@
 import RS from 'ramdasauce'
-const COMMAND = 'redux.value.prompt'
+const COMMAND = 'state.value.prompt'
 
 /**
- Prompts for a path to grab some redux values from.
+ Prompts for a path to grab some state values from.
  */
 const process = (context, action) => {
-  context.ui.prompt('Enter a redux path', (value) => {
+  context.ui.prompt('Enter a state path', (value) => {
     const path = RS.isNilOrEmpty(value) ? null : value
-    context.post({type: 'redux.value.request', path})
+    context.post({type: 'state.value.request', path})
   })
 }
 

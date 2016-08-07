@@ -1,8 +1,8 @@
 import RS from 'ramdasauce'
-const COMMAND = 'redux.dispatch.prompt'
+const COMMAND = 'state.dispatch.prompt'
 
 /**
-Prompts for a path to grab some redux keys from.
+Prompts for a path to grab some state keys from.
  */
 const process = (context, action) => {
   context.ui.prompt('Action to dispatch (e.g. {type: \'MY_ACTION\'})', (value) => {
@@ -18,7 +18,7 @@ const process = (context, action) => {
     if (RS.isNilOrEmpty(action)) return
 
     // got an object?  ship an object.
-    context.post({type: 'redux.dispatch', action})
+    context.post({type: 'state.dispatch', action})
   })
 }
 

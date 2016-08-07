@@ -1,10 +1,10 @@
 import R from 'ramda'
 import RS from 'ramdasauce'
 
-const COMMAND = 'redux.subscribe.request'
+const COMMAND = 'state.subscribe.request'
 
 /**
- Sends a request to get the keys at the path in redux.
+ Sends a request to get the keys at the path in state.
  */
 const process = (context, action) => {
   const paths = R.without([null], RS.dotPath('config.subscriptions', context) || [])

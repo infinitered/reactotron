@@ -8,7 +8,7 @@ const layout = createLayout()
 // helper drawer
 const drawing = createDrawing(layout, {
   apiLoggingStyle: 'short', // short | full
-  reduxActionLoggingStyle: 'short' // short | full
+  stateActionLoggingStyle: 'short' // short | full
 })
 const interactions = createInteractions(layout, drawing)
 

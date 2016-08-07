@@ -1,16 +1,16 @@
-// redux things
-import reduxDispatch from './redux/reduxDispatch'
-import reduxValueRequest from './redux/reduxValueRequest'
-import reduxKeyRequest from './redux/reduxKeyRequest'
-import reduxValuePrompt from './redux/reduxValuePrompt'
-import reduxKeyPrompt from './redux/reduxKeyPrompt'
-import reduxDispatchPrompt from './redux/reduxDispatchPrompt'
-import reduxSubscribeRequest from './redux/reduxSubscribeRequest'
-import reduxSubscribeAdd from './redux/reduxSubscribeAdd'
-import reduxSubscribeAddPrompt from './redux/reduxSubscribeAddPrompt'
-import reduxSubscribeDelete from './redux/reduxSubscribeDelete'
-import reduxSubscribeDeletePrompt from './redux/reduxSubscribeDeletePrompt'
-import reduxSubscribeClear from './redux/reduxSubscribeClear'
+// state things
+import stateDispatch from './state/stateDispatch'
+import stateValueRequest from './state/stateValueRequest'
+import stateKeyRequest from './state/stateKeyRequest'
+import stateValuePrompt from './state/stateValuePrompt'
+import stateKeyPrompt from './state/stateKeyPrompt'
+import stateDispatchPrompt from './state/stateDispatchPrompt'
+import stateSubscribeRequest from './state/stateSubscribeRequest'
+import stateSubscribeAdd from './state/stateSubscribeAdd'
+import stateSubscribeAddPrompt from './state/stateSubscribeAddPrompt'
+import stateSubscribeDelete from './state/stateSubscribeDelete'
+import stateSubscribeDeletePrompt from './state/stateSubscribeDeletePrompt'
+import stateSubscribeClear from './state/stateSubscribeClear'
 import devMenuReload from './devMenu/devMenuReload'
 
 // program things
@@ -27,34 +27,34 @@ import contentScore from './content/contentScore'
 import menuPush from './menus/menuPush'
 import menuPop from './menus/menuPop'
 import menuMain from './menus/menuMain'
-import menuRedux from './menus/menuRedux'
+import menuState from './menus/menuState'
 import menuHelp from './menus/menuHelp'
-import menuReduxSubscribe from './menus/menuReduxSubscribe'
+import menuStateSubscribe from './menus/menuStateSubscribe'
 import menuDevMenu from './menus/menuDevMenu'
 import menuClients from './menus/menuClients'
 
 // come together. right now. over me.
 export default [
-  reduxDispatch,
-  reduxValueRequest,
-  reduxKeyRequest,
-  reduxValuePrompt,
-  reduxKeyPrompt,
-  reduxDispatchPrompt,
-  reduxSubscribeRequest,
-  reduxSubscribeAdd,
-  reduxSubscribeAddPrompt,
-  reduxSubscribeDelete,
-  reduxSubscribeDeletePrompt,
-  reduxSubscribeClear,
+  stateDispatch,
+  stateValueRequest,
+  stateKeyRequest,
+  stateValuePrompt,
+  stateKeyPrompt,
+  stateDispatchPrompt,
+  stateSubscribeRequest,
+  stateSubscribeAdd,
+  stateSubscribeAddPrompt,
+  stateSubscribeDelete,
+  stateSubscribeDeletePrompt,
+  stateSubscribeClear,
   contentClear,
   contentScore,
   menuPush,
   menuPop,
   menuMain,
-  menuRedux,
+  menuState,
   menuHelp,
-  menuReduxSubscribe,
+  menuStateSubscribe,
   menuDevMenu,
   menuClients,
   commandRepeat,

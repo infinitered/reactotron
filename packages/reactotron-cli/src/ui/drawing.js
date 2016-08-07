@@ -67,10 +67,10 @@ export default (layout, config) => {
   const drawStateActionComplete = payload => {
     const {name, ms, action} = payload
     const time = timeStamp()
-    layout.reduxActionBox.log(`${time} {cyan-fg}${name}{/}{|}{white-fg}${ms}{/}ms`)
-    if (config.reduxActionLoggingStyle === 'full') {
-      layout.reduxActionBox.log(action)
-      layout.reduxActionBox.log('')
+    layout.stateActionBox.log(`${time} {cyan-fg}${name}{/}{|}{white-fg}${ms}{/}ms`)
+    if (config.stateActionLoggingStyle === 'full') {
+      layout.stateActionBox.log(action)
+      layout.stateActionBox.log('')
     }
   }
 

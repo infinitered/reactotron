@@ -1,7 +1,7 @@
-const COMMAND = 'redux.dispatch'
+const COMMAND = 'state.dispatch'
 
 /**
- Sends a request to dispatch an action into Redux.
+ Sends a request to dispatch an action into state.
  */
 const process = (context, action) => {
   context.send('state.action.dispatch', { action: action.action })
