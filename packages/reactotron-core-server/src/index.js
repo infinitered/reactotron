@@ -13,7 +13,6 @@ const DEFAULTS = {
   onDisconnect: socket => null // notify disconnections
 }
 
-
 class Server {
 
   // the configuration options
@@ -68,7 +67,7 @@ class Server {
       // when this client disconnects
       socket.on('disconnect', () => {
         // remove them from the list
-        this.connections = R.without([this.findBySocket(socket)], this.connections)
+        this.connections.remove(connection)
 
         // trigger event
         onDisconnect && onDisconnect(connection)

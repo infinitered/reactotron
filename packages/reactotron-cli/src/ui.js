@@ -1,4 +1,8 @@
 import blessed from 'blessed'
+import moment from 'moment'
+import { addSpaceForEmoji } from './emoji'
+import R from 'ramda'
+import RS from 'ramdasauce'
 
 const screen = blessed.screen({
   smartCSR: true,
@@ -215,6 +219,53 @@ const drawClientCount = count => {
   screen.render()
 }
 
+const formatClient = (connection = {}, prefix = '-') => {
+  return `${prefix} {green-fg}[${connection.address}]{/} <${connection.userAgent}> <${connection.version}>`
+}
+
+const drawConnection = connection => {
+  log(formatClient(connection, 'Connected'))
+  screen.render()
+}
+
+const drawDisconnection = connection => {
+  log(formatClient(connection, 'Disconnected'))
+  screen.render()
+}
+
+const timeStamp = () => {
+  const t = moment()
+  return `${t.format('HH:mm:')}{grey-fg}${t.format('ss.SS')}{/}`
+}
+
+const log = (message, level = 'debug') => {
+  const time = timeStamp()
+  if (R.is(Object, message)) {
+    logBox.log(time)
+    logBox.log(message)
+    logBox.log('')
+  } else {
+    if (!RS.isNilOrEmpty(message)) {
+      message = addSpaceForEmoji(message)
+    }
+    switch (level) {
+      case 'debug':
+        logBox.log(`${time} 💡  ${message}`)
+        break
+
+      case 'warn':
+        logBox.log(`${time} {yellow-fg}⚠️  ${message}{/}`)
+        break
+
+      case 'error':
+        logBox.log(`${time} {red-fg}🚨  ${message}{/}`)
+        break
+    }
+  }
+
+  screen.render()
+}
+
 const connectionBox = blessed.box({
   parent: statusBox,
   top: 0,
@@ -240,5 +291,9 @@ export default {
   statusBox,
   clientCount,
   drawClientCount,
-  drawPort
+  drawPort,
+  timeStamp,
+  drawConnection,
+  drawDisconnection,
+  log
 }
