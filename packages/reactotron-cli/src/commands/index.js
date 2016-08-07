@@ -28,7 +28,6 @@ import apiResponse from './api/apiResponse'
 import commandRepeat from './commands/commandRepeat'
 
 // content things
-import contentLog from './content/contentLog'
 import contentClear from './content/contentClear'
 import contentScore from './content/contentScore'
 
@@ -62,7 +61,6 @@ export default [
   reduxSubscribeDeletePrompt,
   reduxSubscribeClear,
   apiResponse,
-  contentLog,
   contentClear,
   contentScore,
   menuPush,

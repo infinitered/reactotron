@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { observable, action, extendObservable } from 'mobx'
 import R from 'ramda'
 import CommandTypes from './types'
 
@@ -22,7 +22,12 @@ class Commands {
    */
   constructor (maximumListSize = DEFAULT_MAXIMUM_LIST_SIZE) {
     // create an observable list for each (named after the type)
-    R.forEach(type => { this[type] = observable([]) }, CommandTypes)
+    R.forEach(type => {
+      extendObservable(this, {
+        [type]: []
+      })
+      // this[type] = observable([])
+    }, CommandTypes)
     this.maximumListSize = maximumListSize
   }
 
@@ -36,12 +41,12 @@ class Commands {
     const list = this[type]
     // but if we can't, jet
     if (R.isNil(list)) return
-    // take all but the first
-    const newList = R.takeLast(this.maximumListSize - 1, list)
     // add this new one on the end
-    newList.push(command)
-    // reset our list (NOTE: feels wierd, but it works to reassign with mobx)
-    this[type] = newList
+    list.push(command)
+    // shift off the head of the list if we've filled up
+    if (list.length > this.maximumListSize) {
+      list.shift()
+    }
   }
 
 }

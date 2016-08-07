@@ -1,22 +1,24 @@
-import { reaction, observe } from 'mobx'
+import { reaction, observe, toJS } from 'mobx'
 import R from 'ramda'
 
 export default (context) => {
   const { ui, server } = context
 
   // when the connection count changes, update the connected total
-  reaction(() => server.connections.length,
-    length => ui.drawClientCount(length),
-    true)
+  reaction(() => server.connections.length, ui.drawClientCount, true)
 
   // when clients come & go
-  observe(server.connections, change => {
-    change.addedCount > 0 && R.forEach(connection => ui.drawConnection(connection), change.added)
-    change.removedCount > 0 && R.forEach(connection => ui.drawDisconnection(connection), change.removed)
+  observe(server.connections, ({added, removed}) => {
+    R.forEach(ui.drawConnection, added)
+    R.forEach(ui.drawDisconnection, removed)
+  })
+
+  // when the log commands change, send the new ones to the ui
+  observe(server.commands['log'], ({added}) => {
+    const sendToLog = ({payload}) => ui.log(payload.message, payload.level)
+    R.forEach(sendToLog, added)
   })
 
   // when port changes
-  reaction(() => server.options.port,
-    port => ui.drawPort(port),
-    true)
+  reaction(() => server.options.port, ui.drawPort, true)
 }
