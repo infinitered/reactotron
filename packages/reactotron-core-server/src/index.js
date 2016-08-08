@@ -20,6 +20,7 @@ class Server {
   started = false
   io = null
   messageId = 0
+  subscriptions = []
 
   /**
    * Holds the commands the client has sent.
@@ -123,6 +124,34 @@ class Server {
    */
   send (type, payload) {
     this.io.sockets.emit('command', { type, payload })
+  }
+
+  /**
+   * Sends a request to the client for state values.
+   */
+  stateValuesRequest (path) {
+    this.send('state.values.request', { path })
+  }
+
+  /**
+   * Sends a request to the client for keys for a state object.
+   */
+  stateKeysRequest (path) {
+    this.send('state.keys.request', { path })
+  }
+
+  /**
+   * Sends a list of subscribed paths to the client for state subscription.
+   */
+  stateValuesSubscribe (paths) {
+    this.send('state.values.subscribe', { paths })
+  }
+
+  /**
+   * Asks the client to run this action
+   */
+  stateActionDispatch (action) {
+    this.send('state.action.dispatch', { action })
   }
 
 }
