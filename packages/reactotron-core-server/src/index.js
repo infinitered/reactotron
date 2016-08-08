@@ -2,7 +2,7 @@ import R from 'ramda'
 import socketIO from 'socket.io'
 import Commands from './commands'
 import validate from './validation'
-import { autorun, reaction, observable } from 'mobx'
+import { observable } from 'mobx'
 
 const DEFAULTS = {
   port: 9090, // the port to live (required)
@@ -82,6 +82,9 @@ class Server {
         onCommand(fullCommand)
         this.commands.addCommand(fullCommand)
       })
+
+      // resend the subscriptions to the client upon connecting
+      this.stateValuesSendSubscriptions()
     })
   }
 
@@ -143,8 +146,37 @@ class Server {
   /**
    * Sends a list of subscribed paths to the client for state subscription.
    */
-  stateValuesSubscribe (paths) {
-    this.send('state.values.subscribe', { paths })
+  stateValuesSendSubscriptions () {
+    this.send('state.values.subscribe', { paths: this.subscriptions })
+  }
+
+  /**
+   * Subscribe to a path in the client's state.
+   */
+  stateValuesSubscribe (path) {
+    // prevent duplicates
+    if (R.contains(path, this.subscriptions)) return
+    // subscribe
+    this.subscriptions.push(path)
+    this.stateValuesSendSubscriptions()
+  }
+
+  /**
+   * Unsubscribe from this path.
+   */
+  stateValuesUnsubscribe (path) {
+    // if it doesn't exist, jet
+    if (!R.contains(path, this.subscriptions)) return
+    this.subscriptions = R.without([path], this.subscriptions)
+    this.stateValuesSendSubscriptions()
+  }
+
+  /**
+   * Clears the subscriptions.
+   */
+  stateValuesClearSubscriptions () {
+    this.subscriptions = []
+    this.stateValuesSendSubscriptions()
   }
 
   /**

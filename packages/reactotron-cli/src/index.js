@@ -11,9 +11,6 @@ const server = createServer({
   port: PORT,
   onCommand: command => {
     context.post(command)
-  },
-  onConnect: client => {
-    context.post({ type: 'state.subscribe.request' })
   }
 })
 

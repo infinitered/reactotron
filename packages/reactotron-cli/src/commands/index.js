@@ -5,7 +5,6 @@ import stateKeyRequest from './state/stateKeyRequest'
 import stateValuePrompt from './state/stateValuePrompt'
 import stateKeyPrompt from './state/stateKeyPrompt'
 import stateDispatchPrompt from './state/stateDispatchPrompt'
-import stateSubscribeRequest from './state/stateSubscribeRequest'
 import stateSubscribeAdd from './state/stateSubscribeAdd'
 import stateSubscribeAddPrompt from './state/stateSubscribeAddPrompt'
 import stateSubscribeDelete from './state/stateSubscribeDelete'
@@ -41,7 +40,6 @@ export default [
   stateValuePrompt,
   stateKeyPrompt,
   stateDispatchPrompt,
-  stateSubscribeRequest,
   stateSubscribeAdd,
   stateSubscribeAddPrompt,
   stateSubscribeDelete,
