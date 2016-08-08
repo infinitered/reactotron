@@ -24,8 +24,6 @@ const createReactotronStoreEnhancer = (reactotron, enhancerOptions = {}) => {
   const reactotronEnhancer = createStore => (reducer, initialState, enhancer) => {
     // the store to create
     const store = createStore(reducer, initialState, enhancer)
-    const plugin = createPlugin(store)
-    reactotron.use(plugin)
 
     // swizzle the current dispatch
     const originalDispatch = store.dispatch
@@ -49,9 +47,12 @@ const createReactotronStoreEnhancer = (reactotron, enhancerOptions = {}) => {
       // return the real work's result
       return result
     }
+    const newStore = R.merge(store, { dispatch: dispatch.bind(store) })
+    const plugin = createPlugin(newStore)
+    reactotron.use(plugin)
 
     // send the store back, but with our our dispatch
-    return R.merge(store, { dispatch })
+    return newStore
   }
 
   return reactotronEnhancer

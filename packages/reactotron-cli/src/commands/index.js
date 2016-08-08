@@ -1,38 +1,24 @@
-// redux things
-import reduxDispatch from './redux/reduxDispatch'
-import reduxValueRequest from './redux/reduxValueRequest'
-import reduxKeyRequest from './redux/reduxKeyRequest'
-import reduxValueResponse from './redux/reduxValueResponse'
-import reduxKeyResponse from './redux/reduxKeyResponse'
-import reduxValuePrompt from './redux/reduxValuePrompt'
-import reduxKeyPrompt from './redux/reduxKeyPrompt'
-import reduxDispatchPrompt from './redux/reduxDispatchPrompt'
-import reduxActionDone from './redux/reduxActionDone'
-import reduxSubscribeRequest from './redux/reduxSubscribeRequest'
-import reduxSubscribeValues from './redux/reduxSubscribeValues'
-import reduxSubscribeAdd from './redux/reduxSubscribeAdd'
-import reduxSubscribeAddPrompt from './redux/reduxSubscribeAddPrompt'
-import reduxSubscribeDelete from './redux/reduxSubscribeDelete'
-import reduxSubscribeDeletePrompt from './redux/reduxSubscribeDeletePrompt'
-import reduxSubscribeClear from './redux/reduxSubscribeClear'
+// state things
+import stateDispatch from './state/stateDispatch'
+import stateValueRequest from './state/stateValueRequest'
+import stateKeyRequest from './state/stateKeyRequest'
+import stateValuePrompt from './state/stateValuePrompt'
+import stateKeyPrompt from './state/stateKeyPrompt'
+import stateDispatchPrompt from './state/stateDispatchPrompt'
+import stateSubscribeAdd from './state/stateSubscribeAdd'
+import stateSubscribeAddPrompt from './state/stateSubscribeAddPrompt'
+import stateSubscribeDelete from './state/stateSubscribeDelete'
+import stateSubscribeDeletePrompt from './state/stateSubscribeDeletePrompt'
+import stateSubscribeClear from './state/stateSubscribeClear'
 import devMenuReload from './devMenu/devMenuReload'
-import benchmarkReport from './benchmark/benchmarkReport'
 
 // program things
 import die from './program/die'
-
-// api things
-import apiResponse from './api/apiResponse'
-
-// client things
-import clientAdd from './client/clientAdd'
-import clientRemove from './client/clientRemove'
 
 // command things
 import commandRepeat from './commands/commandRepeat'
 
 // content things
-import contentLog from './content/contentLog'
 import contentClear from './content/contentClear'
 import contentScore from './content/contentScore'
 
@@ -40,48 +26,36 @@ import contentScore from './content/contentScore'
 import menuPush from './menus/menuPush'
 import menuPop from './menus/menuPop'
 import menuMain from './menus/menuMain'
-import menuRedux from './menus/menuRedux'
+import menuState from './menus/menuState'
 import menuHelp from './menus/menuHelp'
-import menuReduxSubscribe from './menus/menuReduxSubscribe'
+import menuStateSubscribe from './menus/menuStateSubscribe'
 import menuDevMenu from './menus/menuDevMenu'
 import menuClients from './menus/menuClients'
-import consoleError from './console/consoleError'
 
 // come together. right now. over me.
 export default [
-  clientAdd,
-  clientRemove,
-  reduxDispatch,
-  reduxValueRequest,
-  reduxKeyRequest,
-  reduxValueResponse,
-  reduxKeyResponse,
-  reduxValuePrompt,
-  reduxKeyPrompt,
-  reduxDispatchPrompt,
-  reduxActionDone,
-  reduxSubscribeRequest,
-  reduxSubscribeValues,
-  reduxSubscribeAdd,
-  reduxSubscribeAddPrompt,
-  reduxSubscribeDelete,
-  reduxSubscribeDeletePrompt,
-  reduxSubscribeClear,
-  apiResponse,
-  contentLog,
+  stateDispatch,
+  stateValueRequest,
+  stateKeyRequest,
+  stateValuePrompt,
+  stateKeyPrompt,
+  stateDispatchPrompt,
+  stateSubscribeAdd,
+  stateSubscribeAddPrompt,
+  stateSubscribeDelete,
+  stateSubscribeDeletePrompt,
+  stateSubscribeClear,
   contentClear,
   contentScore,
   menuPush,
   menuPop,
   menuMain,
-  menuRedux,
+  menuState,
   menuHelp,
-  menuReduxSubscribe,
+  menuStateSubscribe,
   menuDevMenu,
   menuClients,
   commandRepeat,
   devMenuReload,
-  consoleError,
-  benchmarkReport,
   die
 ]

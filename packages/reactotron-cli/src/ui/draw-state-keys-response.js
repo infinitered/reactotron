@@ -1,14 +1,13 @@
-import RS from 'ramdasauce'
 import R from 'ramda'
-
-const COMMAND = 'state.keys.response'
+import RS from 'ramdasauce'
+import { timeStamp } from './formatting'
 
 /**
- Receives a list of keys from the server.
+ Draws state.keys.response commands.
  */
-const process = (context, action) => {
-  const {path, keys} = action.payload
-  const time = context.timeStamp()
+export default (layout) => payload => {
+  const {path, keys} = payload
+  const time = timeStamp()
 
   const keyPrefix = RS.isNilOrEmpty(path) ? '' : `${path}.`
 
@@ -22,11 +21,6 @@ const process = (context, action) => {
 
   const fullMessage = `{white-fg}${time}{/} ${title} \n${sayKeys}`
 
-  context.ui.logBox.log(fullMessage)
-  context.ui.screen.render()
-}
-
-export default {
-  name: COMMAND,
-  process
+  layout.logBox.log(fullMessage)
+  layout.screen.render()
 }
