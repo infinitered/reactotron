@@ -190,13 +190,6 @@ class Server {
     this.stateValuesSendSubscriptions()
   }
 
-  /**
-   * Asks the client to run this action
-   */
-  stateActionDispatch (action) {
-    this.send('state.action.dispatch', { action })
-  }
-
 }
 
 export default Server
