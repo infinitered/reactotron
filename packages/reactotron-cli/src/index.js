@@ -3,36 +3,24 @@ import { createServer } from 'reactotron-core-server'
 import Context from './context'
 import Router from './router'
 import commands from './commands/index'
-import ui from './ui'
+import ui from './ui/index'
+import reactions from './ui/reactions'
 
 const PORT = 9090
 const server = createServer({
   port: PORT,
   onCommand: command => {
     context.post(command)
-  },
-  onStart: () => {
-    context.log(`Started on port ${PORT}`)
-  },
-  onStop: () => {
-    context.log('stopped')
-  },
-  onConnect: client => {
-    context.post({ type: 'client.add', client })
-    context.post({ type: 'redux.subscribe.request' })
-  },
-  onDisconnect: client => {
-    context.post({ type: 'client.remove', client })
   }
 })
 
 const router = Router.createRouter()
 R.forEach((command) => router.register(command), commands)
-const context = new Context({
-  ui,
-  send: server.send.bind(server),
-  router
-})
+const context = new Context({ ui, router, server })
+
+// some parts of the ui can react to mobx changes.  they go in here.  so awesome.
+// i'd love to move more in here.
+reactions(context)
 
 // always control-c to die
 ui.screen.key('C-c', () => context.post({type: 'program.die'}))

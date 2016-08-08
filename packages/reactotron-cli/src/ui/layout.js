@@ -41,7 +41,6 @@ const infoBox = blessed.message({
   left: 'center',
   height: 'shrink',
   width: '40%',
-  // width: 'shrink',
   border: 'line',
   label: ' {blue-fg}Info{/} ',
   tags: true,
@@ -76,7 +75,7 @@ const logBox = blessed.log({
   }
 })
 
-const reduxContainer = blessed.box({
+const stateContainer = blessed.box({
   parent: screen,
   left: 'center',
   width: '33%',
@@ -84,8 +83,8 @@ const reduxContainer = blessed.box({
   height: '100%-1'
 })
 
-const reduxActionBox = blessed.log({
-  parent: reduxContainer,
+const stateActionBox = blessed.log({
+  parent: stateContainer,
   scrollable: true,
   left: '0',
   top: 0,
@@ -96,15 +95,15 @@ const reduxActionBox = blessed.log({
   keys: true,
   vi: true,
   mouse: true,
-  label: ' {white-fg}Redux Actions{/} ',
+  label: ' {white-fg}State Actions{/} ',
   scrollbar: {
     ch: ' ',
     inverse: true
   }
 })
 
-const reduxWatchBox = blessed.log({
-  parent: reduxContainer,
+const stateWatchBox = blessed.log({
+  parent: stateContainer,
   scrollable: true,
   left: 0,
   width: '100%',
@@ -115,7 +114,7 @@ const reduxWatchBox = blessed.log({
   keys: false,
   vi: false,
   mouse: true,
-  label: ' {white-fg}Redux Subscriptions{/}',
+  label: ' {white-fg}State Subscriptions{/}',
   scrollbar: {
     ch: ' ',
     inverse: true
@@ -186,23 +185,15 @@ const instructionsBox = blessed.box({
   tags: true
 })
 
-blessed.box({
+const brandingBox = blessed.box({
   parent: statusBox,
   width: 'shrink',
   height: '100%',
   left: 0,
   top: 0,
   tags: true,
-  content: '{yellow-fg}reactotron{/}'
+  content: ''
 })
-
-const clientCount = (numberOfClients = 0) => {
-  if (numberOfClients > 0) {
-    return `{right}{black-bg}{green-fg}${numberOfClients} Online{/}{/}{/}`
-  } else {
-    return `{right}{black-bg}{red-fg}${numberOfClients} Online{/}{/}{/}`
-  }
-}
 
 const connectionBox = blessed.box({
   parent: statusBox,
@@ -210,22 +201,22 @@ const connectionBox = blessed.box({
   right: 0,
   height: '100%',
   width: 'shrink',
-  content: clientCount(),
+  content: '',
   tags: true
 })
 
-export default {
+export default () => ({
   screen,
   connectionBox,
   promptBox,
   messageBox,
   infoBox,
   logBox,
-  reduxActionBox,
-  reduxWatchBox,
+  stateActionBox,
+  stateWatchBox,
   apiBox,
   benchBox,
   instructionsBox,
   statusBox,
-  clientCount
-}
+  brandingBox
+})

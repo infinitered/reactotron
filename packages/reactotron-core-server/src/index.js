@@ -1,6 +1,8 @@
 import R from 'ramda'
-import RS from 'ramdasauce'
 import socketIO from 'socket.io'
+import Commands from './commands'
+import validate from './validation'
+import { observable } from 'mobx'
 
 const DEFAULTS = {
   port: 9090, // the port to live (required)
@@ -11,29 +13,30 @@ const DEFAULTS = {
   onDisconnect: socket => null // notify disconnections
 }
 
-const isPortValid = R.allPass([R.complement(R.isNil), R.is(Number), RS.isWithin(1, 65535)])
-const onCommandValid = R.allPass([R.complement(R.isNil)])
-/**
- * Ensures the options are sane to run this baby.  Throw if not.  These
- * are basically sanity checks.
- */
-const validate = (options) => {
-  const { port, onCommand } = options
-
-  if (!isPortValid(port)) throw new Error('invalid port')
-  if (!onCommandValid(onCommand)) throw new Error('onCommand is required')
-
-  return this
-}
-
-export class Server {
+class Server {
 
   // the configuration options
-  options = R.merge({}, DEFAULTS)
+  @observable options = R.merge({}, DEFAULTS)
   started = false
   io = null
-  openSockets = []
   messageId = 0
+  subscriptions = []
+
+  /**
+   * Holds the commands the client has sent.
+   */
+  commands = new Commands()
+
+  /**
+   * Holds the currently connected clients.
+   */
+  @observable connections = []
+
+  constructor () {
+    this.send = this.send.bind(this)
+  }
+
+  findBySocket = socket => R.find(R.propEq('socket', socket), this.connections)
 
   /**
    * Set the configuration options.
@@ -54,33 +57,38 @@ export class Server {
 
     // when we get new clients
     this.io.on('connection', socket => {
-      // remember them
-      this.openSockets.push(socket)
-
       // details about who has connected
-      const clientDetails = {
+      const connection = {
+        socket,
         id: socket.id,
         address: socket.request.connection.remoteAddress
       }
 
+      this.connections.push(connection)
+
       // trigger event
-      onConnect && onConnect(clientDetails)
+      onConnect && onConnect(connection)
 
       // when this client disconnects
       socket.on('disconnect', () => {
         // remove them from the list
-        this.openSockets = R.without([socket], this.openSockets)
+        this.connections.remove(connection)
 
         // trigger event
-        onDisconnect && onDisconnect(clientDetails)
+        onDisconnect && onDisconnect(connection)
       })
 
       // when we receive a command from the client
-      socket.on('command', ({type, payload}) => {
+      socket.on('command', ({ type, payload }) => {
         this.messageId++
         const date = new Date()
-        onCommand({ type, payload, messageId: this.messageId, date })
+        const fullCommand = { type, payload, messageId: this.messageId, date }
+        onCommand(fullCommand)
+        this.commands.addCommand(fullCommand)
       })
+
+      // resend the subscriptions to the client upon connecting
+      this.stateValuesSendSubscriptions()
     })
   }
 
@@ -109,7 +117,7 @@ export class Server {
   stop () {
     const { onStop } = this.options
     this.started = false
-    R.forEach(s => s.connected && s.disconnect(), this.openSockets)
+    R.forEach(s => s.connected && s.disconnect(), R.pluck('socket', this.connections))
     this.io.close()
 
     // trigger the stop message
@@ -125,7 +133,73 @@ export class Server {
     this.io.sockets.emit('command', { type, payload })
   }
 
+  /**
+   * Sends a request to the client for state values.
+   */
+  stateValuesRequest (path) {
+    this.send('state.values.request', { path })
+  }
+
+  /**
+   * Sends a request to the client for keys for a state object.
+   */
+  stateKeysRequest (path) {
+    this.send('state.keys.request', { path })
+  }
+
+  /**
+   * Dispatches an action through to the state.
+   */
+  stateActionDispatch (action) {
+    this.send('state.action.dispatch', { action })
+  }
+
+  /**
+   * Sends a list of subscribed paths to the client for state subscription.
+   */
+  stateValuesSendSubscriptions () {
+    this.send('state.values.subscribe', { paths: this.subscriptions })
+  }
+
+  /**
+   * Subscribe to a path in the client's state.
+   */
+  stateValuesSubscribe (path) {
+    // prevent duplicates
+    if (R.contains(path, this.subscriptions)) return
+    // subscribe
+    this.subscriptions.push(path)
+    this.stateValuesSendSubscriptions()
+  }
+
+  /**
+   * Unsubscribe from this path.
+   */
+  stateValuesUnsubscribe (path) {
+    // if it doesn't exist, jet
+    if (!R.contains(path, this.subscriptions)) return
+    this.subscriptions = R.without([path], this.subscriptions)
+    this.stateValuesSendSubscriptions()
+  }
+
+  /**
+   * Clears the subscriptions.
+   */
+  stateValuesClearSubscriptions () {
+    this.subscriptions = []
+    this.stateValuesSendSubscriptions()
+  }
+
+  /**
+   * Asks the client to run this action
+   */
+  stateActionDispatch (action) {
+    this.send('state.action.dispatch', { action })
+  }
+
 }
+
+export default Server
 
 // convenience factory function
 export const createServer = (options) => {
