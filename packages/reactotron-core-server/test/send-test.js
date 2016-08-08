@@ -21,6 +21,7 @@ test.cb('sends a valid command', t => {
 
     // when the client receives a command, validate
     client.on('command', ({ type, payload }) => {
+      if (type === 'state.values.subscribe') return
       t.is(type, mockType)
       t.deepEqual(payload, mockPayload)
       t.end()
