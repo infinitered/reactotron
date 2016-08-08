@@ -1,7 +1,7 @@
 import R from 'ramda'
 
 const formatClient = (client = {}, prefix = '-') => {
-  return `${prefix} {green-fg}[${client.address}]{/} <${client.userAgent}> <${client.version}>`
+  return `${prefix} {green-fg}[${client.address}]{/} <${client.userAgent}> <${client.reactotronVersion}>`
 }
 
 const formatClients = (clients = {}, prefix = '-') => {
@@ -19,7 +19,7 @@ const process = (context, action) => {
 
   const messageText = `
     {bold}Clients{/bold}
-    ---------------------------------
+    -------------------------------------------------------
 ${clients}
 `
 

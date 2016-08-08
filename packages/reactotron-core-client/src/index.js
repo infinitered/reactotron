@@ -69,7 +69,7 @@ export class Client {
    */
   connect () {
     this.connected = true
-    const { io, host, port } = this.options
+    const { io, host, port, name, userAgent, environment, reactotronVersion } = this.options
     const { onCommand, onConnect, onDisconnect } = this.options
 
     // establish a socket.io connection to the server
@@ -87,7 +87,7 @@ export class Client {
       R.forEach(plugin => plugin.onConnect && plugin.onConnect(), this.plugins)
 
       // introduce ourselves
-      socket.emit('hello.client', this.options)
+      this.send('client.intro', { host, port, name, userAgent, reactotronVersion, environment })
     })
 
     // fires when we disconnect

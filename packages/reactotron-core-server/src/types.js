@@ -1,6 +1,6 @@
 // the list of command types we support
 export default [
-  'hello.client',
+  'client.intro',
   'log',
   'state.action.complete',
   'state.values.response',

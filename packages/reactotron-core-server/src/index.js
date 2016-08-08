@@ -58,13 +58,13 @@ class Server {
     // when we get new clients
     this.io.on('connection', socket => {
       // details about who has connected
-      const connection = {
+      let connection = {
         socket,
         id: socket.id,
         address: socket.request.connection.remoteAddress
       }
 
-      this.connections.push(connection)
+      // this.connections.push(connection)
 
       // trigger event
       onConnect && onConnect(connection)
@@ -83,6 +83,15 @@ class Server {
         this.messageId++
         const date = new Date()
         const fullCommand = { type, payload, messageId: this.messageId, date }
+
+        // for client intros
+        if (type === 'client.intro') {
+          // bestow the payload onto the connection
+          connection = { ...connection, ...payload }
+          // then trigger the connection
+          this.connections.push(connection)
+        }
+
         onCommand(fullCommand)
         this.commands.addCommand(fullCommand)
       })
@@ -188,13 +197,6 @@ class Server {
   stateValuesClearSubscriptions () {
     this.subscriptions = []
     this.stateValuesSendSubscriptions()
-  }
-
-  /**
-   * Asks the client to run this action
-   */
-  stateActionDispatch (action) {
-    this.send('state.action.dispatch', { action })
   }
 
 }
