@@ -12,5 +12,5 @@ test('spot check some of the functions', t => {
 })
 
 test('has the right name', t => {
-  t.is(reactotron.options.name, 'reactotron-react-native')
+  t.is(reactotron.options.name, 'React Native App')
 })

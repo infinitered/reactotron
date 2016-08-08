@@ -53,7 +53,10 @@
     }
   },
   "standard": {
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "globals": [
+      "__DEV__"
+    ]
   },
   "dependencies": {
     "ramda": "^0.21.0",

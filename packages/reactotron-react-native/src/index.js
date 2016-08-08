@@ -8,7 +8,7 @@
 // SECOND PARTY
 // ------------
 
-import { createClient, CorePlugins } from 'reactotron-core-client'
+import { createClient } from 'reactotron-core-client'
 
 // -----------
 // THIRD PARTY
@@ -39,7 +39,10 @@ const DEFAULTS = {
   io,
   host: 'localhost',
   port: 9090,
-  name: 'reactotron-react-native'
+  name: 'React Native App',
+  userAgent: 'reactotron-react-native',
+  reactotronVersion: 'BETA', // TODO: figure this out for realz.  why is this hard?  it must be me.
+  environment: __DEV__ ? 'development' : 'production' // naive... TODO: find the right way ya lazy bum.
 }
 
 // -----------

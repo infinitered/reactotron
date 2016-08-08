@@ -14,5 +14,5 @@ export const timeStamp = () => {
 }
 
 export const formatClient = (connection = {}, prefix = '-') => {
-  return `${prefix} {green-fg}[${connection.address}]{/} <${connection.userAgent}> <${connection.version}>`
+  return `${prefix} {green-fg}[${connection.address}]{/} <${connection.userAgent}> <${connection.reactotronVersion}>`
 }
