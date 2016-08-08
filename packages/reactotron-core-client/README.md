@@ -27,7 +27,8 @@ const client = createClient({
   // fires when the server is telling us something
   onCommand: ({type, payload}) => {
     switch (type) {
-      case 'hello.server':
+      case 'server.intro':
+        const { name, version } = payload
         break
 
       case 'state.values.request':
@@ -170,22 +171,25 @@ For the record.  I don't like this.  But the rest of socket.io is stellar!
 
 # Messages
 
-### hello.client
+### client.intro
 
 The client sends this message to the server when it first connects.  It contains
 all the configuration information used to configure the client.
 
 For example:
 
-```json
+```js
 {
-  "host": "localhost",
-  "port": 9090,
-  "name": "reactotron-core-client"
+  "host": "localhost",                   // the server we're connecting to
+  "port": 9090,                          // the server's port
+  "name": "My Fantastic App",            // the name of our app
+  "userAgent": "Internet Explorer 3.0",  // the user agent
+  "reactotronVersion": "0.99.1",         // the version of reactotron
+  "environment": "development"           // our environment
 }
 ```
 
-### hello.server
+### server.intro
 
 The client receives this message from the server once connected.  It contains
 configuration information used by the server.
@@ -195,7 +199,10 @@ Right now the payload is empty because I haven't even created the server!
 It'll probably have things like directory, version... I really don't know yet.
 
 ```json
-{}
+{
+  "name": "I Am Server.  Roar.",
+  "version": "0.99.1"
+}
 ```
 
 ### log
