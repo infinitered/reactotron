@@ -4,7 +4,6 @@ import Router from './router'
 export default class Context {
 
   constructor (parts) {
-    this.send = parts.send
     this.ui = parts.ui
     this.router = parts.router
     this.menuStack = []
@@ -14,11 +13,6 @@ export default class Context {
     this.apiLoggingStyle = 'short'
     this.config = {}
     this.server = parts.server
-    this.send = this.server.send.bind(this.server)
-  }
-
-  send (type, payload) {
-    this.send(type, {payload})
   }
 
   post (message) {

@@ -3,7 +3,7 @@ import { createServer } from 'reactotron-core-server'
 import Context from './context'
 import Router from './router'
 import commands from './commands/index'
-import ui from './ui'
+import ui from './ui/index'
 import reactions from './ui/reactions'
 
 const PORT = 9090

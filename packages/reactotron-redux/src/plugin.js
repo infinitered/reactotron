@@ -1,8 +1,6 @@
 import R from 'ramda'
-import RS from 'ramdasauce'
 import requestKeys from './keys-request'
 import requestValues from './values-request'
-import subscribeToValues from './values-subscribe'
 import getSubscriptionValues from './get-subscription-values'
 
 const createPlugin = store => {

@@ -32,6 +32,10 @@ class Server {
    */
   @observable connections = []
 
+  constructor () {
+    this.send = this.send.bind(this)
+  }
+
   findBySocket = socket => R.find(R.propEq('socket', socket), this.connections)
 
   /**
@@ -141,6 +145,13 @@ class Server {
    */
   stateKeysRequest (path) {
     this.send('state.keys.request', { path })
+  }
+
+  /**
+   * Dispatches an action through to the state.
+   */
+  stateActionDispatch (action) {
+    this.send('state.action.dispatch', { action })
   }
 
   /**
