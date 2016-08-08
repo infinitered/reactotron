@@ -23,7 +23,7 @@ const process = (context, action) => {
 ${clients}
 `
 
-  context.info(' {yellow-fg}reactotron{/} {blue-fg}clients{/} ', messageText)
+  context.ui.info(' {yellow-fg}reactotron{/} {blue-fg}clients{/} ', messageText)
 }
 
 export default {
