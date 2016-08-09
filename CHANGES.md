@@ -1,6 +1,6 @@
 ### Aug 9, 2016 - 0.9.0
 
-* `NEW` supports secure option for using wss - [@ridersx](https://github.com/ridersx) [(#66)](https://github.com/skellock/reactotron/pull/98)
+* `NEW` supports secure option for using wss - [@ridersx](https://github.com/ridersx) [(#98)](https://github.com/skellock/reactotron/pull/98)
 
 ### July 29, 2016 - 0.8.0
 
