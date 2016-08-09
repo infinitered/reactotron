@@ -81,7 +81,8 @@ client.connect = (userConfigurations = {}) => {
     version: REACTOTRON_VERSION,
     server: 'localhost',
     port: 3334,
-    enabled: true
+    enabled: true,
+    secure: false
   }
 
   // merge user input with defaults
@@ -95,7 +96,7 @@ client.connect = (userConfigurations = {}) => {
   reactotronEnabled = config.enabled
 
   if (config.enabled) {
-    socket = io(`ws://${config.server}:${config.port}`, {
+    socket = io(`${config.secure ? 'wss' : 'ws'}://${config.server}:${config.port}`, {
       jsonp: false,
       transports: ['websocket']
     })
