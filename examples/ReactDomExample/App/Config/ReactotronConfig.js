@@ -1,7 +1,8 @@
 import Reactotron from '../../client' // in a real app, you would use 'reactotron'
 
 Reactotron.connect({
-  name: 'ReactDomExample'
+  name: 'ReactDomExample',
+  secure: false
 })
 
 // a little easier (albiet ghetto) way to make Reactotron available in other

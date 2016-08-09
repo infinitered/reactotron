@@ -6,7 +6,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 // --- Begin Awkward Hackzorz ---
 
-var REACTOTRON_VERSION = '0.8.0';
+var REACTOTRON_VERSION = '0.9.0';
 var R = require('ramda');
 
 // client enabled flag
@@ -87,7 +87,8 @@ client.connect = function () {
     version: REACTOTRON_VERSION,
     server: 'localhost',
     port: 3334,
-    enabled: true
+    enabled: true,
+    secure: false
   };
 
   // merge user input with defaults
@@ -99,7 +100,7 @@ client.connect = function () {
   reactotronEnabled = config.enabled;
 
   if (config.enabled) {
-    socket = io('ws://' + config.server + ':' + config.port, {
+    socket = io((config.secure ? 'wss' : 'ws') + '://' + config.server + ':' + config.port, {
       jsonp: false,
       transports: ['websocket']
     });
