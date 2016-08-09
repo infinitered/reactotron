@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
-import IconReactotron from 'react-icons/lib/md/pool'
+import IconReactotron from 'react-icons/lib/md/rowing'
 import IconGithub from 'react-icons/lib/ti/social-github'
 import IconWeb from 'react-icons/lib/ti/home'
 import IconTwitter from 'react-icons/lib/ti/social-twitter'
-
 
 const Styles = {
   container: {
@@ -45,7 +44,7 @@ const Styles = {
   logo: { color: Colors.text },
   github: { margin: '0 6px', color: Colors.text },
   web: { margin: '0 6px', color: Colors.text },
-  twitter: { margin: '0 6px', color: Colors.text },
+  twitter: { margin: '0 6px', color: Colors.text }
 }
 
 class Footer extends Component {
@@ -55,7 +54,7 @@ class Footer extends Component {
       <div style={Styles.container}>
         <div style={Styles.content}>
 
-          <IconReactotron size={40} style={Styles.logo} />
+          <IconReactotron size={30} style={Styles.logo} />
           <div style={Styles.reactotronContainer}>
             <div style={Styles.reactotron}>Reactotron</div>
             <div style={Styles.version}>1.0.0</div>
