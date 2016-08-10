@@ -3,6 +3,8 @@ import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import IconReactotron from 'react-icons/lib/md/rowing'
 import IconGithub from 'react-icons/lib/ti/social-github'
+import IconSettings from 'react-icons/lib/md/settings'
+import IconFeedback from 'react-icons/lib/md/feedback'
 import IconWeb from 'react-icons/lib/ti/home'
 import IconTwitter from 'react-icons/lib/ti/social-twitter'
 import { observer, inject } from 'mobx-react'
@@ -44,6 +46,8 @@ const Styles = {
   },
   logo: { color: Colors.text },
   github: { margin: '0 6px', color: Colors.text },
+  settings: { margin: '0 6px', color: Colors.text },
+  feedback: { margin: '0 6px', color: Colors.text },
   web: { margin: '0 6px', color: Colors.text },
   twitter: { margin: '0 6px', color: Colors.text },
   stretcher: { flex: 1}
@@ -67,8 +71,10 @@ class Footer extends Component {
             <div style={Styles.version}>1.0.0</div>
           </div>
           <div style={Styles.line}></div>
-          <IconGithub size={39} style={Styles.github} />
-          <IconTwitter size={31} style={Styles.twitter} />
+          <a href='#' title='Settings'><IconSettings size={28} style={Styles.settings} /></a>
+          <a href='#' title='Report an issue or feature request'><IconFeedback size={28} style={Styles.feedback} /></a>
+          <a href='#' title='Source Code!'><IconGithub size={39} style={Styles.github} /></a>
+          <a href='#' title='Check us out on the Twittertron!'><IconTwitter size={31} style={Styles.twitter} /></a>
           <div style={Styles.stretcher}></div>
           <p>port {port}</p>
           <div style={Styles.line}></div>

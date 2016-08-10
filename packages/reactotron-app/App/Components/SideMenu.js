@@ -10,7 +10,7 @@ const Styles = {
     position: 'absolute',
     width: 210,
     left: 30,
-    top: 70,
+    top: 40,
     fontSize: 15,
     color: Colors.text
   },
@@ -39,6 +39,7 @@ class SideMenu extends Component {
           <IconClearAll size={Styles.iconSize} style={Styles.icon} />
           <div style={Styles.text}>CLEAR</div>
         </div>
+        {/*
         <h6 style={Styles.showTitle}></h6>
         <div style={Styles.buttonRow}>
           <IconCheckFull size={Styles.iconSize} style={Styles.iconSelected} />
@@ -52,6 +53,7 @@ class SideMenu extends Component {
           <IconCheckFull size={Styles.iconSize} style={Styles.iconSelected} />
           <div style={Styles.textSelected}>ERROR</div>
         </div>
+        */}
       </div>
     )
   }

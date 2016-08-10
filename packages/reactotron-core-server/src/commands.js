@@ -3,7 +3,7 @@ import R from 'ramda'
 import CommandTypes from './types'
 
 // how many commands we're allowed to have stored at one time (per-list)
-export const DEFAULT_MAXIMUM_LIST_SIZE = 10
+export const DEFAULT_MAXIMUM_LIST_SIZE = 100
 
 /**
  * Holds the lists of commands.

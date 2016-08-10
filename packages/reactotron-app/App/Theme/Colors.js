@@ -3,12 +3,16 @@ export const Palette = {
   matteBlack: '#555555',
   black: '#000000',
   white: '#ffffff',
-  lightestGrey: '#e6e6e6',
+  lightestGrey: '#eaeaea',
   lightGrey: '#e0e0e0',
+  dimGrey: '#cccccc',
+  grey: '#999999',
   transparent: 'rgba(0, 0, 0, 0)',
   primary: '#4a90e2',
   ghost15: 'rgba(0,0,0,0.10)',
-  green: '#0aa260'
+  green: '#0aa260',
+  red: '#9B0013',
+  orange: '#D6A605'
 }
 
 const roles = {
@@ -17,8 +21,11 @@ const roles = {
   primary: Palette.primary,
   subtleShadow: Palette.ghost15,
   text: Palette.matteBlack,
-  line: Palette.lightGrey,
-  good: Palette.green
+  mutedText: Palette.grey,
+  line: Palette.dimGrey,
+  good: Palette.green,
+  error: Palette.red,
+  warning: Palette.orange
 }
 
 export default {
