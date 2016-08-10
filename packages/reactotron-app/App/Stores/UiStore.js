@@ -1,11 +1,10 @@
 import { observable } from 'mobx'
 import Mousetrap from '../Lib/Mousetrap.min.js'
-import engineStore from './EngineStore'
 
 /**
  * Handles UI state.
  */
-class UiStore {
+class UI {
   /**
    * Which tab are we on?
    */
@@ -19,13 +18,15 @@ class UiStore {
   // whether or not to show the state find dialog
   @observable showStateFindDialog = false
 
-  constructor () {
+  constructor (server) {
+    this.server = server
+
     Mousetrap.bind('command+1', () => { this.tab = 'console' })
     Mousetrap.bind('command+2', () => { this.tab = 'redux' })
     Mousetrap.bind('command+3', () => { this.tab = 'api' })
     Mousetrap.bind('command+4', () => { this.tab = 'performance' })
     Mousetrap.bind('command+5', () => { this.tab = 'npm' })
-    Mousetrap.bind('command+k', () => { engineStore.reset() })
+    Mousetrap.bind('command+k', () => { this.server.reset() })
     // holy shit, this works.
     Mousetrap.bind('command+f', () => {
       this.tab = 'redux'
@@ -36,9 +37,4 @@ class UiStore {
 
 }
 
-/**
- * Create the one and only store.
- */
-const uiStore = new UiStore()
-
-export default uiStore
+export default UI

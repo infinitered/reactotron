@@ -5,6 +5,7 @@ import IconReactotron from 'react-icons/lib/md/rowing'
 import IconGithub from 'react-icons/lib/ti/social-github'
 import IconWeb from 'react-icons/lib/ti/home'
 import IconTwitter from 'react-icons/lib/ti/social-twitter'
+import { observer, inject } from 'mobx-react'
 
 const Styles = {
   container: {
@@ -44,12 +45,18 @@ const Styles = {
   logo: { color: Colors.text },
   github: { margin: '0 6px', color: Colors.text },
   web: { margin: '0 6px', color: Colors.text },
-  twitter: { margin: '0 6px', color: Colors.text }
+  twitter: { margin: '0 6px', color: Colors.text },
+  stretcher: { flex: 1}
 }
 
+@inject('session')
+@observer
 class Footer extends Component {
 
   render () {
+    const { server } = this.props.session
+    const { port } = server.options
+    const connectionCount = server.connectionCount
     return (
       <div style={Styles.container}>
         <div style={Styles.content}>
@@ -61,8 +68,11 @@ class Footer extends Component {
           </div>
           <div style={Styles.line}></div>
           <IconGithub size={39} style={Styles.github} />
-          <IconWeb size={26} style={Styles.web} />
           <IconTwitter size={31} style={Styles.twitter} />
+          <div style={Styles.stretcher}></div>
+          <p>port {port}</p>
+          <div style={Styles.line}></div>
+          <p>{connectionCount} connections</p>
         </div>
       </div>
     )

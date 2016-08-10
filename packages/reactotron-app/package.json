@@ -14,7 +14,7 @@
     "start-hot": "cross-env HOT=1 NODE_ENV=development electron -r babel-register ./main.development",
     "package": "cross-env NODE_ENV=production node -r babel-register package.js",
     "package-all": "npm run package -- --all",
-    "postinstall": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
+    "postinstall-old": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
     "start": "concurrently --kill-others \"npm run hot-server\" \"npm run start-hot\""
   },
   "bin": {
@@ -84,7 +84,8 @@
     "react-json-tree": "^0.10.0",
     "react-tap-event-plugin": "^1.0.0",
     "socket.io": "1.4.8",
-    "source-map-support": "^0.4.2"
+    "source-map-support": "^0.4.2",
+    "reactotron-core-server": "^0.90.1"
   },
   "devEngines": {
     "node": "6.x",

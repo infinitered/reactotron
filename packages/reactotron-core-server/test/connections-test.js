@@ -5,7 +5,13 @@ import socketClient from './_socket-client'
 
 test.cb('keeps track of connections', t => {
   getFreePort(port => {
-    const server = createServer({ port }).start()
+    const server = createServer({
+      port,
+      onCommand: ({type, payload}) => {
+        t.is(server.connections.length, 1)
+        t.end()
+      }
+    }).start()
 
     // start empty
     t.is(server.connections.length, 0)
@@ -13,21 +19,7 @@ test.cb('keeps track of connections', t => {
     // add 1
     const client1 = socketClient(`ws://localhost:${port}`)
     client1.on('connect', () => {
-      t.is(server.connections.length, 1)
+      client1.emit('command', {type: 'client.intro', payload: {}})
     })
-
-    // add another
-    const client2 = socketClient(`ws://localhost:${port}`)
-    client2.on('connect', () => {
-      t.is(server.connections.length, 2)
-    })
-
-    // stop
-    server.stop()
-
-    // make sure we're empty
-    t.is(server.connections.length, 0)
-
-    t.end()
   })
 })
