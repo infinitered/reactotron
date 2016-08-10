@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
-import Timestamp from './Timestamp'
+import Timestamp from '../Shared/Timestamp'
 import { observer } from 'mobx-react'
 import DebugIcon from 'react-icons/lib/md/info'
 import WarningIcon from 'react-icons/lib/md/warning'

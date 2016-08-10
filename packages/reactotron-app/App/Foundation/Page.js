@@ -1,9 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
-import SideMenu from './SideMenu'
-import LogList from './LogList'
 
 const Styles = {
   container: {
@@ -18,33 +16,28 @@ const Styles = {
   bottomShadow: {
     height: 5,
     WebkitBoxShadow: `inset 0px -2px 4px 0px ${Colors.subtleShadow}`
-  },
-  content: {
-    ...AppStyles.Layout.vbox,
-    backgroundColor: Colors.screen,
-    paddingLeft: 200,
-    paddingRight: 150,
-    paddingTop: 0,
-    paddingBottom: 0,
-    overflowY: 'scroll',
-    marginRight: 4
   }
 }
 
 @inject('session')
 @observer
-class Body extends Component {
+class Page extends Component {
+
+  static propTypes = {
+    tabId: PropTypes.string.isRequired,
+    children: PropTypes.oneOf([PropTypes.array, PropTypes.object])
+  }
 
   render () {
-    const { server } = this.props.session
-    const logs = server.commands['log']
+    const { children, tabId } = this.props
+    let containerStyles = Styles.container
+    const isShowing = this.props.session.ui.tab === tabId
+    containerStyles.display = isShowing ? 'flex' : 'none'
+
     return (
-      <div style={Styles.container}>
+      <div style={containerStyles}>
         <div style={Styles.topShadow}></div>
-        <SideMenu />
-        <div style={Styles.content} id={'body'}>
-          <LogList logs={logs} />
-        </div>
+        {children}
         <div style={Styles.bottomShadow}></div>
       </div>
     )
@@ -52,4 +45,4 @@ class Body extends Component {
 
 }
 
-export default Body
+export default Page

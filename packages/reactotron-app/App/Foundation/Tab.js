@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import Colors from '../Theme/Colors'
+import { observer, inject } from 'mobx-react'
 
 const Styles = {
   container: {
@@ -18,17 +19,19 @@ const Styles = {
   }
 }
 
+@inject('session')
+@observer
 class Tab extends Component {
 
   static propTypes = {
-    active: PropTypes.bool,
     text: PropTypes.string,
     tabId: PropTypes.string.isRequired,
     onPress: PropTypes.func
   }
 
   render () {
-    const { onPress, text, active } = this.props
+    const { tabId, onPress, text, session } = this.props
+    const active = session.ui.tab === tabId
     const containerStyle = active ? { ...Styles.container, ...Styles.containerActive } : Styles.container
     const textStyle = active ? { ...Styles.text, ...Styles.textActive } : Styles.text
     return (

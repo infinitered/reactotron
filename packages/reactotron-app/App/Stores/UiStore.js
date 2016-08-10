@@ -1,4 +1,4 @@
-import { observable } from 'mobx'
+import { observable, action } from 'mobx'
 import Mousetrap from '../Lib/Mousetrap.min.js'
 
 /**
@@ -8,7 +8,7 @@ class UI {
   /**
    * Which tab are we on?
    */
-  @observable tab = 'console'
+  @observable tab = 'logging'
 
   /**
    * Which state tab are we on?
@@ -21,18 +21,33 @@ class UI {
   constructor (server) {
     this.server = server
 
-    Mousetrap.bind('command+1', () => { this.tab = 'console' })
-    Mousetrap.bind('command+2', () => { this.tab = 'redux' })
-    Mousetrap.bind('command+3', () => { this.tab = 'api' })
-    Mousetrap.bind('command+4', () => { this.tab = 'performance' })
-    Mousetrap.bind('command+5', () => { this.tab = 'npm' })
-    Mousetrap.bind('command+k', () => { this.server.reset() })
+    Mousetrap.bind('command+1', this.switchTabToLogging)
+    Mousetrap.bind('command+2', this.switchTabToState)
+    Mousetrap.bind('command+3', this.switchTabToNetwork)
+    Mousetrap.bind('command+k', this.reset)
+
     // holy shit, this works.
     Mousetrap.bind('command+f', () => {
-      this.tab = 'redux'
-      this.stateTab = 'search'
-      this.showStateFindDialog = true
+      this.switchTabToState()
+      // this.stateTab = 'search'
+      // this.showStateFindDialog = true
     })
+  }
+
+  @action switchTabToLogging = () => {
+    this.tab = 'logging'
+  }
+
+  @action switchTabToState = () => {
+    this.tab = 'state'
+  }
+
+  @action switchTabToNetwork = () => {
+    this.tab = 'network'
+  }
+
+  @action reset = () => {
+    this.server.reset()
   }
 
 }

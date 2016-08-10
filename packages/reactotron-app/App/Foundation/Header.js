@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Colors from '../Theme/Colors'
 import Tab from './Tab'
 import AppStyles from '../Theme/AppStyles'
+import { inject } from 'mobx-react'
 
 const Styles = {
   container: {
@@ -20,16 +21,18 @@ const Styles = {
   }
 }
 
+@inject('session')
 class Header extends Component {
 
   render () {
+    const { ui } = this.props.session
     return (
       <div style={Styles.container}>
         <div style={Styles.content}>
           <div style={Styles.tabs}>
-            <Tab text='LOGGING' active />
-            <Tab text='STATE' />
-            <Tab text='NETWORK' />
+            <Tab tabId='logging' text='LOGGING' onPress={ui.switchTabToLogging} />
+            <Tab tabId='state' text='STATE' onPress={ui.switchTabToState} />
+            <Tab tabId='network' text='NETWORK' onPress={ui.switchTabToNetwork} />
           </div>
         </div>
       </div>
