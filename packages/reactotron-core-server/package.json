@@ -2,7 +2,7 @@
   "name": "reactotron-core-server",
   "version": "0.90.1",
   "description": "Grants Reactotron servers the ability to talk to a Reactotron client.",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "ava",
     "watch": "ava --watch",

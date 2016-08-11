@@ -1,16 +1,16 @@
 import R from 'ramda'
-import socketIO from 'socket.io'
 import Commands from './commands'
 import validate from './validation'
-import { observable } from 'mobx'
+import { observable, computed } from 'mobx'
+import defaultTransport from './transport'
 
 const DEFAULTS = {
   port: 9090, // the port to live (required)
   onCommand: command => null, // handles inbound commands
   onStart: () => null, // handles inbound commands
   onStop: () => null, // handles inbound commands
-  onConnect: socket => null, // notify connections
-  onDisconnect: socket => null // notify disconnections
+  onConnect: connection => null, // notify connections
+  onDisconnect: connection => null // notify disconnections
 }
 
 class Server {
@@ -18,9 +18,19 @@ class Server {
   // the configuration options
   @observable options = R.merge({}, DEFAULTS)
   started = false
-  io = null
   messageId = 0
   subscriptions = []
+
+  /**
+   * Holds the transport which bridges this server to a real socket.  We need
+   * this for electron to proxy ipc between the main process & renderer.
+   */
+  transport = null
+
+  /**
+   * The function which creates a transport.  Called on start().
+   */
+  createTransport
 
   /**
    * Holds the commands the client has sent.
@@ -32,11 +42,23 @@ class Server {
    */
   @observable connections = []
 
-  constructor () {
+  /**
+   * How many people are connected?
+   */
+  @computed get connectionCount () {
+    return R.length(this.connections)
+  }
+
+  constructor (createTransport) {
+    if (createTransport) {
+      this.createTransport = createTransport
+    } else {
+      this.createTransport = defaultTransport
+    }
     this.send = this.send.bind(this)
   }
 
-  findBySocket = socket => R.find(R.propEq('socket', socket), this.connections)
+  findConnectionById = connection => R.find(R.propEq('id', connection), this.connections)
 
   /**
    * Set the configuration options.
@@ -50,69 +72,55 @@ class Server {
   }
 
   /**
-   * Configures the socket.io server with our behaviours.
+   * Starts the server.
    */
-  registerCallbacks () {
+  start () {
+    this.started = true
+    const { port, onStart } = this.options
     const { onCommand, onConnect, onDisconnect } = this.options
+    let partialConnections = []
 
-    // when we get new clients
-    this.io.on('connection', socket => {
-      // details about who has connected
-      let connection = {
-        socket,
-        id: socket.id,
-        address: socket.request.connection.remoteAddress
-      }
+    // start listening
+    this.transport = this.createTransport({
+      port,
 
-      // this.connections.push(connection)
+      // fires when we the transport receives a new connection
+      onConnect: ({id, address}) => {
+        const connection = { id, address }
+        partialConnections.push(connection)
+        onConnect && onConnect(connection)
 
-      // trigger event
-      onConnect && onConnect(connection)
+        // resend the subscriptions to the client upon connecting
+        this.stateValuesSendSubscriptions()
+      },
 
-      // when this client disconnects
-      socket.on('disconnect', () => {
-        // remove them from the list
+      // fires when we say goodbye to someone
+      onDisconnect: id => {
+        const connection = this.findConnectionById(id)
         this.connections.remove(connection)
-
-        // trigger event
         onDisconnect && onDisconnect(connection)
-      })
+      },
 
-      // when we receive a command from the client
-      socket.on('command', ({ type, payload }) => {
+      // fires when the transport gives us a connection
+      onCommand: (id, {type, payload}) => {
         this.messageId++
         const date = new Date()
         const fullCommand = { type, payload, messageId: this.messageId, date }
 
         // for client intros
         if (type === 'client.intro') {
+          const partialConnection = R.find(R.propEq('id', id), partialConnections)
+          partialConnections = R.without([partialConnection], partialConnections)
           // bestow the payload onto the connection
-          connection = { ...connection, ...payload }
+          const connection = { ...partialConnection, ...payload }
           // then trigger the connection
           this.connections.push(connection)
         }
 
         onCommand(fullCommand)
         this.commands.addCommand(fullCommand)
-      })
-
-      // resend the subscriptions to the client upon connecting
-      this.stateValuesSendSubscriptions()
+      }
     })
-  }
-
-  /**
-   * Starts the server.
-   */
-  start () {
-    this.started = true
-    const { port, onStart } = this.options
-
-    // start listening
-    this.io = socketIO(port)
-
-    // configure socket.io to do its thing
-    this.registerCallbacks()
 
     // trigger the start message
     onStart && onStart()
@@ -126,8 +134,8 @@ class Server {
   stop () {
     const { onStop } = this.options
     this.started = false
-    R.forEach(s => s.connected && s.disconnect(), R.pluck('socket', this.connections))
-    this.io.close()
+    this.transport.stop()
+    this.transport.close()
 
     // trigger the stop message
     onStop && onStop()
@@ -139,7 +147,7 @@ class Server {
    * Sends a command to the client
    */
   send (type, payload) {
-    this.io.sockets.emit('command', { type, payload })
+    this.transport.send('command', { type, payload })
   }
 
   /**
@@ -204,8 +212,10 @@ class Server {
 export default Server
 
 // convenience factory function
-export const createServer = (options) => {
-  const server = new Server()
+export const createServer = (options, createTransport) => {
+  const server = new Server(createTransport)
   server.configure(options)
   return server
 }
+
+export const createDefaultTransport = defaultTransport
