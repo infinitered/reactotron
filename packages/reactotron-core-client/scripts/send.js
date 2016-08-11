@@ -19,15 +19,38 @@ const sendBenchmark = async (title) => {
 
 // send a bunch of messages
 const shotgun = async () => {
-  sendDebug('This is a debug message.')
+  sendDebug('This is a debug message. 🦄🔥🔥🔥🔥🔥🔥')
   sendDebug('This is a debug message as well.')
+  sendDebug({
+    someNumbers: [1, 3, 5, 6, 9],
+    users: [
+      { firstName: 'Matthew', lastName: 'Kellock' },
+      { firstName: 'Liam', lastName: 'Kellock' }
+    ]
+  })
   await sleep(50)
   sendWarn('Warning: This is an almost an error. Beware!')
   await sleep(100)
   sendError('Attention! Things just got real.')
   await sleep(100)
-  sendDebug('Here\'s another debug message.  This one is a little longer just to see what wrapping looks like.  I hope you enjoy.  Thank you.  And have a wonderful day.')
+  sendDebug(`
+   Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+   I hope you enjoy.  Thank you.  And have a wonderful day. \
+   Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+   I hope you enjoy.  Thank you.  And have a wonderful day. \
+   I hope you enjoy.  Thank you.  And have a wonderful day. \
+   I hope you enjoy.  Thank you.  And have a wonderful day. \
+   \n\n
+   Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+   I hope you enjoy.  Thank you.  And have a wonderful day. \
+   Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+   Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+   I hope you enjoy.  Thank you.  And have a wonderful day. \
+   Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+   I hope you enjoy.  Thank you.  And have a wonderful day. \
+   `)
   await sendBenchmark('Awesome!')
+
   client.socket.close()
 }
 
