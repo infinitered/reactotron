@@ -24,6 +24,7 @@ const roles = {
   primary: Palette.primary,
   subtleShadow: Palette.ghost15,
   text: Palette.matteBlack,
+  textInverse: Palette.white,
   mutedText: Palette.grey,
   line: Palette.dimGrey,
   subtleLine: Palette.lightGrey,

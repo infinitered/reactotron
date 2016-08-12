@@ -10,11 +10,6 @@ class UI {
    */
   @observable tab = 'streaming'
 
-  /**
-   * Which state tab are we on?
-   */
-  @observable stateTab = 'monitor'
-
   // whether or not to show the state find dialog
   @observable showStateFindDialog = false
 
@@ -26,13 +21,15 @@ class UI {
     Mousetrap.bind('command+3', this.switchTabToState)
     Mousetrap.bind('command+4', this.switchTabToNetwork)
     Mousetrap.bind('command+k', this.reset)
+    Mousetrap.bind('command+f', this.openStateFindDialog)
 
-    // holy shit, this works.
-    Mousetrap.bind('command+f', () => {
-      this.switchTabToState()
-      // this.stateTab = 'search'
-      // this.showStateFindDialog = true
-    })
+    Mousetrap.bind('escape', this.popState)
+  }
+
+  @action popState = () => {
+    if (this.showStateFindDialog) {
+      this.closeStateFindDialog()
+    }
   }
 
   @action switchTabToStreaming = () => {
@@ -51,8 +48,20 @@ class UI {
     this.tab = 'network'
   }
 
+  @action openStateFindDialog = () => {
+    this.showStateFindDialog = true
+  }
+
+  @action closeStateFindDialog = () => {
+    this.showStateFindDialog = false
+  }
+
   @action reset = () => {
-    this.server.reset()
+    this.server.commands.all.clear()
+  }
+
+  @action getStateValues = (path) => {
+    this.server.stateValuesRequest(path)
   }
 
 }

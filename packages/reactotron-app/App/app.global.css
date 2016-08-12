@@ -32,3 +32,10 @@ pre {
   background-color: rgba(200, 200, 200, 1) !important;
   border-radius: 4px;
 }
+
+/* leet hacks */
+a.closeButton--jss-0-1 { display: none; }
+
+*:focus {
+    outline: none;
+}

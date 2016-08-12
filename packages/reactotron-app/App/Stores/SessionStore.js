@@ -9,9 +9,6 @@ class Session {
   server
 
   constructor (port = 9090) {
-    // create the ui store
-    this.ui = new UiStore(this.server)
-
     // configure the bridge transport
     this.bridgeTransport = {
       stop: () => ipcRenderer.send('reactotron.stop'),
@@ -57,6 +54,9 @@ class Session {
     // let's create our faux server & start it up
     this.server = createServer({ port }, createTransport())
     this.server.start()
+
+    // create the ui store
+    this.ui = new UiStore(this.server)
   }
 }
 
