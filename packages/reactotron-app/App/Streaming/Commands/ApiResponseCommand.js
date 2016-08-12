@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import Command from '../Command'
 import ObjectTree from '../../Shared/ObjectTree'
 import { dotPath, isWithin } from 'ramdasauce'
-import { map, toUpper, toPairs } from 'ramda'
-import AppStyles from '../../Theme/AppStyles'
+import { toUpper } from 'ramda'
 import Colors from '../../Theme/Colors'
+import makeTable from '../../Shared/MakeTable'
 
 const Styles = {
   container: {
@@ -20,44 +20,12 @@ const Styles = {
     margin: 0,
     padding: 0,
     paddingTop: 8,
-    paddingBottom: 0,
-  },
-  headerKey: {
-    minWidth: 150,
-    width: 150,
-    wordBreak: 'break-all',
-  },
-  headerValue: {
-    flex: 1,
-    wordBreak: 'break-all'
-  },
-  row: {
-    fontSize: 14,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    WebkitUserSelect: 'all'
+    paddingBottom: 0
   },
   pre: {
     whiteSpace: 'pre-wrap'
   }
-
 }
-
-const makeRow = ([key, value]) => {
-  return (
-    <div key={key} style={Styles.row}>
-      <div style={Styles.headerKey}>{key}</div>
-      <div style={Styles.headerValue}>{value}</div>
-    </div>
-  )
-}
-
-const makeTable = headers => (
-  <div>
-    {map(makeRow, toPairs(headers))}
-  </div>
-)
 
 class ApiResponseCommand extends Component {
 
