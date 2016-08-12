@@ -82,6 +82,7 @@
     "react-dom": "^15.3.0",
     "react-icons": "^2.2.1",
     "react-json-tree": "^0.10.0",
+    "react-modal-dialog": "^3.0.2",
     "react-tap-event-plugin": "^1.0.0",
     "react-tooltip": "^3.1.5",
     "reactotron-core-server": "^0.90.1",
