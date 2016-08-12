@@ -23,6 +23,7 @@ const roles = {
   text: Palette.matteBlack,
   mutedText: Palette.grey,
   line: Palette.dimGrey,
+  subtleLine: Palette.lightGrey,
   good: Palette.green,
   error: Palette.red,
   warning: Palette.orange

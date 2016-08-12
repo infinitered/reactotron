@@ -16,6 +16,8 @@ const sendBenchmark = async (title) => {
   await sleep(100)
   bench.stop()
 }
+const sendAction = (action) =>
+  client.send('state.action.complete', { ms: 123, name: action.type, action })
 
 // send a bunch of messages
 const shotgun = async () => {
@@ -28,27 +30,41 @@ const shotgun = async () => {
       { firstName: 'Liam', lastName: 'Kellock' }
     ]
   })
+  sendAction({ type: 'SLEEP_REQUEST', duration: 50 })
   await sleep(50)
+  sendAction({ type: 'SLEEP_FINISHED', success: true })
   sendWarn('Warning: This is an almost an error. Beware!')
   await sleep(100)
   sendError('Attention! Things just got real.')
   await sleep(100)
-  sendDebug(`
-   Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
-   I hope you enjoy.  Thank you.  And have a wonderful day. \
-   Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
-   I hope you enjoy.  Thank you.  And have a wonderful day. \
-   I hope you enjoy.  Thank you.  And have a wonderful day. \
-   I hope you enjoy.  Thank you.  And have a wonderful day. \
-   \n\n
-   Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
-   I hope you enjoy.  Thank you.  And have a wonderful day. \
-   Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
-   Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
-   I hope you enjoy.  Thank you.  And have a wonderful day. \
-   Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
-   I hope you enjoy.  Thank you.  And have a wonderful day. \
-   `)
+  const giant = `
+  Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+  I hope you enjoy.  Thank you.  And have a wonderful day. \
+  Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+  I hope you enjoy.  Thank you.  And have a wonderful day. \
+  I hope you enjoy.  Thank you.  And have a wonderful day. \
+  I hope you enjoy.  Thank you.  And have a wonderful day. \
+  \n\n
+  Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+  I hope you enjoy.  Thank you.  And have a wonderful day. \
+  Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+  Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+  I hope you enjoy.  Thank you.  And have a wonderful day. \
+  Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+  I hope you enjoy.  Thank you.  And have a wonderful day. \
+  `
+  sendAction({ type: 'POST_GIANT_MESSAGE', message: giant })
+  sendAction({ type: 'OBJECTS_LOLS', theGoods: {
+    cities: ['Toronto', 'Halifax'],
+    towns: ['Tiny', 'Pictou'],
+    thingsAroundMyOffice: { 'htc': 'vive', 'yeti': 'blue' },
+    trueThing: true,
+    falseThing: false,
+    undefinedThing: undefined,
+    nullThing: null,
+    symbolThing: Symbol('hi')
+  }})
+  sendDebug(giant)
   await sendBenchmark('Awesome!')
 
   client.socket.close()

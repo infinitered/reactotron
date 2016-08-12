@@ -1,7 +1,7 @@
 import R from 'ramda'
 import Commands from './commands'
 import validate from './validation'
-import { observable, computed } from 'mobx'
+import { observable, computed, asFlat } from 'mobx'
 import defaultTransport from './transport'
 
 const DEFAULTS = {
@@ -40,7 +40,7 @@ class Server {
   /**
    * Holds the currently connected clients.
    */
-  @observable connections = []
+  @observable connections = asFlat([])
 
   /**
    * How many people are connected?
@@ -110,6 +110,7 @@ class Server {
         // for client intros
         if (type === 'client.intro') {
           const partialConnection = R.find(R.propEq('id', id), partialConnections)
+          fullCommand.payload.address = partialConnection.address
           partialConnections = R.without([partialConnection], partialConnections)
           // bestow the payload onto the connection
           const connection = { ...partialConnection, ...payload }

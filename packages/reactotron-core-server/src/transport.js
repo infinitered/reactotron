@@ -1,12 +1,12 @@
 import socketIO from 'socket.io'
-import R from 'ramda'
+import R, { without } from 'ramda'
 
 export default ({ port, onConnect, onDisconnect, onCommand }) => {
   // hey, it's us!  a SocketIO Server!
   const io = socketIO(port)
 
   // a list of our connections
-  const connections = []
+  let connections = []
 
   // the object to return which has our transport interface
   const transport = {}
@@ -39,7 +39,7 @@ export default ({ port, onConnect, onDisconnect, onCommand }) => {
     socket.on('disconnect', () => {
       onDisconnect(id)
       // remove them from the list
-      connections.remove(transportConnection)
+      without([transportConnection], connections)
     })
 
     // when we receive a command from the client

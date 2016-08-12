@@ -4,6 +4,7 @@ import CommandTypes from './types'
 
 // how many commands we're allowed to have stored at one time (per-list)
 export const DEFAULT_MAXIMUM_LIST_SIZE = 100
+export const ALL_MAXIMUM_LIST_SIZE = 1000
 
 /**
  * Holds the lists of commands.
@@ -13,14 +14,14 @@ export const DEFAULT_MAXIMUM_LIST_SIZE = 100
 class Commands {
 
   /**
-   * Enforces a maximum list size.
+   * It's all the comands.  Like all of them.
    */
-  @observable maximumListSize
+  @observable all = asFlat([])
 
   /**
    * Constructor with an optional overrideable max list size.
    */
-  constructor (maximumListSize = DEFAULT_MAXIMUM_LIST_SIZE) {
+  constructor (maximumListSize = DEFAULT_MAXIMUM_LIST_SIZE, allMaximumListSize = ALL_MAXIMUM_LIST_SIZE) {
     // create an observable list for each (named after the type)
     R.forEach(type => {
       extendObservable(this, {
@@ -29,6 +30,7 @@ class Commands {
       // this[type] = observable([])
     }, CommandTypes)
     this.maximumListSize = maximumListSize
+    this.allMaximumListSize = allMaximumListSize
   }
 
   /**
@@ -41,6 +43,12 @@ class Commands {
     const list = this[type]
     // but if we can't, jet
     if (R.isNil(list)) return
+    // add this to the all list
+    this.all.push(command)
+    // enforce the all cap
+    if (this.all.length > this.allMaximumListSize) {
+      this.all.shift()
+    }
     // add this new one on the end
     list.push(command)
     // shift off the head of the list if we've filled up
