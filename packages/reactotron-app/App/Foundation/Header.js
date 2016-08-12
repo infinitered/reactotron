@@ -30,10 +30,6 @@ class Header extends Component {
       <div style={Styles.container}>
         <div style={Styles.content}>
           <div style={Styles.tabs}>
-            <Tab tabId='streaming' text='STREAMING' onPress={ui.switchTabToStreaming} />
-            <Tab tabId='logging' text='LOGGING' onPress={ui.switchTabToLogging} />
-            <Tab tabId='state' text='STATE' onPress={ui.switchTabToState} />
-            <Tab tabId='network' text='NETWORK' onPress={ui.switchTabToNetwork} />
           </div>
         </div>
       </div>

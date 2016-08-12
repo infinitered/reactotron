@@ -3,7 +3,7 @@ export const Palette = {
   matteBlack: '#555555',
   black: '#000000',
   white: '#ffffff',
-  lightestGrey: '#eaeaea',
+  lightestGrey: '#f0f0f0',
   lightGrey: '#e0e0e0',
   dimGrey: '#cccccc',
   grey: '#999999',

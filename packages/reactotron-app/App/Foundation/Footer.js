@@ -50,12 +50,24 @@ const Styles = {
   feedback: { margin: '0 6px', color: Colors.text },
   web: { margin: '0 6px', color: Colors.text },
   twitter: { margin: '0 6px', color: Colors.text },
-  stretcher: { flex: 1}
+  stretcher: { flex: 1 }
 }
 
 @inject('session')
 @observer
 class Footer extends Component {
+
+  renderIcons () {
+    return (
+      <div>
+        <a href='#' title='Settings'><IconSettings size={28} style={Styles.settings} /></a>
+        <a href='#' title='Report an issue or feature request'><IconFeedback size={28} style={Styles.feedback} /></a>
+        <a href='#' title='Source Code!'><IconGithub size={39} style={Styles.github} /></a>
+        <a href='#' title='Check us out on the Twittertron!'><IconTwitter size={31} style={Styles.twitter} /></a>
+        <div style={Styles.line}></div>
+      </div>
+    )
+  }
 
   render () {
     const { server } = this.props.session
@@ -70,11 +82,6 @@ class Footer extends Component {
             <div style={Styles.reactotron}>Reactotron</div>
             <div style={Styles.version}>1.0.0</div>
           </div>
-          <div style={Styles.line}></div>
-          <a href='#' title='Settings'><IconSettings size={28} style={Styles.settings} /></a>
-          <a href='#' title='Report an issue or feature request'><IconFeedback size={28} style={Styles.feedback} /></a>
-          <a href='#' title='Source Code!'><IconGithub size={39} style={Styles.github} /></a>
-          <a href='#' title='Check us out on the Twittertron!'><IconTwitter size={31} style={Styles.twitter} /></a>
           <div style={Styles.stretcher}></div>
           <p>port {port}</p>
           <div style={Styles.line}></div>
