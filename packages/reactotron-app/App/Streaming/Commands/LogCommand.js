@@ -59,7 +59,7 @@ class LogCommand extends Component {
         break
 
       default:
-        color = Colors.primary
+        color = Colors.Palette.almostBlack
     }
 
     return (
