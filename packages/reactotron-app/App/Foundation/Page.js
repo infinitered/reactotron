@@ -7,7 +7,8 @@ const Styles = {
   container: {
     ...AppStyles.Layout.vbox,
     backgroundColor: Colors.screen,
-    position: 'relative'
+    position: 'relative',
+    borderTop: `1px solid ${Colors.line}`
   },
   topShadow: {
     height: 5,
@@ -34,9 +35,9 @@ class Page extends Component {
     const isShowing = this.props.session.ui.tab === tabId
     containerStyles.display = isShowing ? 'flex' : 'none'
 
+    // <div style={Styles.topShadow}></div>
     return (
       <div style={containerStyles}>
-        <div style={Styles.topShadow}></div>
         {children}
         <div style={Styles.bottomShadow}></div>
       </div>
