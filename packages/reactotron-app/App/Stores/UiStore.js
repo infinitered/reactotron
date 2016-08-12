@@ -8,7 +8,7 @@ class UI {
   /**
    * Which tab are we on?
    */
-  @observable tab = 'logging'
+  @observable tab = 'streaming'
 
   /**
    * Which state tab are we on?
@@ -21,9 +21,10 @@ class UI {
   constructor (server) {
     this.server = server
 
-    Mousetrap.bind('command+1', this.switchTabToLogging)
-    Mousetrap.bind('command+2', this.switchTabToState)
-    Mousetrap.bind('command+3', this.switchTabToNetwork)
+    Mousetrap.bind('command+1', this.switchTabToStreaming)
+    Mousetrap.bind('command+2', this.switchTabToLogging)
+    Mousetrap.bind('command+3', this.switchTabToState)
+    Mousetrap.bind('command+4', this.switchTabToNetwork)
     Mousetrap.bind('command+k', this.reset)
 
     // holy shit, this works.
@@ -32,6 +33,10 @@ class UI {
       // this.stateTab = 'search'
       // this.showStateFindDialog = true
     })
+  }
+
+  @action switchTabToStreaming = () => {
+    this.tab = 'streaming'
   }
 
   @action switchTabToLogging = () => {

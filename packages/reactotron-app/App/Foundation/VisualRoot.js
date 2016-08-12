@@ -7,6 +7,7 @@ import PageNetworking from '../Network/PageNetworking'
 import Footer from './Footer'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
+import PageStreaming from '../Streaming/PageStreaming'
 
 const Styles = {
   container: {
@@ -23,6 +24,7 @@ export default class VisualRoot extends Component {
     return (
       <div style={Styles.container}>
         <Header />
+        {/*
         <Page tabId='logging'>
           <PageLogging />
         </Page>
@@ -31,6 +33,10 @@ export default class VisualRoot extends Component {
         </Page>
         <Page tabId='network'>
           <PageNetworking />
+        </Page>
+        */}
+        <Page tabId='streaming'>
+          <PageStreaming />
         </Page>
         <Footer />
       </div>
