@@ -12,7 +12,10 @@ export const Palette = {
   ghost15: 'rgba(0,0,0,0.10)',
   green: '#0aa260',
   red: '#9B0013',
-  orange: '#D6A605'
+  orange: '#D6A605',
+  purple: '#4F0095',
+  lightPurple: 'D8DCE2',
+  lighterPurple: '#E2E6ED'
 }
 
 const roles = {
@@ -26,7 +29,9 @@ const roles = {
   subtleLine: Palette.lightGrey,
   good: Palette.green,
   error: Palette.red,
-  warning: Palette.orange
+  warning: Palette.orange,
+  barFill: Palette.white,
+  barBorder: Palette.lightGrey
 }
 
 export default {

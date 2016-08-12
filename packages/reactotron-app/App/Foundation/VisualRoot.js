@@ -8,6 +8,7 @@ import Footer from './Footer'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import PageStreaming from '../Streaming/PageStreaming'
+import ReactTooltip from 'react-tooltip'
 
 const Styles = {
   container: {
@@ -38,6 +39,7 @@ export default class VisualRoot extends Component {
         <Page tabId='streaming'>
           <PageStreaming />
         </Page>
+        <ReactTooltip />
         <Footer />
       </div>
     )
