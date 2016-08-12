@@ -12,9 +12,11 @@ const sendError = (message) => client.error(message)
 const sendBenchmark = async (title) => {
   const bench = client.benchmark(title)
   await sleep(50)
-  bench.step('first sleep')
+  bench.step('about to sleep')
   await sleep(100)
-  bench.stop()
+  bench.step('finished sleeping')
+  await sleep(5)
+  bench.last('cleaning up')
 }
 const sendAction = (action) =>
   client.send('state.action.complete', { ms: 123, name: action.type, action })
@@ -65,7 +67,7 @@ const shotgun = async () => {
     symbolThing: Symbol('hi')
   }})
   sendDebug(giant)
-  await sendBenchmark('Awesome!')
+  await sendBenchmark('perf test for myCustomSort()')
 
   client.socket.close()
 }

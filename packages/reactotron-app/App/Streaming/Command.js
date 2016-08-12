@@ -36,18 +36,18 @@ const Styles = {
   },
   subtitle: {
     fontSize: 14,
-    color: Colors.mutedText,
+    color: Colors.text,
     textAlign: 'left',
     paddingLeft: 8
   },
   duration: {
     fontSize: 14,
-    color: Colors.primary,
-    paddingRight: 4
+    color: Colors.text,
+    paddingRight: 10
   },
   timestamp: {
     fontSize: 14,
-    color: Colors.line
+    color: Colors.mutedText
   },
   spacer: {
     flex: 1
