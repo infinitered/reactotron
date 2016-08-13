@@ -1,24 +1,28 @@
 import React from 'react'
 import Colors from '../Theme/Colors'
-import { map, toPairs, identity, isNil, T, equals, cond, always } from 'ramda'
+import { map, toPairs, identity, isNil, T, cond, always } from 'ramda'
 
 const Styles = {
   row: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    WebkitUserSelect: 'all'
+    WebkitUserSelect: 'all',
+    borderBottom: `1px solid ${Colors.subtleLine}`,
+    padding: '2px 0'
   },
   key: {
     width: '25%',
+    minWidth: 150,
     paddingRight: 10,
     wordBreak: 'break-all',
-    textAlign: 'right',
+    textAlign: 'left',
     color: Colors.text
   },
   value: {
     flex: 1,
-    wordBreak: 'break-all'
+    wordBreak: 'break-all',
+    color: Colors.text
   }
 }
 
