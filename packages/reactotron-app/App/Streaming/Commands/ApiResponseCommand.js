@@ -30,7 +30,7 @@ const Styles = {
 class ApiResponseCommand extends Component {
 
   static propTypes = {
-    command: PropTypes.object.isRequired
+    command: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired
   }
 
   renderDataAsObjectTree (data) {
