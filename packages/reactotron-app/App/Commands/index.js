@@ -5,6 +5,7 @@ import ApiResponseCommand from './ApiResponseCommand'
 import ClientIntroCommand from './ClientIntroCommand'
 import BenchmarkReportCommand from './BenchmarkReportCommand'
 import StateValuesResponseCommand from './StateValuesResponseCommand'
+import StateKeysResponseCommand from './StateKeysResponseCommand'
 
 export default command => {
   const { type } = command
@@ -16,6 +17,7 @@ export default command => {
     case 'api.response': return ApiResponseCommand
     case 'client.intro': return ClientIntroCommand
     case 'state.values.response': return StateValuesResponseCommand
+    case 'state.keys.response': return StateKeysResponseCommand
     default: return UnknownCommand
   }
 }
