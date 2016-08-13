@@ -33,6 +33,10 @@ class ApiResponseCommand extends Component {
     command: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired
   }
 
+  shouldComponentUpdate (nextProps) {
+    return this.props.command.id !== nextProps.command.id
+  }
+
   renderDataAsObjectTree (data) {
     return <ObjectTree object={data} level={0} />
   }

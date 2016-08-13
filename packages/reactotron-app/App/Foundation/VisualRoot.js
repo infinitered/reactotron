@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import Header from './Header'
-import Page from './Page'
 import Footer from './Footer'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
-import PageStreaming from './PageStreaming'
+import Timeline from './Timeline'
 import ReactTooltip from 'react-tooltip'
 import SampleModal from '../Dialogs/SampleModal'
 
@@ -23,10 +22,9 @@ export default class VisualRoot extends Component {
     return (
       <div style={Styles.container}>
         <Header />
-        <Page tabId='streaming'>
-          <PageStreaming />
-        </Page>
+        <Timeline />
         <Footer />
+
         <SampleModal />
         <ReactTooltip />
       </div>
