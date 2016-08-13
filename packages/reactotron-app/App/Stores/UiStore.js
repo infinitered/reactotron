@@ -10,19 +10,22 @@ class UI {
    */
   @observable tab = 'streaming'
 
+  /**
+   * Targets state keys or values from the UI & commands.
+   */
+  @observable keysOrValues = 'keys'
+
   // whether or not to show the state find dialog
   @observable showStateFindDialog = false
 
   constructor (server) {
     this.server = server
 
-    Mousetrap.bind('command+1', this.switchTabToStreaming)
-    Mousetrap.bind('command+2', this.switchTabToLogging)
-    Mousetrap.bind('command+3', this.switchTabToState)
-    Mousetrap.bind('command+4', this.switchTabToNetwork)
+    Mousetrap.prototype.stopCallback = () => false
+
     Mousetrap.bind('command+k', this.reset)
     Mousetrap.bind('command+f', this.openStateFindDialog)
-
+    Mousetrap.bind('tab', this.toggleKeysValues)
     Mousetrap.bind('escape', this.popState)
   }
 
@@ -30,22 +33,6 @@ class UI {
     if (this.showStateFindDialog) {
       this.closeStateFindDialog()
     }
-  }
-
-  @action switchTabToStreaming = () => {
-    this.tab = 'streaming'
-  }
-
-  @action switchTabToLogging = () => {
-    this.tab = 'logging'
-  }
-
-  @action switchTabToState = () => {
-    this.tab = 'state'
-  }
-
-  @action switchTabToNetwork = () => {
-    this.tab = 'network'
   }
 
   @action openStateFindDialog = () => {
@@ -60,8 +47,29 @@ class UI {
     this.server.commands.all.clear()
   }
 
+  @action getStateKeysOrValues = (path) => {
+    if (this.keysOrValues === 'keys') {
+      this.getStateKeys(path)
+    } else {
+      this.getStateValues(path)
+    }
+  }
+
   @action getStateValues = (path) => {
     this.server.stateValuesRequest(path)
+  }
+
+  @action getStateKeys = (path) => {
+    this.server.stateKeysRequest(path)
+  }
+
+  @action toggleKeysValues = () => {
+    console.log('toggling opposite of ', this.keysOrValues)
+    if (this.keysOrValues === 'keys') {
+      this.keysOrValues = 'values'
+    } else {
+      this.keysOrValues = 'keys'
+    }
   }
 
 }

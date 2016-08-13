@@ -10,15 +10,19 @@ const ESCAPE_KEYSTROKE = 'Esc'
 const ESCAPE_HINT = 'OMG Cancel'
 const ENTER_KEYSTROKE = 'Enter'
 const ENTER_HINT = 'Search'
-const DIALOG_TITLE = 'State'
-const STATE_INSTRUCTIONS = (<span>Retrieves a value from the state tree at the given path <strong>and all values below</strong>.</span>)
+const TAB_KEYSTROKE = 'Tab'
+const TAB_HINT = 'Keys/Values'
+const DIALOG_TITLE_KEYS = 'State Keys'
+const DIALOG_TITLE_VALUES = 'State Values'
+const STATE_VALUES_INSTRUCTIONS = (<span>Retrieves a value from the state tree at the given path <strong>and all values below</strong>.</span>)
+const STATE_KEYS_INSTRUCTIONS = (<span>Retrieves a list of keys located at the given path in the state tree.</span>)
 const FIELD_LABEL = 'Path'
 
 const Styles = {
   dialog: {
     borderRadius: 4,
     padding: 4,
-    width: 400,
+    width: 450,
     backgroundColor: Colors.screen
   },
   container: {
@@ -111,7 +115,7 @@ class SampleModal extends Component {
     const { path } = this.state
     if (e.key === 'Enter') {
       this.setState({path: null})
-      ui.getStateValues(path)
+      ui.getStateKeysOrValues(path)
       ui.closeStateFindDialog()
     }
   }
@@ -119,6 +123,7 @@ class SampleModal extends Component {
   render () {
     const { ui } = this.props.session
     const open = ui.showStateFindDialog
+    const isKeys = ui.keysOrValues === 'keys'
     if (!open) return null
 
     // need to find a less hacky way of doing this
@@ -129,9 +134,9 @@ class SampleModal extends Component {
           <ModalDialog style={Styles.dialog}>
             <div style={Styles.container}>
               <div style={Styles.header}>
-                <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
+                <h1 style={Styles.title}>{isKeys ? DIALOG_TITLE_KEYS : DIALOG_TITLE_VALUES}</h1>
                 <p style={Styles.subtitle}>
-                  {STATE_INSTRUCTIONS}
+                  {isKeys ? STATE_KEYS_INSTRUCTIONS : STATE_VALUES_INSTRUCTIONS}
                 </p>
               </div>
               <div style={Styles.body}>
@@ -147,10 +152,13 @@ class SampleModal extends Component {
               </div>
               <div style={Styles.keystrokes}>
                 <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span>{ESCAPE_HINT}
+                  <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
                 </div>
                 <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span>{ENTER_HINT}
+                  <span style={Styles.keystroke}>{TAB_KEYSTROKE}</span> {TAB_HINT}
+                </div>
+                <div style={Styles.hotkey}>
+                  <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
                 </div>
               </div>
             </div>
