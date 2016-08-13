@@ -6,6 +6,8 @@ import { observer } from 'mobx-react'
 import { isNilOrEmpty } from 'ramdasauce'
 import { is, merge } from 'ramda'
 
+const MS_LABEL = 'ms'
+
 const Styles = {
   container: {
     ...AppStyles.Layout.hbox,
@@ -89,10 +91,10 @@ class Command extends Component {
             <span style={titleStyle}>{title}</span>
             {hasSubtitle && <span style={Styles.subtitle}>{subtitle}</span>}
             <span style={Styles.spacer}></span>
-            {hasDuration && <span style={Styles.duration}>{ms} ms</span>}
+            {hasDuration && <span style={Styles.duration}>{ms} {MS_LABEL}</span>}
             <Timestamp date={date} style={Styles.timestamp} />
           </div>
-          <div style={Styles.children} className='fade-it'>
+          <div style={Styles.children}>
             {children}
           </div>
         </div>

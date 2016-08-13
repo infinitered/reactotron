@@ -24,7 +24,6 @@ export default class VisualRoot extends Component {
         <Header />
         <Timeline />
         <Footer />
-
         <SampleModal />
         <ReactTooltip />
       </div>
