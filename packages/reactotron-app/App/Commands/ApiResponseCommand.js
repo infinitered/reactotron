@@ -6,6 +6,11 @@ import { toUpper } from 'ramda'
 import Colors from '../Theme/Colors'
 import makeTable from '../Shared/MakeTable'
 
+const COMMAND_TITLE = 'API RESPONSE'
+const REQUEST_HEADER_TITLE = 'Request Headers'
+const RESPONSE_HEADER_TITLE = 'Response Headers'
+const BODY_TITLE = 'Body'
+
 const Styles = {
   container: {
   },
@@ -62,18 +67,17 @@ class ApiResponseCommand extends Component {
     const responseHeaders = dotPath('response.headers', payload)
     const body = dotPath('response.body', payload)
     const color = ok ? Colors.good : Colors.error
-    const title = 'API RESPONSE'
     const subtitle = `${status} - ${method}`
 
     return (
-      <Command command={command} title={title} subtitle={subtitle} duration={duration} color={color}>
+      <Command command={command} title={COMMAND_TITLE} subtitle={subtitle} duration={duration} color={color}>
         <div style={Styles.container}>
           <div style={Styles.url}>{url}</div>
-          <h4 style={Styles.headerTitle}>Request Headers</h4>
+          <h4 style={Styles.headerTitle}>{REQUEST_HEADER_TITLE}</h4>
           {makeTable(requestHeaders)}
-          <h4 style={Styles.headerTitle}>Response Headers</h4>
+          <h4 style={Styles.headerTitle}>{RESPONSE_HEADER_TITLE}</h4>
           {makeTable(responseHeaders)}
-          <h4 style={Styles.headerTitle}>Body</h4>
+          <h4 style={Styles.headerTitle}>{BODY_TITLE}</h4>
           {this.renderData(body)}
 
         </div>

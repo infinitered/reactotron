@@ -2,6 +2,10 @@ import React from 'react'
 import Colors from '../Theme/Colors'
 import { map, toPairs, identity, isNil, T, cond, always } from 'ramda'
 
+const NULL_TEXT = '¯\\_(ツ)_/¯'
+const TRUE_TEXT = 'true'
+const FALSE_TEXT = 'false'
+
 const Styles = {
   row: {
     display: 'flex',
@@ -28,8 +32,8 @@ const Styles = {
 
 const makeRow = ([key, value]) => {
   const textValue = cond([
-    [isNil, always('¯\\_(ツ)_/¯')],
-    [x => typeof x === 'boolean', always(value ? 'true' : 'false')],
+    [isNil, always(NULL_TEXT)],
+    [x => typeof x === 'boolean', always(value ? TRUE_TEXT : FALSE_TEXT)],
     [T, identity]
   ])(value)
 

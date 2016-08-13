@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Colors from '../Theme/Colors'
-import AppStyles from '../Theme/AppStyles'
 
 const Styles = {
   container: {
@@ -9,13 +8,6 @@ const Styles = {
   content: {
     backgroundColor: Colors.toolbar,
     height: 60
-  },
-  tabs: {
-    ...AppStyles.Layout.hbox,
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    height: '100%',
-    fontSize: 18
   }
 }
 
@@ -25,8 +17,6 @@ class Header extends Component {
     return (
       <div style={Styles.container}>
         <div style={Styles.content}>
-          <div style={Styles.tabs}>
-          </div>
         </div>
       </div>
     )

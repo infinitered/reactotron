@@ -5,6 +5,15 @@ import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
 
+const INPUT_PLACEHOLDER = 'smurfs.7.name'
+const ESCAPE_KEYSTROKE = 'Esc'
+const ESCAPE_HINT = 'OMG Cancel'
+const ENTER_KEYSTROKE = 'Enter'
+const ENTER_HINT = 'Search'
+const DIALOG_TITLE = 'State'
+const STATE_INSTRUCTIONS = (<span>Retrieves a value from the state tree at the given path <strong>and all values below</strong>.</span>)
+const FIELD_LABEL = 'Path'
+
 const Styles = {
   dialog: {
     borderRadius: 4,
@@ -120,16 +129,15 @@ class SampleModal extends Component {
           <ModalDialog style={Styles.dialog}>
             <div style={Styles.container}>
               <div style={Styles.header}>
-                <h1 style={Styles.title}>State</h1>
+                <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
                 <p style={Styles.subtitle}>
-                  Retrieves a value from the state tree at the given
-                  path <strong>and all values below</strong>.
+                  {STATE_INSTRUCTIONS}
                 </p>
               </div>
               <div style={Styles.body}>
-                <label style={Styles.fieldLabel}>Path</label>
+                <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
                 <input
-                  placeholder='smurfs.7.name'
+                  placeholder={INPUT_PLACEHOLDER}
                   style={Styles.textField}
                   type='text'
                   ref='textField'
@@ -139,10 +147,10 @@ class SampleModal extends Component {
               </div>
               <div style={Styles.keystrokes}>
                 <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>Esc</span> OMG Cancel
+                  <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span>{ESCAPE_HINT}
                 </div>
                 <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>Enter</span> Search
+                  <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span>{ENTER_HINT}
                 </div>
               </div>
             </div>
