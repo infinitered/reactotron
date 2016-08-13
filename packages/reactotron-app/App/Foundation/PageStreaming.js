@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
-import CommandList from './CommandList'
+import CommandList from '../Shared/CommandList'
 
 const Styles = {
   container: {

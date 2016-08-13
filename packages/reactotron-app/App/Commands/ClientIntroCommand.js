@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
-import Command from '../Command'
-import Colors from '../../Theme/Colors'
-import makeTable from '../../Shared/MakeTable'
+import Command from '../Shared/Command'
+import Colors from '../Theme/Colors'
+import makeTable from '../Shared/MakeTable'
 
 class ClientIntroCommand extends Component {
 

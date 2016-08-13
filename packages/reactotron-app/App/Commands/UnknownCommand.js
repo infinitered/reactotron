@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
-import Command from '../Command'
-import ObjectTree from '../../Shared/ObjectTree'
-import Colors from '../../Theme/Colors'
+import Command from '../Shared/Command'
+import ObjectTree from '../Shared/ObjectTree'
+import Colors from '../Theme/Colors'
 
 class UnknownCommand extends Component {
 

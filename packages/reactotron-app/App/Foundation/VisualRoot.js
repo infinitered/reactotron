@@ -7,7 +7,7 @@ import PageNetworking from '../Network/PageNetworking'
 import Footer from './Footer'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
-import PageStreaming from '../Streaming/PageStreaming'
+import PageStreaming from './PageStreaming'
 import ReactTooltip from 'react-tooltip'
 import SampleModal from '../Dialogs/SampleModal'
 

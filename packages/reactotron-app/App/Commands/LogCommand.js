@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
-import Command from '../Command'
-import ObjectTree from '../../Shared/ObjectTree'
+import Command from '../Shared/Command'
+import ObjectTree from '../Shared/ObjectTree'
 import { map, trim, split } from 'ramda'
-import Colors from '../../Theme/Colors'
+import Colors from '../Theme/Colors'
 
 const getName = level => {
   switch (level) {

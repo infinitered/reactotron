@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
-import Command from '../Command'
-import ObjectTree from '../../Shared/ObjectTree'
+import Command from '../Shared/Command'
+import ObjectTree from '../Shared/ObjectTree'
 
 const Styles = {
   name: {
