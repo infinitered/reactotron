@@ -1,10 +1,8 @@
-import { app, BrowserWindow, Menu, shell, ipcMain } from 'electron'
-import createBridge from './TransportBridge'
+import { app, BrowserWindow, Menu, shell } from 'electron'
 
 let menu
 let template
 let mainWindow = null
-let server = null
 
 if (process.env.NODE_ENV === 'development') {
   require('electron-debug')()
@@ -28,7 +26,6 @@ app.on('ready', () => {
   mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.show()
     mainWindow.focus()
-    server = createBridge(mainWindow.webContents)
   })
 
   mainWindow.on('closed', () => {
