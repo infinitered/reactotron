@@ -4,6 +4,7 @@ import StateActionCompleteCommand from './StateActionCompleteCommand'
 import ApiResponseCommand from './ApiResponseCommand'
 import ClientIntroCommand from './ClientIntroCommand'
 import BenchmarkReportCommand from './BenchmarkReportCommand'
+import StateValuesResponseCommand from './StateValuesResponseCommand'
 
 export default command => {
   const { type } = command
@@ -14,6 +15,7 @@ export default command => {
     case 'state.action.complete': return StateActionCompleteCommand
     case 'api.response': return ApiResponseCommand
     case 'client.intro': return ClientIntroCommand
+    case 'state.values.response': return StateValuesResponseCommand
     default: return UnknownCommand
   }
 }
