@@ -54,7 +54,9 @@ const Styles = {
   },
   children: {
     minHeight: 40,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    animation: 'fade-up 0.25s',
+    willChange: 'transform opacity'
   }
 }
 
@@ -69,7 +71,7 @@ class Command extends Component {
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    return this.props.command !== nextProps.command
+    return (this.props.command.id !== nextProps.command.id)
   }
 
   render () {
@@ -90,7 +92,7 @@ class Command extends Component {
             {hasDuration && <span style={Styles.duration}>{ms} ms</span>}
             <Timestamp date={date} style={Styles.timestamp} />
           </div>
-          <div style={Styles.children}>
+          <div style={Styles.children} className='fade-it'>
             {children}
           </div>
         </div>

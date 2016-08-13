@@ -39,3 +39,8 @@ a.closeButton--jss-0-1 { display: none; }
 *:focus {
     outline: none;
 }
+
+@-webkit-keyframes fade-up {
+  0%   { -webkit-transform: translateY(5%); opacity: 0; }
+  100% { -webkit-transform: translateY(0%); opacity: 1; }
+}
