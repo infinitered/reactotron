@@ -13,7 +13,7 @@ const Styles = {
     backgroundColor: Colors.screen
   },
   container: {
-    ...AppStyles.Layout.vbox,
+    ...AppStyles.Layout.vbox
   },
   keystrokes: {
     ...AppStyles.Layout.hbox,

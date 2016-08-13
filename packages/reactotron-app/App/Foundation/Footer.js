@@ -5,7 +5,6 @@ import IconReactotron from 'react-icons/lib/md/rowing'
 import IconGithub from 'react-icons/lib/ti/social-github'
 import IconSettings from 'react-icons/lib/md/settings'
 import IconFeedback from 'react-icons/lib/md/feedback'
-import IconWeb from 'react-icons/lib/ti/home'
 import IconTwitter from 'react-icons/lib/ti/social-twitter'
 import { observer, inject } from 'mobx-react'
 

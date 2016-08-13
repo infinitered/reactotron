@@ -1,10 +1,7 @@
 import { reverse, map } from 'ramda'
 import { observer, inject } from 'mobx-react'
-import React, { Component, PropTypes } from 'react'
-import Colors from '../Theme/Colors'
-import AppStyles from '../Theme/AppStyles'
-import Command from './Command'
-import getCommandComponent from './Commands'
+import React, { Component } from 'react'
+import getCommandComponent from '../Commands'
 
 const Styles = {
   container: {

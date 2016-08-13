@@ -23,7 +23,7 @@ const Styles = {
 class ObjectTree extends Component {
 
   static propTypes = {
-    object: PropTypes.oneOf([PropTypes.object, PropTypes.array]),
+    object: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     level: PropTypes.number
   }
 
