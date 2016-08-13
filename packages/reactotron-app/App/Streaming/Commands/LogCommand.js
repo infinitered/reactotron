@@ -12,10 +12,11 @@ const getName = level => {
     default: return 'LOG'
   }
 }
-
+let spanCount = 0
 const breakIntoSpans = (part) => {
+  spanCount++
   return (
-    <span>{part}<br /></span>
+    <span key={`span-${spanCount}`}>{part}<br /></span>
   )
 }
 
