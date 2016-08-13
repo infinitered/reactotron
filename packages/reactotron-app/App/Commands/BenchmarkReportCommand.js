@@ -6,6 +6,10 @@ import { isNilOrEmpty } from 'ramdasauce'
 import AppStyles from '../Theme/AppStyles'
 import ReactTooltip from 'react-tooltip'
 
+const COMMAND_TITLE = 'BENCHMARK'
+const LAST_STEP_DEFAULT = 'Last'
+const MS_LABEL = 'ms'
+
 const mapIndexed = addIndex(map)
 
 const color = Colors.Palette.purple
@@ -67,15 +71,15 @@ const makeStep = (step, idx, last, totalDuration) => {
   const pct = Number(delta / totalDuration * 100.0).toFixed(0)
   const startedAt = Number(time - delta).toFixed(0)
   const endedAt = Number(time).toFixed(0)
-  const timeText = `${startedAt} - ${endedAt} ms (${pct}%)`
+  const timeText = `${startedAt} - ${endedAt} ${{MS_LABEL}} (${pct}%)`
   const key = `step-${idx}`
-  const titleText = (last && isNilOrEmpty(title)) ? 'Last' : title
+  const titleText = (last && isNilOrEmpty(title)) ? LAST_STEP_DEFAULT : title
   const pStyle = percentStyle(step.time - step.delta, step.delta, totalDuration)
   const stepStyle = merge(merge(Styles.step, last && Styles.stepLast), pStyle)
   return (
     <div data-tip={timeText} key={key} style={stepStyle}>
       <div style={Styles.stepTitle}>{titleText}</div>
-      <div style={Styles.delta}>+{delta} ms</div>
+      <div style={Styles.delta}>+{delta} ${MS_LABEL}</div>
     </div>
   )
 }
@@ -101,7 +105,7 @@ class BenchmarkReportCommand extends Component {
     const duration = last(steps).time
 
     return (
-      <Command command={command} title='BENCHMARK' color={color} duration={duration}>
+      <Command command={command} title={COMMAND_TITLE} color={color} duration={duration}>
         <div style={Styles.reportTitle}>{title}</div>
           {
             mapIndexed(

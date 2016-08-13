@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import IconReactotron from 'react-icons/lib/md/rowing'
-import IconGithub from 'react-icons/lib/ti/social-github'
-import IconSettings from 'react-icons/lib/md/settings'
-import IconFeedback from 'react-icons/lib/md/feedback'
-import IconTwitter from 'react-icons/lib/ti/social-twitter'
 import { observer, inject } from 'mobx-react'
+
+const APP_NAME = 'Reactotron'
+const APP_VERSION = '1.0.0'
+const PORT_LABEL = 'port'
+const CONNECTIONS_SUFFIX = 'connections'
 
 const Styles = {
   container: {
@@ -56,18 +57,6 @@ const Styles = {
 @observer
 class Footer extends Component {
 
-  renderIcons () {
-    return (
-      <div>
-        <a href='#' title='Settings'><IconSettings size={28} style={Styles.settings} /></a>
-        <a href='#' title='Report an issue or feature request'><IconFeedback size={28} style={Styles.feedback} /></a>
-        <a href='#' title='Source Code!'><IconGithub size={39} style={Styles.github} /></a>
-        <a href='#' title='Check us out on the Twittertron!'><IconTwitter size={31} style={Styles.twitter} /></a>
-        <div style={Styles.line}></div>
-      </div>
-    )
-  }
-
   render () {
     const { server } = this.props.session
     const { port } = server.options
@@ -78,13 +67,13 @@ class Footer extends Component {
 
           <IconReactotron size={30} style={Styles.logo} />
           <div style={Styles.reactotronContainer}>
-            <div style={Styles.reactotron}>Reactotron</div>
-            <div style={Styles.version}>1.0.0</div>
+            <div style={Styles.reactotron}>{APP_NAME}</div>
+            <div style={Styles.version}>{APP_VERSION}</div>
           </div>
           <div style={Styles.stretcher}></div>
-          <p>port {port}</p>
+          <p>{PORT_LABEL} {port}</p>
           <div style={Styles.line}></div>
-          <p>{connectionCount} connections</p>
+          <p>{connectionCount} {CONNECTIONS_SUFFIX}</p>
         </div>
       </div>
     )

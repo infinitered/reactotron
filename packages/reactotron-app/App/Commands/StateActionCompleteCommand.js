@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import Command from '../Shared/Command'
 import ObjectTree from '../Shared/ObjectTree'
 
+const COMMAND_TITLE = 'ACTION'
+
 const Styles = {
   name: {
     margin: 0,
@@ -25,7 +27,7 @@ class StateActionComplete extends Component {
     const { ms, action, name } = payload
 
     return (
-      <Command command={command} title='ACTION' duration={ms}>
+      <Command command={command} title={COMMAND_TITLE} duration={ms}>
         <div style={Styles.container}>
           <span style={Styles.name}>{name}</span>
           <ObjectTree object={{action}} />

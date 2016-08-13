@@ -5,6 +5,11 @@ import Colors from '../Theme/Colors'
 import { isNil, equals, length, pipe, without, reject, map, contains, __, values } from 'ramda'
 import makeTable from '../Shared/MakeTable'
 
+const NULL_TEXT = '¯\\_(ツ)_/¯'
+const ROOT_TEXT = '(root)'
+const COMMAND_TITLE = 'STATE'
+const UNKNOWN_MESSAGE = 'Not sure how to render this value'
+
 const Styles = {
   path: {
     padding: '10px 0'
@@ -49,7 +54,7 @@ class StateValuesResponseCommand extends Component {
   }
 
   renderNull () {
-    return '¯\\_(ツ)_/¯'
+    return NULL_TEXT
   }
 
   renderValue (value) {
@@ -69,7 +74,7 @@ class StateValuesResponseCommand extends Component {
         return this.renderString(value)
 
       default:
-        return <div style={Styles.unknown}>Not sure how to render this value</div>
+        return <div style={Styles.unknown}>{UNKNOWN_MESSAGE}</div>
     }
   }
 
@@ -77,10 +82,10 @@ class StateValuesResponseCommand extends Component {
     const { command } = this.props
     const { payload } = command
     const { path, value } = payload
-    const pathText = path || '(root)'
+    const pathText = path || ROOT_TEXT
 
     return (
-      <Command command={command} title='STATE' subtitle={pathText}>
+      <Command command={command} title={COMMAND_TITLE} subtitle={pathText}>
         <div style={Styles.container}>
           {this.renderValue(value)}
         </div>
