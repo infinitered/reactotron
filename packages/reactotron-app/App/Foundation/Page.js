@@ -25,8 +25,7 @@ const Styles = {
 class Page extends Component {
 
   static propTypes = {
-    tabId: PropTypes.string.isRequired,
-    children: PropTypes.oneOf([PropTypes.array, PropTypes.object])
+    tabId: PropTypes.string.isRequired
   }
 
   render () {
