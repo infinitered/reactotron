@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react'
-import Command from '../Command'
-import Colors from '../../Theme/Colors'
+import Command from '../Shared/Command'
+import Colors from '../Theme/Colors'
 import { clone, map, addIndex, tail, merge, last } from 'ramda'
 import { isNilOrEmpty } from 'ramdasauce'
-import AppStyles from '../../Theme/AppStyles'
+import AppStyles from '../Theme/AppStyles'
 import ReactTooltip from 'react-tooltip'
 
 const mapIndexed = addIndex(map)

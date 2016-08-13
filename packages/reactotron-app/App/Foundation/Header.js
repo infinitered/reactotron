@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import Colors from '../Theme/Colors'
-import Tab from './Tab'
 import AppStyles from '../Theme/AppStyles'
-import { inject } from 'mobx-react'
 
 const Styles = {
   container: {
@@ -21,11 +19,9 @@ const Styles = {
   }
 }
 
-@inject('session')
 class Header extends Component {
 
   render () {
-    const { ui } = this.props.session
     return (
       <div style={Styles.container}>
         <div style={Styles.content}>
