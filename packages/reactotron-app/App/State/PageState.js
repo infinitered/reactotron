@@ -2,15 +2,13 @@ import React, { Component } from 'react'
 import { observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
-import SideMenu from '../Shared/SideMenu'
 import StateActionList from './StateActionList'
 
 const column = {
   flex: 1,
   paddingLeft: 10,
   paddingRight: 10,
-  overflowY: 'scroll',
-
+  overflowY: 'scroll'
 }
 
 const Styles = {

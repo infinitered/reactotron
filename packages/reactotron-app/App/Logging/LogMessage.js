@@ -18,22 +18,11 @@ const levelText = {
 
 const Styles = {
   container: {
-    // paddingTop: 4,
-    // paddingBottom: 4,
-    // minHeight: 80,
-    // border: `1px solid ${Colors.line}`,
-    // borderRadius: 6,
-    // marginBottom: 8,
-    // borderLeft: `8px solid ${Colors.primary}`,
-    // backgroundColor: Colors.toolbar,
-    // overflow: 'hidden',
-
     borderBottom: `1px solid ${Colors.line}`,
     marginBottom: 8,
     marginTop: 8,
     paddingTop: 0,
     paddingBottom: 16,
-
     ...AppStyles.Layout.hbox
   },
   containerWarning: {
