@@ -9,6 +9,10 @@ class UnknownCommand extends Component {
     command: PropTypes.object.isRequired
   }
 
+  shouldComponentUpdate (nextProps) {
+    return this.props.command.id !== nextProps.command.id
+  }
+
   render () {
     const { command } = this.props
     const { payload, type } = command

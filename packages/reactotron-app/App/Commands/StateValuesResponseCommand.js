@@ -32,6 +32,10 @@ class StateValuesResponseCommand extends Component {
     command: PropTypes.object.isRequired
   }
 
+  shouldComponentUpdate (nextProps) {
+    return this.props.command.id !== nextProps.command.id
+  }
+
   renderObject (value) {
     return <ObjectTree object={value} level={0} />
   }

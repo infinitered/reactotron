@@ -86,6 +86,10 @@ class BenchmarkReportCommand extends Component {
     command: PropTypes.object.isRequired
   }
 
+  shouldComponentUpdate (nextProps) {
+    return this.props.command.id !== nextProps.command.id
+  }
+
   componentDidReact () {
     ReactTooltip.rebuild()
   }
