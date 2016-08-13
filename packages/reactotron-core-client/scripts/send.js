@@ -78,7 +78,6 @@ client.configure({
     shotgun()
   },
   onDisconnect: () => console.log('disconnected'),
-  onCommand: command => console.log({inbound: command}),
   plugins: CorePlugins
 })
 
