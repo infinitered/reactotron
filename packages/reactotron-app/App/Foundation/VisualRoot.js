@@ -5,7 +5,8 @@ import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import Timeline from './Timeline'
 import ReactTooltip from 'react-tooltip'
-import SampleModal from '../Dialogs/SampleModal'
+import StateKeysAndValuesDialog from '../Dialogs/StateKeysAndValuesDialog'
+import StateDispatchDialog from '../Dialogs/StateDispatchDialog'
 
 const Styles = {
   container: {
@@ -24,7 +25,8 @@ export default class VisualRoot extends Component {
         <Header />
         <Timeline />
         <Footer />
-        <SampleModal />
+        <StateKeysAndValuesDialog />
+        <StateDispatchDialog />
         <ReactTooltip />
       </div>
     )
