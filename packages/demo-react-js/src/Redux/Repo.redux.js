@@ -1,32 +1,33 @@
 export const Types = {
-  Request: 'RepoMessage.Request',
-  Receive: 'RepoMessage.Receive',
-  Failure: 'RepoMessage.Failure'
+  Request: 'repo.request',
+  Receive: 'repo.receive',
+  Failure: 'repo.failure'
 }
 
 export const Actions = {
-  request: () => ({ type: Types.Request }),
-  receive: (message, url, name, sha) => ({ type: Types.Receive, message, url, name, sha }),
+  request: (repo) => ({ type: Types.Request, repo }),
+  receive: (message, url, name, sha, avatar) => ({ type: Types.Receive, message, url, name, sha, avatar }),
   failure: (error) => ({ type: Types.Failure, error })
 }
 
 export const INITIAL_STATE = {
   message: null,
+  repo: null,
   url: null,
   name: null,
   sha: null,
   fetching: false,
+  avatar: null,
   error: null
 }
 
 // we're going out for the repo message
-const request = (state, action) =>
-  ({ ...INITIAL_STATE, fetching: true })
+const request = (state, { repo }) =>
+  ({ ...INITIAL_STATE, fetching: true, repo })
 
 // we've got a repo message
-const receive = (state, action) => {
-  const { message, url, name, sha } = action
-  return { ...state, fetching: false, message, url, name, sha }
+const receive = (state, { message, url, name, sha, avatar }) => {
+  return { ...state, fetching: false, message, url, name, sha, avatar }
 }
 
 // we failed to get the repo message :(
