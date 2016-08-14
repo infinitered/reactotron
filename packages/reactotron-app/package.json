@@ -79,6 +79,7 @@
     "ramda": "^0.21.0",
     "ramdasauce": "^1.1.0",
     "react": "^15.3.0",
+    "react-base16-styling": "^0.4.1",
     "react-dom": "^15.3.0",
     "react-icons": "^2.2.1",
     "react-json-tree": "^0.10.0",

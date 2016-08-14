@@ -14,7 +14,7 @@ const TAB_KEYSTROKE = 'Tab'
 const TAB_HINT = 'Keys/Values'
 const DIALOG_TITLE_KEYS = 'State Keys'
 const DIALOG_TITLE_VALUES = 'State Values'
-const STATE_VALUES_INSTRUCTIONS = (<span>Retrieves a value from the state tree at the given path <strong>and all values below</strong>.</span>)
+const STATE_VALUES_INSTRUCTIONS = (<span>Retrieves a value from the state tree at the given path <span style={{color: Colors.bold}}>and all values below it</span>.</span>)
 const STATE_KEYS_INSTRUCTIONS = (<span>Retrieves a list of keys located at the given path in the state tree.</span>)
 const FIELD_LABEL = 'Path'
 
@@ -23,7 +23,8 @@ const Styles = {
     borderRadius: 4,
     padding: 4,
     width: 450,
-    backgroundColor: Colors.screen
+    backgroundColor: Colors.background,
+    color: Colors.foreground
   },
   container: {
     ...AppStyles.Layout.vbox
@@ -31,28 +32,25 @@ const Styles = {
   keystrokes: {
     ...AppStyles.Layout.hbox,
     alignSelf: 'center',
-    fontSize: 14,
     paddingTop: 10,
     paddingBottom: 20,
-    color: Colors.mutedText
+    fontSize: 13
   },
   hotkey: {
     padding: '0 10px'
   },
   keystroke: {
-    backgroundColor: Colors.text,
-    color: Colors.textInverse,
+    backgroundColor: Colors.backgroundHighlight,
+    color: Colors.foreground,
     padding: '4px 8px',
     borderRadius: 4
   },
   header: {
     ...AppStyles.Layout.vbox,
-    padding: '1em 2em 1em',
-    backgroundColor: Colors.screen
+    padding: '2em 2em 1em'
   },
   body: {
     ...AppStyles.Layout.vbox,
-    backgroundColor: Colors.screen,
     padding: '2em 2em 4em'
   },
   title: {
@@ -60,20 +58,18 @@ const Styles = {
     padding: 0,
     textAlign: 'left',
     fontWeight: 'normal',
-    fontSize: 40,
-    color: Colors.text
+    fontSize: 24,
+    color: Colors.heading
   },
   subtitle: {
-    color: Colors.primary,
+    color: Colors.foreground,
     textAlign: 'left',
-    fontSize: 16,
     padding: 0,
     margin: 0
   },
   fieldLabel: {
-    color: Colors.text,
+    color: Colors.heading,
     fontSize: 13,
-    fontWeight: 'bold',
     textTransform: 'uppercase'
   },
   textField: {
@@ -82,16 +78,9 @@ const Styles = {
     borderRight: 0,
     borderBottom: `1px solid ${Colors.line}`,
     fontSize: 23,
+    color: Colors.foregroundLight,
     lineHeight: '40px',
-    color: Colors.Text,
     backgroundColor: 'inherit'
-  },
-
-  '&focus': {
-    border: 0
-  },
-  instructions: {
-    textAlign: 'center'
   }
 }
 

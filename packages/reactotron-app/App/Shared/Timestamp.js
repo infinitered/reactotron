@@ -4,13 +4,15 @@ import Colors from '../Theme/Colors'
 
 const Styles = {
   container: {
-    fontSize: 13,
     margin: 0,
-    padding: 0,
-    color: Colors.text
+    padding: 0
   },
-  left: {},
-  right: {}
+  left: {
+    color: Colors.foregroundDark
+  },
+  right: {
+    color: Colors.foreground
+  }
 }
 
 class Timestamp extends Component {
@@ -22,9 +24,9 @@ class Timestamp extends Component {
 
   render () {
     const date = moment(this.props.date)
-    const left = date.format('h:mm:')
+    const left = date.format('h:mm')
     // const right = date.format('ss.SS')
-    const right = date.format('ss A')
+    const right = date.format(':ss')
     const containerStyles = {...Styles.container, ...this.props.style}
     return (
       <span style={containerStyles}>

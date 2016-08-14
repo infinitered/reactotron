@@ -11,7 +11,8 @@ import StateDispatchDialog from '../Dialogs/StateDispatchDialog'
 const Styles = {
   container: {
     ...AppStyles.Layout.vbox,
-    backgroundColor: Colors.screen,
+    backgroundColor: Colors.background,
+    color: Colors.foreground,
     height: '100vh',
     overflow: 'hidden'
   }

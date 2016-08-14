@@ -4,7 +4,8 @@ import AppStyles from '../Theme/AppStyles'
 import Timestamp from '../Shared/Timestamp'
 import { observer } from 'mobx-react'
 import { isNilOrEmpty } from 'ramdasauce'
-import { is, merge } from 'ramda'
+import { is } from 'ramda'
+const Icon = require('react-icons/lib/md/arrow-drop-down')
 
 const MS_LABEL = 'ms'
 
@@ -14,42 +15,43 @@ const Styles = {
     marginBottom: 8,
     marginTop: 8,
     paddingTop: 16,
-    paddingBottom: 16,
-    marginLeft: 10,
-    marginRight: 10,
-    alignItems: 'flex-start'
+    paddingBottom: 24,
+    paddingLeft: 20,
+    paddingRight: 20,
+    alignItems: 'flex-start',
+    borderBottom: `1px solid ${Colors.backgroundLighter}`
+  },
+  icon: {
+    color: Colors.foregroundDark,
+    paddingRight: 4,
   },
   body: {
     ...AppStyles.Layout.vbox,
-    marginLeft: 10
+    marginLeft: 0
   },
   topRow: {
     ...AppStyles.Layout.hbox,
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 4,
-    paddingBottom: 4,
-    borderBottom: `1px solid ${Colors.subtleLine}`
+    marginBottom: 4
   },
   title: {
-    fontSize: 16,
-    color: Colors.primary,
-    textAlign: 'left'
+    color: Colors.tag,
+    textAlign: 'left',
+    fontSize: 'larger'
+    // borderBottom: `1px solid ${Colors.highlight}`
   },
   subtitle: {
-    fontSize: 14,
-    color: Colors.text,
+    color: Colors.foreground,
     textAlign: 'left',
     paddingLeft: 8
   },
   duration: {
-    fontSize: 14,
-    color: Colors.text,
+    color: Colors.foregroundDark,
     paddingRight: 10
   },
   timestamp: {
-    fontSize: 14,
-    color: Colors.mutedText
+    color: Colors.foregroundDark
   },
   spacer: {
     flex: 1
@@ -58,7 +60,7 @@ const Styles = {
     minHeight: 40,
     overflow: 'hidden',
     animation: 'fade-up 0.25s',
-    willChange: 'transform opacity'
+    willChange: 'transform opacity',
   }
 }
 
@@ -77,22 +79,24 @@ class Command extends Component {
   }
 
   render () {
-    const { command, children, title, subtitle, duration, color = Colors.primary } = this.props
+    const { command, children, title, subtitle, duration } = this.props
     const hasSubtitle = !isNilOrEmpty(subtitle)
     const hasDuration = is(Number, duration)
     const ms = hasDuration && Number(duration).toFixed(0)
     const { date } = command
-    const titleStyle = merge(Styles.title, { color })
-    const topRowStyle = merge(Styles.topRow, { borderBottomColor: color })
+    const titleStyle = Styles.title
+    const topRowStyle = Styles.topRow
+    const timestampStyle = Styles.timestamp
     return (
       <div style={Styles.container}>
         <div style={Styles.body}>
           <div style={topRowStyle}>
             <span style={titleStyle}>{title}</span>
+            <Icon size={24} style={Styles.icon} />
             {hasSubtitle && <span style={Styles.subtitle}>{subtitle}</span>}
             <span style={Styles.spacer}></span>
-            {hasDuration && <span style={Styles.duration}>{ms} {MS_LABEL}</span>}
-            <Timestamp date={date} style={Styles.timestamp} />
+            {hasDuration && <span style={Styles.duration}>{ms}{MS_LABEL}</span>}
+            <Timestamp date={date} style={timestampStyle} />
           </div>
           <div style={Styles.children}>
             {children}

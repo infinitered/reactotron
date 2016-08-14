@@ -7,12 +7,17 @@ import AppStyles from '../Theme/AppStyles'
 
 const COMMAND_TITLE = 'STATE KEYS'
 const NULL_MESSAGE = '¯\\_(ツ)_/¯'
-const EMPTY_MESSAGE = 'EMPTY'
+const EMPTY_MESSAGE = 'Sorry, no keys in there.'
 const ROOT_TEXT = '(root)'
+const PATH_LABEL = ''
 
 const Styles = {
   path: {
-    padding: '10px 0'
+    padding: '0 0 10px 0',
+    color: Colors.bold
+  },
+  pathLabel: {
+    color: Colors.foregroundDark
   },
   stringValue: {
     color: Colors.text,
@@ -28,11 +33,11 @@ const Styles = {
     flexWrap: 'wrap'
   },
   key: {
-    color: Colors.textInverse,
-    backgroundColor: Colors.Palette.matteBlack,
+    backgroundColor: Colors.backgroundLighter,
     padding: '4px 8px',
     margin: 4,
-    borderRadius: 4
+    borderRadius: 4,
+    cursor: 'pointer'
   }
 }
 
@@ -95,7 +100,7 @@ class StateKeysResponseCommand extends Component {
 
   renderKeys (keys) {
     if (isNil(keys)) return <div style={Styles.null}>{NULL_MESSAGE}></div>
-    if (keys.length === 0) return <div style={Styles.empty}>{EMPTY_MESSAGE}></div>
+    if (keys.length === 0) return <div style={Styles.empty}>{EMPTY_MESSAGE}</div>
 
     return (
       <div style={Styles.keyList}>
@@ -111,8 +116,9 @@ class StateKeysResponseCommand extends Component {
     const pathText = path || ROOT_TEXT
 
     return (
-      <Command command={command} title={COMMAND_TITLE} subtitle={pathText}>
+      <Command command={command} title={COMMAND_TITLE}>
         <div style={Styles.container}>
+          <div style={Styles.path}><span style={Styles.pathLabel}>{PATH_LABEL}</span> {pathText}</div>
           {this.renderKeys(keys)}
         </div>
       </Command>

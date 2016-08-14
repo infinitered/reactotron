@@ -8,7 +8,6 @@ import AppStyles from '../Theme/AppStyles'
 
 const Styles = {
   container: {
-    backgroundColor: Colors.Palette.screen,
     ...AppStyles.Layout.vbox,
     padding: 0,
     margin: 0
