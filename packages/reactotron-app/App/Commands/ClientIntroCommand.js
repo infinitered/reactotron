@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import Command from '../Shared/Command'
-import Colors from '../Theme/Colors'
 import makeTable from '../Shared/MakeTable'
 
 const COMMAND_TITLE = 'CONNECTION'
@@ -20,7 +19,7 @@ class ClientIntroCommand extends Component {
     const { payload } = command
 
     return (
-      <Command command={command} title={COMMAND_TITLE} color={Colors.Palette.almostBlack}>
+      <Command command={command} title={COMMAND_TITLE}>
         {makeTable(payload)}
       </Command>
     )

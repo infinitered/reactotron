@@ -2,21 +2,13 @@ import React, { Component, PropTypes } from 'react'
 import JSONTree from 'react-json-tree'
 import Colors from '../Theme/Colors'
 
+const theme = { ...Colors.theme, base0B: Colors.foreground }
+
 const Styles = {
-  container: {
-  },
+  container: {},
   theme: {
-    tree: {
-      backgroundColor: 'transparent',
-      fontSize: 14
-    },
-    label: {
-      color: Colors.text
-    },
-    arrowSign: {
-      borderTopColor: Colors.text,
-      color: Colors.text
-    }
+    tree: { backgroundColor: 'transparent' },
+    ...theme,
   }
 }
 
@@ -36,6 +28,7 @@ class ObjectTree extends Component {
           hideRoot
           shouldExpandNode={(keyName, data, minLevel) => minLevel <= level}
           theme={Styles.theme}
+          invertTheme={Colors.invertTheme}
         />
       </div>
     )

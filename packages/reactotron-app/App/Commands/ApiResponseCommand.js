@@ -3,8 +3,8 @@ import Command from '../Shared/Command'
 import ObjectTree from '../Shared/ObjectTree'
 import { dotPath, isWithin } from 'ramdasauce'
 import { toUpper } from 'ramda'
-import Colors from '../Theme/Colors'
 import makeTable from '../Shared/MakeTable'
+import Colors from '../Theme/Colors'
 
 const COMMAND_TITLE = 'API RESPONSE'
 const REQUEST_HEADER_TITLE = 'Request Headers'
@@ -19,13 +19,14 @@ const Styles = {
   url: {
     wordBreak: 'break-all',
     paddingBottom: 10,
-    paddingTop: 10
+    color: Colors.bold
   },
   headerTitle: {
     margin: 0,
     padding: 0,
     paddingTop: 8,
-    paddingBottom: 0
+    paddingBottom: 0,
+    color: Colors.constant
   },
   pre: {
     whiteSpace: 'pre-wrap'
@@ -66,18 +67,17 @@ class ApiResponseCommand extends Component {
     const requestHeaders = dotPath('request.headers', payload)
     const responseHeaders = dotPath('response.headers', payload)
     const body = dotPath('response.body', payload)
-    const color = ok ? Colors.good : Colors.error
     const subtitle = `${status} - ${method}`
 
     return (
-      <Command command={command} title={COMMAND_TITLE} subtitle={subtitle} duration={duration} color={color}>
+      <Command command={command} title={COMMAND_TITLE} duration={duration}>
         <div style={Styles.container}>
-          <div style={Styles.url}>{url}</div>
-          <h4 style={Styles.headerTitle}>{REQUEST_HEADER_TITLE}</h4>
+          <div style={Styles.url}>{subtitle}<br />{url}</div>
+          <div style={Styles.headerTitle}>{REQUEST_HEADER_TITLE}</div>
           {makeTable(requestHeaders)}
-          <h4 style={Styles.headerTitle}>{RESPONSE_HEADER_TITLE}</h4>
+          <div style={Styles.headerTitle}>{RESPONSE_HEADER_TITLE}</div>
           {makeTable(responseHeaders)}
-          <h4 style={Styles.headerTitle}>{BODY_TITLE}</h4>
+          <div style={Styles.headerTitle}>{BODY_TITLE}</div>
           {this.renderData(body)}
 
         </div>

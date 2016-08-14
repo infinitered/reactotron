@@ -3,25 +3,15 @@ html, body {
   margin: 0;
   border: 0;
   cursor: default;
-  font-family: 'Fira Code', 'Inconsolata-dz for Powerline', 'Roboto', '-apple-system', 'San Francisco', 'Helvetica Neue', sans-serif;;
-  font-size: 0.9em;
+  /*font-family: 'Fira Code', 'Inconsolata-dz for Powerline', 'Roboto', '-apple-system', 'San Francisco', 'Helvetica Neue', sans-serif;;*/
+  /*font-family: 'Inconsolata-dz for Powerline', 'Roboto', '-apple-system', 'San Francisco', 'Helvetica Neue', sans-serif;;*/
+  /*font-family: 'Roboto', '-apple-system', 'San Francisco', 'Helvetica Neue', sans-serif;;*/
+  font-family: 'Thonburi', '-apple-system', 'San Francisco', 'Helvetica Neue', sans-serif;;
+  /*font-family: 'Comic Sans MS';*/
+  font-size: 0.94em;
   -webkit-user-select: none;
-  text-rendering: optimizeLegibility;
 }
 
-body {
-}
-
-#root {
-  height: 100vh
-}
-
-pre {
-  margin: 0;
-  padding: 0;
-}
-
-/*
 ::-webkit-scrollbar {
   background-color: transparent;
   width: 8px;
@@ -32,10 +22,9 @@ pre {
   border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(200, 200, 200, 1) !important;
+  background-color: rgba(128, 128, 128, 0.25) !important;
   border-radius: 4px;
 }
-*/
 
 /* leet hacks */
 a.closeButton--jss-0-1 { display: none; }

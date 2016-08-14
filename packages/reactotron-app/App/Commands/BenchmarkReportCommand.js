@@ -12,9 +12,8 @@ const MS_LABEL = 'ms'
 
 const mapIndexed = addIndex(map)
 
-const color = Colors.Palette.purple
-const graphUsed = Colors.barFill
-const graphEmpty = Colors.Palette.transparent
+const graphUsed = Colors.backgroundLighter
+const graphEmpty = Colors.background
 
 function percentStyle (start, length, total) {
   const p1 = Number((start / total * 100).toFixed(0))
@@ -33,7 +32,6 @@ function percentStyle (start, length, total) {
 
 const Styles = {
   step: {
-    border: `1px solid ${Colors.barBorder}`,
     position: 'relative',
     margin: '2px 0',
     ...AppStyles.Layout.hbox,
@@ -46,15 +44,15 @@ const Styles = {
   },
   reportTitle: {
     wordBreak: 'break-all',
-    paddingBottom: 10
+    paddingBottom: 10,
+    color: Colors.bold
   },
   stepNumber: {
     paddingRight: 10
   },
   stepTitle: {
     flex: 1,
-    wordBreak: 'break-all',
-    color: Colors.matteBlack
+    wordBreak: 'break-all'
   },
   delta: {
     textAlign: 'right',
@@ -79,7 +77,7 @@ const makeStep = (step, idx, last, totalDuration) => {
   return (
     <div data-tip={timeText} key={key} style={stepStyle}>
       <div style={Styles.stepTitle}>{titleText}</div>
-      <div style={Styles.delta}>+{delta} ${MS_LABEL}</div>
+      <div style={Styles.delta}>{delta}{MS_LABEL}</div>
     </div>
   )
 }
@@ -105,7 +103,7 @@ class BenchmarkReportCommand extends Component {
     const duration = last(steps).time
 
     return (
-      <Command command={command} title={COMMAND_TITLE} color={color} duration={duration}>
+      <Command command={command} title={COMMAND_TITLE} duration={duration}>
         <div style={Styles.reportTitle}>{title}</div>
           {
             mapIndexed(
