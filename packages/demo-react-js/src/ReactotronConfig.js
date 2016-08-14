@@ -1,11 +1,10 @@
-import Reactotron from 'reactotron-react-js'
+import Reactotron, { trackGlobalErrors } from 'reactotron-react-js'
 import tronsauce from 'reactotron-apisauce'
 
 Reactotron
-.configure({
-  name: 'Demo Time!'
-})
-.use(tronsauce())
-.connect()
+  .configure({ name: 'Demo Time!' })
+  .use(tronsauce())
+  .use(trackGlobalErrors({ offline: false }))
+  .connect()
 
 console.tron = Reactotron

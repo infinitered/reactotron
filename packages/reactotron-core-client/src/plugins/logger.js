@@ -7,7 +7,7 @@ export default () => reactotron => {
       log: (message) => reactotron.send('log', { level: 'debug', message }),
       debug: (message) => reactotron.send('log', { level: 'debug', message }),
       warn: (message) => reactotron.send('log', { level: 'warn', message }),
-      error: (message) => reactotron.send('log', { level: 'error', message })
+      error: (message, stack) => reactotron.send('log', { level: 'error', message, stack })
     }
   }
 }

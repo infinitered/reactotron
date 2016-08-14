@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { Actions as StartupActions } from './Redux/Startup.redux'
 import { Actions as LogoActions } from './Redux/Logo.redux'
 import { Actions as RepoActions } from './Redux/Repo.redux'
+import makeErrorForFun from './ErrorMaker'
 
 const Styles = {
   button: {
@@ -22,6 +23,7 @@ const Styles = {
     borderRadius: 40
   }
 }
+
 
 class App extends Component {
 
@@ -85,7 +87,7 @@ class App extends Component {
             <button style={Styles.button} onClick={this.props.bigger}>Big</button>
             <button style={Styles.button} onClick={this.props.smaller}>Small</button>
           </div>
-          <img src={logo} style={logoStyles} alt="logo" />
+          <img src={logo} style={logoStyles} alt="logo" onClick={this.props.handleLogoPress} />
         </div>
         { repo &&
           <h3 className='App-message-title'>Latest Commit From {repo}</h3> }
@@ -116,7 +118,11 @@ const mapDispatchToProps = dispatch => ({
   requestReactotron: () => dispatch(RepoActions.request('reactotron/reactotron')),
   requestReactNative: () => dispatch(RepoActions.request('facebook/react-native')),
   requestMobx: () => dispatch(RepoActions.request('mobxjs/mobx')),
-  requestRedux: () => dispatch(RepoActions.request('reactjs/redux'))
+  requestRedux: () => dispatch(RepoActions.request('reactjs/redux')),
+  handleLogoPress: () => {
+    console.tron.log('wait for it...')
+    setTimeout(() => { makeErrorForFun('boom') }, 500)
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

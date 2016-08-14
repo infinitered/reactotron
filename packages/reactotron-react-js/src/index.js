@@ -1,5 +1,6 @@
-var createClient = require('reactotron-core-client').createClient
-var io = require('socket.io-client')
+import { createClient } from 'reactotron-core-client'
+import io from 'socket.io-client'
+export trackGlobalErrors from './plugins/track-global-errors'
 
 // ---------------------
 // DEFAULT CONFIGURATION
@@ -18,7 +19,4 @@ var DEFAULTS = {
 // HERE WE GO!
 // -----------
 // Create the default reactotron.
-var reactotron = createClient(DEFAULTS)
-
-// send it back
-module.exports = reactotron
+export default createClient(DEFAULTS)
