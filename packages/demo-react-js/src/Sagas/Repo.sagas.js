@@ -13,7 +13,6 @@ export function * request (api, action) {
     const { message, tree } = commit
     const { name, avatar_url } = author
     const { sha } = tree
-    console.log({ avatar_url })
     // record the last commit's message
     yield put(Repo.Actions.receive(message, url, name, sha, avatar_url))
   } else {

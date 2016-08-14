@@ -1,6 +1,29 @@
 Below you will find some information on how to perform common tasks.  
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md).
 
+
+## Reactotron Notes
+
+With `create-react-app`, the default devtool is `eval`.  We need that set to `source-map` to
+get the stack traces proper.
+
+Instead of ejecting for this demo,  let's just reach into the node_modules and change it.
+
+SPARTA!!!!!!
+
+`atom ./node_modules/react-scripts/config/webpack.config.dev.js`
+
+Change the line that currently says
+
+`  devtool: 'eval',`
+
+to
+
+`devtool: 'source-map',`
+
+It's the first line after the module exports.  (line 18, but that will change as new version get put out)
+
+
 ## Sending Feedback
 
 We are always open to [your feedback](https://github.com/facebookincubator/create-react-app/issues).
@@ -255,7 +278,7 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 ```
 import React, { Component } from 'react';
 import { Navbar, Jumbotron, Button } from 'react-bootstrap';
-``` 
+```
 
 Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [App.js](https://github.com/manavsehgal/react-eshop/blob/master/src/App.js) redone using React Bootstrap.
 
