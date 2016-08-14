@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
-import { reducer as repoMessageReducer } from './RepoMessage.redux'
+import { reducer as repoReducer } from './Repo.redux'
+import { reducer as logoReducer } from './Logo.redux'
 
 export default combineReducers({
-  repoMessage: repoMessageReducer
+  repo: repoReducer,
+  logo: logoReducer
 })

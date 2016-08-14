@@ -24,8 +24,8 @@ export default () => {
   const tracker = createTrackingEnhancer(Reactotron, {
   })
   const enhancers = compose(
-    tracker,
-    applyMiddleware(logger, sagaMiddleware)
+    applyMiddleware(logger, sagaMiddleware),
+    tracker
   )
 
   const store = createStore(rootReducer, enhancers)
