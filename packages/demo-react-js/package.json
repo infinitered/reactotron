@@ -12,14 +12,15 @@
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-redux": "^4.4.5",
+    "reactotron-apisauce": "^0.90.1",
+    "reactotron-core-client": "^0.90.1",
+    "reactotron-react-js": "^0.90.1",
+    "reactotron-redux": "^0.90.1",
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
     "redux-saga": "^0.11.0",
     "socket.io": "^1.4.8",
-    "reactotron-core-client": "^0.90.1",
-    "reactotron-react-js": "^0.90.1",
-    "reactotron-apisauce": "^0.90.1",
-    "reactotron-redux": "^0.90.1"
+    "stacktrace-js": "^1.3.1"
   },
   "scripts": {
     "start": "react-scripts start",
