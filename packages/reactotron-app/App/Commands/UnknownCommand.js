@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import Command from '../Shared/Command'
 import ObjectTree from '../Shared/ObjectTree'
-import Colors from '../Theme/Colors'
 
 const COMMAND_TITLE = 'MYSTERY 👻'
 
@@ -20,7 +19,7 @@ class UnknownCommand extends Component {
     const { payload, type } = command
 
     return (
-      <Command command={command} title={COMMAND_TITLE} subtitle={type} color={Colors.Palette.matteBlack}>
+      <Command command={command} title={COMMAND_TITLE} subtitle={type}>
         <ObjectTree object={{payload}} />
       </Command>
     )

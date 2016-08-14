@@ -11,7 +11,7 @@ const CONNECTIONS_SUFFIX = 'connections'
 
 const Styles = {
   container: {
-    backgroundColor: Colors.toolbar,
+    backgroundColor: Colors.backgroundLighter,
     paddingLeft: 5,
     paddingRight: 10,
     paddingTop: 5,
@@ -25,9 +25,9 @@ const Styles = {
   line: {
     height: 30,
     width: 1,
-    marginLeft: 5,
-    marginRight: 5,
-    backgroundColor: Colors.line
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: Colors.background
   },
   reactotronContainer: {
     paddingLeft: 5,
@@ -37,10 +37,8 @@ const Styles = {
     alignItems: 'flex-start'
   },
   reactotron: {
-    color: Colors.text
   },
   version: {
-    color: Colors.text,
     fontSize: 12,
     fontWeight: 'bold'
   },

@@ -9,13 +9,17 @@ const NULL_TEXT = '¯\\_(ツ)_/¯'
 const ROOT_TEXT = '(root)'
 const COMMAND_TITLE = 'STATE'
 const UNKNOWN_MESSAGE = 'Not sure how to render this value'
+const PATH_LABEL = ''
 
 const Styles = {
   path: {
-    padding: '10px 0'
+    padding: '0 0 10px 0',
+    color: Colors.bold
+  },
+  pathLabel: {
+    color: Colors.foregroundDark
   },
   stringValue: {
-    color: Colors.text,
     WebkitUserSelect: 'all',
     wordBreak: 'break-all'
   }
@@ -85,8 +89,9 @@ class StateValuesResponseCommand extends Component {
     const pathText = path || ROOT_TEXT
 
     return (
-      <Command command={command} title={COMMAND_TITLE} subtitle={pathText}>
+      <Command command={command} title={COMMAND_TITLE}>
         <div style={Styles.container}>
+          <div style={Styles.path}><span style={Styles.pathLabel}>{PATH_LABEL}</span> {pathText}</div>
           {this.renderValue(value)}
         </div>
       </Command>

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Command from '../Shared/Command'
 import ObjectTree from '../Shared/ObjectTree'
-import { map, trim, split } from 'ramda'
+import { merge, map, trim, split } from 'ramda'
 import Colors from '../Theme/Colors'
 
 const getName = level => {
@@ -53,23 +53,11 @@ class LogCommand extends Component {
     const { payload } = command
     const { level } = payload
     const title = getName(level)
-    let color
-    switch (level) {
-      case 'warn':
-        color = Colors.warning
-        break
-
-      case 'error':
-        color = Colors.error
-        break
-
-      default:
-        color = Colors.Palette.almostBlack
-    }
+    const containerTypes = merge(Styles.container, { color: level === 'debug' ? Colors.foreground : Colors.warning })
 
     return (
-      <Command command={command} title={title} color={color}>
-        <div style={Styles.container}>
+      <Command command={command} title={title}>
+        <div style={containerTypes}>
           {formatMessage(payload.message)}
         </div>
       </Command>

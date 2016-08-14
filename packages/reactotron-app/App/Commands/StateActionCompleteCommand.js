@@ -1,11 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import Command from '../Shared/Command'
 import ObjectTree from '../Shared/ObjectTree'
+import Colors from '../Theme/Colors'
 
 const COMMAND_TITLE = 'ACTION'
 
 const Styles = {
   name: {
+    color: Colors.bold,
     margin: 0,
     padding: 0
   }
