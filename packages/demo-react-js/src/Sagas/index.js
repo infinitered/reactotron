@@ -3,10 +3,10 @@ import ApiSauce from 'apisauce'
 import Reactotron from 'reactotron-react-js'
 
 import * as Startup from '../Redux/Startup.redux'
-import * as RepoMessage from '../Redux/RepoMessage.redux'
+import * as Repo from '../Redux/Repo.redux'
 
 import { startup } from './Startup.sagas'
-import { request as requestRepoMessage } from './RepoMessage.sagas'
+import { request as requestRepo } from './Repo.sagas'
 
 const api = ApiSauce.create({
   baseURL: 'https://api.github.com',
@@ -19,7 +19,7 @@ api.addMonitor(Reactotron.apisauce)
 
 export default function * rootSaga () {
   yield [
-    takeLatest(RepoMessage.Types.Request, requestRepoMessage, api),
+    takeLatest(Repo.Types.Request, requestRepo, api),
     takeEvery(Startup.Types.Startup, startup)
   ]
 }
