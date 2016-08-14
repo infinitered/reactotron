@@ -8,15 +8,15 @@ import AppStyles from '../Theme/AppStyles'
 
 const Styles = {
   container: {
-    backgroundColor: Colors.screen,
-    ...AppStyles.Layout.vbox
+    backgroundColor: Colors.Palette.screen,
+    ...AppStyles.Layout.vbox,
+    padding: 0,
+    margin: 0
   },
   commands: {
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingTop: 0,
-    paddingBottom: 0,
-    overflowY: 'scroll',
+    margin: 0,
+    padding: 0,
+    overflowY: 'auto',
     overflowX: 'hidden'
   }
 }

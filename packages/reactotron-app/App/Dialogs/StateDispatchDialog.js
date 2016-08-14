@@ -5,18 +5,16 @@ import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
 
-const INPUT_PLACEHOLDER = 'smurfs.7.name'
 const ESCAPE_KEYSTROKE = 'Esc'
-const ESCAPE_HINT = 'OMG Cancel'
+const ESCAPE_HINT = 'Cancel'
 const ENTER_KEYSTROKE = 'Enter'
-const ENTER_HINT = 'Search'
-const TAB_KEYSTROKE = 'Tab'
-const TAB_HINT = 'Keys/Values'
-const DIALOG_TITLE_KEYS = 'State Keys'
-const DIALOG_TITLE_VALUES = 'State Values'
-const STATE_VALUES_INSTRUCTIONS = (<span>Retrieves a value from the state tree at the given path <strong>and all values below</strong>.</span>)
-const STATE_KEYS_INSTRUCTIONS = (<span>Retrieves a list of keys located at the given path in the state tree.</span>)
-const FIELD_LABEL = 'Path'
+const ENTER_HINT = 'Dispatch'
+const DIALOG_TITLE = 'Dispatch Action'
+const INSTRUCTIONS = (
+  <span> Create an action that will be dispatched to the client to run.</span>
+)
+const INPUT_PLACEHOLDER = '{ type: \'RepoMessage.Request\' }'
+const FIELD_LABEL = 'Action'
 
 const Styles = {
   dialog: {
@@ -97,46 +95,29 @@ const Styles = {
 
 @inject('session')
 @observer
-class SampleModal extends Component {
-
-  constructor (props) {
-    super(props)
-    this.state = {
-      path: null
-    }
-  }
+class StateDispatchDialog extends Component {
 
   handleChange = (e) => {
-    this.setState({ path: e.target.value })
-  }
-
-  handleKeyPress = (e) => {
-    const { ui } = this.props.session
-    const { path } = this.state
-    if (e.key === 'Enter') {
-      this.setState({path: null})
-      ui.getStateKeysOrValues(path)
-      ui.closeStateFindDialog()
-    }
+    const { session } = this.props
+    session.ui.actionToDispatch = e.target.value
   }
 
   render () {
     const { ui } = this.props.session
-    const open = ui.showStateFindDialog
-    const isKeys = ui.keysOrValues === 'keys'
+    const open = ui.showStateDispatchDialog
     if (!open) return null
 
     // need to find a less hacky way of doing this
     setTimeout(() => ReactDOM.findDOMNode(this.refs.textField).focus(), 1)
     return (
       <ModalPortal>
-        <ModalBackground onClose={ui.closeStateFindDialog}>
+        <ModalBackground onClose={ui.closeStateDispatchDialog}>
           <ModalDialog style={Styles.dialog}>
             <div style={Styles.container}>
               <div style={Styles.header}>
-                <h1 style={Styles.title}>{isKeys ? DIALOG_TITLE_KEYS : DIALOG_TITLE_VALUES}</h1>
+                <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
                 <p style={Styles.subtitle}>
-                  {isKeys ? STATE_KEYS_INSTRUCTIONS : STATE_VALUES_INSTRUCTIONS}
+                  {INSTRUCTIONS}
                 </p>
               </div>
               <div style={Styles.body}>
@@ -155,9 +136,6 @@ class SampleModal extends Component {
                   <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
                 </div>
                 <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{TAB_KEYSTROKE}</span> {TAB_HINT}
-                </div>
-                <div style={Styles.hotkey}>
                   <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
                 </div>
               </div>
@@ -169,4 +147,4 @@ class SampleModal extends Component {
   }
 }
 
-export default SampleModal
+export default StateDispatchDialog
