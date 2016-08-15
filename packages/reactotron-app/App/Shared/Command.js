@@ -8,8 +8,6 @@ import { merge, is } from 'ramda'
 const IconOpen = require('react-icons/lib/md/expand-more')
 const IconClosed = require('react-icons/lib/md/chevron-right')
 
-const MS_LABEL = 'ms'
-
 const Styles = {
   container: {
     ...AppStyles.Layout.hbox,
@@ -108,16 +106,14 @@ class Command extends Component {
 
   render () {
     const { isOpen } = this.state
-    const { command, children, title, subtitle, duration, preview } = this.props
+    const { command, children, title, subtitle, preview } = this.props
     const hasSubtitle = !isNilOrEmpty(subtitle)
-    const hasDuration = is(Number, duration)
-    const ms = hasDuration && Number(duration).toFixed(0)
     const { date } = command
     const titleStyle = Styles.title
     const topRowStyle = Styles.topRow
     const timestampStyle = Styles.timestamp
     const Icon = isOpen ? IconOpen : IconClosed
-    const containerStyles = merge(Styles.container, isOpen && Styles.containerOpen )
+    const containerStyles = merge(Styles.container, isOpen && Styles.containerOpen)
     return (
       <div style={containerStyles}>
         <div style={Styles.body}>

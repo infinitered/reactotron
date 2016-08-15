@@ -9,7 +9,7 @@ const Styles = {
   name: {
     color: Colors.bold,
     margin: 0,
-    padding: 0
+    paddingBottom: 10
   }
 }
 
@@ -32,7 +32,7 @@ class StateActionComplete extends Component {
     return (
       <Command command={command} title={COMMAND_TITLE} duration={ms} preview={preview}>
         <div style={Styles.container}>
-          <span style={Styles.name}>{name}</span>
+          <div style={Styles.name}>{name}</div>
           <ObjectTree object={{action}} />
         </div>
       </Command>

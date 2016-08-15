@@ -10,6 +10,7 @@ const Styles = {
   container: {
     ...AppStyles.Layout.vbox,
     margin: 0,
+    flex: 1
   },
   commands: {
     margin: 0,
@@ -45,7 +46,7 @@ class Timeline extends Component {
 
   render () {
     // grab the commands, but sdrawkcab
-    const commands = reverse(dotPath('props.session.server.commands.all', this))
+    const commands = this.props.session.commands
 
     const renderItem = command => {
       const CommandComponent = getCommandComponent(command)

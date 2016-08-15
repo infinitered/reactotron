@@ -33,11 +33,11 @@ const getStylingFromBase16 = base16Theme => ({
 // the default theme until i figure out how to customize it on the fly
 // http://chriskempson.github.io/base16/
 // const defaultTheme = 'atliersavanah'
-const defaultTheme = 'ocean'
+// const defaultTheme = 'ocean'
 // const defaultTheme = 'mocha'
 // const defaultTheme = 'railscasts'
 // const defaultTheme = 'greenscreen'
-// const defaultTheme = 'twilight'
+const defaultTheme = 'twilight'
 
 // the natural or inverted look
 const invertTheme = false
