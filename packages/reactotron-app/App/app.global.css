@@ -18,6 +18,7 @@ html, body {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
+  background-color: transparent;
   border: 0px;
   border-radius: 0px;
 }
@@ -36,4 +37,14 @@ a.closeButton--jss-0-1 { display: none; }
 @-webkit-keyframes fade-up {
   0%   { -webkit-transform: translateY(5%); opacity: 0; }
   100% { -webkit-transform: translateY(0%); opacity: 1; }
+}
+
+@-webkit-keyframes slide-up {
+  0%   { -webkit-transform: translateY(100%); }
+  100%   { -webkit-transform: translateY(0px); }
+}
+
+@-webkit-keyframes slide-down {
+  0%   { -webkit-transform: translateY(0px); }
+  100% { -webkit-transform: translateY(100%); }
 }

@@ -7,8 +7,8 @@ const theme = { ...Colors.theme, base0B: Colors.foreground }
 const Styles = {
   container: {},
   theme: {
-    tree: { backgroundColor: 'transparent' },
-    ...theme,
+    tree: { backgroundColor: 'transparent', marginTop: -3 },
+    ...theme
   }
 }
 
