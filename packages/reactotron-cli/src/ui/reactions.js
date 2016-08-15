@@ -12,7 +12,6 @@ export default (context) => {
 
   // when clients come & go
   observe(server.connections, ({added, removed}) => {
-    R.forEach(ui.drawConnection, added)
     R.forEach(ui.drawDisconnection, removed)
   })
 
@@ -24,7 +23,8 @@ export default (context) => {
     { command: 'state.action.complete', handler: ui.drawStateActionComplete },
     { command: 'state.keys.response', handler: ui.drawStateKeysResponse },
     { command: 'state.values.response', handler: ui.drawStateValuesResponse },
-    { command: 'state.values.change', handler: ui.drawStateValuesChange }
+    { command: 'state.values.change', handler: ui.drawStateValuesChange },
+    { command: 'client.intro', handler: ui.drawConnection }
   ]
 
   // how we hook that up
