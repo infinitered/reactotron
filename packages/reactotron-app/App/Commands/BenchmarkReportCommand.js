@@ -101,9 +101,10 @@ class BenchmarkReportCommand extends Component {
     const { payload } = command
     const { title, steps } = clone(payload)
     const duration = last(steps).time
+    const preview = `${title} in ${duration}ms`
 
     return (
-      <Command command={command} title={COMMAND_TITLE} duration={duration}>
+      <Command command={command} title={COMMAND_TITLE} duration={duration} preview={preview}>
         <div style={Styles.reportTitle}>{title}</div>
           {
             mapIndexed(

@@ -6,8 +6,11 @@ const Styles = {
     WebkitAppRegion: 'drag'
   },
   content: {
-    backgroundColor: Colors.toolbar,
-    height: 60
+    backgroundColor: Colors.chrome,
+    height: 60,
+    borderBottom: `1px solid ${Colors.chromeLine}`,
+    color: Colors.foregroundDark,
+    boxShadow: `0px 0px 30px ${Colors.glow}`
   }
 }
 

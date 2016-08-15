@@ -67,10 +67,11 @@ class ApiResponseCommand extends Component {
     const requestHeaders = dotPath('request.headers', payload)
     const responseHeaders = dotPath('response.headers', payload)
     const body = dotPath('response.body', payload)
-    const subtitle = `${status} - ${method}`
+    const subtitle = `${status} ${method} in ${duration || '?'}ms`
+    const preview = subtitle
 
     return (
-      <Command command={command} title={COMMAND_TITLE} duration={duration}>
+      <Command command={command} title={COMMAND_TITLE} duration={duration} preview={preview}>
         <div style={Styles.container}>
           <div style={Styles.url}>{subtitle}<br />{url}</div>
           <div style={Styles.headerTitle}>{REQUEST_HEADER_TITLE}</div>

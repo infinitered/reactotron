@@ -69,6 +69,7 @@
     "webpack-hot-middleware": "^2.12.2"
   },
   "dependencies": {
+    "color": "^0.11.3",
     "css-modules-require-hook": "^4.0.0",
     "electron-debug": "^1.0.1",
     "font-awesome": "^4.6.3",

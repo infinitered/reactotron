@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
-import Colors from '../Theme/Colors'
 import getCommandComponent from '../Commands'
 import { map, reverse } from 'ramda'
 import { dotPath } from 'ramdasauce'
 import AppStyles from '../Theme/AppStyles'
+import Colors from '../Theme/Colors'
 
 const Styles = {
   container: {
     ...AppStyles.Layout.vbox,
-    padding: 0,
-    margin: 0
+    margin: 0,
   },
   commands: {
     margin: 0,

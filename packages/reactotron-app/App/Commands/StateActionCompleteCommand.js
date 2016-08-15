@@ -27,9 +27,10 @@ class StateActionComplete extends Component {
     const { command } = this.props
     const { payload } = command
     const { ms, action, name } = payload
+    const preview  = `${name}`
 
     return (
-      <Command command={command} title={COMMAND_TITLE} duration={ms}>
+      <Command command={command} title={COMMAND_TITLE} duration={ms} preview={preview}>
         <div style={Styles.container}>
           <span style={Styles.name}>{name}</span>
           <ObjectTree object={{action}} />
