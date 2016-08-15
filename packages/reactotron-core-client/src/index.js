@@ -19,6 +19,7 @@ const DEFAULTS = {
   host: 'localhost', // the server to connect (required)
   port: 9090, // the port to connect (required)
   name: 'reactotron-core-client', // some human-friendly session name
+  secure: false, // use wss instead of ws
   plugins: CorePlugins, // needed to make society function
   onCommand: cmd => null, // the function called when we receive a command
   onConnect: () => null, // fires when we connect
@@ -69,11 +70,12 @@ export class Client {
    */
   connect () {
     this.connected = true
-    const { io, host, port, name, userAgent, environment, reactotronVersion } = this.options
+    const { io, secure, host, port, name, userAgent, environment, reactotronVersion } = this.options
     const { onCommand, onConnect, onDisconnect } = this.options
 
     // establish a socket.io connection to the server
-    const socket = io(`ws://${host}:${port}`, {
+    const protocol = secure ? 'wss' : 'ws'
+    const socket = io(`${protocol}://${host}:${port}`, {
       jsonp: false,
       transports: ['websocket', 'polling']
     })
