@@ -22,8 +22,17 @@ class UI {
   // whether or not to show the state dispatch dialog
   @observable showStateDispatchDialog = false
 
+  // the watch dialog
+  @observable showStateWatchDialog = false
+
+  // the current watch to add
+  @observable watchToAdd
+
   // the current action to dispatch
   @observable actionToDispatch
+
+  // show the watch panel?
+  @observable showWatchPanel = false
 
   constructor (server) {
     this.server = server
@@ -36,6 +45,8 @@ class UI {
     Mousetrap.bind('tab', this.toggleKeysValues)
     Mousetrap.bind('escape', this.popState)
     Mousetrap.bind('enter', this.submitCurrentForm)
+    Mousetrap.bind('command+\\', this.toggleWatchPanel)
+    Mousetrap.bind('command+n', this.openStateWatchDialog)
   }
 
   @action popState = () => {
@@ -46,21 +57,41 @@ class UI {
 
   @action submitCurrentForm = () => {
     if (this.showStateDispatchDialog) {
-      // try not to blow up the frame
-      let action = null
-      try {
-        // brackets are need on chromium side, huh.
-        action = eval('(' + this.actionToDispatch + ')') // lulz - straight to hell.
-      } catch (e) {
-      }
-      // jet if not valid
-      if (isNilOrEmpty(action)) return
-
-      // let's attempt to dispatch
-      this.dispatchAction(action)
-      // close the form
-      this.showStateDispatchDialog = false
+      this.submitStateDispatch()
+    } else if (this.showStateWatchDialog) {
+      this.submitStateWatch()
     }
+  }
+
+  @action submitStateWatch = () => {
+    this.server.stateValuesSubscribe(this.watchToAdd)
+    this.showStateWatchDialog = false
+    this.watchToAdd = null
+  }
+
+  @action removeStateWatch = (path) => {
+    this.server.stateValuesUnsubscribe(path)
+  }
+
+  @action clearStateWatches = () => {
+    this.server.stateValuesClearSubscriptions()
+  }
+
+  @action submitStateDispatch = () => {
+    // try not to blow up the frame
+    let action = null
+    try {
+      // brackets are need on chromium side, huh.
+      action = eval('(' + this.actionToDispatch + ')') // lulz - straight to hell.
+    } catch (e) {
+    }
+    // jet if not valid
+    if (isNilOrEmpty(action)) return
+
+    // let's attempt to dispatch
+    this.dispatchAction(action)
+    // close the form
+    this.showStateDispatchDialog = false
   }
 
   @action openStateFindDialog = () => {
@@ -69,6 +100,14 @@ class UI {
 
   @action closeStateFindDialog = () => {
     this.showStateFindDialog = false
+  }
+
+  @action openStateWatchDialog = () => {
+    this.showStateWatchDialog = true
+  }
+
+  @action closeStateWatchDialog = () => {
+    this.showStateWatchDialog = false
   }
 
   @action openStateDispatchDialog = () => {
@@ -104,12 +143,15 @@ class UI {
   }
 
   @action toggleKeysValues = () => {
-    console.log('toggling opposite of ', this.keysOrValues)
     if (this.keysOrValues === 'keys') {
       this.keysOrValues = 'values'
     } else {
       this.keysOrValues = 'keys'
     }
+  }
+
+  @action toggleWatchPanel = () => {
+    this.showWatchPanel = !this.showWatchPanel
   }
 
 }

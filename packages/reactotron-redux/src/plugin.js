@@ -15,11 +15,15 @@ const createPlugin = store => {
     // remember the plugin's send function for use in the report() below.  :(
     capturedSend = reactotron.send
 
-    //
+    const sendSubscriptions = () => {
+      const changes = getSubscriptionValues(subscriptions, store.getState())
+      reactotron.stateValuesChange(changes)
+    }
+
     const sendSubscriptionsIfNeeded = () => {
       const changes = getSubscriptionValues(subscriptions, store.getState())
       if (!R.isEmpty(changes)) {
-        reactotron.stateValuesChange(changes)
+        sendSubscriptions()
       }
     }
 
@@ -40,7 +44,7 @@ const createPlugin = store => {
           // client is asking to subscribe to some paths
           case 'state.values.subscribe':
             subscriptions = R.pipe(R.flatten, R.uniq)(payload.paths)
-            sendSubscriptionsIfNeeded()
+            sendSubscriptions()
             return
 
           // server is asking to dispatch this action

@@ -14,7 +14,7 @@ export default (subscriptions, state) =>
           R.map((key) => `${keyMinusWildcard}.${key}`)
         )(value)
       }
-      return null
+      return []
     }),
     R.concat(subscriptions),
     R.flatten,

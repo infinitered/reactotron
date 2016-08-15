@@ -122,6 +122,11 @@ class Server {
           this.connections.push(connection)
         }
 
+        // refresh subscriptions
+        if (type === 'state.values.change') {
+          this.subscriptions = pluck('path', payload.changes || [])
+        }
+
         this.commands.addCommand(fullCommand)
         onCommand(fullCommand)
       })

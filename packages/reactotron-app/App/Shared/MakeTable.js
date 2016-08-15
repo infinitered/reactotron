@@ -28,26 +28,28 @@ const Styles = {
   }
 }
 
-const makeRow = ([key, value]) => {
-  const textValue = cond([
+export function textForValue (value) {
+  return cond([
     [isNil, always(NULL_TEXT)],
     [x => typeof x === 'boolean', always(value ? TRUE_TEXT : FALSE_TEXT)],
     [T, identity]
   ])(value)
+}
 
-  let valueColor = Colors.foreground
+export function colorForValue (value) {
+  if (isNil(value)) return Colors.foregroundDark
   const valueType = typeof value
   switch (valueType) {
-    case 'boolean':
-      valueColor = Colors.constant
-      break
-    case 'string':
-      valueColor = Colors.foreground
-      break
-    case 'number':
-      valueColor = Colors.constant
+    case 'boolean': return Colors.constant
+    case 'string': return Colors.foreground
+    case 'number': return Colors.constant
+    default: return Colors.foreground
   }
-  const valueStyle = merge(Styles.value, { color: valueColor })
+}
+
+const makeRow = ([key, value]) => {
+  const textValue = textForValue(value)
+  const valueStyle = merge(Styles.value, { color: colorForValue(value) })
 
   return (
     <div key={key} style={Styles.row}>

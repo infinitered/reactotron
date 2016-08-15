@@ -7,6 +7,8 @@ import Timeline from './Timeline'
 import ReactTooltip from 'react-tooltip'
 import StateKeysAndValuesDialog from '../Dialogs/StateKeysAndValuesDialog'
 import StateDispatchDialog from '../Dialogs/StateDispatchDialog'
+import StateWatchDialog from '../Dialogs/StateWatchDialog'
+import WatchPanel from './WatchPanel'
 
 const Styles = {
   container: {
@@ -25,9 +27,11 @@ export default class VisualRoot extends Component {
       <div style={Styles.container}>
         <Header />
         <Timeline />
+        <WatchPanel />
         <Footer />
         <StateKeysAndValuesDialog />
         <StateDispatchDialog />
+        <StateWatchDialog />
         <ReactTooltip />
       </div>
     )
