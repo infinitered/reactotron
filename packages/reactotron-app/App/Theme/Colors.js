@@ -1,3 +1,4 @@
+import Color from 'color'
 import { createStyling } from 'react-base16-styling'
 
 // https://github.com/chriskempson/base16/blob/master/styling.md
@@ -5,8 +6,9 @@ import { createStyling } from 'react-base16-styling'
 const getStylingFromBase16 = base16Theme => ({
   roles: {
     background: base16Theme.base00, // base00 - Default Background
+    backgroundSubtleLight: Color(base16Theme.base00).lighten(0.05).hslString(),
     backgroundLighter: base16Theme.base01, // base01 - Lighter Background (Used for status bars)
-    line: base16Theme.base01,
+    line: Color(base16Theme.base01).darken(0.1).hslString(),
     backgroundHighlight: base16Theme.base02, // base02 - Selection Background
     highlight: base16Theme.base03, // base03 - Comments, Invisibles, Line Highlighting
     foregroundDark: base16Theme.base04, // base04 - Dark Foreground (Used for status bars)
@@ -16,11 +18,14 @@ const getStylingFromBase16 = base16Theme => ({
     tag: base16Theme.base08, // base08 - Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
     constant: base16Theme.base09, // base09 - Integers, Boolean, Constants, XML Attributes, Markup Link Url
     bold: base16Theme.base0A, // base0A - Classes, Markup Bold, Search Text Background
+    glow: Color(base16Theme.base00).darken(0.2).clearer(0.2).hslString(),
     string: base16Theme.base0B, // base0B - Strings, Inherited Class, Markup Code, Diff Inserted
     support: base16Theme.base0C, // base0C - Support, Regular Expressions, Escape Characters, Markup Quotes
     heading: base16Theme.base0D, // base0D - Functions, Methods, Attribute IDs, Headings
     keyword: base16Theme.base0E, // base0E - Keywords, Storage, Selector, Markup Italic, Diff Changed
-    warning: base16Theme.base0F // base0F - Deprecated, Opening/Closing Embedded Language Tags e.g. <?php ?>
+    warning: base16Theme.base0F, // base0F - Deprecated, Opening/Closing Embedded Language Tags e.g. <?php ?>
+    chrome: Color(base16Theme.base00).lighten(0.1).hslString(),
+    chromeLine: Color(base16Theme.base00).lighten(0.25).hslString(),
   },
   theme: base16Theme // TODO: figure out why I'm doing this?
 })
