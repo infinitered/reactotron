@@ -11,11 +11,14 @@ const CONNECTIONS_SUFFIX = 'connections'
 
 const Styles = {
   container: {
-    backgroundColor: Colors.backgroundLighter,
+    backgroundColor: Colors.chrome,
+    borderTop: `1px solid ${Colors.chromeLine}`,
+    color: Colors.foregroundDark,
     paddingLeft: 5,
     paddingRight: 10,
     paddingTop: 5,
-    paddingBottom: 5
+    paddingBottom: 5,
+    boxShadow: `0px 0px 30px ${Colors.glow}`
   },
   content: {
     ...AppStyles.Layout.hbox,

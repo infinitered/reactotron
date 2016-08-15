@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import Command from '../Shared/Command'
 import ObjectTree from '../Shared/ObjectTree'
-import { replace, merge, map, trim, split } from 'ramda'
+import { take, replace, merge, map, trim, split } from 'ramda'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
-import makeTable from '../Shared/MakeTable'
 
 const STACK_TITLE = 'YE OLDE STACK TRACE'
+const PREVIEW_LENGTH = 500
 
 const getName = level => {
   switch (level) {
@@ -91,7 +91,7 @@ class LogCommand extends Component {
 
   renderStackFrame (stackFrame, number) {
     const key = `stack-${number}`
-    let { columnNumber, fileName, functionName, lineNumber } = stackFrame
+    let { fileName, functionName, lineNumber } = stackFrame
     fileName = fileName && replace('webpack://', '', fileName)
     functionName = functionName && replace('webpack://', '', functionName)
     return (
@@ -118,6 +118,13 @@ class LogCommand extends Component {
     )
   }
 
+  getPreview (message) {
+    if (typeof message === 'string') {
+      return `${take(PREVIEW_LENGTH, message)}`
+    }
+    return null
+  }
+
   render () {
     const { command } = this.props
     const { payload } = command
@@ -126,8 +133,10 @@ class LogCommand extends Component {
     const title = getName(level)
     const containerTypes = merge(Styles.container, { color: level === 'debug' ? Colors.foreground : Colors.foreground })
 
+    let preview = this.getPreview(message)
+
     return (
-      <Command command={command} title={title}>
+      <Command command={command} title={title} preview={preview}>
         <div style={containerTypes}>
           {formatMessage(message)}
           {stack && this.renderStack(stack)}
