@@ -66,8 +66,10 @@ export default (layout, config) => {
 
   const drawStateActionComplete = payload => {
     const {name, ms, action} = payload
+    const msText = ms && Number(ms).toFixed(0)
+    const msSuffix = ms && 'ms'
     const time = timeStamp()
-    layout.stateActionBox.log(`${time} {cyan-fg}${name}{/}{|}{white-fg}${ms}{/}ms`)
+    layout.stateActionBox.log(`${time} {cyan-fg}${name}{/}{|}{white-fg}${msText}{/}${msSuffix}`)
     if (config.stateActionLoggingStyle === 'full') {
       layout.stateActionBox.log(action)
       layout.stateActionBox.log('')
