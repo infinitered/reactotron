@@ -13,6 +13,7 @@ test.cb('sends a valid command', t => {
     const server = socketServer(port)
     server.on('connection', socket => {
       socket.on('command', ({type, payload}) => {
+        if (type === 'client.intro') return
         t.is(type, mockType)
         t.deepEqual(payload, mockPayload)
         t.end()
