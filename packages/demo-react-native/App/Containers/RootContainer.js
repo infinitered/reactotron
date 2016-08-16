@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { ScrollView, View, Text, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import Styles from './Styles/RootContainerStyles'
 // import Reactotron from 'reactotron-react-native'
 import Button from '../Components/Button'
+import Repo from '../Components/Repo'
+import { Actions as RepoActions } from '../Redux/RepoRedux'
+import { Actions as LogoActions } from '../Redux/LogoRedux'
+import makeErrorForFun from '../Lib/ErrorMaker'
+import { keys, map, join } from 'ramda'
 
 export default class RootContainer extends Component {
 
@@ -14,35 +19,39 @@ export default class RootContainer extends Component {
     this.handlePressDebug = () => console.tron.debug('This is a debug message')
     this.handlePressWarn = () => console.tron.warn('This is a warn message')
     this.handlePressError = () => console.tron.error('This is a error message')
+
   }
 
   handlePress () {
-    const {dispatch} = this.props
     console.tron.log('A touchable was pressed.🔥🦄')
-    dispatch(Actions.requestTemperature('Toronto'))
-  }
-
-  componentWillMount () {
-    const { dispatch } = this.props
-    dispatch(Actions.startup())
   }
 
   render () {
-    const {city, temperature, fetching} = this.props
+    const { avatar, repo, name, message, size, speed } = this.props
+    const { reset, faster, slower, bigger, smaller } = this.props
+
     return (
-      <View style={Styles.container}>
-        <TouchableOpacity onPress={this.handlePress}>
-          <Text style={Styles.welcome}>
-            {`The weather in ${city} is ${fetching ? 'loading' : temperature}.`}
-          </Text>
-        </TouchableOpacity>
-        <Text style={Styles.logTitle}>Logging</Text>
-        <View style={Styles.logButtons}>
-          <Button text='.debug()' onPress={this.handlePressDebug} />
-          <Button text='.warn()' onPress={this.handlePressWarn} />
-          <Button text='.error()' onPress={this.handlePressError} />
+      <ScrollView style={Styles.container} contentContainerStyle={Styles.content}>
+        <View style={Styles.titleContainer}>
+          <Text style={Styles.title}>Awesome Github Viewer!</Text>
+          <Text style={Styles.subtitle}>Reactotron Demo</Text>
         </View>
-      </View>
+        <View style={Styles.repoContainer}>
+          <View style={Styles.buttons}>
+            <Button text='Reactotron' onPress={this.props.requestReactotron} />
+            <Button text='Redux' onPress={this.props.requestRedux} />
+            <Button text='Mobx' onPress={this.props.requestMobx} />
+            <Button text='React Native' onPress={this.props.requestReactNative} />
+          </View>
+          <Repo
+            avatar={avatar} repo={repo} name={name} message={message}
+            size={size} speed={speed}
+            bigger={bigger} smaller={smaller} faster={faster} slower={slower}
+            reset={reset}
+          />
+          <Button text='Error Tyme!' onPress={this.props.bomb} />
+        </View>
+      </ScrollView>
     )
   }
 
@@ -50,10 +59,27 @@ export default class RootContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    city: state.weather.city,
-    temperature: state.weather.temperature,
-    fetching: state.weather.fetching
+    ...state.repo,
+    ...state.logo
   }
 }
 
-export default connect(mapStateToProps)(RootContainer)
+const mapDispatchToProps = dispatch => ({
+  startup: () => dispatch(StartupActions.startup()),
+  faster: () => dispatch(LogoActions.changeSpeed(10)),
+  slower: () => dispatch(LogoActions.changeSpeed(50)),
+  bigger: () => dispatch(LogoActions.changeSize(140)),
+  smaller: () => dispatch(LogoActions.changeSize(40)),
+  reset: () => dispatch(LogoActions.reset()),
+  requestReactotron: () => dispatch(RepoActions.request('reactotron/reactotron')),
+  requestReactNative: () => dispatch(RepoActions.request('facebook/react-native')),
+  requestMobx: () => dispatch(RepoActions.request('mobxjs/mobx')),
+  requestRedux: () => dispatch(RepoActions.request('reactjs/redux')),
+  bomb: () => {
+    console.tron.log('wait for it...')
+    setTimeout(() => { makeErrorForFun('boom') }, 500)
+  }
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(RootContainer)

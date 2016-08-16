@@ -3,6 +3,7 @@
 // -----------
 
 // import validate from './validate'
+export trackGlobalErrors from './plugins/track-global-errors'
 
 // ------------
 // SECOND PARTY

@@ -1,6 +1,5 @@
 #!/bin/bash
-cp ../reactotron-react-native/src/*.js node_modules/reactotron-react-native/
-cp ../reactotron-core-client/src/*.js node_modules/reactotron-core-client/
-cp -r ../reactotron-core-client/src/plugins node_modules/reactotron-core-client/
-cp ../reactotron-redux/dist/*.js node_modules/reactotron-redux/
-cp ../reactotron-apisauce/dist/*.js node_modules/reactotron-apisauce/
+cp ../reactotron-react-native/dist/index.js ./node_modules/reactotron-react-native/index.js
+cp ../reactotron-core-client/dist/index.js ./node_modules/reactotron-core-client/index.js
+cp ../reactotron-redux/dist/index.js ./node_modules/reactotron-redux/index.js
+cp ../reactotron-apisauce/dist/index.js ./node_modules/reactotron-apisauce/index.js
