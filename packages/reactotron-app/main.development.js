@@ -34,9 +34,9 @@ app.on('ready', () => {
 
   if (process.platform === 'darwin') {
     template = [{
-      label: 'Electron',
+      label: 'Reactotron',
       submenu: [{
-        label: 'About ElectronReact',
+        label: 'About Reactotron',
         selector: 'orderFrontStandardAboutPanel:'
       }, {
         type: 'separator'
@@ -46,7 +46,7 @@ app.on('ready', () => {
       }, {
         type: 'separator'
       }, {
-        label: 'Hide ElectronReact',
+        label: 'Hide Reactotron',
         accelerator: 'Command+H',
         selector: 'hide:'
       }, {
@@ -140,24 +140,9 @@ app.on('ready', () => {
     }, {
       label: 'Help',
       submenu: [{
-        label: 'Learn More',
+        label: 'Visit on Github',
         click () {
-          shell.openExternal('http://electron.atom.io')
-        }
-      }, {
-        label: 'Documentation',
-        click () {
-          shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme')
-        }
-      }, {
-        label: 'Community Discussions',
-        click () {
-          shell.openExternal('https://discuss.atom.io/c/electron')
-        }
-      }, {
-        label: 'Search Issues',
-        click () {
-          shell.openExternal('https://github.com/atom/electron/issues')
+          shell.openExternal('https://github.com/reactotron/reactotron')
         }
       }]
     }]
@@ -207,24 +192,9 @@ app.on('ready', () => {
     }, {
       label: 'Help',
       submenu: [{
-        label: 'Learn More',
+        label: 'Visit on Github',
         click () {
-          shell.openExternal('http://electron.atom.io')
-        }
-      }, {
-        label: 'Documentation',
-        click () {
-          shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme')
-        }
-      }, {
-        label: 'Community Discussions',
-        click () {
-          shell.openExternal('https://discuss.atom.io/c/electron')
-        }
-      }, {
-        label: 'Search Issues',
-        click () {
-          shell.openExternal('https://github.com/atom/electron/issues')
+          shell.openExternal('https://github.com/reactotron/reactotron')
         }
       }]
     }]
