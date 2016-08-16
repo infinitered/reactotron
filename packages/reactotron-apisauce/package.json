@@ -1,6 +1,6 @@
 {
   "name": "reactotron-apisauce",
-  "version": "0.90.1",
+  "version": "0.91.0",
   "description": "A Reactotron plugin for Apisauce.",
   "main": "dist/index.js",
   "scripts": {
@@ -21,8 +21,7 @@
     "LICENSE",
     "README.md"
   ],
-  "peerDependencies": {
-  },
+  "peerDependencies": {},
   "devDependencies": {
     "ava": "^0.16.0",
     "babel-cli": "^6.11.4",
@@ -57,6 +56,6 @@
     "apisauce": "^0.3.0",
     "ramda": "^0.22.1",
     "ramdasauce": "^1.1.0",
-    "reactotron-core-client": "^0.90.1"
+    "reactotron-core-client": "^0.91.0"
   }
 }

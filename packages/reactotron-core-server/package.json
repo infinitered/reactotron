@@ -1,6 +1,6 @@
 {
   "name": "reactotron-core-server",
-  "version": "0.90.1",
+  "version": "0.91.0",
   "description": "Grants Reactotron servers the ability to talk to a Reactotron client.",
   "main": "dist/index.js",
   "scripts": {
