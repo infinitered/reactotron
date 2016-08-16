@@ -16,7 +16,6 @@ const PLUGIN_DEFAULTS = {
 export default options => reactotron => {
   // setup configuration
   const config = merge(PLUGIN_DEFAULTS, options || {})
-  console.log('config', config)
 
   // holds the previous window.onerror when needed
   let swizzledOnError = null
@@ -30,11 +29,11 @@ export default options => reactotron => {
       .fromError(error, { offline: config.offline })
       // then try to send it up to the server
       .then(stackFrames =>
-        console.tron.error(msg, stackFrames)
+        reactotron.error(msg, stackFrames)
       )
       // can't resolve, well, let the user know, but still upload something sane
       .catch(resolvingError =>
-        console.tron.error({
+        reactotron.error({
           message: CANNOT_RESOLVE_ERROR,
           original: { msg, file, line, col, error },
           resolvingError
