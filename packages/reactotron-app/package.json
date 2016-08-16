@@ -5,7 +5,7 @@
   "description": "Reactotron desktop mode engage!",
   "main": "main.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test mocha --compilers js:babel-register --recursive --require ./test/setup.js test/**/*.spec.js",
+    "test-nope": "cross-env NODE_ENV=test mocha --compilers js:babel-register --recursive --require ./test/setup.js test/**/*.spec.js",
     "hot-server": "node -r babel-register server.js",
     "build-main": "cross-env NODE_ENV=production node -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.electron.js --progress --profile --colors",
     "build-renderer": "cross-env NODE_ENV=production node -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.production.js --progress --profile --colors",
@@ -20,7 +20,7 @@
   "bin": {
     "electron": "./node_modules/.bin/electron"
   },
-  "repository": "https://github.com/skellock/reactotron/tree/master/packages/reactotron-app",
+  "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-app",
   "author": {
     "name": "Steve Kellock",
     "email": "steve@kellock.ca",

@@ -10,5 +10,6 @@ export default {
       plugins: ['transform-decorators-legacy']
     })
   ],
-  dest: 'dist/index.js'
+  dest: 'dist/index.js',
+  exports: 'named'
 }
