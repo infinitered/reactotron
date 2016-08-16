@@ -1,12 +1,18 @@
 export default {
   container: {
-    padding: 10,
-    backgroundColor: '#222',
-    borderRadius: 8,
-    margin: 10
+    paddingVertical: 10,
+    backgroundColor: '#243E5D',
+    borderRadius: 4,
+    marginTop: 10,
+    marginHorizontal: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 80,
+    height: 40
   },
   text: {
-    fontSize: 16,
-    color: 'white'
+    fontSize: 12,
+    color: 'white',
+    textAlign: 'center'
   }
 }
