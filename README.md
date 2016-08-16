@@ -110,6 +110,8 @@ the entry point of your application.  Check out the 3 projects under `examples` 
 
 ##### Hook To Hook
 
+__Note__ : If you are having universal react app , make sure you apply `reactotron` middleware when you are running on CLIENT. You can use Webpack Define plugin to have enivorment variables.
+
 ```js
 // wherever you create your Redux store, add the Reactotron middleware:
 
