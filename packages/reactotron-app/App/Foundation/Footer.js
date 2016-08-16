@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
-import IconReactotron from 'react-icons/lib/md/rowing'
 import { observer, inject } from 'mobx-react'
+const logoUrl = require('../Theme/Reactotron-128.png')
 
 const APP_NAME = 'Reactotron'
 const APP_VERSION = '1.0.0'
 const PORT_LABEL = 'port'
-const CONNECTIONS_SUFFIX = 'connections'
+const CONNECTIONS_SUFFIX_SINGULAR = 'connection'
+const CONNECTIONS_SUFFIX_PLURAL = 'connections'
 
 const Styles = {
   container: {
@@ -46,7 +47,7 @@ const Styles = {
     fontSize: 12,
     fontWeight: 'bold'
   },
-  logo: { color: Colors.text },
+  logo: { width: 32, height: 32 },
   github: { margin: '0 6px', color: Colors.text },
   settings: { margin: '0 6px', color: Colors.text },
   feedback: { margin: '0 6px', color: Colors.text },
@@ -67,7 +68,7 @@ class Footer extends Component {
       <div style={Styles.container}>
         <div style={Styles.content}>
 
-          <IconReactotron size={30} style={Styles.logo} />
+          <img src={logoUrl} style={Styles.logo} />
           <div style={Styles.reactotronContainer}>
             <div style={Styles.reactotron}>{APP_NAME}</div>
             <div style={Styles.version}>{APP_VERSION}</div>
@@ -75,7 +76,7 @@ class Footer extends Component {
           <div style={Styles.stretcher}></div>
           <p>{PORT_LABEL} {port}</p>
           <div style={Styles.line}></div>
-          <p>{connectionCount} {CONNECTIONS_SUFFIX}</p>
+          <p>{connectionCount} {connectionCount === 1 ? CONNECTIONS_SUFFIX_SINGULAR : CONNECTIONS_SUFFIX_PLURAL}</p>
         </div>
       </div>
     )
