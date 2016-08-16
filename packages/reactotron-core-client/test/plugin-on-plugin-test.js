@@ -32,6 +32,7 @@ test.cb('plugins support onPlugin', t => {
 
         // fires the server receives a command
         socket.on('command', ({type, payload}) => {
+          if (type === 'client.intro') return
           t.is(type, mockType)
           t.deepEqual(payload, mockPayload)
           t.end()
