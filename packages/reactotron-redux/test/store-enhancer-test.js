@@ -13,21 +13,30 @@ test('tests pretty much everything', t => {
   // these guys will hold the values of the command jumping the wire
   let capturedType
   let capturedPayload
+  let capturedImportant = false
+  let importantCount = 0
 
   // create our own socket.io which captures the contents of emit
   const io = x => {
     return {
       on: (command, callback) => true,
-      emit: (command, { type, payload }) => {
+      emit: (command, { type, payload, important }) => {
         capturedType = type
         capturedPayload = payload
+        capturedImportant = important
       }
     }
   }
 
+  // test the important callback
+  const isActionImportant = (action) => {
+    importantCount++
+    return true
+  }
+
   // grab the enhancer
   const client = createClient({ io, plugins: CorePlugins })
-  const enhancer = createEnhancer(client)
+  const enhancer = createEnhancer(client, { isActionImportant })
   t.is(typeof enhancer, 'function')
 
   // things to make sure our internal middleware chains dispatch properly
@@ -62,4 +71,6 @@ test('tests pretty much everything', t => {
   t.is(capturedPayload.name, 'add')
   t.deepEqual(capturedPayload.action, action)
   t.true(capturedPayload.ms >= 0)
+  t.is(importantCount, 1)
+  t.true(capturedImportant)
 })

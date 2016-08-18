@@ -4,8 +4,8 @@
 export default () => reactotron => {
   return {
     features: {
-      stateActionComplete: (name, action) =>
-        reactotron.send('state.action.complete', { name, action }),
+      stateActionComplete: (name, action, important = false) =>
+        reactotron.send('state.action.complete', { name, action }, !!important),
 
       stateValuesResponse: (path, value, valid = true) =>
         reactotron.send('state.values.response', { path, value, valid }),

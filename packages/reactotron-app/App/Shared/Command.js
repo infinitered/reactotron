@@ -33,9 +33,17 @@ const Styles = {
     cursor: 'pointer'
   },
   title: {
-    color: Colors.tag,
     textAlign: 'left',
     width: 150
+  },
+  titleText: {
+    color: Colors.tag
+  },
+  titleTextInverse: {
+    backgroundColor: Colors.tag,
+    color: Colors.foregroundLight,
+    borderRadius: 4,
+    padding: '4px 8px'
   },
   subtitle: {
     color: Colors.foreground,
@@ -107,9 +115,10 @@ class Command extends Component {
   render () {
     const { isOpen } = this.state
     const { command, children, title, subtitle, preview } = this.props
+    const { important } = command
     const hasSubtitle = !isNilOrEmpty(subtitle)
     const { date } = command
-    const titleStyle = Styles.title
+    const titleTextStyle = merge(Styles.titleText, important ? Styles.titleTextInverse : {})
     const topRowStyle = Styles.topRow
     const timestampStyle = Styles.timestamp
     const Icon = isOpen ? IconOpen : IconClosed
@@ -119,7 +128,9 @@ class Command extends Component {
         <div style={Styles.body}>
           <div style={topRowStyle} onClick={this.handleToggleOpen}>
             <Timestamp date={date} style={timestampStyle} />
-            <span style={titleStyle}>{title}</span>
+            <div style={Styles.title}>
+              <span style={titleTextStyle}>{title}</span>
+            </div>
             {isOpen && hasSubtitle && <span style={Styles.subtitle}>{subtitle}</span>}
             {!isOpen && <span style={Styles.preview}>{preview}</span>}
             {isOpen && <span style={Styles.spacer}></span>}

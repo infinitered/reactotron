@@ -98,6 +98,7 @@ class App extends Component {
           <button style={Styles.button} onClick={this.props.requestReactNative}>React Native</button>
           <button style={Styles.button} onClick={this.props.requestMobx}>Mobx</button>
           <button style={Styles.button} onClick={this.props.requestRedux}>Redux</button>
+          <button style={Styles.button} onClick={this.props.requestBad}>Bad</button>
 
         { error ? this.renderError() : this.renderMessage() }
 
@@ -119,8 +120,9 @@ const mapDispatchToProps = dispatch => ({
   requestReactNative: () => dispatch(RepoActions.request('facebook/react-native')),
   requestMobx: () => dispatch(RepoActions.request('mobxjs/mobx')),
   requestRedux: () => dispatch(RepoActions.request('reactjs/redux')),
+  requestBad: () => dispatch(RepoActions.request('zzzz/zzzzz')),
   handleLogoPress: () => {
-    console.tron.log('wait for it...')
+    console.tron.log('wait for it...', true)
     setTimeout(() => { makeErrorForFun('boom') }, 500)
   }
 })

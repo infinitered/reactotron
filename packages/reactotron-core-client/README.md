@@ -59,6 +59,9 @@ client.connect()
 // send a log message as a string
 client.send('log', { level: 'debug', message: 'hello!' })
 
+// send a log message as a string that's important
+client.send('log', { level: 'debug', message: 'hello!' }, true)
+
 // sending an object log message
 client.send('log', {
   level: 'debug',

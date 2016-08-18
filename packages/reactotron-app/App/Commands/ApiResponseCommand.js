@@ -61,7 +61,6 @@ class ApiResponseCommand extends Component {
     const { payload } = command
     const { duration } = payload
     const status = dotPath('response.status', payload)
-    const ok = isWithin(200, 299, status || 0)
     const url = dotPath('request.url', payload)
     const method = toUpper(dotPath('request.method', payload) || '')
     const requestHeaders = dotPath('request.headers', payload)
