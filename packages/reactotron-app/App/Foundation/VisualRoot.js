@@ -7,6 +7,7 @@ import Timeline from './Timeline'
 import ReactTooltip from 'react-tooltip'
 import StateKeysAndValuesDialog from '../Dialogs/StateKeysAndValuesDialog'
 import StateDispatchDialog from '../Dialogs/StateDispatchDialog'
+import HelpDialog from '../Dialogs/HelpDialog'
 import StateWatchDialog from '../Dialogs/StateWatchDialog'
 import WatchPanel from './WatchPanel'
 
@@ -31,6 +32,7 @@ export default class VisualRoot extends Component {
         <Footer />
         <StateKeysAndValuesDialog />
         <StateDispatchDialog />
+        <HelpDialog />
         <StateWatchDialog />
         <ReactTooltip />
       </div>

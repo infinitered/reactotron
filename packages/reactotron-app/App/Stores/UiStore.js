@@ -22,6 +22,9 @@ class UI {
   // whether or not to show the state dispatch dialog
   @observable showStateDispatchDialog = false
 
+  // whether or not to show the help dialog
+  @observable showHelpDialog = false
+
   // the watch dialog
   @observable showStateWatchDialog = false
 
@@ -42,6 +45,8 @@ class UI {
     Mousetrap.bind('command+k', this.reset)
     Mousetrap.bind('command+f', this.openStateFindDialog)
     Mousetrap.bind('command+d', this.openStateDispatchDialog)
+    Mousetrap.bind('command+/', this.openHelpDialog)
+    Mousetrap.bind('command+?', this.openHelpDialog)
     Mousetrap.bind('tab', this.toggleKeysValues)
     Mousetrap.bind('escape', this.popState)
     Mousetrap.bind('enter', this.submitCurrentForm)
@@ -52,6 +57,9 @@ class UI {
   @action popState = () => {
     if (this.showStateFindDialog) {
       this.closeStateFindDialog()
+    }
+    if (this.showHelpDialog) {
+      this.closeHelpDialog()
     }
   }
 
@@ -114,8 +122,16 @@ class UI {
     this.showStateDispatchDialog = true
   }
 
+  @action openHelpDialog = () => {
+    this.showHelpDialog = true
+  }
+
   @action closeStateDispatchDialog = () => {
     this.showStateDispatchDialog = false
+  }
+
+  @action closeHelpDialog = () => {
+    this.showHelpDialog = false
   }
 
   @action reset = () => {
