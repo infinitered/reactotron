@@ -6,15 +6,11 @@ import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
 
 const ESCAPE_KEYSTROKE = 'Esc'
-const ESCAPE_HINT = 'Cancel'
-const ENTER_KEYSTROKE = 'Enter'
-const ENTER_HINT = 'Dispatch'
-const DIALOG_TITLE = 'Dispatch Action'
+const ESCAPE_HINT = 'Close Help'
+const DIALOG_TITLE = 'Reactotron Quick-Help'
 const INSTRUCTIONS = (
-  <span> Create an action that will be dispatched to the client to run.</span>
+  <span> Shortcut list</span>
 )
-const INPUT_PLACEHOLDER = '{ type: \'RepoMessage.Request\' }'
-const FIELD_LABEL = 'Action'
 
 const Styles = {
   dialog: {
@@ -49,7 +45,10 @@ const Styles = {
   },
   body: {
     ...AppStyles.Layout.vbox,
-    padding: '2em 2em 4em'
+    padding: '0.5em 2em 3em'
+  },
+  helpShortcut: {
+    flexDirection: 'row'
   },
   title: {
     margin: 0,
@@ -65,19 +64,16 @@ const Styles = {
     padding: 0,
     margin: 0
   },
-  fieldLabel: {
-    color: Colors.heading,
+  helpLabel: {
+    // borderBottom: `1px solid ${Colors.line}`,
+    color: Colors.bold,
     fontSize: 13,
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    paddingRight: 10
   },
-  textField: {
-    borderTop: 0,
-    borderLeft: 0,
-    borderRight: 0,
-    borderBottom: `1px solid ${Colors.line}`,
-    fontSize: 23,
+  helpDetail: {
+    fontSize: 13,
     color: Colors.foregroundLight,
-    lineHeight: '40px',
     backgroundColor: 'inherit'
   }
 }
@@ -96,8 +92,6 @@ class StateDispatchDialog extends Component {
     const open = ui.showHelpDialog
     if (!open) return null
 
-    // need to find a less hacky way of doing this
-    setTimeout(() => ReactDOM.findDOMNode(this.refs.textField).focus(), 1)
     return (
       <ModalPortal>
         <ModalBackground onClose={ui.closeStateDispatchDialog}>
@@ -110,22 +104,26 @@ class StateDispatchDialog extends Component {
                 </p>
               </div>
               <div style={Styles.body}>
-                <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
-                <input
-                  placeholder={INPUT_PLACEHOLDER}
-                  style={Styles.textField}
-                  type='text'
-                  ref='textField'
-                  onKeyPress={this.handleKeyPress}
-                  onChange={this.handleChange}
-                />
+                <div style={Styles.helpShortcut}>
+                  <label style={Styles.helpLabel}>Cmd + F</label>
+                  <label style={Styles.helpDetail}>find Redux keys or values (use tab to toggle)</label>
+                </div>
+                <div style={Styles.helpShortcut}>
+                  <label style={Styles.helpLabel}>Cmd + N</label>
+                  <label style={Styles.helpDetail}>subscribe to a Redux path</label>
+                </div>
+                <div style={Styles.helpShortcut}>
+                  <label style={Styles.helpLabel}>Cmd + D</label>
+                  <label style={Styles.helpDetail}>dispatch a Redux action</label>
+                </div>
+                <div style={Styles.helpShortcut}>
+                  <label style={Styles.helpLabel}>Cmd + K</label>
+                  <label style={Styles.helpDetail}>klear!</label>
+                </div>
               </div>
               <div style={Styles.keystrokes}>
                 <div style={Styles.hotkey}>
                   <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
-                </div>
-                <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
                 </div>
               </div>
             </div>
