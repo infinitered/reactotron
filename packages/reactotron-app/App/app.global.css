@@ -48,3 +48,7 @@ a.closeButton--jss-0-1 { display: none; }
   0%   { -webkit-transform: translateY(0px); }
   100% { -webkit-transform: translateY(100%); }
 }
+
+.tooltipTheme {
+  background-color: 'green'
+}

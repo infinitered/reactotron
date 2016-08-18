@@ -45,8 +45,8 @@ class UI {
     Mousetrap.bind('command+k', this.reset)
     Mousetrap.bind('command+f', this.openStateFindDialog)
     Mousetrap.bind('command+d', this.openStateDispatchDialog)
-    Mousetrap.bind('command+/', this.openHelpDialog)
-    Mousetrap.bind('command+?', this.openHelpDialog)
+    Mousetrap.bind('command+/', this.toggleHelpDialog)
+    Mousetrap.bind('command+?', this.toggleHelpDialog)
     Mousetrap.bind('tab', this.toggleKeysValues)
     Mousetrap.bind('escape', this.popState)
     Mousetrap.bind('enter', this.submitCurrentForm)
@@ -120,6 +120,10 @@ class UI {
 
   @action openStateDispatchDialog = () => {
     this.showStateDispatchDialog = true
+  }
+
+  @action toggleHelpDialog = () => {
+    this.showHelpDialog = !this.showHelpDialog
   }
 
   @action openHelpDialog = () => {
