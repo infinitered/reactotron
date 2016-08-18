@@ -5,7 +5,8 @@ import createSagaMiddleware from 'redux-saga'
 import rootReducer from './RootReducer'
 import rootSaga from '../Sagas'
 import Reactotron from 'reactotron-react-js'
-import createTrackingEnhancer from 'reactotron-redux'
+import createTronohancer from 'reactotron-redux'
+import { Types as LogoTypes } from './Logo.redux'
 
 // the logger master switch
 const USE_LOGGING = false
@@ -21,7 +22,9 @@ const logger = createLogger({
 // a function which can create our store and auto-persist the data
 export default () => {
   const sagaMiddleware = createSagaMiddleware()
-  const tracker = createTrackingEnhancer(Reactotron, {})
+  const tracker = createTronohancer(Reactotron, {
+    isActionImportant: action => action.type === LogoTypes.Size && action.size > 100
+  })
   const enhancers = compose(
     applyMiddleware(logger, sagaMiddleware),
     tracker

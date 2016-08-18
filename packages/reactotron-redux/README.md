@@ -38,7 +38,10 @@ Here's a bigger example:
 // came in up in the import section.
 const enhancers = compose(
   applyMiddleware(logger),
-  createReactotronTrackingEnhancer(Reactotron)
+  createReactotronTrackingEnhancer(Reactotron, {
+    // optional flagging of important actions
+    isActionImportant: action => action.type === 'FORMAT_HARD_DRIVE'
+  })
 )
 
 // This creates our store (rootReducer is just from a sample app, you've

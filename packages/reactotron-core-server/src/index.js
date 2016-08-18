@@ -99,10 +99,10 @@ class Server {
       })
 
       // when we receive a command from the client
-      socket.on('command', ({ type, payload }) => {
+      socket.on('command', ({ type, important, payload }) => {
         this.messageId++
         const date = new Date()
-        const fullCommand = { type, payload, messageId: this.messageId, date }
+        const fullCommand = { type, important, payload, messageId: this.messageId, date }
 
         // for client intros
         if (type === 'client.intro') {

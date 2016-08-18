@@ -41,7 +41,13 @@ const createReactotronStoreEnhancer = (reactotron, enhancerOptions = {}) => {
 
       // action not blacklisted?
       if (!R.contains(action.type, options.except || [])) {
-        plugin.report(action, ms)
+        // check if the app considers this important
+        let important = false
+        if (enhancerOptions && typeof enhancerOptions.isActionImportant === 'function') {
+          important = !!enhancerOptions.isActionImportant(action)
+        }
+
+        plugin.report(action, ms, important)
       }
 
       // return the real work's result

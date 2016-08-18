@@ -3,7 +3,7 @@ import requestKeys from './keys-request'
 import requestValues from './values-request'
 import getSubscriptionValues from './get-subscription-values'
 
-const createPlugin = store => {
+const createPlugin = (store, pluginConfig = {}) => {
   // hold onto the send
   let capturedSend
 
@@ -58,7 +58,7 @@ const createPlugin = store => {
   }
 
   // attach a function that we can call from the enhancer
-  plugin.report = (action, ms) => {
+  plugin.report = (action, ms, important = false) => {
     if (!capturedSend) return
 
     // let's call the type, name because that's "generic" name in Reactotron
@@ -70,7 +70,7 @@ const createPlugin = store => {
     }
 
     // off ya go!
-    capturedSend('state.action.complete', { name, action, ms })
+    capturedSend('state.action.complete', { name, action, ms }, important)
   }
 
   return plugin
