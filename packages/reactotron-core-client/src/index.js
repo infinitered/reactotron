@@ -119,8 +119,8 @@ export class Client {
   /**
    * Sends a command to the server
    */
-  send (type, payload) {
-    this.socket && this.socket.emit('command', { type, payload })
+  send (type, payload, important = false) {
+    this.socket && this.socket.emit('command', { type, payload, important: !!important })
   }
 
   /**
