@@ -6,7 +6,7 @@ import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
 
 const ESCAPE_KEYSTROKE = 'Esc'
-const ESCAPE_HINT = 'Close Help'
+const ESCAPE_HINT = 'Close'
 const DIALOG_TITLE = 'Reactotron Quick-Help'
 const INSTRUCTIONS = (
   <span> Shortcut list</span>
@@ -27,8 +27,7 @@ const Styles = {
     ...AppStyles.Layout.hbox,
     alignSelf: 'center',
     paddingTop: 10,
-    paddingBottom: 20,
-    fontSize: 13
+    paddingBottom: 20
   },
   hotkey: {
     padding: '0 10px'
@@ -48,7 +47,8 @@ const Styles = {
     padding: '0.5em 2em 3em'
   },
   helpShortcut: {
-    flexDirection: 'row'
+    ...AppStyles.Layout.hbox,
+    margin: '2px 0'
   },
   title: {
     margin: 0,
@@ -67,14 +67,18 @@ const Styles = {
   helpLabel: {
     // borderBottom: `1px solid ${Colors.line}`,
     color: Colors.bold,
-    fontSize: 13,
     textTransform: 'uppercase',
-    paddingRight: 10
+    width: 100
   },
   helpDetail: {
-    fontSize: 13,
-    color: Colors.foregroundLight,
-    backgroundColor: 'inherit'
+    flex: 1
+  },
+  group: {
+    marginTop: 10,
+    marginBottom: 2,
+    paddingBottom: 2,
+    color: Colors.highlight,
+    borderBottom: `1px solid ${Colors.line}`
   }
 }
 
@@ -94,7 +98,7 @@ class StateDispatchDialog extends Component {
 
     return (
       <ModalPortal>
-        <ModalBackground onClose={ui.closeStateDispatchDialog}>
+        <ModalBackground onClose={ui.closeHelpDialog}>
           <ModalDialog style={Styles.dialog}>
             <div style={Styles.container}>
               <div style={Styles.header}>
@@ -104,21 +108,27 @@ class StateDispatchDialog extends Component {
                 </p>
               </div>
               <div style={Styles.body}>
+                <div style={Styles.group}>Working With State</div>
                 <div style={Styles.helpShortcut}>
-                  <label style={Styles.helpLabel}>Cmd + F</label>
-                  <label style={Styles.helpDetail}>find Redux keys or values (use tab to toggle)</label>
+                  <div style={Styles.helpLabel}>Cmd + F</div>
+                  <div style={Styles.helpDetail}>find keys or values</div>
                 </div>
                 <div style={Styles.helpShortcut}>
-                  <label style={Styles.helpLabel}>Cmd + N</label>
-                  <label style={Styles.helpDetail}>subscribe to a Redux path</label>
+                  <div style={Styles.helpLabel}>Cmd + N</div>
+                  <div style={Styles.helpDetail}>new subscription</div>
                 </div>
                 <div style={Styles.helpShortcut}>
-                  <label style={Styles.helpLabel}>Cmd + D</label>
-                  <label style={Styles.helpDetail}>dispatch a Redux action</label>
+                  <div style={Styles.helpLabel}>Cmd + D</div>
+                  <div style={Styles.helpDetail}>dispatch an action</div>
+                </div>
+                <div style={Styles.group}>Miscellaneous</div>
+                <div style={Styles.helpShortcut}>
+                  <div style={Styles.helpLabel}>Cmd + K</div>
+                  <div style={Styles.helpDetail}>klear!</div>
                 </div>
                 <div style={Styles.helpShortcut}>
-                  <label style={Styles.helpLabel}>Cmd + K</label>
-                  <label style={Styles.helpDetail}>klear!</label>
+                  <div style={Styles.helpLabel}>Cmd + /</div>
+                  <div style={Styles.helpDetail}>toggle help</div>
                 </div>
               </div>
               <div style={Styles.keystrokes}>

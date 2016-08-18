@@ -34,7 +34,6 @@ export default class VisualRoot extends Component {
         <StateDispatchDialog />
         <HelpDialog />
         <StateWatchDialog />
-        <ReactTooltip />
       </div>
     )
   }
