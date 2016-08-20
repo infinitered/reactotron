@@ -50,6 +50,7 @@ class UI {
     Mousetrap.bind('tab', this.toggleKeysValues)
     Mousetrap.bind('escape', this.popState)
     Mousetrap.bind('enter', this.submitCurrentForm)
+    Mousetrap.bind('command+enter', this.submitCurrentFormDelicately)
     Mousetrap.bind('command+\\', this.toggleWatchPanel)
     Mousetrap.bind('command+n', this.openStateWatchDialog)
   }
@@ -64,10 +65,14 @@ class UI {
   }
 
   @action submitCurrentForm = () => {
+    if (this.showStateWatchDialog) {
+      this.submitStateWatch()
+    }
+  }
+
+  @action submitCurrentFormDelicately = () => {
     if (this.showStateDispatchDialog) {
       this.submitStateDispatch()
-    } else if (this.showStateWatchDialog) {
-      this.submitStateWatch()
     }
   }
 
@@ -83,6 +88,11 @@ class UI {
 
   @action clearStateWatches = () => {
     this.server.stateValuesClearSubscriptions()
+  }
+
+  @action setActionToDispatch (action) {
+    this.actionToDispatch = action
+    this.showStateDispatchDialog = true
   }
 
   @action submitStateDispatch = () => {
