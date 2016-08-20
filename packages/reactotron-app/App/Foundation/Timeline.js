@@ -15,7 +15,7 @@ const Styles = {
   commands: {
     margin: 0,
     padding: 0,
-    overflowY: 'auto',
+    overflowY: 'scroll',
     overflowX: 'hidden'
   }
 }
