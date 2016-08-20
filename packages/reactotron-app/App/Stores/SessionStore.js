@@ -1,18 +1,38 @@
 import UiStore from './UiStore'
 import { createServer } from 'reactotron-core-server'
 import { computed, reaction } from 'mobx'
-import { last, isNil, reject, reverse, pipe, propEq } from 'ramda'
+import { last, isNil, reject, equals, reverse, pipe, propEq, map, fromPairs } from 'ramda'
 import { dotPath } from 'ramdasauce'
 
 const isSubscription = propEq('type', 'state.values.change')
-const isZeroChangeSubscription = command => isSubscription(command) && dotPath('payload.changes.length', command) === 0
+const isSubscriptionCommandWithEmptyChanges = command => isSubscription(command) && dotPath('payload.changes.length', command) === 0
 
 class Session {
+
+  // holds the last known state of the subscription values
+  subscriptions = {}
+
+  // checks if it was the exact same as last time
+  isSubscriptionValuesSameAsLastTime (command) {
+    if (!isSubscription(command)) return false
+    const rawChanges = command.payload && command.payload.changes || []
+    const newSubscriptions = fromPairs(map(change => ([change.path, change.value]), rawChanges))
+    const isNew = !equals(this.subscriptions, newSubscriptions)
+
+    // 🚨🚨🚨 side effect alert 🚨🚨🚨
+    if (isNew) {
+      this.subscriptions = newSubscriptions
+    }
+    // 🚨🚨🚨 side effect alert 🚨🚨🚨
+
+    return !isNew
+  }
 
   @computed get commands () {
     return pipe(
       dotPath('server.commands.all'),
-      reject(isZeroChangeSubscription),
+      reject(isSubscriptionCommandWithEmptyChanges),
+      reject(this.isSubscriptionValuesSameAsLastTime),
       reverse
     )(this)
   }
@@ -28,6 +48,7 @@ class Session {
   constructor (port = 9090) {
     this.server = createServer({ port })
     this.server.start()
+    this.isSubscriptionValuesSameAsLastTime = this.isSubscriptionValuesSameAsLastTime.bind(this)
 
     // create the ui store
     this.ui = new UiStore(this.server)
