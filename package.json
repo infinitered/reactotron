@@ -10,5 +10,8 @@
   },
   "devDependencies": {
     "lerna": "2.0.0-beta.26"
+  },
+  "dependencies": {
+    "stringify-object": "^2.4.0"
   }
 }

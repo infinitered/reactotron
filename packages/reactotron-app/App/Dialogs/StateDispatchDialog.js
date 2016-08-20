@@ -7,7 +7,7 @@ import Colors from '../Theme/Colors'
 
 const ESCAPE_KEYSTROKE = 'Esc'
 const ESCAPE_HINT = 'Cancel'
-const ENTER_KEYSTROKE = 'Enter'
+const ENTER_KEYSTROKE = '⌘ + Enter'
 const ENTER_HINT = 'Dispatch'
 const DIALOG_TITLE = 'Dispatch Action'
 const INSTRUCTIONS = (
@@ -70,15 +70,15 @@ const Styles = {
     fontSize: 13,
     textTransform: 'uppercase'
   },
-  textField: {
+  dispatchField: {
     borderTop: 0,
     borderLeft: 0,
     borderRight: 0,
     borderBottom: `1px solid ${Colors.line}`,
     fontSize: 23,
     color: Colors.foregroundLight,
-    lineHeight: '40px',
-    backgroundColor: 'inherit'
+    backgroundColor: 'inherit',
+    height: 200
   }
 }
 
@@ -97,7 +97,7 @@ class StateDispatchDialog extends Component {
     if (!open) return null
 
     // need to find a less hacky way of doing this
-    setTimeout(() => ReactDOM.findDOMNode(this.refs.textField).focus(), 1)
+    setTimeout(() => ReactDOM.findDOMNode(this.refs.dispatchField).focus(), 1)
     return (
       <ModalPortal>
         <ModalBackground onClose={ui.closeStateDispatchDialog}>
@@ -111,11 +111,12 @@ class StateDispatchDialog extends Component {
               </div>
               <div style={Styles.body}>
                 <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
-                <input
+                <textarea
                   placeholder={INPUT_PLACEHOLDER}
-                  style={Styles.textField}
+                  style={Styles.dispatchField}
                   type='text'
-                  ref='textField'
+                  ref='dispatchField'
+                  value={ui.actionToDispatch}
                   onKeyPress={this.handleKeyPress}
                   onChange={this.handleChange}
                 />
