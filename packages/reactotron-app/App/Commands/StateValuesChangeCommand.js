@@ -4,7 +4,8 @@ import ObjectTree from '../Shared/ObjectTree'
 import Colors from '../Theme/Colors'
 import isShallow from '../Lib/IsShallow'
 import makeTable from '../Shared/MakeTable'
-import { map, fromPairs } from 'ramda'
+import { keys, concat, join } from 'ramda'
+import { mapKeys, isNilOrEmpty } from 'ramdasauce'
 
 const COMMAND_TITLE = 'SUBSCRIPTIONS'
 
@@ -32,15 +33,31 @@ class StateValuesChangeCommand extends Component {
 
   render () {
     const { command } = this.props
-    const changes = map(change => ([change.path, change.value]), this.props.command.payload.changes)
-    const changeObject = fromPairs(changes)
-    const preview = null // `${changes.length} change${changes.length !== 1 && 's'}`
+    const { payload } = command
+    const phrase = []
+    let { changed, added, removed } = payload
+    const hasAdded = !isNilOrEmpty(added)
+    const hasRemoved = !isNilOrEmpty(removed)
+    const hasChanged = !isNilOrEmpty(changed)
+    if (hasChanged) {
+      phrase.push(`${keys(changed).length} changed`)
+    }
+    if (hasAdded) {
+      added = mapKeys(concat('+ '), added)
+      phrase.push(`${keys(added).length} added`)
+    }
+    if (hasRemoved) {
+      removed = mapKeys(concat('- '), removed)
+      phrase.push(`${keys(removed).length} removed`)
+    }
+    const preview = join(' ', phrase)
 
     return (
       <Command command={command} title={COMMAND_TITLE} preview={preview}>
         <div style={Styles.container}>
-          <div style={Styles.name}>{name}</div>
-          {this.renderContent(changeObject)}
+          {hasChanged && this.renderContent(changed)}
+          {hasAdded && this.renderContent(added)}
+          {hasRemoved && this.renderContent(removed)}
         </div>
       </Command>
     )
