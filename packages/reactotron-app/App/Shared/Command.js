@@ -36,7 +36,7 @@ const Styles = {
   },
   title: {
     textAlign: 'left',
-    width: 150
+    width: 168
   },
   titleText: {
     color: Colors.tag
@@ -46,11 +46,6 @@ const Styles = {
     color: Colors.foregroundLight,
     borderRadius: 4,
     padding: '4px 8px'
-  },
-  subtitle: {
-    color: Colors.foreground,
-    textAlign: 'left',
-    paddingLeft: 8
   },
   preview: {
     color: Colors.highlight,

@@ -15,8 +15,7 @@ const Styles = {
     padding: '2px 0'
   },
   key: {
-    width: '33%',
-    minWidth: 150,
+    width: 210,
     paddingRight: 10,
     wordBreak: 'break-all',
     textAlign: 'left',
