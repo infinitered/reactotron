@@ -4,12 +4,15 @@ import { computed, reaction } from 'mobx'
 import { last, isNil, reject, reverse, pipe, propEq } from 'ramda'
 import { dotPath } from 'ramdasauce'
 
+const isSubscription = propEq('type', 'state.values.change')
+const isZeroChangeSubscription = command => isSubscription(command) && dotPath('payload.changes.length', command) === 0
+
 class Session {
 
   @computed get commands () {
     return pipe(
       dotPath('server.commands.all'),
-      reject(propEq('type', 'state.values.change')),
+      reject(isZeroChangeSubscription),
       reverse
     )(this)
   }

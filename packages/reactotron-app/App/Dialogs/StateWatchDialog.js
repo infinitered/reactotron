@@ -8,8 +8,8 @@ import Colors from '../Theme/Colors'
 const ESCAPE_KEYSTROKE = 'Esc'
 const ESCAPE_HINT = 'Cancel'
 const ENTER_KEYSTROKE = 'Enter'
-const ENTER_HINT = 'Watch'
-const DIALOG_TITLE = 'Adding A State Watch'
+const ENTER_HINT = 'Subscribe'
+const DIALOG_TITLE = 'Add Subscription'
 
 const INPUT_PLACEHOLDER = ''
 const FIELD_LABEL = 'path'
@@ -88,7 +88,7 @@ const Styles = {
 }
 
 const INSTRUCTIONS = <div>
-  <p>Enter a path you would like to watch.  Here are some examples to get you started:</p>
+  <p>Enter a path you would like to subscribe.  Here are some examples to get you started:</p>
   <p style={Styles.example}>user.firstName</p>
   <p style={Styles.example}>repo</p>
   <p style={Styles.example}>repo.*</p>
