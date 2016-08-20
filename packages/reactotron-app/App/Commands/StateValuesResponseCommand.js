@@ -2,8 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import Command from '../Shared/Command'
 import ObjectTree from '../Shared/ObjectTree'
 import Colors from '../Theme/Colors'
-import { isNil, equals, length, pipe, without, reject, map, contains, __, values } from 'ramda'
+import { isNil } from 'ramda'
 import makeTable from '../Shared/MakeTable'
+import isShallow from '../Lib/IsShallow'
 
 const NULL_TEXT = '¯\\_(ツ)_/¯'
 const ROOT_TEXT = '(root)'
@@ -24,16 +25,6 @@ const Styles = {
     wordBreak: 'break-all'
   }
 }
-
-// all the values in this object are in our approved list of types?
-const allValuesStatic = pipe(
-  values,
-  without([null, undefined]),
-  map(x => typeof x),
-  reject(contains(__, ['number', 'string', 'boolean'])),
-  length,
-  equals(0)
-  )
 
 class StateValuesResponseCommand extends Component {
 
@@ -67,7 +58,7 @@ class StateValuesResponseCommand extends Component {
     }
     switch (typeof value) {
       case 'object':
-        if (allValuesStatic(value)) {
+        if (isShallow(value)) {
           return this.renderTable(value)
         } else {
           return this.renderObject(value)
