@@ -9,6 +9,9 @@ const Styles = {
   theme: {
     tree: { backgroundColor: 'transparent', marginTop: -3 },
     ...theme
+  },
+  muted: {
+    color: Colors.highlight
   }
 }
 
@@ -29,6 +32,13 @@ class ObjectTree extends Component {
           shouldExpandNode={(keyName, data, minLevel) => minLevel <= level}
           theme={Styles.theme}
           invertTheme={Colors.invertTheme}
+          getItemString={(type, data, itemType, itemString) => {
+            if (type === 'Object') return <span style={Styles.muted}>{itemType}</span>
+            return <span style={Styles.muted}>{itemType} {itemString}</span>
+          }}
+          valueRenderer={(transformed, untransformed) => {
+            return `${untransformed || transformed}`
+          }}
         />
       </div>
     )
