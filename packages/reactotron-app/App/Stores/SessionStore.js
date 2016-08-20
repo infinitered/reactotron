@@ -3,6 +3,7 @@ import { createServer } from 'reactotron-core-server'
 import { computed, reaction } from 'mobx'
 import { last, isNil, reject, equals, reverse, pipe, propEq, map, fromPairs } from 'ramda'
 import { dotPath } from 'ramdasauce'
+import shallowDiff from '../Lib/ShallowDiff'
 
 const isSubscription = propEq('type', 'state.values.change')
 const isSubscriptionCommandWithEmptyChanges = command => isSubscription(command) && dotPath('payload.changes.length', command) === 0
@@ -21,6 +22,10 @@ class Session {
 
     // 🚨🚨🚨 side effect alert 🚨🚨🚨
     if (isNew) {
+      const diff = shallowDiff(this.subscriptions, newSubscriptions)
+      command.payload.changed = map(v => v.rightValue, diff.difference || [])
+      command.payload.added = diff.onlyOnRight || []
+      command.payload.removed = diff.onlyOnLeft || []
       this.subscriptions = newSubscriptions
     }
     // 🚨🚨🚨 side effect alert 🚨🚨🚨
