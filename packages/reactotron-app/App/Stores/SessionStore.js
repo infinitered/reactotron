@@ -2,7 +2,7 @@ import UiStore from './UiStore'
 import { createServer } from 'reactotron-core-server'
 import { computed, reaction } from 'mobx'
 import { last, isNil, reject, reverse, pipe, propEq } from 'ramda'
-import { dotPath, log } from 'ramdasauce'
+import { dotPath } from 'ramdasauce'
 
 class Session {
 

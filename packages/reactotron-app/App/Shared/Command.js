@@ -4,7 +4,9 @@ import AppStyles from '../Theme/AppStyles'
 import Timestamp from '../Shared/Timestamp'
 import { observer } from 'mobx-react'
 import { isNilOrEmpty } from 'ramdasauce'
-import { merge, is } from 'ramda'
+import { merge } from 'ramda'
+import CommandToolbar from './CommandToolbar'
+
 const IconOpen = require('react-icons/lib/md/expand-more')
 const IconClosed = require('react-icons/lib/md/chevron-right')
 
@@ -114,9 +116,8 @@ class Command extends Component {
 
   render () {
     const { isOpen } = this.state
-    const { command, children, title, subtitle, preview } = this.props
+    const { command, children, title, preview } = this.props
     const { important } = command
-    const hasSubtitle = !isNilOrEmpty(subtitle)
     const { date } = command
     const titleTextStyle = merge(Styles.titleText, important ? Styles.titleTextInverse : {})
     const topRowStyle = Styles.topRow
@@ -131,8 +132,8 @@ class Command extends Component {
             <div style={Styles.title}>
               <span style={titleTextStyle}>{title}</span>
             </div>
-            {isOpen && hasSubtitle && <span style={Styles.subtitle}>{subtitle}</span>}
             {!isOpen && <span style={Styles.preview}>{preview}</span>}
+            {isOpen && <CommandToolbar command={command} />}
             {isOpen && <span style={Styles.spacer}></span>}
             <Icon size={20} style={Styles.icon} />
           </div>
