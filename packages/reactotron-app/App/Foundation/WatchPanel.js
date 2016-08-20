@@ -8,6 +8,8 @@ import { is, map, merge } from 'ramda'
 import ObjectTree from '../Shared/ObjectTree'
 import { colorForValue, textForValue } from '../Shared/MakeTable'
 
+const TITLE = 'Subscriptions'
+
 const Styles = {
   container: {
     backgroundColor: Colors.chrome,
@@ -111,7 +113,7 @@ class WatchPanel extends Component {
     return (
       <div style={Styles.container}>
         <div style={Styles.header}>
-          <div style={Styles.title}>State Watches</div>
+          <div style={Styles.title}>{TITLE}</div>
           <div style={Styles.toolbar}>
             <IconAdd size={24} style={Styles.toolbarAdd} onClick={ui.openStateWatchDialog} />
             <IconClear size={24} style={Styles.toolbarClear} onClick={ui.clearStateWatches} />
