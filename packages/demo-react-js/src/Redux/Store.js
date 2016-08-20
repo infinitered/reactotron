@@ -26,8 +26,8 @@ export default () => {
     isActionImportant: action => action.type === LogoTypes.Size && action.size > 100
   })
   const enhancers = compose(
-    applyMiddleware(logger, sagaMiddleware),
-    tracker
+    tracker,
+    applyMiddleware(logger, sagaMiddleware)
   )
 
   const store = createStore(rootReducer, enhancers)
