@@ -155,6 +155,15 @@ const elapsed = client.startTimer()
 // do something you want to time
 const ms = elapsed()  // the number of ms it took.  ish.
 
+// display a custom event
+client.display({
+  name: 'MY EVENT',
+  value: { color: 'green', vegetable: 'spinach', variant: 'baby', salad: true },
+  important: true,
+  preview: 'What\'s in my appetizer?'
+})
+
+
 ```
 
 # Why are we passing socket.io down?
@@ -395,6 +404,23 @@ Sent from the client to server when it's time to report some performance details
     { "title": "lookup tables", "time": 123 },
     { "title": "randomize", "time": 422 }
   ]
+}
+```
+
+### display
+
+Sent from the client to the server to provide a way to show "custom" commands.
+```json
+{
+  "name": "MY EVENT",
+  "value": {
+    "color": "green",
+    "vegetable": "spinach",
+    "variant": "baby",
+    "salad": true
+  },
+  "important": true,
+  "preview": "What's in my appetizer?"
 }
 ```
 

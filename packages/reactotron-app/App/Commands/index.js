@@ -7,6 +7,7 @@ import BenchmarkReportCommand from './BenchmarkReportCommand'
 import StateValuesResponseCommand from './StateValuesResponseCommand'
 import StateKeysResponseCommand from './StateKeysResponseCommand'
 import StateValuesChangeCommand from './StateValuesChangeCommand'
+import DisplayCommand from './DisplayCommand'
 
 export default command => {
   const { type } = command
@@ -20,6 +21,7 @@ export default command => {
     case 'state.values.response': return StateValuesResponseCommand
     case 'state.keys.response': return StateKeysResponseCommand
     case 'state.values.change': return StateValuesChangeCommand
+    case 'display': return DisplayCommand
     default: return UnknownCommand
   }
 }
