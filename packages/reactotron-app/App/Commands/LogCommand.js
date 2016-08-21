@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import Command from '../Shared/Command'
-import ObjectTree from '../Shared/ObjectTree'
-import { take, replace, merge, map, trim, split } from 'ramda'
+import { take, replace, merge, map } from 'ramda'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
+import Content from '../Shared/Content'
 
 const STACK_TITLE = 'YE OLDE STACK TRACE'
 const PREVIEW_LENGTH = 500
@@ -14,25 +14,6 @@ const getName = level => {
     case 'warn': return 'WARNING'
     case 'error': return 'ERROR'
     default: return 'LOG'
-  }
-}
-let spanCount = 0
-const breakIntoSpans = (part) => {
-  spanCount++
-  return (
-    <span key={`span-${spanCount}`}>{part}<br /></span>
-  )
-}
-
-const formatMessage = message => {
-  if (typeof message === 'string') {
-    return (
-      <div>
-        {map(breakIntoSpans, split('\n', trim(message)))}
-      </div>
-    )
-  } else if (typeof message === 'object') {
-    return <ObjectTree object={{payload: message}} />
   }
 }
 
@@ -138,7 +119,7 @@ class LogCommand extends Component {
     return (
       <Command command={command} title={title} preview={preview}>
         <div style={containerTypes}>
-          {formatMessage(message)}
+          <Content value={message} />
           {stack && this.renderStack(stack)}
         </div>
       </Command>

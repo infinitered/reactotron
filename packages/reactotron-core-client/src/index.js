@@ -124,6 +124,13 @@ export class Client {
   }
 
   /**
+   * Sends a custom command to the server to displays nicely.
+   */
+  display ({ name, value, preview, important = false }) {
+    this.send('display', { name, value, preview }, important)
+  }
+
+  /**
    * Adds a plugin to the system
    */
   use (pluginCreator) {
