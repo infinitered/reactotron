@@ -1,25 +1,31 @@
 import React, { Component, PropTypes } from 'react'
 import Command from '../Shared/Command'
 import ObjectTree from '../Shared/ObjectTree'
-import { dotPath, isWithin } from 'ramdasauce'
-import { toUpper } from 'ramda'
+import { dotPath, isNilOrEmpty } from 'ramdasauce'
+import { toUpper, equals } from 'ramda'
 import makeTable from '../Shared/MakeTable'
 import Colors from '../Theme/Colors'
+import AppStyles from '../Theme/AppStyles'
+import SectionLink from './SectionLink'
 
 const COMMAND_TITLE = 'API RESPONSE'
 const REQUEST_HEADER_TITLE = 'Request Headers'
 const RESPONSE_HEADER_TITLE = 'Response Headers'
-const BODY_TITLE = 'Body'
+const REQUEST_BODY_TITLE = 'Request'
+const RESPONSE_BODY_TITLE = 'Response'
+const NO_REQUEST_BODY = 'Nothing sent.'
 
 const Styles = {
   container: {
   },
   method: {},
   status: {},
+  duration: {
+  },
   url: {
     wordBreak: 'break-all',
-    paddingBottom: 10,
-    color: Colors.bold
+    color: Colors.constant,
+    paddingBottom: 10
   },
   headerTitle: {
     margin: 0,
@@ -30,7 +36,22 @@ const Styles = {
   },
   pre: {
     whiteSpace: 'pre-wrap'
+  },
+  sectionLinks: {
+    ...AppStyles.Layout.hbox,
+    paddingTop: 10,
+    paddingBottom: 10
+  },
+  spacer: {
+    flex: 1
   }
+}
+
+const INITIAL_STATE = {
+  showRequestHeaders: false,
+  showResponseHeaders: false,
+  showRequestBody: false,
+  showResponseBody: false
 }
 
 class ApiResponseCommand extends Component {
@@ -39,8 +60,33 @@ class ApiResponseCommand extends Component {
     command: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired
   }
 
-  shouldComponentUpdate (nextProps) {
-    return this.props.command.id !== nextProps.command.id
+  constructor (props) {
+    super(props)
+    this.state = INITIAL_STATE
+    this.toggleRequestHeaders = this.toggleRequestHeaders.bind(this)
+    this.toggleResponseHeaders = this.toggleResponseHeaders.bind(this)
+    this.toggleRequestBody = this.toggleRequestBody.bind(this)
+    this.toggleResponseBody = this.toggleResponseBody.bind(this)
+  }
+
+  toggleRequestHeaders () {
+    this.setState({ ...INITIAL_STATE, showRequestHeaders: !this.state.showRequestHeaders })
+  }
+
+  toggleResponseHeaders () {
+    this.setState({ ...INITIAL_STATE, showResponseHeaders: !this.state.showResponseHeaders })
+  }
+
+  toggleRequestBody () {
+    this.setState({ ...INITIAL_STATE, showRequestBody: !this.state.showRequestBody })
+  }
+
+  toggleResponseBody () {
+    this.setState({ ...INITIAL_STATE, showResponseBody: !this.state.showResponseBody })
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    return !(equals(nextProps, this.props) && equals(this.state, nextState))
   }
 
   renderDataAsObjectTree (data) {
@@ -58,6 +104,7 @@ class ApiResponseCommand extends Component {
 
   render () {
     const { command } = this.props
+    const { showRequestHeaders, showResponseHeaders, showRequestBody, showResponseBody } = this.state
     const { payload } = command
     const { duration } = payload
     const status = dotPath('response.status', payload)
@@ -65,20 +112,33 @@ class ApiResponseCommand extends Component {
     const method = toUpper(dotPath('request.method', payload) || '')
     const requestHeaders = dotPath('request.headers', payload)
     const responseHeaders = dotPath('response.headers', payload)
-    const body = dotPath('response.body', payload)
+    const requestBody = dotPath('request.data', payload)
+    const responseBody = dotPath('response.body', payload)
     const subtitle = `${status} ${method} in ${duration || '?'}ms`
     const preview = subtitle
+    const summary = { 'Status Code': status, 'Method': method, 'Duration (ms)': duration }
 
     return (
       <Command command={command} title={COMMAND_TITLE} duration={duration} preview={preview}>
         <div style={Styles.container}>
-          <div style={Styles.url}>{subtitle}<br />{url}</div>
-          <div style={Styles.headerTitle}>{REQUEST_HEADER_TITLE}</div>
-          {makeTable(requestHeaders)}
-          <div style={Styles.headerTitle}>{RESPONSE_HEADER_TITLE}</div>
-          {makeTable(responseHeaders)}
-          <div style={Styles.headerTitle}>{BODY_TITLE}</div>
-          {this.renderData(body)}
+
+          <div style={Styles.url}>{url}</div>
+
+          {makeTable(summary)}
+
+          <div style={Styles.sectionLinks}>
+            <SectionLink text={RESPONSE_BODY_TITLE} isActive={showResponseBody} onClick={this.toggleResponseBody} />
+            <SectionLink text={RESPONSE_HEADER_TITLE} isActive={showResponseHeaders} onClick={this.toggleResponseHeaders} />
+            {!isNilOrEmpty(requestBody) && <SectionLink text={REQUEST_BODY_TITLE} isActive={showRequestBody} onClick={this.toggleRequestBody} />}
+            <SectionLink text={REQUEST_HEADER_TITLE} isActive={showRequestHeaders} onClick={this.toggleRequestHeaders} />
+          </div>
+
+          <div style={Styles.content}>
+            {showResponseBody && this.renderData(responseBody)}
+            {showResponseHeaders && makeTable(responseHeaders)}
+            {showRequestBody && (isNilOrEmpty(requestBody) ? NO_REQUEST_BODY : this.renderData(requestBody))}
+            {showRequestHeaders && makeTable(requestHeaders)}
+          </div>
 
         </div>
       </Command>
