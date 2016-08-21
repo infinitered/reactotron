@@ -3,9 +3,9 @@ import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import Timestamp from '../Shared/Timestamp'
 import { observer } from 'mobx-react'
-import { isNilOrEmpty } from 'ramdasauce'
 import { merge, equals } from 'ramda'
 import CommandToolbar from './CommandToolbar'
+import DisplayIcon from 'react-icons/lib/md/label'
 
 const IconOpen = require('react-icons/lib/md/expand-more')
 const IconClosed = require('react-icons/lib/md/chevron-right')
@@ -47,6 +47,11 @@ const Styles = {
     borderRadius: 4,
     padding: '4px 8px'
   },
+  displayIcon: {
+    marginRight: 4,
+    marginBottom: 4
+  },
+  displayIconSize: 16,
   preview: {
     color: Colors.highlight,
     textAlign: 'left',
@@ -111,7 +116,8 @@ class Command extends Component {
   render () {
     const { isOpen } = this.state
     const { command, children, title, preview } = this.props
-    const { important } = command
+    const { important, type } = command
+    const isDisplay = type === 'display'
     const { date } = command
     const titleTextStyle = merge(Styles.titleText, important ? Styles.titleTextInverse : {})
     const topRowStyle = Styles.topRow
@@ -124,7 +130,10 @@ class Command extends Component {
           <div style={topRowStyle} onClick={this.handleToggleOpen}>
             <Timestamp date={date} style={timestampStyle} />
             <div style={Styles.title}>
-              <span style={titleTextStyle}>{title}</span>
+              <span style={titleTextStyle}>
+                {isDisplay && <DisplayIcon size={Styles.displayIconSize} style={Styles.displayIcon} />}
+                {title}
+              </span>
             </div>
             {!isOpen && <span style={Styles.preview}>{preview}</span>}
             {isOpen && <CommandToolbar command={command} />}

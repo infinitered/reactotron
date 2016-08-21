@@ -7,6 +7,7 @@ import makeTable from '../Shared/MakeTable'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import SectionLink from './SectionLink'
+import Content from '../Shared/Content'
 
 const COMMAND_TITLE = 'API RESPONSE'
 const REQUEST_HEADER_TITLE = 'Request Headers'
@@ -89,19 +90,6 @@ class ApiResponseCommand extends Component {
     return !(equals(nextProps, this.props) && equals(this.state, nextState))
   }
 
-  renderDataAsObjectTree (data) {
-    return <ObjectTree object={data} level={0} />
-  }
-
-  renderDataAsPreTag (data) {
-    const stringified = JSON.stringify(data, 2, 2)
-    return <pre style={Styles.pre}>{stringified}</pre>
-  }
-
-  renderData (data) {
-    return this.renderDataAsObjectTree(data)
-  }
-
   render () {
     const { command } = this.props
     const { showRequestHeaders, showResponseHeaders, showRequestBody, showResponseBody } = this.state
@@ -134,9 +122,9 @@ class ApiResponseCommand extends Component {
           </div>
 
           <div style={Styles.content}>
-            {showResponseBody && this.renderData(responseBody)}
+            {showResponseBody && <Content value={responseBody} />}
             {showResponseHeaders && makeTable(responseHeaders)}
-            {showRequestBody && (isNilOrEmpty(requestBody) ? NO_REQUEST_BODY : this.renderData(requestBody))}
+            {showRequestBody && (isNilOrEmpty(requestBody) ? NO_REQUEST_BODY : <Content value={requestBody} />)}
             {showRequestHeaders && makeTable(requestHeaders)}
           </div>
 

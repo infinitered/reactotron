@@ -102,6 +102,10 @@ class App extends Component {
 
         { error ? this.renderError() : this.renderMessage() }
 
+        <div>
+          <button style={Styles.button} onClick={this.props.display}>Custom Messages</button>
+        </div>
+
 
       </div>
     );
@@ -122,8 +126,26 @@ const mapDispatchToProps = dispatch => ({
   requestRedux: () => dispatch(RepoActions.request('reactjs/redux')),
   requestBad: () => dispatch(RepoActions.request('zzzz/zzzzz')),
   handleLogoPress: () => {
-    console.tron.log('wait for it...', true)
+    console.tron.log('wait for it...')
     setTimeout(() => { makeErrorForFun('boom') }, 500)
+  },
+  display: () => {
+    console.tron.display({ name: 'HELLO', value: 'You\'re awesome.', preview: 'Guess what?' })
+    console.tron.display({ name: 'DANGER', value: 9001, important: true, preview: 'It\'s over 9000!' })
+    console.tron.display({ name: 'ORDER', preview: 'Here\'s your order...', value: {
+        app: {
+          color: 'green',
+          vegetable: 'spinach',
+          variant: 'baby',
+          salad: true
+        },
+        main: {
+          type: 'poutine'
+        },
+        when: new Date()
+      }
+    })
+    console.tron.display({ name: 'LIST', value: [1, 'a', true, new Date()], preview: '4 things' })
   }
 })
 
