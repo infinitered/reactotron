@@ -4,7 +4,7 @@ import AppStyles from '../Theme/AppStyles'
 import Timestamp from '../Shared/Timestamp'
 import { observer } from 'mobx-react'
 import { isNilOrEmpty } from 'ramdasauce'
-import { merge } from 'ramda'
+import { merge, equals } from 'ramda'
 import CommandToolbar from './CommandToolbar'
 
 const IconOpen = require('react-icons/lib/md/expand-more')
@@ -101,8 +101,7 @@ class Command extends Component {
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    return (this.props.command.id !== nextProps.command.id) ||
-      (this.state.isOpen !== nextState.isOpen)
+    return !(equals(nextProps, this.props) && equals(this.state, nextState))
   }
 
   handleToggleOpen () {
