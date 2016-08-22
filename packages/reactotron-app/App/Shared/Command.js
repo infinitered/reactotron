@@ -43,7 +43,7 @@ const Styles = {
   },
   titleTextInverse: {
     backgroundColor: Colors.tag,
-    color: Colors.foregroundLight,
+    color: Colors.tagComplement,
     borderRadius: 4,
     padding: '4px 8px'
   },
