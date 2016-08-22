@@ -19,8 +19,6 @@ const Styles = {
     paddingRight: 10,
     paddingTop: 5,
     paddingBottom: 5,
-    boxShadow: `0px 0px 30px ${Colors.glow}`,
-    zIndex: 100
   },
   content: {
     ...AppStyles.Layout.hbox,

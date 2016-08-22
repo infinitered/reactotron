@@ -7,6 +7,7 @@ const getStylingFromBase16 = base16Theme => ({
   roles: {
     background: base16Theme.base00, // base00 - Default Background
     backgroundSubtleLight: Color(base16Theme.base00).lighten(0.05).hslString(),
+    backgroundSubtleDark: Color(base16Theme.base00).darken(0.3).hslString(),
     backgroundLighter: base16Theme.base01, // base01 - Lighter Background (Used for status bars)
     line: Color(base16Theme.base01).darken(0.1).hslString(),
     backgroundHighlight: base16Theme.base02, // base02 - Selection Background
@@ -25,7 +26,7 @@ const getStylingFromBase16 = base16Theme => ({
     keyword: base16Theme.base0E, // base0E - Keywords, Storage, Selector, Markup Italic, Diff Changed
     warning: base16Theme.base0F, // base0F - Deprecated, Opening/Closing Embedded Language Tags e.g. <?php ?>
     chrome: Color(base16Theme.base00).lighten(0.1).hslString(),
-    chromeLine: Color(base16Theme.base00).lighten(0.25).hslString(),
+    chromeLine: Color(base16Theme.base00).lighten(0.25).hslString()
   },
   theme: base16Theme // TODO: figure out why I'm doing this?
 })
