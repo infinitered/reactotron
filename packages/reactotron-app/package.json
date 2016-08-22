@@ -91,7 +91,8 @@
     "react-tooltip": "^3.1.5",
     "reactotron-core-server": "^0.94.0",
     "socket.io": "1.4.8",
-    "source-map-support": "^0.4.2"
+    "source-map-support": "^0.4.2",
+    "stringify-object": "^2.4.0"
   },
   "devEngines": {
     "node": "6.x",
