@@ -9,7 +9,7 @@ class UI {
   /**
    * Which tab are we on?
    */
-  @observable tab = 'streaming'
+  @observable tab = 'timeline'
 
   /**
    * Targets state keys or values from the UI & commands.
@@ -45,14 +45,19 @@ class UI {
     Mousetrap.bind('command+k', this.reset)
     Mousetrap.bind('command+f', this.openStateFindDialog)
     Mousetrap.bind('command+d', this.openStateDispatchDialog)
-    Mousetrap.bind('command+/', this.toggleHelpDialog)
-    Mousetrap.bind('command+?', this.toggleHelpDialog)
     Mousetrap.bind('tab', this.toggleKeysValues)
     Mousetrap.bind('escape', this.popState)
     Mousetrap.bind('enter', this.submitCurrentForm)
     Mousetrap.bind('command+enter', this.submitCurrentFormDelicately)
-    Mousetrap.bind('command+\\', this.toggleWatchPanel)
     Mousetrap.bind('command+n', this.openStateWatchDialog)
+    Mousetrap.bind('command+1', this.switchTab.bind(this, 'timeline'))
+    Mousetrap.bind('command+2', this.switchTab.bind(this, 'subscriptions'))
+    Mousetrap.bind('command+/', this.switchTab.bind(this, 'help'))
+    Mousetrap.bind('command+?', this.switchTab.bind(this, 'help'))
+  }
+
+  @action switchTab = (newTab) => {
+    this.tab = newTab
   }
 
   @action popState = () => {

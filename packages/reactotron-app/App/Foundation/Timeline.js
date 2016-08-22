@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import getCommandComponent from '../Commands'
-import { map, reverse } from 'ramda'
-import { dotPath } from 'ramdasauce'
+import TimelineHeader from './TimelineHeader'
+import { map } from 'ramda'
 import AppStyles from '../Theme/AppStyles'
-import Colors from '../Theme/Colors'
 
 const Styles = {
   container: {
@@ -54,7 +53,9 @@ class Timeline extends Component {
     }
 
     return (
-      <div style={Styles.container} ref='container'>
+      <div style={Styles.container}>
+        <TimelineHeader />
+
         <div style={Styles.commands} ref='commands'>
           {map(renderItem, commands)}
         </div>
