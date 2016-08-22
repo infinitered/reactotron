@@ -17,6 +17,7 @@ const getStylingFromBase16 = base16Theme => ({
     foregroundLight: base16Theme.base06, // base06 - Light Foreground (Not often used)
     backgroundLight: base16Theme.base07, // base07 - Light Background (Not often used)
     tag: base16Theme.base08, // base08 - Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
+    tagComplement: Color(base16Theme.base08).lighten(0.65).hslString(),
     constant: base16Theme.base09, // base09 - Integers, Boolean, Constants, XML Attributes, Markup Link Url
     bold: base16Theme.base0A, // base0A - Classes, Markup Bold, Search Text Background
     glow: Color(base16Theme.base00).darken(0.2).clearer(0.2).hslString(),
