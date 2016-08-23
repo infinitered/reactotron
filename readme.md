@@ -37,8 +37,8 @@ Welcome to flavour country.
 
 # Usage
 
-* [Error Tracking](docs/plugin-track-global-errors.md) Plugin.
-* Redux Plugin
+* [Track Errors](docs/plugin-track-global-errors.md)
+* Integrate with [Redux](docs/plugin-redux.md)
 * Apisauce Plugin
 * Creating Your Own Plugins
 
