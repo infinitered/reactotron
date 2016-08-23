@@ -39,8 +39,10 @@ Welcome to flavour country.
 
 * [Track Errors](docs/plugin-track-global-errors.md)
 * Integrate with [Redux](docs/plugin-redux.md)
-* Apisauce Plugin
-* Creating Your Own Plugins
+* Networking monitoring with [Apisauce](docs/plugin-apisauce.md)
+* Start making fetch happen (plugin coming soon...)
+* Creating Your Own Plugins (tutorial coming soon...)
+* The JSON interface between client & server (coming soon...)
 
 
 # Change Log
