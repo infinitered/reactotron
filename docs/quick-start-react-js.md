@@ -11,7 +11,7 @@ Unzip & run.
 
 ## Humble Beginnings
 
-Did you BYOApp?  Skip to the next section.
+Did you B.Y.O.App?  Skip to the next section.
 
 Let’s use [create-react-app](https://github.com/facebookincubator/create-react-app) to bootstrap a new React JS app because, wow, is it fantastic.
 
@@ -104,7 +104,7 @@ Well, at this point, we have a complicated version of `console.log`.
 
 Where Reactotron starts to shine is when you start plugging into Redux, tracking global errors, and watching network requests.
 
-Check out our [Demo]('../packages/demo-react-js') for more goodies.
+Check out our [Demo](../packages/demo-react-js) for more goodies.
 
 ![Demo Web App](./images/quick-start-react-js/react-demo-js.jpg)
 
