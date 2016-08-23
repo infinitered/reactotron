@@ -1,7 +1,7 @@
 {
   "name": "reactotron-react-js",
   "version": "1.0.0",
-  "description": "A development tool to explore, inspect, and diagnosis your React JS/DOM apps.",
+  "description": "A development tool to explore, inspect, and diagnose your React JS/DOM apps.",
   "main": "dist/index.js",
   "scripts": {
     "test-nope": "ava",
