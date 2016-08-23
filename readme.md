@@ -49,6 +49,7 @@ Welcome to flavour country.
 
 # Change Log
 
+* August 23st, 2016 - [1.0.0](https://github.com/reactotron/reactotron/releases/tag/v1.0.0)
 * August 21st, 2016 - [0.94.0](https://github.com/reactotron/reactotron/releases/tag/v0.94.0)
 * August 18th, 2016 - [0.93.0](https://github.com/reactotron/reactotron/releases/tag/v0.93.0)
 * August 16th, 2016 - [0.92.0](https://github.com/reactotron/reactotron/releases/tag/v0.92.0)
