@@ -11,9 +11,15 @@ The goal of this plugin is to ensure all error will get thrown over to Reactotro
 
 Where you setup your Reactotron in your app, you also require the additional plugin.
 
-`import Reactotron, { trackGlobalErrors } from 'reactotron-react-native'`
+```js
+import Reactotron, { trackGlobalErrors } from 'reactotron-react-native'`
+```
+
 or
-`import Reactotron, { trackGlobalErrors } from 'reactotron-react-js'`
+
+```js
+import Reactotron, { trackGlobalErrors } from 'reactotron-react-js'
+```
 
 Next, we add it as a plugin to Reactotron.
 
