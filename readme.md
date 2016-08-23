@@ -1,6 +1,33 @@
-# Reactotron - 1.0
+# ![CLI](./docs/images/readme/Reactotron-64.png) Reactotron
 
-Still putting this together.
+Reactotron is a developer tool which allows you to peak under the kilt of your [React JS](https://facebook.github.io/react/) and [React Native](https://facebook.github.io/react-native/) apps.
+
+
+Use it to:
+
+* view your application state
+* show API requests & responses
+* perform quick performance benchmarks
+* subscribe to parts of your application state
+* display messages similar to console.log
+* track global errors with source-mapped stack traces
+* dispatch actions like a government-run mind control experiment
+
+You plug it into your app as a dev dependency so it adds nothing to your product builds.
+
+The app comes in two forms:
+
+### Desktop
+Reactotron on the left, demo React Native app on the right.
+
+![Desktop](./docs/images/readme/reactotron-demo-app.gif)
+
+### Command Line
+
+![CLI](./docs/images/readme/reactotron-demo-cli.gif)
+
+
+Welcome to flavour country.
 
 # Quick Start
 
@@ -8,30 +35,11 @@ Still putting this together.
 * See the [React Native Quick Start](docs/quick-start-react-native.md).
 
 
-# Changes
 
-### August 21st, 2016 - 0.94.0
+# Change Log
 
-* Adds tabs and a help screen. [@skellock](https://github.com/skellock) ([#147](https://github.com/reactotron/reactotron/pull/147))
-* Support for user-generated commands. [@skellock](https://github.com/skellock) ([#146](https://github.com/reactotron/reactotron/pull/146))
-* Adds tabs to the API response to organize it better. [@skellock](https://github.com/skellock) ([#145](https://github.com/reactotron/reactotron/pull/145))
-* Cleans up the tree view. [@skellock](https://github.com/skellock) ([#144](https://github.com/reactotron/reactotron/pull/144))
-* Upgrades subscription messages to diffs. [@skellock](https://github.com/skellock) ([#143](https://github.com/reactotron/reactotron/pull/143))
-* Edit and dispatch action button. [@skellock](https://github.com/skellock) ([#142](https://github.com/reactotron/reactotron/pull/142))
-* Fix vertical scrollbar causing jank. [@skellock](https://github.com/skellock) ([#141](https://github.com/reactotron/reactotron/pull/141))
-* Adds subscriptions to the timeline. [@skellock](https://github.com/skellock) ([#140](https://github.com/reactotron/reactotron/pull/140))
-* Replay action button. [@skellock](https://github.com/skellock) ([#139](https://github.com/reactotron/reactotron/pull/139))
-* Actions which are flat objects will be shown as a table. [@skellock](https://github.com/skellock) ([#138](https://github.com/reactotron/reactotron/pull/138))
-* Adds always on top to the menu. [@skellock](https://github.com/skellock) ([#137](https://github.com/reactotron/reactotron/pull/137))
+August 21st, 2016 - [0.94.0](https://github.com/reactotron/reactotron/releases/tag/v0.94.0)
 
+August 18th, 2016 - [0.93.0](https://github.com/reactotron/reactotron/releases/tag/v0.93.0)
 
-### August 18th, 2016 - 0.93.0
-
-* We have a help screen (command + /) and a new core contributor! [@gantman](https://github.com/gantman) ([#133](https://github.com/reactotron/reactotron/pull/133))
-* Commands can be flagged as important for better visibility. [@skellock](https://github.com/skellock) ([#134](https://github.com/reactotron/reactotron/pull/134))
-* Adds an electron code-signing script. [@skellock](https://github.com/skellock) ([#136](https://github.com/reactotron/reactotron/pull/136))
-
-### August 16th, 2016 - 0.92.0
-
-* Adds an Electron-based App.
-* Adds plugins.
+August 16th, 2016 - [0.92.0](https://github.com/reactotron/reactotron/releases/tag/v0.92.0)
