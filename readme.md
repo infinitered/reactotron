@@ -1,5 +1,7 @@
 # ![CLI](./docs/images/readme/Reactotron-64.png) Reactotron
 
+[![Join the chat at https://gitter.im/reactotron/reactotron](https://badges.gitter.im/reactotron/reactotron.svg)](https://gitter.im/reactotron/reactotron?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Reactotron is a developer tool which allows you to peak under the kilt of your [React JS](https://facebook.github.io/react/) and [React Native](https://facebook.github.io/react-native/) apps.
 
 
