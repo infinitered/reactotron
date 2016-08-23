@@ -18,6 +18,7 @@ You plug it into your app as a dev dependency so it adds nothing to your product
 The app comes in two forms:
 
 ### Desktop
+
 Reactotron on the left, demo React Native app on the right.
 
 ![Desktop](./docs/images/readme/reactotron-demo-app.gif)
@@ -34,12 +35,16 @@ Welcome to flavour country.
 * See the [React JS Quick Start](docs/quick-start-react-js.md).
 * See the [React Native Quick Start](docs/quick-start-react-native.md).
 
+# Usage
+
+* [Error Tracking](docs/plugin-track-global-errors.md) Plugin.
+* Redux Plugin
+* Apisauce Plugin
+* Creating Your Own Plugins
 
 
 # Change Log
 
-August 21st, 2016 - [0.94.0](https://github.com/reactotron/reactotron/releases/tag/v0.94.0)
-
-August 18th, 2016 - [0.93.0](https://github.com/reactotron/reactotron/releases/tag/v0.93.0)
-
-August 16th, 2016 - [0.92.0](https://github.com/reactotron/reactotron/releases/tag/v0.92.0)
+* August 21st, 2016 - [0.94.0](https://github.com/reactotron/reactotron/releases/tag/v0.94.0)
+* August 18th, 2016 - [0.93.0](https://github.com/reactotron/reactotron/releases/tag/v0.93.0)
+* August 16th, 2016 - [0.92.0](https://github.com/reactotron/reactotron/releases/tag/v0.92.0)
