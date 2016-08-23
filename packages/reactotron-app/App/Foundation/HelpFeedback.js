@@ -45,7 +45,7 @@ class HelpFeedback extends Component {
 
   constructor (props) {
     super(props)
-    this.openRepo = () => shell.openExternal('https://github.com/reactotron/reactotron/tree/next')
+    this.openRepo = () => shell.openExternal('https://github.com/reactotron/reactotron')
     this.feedback = () => shell.openExternal('https://github.com/reactotron/reactotron/issues/new')
     this.checkUpdates = () => shell.openExternal('https://github.com/reactotron/reactotron/releases')
     this.twitter = () => shell.openExternal('https://twitter.com/reactotron')
