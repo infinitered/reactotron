@@ -1,0 +1,55 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  cursor: default;
+  /*font-family: 'Fira Code', 'Inconsolata-dz for Powerline', 'Roboto', '-apple-system', 'San Francisco', 'Helvetica Neue', sans-serif;;*/
+  /*font-family: 'Inconsolata-dz for Powerline', 'Roboto', '-apple-system', 'San Francisco', 'Helvetica Neue', sans-serif;;*/
+  /*font-family: 'Roboto', '-apple-system', 'San Francisco', 'Helvetica Neue', sans-serif;;*/
+  /*font-family: 'Thonburi', '-apple-system', 'San Francisco', 'Helvetica Neue', sans-serif;;*/
+  font-family: '-apple-system', 'San Francisco', 'Helvetica Neue', sans-serif;;
+  /*font-family: 'Comic Sans MS';*/
+  font-size: 0.94em;
+  -webkit-user-select: none;
+}
+
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  border: 0px;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.25) !important;
+  border-radius: 4px;
+}
+
+/* leet hacks */
+a.closeButton--jss-0-1 { display: none; }
+
+*:focus {
+    outline: none;
+}
+
+@-webkit-keyframes fade-up {
+  0%   { -webkit-transform: translateY(5%); opacity: 0; }
+  100% { -webkit-transform: translateY(0%); opacity: 1; }
+}
+
+@-webkit-keyframes slide-up {
+  0%   { -webkit-transform: translateY(100%); }
+  100%   { -webkit-transform: translateY(0px); }
+}
+
+@-webkit-keyframes slide-down {
+  0%   { -webkit-transform: translateY(0px); }
+  100% { -webkit-transform: translateY(100%); }
+}
+
+.tooltipTheme {
+  background-color: 'green'
+}

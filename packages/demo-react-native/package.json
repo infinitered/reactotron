@@ -1,0 +1,32 @@
+{
+  "name": "DemoReactNative",
+  "version": "0.94.0",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "copy-internal-deps": "./copy-internal-deps.sh"
+  },
+  "dependencies": {
+    "apisauce": "^0.3.0",
+    "ramda": "^0.22.0",
+    "ramdasauce": "^1.0.0",
+    "react": "15.2.1",
+    "react-native": "^0.31.0",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.1",
+    "redux-logger": "^2.6.1",
+    "redux-saga": "^0.11.0",
+    "seamless-immutable": "^6.0.1",
+    "socket.io": "^1.4.8",
+    "reactotron-core-client": "^0.94.0",
+    "reactotron-react-native": "^0.94.0",
+    "reactotron-apisauce": "^0.94.0",
+    "reactotron-redux": "^0.94.0"
+  },
+  "globals": [
+    "__DEV__"
+  ],
+  "standard": {
+    "parser": "eslint"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "name": "reactotron-react-js",
+  "version": "0.94.0",
+  "description": "A development tool to explore, inspect, and diagnosis your React JS/DOM apps.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test-nope": "ava",
+    "watch": "ava --watch",
+    "coverage": "nyc ava",
+    "build": "rollup -c"
+  },
+  "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-react-js",
+  "author": "Steve Kellock",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reactotron/reactotron/issues"
+  },
+  "homepage": "https://reactotron.com",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "peerDependencies": {},
+  "devDependencies": {
+    "ava": "^0.16.0",
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.11.4",
+    "babel-eslint": "^6.1.2",
+    "babel-preset-es2015-rollup": "^1.2.0",
+    "babel-preset-stage-1": "^6.5.0",
+    "babelrc-rollup": "^3.0.0",
+    "mockery": "^1.7.0",
+    "nyc": "^8.1.0",
+    "rollup": "^0.34.8",
+    "rollup-plugin-babel": "^2.6.1",
+    "standard": "^7.1.2"
+  },
+  "ava": {
+    "require": [
+      "babel-core/register"
+    ],
+    "babel": {
+      "babelrc": false,
+      "presets": [
+        "es2015-rollup",
+        "stage-1"
+      ]
+    }
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "__DEV__"
+    ]
+  },
+  "dependencies": {
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0",
+    "stacktrace-js": "^1.3.1",
+    "socket.io": "^1.4.8",
+    "reactotron-core-client": "^0.94.0"
+  }
+}

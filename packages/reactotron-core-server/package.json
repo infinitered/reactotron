@@ -1,0 +1,60 @@
+{
+  "name": "reactotron-core-server",
+  "version": "0.94.0",
+  "description": "Grants Reactotron servers the ability to talk to a Reactotron client.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "ava",
+    "watch": "ava --watch",
+    "coverage": "nyc ava",
+    "build": "rollup -c"
+  },
+  "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-core-server",
+  "author": "Steve Kellock",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reactotron/reactotron/issues"
+  },
+  "homepage": "https://reactotron.com",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "devDependencies": {
+    "ava": "^0.16.0",
+    "babel-core": "^6.13.2",
+    "babel-eslint": "^6.1.2",
+    "babel-plugin-transform-async-to-generator": "^6.8.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-runtime": "^6.9.0",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-es2015-rollup": "^1.2.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "nyc": "^8.1.0",
+    "standard": "^7.1.2",
+    "rollup": "^0.34.8",
+    "rollup-plugin-babel": "^2.6.1"
+  },
+  "ava": {
+    "require": [
+      "babel-core/register"
+    ],
+    "babel": {
+      "babelrc": false,
+      "presets": [
+        "es2015",
+        "stage-1"
+      ]
+    }
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "dependencies": {
+    "mobx": "^2.4.3",
+    "ramda": "^0.22.1",
+    "ramdasauce": "^1.1.0",
+    "socket.io": "^1.4.8"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "name": "reactotron-apisauce",
+  "version": "0.94.0",
+  "description": "A Reactotron plugin for Apisauce.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "ava",
+    "watch": "ava --watch",
+    "coverage": "nyc ava",
+    "build": "rollup -c"
+  },
+  "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-apisauce",
+  "author": "Steve Kellock",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reactotron/reactotron/issues"
+  },
+  "homepage": "https://reactotron.com",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "peerDependencies": {},
+  "devDependencies": {
+    "ava": "^0.16.0",
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.13.2",
+    "babel-eslint": "^6.1.2",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-es2015-rollup": "^1.2.0",
+    "babel-preset-stage-1": "^6.13.0",
+    "json-server": "^0.8.17",
+    "mockery": "^1.7.0",
+    "nyc": "^8.1.0",
+    "rollup": "^0.34.8",
+    "rollup-plugin-babel": "^2.6.1",
+    "standard": "^7.1.2"
+  },
+  "ava": {
+    "require": [
+      "babel-core/register"
+    ],
+    "babel": {
+      "babelrc": false,
+      "presets": [
+        "es2015",
+        "stage-1"
+      ]
+    }
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "dependencies": {
+    "apisauce": "^0.3.0",
+    "ramda": "^0.22.1",
+    "ramdasauce": "^1.1.0",
+    "reactotron-core-client": "^0.94.0"
+  }
+}

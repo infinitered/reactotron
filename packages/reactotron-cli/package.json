@@ -1,0 +1,59 @@
+{
+  "name": "reactotron-cli",
+  "version": "0.94.0",
+  "description": "Reactotron terminal mode engage!",
+  "bin": {
+    "reactotron": "./dist/index.js"
+  },
+  "scripts": {
+    "test": "ava",
+    "watch": "ava --watch",
+    "coverage": "nyc ava",
+    "start": "babel-node src/index.js",
+    "build": "rollup -c"
+  },
+  "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-cli",
+  "author": "Steve Kellock",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reactotron/reactotron/issues"
+  },
+  "homepage": "https://reactotron.com",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "devDependencies": {
+    "ava": "^0.16.0",
+    "babel-core": "^6.13.2",
+    "babel-eslint": "^6.1.2",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-es2015-rollup": "^1.2.0",
+    "babel-preset-stage-1": "^6.13.0",
+    "nyc": "^8.1.0",
+    "rollup": "^0.34.8",
+    "rollup-plugin-babel": "^2.6.1",
+    "standard": "^7.1.2"
+  },
+  "ava": {
+    "require": [
+      "babel-core/register"
+    ],
+    "babel": "inherit"
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "dependencies": {
+    "mobx": "^2.4.3",
+    "ramda": "^0.22.1",
+    "ramdasauce": "^1.1.0",
+    "strman": "^1.0.1",
+    "blessed": "^0.1.81",
+    "gemoji": "^1.0.0",
+    "moment": "^2.12.0",
+    "reactotron-core-server": "^0.94.0"
+  }
+}
