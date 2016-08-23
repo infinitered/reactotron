@@ -98,6 +98,35 @@ Let's change our log statement to:
 Reactotron.log({ numbers: [1, 2, 3], boolean: false, nested: { here: 'we go' } })
 ```
 
+Or this
+
+```js
+Reactotron.warn('*glares*')
+```
+
+Or this
+
+```js
+Reactotron.error('Now you\'ve done it.')
+```
+
+Or this
+
+```js
+Reactotron.display({
+  name: 'KNOCK KNOCK',
+  preview: 'Who\'s there?',
+  value: 'Orange.'
+})
+
+Reactotron.display({
+  name: 'ORANGE',
+  preview: 'Who?',
+  value: 'Orange you glad you don\'t know me in real life?',
+  important: true
+})
+```
+
 ## Now What?
 
 Well, at this point, we have a complicated version of `console.log`.  
