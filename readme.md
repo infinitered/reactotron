@@ -4,11 +4,18 @@
 
 Reactotron is a developer tool which allows you to peak under the kilt of your [React JS](https://facebook.github.io/react/) and [React Native](https://facebook.github.io/react-native/) apps.
 
-### Download
+# Download
 
-[Download Mac App](https://github.com/reactotron/reactotron/releases/download/v1.0.0/Reactotron.app.zip)
+[Download OS X App](https://github.com/reactotron/reactotron/releases/download/v1.0.0/Reactotron.app.zip) from Github...
 
-### About
+Or Install CLI with:
+
+```
+npm install -g reactotron-cli
+```
+
+
+# About
 
 Use it to:
 
