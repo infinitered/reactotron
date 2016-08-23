@@ -4,8 +4,8 @@ Still putting this together.
 
 # Quick Start
 
-See our [React JS Quick Start]('docs/quick-start-react-js').
-See our [React Native Quick Start]('docs/quick-start-react-native').  Coming soon.
+See our [React JS Quick Start](docs/quick-start-react-js.md).
+See our [React Native Quick Start](docs/quick-start-react-native.md).  Coming soon.
 
 
 # Changes
