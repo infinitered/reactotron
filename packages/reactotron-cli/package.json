@@ -10,7 +10,7 @@
     "watch": "ava --watch",
     "coverage": "nyc ava",
     "start": "babel-node src/index.js",
-    "build": "rollup -c"
+    "build": "rollup -c && mv dist/index.js dist/index.js.tmp && echo '#!/usr/bin/env node\n' > ./dist/index.js && cat dist/index.js.tmp >> ./dist/index.js && chmod +x ./dist/index.js"
   },
   "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-cli",
   "author": "Steve Kellock",
