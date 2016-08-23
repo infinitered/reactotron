@@ -1,6 +1,6 @@
 {
   "name": "demo-react-js",
-  "version": "0.94.0",
+  "version": "1.0.0",
   "private": true,
   "devDependencies": {
     "react-scripts": "0.2.1"
@@ -12,10 +12,10 @@
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-redux": "^4.4.5",
-    "reactotron-apisauce": "^0.94.0",
-    "reactotron-core-client": "^0.94.0",
-    "reactotron-react-js": "^0.94.0",
-    "reactotron-redux": "^0.94.0",
+    "reactotron-apisauce": "^1.0.0",
+    "reactotron-core-client": "^1.0.0",
+    "reactotron-react-js": "^1.0.0",
+    "reactotron-redux": "^1.0.0",
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
     "redux-saga": "^0.11.0",

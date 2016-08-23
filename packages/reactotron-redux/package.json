@@ -1,6 +1,6 @@
 {
   "name": "reactotron-redux",
-  "version": "0.94.0",
+  "version": "1.0.0",
   "description": "A Reactotron plugin for Redux.",
   "main": "dist/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/reactotron/reactotron/issues"
   },
-  "homepage": "https://reactotron.com",
+  "homepage": "https://github.com/reactotron/reactotron",
   "files": [
     "dist",
     "LICENSE",
@@ -57,6 +57,6 @@
     "redux": "^3.5.2",
     "ramda": "^0.22.1",
     "ramdasauce": "^1.1.0",
-    "reactotron-core-client": "^0.94.0"
+    "reactotron-core-client": "^1.0.0"
   }
 }

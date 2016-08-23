@@ -1,7 +1,7 @@
 {
   "name": "reactotron-react-native",
-  "version": "0.94.0",
-  "description": "A development tool to explore, inspect, and diagnosis your React Native apps.",
+  "version": "1.0.0",
+  "description": "A development tool to explore, inspect, and diagnose your React Native apps.",
   "main": "dist/index.js",
   "scripts": {
     "test": "ava",
@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/reactotron/reactotron/issues"
   },
-  "homepage": "https://reactotron.com",
+  "homepage": "https://github.com/reactotron/reactotron",
   "files": [
     "dist",
     "LICENSE",
@@ -65,6 +65,6 @@
     "ramda": "^0.22.1",
     "ramdasauce": "^1.1.0",
     "socket.io": "^1.4.8",
-    "reactotron-core-client": "^0.94.0"
+    "reactotron-core-client": "^1.0.0"
   }
 }
