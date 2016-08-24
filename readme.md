@@ -6,7 +6,7 @@ A CLI and OS X app for inspecting your [React JS](https://facebook.github.io/rea
 
 # Download
 
-[Download OS X App](https://github.com/reactotron/reactotron/releases/download/v1.0.0/Reactotron.app.zip) from Github...
+[Download OS X App](https://github.com/reactotron/reactotron/releases/download/v1.0.0/Reactotron.app.zip) from GitHub...
 
 Or Install CLI with:
 
