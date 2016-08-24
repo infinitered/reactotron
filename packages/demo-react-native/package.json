@@ -8,20 +8,21 @@
   },
   "dependencies": {
     "apisauce": "^0.3.0",
+    "es6-symbol": "^3.1.0",
     "ramda": "^0.22.0",
     "ramdasauce": "^1.0.0",
     "react": "15.2.1",
     "react-native": "^0.31.0",
     "react-redux": "^4.4.5",
+    "reactotron-apisauce": "^1.0.0",
+    "reactotron-core-client": "^1.0.0",
+    "reactotron-react-native": "^1.0.0",
+    "reactotron-redux": "^1.0.0",
     "redux": "^3.5.1",
     "redux-logger": "^2.6.1",
     "redux-saga": "^0.11.0",
     "seamless-immutable": "^6.0.1",
-    "socket.io": "^1.4.8",
-    "reactotron-core-client": "^1.0.0",
-    "reactotron-react-native": "^1.0.0",
-    "reactotron-apisauce": "^1.0.0",
-    "reactotron-redux": "^1.0.0"
+    "socket.io": "^1.4.8"
   },
   "globals": [
     "__DEV__"
