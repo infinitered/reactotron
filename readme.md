@@ -61,7 +61,18 @@ Welcome to flavour country.
 
 # Change Log
 
-* August 23st, 2016 - [1.0.0](https://github.com/reactotron/reactotron/releases/tag/v1.0.0)
+* August 23rd, 2016 - [1.0.1](https://github.com/reactotron/reactotron/releases/tag/v1.0.1)
+* August 23rd, 2016 - [1.0.0](https://github.com/reactotron/reactotron/releases/tag/v1.0.0)
 * August 21st, 2016 - [0.94.0](https://github.com/reactotron/reactotron/releases/tag/v0.94.0)
 * August 18th, 2016 - [0.93.0](https://github.com/reactotron/reactotron/releases/tag/v0.93.0)
 * August 16th, 2016 - [0.92.0](https://github.com/reactotron/reactotron/releases/tag/v0.92.0)
+* August 9th, 2016 - [0.9.0](https://github.com/reactotron/reactotron/releases/tag/v0.9.0)
+* July 29th, 2016 - [0.8.0](https://github.com/reactotron/reactotron/releases/tag/v0.8.0)
+* July 15th, 2016 - [0.7.0](https://github.com/reactotron/reactotron/releases/tag/v0.7.0)
+* April 27th, 2016 - [0.6.1](https://github.com/reactotron/reactotron/releases/tag/v0.6.1)
+* April 24th, 2016 - [0.6.0](https://github.com/reactotron/reactotron/releases/tag/v0.6.0)
+* April 23rd, 2016 - [0.5.0](https://github.com/reactotron/reactotron/releases/tag/v0.5.0)
+* April 23rd, 2016 - [0.4.0](https://github.com/reactotron/reactotron/releases/tag/v0.4.0)
+* April 22nd, 2016 - [0.3.0](https://github.com/reactotron/reactotron/releases/tag/v0.3.0)
+* April 21st, 2016 - [0.2.0](https://github.com/reactotron/reactotron/releases/tag/v0.2.0)
+* April 20th, 2016 - [0.2.0](https://github.com/reactotron/reactotron/releases/tag/v0.1.0)
