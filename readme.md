@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/reactotron/reactotron](https://badges.gitter.im/reactotron/reactotron.svg)](https://gitter.im/reactotron/reactotron?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Explore, inspect, and diagnose your [React JS](https://facebook.github.io/react/) and [React Native](https://facebook.github.io/react-native/) apps.
+A CLI and OS X app for inspecting your [React JS](https://facebook.github.io/react/) and [React Native](https://facebook.github.io/react-native/) apps.
 
 # Download
 
