@@ -59,6 +59,12 @@ Welcome to flavour country.
 * The JSON interface between client & server (coming soon...)
 
 
+# Special Thanks
+
+Reactotron is sponsored by [Infinite Red](https://infinite.red) who encourage this type of open-source hacking & sharing.  They specialize in React, React Native, and Elixir. <3
+
+[<img src='https://infinite.red/images/ir-logo-7ebf9ed9d02e2805bb2c94309efa5176.svg' />](https://infinite.red)
+
 # Change Log
 
 * August 23rd, 2016 - [1.0.1](https://github.com/reactotron/reactotron/releases/tag/v1.0.1)
