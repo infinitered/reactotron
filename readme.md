@@ -74,6 +74,32 @@ Welcome to flavour country.
 * The JSON interface between client & server (coming soon...)
 
 
+# Tips
+
+### Remote JS Debugging on Android
+
+You'll need to turn of remote JS debugging as it hijacks the websocket channel between your app & Reactotron.  I'm going to look into options.  :|
+
+
+### Reverse Forwarding on Android
+
+If you're running an android emulator and Android 5.x+ (or you're tethered on your device), then you'll need to forward port 9090 from your device back to your computer.
+
+```sh
+adb reverse tcp:9090 tcp:9090
+```
+
+### Running in Production Builds
+
+Although I don't recommend this for security & privacy reasons, you may actually want to run Reactotron in a production build (please please don't ship to the AppStore with it enabled.  <3).
+
+A few changes you'll need to make is to install Reactotron with `--save` instead of `--save-dev`.  From there, you're good to go.  But you also might want to consider calling `Reactotron.connect()` if you're in `__DEV__` mode.
+
+Here's a few us chatting about this subject:
+
+https://github.com/reactotron/reactotron/issues/173
+
+
 # Special Thanks
 
 Reactotron is sponsored by [Infinite Red](https://infinite.red) who encourage this type of open-source hacking & sharing.  They specialize in React, React Native, and Elixir. <3
