@@ -30,7 +30,7 @@ app.on('ready', () => {
     menuItem.checked = nextValue
   }
 
-  mainWindow.loadURL(`file://${__dirname}/App/App.html`)
+  mainWindow.loadURL(`file://${__dirname}/App/app.html`)
 
   mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.show()

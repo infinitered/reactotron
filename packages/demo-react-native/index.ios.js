@@ -1,4 +1,5 @@
 // imported from a file to ensure the connect statement gets run first!
+import 'es6-symbol/implement'
 import React, { Component } from 'react'
 import { AppRegistry } from 'react-native'
 import './App/Config/ReactotronConfig'
