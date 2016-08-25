@@ -4,16 +4,31 @@
 
 A CLI and OS X app for inspecting your [React JS](https://facebook.github.io/react/) and [React Native](https://facebook.github.io/react-native/) apps.
 
-# Download
+# Installing
 
-[Download OS X App](https://github.com/reactotron/reactotron/releases/download/v1.0.0/Reactotron.app.zip) from GitHub...
+## Install CLI with NPM
 
-Or Install CLI with:
-
-```
+```sh
 npm install -g reactotron-cli
 ```
 
+## Install OS X application
+
+[Download OS X App](https://github.com/reactotron/reactotron/releases/download/v1.0.0/Reactotron.app.zip) from GitHub release and drop the Reactotron.app to the Applications folder.
+
+### Using Homebrew
+
+Reactotron is also available via [Homebrew Cask](https://caskroom.github.io/) package manager. To ensure you get the latest version, update Homebrew first:
+
+```sh
+brew update
+```
+
+Then simply type:
+
+```
+brew cask install reactotron
+```
 
 # About
 
