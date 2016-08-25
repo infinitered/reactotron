@@ -10,7 +10,7 @@ const config = {
 
   entry: [
     'webpack-hot-middleware/client?path=http://localhost:3001/__webpack_hmr',
-    './App/Index'
+    './App/index'
   ],
 
   output: {
