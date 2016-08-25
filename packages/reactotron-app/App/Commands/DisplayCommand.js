@@ -4,6 +4,15 @@ import Content from '../Shared/Content'
 
 const COMMAND_TITLE = 'DISPLAY'
 
+const Styles = {
+  imageContainer: {
+  },
+  image: {
+    maxWidth: '100%',
+    maxHeight: '100%'
+  }
+}
+
 class DisplayCommand extends Component {
 
   static propTypes = {
@@ -17,11 +26,16 @@ class DisplayCommand extends Component {
   render () {
     const { command } = this.props
     const { payload, important } = command
-    const { name, value, preview } = payload
+    const { name, value, image, preview } = payload
 
     return (
       <Command command={command} title={name || COMMAND_TITLE} important={important} preview={preview}>
-        <Content value={value} />
+        {value && <Content value={value} />}
+        {image &&
+          <div style={Styles.imageContainer}>
+            <img style={Styles.image} src={`data:image/png;base64,${image.data}`} />
+          </div>
+        }
       </Command>
     )
   }

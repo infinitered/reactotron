@@ -126,8 +126,8 @@ export class Client {
   /**
    * Sends a custom command to the server to displays nicely.
    */
-  display ({ name, value, preview, important = false }) {
-    this.send('display', { name, value, preview }, important)
+  display ({ name, value, preview, image, important = false }) {
+    this.send('display', { name, value, preview, image }, important)
   }
 
   /**

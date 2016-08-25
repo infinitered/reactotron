@@ -29,5 +29,8 @@
   ],
   "standard": {
     "parser": "eslint"
+  },
+  "devDependencies": {
+    "react-native-view-shot": "skellock/react-native-view-shot#all"
   }
 }

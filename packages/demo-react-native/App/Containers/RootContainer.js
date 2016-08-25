@@ -10,6 +10,7 @@ import { Actions as RepoActions } from '../Redux/RepoRedux'
 import { Actions as LogoActions } from '../Redux/LogoRedux'
 import makeErrorForFun from '../Lib/ErrorMaker'
 import { keys, map, join } from 'ramda'
+import RNViewShot from 'react-native-view-shot'
 
 export class RootContainer extends Component {
 
@@ -19,11 +20,21 @@ export class RootContainer extends Component {
     this.handlePressDebug = () => console.tron.debug('This is a debug message')
     this.handlePressWarn = () => console.tron.warn('This is a warn message')
     this.handlePressError = () => console.tron.error('This is a error message')
-
+    this.handleScreenshot = this.handleScreenshot.bind(this)
   }
 
   handlePress () {
     console.tron.log('A touchable was pressed.🔥🦄')
+  }
+
+  handleScreenshot () {
+    RNViewShot
+      .takeSnapshot(this.refs.foo, { base64: true })
+      .then(
+        data => console.tron.display({ name: 'Screenshot', preview: 'A Screenshot', image: { data } }),
+        error => console.tron.error('Oops, snapshot failed', error)
+      )
+
   }
 
   render () {
@@ -31,7 +42,7 @@ export class RootContainer extends Component {
     const { reset, faster, slower, bigger, smaller } = this.props
 
     return (
-      <ScrollView style={Styles.container} contentContainerStyle={Styles.content}>
+      <ScrollView style={Styles.container} contentContainerStyle={Styles.content} ref='foo'>
         <View style={Styles.titleContainer}>
           <Text style={Styles.title}>Awesome Github Viewer!</Text>
           <Text style={Styles.subtitle}>Reactotron Demo</Text>
@@ -50,6 +61,7 @@ export class RootContainer extends Component {
             reset={reset}
           />
           <Button text='Error Tyme!' onPress={this.props.bomb} />
+          <Button text='Screenshot' onPress={this.handleScreenshot} />
         </View>
       </ScrollView>
     )
