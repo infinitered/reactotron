@@ -8,7 +8,7 @@ A CLI and OS X app for inspecting your [React JS](https://facebook.github.io/rea
 
 ## Install CLI with NPM
 
-```
+```sh
 npm install -g reactotron-cli
 ```
 
@@ -20,11 +20,15 @@ npm install -g reactotron-cli
 
 Reactotron is also available via [Homebrew Cask](https://caskroom.github.io/) package manager. To ensure you get the latest version, update Homebrew first:
 
-`brew update`
+```sh
+brew update
+```
 
 Then simply type:
 
-`brew cask install reactotron`
+```
+brew cask install reactotron
+```
 
 # About
 
