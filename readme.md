@@ -44,7 +44,7 @@ Use it to:
 
 You plug it into your app as a dev dependency so it adds nothing to your product builds.
 
-The app comes in two forms:
+The app comes in two forms, which share the same [back end](https://github.com/reactotron/reactotron/tree/master/packages/reactotron-core-server):
 
 ### Desktop
 
