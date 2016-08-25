@@ -20,7 +20,7 @@ import tronsauce from 'reactotron-apisauce'
 
 Reactotron
   .configure()
-  .use(tronsauce) // <-- here we go!!!
+  .use(tronsauce()) // <-- here we go!!!
   .connect()
 
 // meanwhile, in a different file, when you get a response back
