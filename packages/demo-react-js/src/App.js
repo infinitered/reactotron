@@ -37,10 +37,6 @@ class App extends Component {
     fetching: PropTypes.bool
   }
 
-  componentWillMount () {
-    // this.props.startup()
-  }
-
   renderError () {
     const { error } = this.props
     return (
@@ -126,13 +122,13 @@ const mapDispatchToProps = dispatch => ({
   requestRedux: () => dispatch(RepoActions.request('reactjs/redux')),
   requestBad: () => dispatch(RepoActions.request('zzzz/zzzzz')),
   handleLogoPress: () => {
-    console.tron.log('wait for it...')
+    if (console.tron) console.tron.log('wait for it...')
     setTimeout(() => { makeErrorForFun('boom') }, 500)
   },
   display: () => {
-    console.tron.display({ name: 'HELLO', value: 'You\'re awesome.', preview: 'Guess what?' })
-    console.tron.display({ name: 'DANGER', value: 9001, important: true, preview: 'It\'s over 9000!' })
-    console.tron.display({ name: 'ORDER', preview: 'Here\'s your order...', value: {
+    if (console.tron) console.tron.display({ name: 'HELLO', value: 'You\'re awesome.', preview: 'Guess what?' })
+    if (console.tron) console.tron.display({ name: 'DANGER', value: 9001, important: true, preview: 'It\'s over 9000!' })
+    if (console.tron) console.tron.display({ name: 'ORDER', preview: 'Here\'s your order...', value: {
         app: {
           color: 'green',
           vegetable: 'spinach',
@@ -145,7 +141,7 @@ const mapDispatchToProps = dispatch => ({
         when: new Date()
       }
     })
-    console.tron.display({ name: 'LIST', value: [1, 'a', true, new Date()], preview: '4 things' })
+    if (console.tron) console.tron.display({ name: 'LIST', value: [1, 'a', true, new Date()], preview: '4 things' })
   }
 })
 

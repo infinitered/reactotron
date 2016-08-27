@@ -4,9 +4,9 @@ import createLogger from 'redux-logger'
 import createSagaMiddleware from 'redux-saga'
 import rootReducer from './RootReducer'
 import rootSaga from '../Sagas'
-import Reactotron from 'reactotron-react-js'
-import createTronohancer from 'reactotron-redux'
 import { Types as LogoTypes } from './Logo.redux'
+const Reactotron = process.env.NODE_ENV !== 'production' && require('reactotron-react-js').default
+const createReactotronEnhancer = process.env.NODE_ENV !== 'production' && require('reactotron-redux')
 
 // the logger master switch
 const USE_LOGGING = false
@@ -21,16 +21,28 @@ const logger = createLogger({
 
 // a function which can create our store and auto-persist the data
 export default () => {
+  // create the saga middleware
   const sagaMiddleware = createSagaMiddleware()
-  const tracker = createTronohancer(Reactotron, {
-    isActionImportant: action => action.type === LogoTypes.Size && action.size > 100
-  })
-  const enhancers = compose(
-    tracker,
-    applyMiddleware(logger, sagaMiddleware)
-  )
 
-  const store = createStore(rootReducer, enhancers)
+  // setup an array to place our enhancers
+  const enhancers = []
+
+  // unless we're in production, add the Reactotron enhancer to the list
+  if (process.env.NODE_ENV !== 'production') {
+    const reactotronEnhancer = createReactotronEnhancer(Reactotron, {
+      isActionImportant: action => action.type === LogoTypes.Size && action.size > 100
+    })
+    enhancers.push(reactotronEnhancer)
+  }
+
+  // add our normal middleware to the list
+  enhancers.push(applyMiddleware(logger, sagaMiddleware))
+
+  // create the store with a root reducer & a composed list of enhancers
+  const store = createStore(rootReducer, compose(...enhancers))
+
+  // kick off the root saga
   sagaMiddleware.run(rootSaga)
+
   return store
 }

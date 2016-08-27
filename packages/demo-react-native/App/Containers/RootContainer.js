@@ -11,7 +11,7 @@ import { Actions as LogoActions } from '../Redux/LogoRedux'
 import makeErrorForFun from '../Lib/ErrorMaker'
 import { keys, map, join } from 'ramda'
 
-export default class RootContainer extends Component {
+export class RootContainer extends Component {
 
   constructor (props) {
     super(props)
