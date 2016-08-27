@@ -22,6 +22,7 @@ class RootContainer extends Component {
     this.handlePressError = () => console.tron.error('This is a error message')
     this.handleScreenshot = this.handleScreenshot.bind(this)
     this.handleSendCatPicture = this.handleSendCatPicture.bind(this)
+    console.tron.display({ name: 'Startup', value: 'Arise my champion.' })
   }
 
   handlePress () {

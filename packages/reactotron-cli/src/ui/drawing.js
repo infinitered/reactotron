@@ -30,6 +30,24 @@ export default (layout, config) => {
     layout.screen.render()
   }
 
+  // generic message display
+  const display = ({ value = '', name = '' }) => {
+    const time = timeStamp()
+
+    if (R.is(Object, value)) {
+      layout.logBox.log(`${time} [${name}]`)
+      layout.logBox.log(value)
+      layout.logBox.log('')
+    } else {
+      if (RS.isNilOrEmpty(name)) {
+        layout.logBox.log(`${time} ${value}`)
+      } else {
+        layout.logBox.log(`${time} [${name}] ${value}`)
+      }
+    }
+    layout.screen.render()
+  }
+
   const log = (message, level = 'debug') => {
     const time = timeStamp()
     if (R.is(Object, message)) {
@@ -88,6 +106,7 @@ export default (layout, config) => {
     drawStateKeysResponse,
     drawStateValuesResponse,
     drawStateValuesChange,
-    log
+    log,
+    display
   }
 }

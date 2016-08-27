@@ -18,6 +18,7 @@ export default (context) => {
   // a list of commands & functions to call when we see 'em'
   const subscriptions = [
     { command: 'log', handler: ({ message, level }) => ui.log(message, level) },
+    { command: 'display', handler: (displayOptions) => ui.display(displayOptions) },
     { command: 'api.response', handler: ui.drawApiResponse },
     { command: 'benchmark.report', handler: ui.drawBenchmarkReport },
     { command: 'state.action.complete', handler: ui.drawStateActionComplete },
