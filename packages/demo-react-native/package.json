@@ -13,6 +13,7 @@
     "ramdasauce": "^1.0.0",
     "react": "15.3.1",
     "react-native": "^0.32.0",
+    "react-native-view-shot": "^1.1.0",
     "react-redux": "^4.4.5",
     "reactotron-apisauce": "^1.0.0",
     "reactotron-core-client": "^1.0.0",
@@ -30,7 +31,5 @@
   "standard": {
     "parser": "eslint"
   },
-  "devDependencies": {
-    "react-native-view-shot": "skellock/react-native-view-shot#all"
-  }
+  "devDependencies": {}
 }

@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import Command from '../Shared/Command'
 import Content from '../Shared/Content'
+import Colors from '../Theme/Colors'
 
-const COMMAND_TITLE = 'DISPLAY'
+const COMMAND_TITLE = 'IMAGE'
 
 const Styles = {
   imageContainer: {
@@ -10,6 +11,17 @@ const Styles = {
   image: {
     maxWidth: '100%',
     maxHeight: '100%'
+  },
+  caption: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    fontSize: 'larger'
+  },
+  dimensions: {
+    color: Colors.constant
+  },
+  filename: {
+    color: Colors.highlight
   }
 }
 
@@ -26,16 +38,18 @@ class DisplayCommand extends Component {
   render () {
     const { command } = this.props
     const { payload, important } = command
-    const { name, value, image, preview } = payload
+
+    const { uri, preview, caption, width, height, filename } = payload
+    const dimensions = width && height && `${width} x ${height}`
 
     return (
       <Command command={command} title={name || COMMAND_TITLE} important={important} preview={preview}>
-        {value && <Content value={value} />}
-        {image &&
-          <div style={Styles.imageContainer}>
-            <img style={Styles.image} src={image.uri} />
-          </div>
-        }
+        <div style={Styles.imageContainer}>
+          <img style={Styles.image} src={uri} />
+          {caption && <div style={Styles.caption}>{caption}</div>}
+          {dimensions && <div style={Styles.dimensions}>{dimensions}</div>}
+          {filename && <div style={Styles.filename}>{filename}</div>}
+        </div>
       </Command>
     )
   }

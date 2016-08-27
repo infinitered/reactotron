@@ -1,6 +1,7 @@
 import R from 'ramda'
 import validate from './validate'
 import logger from './plugins/logger'
+import image from './plugins/image'
 import benchmark from './plugins/benchmark'
 import stateResponses from './plugins/state-responses'
 import apiResponse from './plugins/api-response'
@@ -8,6 +9,7 @@ import { start } from './stopwatch'
 export { start } from './stopwatch'
 
 export const CorePlugins = [
+  image(),
   logger(),
   benchmark(),
   stateResponses(),

@@ -12,7 +12,7 @@ import makeErrorForFun from '../Lib/ErrorMaker'
 import { keys, map, join } from 'ramda'
 import RNViewShot from 'react-native-view-shot'
 
-export class RootContainer extends Component {
+class RootContainer extends Component {
 
   constructor (props) {
     super(props)
@@ -21,17 +21,29 @@ export class RootContainer extends Component {
     this.handlePressWarn = () => console.tron.warn('This is a warn message')
     this.handlePressError = () => console.tron.error('This is a error message')
     this.handleScreenshot = this.handleScreenshot.bind(this)
+    this.handleSendCatPicture = this.handleSendCatPicture.bind(this)
   }
 
   handlePress () {
     console.tron.log('A touchable was pressed.🔥🦄')
   }
 
+  handleSendCatPicture () {
+    console.tron.image({
+      uri: 'https://placekitten.com/g/400/400',
+      preview: 'placekitten.com',
+      filename: 'cat.jpg',
+      width: 400,
+      height: 400,
+      caption: 'D\'awwwwwww'
+    })
+  }
+
   handleScreenshot () {
     RNViewShot
-      .takeSnapshot(this.refs.foo, { base64: true })
+      .takeSnapshot(this.refs.foo, { result: 'data-uri' })
       .then(
-        data => console.tron.display({ name: 'Screenshot', preview: 'A Screenshot', image: { data } }),
+        uri => console.tron.display({ name: 'Screenshot', preview: 'App screenshot', image: { uri } }),
         error => console.tron.error('Oops, snapshot failed', error)
       )
 
@@ -60,8 +72,11 @@ export class RootContainer extends Component {
             bigger={bigger} smaller={smaller} faster={faster} slower={slower}
             reset={reset}
           />
-          <Button text='Error Tyme!' onPress={this.props.bomb} />
-          <Button text='Screenshot' onPress={this.handleScreenshot} />
+          <View style={Styles.buttons}>
+            <Button text='Error Tyme!' onPress={this.props.bomb} />
+            <Button text='Screenshot' onPress={this.handleScreenshot} />
+            <Button text='Cats!' onPress={this.handleSendCatPicture} />
+          </View>
         </View>
       </ScrollView>
     )
