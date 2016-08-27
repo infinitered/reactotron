@@ -1,6 +1,7 @@
 import R from 'ramda'
 import validate from './validate'
 import logger from './plugins/logger'
+import image from './plugins/image'
 import benchmark from './plugins/benchmark'
 import stateResponses from './plugins/state-responses'
 import apiResponse from './plugins/api-response'
@@ -8,6 +9,7 @@ import { start } from './stopwatch'
 export { start } from './stopwatch'
 
 export const CorePlugins = [
+  image(),
   logger(),
   benchmark(),
   stateResponses(),
@@ -126,8 +128,8 @@ export class Client {
   /**
    * Sends a custom command to the server to displays nicely.
    */
-  display ({ name, value, preview, important = false }) {
-    this.send('display', { name, value, preview }, important)
+  display ({ name, value, preview, image, important = false }) {
+    this.send('display', { name, value, preview, image }, important)
   }
 
   /**

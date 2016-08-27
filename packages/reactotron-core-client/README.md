@@ -258,6 +258,22 @@ and I need to research what these will look like.
 
 Also, how is source maps going to factor in?
 
+### image
+
+Send from the client to the server to pass an image.  The uri field is required
+and is a `data-uri`.  This means, an ordinary http link will work, but as will embedding the image inline.
+
+```json
+{
+  "uri": "http://placekitten.com/g/400/400",
+  "preview": "placekitten.com!",
+  "filename": "cat.jpg",
+  "width": 400,
+  "height": 400,
+  "caption": "D'awwwwwww",
+}
+```
+
 ### state.action.complete
 
 Sent from the client to the server when an action is complete.  It's up to you
@@ -418,6 +434,9 @@ Sent from the client to the server to provide a way to show "custom" commands.
     "vegetable": "spinach",
     "variant": "baby",
     "salad": true
+  },
+  "image": {
+    "uri": "http://placekitten.com/g/400/400"
   },
   "important": true,
   "preview": "What's in my appetizer?"

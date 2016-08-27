@@ -2,6 +2,7 @@
 export default [
   'client.intro',
   'log',
+  'image',
   'state.action.complete',
   'state.values.response',
   'state.keys.response',

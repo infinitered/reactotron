@@ -10,8 +10,9 @@ import { Actions as RepoActions } from '../Redux/RepoRedux'
 import { Actions as LogoActions } from '../Redux/LogoRedux'
 import makeErrorForFun from '../Lib/ErrorMaker'
 import { keys, map, join } from 'ramda'
+import RNViewShot from 'react-native-view-shot'
 
-export class RootContainer extends Component {
+class RootContainer extends Component {
 
   constructor (props) {
     super(props)
@@ -19,11 +20,33 @@ export class RootContainer extends Component {
     this.handlePressDebug = () => console.tron.debug('This is a debug message')
     this.handlePressWarn = () => console.tron.warn('This is a warn message')
     this.handlePressError = () => console.tron.error('This is a error message')
-
+    this.handleScreenshot = this.handleScreenshot.bind(this)
+    this.handleSendCatPicture = this.handleSendCatPicture.bind(this)
   }
 
   handlePress () {
     console.tron.log('A touchable was pressed.🔥🦄')
+  }
+
+  handleSendCatPicture () {
+    console.tron.image({
+      uri: 'https://placekitten.com/g/400/400',
+      preview: 'placekitten.com',
+      filename: 'cat.jpg',
+      width: 400,
+      height: 400,
+      caption: 'D\'awwwwwww'
+    })
+  }
+
+  handleScreenshot () {
+    RNViewShot
+      .takeSnapshot(this.refs.foo, { result: 'data-uri' })
+      .then(
+        uri => console.tron.display({ name: 'Screenshot', preview: 'App screenshot', image: { uri } }),
+        error => console.tron.error('Oops, snapshot failed', error)
+      )
+
   }
 
   render () {
@@ -31,7 +54,7 @@ export class RootContainer extends Component {
     const { reset, faster, slower, bigger, smaller } = this.props
 
     return (
-      <ScrollView style={Styles.container} contentContainerStyle={Styles.content}>
+      <ScrollView style={Styles.container} contentContainerStyle={Styles.content} ref='foo'>
         <View style={Styles.titleContainer}>
           <Text style={Styles.title}>Awesome Github Viewer!</Text>
           <Text style={Styles.subtitle}>Reactotron Demo</Text>
@@ -49,7 +72,11 @@ export class RootContainer extends Component {
             bigger={bigger} smaller={smaller} faster={faster} slower={slower}
             reset={reset}
           />
-          <Button text='Error Tyme!' onPress={this.props.bomb} />
+          <View style={Styles.buttons}>
+            <Button text='Error Tyme!' onPress={this.props.bomb} />
+            <Button text='Screenshot' onPress={this.handleScreenshot} />
+            <Button text='Cats!' onPress={this.handleSendCatPicture} />
+          </View>
         </View>
       </ScrollView>
     )

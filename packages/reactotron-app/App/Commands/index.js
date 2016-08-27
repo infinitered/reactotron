@@ -8,6 +8,7 @@ import StateValuesResponseCommand from './StateValuesResponseCommand'
 import StateKeysResponseCommand from './StateKeysResponseCommand'
 import StateValuesChangeCommand from './StateValuesChangeCommand'
 import DisplayCommand from './DisplayCommand'
+import ImageCommand from './ImageCommand'
 
 export default command => {
   const { type } = command
@@ -22,6 +23,7 @@ export default command => {
     case 'state.keys.response': return StateKeysResponseCommand
     case 'state.values.change': return StateValuesChangeCommand
     case 'display': return DisplayCommand
+    case 'image': return ImageCommand
     default: return UnknownCommand
   }
 }
