@@ -1,10 +1,13 @@
-import Reactotron, { trackGlobalErrors } from 'reactotron-react-js'
-import tronsauce from 'reactotron-apisauce'
+if (process.env.NODE_ENV !== 'production') {
+  const Reactotron = require('reactotron-react-js').default
+  const { trackGlobalErrors } = require('reactotron-react-js')
+  const tronsauce = require('reactotron-apisauce')
 
-Reactotron
-  .configure({ name: 'Demo Time!', secure: false })
-  .use(tronsauce())
-  .use(trackGlobalErrors({ offline: false }))
-  .connect()
+  Reactotron
+    .configure({ name: 'Demo Time!', secure: false })
+    .use(tronsauce())
+    .use(trackGlobalErrors({ offline: false }))
+    .connect()
 
-console.tron = Reactotron
+  console.tron = Reactotron
+}
