@@ -1,6 +1,6 @@
 {
   "name": "reactotron-cli",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Reactotron terminal mode engage!",
   "bin": {
     "reactotron": "./dist/index.js"
@@ -54,6 +54,6 @@
     "blessed": "^0.1.81",
     "gemoji": "^1.0.0",
     "moment": "^2.12.0",
-    "reactotron-core-server": "^1.0.0"
+    "reactotron-core-server": "^1.1.0"
   }
 }
