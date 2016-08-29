@@ -56,16 +56,18 @@ const shotgun = async () => {
   I hope you enjoy.  Thank you.  And have a wonderful day. \
   `
   sendAction({ type: 'POST_GIANT_MESSAGE', message: giant })
-  sendAction({ type: 'OBJECTS_LOLS', theGoods: {
-    cities: ['Toronto', 'Halifax'],
-    towns: ['Tiny', 'Pictou'],
-    thingsAroundMyOffice: { 'htc': 'vive', 'yeti': 'blue' },
-    trueThing: true,
-    falseThing: false,
-    undefinedThing: undefined,
-    nullThing: null,
-    symbolThing: Symbol('hi')
-  }})
+  sendAction({ type: 'OBJECTS_LOLS',
+    theGoods: {
+      cities: ['Toronto', 'Halifax'],
+      towns: ['Tiny', 'Pictou'],
+      thingsAroundMyOffice: { 'htc': 'vive', 'yeti': 'blue' },
+      trueThing: true,
+      falseThing: false,
+      undefinedThing: undefined,
+      nullThing: null,
+      symbolThing: Symbol('hi')
+    }
+  })
   sendDebug(giant)
   await sendBenchmark('perf test for myCustomSort()')
 

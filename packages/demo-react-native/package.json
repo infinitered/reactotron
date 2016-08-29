@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "copy-internal-deps": "./copy-internal-deps.sh"
+    "copy-internal-deps": "./copy-internal-deps.sh",
+    "lint": "standard"
   },
   "dependencies": {
     "apisauce": "^0.4.0",
@@ -25,11 +26,14 @@
     "seamless-immutable": "^6.0.1",
     "socket.io": "^1.4.8"
   },
-  "globals": [
-    "__DEV__"
-  ],
   "standard": {
-    "parser": "eslint"
+    "parser": "babel-eslint",
+    "globals": [
+      "__DEV__"
+    ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "standard": "^8.0.0"
+  }
 }

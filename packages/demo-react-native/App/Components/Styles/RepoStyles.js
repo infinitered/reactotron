@@ -1,6 +1,6 @@
 export default {
   container: {
-    alignItems: 'center',
+    alignItems: 'center'
   },
   name: {
     color: '#ffffff'
@@ -20,7 +20,6 @@ export default {
   },
   message: {
     color: '#BBD1EA',
-    marginTop: 5,
     fontSize: 12,
     height: 100,
     overflow: 'hidden',

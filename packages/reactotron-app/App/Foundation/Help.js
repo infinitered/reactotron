@@ -58,7 +58,6 @@ class Help extends Component {
           <div style={Styles.title}>{KEYSTROKES}</div>
           <HelpKeystrokes />
 
-
         </div>
       </div>
     )

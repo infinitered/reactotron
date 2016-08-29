@@ -105,7 +105,7 @@ class UI {
     let action = null
     try {
       // brackets are need on chromium side, huh.
-      action = eval('(' + this.actionToDispatch + ')') // lulz - straight to hell.
+      action = eval('(' + this.actionToDispatch + ')') // eslint-disable-line
     } catch (e) {
     }
     // jet if not valid

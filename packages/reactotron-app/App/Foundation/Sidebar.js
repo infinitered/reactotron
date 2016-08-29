@@ -49,7 +49,7 @@ class Sidebar extends Component {
             <SidebarButton text='Timeline' icon='reorder' isActive={ui.tab === 'timeline'} onClick={this.handleClickTimeline} />
             <SidebarButton text='Subs' icon='notifications-none' isActive={ui.tab === 'subscriptions'} onClick={this.handleClickSubscriptions} />
           </div>
-          <div style={Styles.spacer}></div>
+          <div style={Styles.spacer} />
           <div>
             <SidebarButton text='Help' icon='live-help' isActive={ui.tab === 'help'} onClick={this.handleClickHelp} />
           </div>

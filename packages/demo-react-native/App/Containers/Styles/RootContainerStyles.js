@@ -17,13 +17,13 @@ export default StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#FFD898',
+    color: '#FFD898'
   },
   subtitle: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#ffffff',
+    color: '#ffffff'
   },
   repoContainer: {
     alignItems: 'center'

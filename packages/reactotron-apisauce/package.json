@@ -7,7 +7,8 @@
     "test": "ava",
     "watch": "ava --watch",
     "coverage": "nyc ava",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "lint": "standard"
   },
   "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-apisauce",
   "author": "Steve Kellock",
@@ -35,7 +36,7 @@
     "nyc": "^8.1.0",
     "rollup": "^0.34.8",
     "rollup-plugin-babel": "^2.6.1",
-    "standard": "^7.1.2"
+    "standard": "^8.0.0"
   },
   "ava": {
     "require": [

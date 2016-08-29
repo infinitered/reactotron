@@ -75,7 +75,7 @@ class HelpFeedback extends Component {
             <div style={Styles.text}>@reactotron</div>
           </div>
 
-          <div style={Styles.spacer}></div>
+          <div style={Styles.spacer} />
         </div>
       </div>
     )

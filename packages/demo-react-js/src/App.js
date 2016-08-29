@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component, PropTypes } from 'react'
+import logo from './logo.svg'
+import './App.css'
 import { connect } from 'react-redux'
 import { Actions as StartupActions } from './Redux/Startup.redux'
 import { Actions as LogoActions } from './Redux/Logo.redux'
@@ -23,7 +23,6 @@ const Styles = {
     borderRadius: 40
   }
 }
-
 
 class App extends Component {
 
@@ -74,8 +73,8 @@ class App extends Component {
     }
 
     return (
-      <div className="App">
-        <div className="App-header">
+      <div className='App'>
+        <div className='App-header'>
           <h2>Reactotron Demo</h2>
           <div>
             <button style={Styles.button} onClick={this.props.slower}>Slow</button>
@@ -83,18 +82,18 @@ class App extends Component {
             <button style={Styles.button} onClick={this.props.bigger}>Big</button>
             <button style={Styles.button} onClick={this.props.smaller}>Small</button>
           </div>
-          <img src={logo} style={logoStyles} alt="logo" onClick={this.props.handleLogoPress} />
+          <img src={logo} style={logoStyles} alt='logo' onClick={this.props.handleLogoPress} />
         </div>
         { repo &&
           <h3 className='App-message-title'>Latest Commit From {repo}</h3> }
         { avatar &&
-          <div><img src={avatar} style={Styles.avatar} alt="avatar" /></div>
+          <div><img src={avatar} style={Styles.avatar} alt='avatar' /></div>
         }
-          <button style={Styles.button} onClick={this.props.requestReactotron}>Reactotron</button>
-          <button style={Styles.button} onClick={this.props.requestReactNative}>React Native</button>
-          <button style={Styles.button} onClick={this.props.requestMobx}>Mobx</button>
-          <button style={Styles.button} onClick={this.props.requestRedux}>Redux</button>
-          <button style={Styles.button} onClick={this.props.requestBad}>Bad</button>
+        <button style={Styles.button} onClick={this.props.requestReactotron}>Reactotron</button>
+        <button style={Styles.button} onClick={this.props.requestReactNative}>React Native</button>
+        <button style={Styles.button} onClick={this.props.requestMobx}>Mobx</button>
+        <button style={Styles.button} onClick={this.props.requestRedux}>Redux</button>
+        <button style={Styles.button} onClick={this.props.requestBad}>Bad</button>
 
         { error ? this.renderError() : this.renderMessage() }
 
@@ -102,9 +101,8 @@ class App extends Component {
           <button style={Styles.button} onClick={this.props.display}>Custom Messages</button>
         </div>
 
-
       </div>
-    );
+    )
   }
 }
 
@@ -126,23 +124,21 @@ const mapDispatchToProps = dispatch => ({
     setTimeout(() => { makeErrorForFun('boom') }, 500)
   },
   display: () => {
-    if (console.tron) console.tron.display({ name: 'HELLO', value: 'You\'re awesome.', preview: 'Guess what?' })
-    if (console.tron) console.tron.display({ name: 'DANGER', value: 9001, important: true, preview: 'It\'s over 9000!' })
-    if (console.tron) console.tron.display({ name: 'ORDER', preview: 'Here\'s your order...', value: {
-        app: {
-          color: 'green',
-          vegetable: 'spinach',
-          variant: 'baby',
-          salad: true
-        },
-        main: {
-          type: 'poutine'
-        },
-        when: new Date()
-      }
-    })
-    if (console.tron) console.tron.display({ name: 'LIST', value: [1, 'a', true, new Date()], preview: '4 things' })
+    if (console.tron) {
+      console.tron.display({ name: 'HELLO', value: 'You\'re awesome.', preview: 'Guess what?' })
+      console.tron.display({ name: 'DANGER', value: 9001, important: true, preview: 'It\'s over 9000!' })
+      console.tron.display({
+        name: 'ORDER',
+        preview: 'Here\'s your order...',
+        value: {
+          app: { color: 'green', vegetable: 'spinach', variant: 'baby', salad: true },
+          main: { type: 'poutine' },
+          when: new Date()
+        }
+      })
+      console.tron.display({ name: 'LIST', value: [1, 'a', true, new Date()], preview: '4 things' })
+    }
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App)

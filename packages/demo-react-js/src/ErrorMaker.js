@@ -1,3 +1,3 @@
-export default function makeErrorForFun(message) {
+export default function makeErrorForFun (message) {
   throw new Error(message)
 }

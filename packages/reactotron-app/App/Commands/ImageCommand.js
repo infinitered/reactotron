@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import Command from '../Shared/Command'
-import Content from '../Shared/Content'
 import Colors from '../Theme/Colors'
 
 const COMMAND_TITLE = 'IMAGE'
@@ -43,7 +42,7 @@ class DisplayCommand extends Component {
     const dimensions = width && height && `${width} x ${height}`
 
     return (
-      <Command command={command} title={name || COMMAND_TITLE} important={important} preview={preview}>
+      <Command command={command} title={COMMAND_TITLE} important={important} preview={preview}>
         <div style={Styles.imageContainer}>
           <img style={Styles.image} src={uri} />
           {caption && <div style={Styles.caption}>{caption}</div>}
