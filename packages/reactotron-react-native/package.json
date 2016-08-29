@@ -23,8 +23,8 @@
     "README.md"
   ],
   "peerDependencies": {
-    "react": "^15.2.1",
-    "react-native": "^0.31.0"
+    "react": ">=15.2.1",
+    "react-native": ">=0.31.0"
   },
   "devDependencies": {
     "ava": "^0.16.0",
@@ -39,8 +39,8 @@
     "rollup": "^0.34.8",
     "rollup-plugin-babel": "^2.6.1",
     "standard": "^8.0.0",
-    "react": "^15.2.1",
-    "react-native": "^0.31.0"
+    "react": ">=15.2.1",
+    "react-native": ">=0.31.0"
   },
   "ava": {
     "require": [
