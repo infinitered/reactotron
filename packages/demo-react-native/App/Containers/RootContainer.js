@@ -1,15 +1,12 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Text, TouchableOpacity } from 'react-native'
+import { ScrollView, View, Text } from 'react-native'
 import { connect } from 'react-redux'
-import Actions from '../Actions/Creators'
 import Styles from './Styles/RootContainerStyles'
-// import Reactotron from 'reactotron-react-native'
 import Button from '../Components/Button'
 import Repo from '../Components/Repo'
 import { Actions as RepoActions } from '../Redux/RepoRedux'
 import { Actions as LogoActions } from '../Redux/LogoRedux'
 import makeErrorForFun from '../Lib/ErrorMaker'
-import { keys, map, join } from 'ramda'
 import RNViewShot from 'react-native-view-shot'
 
 class RootContainer extends Component {
@@ -47,7 +44,6 @@ class RootContainer extends Component {
         uri => console.tron.display({ name: 'Screenshot', preview: 'App screenshot', image: { uri } }),
         error => console.tron.error('Oops, snapshot failed', error)
       )
-
   }
 
   render () {
@@ -93,7 +89,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  startup: () => dispatch(StartupActions.startup()),
   faster: () => dispatch(LogoActions.changeSpeed(10)),
   slower: () => dispatch(LogoActions.changeSpeed(50)),
   bigger: () => dispatch(LogoActions.changeSize(140)),
@@ -108,6 +103,5 @@ const mapDispatchToProps = dispatch => ({
     setTimeout(() => { makeErrorForFun('boom') }, 500)
   }
 })
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootContainer)

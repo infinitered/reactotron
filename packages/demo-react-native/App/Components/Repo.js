@@ -42,14 +42,13 @@ class Repo extends Component {
   }
 
   animate () {
-
     const duration = 100 * this.props.speed
     const easing = Easing.linear
     this.state.spinny.setValue(0)
     this.animation = Animated.sequence([
-      Animated.timing(this.state.spinny, { toValue: 1, duration, easing }),
+      Animated.timing(this.state.spinny, { toValue: 1, duration, easing })
       // Animated.timing(this.state.spinny, { toValue: 0, duration: 0 })
-    ]).start( ({finished}) => {
+    ]).start(({finished}) => {
       if (finished) {
         this.animate()
       } else {
@@ -57,7 +56,6 @@ class Repo extends Component {
       }
     })
   }
-
 
   getAnimationStyle () {
     return {
@@ -68,7 +66,7 @@ class Repo extends Component {
   }
 
   render () {
-    const { repo, name, avatar, message, size, speed } = this.props
+    const { repo, name, avatar, message, size } = this.props
     const avatarSource = avatar && { uri: avatar }
 
     const avatarStyles = merge(Styles.avatar, { width: size, height: size, borderRadius: size * 0.5 })
@@ -83,7 +81,7 @@ class Repo extends Component {
           </View>
           <Animated.View style={centerStyles}>
             <TouchableWithoutFeedback onPress={this.props.reset}>
-              <Image style={avatarStyles} source={avatarSource}  />
+              <Image style={avatarStyles} source={avatarSource} />
             </TouchableWithoutFeedback>
           </Animated.View>
           <View style={Styles.right}>

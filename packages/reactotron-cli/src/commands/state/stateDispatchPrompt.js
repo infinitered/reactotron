@@ -10,7 +10,7 @@ const process = (context, action) => {
 
     // try not to blow up the frame
     try {
-      eval('action = ' + value) // lulz
+      eval('action = ' + value) // eslint-disable-line
     } catch (e) {
     }
 

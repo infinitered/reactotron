@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import Command from '../Shared/Command'
-import ObjectTree from '../Shared/ObjectTree'
 import { dotPath, isNilOrEmpty } from 'ramdasauce'
 import { toUpper, equals } from 'ramda'
 import makeTable from '../Shared/MakeTable'

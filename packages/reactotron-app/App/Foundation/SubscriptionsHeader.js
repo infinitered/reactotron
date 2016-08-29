@@ -65,7 +65,7 @@ class SubscriptionsHeader extends Component {
     return (
       <div style={Styles.container}>
         <div style={Styles.content}>
-          <div style={Styles.left}></div>
+          <div style={Styles.left} />
           <div style={Styles.center}>
             <div style={Styles.title}>{TITLE}</div>
           </div>

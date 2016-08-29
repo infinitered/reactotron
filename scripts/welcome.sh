@@ -10,5 +10,6 @@ echo ""
 echo ""
 npm run bootstrap
 npm run build
+npm run lint
 npm run copy-internal-deps
 npm test

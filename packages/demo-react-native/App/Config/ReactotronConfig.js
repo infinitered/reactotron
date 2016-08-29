@@ -7,7 +7,7 @@ if (__DEV__) {
     .use(tronsauce())
     .use(trackGlobalErrors({
       veto: frame => frame.fileName.indexOf('/node_modules/react-native/') >= 0
-     }))
+    }))
     .connect()
 
   console.tron = Reactotron

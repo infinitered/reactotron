@@ -18,7 +18,7 @@ const Styles = {
     paddingLeft: 5,
     paddingRight: 10,
     paddingTop: 5,
-    paddingBottom: 5,
+    paddingBottom: 5
   },
   content: {
     ...AppStyles.Layout.hbox,
@@ -71,9 +71,9 @@ class Footer extends Component {
             <div style={Styles.reactotron}>{APP_NAME}</div>
             <div style={Styles.version}>{APP_VERSION}</div>
           </div>
-          <div style={Styles.stretcher}></div>
+          <div style={Styles.stretcher} />
           <p>{PORT_LABEL} {port}</p>
-          <div style={Styles.line}></div>
+          <div style={Styles.line} />
           <p>{connectionCount} {connectionCount === 1 ? CONNECTIONS_SUFFIX_SINGULAR : CONNECTIONS_SUFFIX_PLURAL}</p>
         </div>
       </div>

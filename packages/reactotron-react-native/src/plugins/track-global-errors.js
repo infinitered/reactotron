@@ -1,7 +1,7 @@
 /**
  * Provides a global error handler to report errors..
  */
-import { merge, map, reject, contains } from 'ramda'
+import { merge, map, reject } from 'ramda'
 import { NativeModules } from 'react-native'
 
 // defaults

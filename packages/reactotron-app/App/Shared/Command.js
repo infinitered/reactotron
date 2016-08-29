@@ -137,7 +137,7 @@ class Command extends Component {
             </div>
             {!isOpen && <span style={Styles.preview}>{preview}</span>}
             {isOpen && <CommandToolbar command={command} />}
-            {isOpen && <span style={Styles.spacer}></span>}
+            {isOpen && <span style={Styles.spacer} />}
             <Icon size={20} style={Styles.icon} />
           </div>
           {isOpen &&
