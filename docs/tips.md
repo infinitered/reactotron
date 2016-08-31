@@ -68,3 +68,23 @@ Now, anywhere in your app if you want to log something?
 ```js
 console.tron.log('Sweet Freedom!')
 ```
+
+### Fancy Console Magic :tophat: :sparkles:
+
+You can add an important indicator light on any log by adding `true` as a second parameter.  _E.g._
+```js
+// or Reactotron.log
+console.tron.log('I am important', true)
+```
+
+Additionally, you can access a more advanced message and indicator with `display`.
+```js
+// or Reactotron.display
+console.tron.display({
+  name: 'Tacos',
+  value: {a: 1, b: [1,2,3]},
+  preview: 'when you click here, it might surprise you!',
+  important: true,
+  image: 'http://placekitten.com/g/400/400'
+})
+```
