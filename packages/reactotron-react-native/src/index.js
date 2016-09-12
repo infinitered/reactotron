@@ -3,6 +3,8 @@
 // -----------
 
 // import validate from './validate'
+import getHost from './get-host'
+
 export trackGlobalErrors from './plugins/track-global-errors'
 
 // ------------
@@ -38,7 +40,7 @@ var io = require('socket.io-client/socket.io')
 
 const DEFAULTS = {
   io,
-  host: 'localhost',
+  host: getHost('localhost'),
   port: 9090,
   name: 'React Native App',
   userAgent: 'reactotron-react-native',
