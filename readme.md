@@ -36,14 +36,14 @@ Welcome to flavour country.
 
 # Documentation
 
-* [Installing](docs/installing.md)
-* Quick start for [React JS](docs/quick-start-react-js.md)
-* Quick start for [React Native](docs/quick-start-react-native.md)
-* [Tracking errors globally](docs/plugin-track-global-errors.md)
-* Integrating with [Redux](docs/plugin-redux.md)
-* Networking monitoring with [Apisauce](docs/plugin-apisauce.md)
-* [Troubleshooting](docs/troubleshooting.md)
-* [Tips and Tricks](docs/tips.md)
+* [Installing](reactotron/tree/master/docs/installing.md)
+* Quick start for [React JS](reactotron/tree/master/docs/quick-start-react-js.md)
+* Quick start for [React Native](reactotron/tree/master/docs/quick-start-react-native.md)
+* [Tracking errors globally](reactotron/tree/master/docs/plugin-track-global-errors.md)
+* Integrating with [Redux](reactotron/tree/master/docs/plugin-redux.md)
+* Networking monitoring with [Apisauce](reactotron/tree/master/docs/plugin-apisauce.md)
+* [Troubleshooting](reactotron/tree/master/docs/troubleshooting.md)
+* [Tips and Tricks](reactotron/tree/master/docs/tips.md)
 * [Release Notes](https://github.com/reactotron/reactotron/releases)
 
 #### Coming Soon
