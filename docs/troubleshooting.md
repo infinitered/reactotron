@@ -3,6 +3,7 @@
 Here are some notes about common things that go off the rails.
 
 ## General Discomfort
+
 #### Missing Libraries with NPM 2.x
 
 Life is better with NPM 3.x. NPM 2.x kept nested dependencies in sub-folders.  In version 3, they try to flatten as many dependencies up to the `node_modules` level.
@@ -25,6 +26,7 @@ adb reverse tcp:9090 tcp:9090
 
 This only works on Android 5.x+.
 
+As of 1.1.4, the proper IP address is auto-discovered.  Simply leave the `configure` as is.
 
 #### Turn Off Remote JS Debugging
 
