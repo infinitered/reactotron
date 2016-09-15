@@ -2,6 +2,7 @@
 
 [![Join the chat at https://gitter.im/reactotron/reactotron](https://badges.gitter.im/reactotron/reactotron.svg)](https://gitter.im/reactotron/reactotron?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+[Less Talk More Action](./docs/installing.md)
 
 # What is Reactotron?
 
