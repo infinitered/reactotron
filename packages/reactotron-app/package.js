@@ -12,6 +12,8 @@ const argv = require('minimist')(process.argv.slice(2))
 const pkg = require('./package.json')
 const deps = Object.keys(pkg.dependencies)
 const devDeps = Object.keys(pkg.devDependencies)
+const R = require('ramda')
+const RS = require('ramdasauce')
 
 const appName = argv.name || argv.n || pkg.productName
 const shouldUseAsar = argv.asar || argv.a || false
@@ -46,13 +48,17 @@ if (version) {
   startPack()
 } else {
   // use the same version as the currently-installed electron-prebuilt
-  exec('npm list electron-prebuilt --dev', (err, stdout) => {
+  exec('npm list electron-prebuilt --depth 0 --dev', (err, stdout) => {
     if (err) {
       DEFAULT_OPTS.version = '1.4.0'
     } else {
-      DEFAULT_OPTS.version = stdout.split('electron-prebuilt@')[1].replace(/\s/g, '')
+      DEFAULT_OPTS.version = R.pipe(
+        R.split(/\s/),
+        R.find(RS.startsWith('electron-prebuilt@')),
+        R.split('@'),
+        R.last
+      )(stdout)
     }
-
     startPack()
   })
 }
