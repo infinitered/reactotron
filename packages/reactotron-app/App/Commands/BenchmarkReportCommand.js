@@ -106,11 +106,11 @@ class BenchmarkReportCommand extends Component {
     return (
       <Command command={command} title={COMMAND_TITLE} duration={duration} preview={preview}>
         <div style={Styles.reportTitle}>{title}</div>
-          {
-            mapIndexed(
-              (step, idx) => makeStep(step, idx, idx === steps.length - 2, duration),
-              tail(steps))
-          }
+        {
+          mapIndexed(
+            (step, idx) => makeStep(step, idx, idx === steps.length - 2, duration),
+            tail(steps))
+        }
       </Command>
     )
   }
