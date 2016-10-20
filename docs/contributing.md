@@ -10,9 +10,10 @@ cd reactotron
 git checkout next
 ```
 
-Run the setup script to install the dependencies & run tests.
+Install `lerna` and run the setup script to install the dependencies & run tests.
 
 ```
+npm install
 npm run welcome
 ```
 
