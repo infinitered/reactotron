@@ -13,7 +13,9 @@ const REQUEST_HEADER_TITLE = 'Request Headers'
 const RESPONSE_HEADER_TITLE = 'Response Headers'
 const REQUEST_BODY_TITLE = 'Request'
 const RESPONSE_BODY_TITLE = 'Response'
+const REQUEST_PARAMS_TITLE = 'Request Params'
 const NO_REQUEST_BODY = 'Nothing sent.'
+const NO_REQUEST_PARAMS = 'No params sent.'
 
 const Styles = {
   container: {
@@ -51,7 +53,8 @@ const INITIAL_STATE = {
   showRequestHeaders: false,
   showResponseHeaders: false,
   showRequestBody: false,
-  showResponseBody: false
+  showResponseBody: false,
+  showRequestParams: false
 }
 
 class ApiResponseCommand extends Component {
@@ -67,6 +70,7 @@ class ApiResponseCommand extends Component {
     this.toggleResponseHeaders = this.toggleResponseHeaders.bind(this)
     this.toggleRequestBody = this.toggleRequestBody.bind(this)
     this.toggleResponseBody = this.toggleResponseBody.bind(this)
+    this.toggleRequestParams = this.toggleRequestParams.bind(this)
   }
 
   toggleRequestHeaders () {
@@ -85,13 +89,21 @@ class ApiResponseCommand extends Component {
     this.setState({ ...INITIAL_STATE, showResponseBody: !this.state.showResponseBody })
   }
 
+  toggleRequestParams () {
+    this.setState({ ...INITIAL_STATE, showRequestParams: !this.state.showRequestParams })
+  }
+
   shouldComponentUpdate (nextProps, nextState) {
     return !(equals(nextProps, this.props) && equals(this.state, nextState))
   }
 
   render () {
     const { command } = this.props
-    const { showRequestHeaders, showResponseHeaders, showRequestBody, showResponseBody } = this.state
+    const {
+      showRequestHeaders, showResponseHeaders,
+      showRequestBody, showResponseBody,
+      showRequestParams
+    } = this.state
     const { payload } = command
     const { duration } = payload
     const status = dotPath('response.status', payload)
@@ -101,6 +113,7 @@ class ApiResponseCommand extends Component {
     const responseHeaders = dotPath('response.headers', payload)
     const requestBody = dotPath('request.data', payload)
     const responseBody = dotPath('response.body', payload)
+    const requestParams = dotPath('request.params', payload)
     const subtitle = `${status} ${method} in ${duration || '?'}ms`
     const preview = subtitle
     const summary = { 'Status Code': status, 'Method': method, 'Duration (ms)': duration }
@@ -117,6 +130,7 @@ class ApiResponseCommand extends Component {
             <SectionLink text={RESPONSE_BODY_TITLE} isActive={showResponseBody} onClick={this.toggleResponseBody} />
             <SectionLink text={RESPONSE_HEADER_TITLE} isActive={showResponseHeaders} onClick={this.toggleResponseHeaders} />
             {!isNilOrEmpty(requestBody) && <SectionLink text={REQUEST_BODY_TITLE} isActive={showRequestBody} onClick={this.toggleRequestBody} />}
+            {!isNilOrEmpty(requestParams) && <SectionLink text={REQUEST_PARAMS_TITLE} isActive={showRequestParams} onClick={this.toggleRequestParams} />}
             <SectionLink text={REQUEST_HEADER_TITLE} isActive={showRequestHeaders} onClick={this.toggleRequestHeaders} />
           </div>
 
@@ -124,6 +138,7 @@ class ApiResponseCommand extends Component {
             {showResponseBody && <Content value={responseBody} />}
             {showResponseHeaders && makeTable(responseHeaders)}
             {showRequestBody && (isNilOrEmpty(requestBody) ? NO_REQUEST_BODY : <Content value={requestBody} />)}
+            {showRequestParams && (isNilOrEmpty(requestParams) ? NO_REQUEST_PARAMS : <Content value={requestParams} />)}
             {showRequestHeaders && makeTable(requestHeaders)}
           </div>
 
