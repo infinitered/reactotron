@@ -3,6 +3,8 @@ import { inject, observer } from 'mobx-react'
 import Button from './CommandToolbarButton'
 import AppStyles from '../Theme/AppStyles'
 import stringifyObject from 'stringify-object'
+import { clipboard } from 'electron'
+import { dotPath, isNilOrEmpty } from 'ramdasauce'
 
 const Styles = {
   container: {
@@ -18,6 +20,10 @@ const TIP_CUSTOMIZE_REPLAY_ACTION = 'Edit and dispatch this action.'
 // the buttons (minus the onClick)
 const ReplayButton = props => <Button icon='repeat' onClick={props.onClick} tip={TIP_REPLAY_ACTION} />
 const CustomizeReplayButton = props => <Button icon='code' onClick={props.onClick} tip={TIP_CUSTOMIZE_REPLAY_ACTION} />
+const CopyApiResponseButton = props =>
+  <Button icon='call-received' onClick={props.onClick} tip='Copy JSON response to clipboard' />
+const CopyApiRequestButton = props =>
+  <Button icon='call-made' onClick={props.onClick} tip='Copy JSON request to clipboard' />
 
 @inject('session')
 @observer
@@ -51,10 +57,45 @@ class CommandToolbar extends Component {
     event.stopPropagation()
   }
 
+  // copy api response to clipboard
+  handleCopyApiResponseToClipboard = event => {
+    event.stopPropagation()
+
+    try {
+      const { command } = this.props
+      const { payload } = command
+      const body = dotPath('response.body', payload)
+      const text = JSON.stringify(body, 2, 2)
+
+      clipboard.writeText(text)
+    } catch (e) {
+    }
+  }
+
+  // copy api request to clipboard
+  handleCopyApiRequestToClipboard = event => {
+    event.stopPropagation()
+    const { command } = this.props
+    const { payload } = command
+    const body = dotPath('request.data', payload)
+
+    try {
+      const text = JSON.stringify(JSON.parse(body), 2, 2)
+      clipboard.writeText(text)
+    } catch (e) {
+      clipboard.writeText(body)
+    }
+  }
+
   render () {
     const { command } = this.props
+    const { payload } = command
+    const requestBody = dotPath('request.data', payload)
+
     const showReplayAction = command.type === 'state.action.complete'
     const showCustomizeReplayAction = command.type === 'state.action.complete'
+    const showCopyApiResponse = command.type === 'api.response'
+    const showCopyApiRequest = command.type === 'api.response' && !isNilOrEmpty(requestBody)
 
     return (
       <div style={Styles.container}>
@@ -63,6 +104,12 @@ class CommandToolbar extends Component {
         }
         {showCustomizeReplayAction &&
           <CustomizeReplayButton onClick={this.handleCustomizeReplayAction} />
+        }
+        {showCopyApiResponse &&
+          <CopyApiResponseButton onClick={this.handleCopyApiResponseToClipboard} />
+        }
+        {showCopyApiRequest &&
+          <CopyApiRequestButton onClick={this.handleCopyApiRequestToClipboard} />
         }
       </div>
     )

@@ -1,12 +1,36 @@
 import React, { Component, PropTypes } from 'react'
 import Command from '../Shared/Command'
 import { dotPath, isNilOrEmpty } from 'ramdasauce'
-import { toUpper, equals } from 'ramda'
+import { toUpper, equals, isNil } from 'ramda'
 import makeTable from '../Shared/MakeTable'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import SectionLink from './SectionLink'
 import Content from '../Shared/Content'
+
+// Given a request body (string), attempts to coerce it to a JSON string.
+// and if successful, returns that JSON object instead.  A friendlier way
+// to display the request.
+const getRequestText = request => {
+  // nulls be nulls
+  if (isNil(request)) return null
+
+  try {
+    // attemp? to parse as json
+    const toJson = JSON.parse(request)
+
+    // is it empty?
+    if (isNilOrEmpty(toJson)) {
+      return request
+    } else {
+      // embed a "root" level node
+      return { ' ': toJson }
+    }
+  } catch (e) {
+    // any problems, return the original string
+    return request
+  }
+}
 
 const COMMAND_TITLE = 'API RESPONSE'
 const REQUEST_HEADER_TITLE = 'Request Headers'
@@ -35,9 +59,6 @@ const Styles = {
     paddingTop: 8,
     paddingBottom: 0,
     color: Colors.constant
-  },
-  pre: {
-    whiteSpace: 'pre-wrap'
   },
   sectionLinks: {
     ...AppStyles.Layout.hbox,
@@ -111,7 +132,7 @@ class ApiResponseCommand extends Component {
     const method = toUpper(dotPath('request.method', payload) || '')
     const requestHeaders = dotPath('request.headers', payload)
     const responseHeaders = dotPath('response.headers', payload)
-    const requestBody = dotPath('request.data', payload)
+    const requestBody = getRequestText(dotPath('request.data', payload))
     const responseBody = dotPath('response.body', payload)
     const requestParams = dotPath('request.params', payload)
     const subtitle = `${status} ${method} in ${duration || '?'}ms`
@@ -137,7 +158,7 @@ class ApiResponseCommand extends Component {
           <div style={Styles.content}>
             {showResponseBody && <Content value={responseBody} />}
             {showResponseHeaders && makeTable(responseHeaders)}
-            {showRequestBody && (isNilOrEmpty(requestBody) ? NO_REQUEST_BODY : <Content value={requestBody} />)}
+            {showRequestBody && (isNilOrEmpty(requestBody) ? NO_REQUEST_BODY : <Content value={requestBody} treeLevel={1} />)}
             {showRequestParams && (isNilOrEmpty(requestParams) ? NO_REQUEST_PARAMS : <Content value={requestParams} />)}
             {showRequestHeaders && makeTable(requestHeaders)}
           </div>
