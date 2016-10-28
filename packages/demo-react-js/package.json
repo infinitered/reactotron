@@ -1,11 +1,11 @@
 {
   "name": "demo-react-js",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "private": true,
   "devDependencies": {
     "babel-eslint": "^6.1.2",
     "react-scripts": "0.4.1",
-    "reactotron-apisauce": "^1.1.4",
+    "reactotron-apisauce": "^1.2.0",
     "reactotron-core-client": "^1.1.4",
     "reactotron-react-js": "^1.1.4",
     "reactotron-redux": "^1.1.4",
