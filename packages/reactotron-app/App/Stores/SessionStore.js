@@ -50,6 +50,10 @@ class Session {
     return dotPath('payload.changes', recentCommand) || []
   }
 
+  @computed get backups () {
+    return this.server.commands['state.backup.response'].toJS().reverse()
+  }
+
   constructor (port = 9090) {
     this.server = createServer({ port })
     this.server.start()

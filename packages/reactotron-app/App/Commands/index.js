@@ -1,5 +1,4 @@
 import LogCommand from './LogCommand'
-import UnknownCommand from './UnknownCommand'
 import StateActionCompleteCommand from './StateActionCompleteCommand'
 import ApiResponseCommand from './ApiResponseCommand'
 import ClientIntroCommand from './ClientIntroCommand'
@@ -24,6 +23,6 @@ export default command => {
     case 'state.values.change': return StateValuesChangeCommand
     case 'display': return DisplayCommand
     case 'image': return ImageCommand
-    default: return UnknownCommand
+    default: return null
   }
 }

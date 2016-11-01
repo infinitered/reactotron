@@ -36,7 +36,7 @@ You'll configure where you setup your Redux store.  In that file, we'll import b
 ```js
 import Reactotron from 'reactotron-react-js'
 // import Reactotron from 'reactotron-react-native'  // if on mobile
-import createReactotronEnhancer from 'reactotron-redux'
+import { createReactotronStoreEnhancer } from 'reactotron-redux'
 ```
 
 `createReactotronEnhancer` is a function that creates an enhancer ready to inject into Redux. There are 2 parameters.
@@ -51,7 +51,7 @@ Use take the return value and put that into your call to `createStore()`.
 Here's a few examples in action:
 
 ```js
-const reactotronEnhancer = createReactotronEnhancer(Reactotron)
+const reactotronEnhancer = createReactotronStoreEnhancer(Reactotron)
 
 // where there are no other enhancers
 createStore(rootReducer, reactotronEnhancer)
@@ -64,7 +64,7 @@ See the demos for more examples.
 
 # Options
 
-`createReactotronEnhancer` supports options as the 2nd parameter.
+`createReactotronStoreEnhancer` supports options as the 2nd parameter.
 
 `except` is an array of strings that match actions flowing through Redux.
 
@@ -86,3 +86,24 @@ createReactotronEnhancer(Reactotron, {
   isActionImportant: action => action.type === 'FORMAT_HARD_DRIVE'
 })
 ```
+
+# State Snapshots (Time Travel)
+
+Also supported is the ability to take snapshot of the whole state and upload them to the application later.
+
+To do this, you create another reducer to wrap your own root reducer.  Like this:
+
+```js
+// grab your reducers as usual
+import rootReducer from '../Reducers' // or wherever your reducers live
+
+// import createReplacementReducer as well
+import { createReactotronStoreEnhancer, createReplacementReducer } from 'reactotron-redux'
+
+// pass in your reducer to create a new reducer
+const oneReducerToRuleThemAll = createReplacementReducer(rootReducer)
+
+//  then hand that off to the store (as usual)
+```
+
+Congrats!  Now you can upload & download state from inside the Reactotron App.

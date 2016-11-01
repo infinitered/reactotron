@@ -58,6 +58,10 @@ class HelpKeystrokes extends Component {
               <div style={Styles.helpDetail}>view subscriptions</div>
             </div>
             <div style={Styles.helpShortcut}>
+              <div style={Styles.helpLabel}><Key text='⌘' />+<Key text='3' /></div>
+              <div style={Styles.helpDetail}>view state snapshots</div>
+            </div>
+            <div style={Styles.helpShortcut}>
               <div style={Styles.helpLabel}><Key text='⌘' />+<Key text='/' /></div>
               <div style={Styles.helpDetail}>view help</div>
             </div>
@@ -76,6 +80,10 @@ class HelpKeystrokes extends Component {
             <div style={Styles.helpShortcut}>
               <div style={Styles.helpLabel}><Key text='⌘' />+<Key text='D' /></div>
               <div style={Styles.helpDetail}>dispatch an action</div>
+            </div>
+            <div style={Styles.helpShortcut}>
+              <div style={Styles.helpLabel}><Key text='⌘' />+<Key text='S' /></div>
+              <div style={Styles.helpDetail}>take a snapshot of current state</div>
             </div>
           </div>
 

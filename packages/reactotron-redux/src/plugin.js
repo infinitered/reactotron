@@ -1,9 +1,20 @@
-import R from 'ramda'
+import { isEmpty, pipe, uniq, flatten } from 'ramda'
 import requestKeys from './keys-request'
 import requestValues from './values-request'
 import getSubscriptionValues from './get-subscription-values'
 
+export const RESTORE_ACTION_TYPE = 'REACTOTRON_RESTORE_STATE'
+const DEFAULT_ON_BACKUP = state => state
+const DEFAULT_ON_RESTORE = state => state
+
 const createPlugin = (store, pluginConfig = {}) => {
+  // the action type we'll trigger restores on
+  const restoreActionType = pluginConfig.restoreActionType || RESTORE_ACTION_TYPE
+
+  // a chance to change the state before backup
+  const onBackup = pluginConfig.onBackup || DEFAULT_ON_BACKUP
+  const onRestore = pluginConfig.onRestore || DEFAULT_ON_RESTORE
+
   // hold onto the send
   let capturedSend
 
@@ -22,7 +33,7 @@ const createPlugin = (store, pluginConfig = {}) => {
 
     const sendSubscriptionsIfNeeded = () => {
       const changes = getSubscriptionValues(subscriptions, store.getState())
-      if (!R.isEmpty(changes)) {
+      if (!isEmpty(changes)) {
         sendSubscriptions()
       }
     }
@@ -30,6 +41,7 @@ const createPlugin = (store, pluginConfig = {}) => {
     store.subscribe(sendSubscriptionsIfNeeded)
 
     return {
+
       // fires
       onCommand: ({type, payload}) => {
         switch (type) {
@@ -43,7 +55,7 @@ const createPlugin = (store, pluginConfig = {}) => {
 
           // client is asking to subscribe to some paths
           case 'state.values.subscribe':
-            subscriptions = R.pipe(R.flatten, R.uniq)(payload.paths)
+            subscriptions = pipe(flatten, uniq)(payload.paths)
             sendSubscriptions()
             return
 
@@ -51,6 +63,22 @@ const createPlugin = (store, pluginConfig = {}) => {
           case 'state.action.dispatch':
             store.dispatch(payload.action)
             return
+
+          // server is asking to backup state
+          case 'state.backup.request': {
+            // run our state through our onBackup
+            const state = onBackup(store.getState())
+            reactotron.send('state.backup.response', { state })
+            return
+          }
+
+          // server is asking to clobber state with this
+          case 'state.restore.request': {
+            // run our state through our onRestore
+            const state = onRestore(payload.state)
+            store.dispatch({ type: restoreActionType, state })
+            return
+          }
 
         }
       }

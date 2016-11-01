@@ -81,3 +81,19 @@ test('stateValuesChange', t => {
   t.is(type, 'state.values.change')
   t.deepEqual(changes, [{ path: 'a', value: 1 }, { path: 'b', value: 2 }])
 })
+
+test('stateBackupResponse', t => {
+  const client = createClient({ io: socketClient })
+  let type
+  let state
+  client.send = (x, y) => {
+    type = x
+    state = y.state
+  }
+  client.use(plugin())
+  t.is(client.plugins.length, CorePlugins.length + 1)
+  t.is(typeof client.stateBackupResponse, 'function')
+  client.stateBackupResponse({ x: [1, 2, 3] })
+  t.is(type, 'state.backup.response')
+  t.deepEqual(state, { x: [1, 2, 3] })
+})

@@ -7,6 +7,7 @@ export default [
   'state.values.response',
   'state.keys.response',
   'state.values.change',
+  'state.backup.response',
   'api.response',
   'benchmark.report',
   'display',
