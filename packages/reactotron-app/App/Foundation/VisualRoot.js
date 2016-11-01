@@ -7,6 +7,7 @@ import StateDispatchDialog from '../Dialogs/StateDispatchDialog'
 import HelpDialog from '../Dialogs/HelpDialog'
 import StateWatchDialog from '../Dialogs/StateWatchDialog'
 import Subscriptions from './Subscriptions'
+import Backups from './Backups'
 import Sidebar from './Sidebar'
 import Help from './Help'
 import { inject, observer } from 'mobx-react'
@@ -51,6 +52,7 @@ export default class VisualRoot extends Component {
     const showSubscriptions = ui.tab === 'subscriptions'
     const showHelp = ui.tab === 'help'
     const showSettings = ui.tab === 'settings'
+    const showBackups = ui.tab === 'backups'
 
     return (
       <div style={Styles.container}>
@@ -63,6 +65,9 @@ export default class VisualRoot extends Component {
               </div>
               <div style={showSubscriptions ? Styles.page : Styles.pageHidden}>
                 <Subscriptions />
+              </div>
+              <div style={showBackups ? Styles.page : Styles.pageHidden}>
+                <Backups />
               </div>
               <div style={showHelp ? Styles.page : Styles.pageHidden}>
                 <Help />

@@ -14,7 +14,11 @@ export default () => reactotron => {
         reactotron.send('state.keys.response', { path, keys, valid }),
 
       stateValuesChange: changes =>
-        reactotron.send('state.values.change', { changes })
+        reactotron.send('state.values.change', { changes }),
+
+      // sends the state backup over to the server
+      stateBackupResponse: state =>
+        reactotron.send('state.backup.response', { state })
     }
   }
 }

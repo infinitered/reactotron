@@ -1,4 +1,4 @@
-import R from 'ramda'
+import { is, contains, merge, concat } from 'ramda'
 import createPlugin from './plugin'
 
 const DEFAULTS = {
@@ -13,12 +13,13 @@ const DEFAULTS = {
  */
 const createReactotronStoreEnhancer = (reactotron, enhancerOptions = {}) => {
   // verify reactotron
-  if (!(R.is(Object, reactotron) && typeof reactotron.use === 'function')) {
+  if (!(is(Object, reactotron) && typeof reactotron.use === 'function')) {
     throw new Error('invalid reactotron passed')
   }
 
   // assemble a crack team of options to use
-  const options = R.merge(DEFAULTS, enhancerOptions)
+  const options = merge(DEFAULTS, enhancerOptions)
+  const exceptions = concat(['REACTOTRON_RESTORE_STATE'], options.except || [])
 
   // an enhancer is a function that returns a store
   const reactotronEnhancer = createStore => (reducer, initialState, enhancer) => {
@@ -40,7 +41,7 @@ const createReactotronStoreEnhancer = (reactotron, enhancerOptions = {}) => {
       const ms = elapsed()
 
       // action not blacklisted?
-      if (!R.contains(action.type, options.except || [])) {
+      if (!contains(action.type, exceptions)) {
         // check if the app considers this important
         let important = false
         if (enhancerOptions && typeof enhancerOptions.isActionImportant === 'function') {
@@ -53,8 +54,13 @@ const createReactotronStoreEnhancer = (reactotron, enhancerOptions = {}) => {
       // return the real work's result
       return result
     }
-    const newStore = R.merge(store, { dispatch: dispatch.bind(store) })
-    const plugin = createPlugin(newStore)
+    const newStore = merge(store, { dispatch: dispatch.bind(store) })
+
+    // create the plugin with the store & a few passthru options
+    const plugin = createPlugin(newStore, {
+      onRestore: options.onRestore,
+      onBackup: options.onBackup
+    })
     reactotron.use(plugin)
 
     // send the store back, but with our our dispatch

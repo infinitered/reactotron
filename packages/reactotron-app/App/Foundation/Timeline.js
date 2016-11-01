@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import getCommandComponent from '../Commands'
 import TimelineHeader from './TimelineHeader'
-import { map } from 'ramda'
+import { map, isNil } from 'ramda'
 import AppStyles from '../Theme/AppStyles'
 
 const Styles = {
@@ -49,6 +49,7 @@ class Timeline extends Component {
 
     const renderItem = command => {
       const CommandComponent = getCommandComponent(command)
+      if (isNil(CommandComponent)) return null
       return <CommandComponent key={command.messageId} command={command} />
     }
 

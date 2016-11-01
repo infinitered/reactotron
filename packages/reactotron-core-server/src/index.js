@@ -225,6 +225,20 @@ class Server {
     this.stateValuesSendSubscriptions()
   }
 
+  /**
+   * Asks the client for a copy of the current state.
+   */
+  stateBackupRequest () {
+    this.send('state.backup.request', {})
+  }
+
+  /**
+   * Asks the client to substitute this new state.  Good luck!  Hope it is compatible!
+   */
+  stateRestoreRequest (state) {
+    this.send('state.restore.request', { state })
+  }
+
 }
 
 export default Server

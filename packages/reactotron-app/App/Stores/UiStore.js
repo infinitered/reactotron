@@ -45,6 +45,7 @@ class UI {
     Mousetrap.bind('command+k', this.reset)
     Mousetrap.bind('command+f', this.openStateFindDialog)
     Mousetrap.bind('command+d', this.openStateDispatchDialog)
+    Mousetrap.bind('command+s', this.backupState)
     Mousetrap.bind('tab', this.toggleKeysValues)
     Mousetrap.bind('escape', this.popState)
     Mousetrap.bind('enter', this.submitCurrentForm)
@@ -52,6 +53,7 @@ class UI {
     Mousetrap.bind('command+n', this.openStateWatchDialog)
     Mousetrap.bind('command+1', this.switchTab.bind(this, 'timeline'))
     Mousetrap.bind('command+2', this.switchTab.bind(this, 'subscriptions'))
+    Mousetrap.bind('command+3', this.switchTab.bind(this, 'backups'))
     Mousetrap.bind('command+/', this.switchTab.bind(this, 'help'))
     Mousetrap.bind('command+?', this.switchTab.bind(this, 'help'))
   }
@@ -187,6 +189,17 @@ class UI {
 
   @action toggleWatchPanel = () => {
     this.showWatchPanel = !this.showWatchPanel
+  }
+
+  // grab a copy of the state for backup purposes
+  @action backupState = () => this.server.stateBackupRequest()
+
+  // change the state on the app to this
+  @action restoreState = state => this.server.stateRestoreRequest(state)
+
+  // removes an existing state object
+  @action deleteState = state => {
+    this.server.commands['state.backup.response'].remove(state)
   }
 
 }

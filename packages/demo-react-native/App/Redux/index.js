@@ -8,13 +8,16 @@ import rootSaga from '../Sagas'
 
 // Reactotron Stuff
 import Reactotron from 'reactotron-react-native'
-import createTrackingEnhancer from 'reactotron-redux'
+import { createReactotronStoreEnhancer, createReplacementReducer } from 'reactotron-redux'
 
 // make our root reducer
 const rootReducer = combineReducers({
   repo: repoReducer,
   logo: logoReducer
 })
+
+// wrap our real reducer with one that can inject state from Reactotron
+const replacementReducer = createReplacementReducer(rootReducer)
 
 // the logger master switch
 const USE_LOGGING = false
@@ -30,13 +33,14 @@ const logger = createLogger({
 // a function which can create our store and auto-persist the data
 export default () => {
   const sagaMiddleware = createSagaMiddleware()
-  const tracker = createTrackingEnhancer(Reactotron, {})
+  // create the Reactotron Store Enhancer
+  const tracker = createReactotronStoreEnhancer(Reactotron, {})
   const enhancers = compose(
     tracker,
     applyMiddleware(logger, sagaMiddleware)
   )
 
-  const store = createStore(rootReducer, enhancers)
+  const store = createStore(replacementReducer, enhancers)
   sagaMiddleware.run(rootSaga)
   return store
 }

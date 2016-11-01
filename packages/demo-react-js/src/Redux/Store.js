@@ -6,7 +6,10 @@ import rootReducer from './RootReducer'
 import rootSaga from '../Sagas'
 import { Types as LogoTypes } from './Logo.redux'
 const Reactotron = process.env.NODE_ENV !== 'production' && require('reactotron-react-js').default
-const createReactotronEnhancer = process.env.NODE_ENV !== 'production' && require('reactotron-redux')
+const {
+  createReactotronStoreEnhancer,
+  createReplacementReducer
+} = process.env.NODE_ENV !== 'production' && require('reactotron-redux')
 
 // the logger master switch
 const USE_LOGGING = false
@@ -29,7 +32,7 @@ export default () => {
 
   // unless we're in production, add the Reactotron enhancer to the list
   if (process.env.NODE_ENV !== 'production') {
-    const reactotronEnhancer = createReactotronEnhancer(Reactotron, {
+    const reactotronEnhancer = createReactotronStoreEnhancer(Reactotron, {
       isActionImportant: action => action.type === LogoTypes.Size && action.size > 100
     })
     enhancers.push(reactotronEnhancer)
@@ -38,8 +41,13 @@ export default () => {
   // add our normal middleware to the list
   enhancers.push(applyMiddleware(logger, sagaMiddleware))
 
+  // in dev, we'll wrap our root reducer with one that can replace the state remotely
+  const reducerToUse = process.env.NODE_ENV !== 'production'
+    ? createReplacementReducer(rootReducer)
+    : rootReducer
+
   // create the store with a root reducer & a composed list of enhancers
-  const store = createStore(rootReducer, compose(...enhancers))
+  const store = createStore(reducerToUse, compose(...enhancers))
 
   // kick off the root saga
   sagaMiddleware.run(rootSaga)
