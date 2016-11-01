@@ -5,6 +5,7 @@ import image from './plugins/image'
 import benchmark from './plugins/benchmark'
 import stateResponses from './plugins/state-responses'
 import apiResponse from './plugins/api-response'
+import clear from './plugins/clear'
 import { start } from './stopwatch'
 export { start } from './stopwatch'
 
@@ -13,7 +14,8 @@ export const CorePlugins = [
   logger(),
   benchmark(),
   stateResponses(),
-  apiResponse()
+  apiResponse(),
+  clear()
 ]
 
 const DEFAULTS = {
@@ -121,7 +123,7 @@ export class Client {
   /**
    * Sends a command to the server
    */
-  send (type, payload, important = false) {
+  send (type, payload = {}, important = false) {
     this.socket && this.socket.emit('command', { type, payload, important: !!important })
   }
 

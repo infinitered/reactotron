@@ -9,5 +9,6 @@ export default [
   'state.values.change',
   'api.response',
   'benchmark.report',
-  'display'
+  'display',
+  'clear'
 ]

@@ -11,4 +11,5 @@ if (__DEV__) {
     .connect()
 
   console.tron = Reactotron
+  Reactotron.clear()
 }
