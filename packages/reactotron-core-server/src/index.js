@@ -127,8 +127,13 @@ class Server {
           this.subscriptions = pluck('path', payload.changes || [])
         }
 
-        this.commands.addCommand(fullCommand)
-        onCommand(fullCommand)
+        // clear
+        if (type === 'clear') {
+          this.commands.all.clear()
+        } else {
+          this.commands.addCommand(fullCommand)
+          onCommand(fullCommand)
+        }
       })
 
       // resend the subscriptions to the client upon connecting

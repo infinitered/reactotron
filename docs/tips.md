@@ -1,5 +1,15 @@
 # Tips and Tricks
 
+### Clearing Reactotron
+
+You can clear Reactotron by calling `clear()`.
+
+For example, let's say in React Native you want to clear the logs everytime you start up?  Add this to your app's `ReactotronConfig.js`:
+
+```js
+Reactotron.clear()
+```
+
 ### Running In Production
 
 Don't... said the stranger on the Internet pretending he knows what's best for you.
@@ -38,8 +48,6 @@ if (process.env.NODE_ENV !== 'production') {
   // ZAP!
 }
 ```
-
-
 
 ### Piggybacking on Console
 

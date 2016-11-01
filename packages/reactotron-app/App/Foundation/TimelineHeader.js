@@ -2,8 +2,13 @@ import React, { Component } from 'react'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import { inject, observer } from 'mobx-react'
+import IconClear from 'react-icons/lib/md/delete-sweep'
 
 const TITLE = 'Event Timeline'
+
+const toolbarButton = {
+  cursor: 'pointer'
+}
 
 const Styles = {
   container: {
@@ -15,13 +20,34 @@ const Styles = {
   },
   content: {
     height: 60,
+    paddingLeft: 10,
+    paddingRight: 10,
     ...AppStyles.Layout.hbox,
+    justifyContent: 'space-between'
+  },
+  left: {
+    ...AppStyles.Layout.hbox,
+    width: 100
+  },
+  right: {
+    width: 100,
+    ...AppStyles.Layout.hbox,
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+  center: {
+    ...AppStyles.Layout.vbox,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
   },
   title: {
     color: Colors.foregroundLight,
     textAlign: 'center'
+  },
+  iconSize: 32,
+  toolbarClear: {
+    ...toolbarButton
   }
 }
 
@@ -30,10 +56,18 @@ const Styles = {
 class TimelineHeader extends Component {
 
   render () {
+    const { ui } = this.props.session
+
     return (
       <div style={Styles.container}>
         <div style={Styles.content}>
-          <div style={Styles.title}>{TITLE}</div>
+          <div style={Styles.left} />
+          <div style={Styles.center}>
+            <div style={Styles.title}>{TITLE}</div>
+          </div>
+          <div style={Styles.right}>
+            <IconClear size={Styles.iconSize} style={Styles.toolbarClear} onClick={ui.reset} />
+          </div>
         </div>
       </div>
     )

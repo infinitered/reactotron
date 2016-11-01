@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import Command from '../Shared/Command'
 import ObjectTree from '../Shared/ObjectTree'
 
-const COMMAND_TITLE = 'MYSTERY 👻'
+const COMMAND_TITLE = 'UNKNOWN'
 
 class UnknownCommand extends Component {
 
@@ -19,7 +19,7 @@ class UnknownCommand extends Component {
     const { payload, type } = command
 
     return (
-      <Command command={command} title={COMMAND_TITLE} subtitle={type}>
+      <Command command={command} title={COMMAND_TITLE} preview={type}>
         <ObjectTree object={{payload}} />
       </Command>
     )

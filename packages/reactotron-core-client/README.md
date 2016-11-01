@@ -274,6 +274,10 @@ and is a `data-uri`.  This means, an ordinary http link will work, but as will e
 }
 ```
 
+### clear
+
+An instruction sent from the client to the server to clear the history on the server.
+
 ### state.action.complete
 
 Sent from the client to the server when an action is complete.  It's up to you
