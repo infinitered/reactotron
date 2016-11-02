@@ -107,3 +107,21 @@ const oneReducerToRuleThemAll = createReplacementReducer(rootReducer)
 ```
 
 Congrats!  Now you can upload & download state from inside the Reactotron App.
+
+#### Transform Hooks
+
+If you use `seamless-immutable` in your reducers to ensure your global state
+tree is immutable, then you'll need to ensure when you restore state that you
+convert it into an `Immutable` object.
+
+You can hook the `onRestore` event to provide this translation.
+
+```js
+const enhancer = createReactotronStoreEnhancer(Reactotron, {
+  onRestore: state => Immutable(state)
+})
+```
+
+There's also a `onBackup` function you can use to provide the snapshot in a
+serialized form if you're working with `Immutable.js` or would like to strip
+out big or sensitive data.
