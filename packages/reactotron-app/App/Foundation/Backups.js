@@ -5,7 +5,6 @@ import { inject, observer } from 'mobx-react'
 import { map } from 'ramda'
 import BackupsHeader from './BackupsHeader'
 import moment from 'moment'
-import IconUpload from 'react-icons/lib/md/file-upload'
 import IconDelete from 'react-icons/lib/md/delete'
 
 const Styles = {
