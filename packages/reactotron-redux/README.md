@@ -8,6 +8,7 @@ Ships with middleware ready to plug into your Redux store.
 * Query your state tree
 * Subscribe to paths within your state tree watching for changes
 * Execute arbitrary actions
+* Hot swap your app state on the fly
 
 # Installing
 
@@ -16,49 +17,68 @@ Ships with middleware ready to plug into your Redux store.
 
 # Configuring
 
-In the file that you create your Redux store, add these two imports at the top:
-
-```js
-import Reactotron from 'reactotron-react-native'
-import createReactotronTrackingEnhancer from 'reactotron-redux'
-```
-
-Then you either add it as the 2nd parameter to Redux's `createStore` or
-you add it the list of enhancers you're composing.
-
-Here's a bigger example:
+Two files need to change to hookup Reactotron to Redux.  First, in your
+ReactotronConfig, you'll need to add `reactotron-redux` as plugin
 
 ```js
 
-// Here we're composing our enhancers, this example is already using the
-// `applyMiddleware` enhancer which typical in Redux apps.
-// So we just put our call to `createReactotronTrackingEnhancer` here.
-//
-// Also, we have to pass it the Reactotron we're using for our app which
-// came in up in the import section.
-const enhancers = compose(
-  applyMiddleware(logger),
-  createReactotronTrackingEnhancer(Reactotron, {
-    // optional flagging of important actions
-    isActionImportant: action => action.type === 'FORMAT_HARD_DRIVE'
-  })
-)
+// ReactotronConfig.js
+import { reactotronRedux } from 'reactotron-redux'
 
-// This creates our store (rootReducer is just from a sample app, you've
-// probably got something similar).
-const store = createStore(rootReducer, enhancers)
+
+// then add it to the plugin list
+Reactotron
+  .configure({ name: 'React Native Demo' })
+  .use(reactotronRedux()) //  <- here i am!
 ```
 
+Then, where you create your Redux store, instead of using Redux's `createStore`,
+you can use Reactotron's `createStore` which has the same interface.
+
+
+```js
+const store = Reactotron.createStore(rootReducer, compose(middleware))
+```
 
 # Options
 
-`createReactotronTrackingEnhancer()` has a 2nd parameter.  It's an object.
+`reactotronRedux()` accepts an optional parameter which is an object you can use
+ton configure
+
+#### except
 
 `except` is an array of strings that match actions flowing through Redux.
 
 If you have some actions you'd rather just not see (for example, `redux-saga`)
 triggers a little bit of noise, you can suppress them:
 
-`createReactotronTrackingEnhancer(Reactotron, {
+```js
+reactotronRedux({
   except: ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'EFFECT_REJECTED']
-})`
+})
+```
+
+#### isImportantAction
+
+`isImportantAction` is a function which receives and action and returns a boolean.
+`true` will be cause the action to show up in the Reactotron app with a highlight.
+
+```js
+reactotronRedux({
+  isActionImportant: action => action.type === 'repo.receive'
+})
+```
+
+#### onBackup
+
+`onBackup` fires when we're about to transfer a copy of your Redux global state
+tree and send it to the server.  It accepts a object called `state` and returns
+an object called `state`.
+
+You can use this to prevent big, sensitive, or transient data from going to
+Reactotron.
+
+#### onRestore
+
+`onRestore` is the opposite of `onBackup`.  It will fire when the Reactotron app
+sends a new copy of state to the app.

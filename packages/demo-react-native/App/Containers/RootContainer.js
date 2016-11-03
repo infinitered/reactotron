@@ -27,6 +27,7 @@ class RootContainer extends Component {
   }
 
   handleSendCatPicture () {
+    this.props.ignore()
     console.tron.image({
       uri: 'https://placekitten.com/g/400/400',
       preview: 'placekitten.com',
@@ -89,6 +90,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => ({
+  ignore: () => dispatch({ type: 'ignore' }),
   faster: () => dispatch(LogoActions.changeSpeed(10)),
   slower: () => dispatch(LogoActions.changeSpeed(50)),
   bigger: () => dispatch(LogoActions.changeSize(140)),
