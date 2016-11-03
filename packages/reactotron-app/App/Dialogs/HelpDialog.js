@@ -3,6 +3,7 @@ import { ModalPortal, ModalBackground, ModalDialog } from 'react-modal-dialog'
 import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
+import Keystroke from '../Lib/Keystroke'
 
 const ESCAPE_KEYSTROKE = 'Esc'
 const ESCAPE_HINT = 'Close'
@@ -109,24 +110,24 @@ class StateDispatchDialog extends Component {
               <div style={Styles.body}>
                 <div style={Styles.group}>Working With State</div>
                 <div style={Styles.helpShortcut}>
-                  <div style={Styles.helpLabel}>Cmd + F</div>
+                  <div style={Styles.helpLabel}>{Keystroke.modifierName} + F</div>
                   <div style={Styles.helpDetail}>find keys or values</div>
                 </div>
                 <div style={Styles.helpShortcut}>
-                  <div style={Styles.helpLabel}>Cmd + N</div>
+                  <div style={Styles.helpLabel}>{Keystroke.modifierName} + N</div>
                   <div style={Styles.helpDetail}>new subscription</div>
                 </div>
                 <div style={Styles.helpShortcut}>
-                  <div style={Styles.helpLabel}>Cmd + D</div>
+                  <div style={Styles.helpLabel}>{Keystroke.modifierName} + D</div>
                   <div style={Styles.helpDetail}>dispatch an action</div>
                 </div>
                 <div style={Styles.group}>Miscellaneous</div>
                 <div style={Styles.helpShortcut}>
-                  <div style={Styles.helpLabel}>Cmd + K</div>
+                  <div style={Styles.helpLabel}>{Keystroke.modifierName} + K</div>
                   <div style={Styles.helpDetail}>klear!</div>
                 </div>
                 <div style={Styles.helpShortcut}>
-                  <div style={Styles.helpLabel}>Cmd + /</div>
+                  <div style={Styles.helpLabel}>{Keystroke.modifierName} + /</div>
                   <div style={Styles.helpDetail}>toggle help</div>
                 </div>
               </div>

@@ -26,7 +26,7 @@ app.on('ready', () => {
     const nextValue = !mainWindow.isAlwaysOnTop()
     mainWindow.setAlwaysOnTop(nextValue)
     // fragile way of getting the Always On Top
-    const menuItem = menu.items[3].submenu.items[0]
+    const menuItem = process.platform === 'darwin' ? menu.items[3].submenu.items[0] : menu.items[1].submenu.items[0]
     menuItem.checked = nextValue
   }
 
@@ -103,6 +103,7 @@ app.on('ready', () => {
     }, {
       label: '&View',
       submenu: (process.env.NODE_ENV === 'development') ? [
+        { type: 'checkbox', label: 'Always On Top', click () { toggleAlwaysOnTop(this) } },
         { label: '&Reload', accelerator: 'Ctrl+R', click () { mainWindow.webContents.reload() } },
         { label: 'Toggle &Developer Tools', accelerator: 'Alt+Ctrl+I', click () { mainWindow.toggleDevTools() } }
       ] : [

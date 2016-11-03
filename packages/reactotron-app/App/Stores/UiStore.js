@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx'
 import Mousetrap from '../Lib/Mousetrap.min.js'
 import { isNilOrEmpty } from 'ramdasauce'
+import Keystroke from '../Lib/Keystroke'
 
 /**
  * Handles UI state.
@@ -42,20 +43,20 @@ class UI {
 
     Mousetrap.prototype.stopCallback = () => false
 
-    Mousetrap.bind('command+k', this.reset)
-    Mousetrap.bind('command+f', this.openStateFindDialog)
-    Mousetrap.bind('command+d', this.openStateDispatchDialog)
-    Mousetrap.bind('command+s', this.backupState)
-    Mousetrap.bind('tab', this.toggleKeysValues)
-    Mousetrap.bind('escape', this.popState)
-    Mousetrap.bind('enter', this.submitCurrentForm)
-    Mousetrap.bind('command+enter', this.submitCurrentFormDelicately)
-    Mousetrap.bind('command+n', this.openStateWatchDialog)
-    Mousetrap.bind('command+1', this.switchTab.bind(this, 'timeline'))
-    Mousetrap.bind('command+2', this.switchTab.bind(this, 'subscriptions'))
-    Mousetrap.bind('command+3', this.switchTab.bind(this, 'backups'))
-    Mousetrap.bind('command+/', this.switchTab.bind(this, 'help'))
-    Mousetrap.bind('command+?', this.switchTab.bind(this, 'help'))
+    Mousetrap.bind(`${Keystroke.mousetrap}+k`, this.reset)
+    Mousetrap.bind(`${Keystroke.mousetrap}+f`, this.openStateFindDialog)
+    Mousetrap.bind(`${Keystroke.mousetrap}+d`, this.openStateDispatchDialog)
+    Mousetrap.bind(`${Keystroke.mousetrap}+s`, this.backupState)
+    Mousetrap.bind(`tab`, this.toggleKeysValues)
+    Mousetrap.bind(`escape`, this.popState)
+    Mousetrap.bind(`enter`, this.submitCurrentForm)
+    Mousetrap.bind(`${Keystroke.mousetrap}+enter`, this.submitCurrentFormDelicately)
+    Mousetrap.bind(`${Keystroke.mousetrap}+n`, this.openStateWatchDialog)
+    Mousetrap.bind(`${Keystroke.mousetrap}+1`, this.switchTab.bind(this, 'timeline'))
+    Mousetrap.bind(`${Keystroke.mousetrap}+2`, this.switchTab.bind(this, 'subscriptions'))
+    Mousetrap.bind(`${Keystroke.mousetrap}+3`, this.switchTab.bind(this, 'backups'))
+    Mousetrap.bind(`${Keystroke.mousetrap}+/`, this.switchTab.bind(this, 'help'))
+    Mousetrap.bind(`${Keystroke.mousetrap}+?`, this.switchTab.bind(this, 'help'))
   }
 
   @action switchTab = (newTab) => {
