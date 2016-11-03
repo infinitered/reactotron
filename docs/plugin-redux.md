@@ -26,45 +26,46 @@ npm install --save-dev reactotron-redux
 * pull values out on demand
 * view list of keys
 * dispatch actions from Reactotron
+* replay actions
+* hot swap your app state on the fly
 
-# Setting Up
 
-This plugin connects Reactotron to Redux via Redux's [Store Enhancer](http://redux.js.org/docs/Glossary.html#store-enhancer) plugin system.
+# Installing
 
-You'll configure where you setup your Redux store.  In that file, we'll import both `reactotron-redux` and Reactotron.
+`npm i --save-dev reactotron-redux`
 
-```js
-import Reactotron from 'reactotron-react-js'
-// import Reactotron from 'reactotron-react-native'  // if on mobile
-import { createReactotronStoreEnhancer } from 'reactotron-redux'
-```
 
-`createReactotronEnhancer` is a function that creates an enhancer ready to inject into Redux. There are 2 parameters.
+# Configuring
 
-1. `reactotronInstance` (required) - `Reactotron` itself. It's the object that came out of the import at the top.
-2. `options` (optional) - An object providing configuration option to the store enhancer.
-
-Use take the return value and put that into your call to `createStore()`.
-
-**IMPORTANT:  Your enhancer should go first if there are multiple enhancers.**
-
-Here's a few examples in action:
+Two files need to change to hookup Reactotron to Redux.  First, in your
+ReactotronConfig, you'll need to add `reactotron-redux` as plugin
 
 ```js
-const reactotronEnhancer = createReactotronStoreEnhancer(Reactotron)
 
-// where there are no other enhancers
-createStore(rootReducer, reactotronEnhancer)
+// ReactotronConfig.js
+import { reactotronRedux } from 'reactotron-redux'
 
-// using Redux's compose() to bring together multiple enhancers
-createStore(rootReducer, compose(reactotronEnhancer, applyMiddleware(logger, sagaMiddleware)))
+
+// then add it to the plugin list
+Reactotron
+  .configure({ name: 'React Native Demo' })
+  .use(reactotronRedux()) //  <- here i am!
 ```
 
-See the demos for more examples.
+Then, where you create your Redux store, instead of using Redux's `createStore`,
+you can use Reactotron's `createStore` which has the same interface.
+
+
+```js
+const store = Reactotron.createStore(rootReducer, compose(middleware))
+```
 
 # Options
 
-`createReactotronStoreEnhancer` supports options as the 2nd parameter.
+`reactotronRedux()` accepts an optional parameter which is an object you can use
+ton configure
+
+#### except
 
 `except` is an array of strings that match actions flowing through Redux.
 
@@ -72,56 +73,32 @@ If you have some actions you'd rather just not see (for example, `redux-saga`)
 triggers a little bit of noise, you can suppress them:
 
 ```js
-createReactotronEnhancer(Reactotron, {
+reactotronRedux({
   except: ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'EFFECT_REJECTED']
 })
 ```
 
-`isActionImportant` is a way to mark certain actions as "important".   Important messages are display in a bolder style that gets your attention within Reactotron.  
+#### isImportantAction
 
-It is a function that accepts the action and returns a `boolean`.  `true` is important.  `false` is normal.
+`isImportantAction` is a function which receives and action and returns a boolean.
+`true` will be cause the action to show up in the Reactotron app with a highlight.
 
 ```js
-createReactotronEnhancer(Reactotron, {
-  isActionImportant: action => action.type === 'FORMAT_HARD_DRIVE'
+reactotronRedux({
+  isActionImportant: action => action.type === 'repo.receive'
 })
 ```
 
-# State Snapshots (Time Travel)
+#### onBackup
 
-Also supported is the ability to take snapshot of the whole state and upload them to the application later.
+`onBackup` fires when we're about to transfer a copy of your Redux global state
+tree and send it to the server.  It accepts a object called `state` and returns
+an object called `state`.
 
-To do this, you create another reducer to wrap your own root reducer.  Like this:
+You can use this to prevent big, sensitive, or transient data from going to
+Reactotron.
 
-```js
-// grab your reducers as usual
-import rootReducer from '../Reducers' // or wherever your reducers live
+#### onRestore
 
-// import createReplacementReducer as well
-import { createReactotronStoreEnhancer, createReplacementReducer } from 'reactotron-redux'
-
-// pass in your reducer to create a new reducer
-const oneReducerToRuleThemAll = createReplacementReducer(rootReducer)
-
-//  then hand that off to the store (as usual)
-```
-
-Congrats!  Now you can upload & download state from inside the Reactotron App.
-
-#### Transform Hooks
-
-If you use `seamless-immutable` in your reducers to ensure your global state
-tree is immutable, then you'll need to ensure when you restore state that you
-convert it into an `Immutable` object.
-
-You can hook the `onRestore` event to provide this translation.
-
-```js
-const enhancer = createReactotronStoreEnhancer(Reactotron, {
-  onRestore: state => Immutable(state)
-})
-```
-
-There's also a `onBackup` function you can use to provide the snapshot in a
-serialized form if you're working with `Immutable.js` or would like to strip
-out big or sensitive data.
+`onRestore` is the opposite of `onBackup`.  It will fire when the Reactotron app
+sends a new copy of state to the app.
