@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import Key from '../Shared/Key'
+import Keystroke from '../Lib/Keystroke'
 
 const Styles = {
   container: {
@@ -39,6 +40,8 @@ const Styles = {
   }
 }
 
+const hotkey = window.process.platform === 'win32' ? `CTRL` : `⌘`
+
 class HelpKeystrokes extends Component {
 
   render () {
@@ -50,19 +53,19 @@ class HelpKeystrokes extends Component {
           <div style={Styles.group}>
             <div style={Styles.category}>Navigation</div>
             <div style={Styles.helpShortcut}>
-              <div style={Styles.helpLabel}><Key text='⌘' />+<Key text='1' /></div>
+              <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='1' /></div>
               <div style={Styles.helpDetail}>view timeline</div>
             </div>
             <div style={Styles.helpShortcut}>
-              <div style={Styles.helpLabel}><Key text='⌘' />+<Key text='2' /></div>
+              <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='2' /></div>
               <div style={Styles.helpDetail}>view subscriptions</div>
             </div>
             <div style={Styles.helpShortcut}>
-              <div style={Styles.helpLabel}><Key text='⌘' />+<Key text='3' /></div>
+              <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='3' /></div>
               <div style={Styles.helpDetail}>view state snapshots</div>
             </div>
             <div style={Styles.helpShortcut}>
-              <div style={Styles.helpLabel}><Key text='⌘' />+<Key text='/' /></div>
+              <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='/' /></div>
               <div style={Styles.helpDetail}>view help</div>
             </div>
           </div>
@@ -70,19 +73,19 @@ class HelpKeystrokes extends Component {
           <div style={Styles.group}>
             <div style={Styles.category}>State Goodies</div>
             <div style={Styles.helpShortcut}>
-              <div style={Styles.helpLabel}><Key text='⌘' />+<Key text='F' /></div>
+              <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='F' /></div>
               <div style={Styles.helpDetail}>find keys or values</div>
             </div>
             <div style={Styles.helpShortcut}>
-              <div style={Styles.helpLabel}><Key text='⌘' />+<Key text='N' /></div>
+              <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='N' /></div>
               <div style={Styles.helpDetail}>new subscription</div>
             </div>
             <div style={Styles.helpShortcut}>
-              <div style={Styles.helpLabel}><Key text='⌘' />+<Key text='D' /></div>
+              <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='D' /></div>
               <div style={Styles.helpDetail}>dispatch an action</div>
             </div>
             <div style={Styles.helpShortcut}>
-              <div style={Styles.helpLabel}><Key text='⌘' />+<Key text='S' /></div>
+              <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='S' /></div>
               <div style={Styles.helpDetail}>take a snapshot of current state</div>
             </div>
           </div>
@@ -90,7 +93,7 @@ class HelpKeystrokes extends Component {
           <div style={Styles.group}>
             <div style={Styles.category}>Miscellaneous</div>
             <div style={Styles.helpShortcut}>
-              <div style={Styles.helpLabel}><Key text='⌘' />+<Key text='K' /></div>
+              <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='K' /></div>
               <div style={Styles.helpDetail}>klear!</div>
             </div>
           </div>

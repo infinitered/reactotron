@@ -4,10 +4,11 @@ import { ModalPortal, ModalBackground, ModalDialog } from 'react-modal-dialog'
 import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
+import Keystroke from '../Lib/Keystroke'
 
 const ESCAPE_KEYSTROKE = 'Esc'
 const ESCAPE_HINT = 'Cancel'
-const ENTER_KEYSTROKE = '⌘ + Enter'
+const ENTER_KEYSTROKE = `${Keystroke.modifierName} + Enter`
 const ENTER_HINT = 'Dispatch'
 const DIALOG_TITLE = 'Dispatch Action'
 const INSTRUCTIONS = (
