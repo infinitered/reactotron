@@ -66,7 +66,7 @@ export default (pluginConfig = {}) => reactotron => {
         // server is asking to clobber state with this
         case 'state.restore.request': {
           // run our state through our onRestore
-          const state = onRestore(payload.state)
+          const state = onRestore(payload.state, reduxStore.getState())
           reduxStore.dispatch({ type: restoreActionType, state })
           return
         }
