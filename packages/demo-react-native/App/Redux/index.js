@@ -28,7 +28,9 @@ const logger = createLogger({
 
 // a function which can create our store and auto-persist the data
 export default () => {
-  const sagaMiddleware = createSagaMiddleware()
+  const sagaMiddleware = createSagaMiddleware({
+    sagaMonitor: Reactotron.createSagaMonitor()
+  })
   const middleware = applyMiddleware(logger, sagaMiddleware)
   const store = Reactotron.createStore(rootReducer, compose(middleware))
   sagaMiddleware.run(rootSaga)
