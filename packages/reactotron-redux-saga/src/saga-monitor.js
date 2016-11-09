@@ -1,6 +1,7 @@
 import { is } from 'redux-saga/utils'
 import getEffectName from './get-effect-name'
-import { CALL, PUT, FORK, RACE, PENDING, RESOLVED, REJECTED, CANCELLED } from './saga-constants'
+import getEffectDescription from './get-effect-description'
+import { ITERATOR, CALL, PUT, FORK, RACE, PENDING, RESOLVED, REJECTED, CANCELLED } from './saga-constants'
 import { reject, values, pluck, isNil, split, pathOr, last, forEach, propEq, filter, __ } from 'ramda'
 
 // creates a saga monitor
@@ -31,6 +32,7 @@ export default (reactotron, options) => {
       label,
       status: PENDING,
       name: getEffectName(effect),
+      description: getEffectDescription(effect),
       result: null,
       startedAt: timer()
     }
@@ -61,17 +63,17 @@ export default (reactotron, options) => {
     // grab the parent too
     const { parentEffectId } = effectInfo
     const parentEffectInfo = effects[parentEffectId]
-
-    // TODO: For now, let's just display a bunch of data and let the user figure
-    // it out.
-
     const children = []
     const sample = {}
+    let sagaDescription
     const { duration } = effectInfo
     if (effectInfo.name === FORK) {
       const args = pathOr([], split('.', 'effect.FORK.args'), effectInfo)
       const lastArg = last(args)
       sample.type = lastArg && lastArg.type
+      if (parentEffectInfo.name === ITERATOR) {
+        sagaDescription = parentEffectInfo.description
+      }
 
       // flatten out the nested effects
       const buildChild = (depth, effectId) => {
@@ -104,10 +106,12 @@ export default (reactotron, options) => {
           effectId: sourceEffectInfo.effectId,
           parentEffectId: sourceEffectInfo.parentEffectId,
           name: sourceEffectInfo.name,
+          description: sourceEffectInfo.description,
           duration: sourceEffectInfo.duration,
           status: sourceEffectInfo.status,
           winner: sourceEffectInfo.winner,
           loser: sourceEffectInfo.loser,
+          result: sourceEffectInfo.result,
           extra
         })
 
@@ -126,14 +130,9 @@ export default (reactotron, options) => {
 
     reactotron.send('saga.task.complete', {
       triggerType: sample.type,
+      description: sagaDescription,
       duration,
-      children,
-      giantBagOfUnsortedStuff: {
-        effectInfo: effectInfo,
-        parentEffectInfo: parentEffectInfo,
-        taskResult,
-        effects
-      }
+      children
     })
   }
 

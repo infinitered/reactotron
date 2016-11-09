@@ -14,14 +14,22 @@ const Styles = {
 }
 
 // the tips
+const TIP_SAGA_VIEW_DETAILS = 'Toggle saga details'
 const TIP_REPLAY_ACTION = 'Repeat this action.'
 const TIP_CUSTOMIZE_REPLAY_ACTION = 'Edit and dispatch this action.'
 
-// the buttons (minus the onClick)
-const ReplayButton = props => <Button icon='repeat' onClick={props.onClick} tip={TIP_REPLAY_ACTION} />
-const CustomizeReplayButton = props => <Button icon='code' onClick={props.onClick} tip={TIP_CUSTOMIZE_REPLAY_ACTION} />
+const ToggleSagaViewDetailButton = props =>
+  <Button icon='list' onClick={props.onClick} tip={TIP_SAGA_VIEW_DETAILS} />
+
+const ReplayButton = props =>
+  <Button icon='repeat' onClick={props.onClick} tip={TIP_REPLAY_ACTION} />
+
+const CustomizeReplayButton = props =>
+  <Button icon='code' onClick={props.onClick} tip={TIP_CUSTOMIZE_REPLAY_ACTION} />
+
 const CopyApiResponseButton = props =>
   <Button icon='call-received' onClick={props.onClick} tip='Copy JSON response to clipboard' />
+  
 const CopyApiRequestButton = props =>
   <Button icon='call-made' onClick={props.onClick} tip='Copy JSON request to clipboard' />
 
@@ -87,6 +95,17 @@ class CommandToolbar extends Component {
     }
   }
 
+  handleToggleViewSagaDetails = event => {
+    event.stopPropagation()
+    const { command, session } = this.props
+    const { ui } = session
+    const { messageId } = command
+    const key = 'details'
+    const currentValue = ui.getCommandProperty(messageId, key)
+
+    ui.setCommandProperty(messageId, key, !currentValue)
+  }
+
   render () {
     const { command } = this.props
     const { payload } = command
@@ -96,6 +115,7 @@ class CommandToolbar extends Component {
     const showCustomizeReplayAction = command.type === 'state.action.complete'
     const showCopyApiResponse = command.type === 'api.response'
     const showCopyApiRequest = command.type === 'api.response' && !isNilOrEmpty(requestBody)
+    const showToggleViewSagaDetails = command.type === 'saga.task.complete'
 
     return (
       <div style={Styles.container}>
@@ -110,6 +130,9 @@ class CommandToolbar extends Component {
         }
         {showCopyApiRequest &&
           <CopyApiRequestButton onClick={this.handleCopyApiRequestToClipboard} />
+        }
+        {showToggleViewSagaDetails &&
+          <ToggleSagaViewDetailButton onClick={this.handleToggleViewSagaDetails} />
         }
       </div>
     )

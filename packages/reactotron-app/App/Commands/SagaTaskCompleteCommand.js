@@ -7,11 +7,11 @@ import { map } from 'ramda'
 import IconStatusResolved from 'react-icons/lib/md/done'
 import IconStatusRejected from 'react-icons/lib/md/error'
 import IconStatusCancelled from 'react-icons/lib/md/eject'
-import IconStatusWinner from 'react-icons/lib/md/done-all'
+import ReactTooltip from 'react-tooltip'
+import { inject, observer } from 'mobx-react'
 
 const COMMAND_TITLE = 'SAGA'
 const INDENT_SPACE = 20
-const I_AM_A_TRAINED_PROFESSIONAL = false
 
 const STATUS_MAP = {
   'RESOLVED': <IconStatusResolved size={18} />,
@@ -58,6 +58,9 @@ const Styles = {
   effectName: {
     color: Colors.constant
   },
+  effectDescription: {
+    paddingBottom: 4
+  },
   winning: {
   },
   losing: {
@@ -77,18 +80,30 @@ const Styles = {
     color: Colors.foregroundDark
   }
 }
+
+@inject('session')
+@observer
 class SagaTaskCompleteCommand extends Component {
 
   static propTypes = {
     command: PropTypes.object.isRequired
   }
 
-  shouldComponentUpdate (nextProps) {
-    return this.props.command.id !== nextProps.command.id
+  constructor (props) {
+    super(props)
+    this.renderEffect = this.renderEffect.bind(this)
   }
 
+  // shouldComponentUpdate (nextProps) {
+  //   return this.props.command.id !== nextProps.command.id
+  // }
+
+  // componentDidReact () {
+  //   ReactTooltip.rebuild()
+  // }
+
   renderEffect (effect) {
-    const { extra, loser, winner, status, name, duration, depth } = effect
+    const { extra, loser, winner, status, name, description, duration, depth, result } = effect
     const key = `effect-${effect.effectId}`
     const losingStyle = loser || status === 'CANCELLED' ? Styles.losing : {}
     const winningStyle = winner ? Styles.winning : {}
@@ -102,9 +117,13 @@ class SagaTaskCompleteCommand extends Component {
       ...Styles.effectDuration,
       ...losingStyle
     }
+    const { session, command } = this.props
+    const { ui } = session
+    const { messageId } = command
+    const showInOut = ui.getCommandProperty(messageId, 'details')
     return (
       <div key={key} style={Styles.effect}>
-        <div style={Styles.effectNameContainer}>
+        <div style={Styles.effectNameContainer} data-tip={description} >
           <span style={effectNameStyle}>
             <span style={Styles.effectStatus}>
               { STATUS_MAP[status] }
@@ -114,7 +133,10 @@ class SagaTaskCompleteCommand extends Component {
         </div>
         <div style={Styles.effectExtra}>
           { extra &&
-            <Content value={{ '': extra }} treeLevel={0} />
+            <div>
+              <div style={Styles.effectDescription}>{description}</div>
+              { showInOut && <Content value={{ in: extra, out: result }} treeLevel={0} /> }
+            </div>
           }
         </div>
         <div style={effectDurationStyle}>
@@ -127,7 +149,7 @@ class SagaTaskCompleteCommand extends Component {
   render () {
     const { command } = this.props
     const { payload } = command
-    const { triggerType, duration, children, giantBagOfUnsortedStuff } = payload
+    const { description, triggerType, duration, children } = payload
     const preview = `${triggerType} in ${duration}ms`
     const effectTitle = `${children.length} Effect${children.length > 0 && 's'}`
 
@@ -136,18 +158,14 @@ class SagaTaskCompleteCommand extends Component {
         <div style={Styles.effects}>
           <div style={Styles.effectTitle}>
             <div style={Styles.triggerType}>
-              {triggerType}
+              {description || triggerType}
             </div>
             <div style={Styles.count}>{effectTitle}</div>
             <div style={Styles.duration}>{duration}<span style={Styles.ms}>ms</span></div>
           </div>
-          {map(this.renderEffect.bind(this), children)}
+          {map(this.renderEffect, children)}
         </div>
-        { I_AM_A_TRAINED_PROFESSIONAL &&
-          <div style={Styles.giant}>
-            <Content value={{ ...giantBagOfUnsortedStuff }} />
-          </div>
-        }
+        <ReactTooltip place='bottom' type='light' />
       </Command>
     )
   }
