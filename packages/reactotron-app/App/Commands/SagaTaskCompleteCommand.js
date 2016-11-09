@@ -7,7 +7,6 @@ import { map } from 'ramda'
 import IconStatusResolved from 'react-icons/lib/md/done'
 import IconStatusRejected from 'react-icons/lib/md/error'
 import IconStatusCancelled from 'react-icons/lib/md/eject'
-import ReactTooltip from 'react-tooltip'
 import { inject, observer } from 'mobx-react'
 
 const COMMAND_TITLE = 'SAGA'
@@ -94,14 +93,6 @@ class SagaTaskCompleteCommand extends Component {
     this.renderEffect = this.renderEffect.bind(this)
   }
 
-  // shouldComponentUpdate (nextProps) {
-  //   return this.props.command.id !== nextProps.command.id
-  // }
-
-  // componentDidReact () {
-  //   ReactTooltip.rebuild()
-  // }
-
   renderEffect (effect) {
     const { extra, loser, winner, status, name, description, duration, depth, result } = effect
     const key = `effect-${effect.effectId}`
@@ -123,7 +114,7 @@ class SagaTaskCompleteCommand extends Component {
     const showInOut = ui.getCommandProperty(messageId, 'details')
     return (
       <div key={key} style={Styles.effect}>
-        <div style={Styles.effectNameContainer} data-tip={description} >
+        <div style={Styles.effectNameContainer}>
           <span style={effectNameStyle}>
             <span style={Styles.effectStatus}>
               { STATUS_MAP[status] }
@@ -165,7 +156,6 @@ class SagaTaskCompleteCommand extends Component {
           </div>
           {map(this.renderEffect, children)}
         </div>
-        <ReactTooltip place='bottom' type='light' />
       </Command>
     )
   }
