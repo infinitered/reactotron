@@ -10,6 +10,7 @@ const getStylingFromBase16 = base16Theme => ({
     backgroundSubtleDark: Color(base16Theme.base00).darken(0.3).hslString(),
     backgroundLighter: base16Theme.base01, // base01 - Lighter Background (Used for status bars)
     line: Color(base16Theme.base01).darken(0.1).hslString(),
+    subtleLine: Color(base16Theme.base01).darken(0.2).hslString(),
     backgroundHighlight: base16Theme.base02, // base02 - Selection Background
     highlight: base16Theme.base03, // base03 - Comments, Invisibles, Line Highlighting
     foregroundDark: base16Theme.base04, // base04 - Dark Foreground (Used for status bars)

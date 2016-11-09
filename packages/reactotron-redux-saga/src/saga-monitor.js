@@ -1,7 +1,7 @@
 import { is } from 'redux-saga/utils'
 import getEffectName from './get-effect-name'
-import { FORK, RACE, PENDING, RESOLVED, REJECTED, CANCELLED } from './saga-constants'
-import { pick, map, split, pathOr, last, forEach, propEq, filter, __ } from 'ramda'
+import { CALL, PUT, FORK, RACE, PENDING, RESOLVED, REJECTED, CANCELLED } from './saga-constants'
+import { reject, values, pluck, isNil, split, pathOr, last, forEach, propEq, filter, __ } from 'ramda'
 
 // creates a saga monitor
 export default (reactotron, options) => {
@@ -11,7 +11,8 @@ export default (reactotron, options) => {
   // filtering that effect table
   const byParentId = propEq('parentEffectId', __)
   const byLabel = propEq('label', __)
-  const getChildEffectInfos = parentEffectId => filter(byParentId(parentEffectId), effects)
+  const getChildEffectInfos = parentEffectId => filter(byParentId(parentEffectId), values(effects))
+  const getChildEffectIds = effectId => pluck('effectId', getChildEffectInfos(effectId))
 
   // start a relative timer
   const timer = reactotron.startTimer()
@@ -30,20 +31,12 @@ export default (reactotron, options) => {
       label,
       status: PENDING,
       name: getEffectName(effect),
-      children: [],
       result: null,
       startedAt: timer()
     }
 
     // store it
     effects[effectId] = effectInfo
-
-    // TODO: temporarily track in our parent for visibility in reactotron until
-    // we come up with a better visualization
-    const parentEffectInfo = effects[parentEffectId]
-    if (parentEffectInfo) {
-      parentEffectInfo.children.push(effectInfo)
-    }
   }
 
   // ---------------- Finishing ----------------------------
@@ -72,27 +65,74 @@ export default (reactotron, options) => {
     // TODO: For now, let's just display a bunch of data and let the user figure
     // it out.
 
+    const children = []
     const sample = {}
+    const { duration } = effectInfo
     if (effectInfo.name === FORK) {
       const args = pathOr([], split('.', 'effect.FORK.args'), effectInfo)
       const lastArg = last(args)
       sample.type = lastArg && lastArg.type
-      sample.duration = effectInfo.duration
-      // TODO: recurse
-      sample.children = map(
-        pick(['name', 'duration', 'result', 'effectId']),
-        effectInfo.children
+
+      // flatten out the nested effects
+      const buildChild = (depth, effectId) => {
+        const sourceEffectInfo = effects[effectId]
+        if (isNil(sourceEffectInfo)) return
+
+        let extra = null
+        switch (sourceEffectInfo.name) {
+          case CALL:
+            extra = sourceEffectInfo.effect[sourceEffectInfo.name].args
+            break
+
+          case PUT:
+            extra = sourceEffectInfo.effect[sourceEffectInfo.name].action
+            break
+
+          // children handle this
+          case RACE:
+            break
+
+          // TODO: More of customizations needed here
+
+          default:
+            extra = sourceEffectInfo.effect[sourceEffectInfo.name]
+            break
+        }
+        // assemble the structure
+        children.push({
+          depth,
+          effectId: sourceEffectInfo.effectId,
+          parentEffectId: sourceEffectInfo.parentEffectId,
+          name: sourceEffectInfo.name,
+          duration: sourceEffectInfo.duration,
+          status: sourceEffectInfo.status,
+          winner: sourceEffectInfo.winner,
+          loser: sourceEffectInfo.loser,
+          extra
+        })
+
+        // rerun this function for our children
+        forEach(
+          x => buildChild(depth + 1, x),
+          getChildEffectIds(effectId)
+        )
+      }
+      const xs = getChildEffectIds(effectId)
+      forEach(
+        effectId => buildChild(0, effectId),
+        xs
       )
     }
 
     reactotron.send('saga.task.complete', {
       triggerType: sample.type,
-      duration: sample.duration,
-      children: sample.children,
+      duration,
+      children,
       giantBagOfUnsortedStuff: {
         effectInfo: effectInfo,
         parentEffectInfo: parentEffectInfo,
-        taskResult
+        taskResult,
+        effects
       }
     })
   }
@@ -136,10 +176,13 @@ export default (reactotron, options) => {
     const winnerLabel = Object.keys(resultOrError)[0]
     const children = getChildEffectInfos(effectId)
     const winningChildren = filter(byLabel(winnerLabel), children)
+    const losingChildren = reject(byLabel(winnerLabel), children)
     const setWinner = effectInfo => { effectInfo.winner = true }
+    const setLoser = effectInfo => { effectInfo.loser = true }
 
     // set the 1 (hopefully 1) winner -- but i'm not sure
     forEach(setWinner, winningChildren)
+    forEach(setLoser, losingChildren)
   }
 
   // ---------------- Failing ------------------------------

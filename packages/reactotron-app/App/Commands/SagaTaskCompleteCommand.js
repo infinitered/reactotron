@@ -2,16 +2,27 @@ import React, { Component, PropTypes } from 'react'
 import Command from '../Shared/Command'
 import Colors from '../Theme/Colors'
 import Content from '../Shared/Content'
-import makeTable from '../Shared/MakeTable'
 import AppStyles from '../Theme/AppStyles'
 import { map } from 'ramda'
+import IconStatusResolved from 'react-icons/lib/md/done'
+import IconStatusRejected from 'react-icons/lib/md/error'
+import IconStatusCancelled from 'react-icons/lib/md/eject'
+import IconStatusWinner from 'react-icons/lib/md/done-all'
 
 const COMMAND_TITLE = 'SAGA'
+const INDENT_SPACE = 20
+const I_AM_A_TRAINED_PROFESSIONAL = false
+
+const STATUS_MAP = {
+  'RESOLVED': <IconStatusResolved size={18} />,
+  'REJECTED': <IconStatusRejected />,
+  'CANCELLED': <IconStatusCancelled />
+}
+
 const Styles = {
   details: {
   },
   effects: {
-    paddingTop: 10
   },
   giant: {
     borderTop: `1px solid ${Colors.line}`,
@@ -20,18 +31,44 @@ const Styles = {
     paddingBottom: 10
   },
   effect: {
-    ...AppStyles.Layout.hbox
+    ...AppStyles.Layout.hbox,
+    paddingTop: 4,
+    marginTop: 2,
+    borderBottom: `1px solid ${Colors.subtleLine}`
+  },
+  effectStatus: {
+    color: Colors.tag,
+    paddingRight: 4
+  },
+  effectNameContainer: {
+    width: 140,
+    alignItems: 'center',
+    marginBottom: 4
+  },
+  triggerType: {
+    color: Colors.tag,
+    paddingRight: 20
+  },
+  count: {
+  },
+  duration: {
+    textAlign: 'right',
+    flex: 1
   },
   effectName: {
-    width: 50,
-    color: Colors.bold
+    color: Colors.constant
   },
-  effectDuration: {
-    textAlign: 'right',
-    width: 50
+  winning: {
+  },
+  losing: {
+    textDecoration: 'line-through',
+    color: Colors.foregroundDark
+  },
+  effectExtra: {
+    flex: 1
   },
   effectTitle: {
-    color: Colors.foregroundDark,
+    ...AppStyles.Layout.hbox,
     borderBottom: `1px solid ${Colors.highlight}`,
     paddingBottom: 4,
     marginBottom: 4
@@ -51,11 +88,38 @@ class SagaTaskCompleteCommand extends Component {
   }
 
   renderEffect (effect) {
+    const { extra, loser, winner, status, name, duration, depth } = effect
     const key = `effect-${effect.effectId}`
+    const losingStyle = loser || status === 'CANCELLED' ? Styles.losing : {}
+    const winningStyle = winner ? Styles.winning : {}
+    const effectNameStyle = {
+      ...Styles.effectName,
+      paddingLeft: depth * INDENT_SPACE,
+      ...losingStyle,
+      ...winningStyle
+    }
+    const effectDurationStyle = {
+      ...Styles.effectDuration,
+      ...losingStyle
+    }
     return (
       <div key={key} style={Styles.effect}>
-        <div style={Styles.effectName}>{effect.name}</div>
-        <div style={Styles.effectDuration}>{effect.duration}<span style={Styles.ms}>ms</span></div>
+        <div style={Styles.effectNameContainer}>
+          <span style={effectNameStyle}>
+            <span style={Styles.effectStatus}>
+              { STATUS_MAP[status] }
+            </span>
+            { name }
+          </span>
+        </div>
+        <div style={Styles.effectExtra}>
+          { extra &&
+            <Content value={{ '': extra }} treeLevel={0} />
+          }
+        </div>
+        <div style={effectDurationStyle}>
+          {duration}<span style={Styles.ms}>ms</span>
+        </div>
       </div>
     )
   }
@@ -65,23 +129,25 @@ class SagaTaskCompleteCommand extends Component {
     const { payload } = command
     const { triggerType, duration, children, giantBagOfUnsortedStuff } = payload
     const preview = `${triggerType} in ${duration}ms`
-    const details = {
-      'Triggered By Action': triggerType,
-      'Duration (ms)': duration
-    }
     const effectTitle = `${children.length} Effect${children.length > 0 && 's'}`
 
     return (
       <Command command={command} title={COMMAND_TITLE} preview={preview}>
-        <div style={Styles.details}>
-          {makeTable(details)}
-        </div>
         <div style={Styles.effects}>
-          <div style={Styles.effectTitle}>{effectTitle}</div>
+          <div style={Styles.effectTitle}>
+            <div style={Styles.triggerType}>
+              {triggerType}
+            </div>
+            <div style={Styles.count}>{effectTitle}</div>
+            <div style={Styles.duration}>{duration}<span style={Styles.ms}>ms</span></div>
+          </div>
           {map(this.renderEffect.bind(this), children)}
         </div>
-        <div style={Styles.giant}>Giant Bag of Unsorted Stuff</div>
-        <Content value={{ ...giantBagOfUnsortedStuff }} />
+        { I_AM_A_TRAINED_PROFESSIONAL &&
+          <div style={Styles.giant}>
+            <Content value={{ ...giantBagOfUnsortedStuff }} />
+          </div>
+        }
       </Command>
     )
   }
