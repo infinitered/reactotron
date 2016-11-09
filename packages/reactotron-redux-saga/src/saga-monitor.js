@@ -80,7 +80,7 @@ export default (reactotron, options) => {
       sample.duration = effectInfo.duration
       // TODO: recurse
       sample.children = map(
-        pick(['name', 'duration', 'result']),
+        pick(['name', 'duration', 'result', 'effectId']),
         effectInfo.children
       )
     }

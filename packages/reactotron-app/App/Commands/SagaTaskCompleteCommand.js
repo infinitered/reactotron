@@ -3,7 +3,8 @@ import Command from '../Shared/Command'
 import Colors from '../Theme/Colors'
 import Content from '../Shared/Content'
 import makeTable from '../Shared/MakeTable'
-import { props, fromPairs, map } from 'ramda'
+import AppStyles from '../Theme/AppStyles'
+import { map } from 'ramda'
 
 const COMMAND_TITLE = 'SAGA'
 const Styles = {
@@ -17,6 +18,26 @@ const Styles = {
     marginTop: 10,
     paddingTop: 10,
     paddingBottom: 10
+  },
+  effect: {
+    ...AppStyles.Layout.hbox
+  },
+  effectName: {
+    width: 50,
+    color: Colors.bold
+  },
+  effectDuration: {
+    textAlign: 'right',
+    width: 50
+  },
+  effectTitle: {
+    color: Colors.foregroundDark,
+    borderBottom: `1px solid ${Colors.highlight}`,
+    paddingBottom: 4,
+    marginBottom: 4
+  },
+  ms: {
+    color: Colors.foregroundDark
   }
 }
 class SagaTaskCompleteCommand extends Component {
@@ -29,6 +50,17 @@ class SagaTaskCompleteCommand extends Component {
     return this.props.command.id !== nextProps.command.id
   }
 
+  renderEffect (effect) {
+    console.log(effect)
+    const key = `effect-${effect.effectId}`
+    return (
+      <div key={key} style={Styles.effect}>
+        <div style={Styles.effectName}>{effect.name}</div>
+        <div style={Styles.effectDuration}>{effect.duration}<span style={Styles.ms}>ms</span></div>
+      </div>
+    )
+  }
+
   render () {
     const { command } = this.props
     const { payload } = command
@@ -38,8 +70,7 @@ class SagaTaskCompleteCommand extends Component {
       'Triggered By Action': triggerType,
       'Duration (ms)': duration
     }
-
-    const kids = fromPairs(map(props(['name', 'duration']), children))
+    const effectTitle = `${children.length} Effect${children.length > 0 && 's'}`
 
     return (
       <Command command={command} title={COMMAND_TITLE} preview={preview}>
@@ -47,7 +78,8 @@ class SagaTaskCompleteCommand extends Component {
           {makeTable(details)}
         </div>
         <div style={Styles.effects}>
-          <Content value={kids} />
+          <div style={Styles.effectTitle}>{effectTitle}</div>
+          {map(this.renderEffect.bind(this), children)}
         </div>
         <div style={Styles.giant}>Giant Bag of Unsorted Stuff</div>
         <Content value={{ ...giantBagOfUnsortedStuff }} />
