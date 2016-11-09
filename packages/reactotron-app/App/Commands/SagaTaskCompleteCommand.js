@@ -51,7 +51,6 @@ class SagaTaskCompleteCommand extends Component {
   }
 
   renderEffect (effect) {
-    console.log(effect)
     const key = `effect-${effect.effectId}`
     return (
       <div key={key} style={Styles.effect}>
