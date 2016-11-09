@@ -8,7 +8,7 @@ if (__DEV__) {
     .configure({ name: 'React Native Demo' })
     .use(tronsauce())
     .use(reactotronRedux({
-      isActionImportant: action => action.type === 'repo.receive',
+      isActionImportant: action => action.type === 'something.important',
       except: ['ignore']
     }))
     .use(trackGlobalErrors({
