@@ -18,6 +18,7 @@ Use it to:
 * track global errors with source-mapped stack traces
 * dispatch actions like a government-run mind control experiment
 * hot swap your app's state
+* track your sagas
 
 You plug it into your app as a dev dependency so it adds nothing to your product builds.
 
@@ -43,6 +44,7 @@ Welcome to flavour country.
 * Quick start for [React Native](./docs/quick-start-react-native.md)
 * [Tracking errors globally](./docs/plugin-track-global-errors.md)
 * Integrating with [Redux](./docs/plugin-redux.md)
+* Integrating with [Redux Saga](./docs/plugin-redux-saga.md)
 * Networking monitoring with [Apisauce](./docs/plugin-apisauce.md)
 * [Troubleshooting](./docs/troubleshooting.md)
 * [Tips and Tricks](./docs/tips.md)
