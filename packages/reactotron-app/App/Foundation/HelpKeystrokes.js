@@ -40,8 +40,6 @@ const Styles = {
   }
 }
 
-const hotkey = window.process.platform === 'win32' ? `CTRL` : `⌘`
-
 class HelpKeystrokes extends Component {
 
   render () {
