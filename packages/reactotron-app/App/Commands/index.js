@@ -8,6 +8,7 @@ import StateKeysResponseCommand from './StateKeysResponseCommand'
 import StateValuesChangeCommand from './StateValuesChangeCommand'
 import DisplayCommand from './DisplayCommand'
 import ImageCommand from './ImageCommand'
+import SagaTaskCompleteCommand from './SagaTaskCompleteCommand'
 
 export default command => {
   const { type } = command
@@ -23,6 +24,7 @@ export default command => {
     case 'state.values.change': return StateValuesChangeCommand
     case 'display': return DisplayCommand
     case 'image': return ImageCommand
+    case 'saga.task.complete': return SagaTaskCompleteCommand
     default: return null
   }
 }

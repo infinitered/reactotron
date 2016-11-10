@@ -8,6 +8,9 @@ npm publish
 cd ../reactotron-apisauce
 npm run build
 npm publish
+cd ../reactotron-redux-saga
+npm run build
+npm publish
 cd ../reactotron-redux
 npm run build
 npm publish

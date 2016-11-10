@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { observable, action, asMap } from 'mobx'
 import Mousetrap from '../Lib/Mousetrap.min.js'
 import { isNilOrEmpty } from 'ramdasauce'
 import Keystroke from '../Lib/Keystroke'
@@ -37,6 +37,10 @@ class UI {
 
   // show the watch panel?
   @observable showWatchPanel = false
+
+  // additional properties that some commands may want... a way to communicate
+  // from the command toolbar to the command
+  commandProperties = {}
 
   constructor (server) {
     this.server = server
@@ -201,6 +205,24 @@ class UI {
   // removes an existing state object
   @action deleteState = state => {
     this.server.commands['state.backup.response'].remove(state)
+  }
+
+  getCommandProperty = (messageId, key) => {
+    const props = this.commandProperties[messageId]
+    if (props) {
+      return props.get(key)
+    } else {
+      this.commandProperties[messageId] = observable(asMap({}))
+      return this.commandProperties[messageId].get(key, null)
+    }
+  }
+
+  @action setCommandProperty = (messageId, key, value) => {
+    // console.log('setting', messageId, key, value, this.commandProperties)
+    if (!this.commandProperties[messageId]) {
+      this.commandProperties[messageId] = observable(asMap({}))
+    }
+    this.commandProperties[messageId].set(key, value)
   }
 
 }

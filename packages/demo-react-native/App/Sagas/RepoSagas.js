@@ -1,14 +1,29 @@
 import RS from 'ramdasauce'
 import { delay } from 'redux-saga'
-import { call, put } from 'redux-saga/effects'
+import { race, call, put } from 'redux-saga/effects'
 import * as Repo from '../Redux/RepoRedux'
+
+function * sampleNestedGenerator () {
+  yield call(delay, 49)
+  yield call(delay, 51)
+}
+
+function * muchSlowerGenerator () {
+  yield call(delay, 1000)
+}
 
 export function * request (api, action) {
   try {
     // make the call to github
     const { repo } = action
     const { ok, data, status, problem } = yield call(api.get, `/repos/${repo}/commits`)
-    yield call(delay, 200)
+    yield call(sampleNestedGenerator)
+
+    yield race([
+      call(sampleNestedGenerator),
+      call(muchSlowerGenerator)
+    ])
+
     // are we good?
     if (ok) {
       const entry = RS.dotPath('0', data)
