@@ -29,7 +29,7 @@ const CustomizeReplayButton = props =>
 
 const CopyApiResponseButton = props =>
   <Button icon='call-received' onClick={props.onClick} tip='Copy JSON response to clipboard' />
-  
+
 const CopyApiRequestButton = props =>
   <Button icon='call-made' onClick={props.onClick} tip='Copy JSON request to clipboard' />
 
