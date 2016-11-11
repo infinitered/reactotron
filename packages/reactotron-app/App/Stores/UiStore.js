@@ -52,6 +52,7 @@ class UI {
 
     Mousetrap.bind(`${Keystroke.mousetrap}+k`, this.reset)
     Mousetrap.bind(`${Keystroke.mousetrap}+f`, this.openStateFindDialog)
+    Mousetrap.bind(`${Keystroke.mousetrap}+shift+f`, this.openFilterTimelineDialog)
     Mousetrap.bind(`${Keystroke.mousetrap}+d`, this.openStateDispatchDialog)
     Mousetrap.bind(`${Keystroke.mousetrap}+s`, this.backupState)
     Mousetrap.bind(`tab`, this.toggleKeysValues)
@@ -168,7 +169,7 @@ class UI {
   }
 
   @action closeFilterTimelineDialog = () => {
-    this.showFilterTimelineDialog = false;
+    this.showFilterTimelineDialog = false
   }
 
   @action reset = () => {

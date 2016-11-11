@@ -1,75 +1,41 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import { ModalPortal, ModalBackground, ModalDialog } from 'react-modal-dialog'
 import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
 import Checkbox from '../Shared/Checkbox'
 
-// Move this to a better place?
-const FILTER_OPTIONS = [
+const ESCAPE_HINT = 'Close'
+const ESCAPE_KEYSTROKE = 'ESC'
+const DIALOG_TITLE = 'Timeline Filter'
+
+// all possible commands grouped by functionality
+const GROUPS = [
   {
-    name: 'General',
+    name: 'Informational',
     items: [
-      {
-        value: 'client.intro',
-        text: 'Connected'
-      },
-      {
-        value: 'benchmark.report',
-        text: 'Benchmark'
-      },
-      {
-        value: 'log',
-        text: 'Log Messages'
-      },
-      {
-        value: 'image',
-        text: 'Images'
-      },
-      {
-        value: 'display',
-        text: 'Display'
-      }
+      { value: 'log', text: 'Log' },
+      { value: 'image', text: 'Image' },
+      { value: 'display', text: 'Custom Display' }
     ]
   },
   {
-    name: 'API',
+    name: 'General',
     items: [
-      {
-        value: 'api.response',
-        text: 'API Responses'
-      }
+      { value: 'client.intro', text: 'Connection' },
+      { value: 'benchmark.report', text: 'Benchmark' },
+      { value: 'api.response', text: 'API' }
     ]
-  }
+  },
   {
-    name: 'Redux',
+    name: 'Redux & Sagas',
     items: [
-      {
-        value: 'state.action.complete',
-        text: 'Action'
-      },
-      {
-        value: 'saga.task.complete',
-        text: 'Saga'
-      },
-      {
-        value: 'state.values.response',
-        text: 'State Values'
-      },
-      {
-        value: 'state.values.response',
-        text: 'State Keys'
-      },
-      {
-        value: 'state.values.change',
-        text: 'State Values Change'
-      }
+      { value: 'state.action.complete', text: 'Action' },
+      { value: 'saga.task.complete', text: 'Saga' },
+      { value: 'state.values.response', text: 'Subscription Changed' }
     ]
   }
 ]
-
-const DIALOG_TITLE = 'Filter'
 
 const Styles = {
   dialog: {
@@ -141,63 +107,42 @@ const Styles = {
     color: Colors.foregroundLight,
     lineHeight: '40px',
     backgroundColor: 'inherit'
+  },
+  group: {
+  },
+  groupName: {
+    fontSize: 18,
+    marginTop: 10,
+    marginBottom: 10,
+    color: Colors.foregroundLight,
+    paddingBottom: 2,
+    borderBottom: `1px solid ${Colors.highlight}`
+  },
+  option: {
   }
 }
-
-const INSTRUCTIONS = <div>
-  <p>Enter a path you would like to subscribe.  Here are some examples to get you started:</p>
-  <p style={Styles.example}>user.firstName</p>
-  <p style={Styles.example}>repo</p>
-  <p style={Styles.example}>repo.*</p>
-</div>
 
 @inject('session')
 @observer
 class FilterTimelineDialog extends Component {
 
-  componentWillMount() {
-    // I feel like this is a terrible place to do this
-    // but putting here for now to get things to work
-    this.props.session.timelineCommandFilters =
-      [].concat.apply([], FILTER_OPTIONS.map(grp => grp.items.map(itm => itm.value)))
-  }
-
-  handleToggleFilter = (type, checked) => {
-    const { timelineCommandFilters } = this.props.session
-
-    if (checked) {
-      if (timelineCommandFilters.filter(tc => tc === type).length > 0) return
-
-      timelineCommandFilters.push(type);
-    }
-    else {
-      timelineCommandFilters.remove(type);
-    }
-  }
-
   render () {
-    const { ui, timelineCommandFilters } = this.props.session
-    const open = ui.showFilterTimelineDialog
-    if (!open) return null
+    const { session } = this.props
+    const { ui } = session
+    if (!ui.showFilterTimelineDialog) return null
 
-    const groups = FILTER_OPTIONS.map((opt, optIdx) => {
+    const groups = GROUPS.map((opt, optIdx) => {
       const options = opt.items.map((itm, itmIdx) => {
-        const isChecked = timelineCommandFilters.filter(tc => tc === itm.value).length > 0
+        const isChecked = session.isCommandHidden(itm.value)
+        const onToggle = () => session.toggleCommandVisibility(itm.value)
 
-        return (
-          <Checkbox
-            key={itmIdx}
-            checked={isChecked}
-            label={itm.text}
-            onChange={checked => this.handleToggleFilter(itm.value, checked)}
-          />
-        )
+        return <Checkbox key={itmIdx} checked={isChecked} label={itm.text} onToggle={onToggle} />
       })
 
       return (
-        <div key={optIdx}>
-          {opt.name}
-          <div>
+        <div style={Styles.group} key={optIdx}>
+          <div style={Styles.groupName}>{opt.name}</div>
+          <div style={Styles.option}>
             {options}
           </div>
         </div>
@@ -211,30 +156,15 @@ class FilterTimelineDialog extends Component {
             <div style={Styles.container}>
               <div style={Styles.header}>
                 <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
-                <p style={Styles.subtitle}>
-                  {INSTRUCTIONS}
-                </p>
               </div>
-              {groups}
-              {/*<div style={Styles.body}>
-                <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
-                <input
-                  placeholder={INPUT_PLACEHOLDER}
-                  style={Styles.textField}
-                  type='text'
-                  ref='textField'
-                  onKeyPress={this.handleKeyPress}
-                  onChange={this.handleChange}
-                />
+              <div style={Styles.body}>
+                {groups}
               </div>
               <div style={Styles.keystrokes}>
                 <div style={Styles.hotkey}>
                   <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
                 </div>
-                <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
-                </div>
-              </div>*/}
+              </div>
             </div>
           </ModalDialog>
         </ModalBackground>
