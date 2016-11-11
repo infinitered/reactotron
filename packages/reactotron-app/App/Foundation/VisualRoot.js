@@ -6,6 +6,7 @@ import StateKeysAndValuesDialog from '../Dialogs/StateKeysAndValuesDialog'
 import StateDispatchDialog from '../Dialogs/StateDispatchDialog'
 import HelpDialog from '../Dialogs/HelpDialog'
 import StateWatchDialog from '../Dialogs/StateWatchDialog'
+import FilterTimelineDialog from '../Dialogs/FilterTimelineDialog';
 import Subscriptions from './Subscriptions'
 import Backups from './Backups'
 import Sidebar from './Sidebar'
@@ -82,6 +83,7 @@ export default class VisualRoot extends Component {
         <StateDispatchDialog />
         <HelpDialog />
         <StateWatchDialog />
+        <FilterTimelineDialog />
       </div>
     )
   }

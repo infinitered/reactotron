@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import { inject, observer } from 'mobx-react'
+import IconFilter from 'react-icons/lib/md/filter-list'
 import IconClear from 'react-icons/lib/md/delete-sweep'
 
 const TITLE = 'Event Timeline'
@@ -66,6 +67,7 @@ class TimelineHeader extends Component {
             <div style={Styles.title}>{TITLE}</div>
           </div>
           <div style={Styles.right}>
+            <IconFilter size={Styles.iconSize} style={Styles.toolbarClear} onClick={ui.openFilterTimelineDialog} />
             <IconClear size={Styles.iconSize} style={Styles.toolbarClear} onClick={ui.reset} />
           </div>
         </div>

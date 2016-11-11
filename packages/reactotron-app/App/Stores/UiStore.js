@@ -29,6 +29,9 @@ class UI {
   // the watch dialog
   @observable showStateWatchDialog = false
 
+  // wheter or not to show the timeline filter dialog
+  @observable showFilterTimelineDialog = false
+
   // the current watch to add
   @observable watchToAdd
 
@@ -158,6 +161,14 @@ class UI {
 
   @action closeHelpDialog = () => {
     this.showHelpDialog = false
+  }
+
+  @action openFilterTimelineDialog = () => {
+    this.showFilterTimelineDialog = true
+  }
+
+  @action closeFilterTimelineDialog = () => {
+    this.showFilterTimelineDialog = false;
   }
 
   @action reset = () => {
