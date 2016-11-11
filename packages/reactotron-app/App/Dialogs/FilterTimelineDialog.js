@@ -8,37 +8,31 @@ import Checkbox from '../Shared/Checkbox'
 const ESCAPE_HINT = 'Close'
 const ESCAPE_KEYSTROKE = 'ESC'
 const DIALOG_TITLE = 'Timeline Filter'
-const INSTRUCTIONS =
-  <div>
-    <p>Choose what would like to see in the timeline.</p>
-  </div>
 
 // all possible commands grouped by functionality
 const GROUPS = [
   {
+    name: 'Informational',
+    items: [
+      { value: 'log', text: 'Log' },
+      { value: 'image', text: 'Images' },
+      { value: 'display', text: 'Custom' }
+    ]
+  },
+  {
     name: 'General',
     items: [
-      { value: 'client.intro', text: 'Connected' },
+      { value: 'client.intro', text: 'Connection' },
       { value: 'benchmark.report', text: 'Benchmark' },
-      { value: 'log', text: 'Log Messages' },
-      { value: 'image', text: 'Images' },
-      { value: 'display', text: 'Display' }
+      { value: 'api.response', text: 'API' }
     ]
   },
   {
-    name: 'API',
+    name: 'Redux & Sagas',
     items: [
-      { value: 'api.response', text: 'API Responses' }
-    ]
-  },
-  {
-    name: 'Redux',
-    items: [
-      { value: 'state.action.complete', text: 'Action' },
-      { value: 'saga.task.complete', text: 'Saga' },
-      { value: 'state.values.response', text: 'State Values' },
-      { value: 'state.values.response', text: 'State Keys' },
-      { value: 'state.values.change', text: 'State Values Change' }
+      { value: 'state.action.complete', text: 'Action Completed' },
+      { value: 'saga.task.complete', text: 'Saga Completed' },
+      { value: 'state.values.response', text: 'Subscription Changed' }
     ]
   }
 ]
@@ -113,6 +107,18 @@ const Styles = {
     color: Colors.foregroundLight,
     lineHeight: '40px',
     backgroundColor: 'inherit'
+  },
+  group: {
+  },
+  groupName: {
+    fontSize: 18,
+    marginTop: 10,
+    marginBottom: 10,
+    color: Colors.foregroundLight,
+    paddingBottom: 2,
+    borderBottom: `1px solid ${Colors.highlight}`
+  },
+  option: {
   }
 }
 
@@ -134,9 +140,9 @@ class FilterTimelineDialog extends Component {
       })
 
       return (
-        <div key={optIdx}>
-          {opt.name}
-          <div>
+        <div style={Styles.group} key={optIdx}>
+          <div style={Styles.groupName}>{opt.name}</div>
+          <div style={Styles.option}>
             {options}
           </div>
         </div>
@@ -150,9 +156,6 @@ class FilterTimelineDialog extends Component {
             <div style={Styles.container}>
               <div style={Styles.header}>
                 <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
-                <p style={Styles.subtitle}>
-                  {INSTRUCTIONS}
-                </p>
               </div>
               <div style={Styles.body}>
                 {groups}
