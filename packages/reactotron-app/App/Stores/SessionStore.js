@@ -1,7 +1,7 @@
 import UiStore from './UiStore'
 import { createServer } from 'reactotron-core-server'
-import { observable, computed, reaction } from 'mobx'
-import { last, isNil, reject, equals, reverse, pipe, propEq, map, fromPairs } from 'ramda'
+import { action, observable, computed, reaction } from 'mobx'
+import { contains, last, isNil, reject, equals, reverse, pipe, propEq, map, fromPairs } from 'ramda'
 import { dotPath } from 'ramdasauce'
 import shallowDiff from '../Lib/ShallowDiff'
 
@@ -10,13 +10,8 @@ const isSubscriptionCommandWithEmptyChanges = command => isSubscription(command)
 
 class Session {
 
-  // holds the list of commands to include in the list
-  @observable timelineCommandFilters = []
-
-  // checks if a command is on the filter list
-  isCommandFilteredOut = (command) => {
-    return this.timelineCommandFilters.filter(cmd => cmd === command.type).length === 0
-  }
+  // commands to exlude in the timeline
+  @observable commandsHiddenInTimeline = []
 
   // holds the last known state of the subscription values
   subscriptions = {}
@@ -46,7 +41,7 @@ class Session {
       dotPath('server.commands.all'),
       reject(isSubscriptionCommandWithEmptyChanges),
       reject(this.isSubscriptionValuesSameAsLastTime),
-      reject(this.isCommandFilteredOut),
+      reject(command => contains(command.type, this.commandsHiddenInTimeline)),
       reverse
     )(this)
   }
@@ -61,6 +56,22 @@ class Session {
 
   @computed get backups () {
     return this.server.commands['state.backup.response'].toJS().reverse()
+  }
+
+  // are commands of this type hidden?
+  isCommandHidden (commandType) {
+    return contains(commandType, this.commandsHiddenInTimeline)
+  }
+
+  // toggles whether a command type is to be ignored or not
+  @action toggleCommandVisibility (commandType) {
+    const hidden = this.isCommandHidden(commandType)
+    if (hidden) {
+      this.commandsHiddenInTimeline.remove(commandType)
+    } else {
+      this.commandsHiddenInTimeline.push(commandType)
+    }
+    return !hidden
   }
 
   constructor (port = 9090) {
