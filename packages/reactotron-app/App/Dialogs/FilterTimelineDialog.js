@@ -4,72 +4,44 @@ import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
 import Checkbox from '../Shared/Checkbox'
-import { contains } from 'ramda'
 
-// Move this to a better place?
-const FILTER_OPTIONS = [
+const ESCAPE_HINT = 'Close'
+const ESCAPE_KEYSTROKE = 'ESC'
+const DIALOG_TITLE = 'Timeline Filter'
+const INSTRUCTIONS =
+  <div>
+    <p>Choose what would like to see in the timeline.</p>
+  </div>
+
+// all possible commands grouped by functionality
+const GROUPS = [
   {
     name: 'General',
     items: [
-      {
-        value: 'client.intro',
-        text: 'Connected'
-      },
-      {
-        value: 'benchmark.report',
-        text: 'Benchmark'
-      },
-      {
-        value: 'log',
-        text: 'Log Messages'
-      },
-      {
-        value: 'image',
-        text: 'Images'
-      },
-      {
-        value: 'display',
-        text: 'Display'
-      }
+      { value: 'client.intro', text: 'Connected' },
+      { value: 'benchmark.report', text: 'Benchmark' },
+      { value: 'log', text: 'Log Messages' },
+      { value: 'image', text: 'Images' },
+      { value: 'display', text: 'Display' }
     ]
   },
   {
     name: 'API',
     items: [
-      {
-        value: 'api.response',
-        text: 'API Responses'
-      }
+      { value: 'api.response', text: 'API Responses' }
     ]
   },
   {
     name: 'Redux',
     items: [
-      {
-        value: 'state.action.complete',
-        text: 'Action'
-      },
-      {
-        value: 'saga.task.complete',
-        text: 'Saga'
-      },
-      {
-        value: 'state.values.response',
-        text: 'State Values'
-      },
-      {
-        value: 'state.values.response',
-        text: 'State Keys'
-      },
-      {
-        value: 'state.values.change',
-        text: 'State Values Change'
-      }
+      { value: 'state.action.complete', text: 'Action' },
+      { value: 'saga.task.complete', text: 'Saga' },
+      { value: 'state.values.response', text: 'State Values' },
+      { value: 'state.values.response', text: 'State Keys' },
+      { value: 'state.values.change', text: 'State Values Change' }
     ]
   }
 ]
-
-const DIALOG_TITLE = 'Filter'
 
 const Styles = {
   dialog: {
@@ -144,13 +116,6 @@ const Styles = {
   }
 }
 
-const INSTRUCTIONS = <div>
-  <p>Enter a path you would like to subscribe.  Here are some examples to get you started:</p>
-  <p style={Styles.example}>user.firstName</p>
-  <p style={Styles.example}>repo</p>
-  <p style={Styles.example}>repo.*</p>
-</div>
-
 @inject('session')
 @observer
 class FilterTimelineDialog extends Component {
@@ -158,22 +123,14 @@ class FilterTimelineDialog extends Component {
   render () {
     const { session } = this.props
     const { ui } = session
-    const open = ui.showFilterTimelineDialog
-    if (!open) return null
+    if (!ui.showFilterTimelineDialog) return null
 
-    const groups = FILTER_OPTIONS.map((opt, optIdx) => {
+    const groups = GROUPS.map((opt, optIdx) => {
       const options = opt.items.map((itm, itmIdx) => {
         const isChecked = session.isCommandHidden(itm.value)
-        console.log(itm.value, isChecked, session.commandsHiddenInTimeline)
         const onToggle = () => session.toggleCommandVisibility(itm.value)
 
-        return (
-          <Checkbox key={itmIdx}
-            checked={isChecked}
-            label={itm.text}
-            onToggle={onToggle}
-          />
-        )
+        return <Checkbox key={itmIdx} checked={isChecked} label={itm.text} onToggle={onToggle} />
       })
 
       return (
@@ -197,26 +154,14 @@ class FilterTimelineDialog extends Component {
                   {INSTRUCTIONS}
                 </p>
               </div>
-              {groups}
-              {/* <div style={Styles.body}>
-                <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
-                <input
-                  placeholder={INPUT_PLACEHOLDER}
-                  style={Styles.textField}
-                  type='text'
-                  ref='textField'
-                  onKeyPress={this.handleKeyPress}
-                  onChange={this.handleChange}
-                />
+              <div style={Styles.body}>
+                {groups}
               </div>
               <div style={Styles.keystrokes}>
                 <div style={Styles.hotkey}>
                   <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
                 </div>
-                <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
-                </div>
-              </div> */}
+              </div>
             </div>
           </ModalDialog>
         </ModalBackground>
