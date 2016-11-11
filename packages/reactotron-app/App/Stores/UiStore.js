@@ -168,7 +168,7 @@ class UI {
   }
 
   @action closeFilterTimelineDialog = () => {
-    this.showFilterTimelineDialog = false;
+    this.showFilterTimelineDialog = false
   }
 
   @action reset = () => {
