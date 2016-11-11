@@ -15,8 +15,8 @@ const GROUPS = [
     name: 'Informational',
     items: [
       { value: 'log', text: 'Log' },
-      { value: 'image', text: 'Images' },
-      { value: 'display', text: 'Custom' }
+      { value: 'image', text: 'Image' },
+      { value: 'display', text: 'Custom Display' }
     ]
   },
   {
@@ -30,8 +30,8 @@ const GROUPS = [
   {
     name: 'Redux & Sagas',
     items: [
-      { value: 'state.action.complete', text: 'Action Completed' },
-      { value: 'saga.task.complete', text: 'Saga Completed' },
+      { value: 'state.action.complete', text: 'Action' },
+      { value: 'saga.task.complete', text: 'Saga' },
       { value: 'state.values.response', text: 'Subscription Changed' }
     ]
   }
