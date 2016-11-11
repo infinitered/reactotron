@@ -7,23 +7,19 @@ class Checkbox extends Component {
   static propTypes = {
     label: PropTypes.string,
     checked: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired
-  }
-
-  handleClick = () => {
-    this.props.onChange(!this.props.checked)
+    onToggle: PropTypes.func.isRequired
   }
 
   render () {
     const { label, checked } = this.props
 
     const CheckComponent = checked
-      ? IconChecked
-      : IconUnchecked
+      ? IconUnchecked
+      : IconChecked
 
     return (
       <div>
-        <CheckComponent onClick={this.handleClick} />
+        <CheckComponent onClick={this.props.onToggle} />
         {label}
       </div>
     )

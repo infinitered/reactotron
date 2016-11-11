@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
 import Checkbox from '../Shared/Checkbox'
+import { contains } from 'ramda'
 
 // Move this to a better place?
 const FILTER_OPTIONS = [
@@ -154,40 +155,23 @@ const INSTRUCTIONS = <div>
 @observer
 class FilterTimelineDialog extends Component {
 
-  componentWillMount () {
-    // I feel like this is a terrible place to do this
-    // but putting here for now to get things to work
-    this.props.session.timelineCommandFilters =
-      [].concat.apply([], FILTER_OPTIONS.map(grp => grp.items.map(itm => itm.value)))
-  }
-
-  handleToggleFilter = (type, checked) => {
-    const { timelineCommandFilters } = this.props.session
-
-    if (checked) {
-      if (timelineCommandFilters.filter(tc => tc === type).length > 0) return
-
-      timelineCommandFilters.push(type)
-    } else {
-      timelineCommandFilters.remove(type)
-    }
-  }
-
   render () {
-    const { ui, timelineCommandFilters } = this.props.session
+    const { session } = this.props
+    const { ui } = session
     const open = ui.showFilterTimelineDialog
     if (!open) return null
 
     const groups = FILTER_OPTIONS.map((opt, optIdx) => {
       const options = opt.items.map((itm, itmIdx) => {
-        const isChecked = timelineCommandFilters.filter(tc => tc === itm.value).length > 0
+        const isChecked = session.isCommandHidden(itm.value)
+        console.log(itm.value, isChecked, session.commandsHiddenInTimeline)
+        const onToggle = () => session.toggleCommandVisibility(itm.value)
 
         return (
-          <Checkbox
-            key={itmIdx}
+          <Checkbox key={itmIdx}
             checked={isChecked}
             label={itm.text}
-            onChange={checked => this.handleToggleFilter(itm.value, checked)}
+            onToggle={onToggle}
           />
         )
       })
