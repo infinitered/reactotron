@@ -14,15 +14,56 @@ const FILTER_OPTIONS = [
       {
         value: 'client.intro',
         text: 'Connected'
+      },
+      {
+        value: 'benchmark.report',
+        text: 'Benchmark'
+      },
+      {
+        value: 'log',
+        text: 'Log Messages'
+      },
+      {
+        value: 'image',
+        text: 'Images'
+      },
+      {
+        value: 'display',
+        text: 'Display'
       }
     ]
   },
+  {
+    name: 'API',
+    items: [
+      {
+        value: 'api.response',
+        text: 'API Responses'
+      }
+    ]
+  }
   {
     name: 'Redux',
     items: [
       {
         value: 'state.action.complete',
         text: 'Action'
+      },
+      {
+        value: 'saga.task.complete',
+        text: 'Saga'
+      },
+      {
+        value: 'state.values.response',
+        text: 'State Values'
+      },
+      {
+        value: 'state.values.response',
+        text: 'State Keys'
+      },
+      {
+        value: 'state.values.change',
+        text: 'State Values Change'
       }
     ]
   }
