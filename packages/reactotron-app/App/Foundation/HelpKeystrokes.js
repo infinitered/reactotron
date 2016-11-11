@@ -9,7 +9,7 @@ const Styles = {
     color: Colors.foreground
   },
   helpLabel: {
-    width: 120
+    width: 160
   },
   key: {
     color: Colors.foregroundLight,
@@ -73,6 +73,10 @@ class HelpKeystrokes extends Component {
             <div style={Styles.helpShortcut}>
               <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='F' /></div>
               <div style={Styles.helpDetail}>find keys or values</div>
+            </div>
+            <div style={Styles.helpShortcut}>
+              <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='⬆' />+<Key text='F' /></div>
+              <div style={Styles.helpDetail}>filter timeline</div>
             </div>
             <div style={Styles.helpShortcut}>
               <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='N' /></div>
