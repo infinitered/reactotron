@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import { ModalPortal, ModalBackground, ModalDialog } from 'react-modal-dialog'
 import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
@@ -155,7 +154,7 @@ const INSTRUCTIONS = <div>
 @observer
 class FilterTimelineDialog extends Component {
 
-  componentWillMount() {
+  componentWillMount () {
     // I feel like this is a terrible place to do this
     // but putting here for now to get things to work
     this.props.session.timelineCommandFilters =
@@ -168,10 +167,9 @@ class FilterTimelineDialog extends Component {
     if (checked) {
       if (timelineCommandFilters.filter(tc => tc === type).length > 0) return
 
-      timelineCommandFilters.push(type);
-    }
-    else {
-      timelineCommandFilters.remove(type);
+      timelineCommandFilters.push(type)
+    } else {
+      timelineCommandFilters.remove(type)
     }
   }
 
@@ -216,7 +214,7 @@ class FilterTimelineDialog extends Component {
                 </p>
               </div>
               {groups}
-              {/*<div style={Styles.body}>
+              {/* <div style={Styles.body}>
                 <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
                 <input
                   placeholder={INPUT_PLACEHOLDER}
@@ -234,7 +232,7 @@ class FilterTimelineDialog extends Component {
                 <div style={Styles.hotkey}>
                   <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
                 </div>
-              </div>*/}
+              </div> */}
             </div>
           </ModalDialog>
         </ModalBackground>

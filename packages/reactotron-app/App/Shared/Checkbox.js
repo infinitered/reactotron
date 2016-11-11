@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import Colors from '../Theme/Colors'
 import IconUnchecked from 'react-icons/lib/md/check-box-outline-blank'
 import IconChecked from 'react-icons/lib/md/check-box'
 
@@ -15,7 +14,7 @@ class Checkbox extends Component {
     this.props.onChange(!this.props.checked)
   }
 
-  render() {
+  render () {
     const { label, checked } = this.props
 
     const CheckComponent = checked
