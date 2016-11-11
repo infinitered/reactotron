@@ -4,7 +4,7 @@ Reactotron comes in two versions.  A desktop version and a CLI.
 
 ### Via Direct Download
 
-[Download OS X App](https://github.com/reactotron/reactotron/releases/download/v1.1.4/Reactotron.app.zip) from GitHub release and drop the Reactotron.app to the Applications folder.
+[Download OS X App](https://github.com/reactotron/reactotron/releases/download/v1.4.4/Reactotron.app.zip) from GitHub release and drop the Reactotron.app to the Applications folder.
 
 ### Via Homebrew
 
