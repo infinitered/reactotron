@@ -31,7 +31,6 @@ const Styles = {
     width: 100
   },
   right: {
-    width: 100,
     ...AppStyles.Layout.hbox,
     justifyContent: 'flex-end',
     alignItems: 'center'
@@ -49,6 +48,10 @@ const Styles = {
   iconSize: 32,
   toolbarClear: {
     ...toolbarButton
+  },
+  toolbarFilter: {
+    ...toolbarButton,
+    paddingRight: 8
   }
 }
 
@@ -67,7 +70,7 @@ class TimelineHeader extends Component {
             <div style={Styles.title}>{TITLE}</div>
           </div>
           <div style={Styles.right}>
-            <IconFilter size={Styles.iconSize} style={Styles.toolbarClear} onClick={ui.openFilterTimelineDialog} />
+            <IconFilter size={Styles.iconSize} style={Styles.toolbarFilter} onClick={ui.openFilterTimelineDialog} />
             <IconClear size={Styles.iconSize} style={Styles.toolbarClear} onClick={ui.reset} />
           </div>
         </div>
