@@ -4,6 +4,29 @@ import { ModalPortal, ModalBackground, ModalDialog } from 'react-modal-dialog'
 import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
+import Checkbox from '../Shared/Checkbox'
+
+// Move this to a better place?
+const FILTER_OPTIONS = [
+  {
+    name: 'General',
+    items: [
+      {
+        value: 'client.intro',
+        text: 'Connected'
+      }
+    ]
+  },
+  {
+    name: 'Redux',
+    items: [
+      {
+        value: 'state.action.complete',
+        text: 'Action'
+      }
+    ]
+  }
+]
 
 const DIALOG_TITLE = 'Filter'
 
@@ -91,15 +114,54 @@ const INSTRUCTIONS = <div>
 @observer
 class FilterTimelineDialog extends Component {
 
-  handleChange = (e) => {
-    const { session } = this.props
-    session.ui.watchToAdd = e.target.value
+  componentWillMount() {
+    // I feel like this is a terrible place to do this
+    // but putting here for now to get things to work
+    this.props.session.timelineCommandFilters =
+      [].concat.apply([], FILTER_OPTIONS.map(grp => grp.items.map(itm => itm.value)))
+  }
+
+  handleToggleFilter = (type, checked) => {
+    const { timelineCommandFilters } = this.props.session
+
+    if (checked) {
+      if (timelineCommandFilters.filter(tc => tc === type).length > 0) return
+
+      timelineCommandFilters.push(type);
+    }
+    else {
+      timelineCommandFilters.remove(type);
+    }
   }
 
   render () {
-    const { ui } = this.props.session
+    const { ui, timelineCommandFilters } = this.props.session
     const open = ui.showFilterTimelineDialog
     if (!open) return null
+
+    const groups = FILTER_OPTIONS.map((opt, optIdx) => {
+      const options = opt.items.map((itm, itmIdx) => {
+        const isChecked = timelineCommandFilters.filter(tc => tc === itm.value).length > 0
+
+        return (
+          <Checkbox
+            key={itmIdx}
+            checked={isChecked}
+            label={itm.text}
+            onChange={checked => this.handleToggleFilter(itm.value, checked)}
+          />
+        )
+      })
+
+      return (
+        <div key={optIdx}>
+          {opt.name}
+          <div>
+            {options}
+          </div>
+        </div>
+      )
+    })
 
     return (
       <ModalPortal>
@@ -112,6 +174,7 @@ class FilterTimelineDialog extends Component {
                   {INSTRUCTIONS}
                 </p>
               </div>
+              {groups}
               {/*<div style={Styles.body}>
                 <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
                 <input

@@ -1,6 +1,6 @@
 import UiStore from './UiStore'
 import { createServer } from 'reactotron-core-server'
-import { computed, reaction } from 'mobx'
+import { observable, computed, reaction } from 'mobx'
 import { last, isNil, reject, equals, reverse, pipe, propEq, map, fromPairs } from 'ramda'
 import { dotPath } from 'ramdasauce'
 import shallowDiff from '../Lib/ShallowDiff'
@@ -9,6 +9,14 @@ const isSubscription = propEq('type', 'state.values.change')
 const isSubscriptionCommandWithEmptyChanges = command => isSubscription(command) && dotPath('payload.changes.length', command) === 0
 
 class Session {
+
+  // holds the list of commands to include in the list
+  @observable timelineCommandFilters = []
+
+  // checks if a command is on the filter list
+  isCommandFilteredOut = (command) => {
+    return this.timelineCommandFilters.filter(cmd => cmd === command.type).length === 0
+  }
 
   // holds the last known state of the subscription values
   subscriptions = {}
@@ -38,6 +46,7 @@ class Session {
       dotPath('server.commands.all'),
       reject(isSubscriptionCommandWithEmptyChanges),
       reject(this.isSubscriptionValuesSameAsLastTime),
+      reject(this.isCommandFilteredOut),
       reverse
     )(this)
   }
