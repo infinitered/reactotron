@@ -41,7 +41,7 @@ const FILTER_OPTIONS = [
         text: 'API Responses'
       }
     ]
-  }
+  },
   {
     name: 'Redux',
     items: [
