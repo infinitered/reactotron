@@ -78,9 +78,9 @@ reactotronRedux({
 })
 ```
 
-#### isImportantAction
+#### isActionImportant
 
-`isImportantAction` is a function which receives and action and returns a boolean.
+`isActionImportant` is a function which receives and action and returns a boolean.
 `true` will be cause the action to show up in the Reactotron app with a highlight.
 
 ```js
