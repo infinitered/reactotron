@@ -40,19 +40,19 @@ const shotgun = async () => {
   sendError('Attention! Things just got real.')
   await sleep(100)
   const giant = `
-  Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+  Here's another debug message.  This one is a little longer just to see what wrapping looks like. \
   I hope you enjoy.  Thank you.  And have a wonderful day. \
-  Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+  Here's another debug message.  This one is a little longer just to see what wrapping looks like. \
   I hope you enjoy.  Thank you.  And have a wonderful day. \
   I hope you enjoy.  Thank you.  And have a wonderful day. \
   I hope you enjoy.  Thank you.  And have a wonderful day. \
   \n\n
-  Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+  Here's another debug message.  This one is a little longer just to see what wrapping looks like. \
   I hope you enjoy.  Thank you.  And have a wonderful day. \
-  Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
-  Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+  Here's another debug message.  This one is a little longer just to see what wrapping looks like. \
+  Here's another debug message.  This one is a little longer just to see what wrapping looks like. \
   I hope you enjoy.  Thank you.  And have a wonderful day. \
-  Here\'s another debug message.  This one is a little longer just to see what wrapping looks like. \
+  Here's another debug message.  This one is a little longer just to see what wrapping looks like. \
   I hope you enjoy.  Thank you.  And have a wonderful day. \
   `
   sendAction({ type: 'POST_GIANT_MESSAGE', message: giant })
