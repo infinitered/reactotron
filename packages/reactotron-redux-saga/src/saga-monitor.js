@@ -107,7 +107,7 @@ export default (reactotron, options) => {
           parentEffectId: sourceEffectInfo.parentEffectId,
           name: sourceEffectInfo.name,
           description: sourceEffectInfo.description,
-          duration: sourceEffectInfo.duration,
+          duration: Math.round(sourceEffectInfo.duration),
           status: sourceEffectInfo.status,
           winner: sourceEffectInfo.winner,
           loser: sourceEffectInfo.loser,
@@ -131,7 +131,7 @@ export default (reactotron, options) => {
     reactotron.send('saga.task.complete', {
       triggerType: sample.type,
       description: sagaDescription,
-      duration,
+      duration: Math.round(duration),
       children
     })
   }
