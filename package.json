@@ -10,7 +10,7 @@
     "e2e": "npm run bootstrap && npm run build && npm run lint && npm run copy-internal-deps && npm run test"
   },
   "devDependencies": {
-    "lerna": "2.0.0-beta.26"
+    "lerna": "2.0.0-beta.30"
   },
   "dependencies": {
     "stringify-object": "^2.4.0"

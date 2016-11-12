@@ -19,7 +19,10 @@ const logger = createLogger({
 // a function which can create our store and auto-persist the data
 export default () => {
   // create the saga middleware
-  const sagaMiddleware = createSagaMiddleware()
+  const sagaMonitor = process.env.NODE_ENV !== 'production'
+    ? console.tron.createSagaMonitor()
+    : null
+  const sagaMiddleware = createSagaMiddleware({ sagaMonitor })
 
   // add our normal middleware to the list
   const middleware = applyMiddleware(logger, sagaMiddleware)

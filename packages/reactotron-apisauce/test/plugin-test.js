@@ -43,7 +43,7 @@ test.cb('parses responses', t => {
         t.is(request.url, `http://localhost:${port}/hey`)
         t.is(request.method, 'get')
         t.is(request.headers['Accept'], 'application/json')
-        t.is(request.headers['User-Agent'], 'axios/0.13.1')
+        t.is(request.headers['User-Agent'], 'axios/0.15.2')
         t.falsy(request.data)
         t.deepEqual(response.body, {a: 'ok', b: 1})
         t.is(response.status, 200)
