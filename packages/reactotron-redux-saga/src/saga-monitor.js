@@ -49,30 +49,34 @@ export default (reactotron, options) => {
   }
 
   // fires when a task has been resolved
-  // TODO: this is the only thing i'm interested in right now.  it's really
-  // a subset of what can be tracked by redux-saga, but my head hurts trying
-  // to follow all the cases.
-  //
-  // I'd like figure out just how to display saga information, and that's really
-  // what is holding me back from deciding what to throw over the wire to reactotron.
   const taskResolved = (effectId, taskResult) => {
     // lookup this effect info
     const effectInfo = effects[effectId]
     updateDuration(effectInfo)
+    const { duration } = effectInfo
 
     // grab the parent too
     const { parentEffectId } = effectInfo
     const parentEffectInfo = effects[parentEffectId]
     const children = []
-    const sample = {}
+
+    // a human friendly name of the saga task
     let sagaDescription
-    const { duration } = effectInfo
+    // what caused the trigger
+    let triggerType
+
+    // for FORK tasks, we have a bunch on things to pass along
     if (effectInfo.name === FORK) {
       const args = pathOr([], split('.', 'effect.FORK.args'), effectInfo)
       const lastArg = last(args)
-      sample.type = lastArg && lastArg.type
-      if (parentEffectInfo.name === ITERATOR) {
-        sagaDescription = parentEffectInfo.description
+      triggerType = lastArg && lastArg.type
+      if (parentEffectInfo) {
+        if (parentEffectInfo.name === ITERATOR) {
+          sagaDescription = parentEffectInfo.description
+        }
+      } else {
+        sagaDescription = '(root)'
+        triggerType = `${effectInfo.description}()`
       }
 
       // flatten out the nested effects
@@ -129,7 +133,7 @@ export default (reactotron, options) => {
     }
 
     reactotron.send('saga.task.complete', {
-      triggerType: sample.type,
+      triggerType,
       description: sagaDescription,
       duration: Math.round(duration),
       children
