@@ -18,7 +18,7 @@ api.addMonitor(Reactotron.apisauce)
 
 export default function * rootSaga () {
   yield [
-    takeLatest(Repo.Types.Request, requestRepo, api),
-    takeEvery(Startup.Types.Startup, startup)
+    takeEvery(Startup.Types.Startup, startup),
+    takeLatest(Repo.Types.Request, requestRepo, api)
   ]
 }

@@ -1,4 +1,5 @@
 import { takeEvery, takeLatest } from 'redux-saga'
+import { fork, call } from 'redux-saga/effects'
 import ApiSauce from 'apisauce'
 const Reactotron = process.env.NODE_ENV !== 'production' && require('reactotron-react-js').default
 
@@ -19,7 +20,12 @@ if (process.env.NODE_ENV !== 'production') {
   api.addMonitor(Reactotron.apisauce)
 }
 
+function * hi (name) {
+  yield call(console.log, name)
+}
+
 export default function * rootSaga () {
+  yield fork(hi, 'programmer!')
   yield [
     takeLatest(Repo.Types.Request, requestRepo, api),
     takeEvery(Startup.Types.Startup, startup)

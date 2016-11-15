@@ -1,7 +1,6 @@
-// import { put } from 'redux-saga/effects'
-// import * as RepoMessage from '../Redux/RepoMessage.redux'
+import { put } from 'redux-saga/effects'
 
 // process STARTUP actions
 export function * startup () {
-  // yield put(RepoMessage.Actions.request())
+  yield put({ type: 'HELLO' })
 }
