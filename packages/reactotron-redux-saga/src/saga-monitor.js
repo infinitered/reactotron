@@ -215,6 +215,7 @@ export default (reactotron, options) => {
     effectTriggered,
     effectResolved,
     effectRejected,
-    effectCancelled
+    effectCancelled,
+    actionDispatched: () => {}
   }
 }
