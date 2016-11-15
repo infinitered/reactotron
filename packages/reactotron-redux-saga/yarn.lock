@@ -3065,9 +3065,9 @@ rc@^1.0.1, rc@^1.1.6, rc@~1.1.6:
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
 
-reactotron-core-client@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-1.3.0.tgz#abfa7401ad76d87226579d3ebe5326364fa5e746"
+reactotron-core-client@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-1.5.0.tgz#527c8f8797a07357a9a14e8d0896faff7f7b5c51"
   dependencies:
     ramda "^0.22.1"
     ramdasauce "^1.1.1"

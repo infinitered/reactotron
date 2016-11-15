@@ -79,14 +79,6 @@ ansi@^0.3.0, ansi@~0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/ansi/-/ansi-0.3.1.tgz#0c42d4fb17160d5a9af1e484bace1c66922c1b21"
 
-apisauce@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/apisauce/-/apisauce-0.5.0.tgz#7d88524155189f63c91a63cba5da8dfeae7ac6e4"
-  dependencies:
-    axios "^0.13.1"
-    ramda "^0.22.1"
-    ramdasauce "^1.1.1"
-
 apisauce@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/apisauce/-/apisauce-0.6.0.tgz#c7c8472473bd01ff5fa515758d2a6a4ba0312da9"
@@ -189,12 +181,6 @@ async@^2.0.1:
 async@~0.2.6:
   version "0.2.10"
   resolved "https://registry.yarnpkg.com/async/-/async-0.2.10.tgz#b6bbe0b0674b9d719708ca38de8c237cb526c3d1"
-
-axios@^0.13.1:
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.13.1.tgz#3e67abfe4333bc9d2d5fe6fbd13b4694eafc8df8"
-  dependencies:
-    follow-redirects "0.0.7"
 
 axios@^0.15.2:
   version "0.15.2"
@@ -3756,50 +3742,50 @@ react@15.3.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
-reactotron-apisauce@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/reactotron-apisauce/-/reactotron-apisauce-1.3.0.tgz#1dba5cc95548f1783c47015d412d8173951518d0"
+reactotron-apisauce@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/reactotron-apisauce/-/reactotron-apisauce-1.5.0.tgz#7c3374b6235f3ecb858a0ac1bd0fbe8cd5018d35"
   dependencies:
-    apisauce "^0.5.0"
+    apisauce "^0.6.0"
     ramda "^0.22.1"
     ramdasauce "^1.1.1"
-    reactotron-core-client "^1.3.0"
+    reactotron-core-client "^1.5.0"
 
-reactotron-core-client@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-1.3.0.tgz#abfa7401ad76d87226579d3ebe5326364fa5e746"
+reactotron-core-client@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-1.5.0.tgz#527c8f8797a07357a9a14e8d0896faff7f7b5c51"
   dependencies:
     ramda "^0.22.1"
     ramdasauce "^1.1.1"
     socket.io "^1.4.8"
 
-reactotron-react-native@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-1.3.0.tgz#9929720142ecffbaa913715ef3bec1dd792055fd"
+reactotron-react-native@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-1.5.0.tgz#f298864c98de28516bd4bd28a97f90cd96b1dbb2"
   dependencies:
     ramda "^0.22.1"
     ramdasauce "^1.1.1"
-    reactotron-core-client "^1.3.0"
+    reactotron-core-client "^1.5.0"
     socket.io "^1.4.8"
     socket.io-client "^1.4.8"
 
-reactotron-redux-saga@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/reactotron-redux-saga/-/reactotron-redux-saga-1.4.0.tgz#21df159b4183df78c14291575eb0a4ceb7bd86c8"
+reactotron-redux-saga@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/reactotron-redux-saga/-/reactotron-redux-saga-1.5.0.tgz#c518f53be0aa29bd0499a63ac0b75674b699e0d7"
   dependencies:
     ramda "^0.22.1"
     ramdasauce "^1.1.1"
-    reactotron-core-client "^1.3.0"
+    reactotron-core-client "^1.5.0"
     redux "^3.6.0"
     redux-saga "^0.12.1"
 
-reactotron-redux@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/reactotron-redux/-/reactotron-redux-1.4.0.tgz#9fb61f64e3a13a3266fe8e353b43c99d7d3ded8f"
+reactotron-redux@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/reactotron-redux/-/reactotron-redux-1.5.0.tgz#e435f1bf85173c839c2f59c3cf695ebde90f6c70"
   dependencies:
     ramda "^0.22.1"
     ramdasauce "^1.1.1"
-    reactotron-core-client "^1.3.0"
+    reactotron-core-client "^1.5.0"
     redux "^3.6.0"
 
 read-all-stream@^3.0.0:
