@@ -142,7 +142,7 @@ class SagaTaskCompleteCommand extends Component {
     const { payload } = command
     const { description, triggerType, duration, children } = payload
     const preview = `${triggerType} in ${duration}ms`
-    const effectTitle = `${children.length} Effect${children.length > 0 && 's'}`
+    const effectTitle = `${children.length} Effect${children.length === 1 ? '' : 's'}`
 
     return (
       <Command command={command} title={COMMAND_TITLE} preview={preview}>
