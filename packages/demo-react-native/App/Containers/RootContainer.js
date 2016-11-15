@@ -6,6 +6,7 @@ import Button from '../Components/Button'
 import Repo from '../Components/Repo'
 import { Actions as RepoActions } from '../Redux/RepoRedux'
 import { Actions as LogoActions } from '../Redux/LogoRedux'
+import { Actions as StartupActions } from '../Redux/StartupRedux'
 import makeErrorForFun from '../Lib/ErrorMaker'
 import RNViewShot from 'react-native-view-shot'
 
@@ -24,6 +25,10 @@ class RootContainer extends Component {
 
   handlePress () {
     console.tron.log('A touchable was pressed.🔥🦄')
+  }
+
+  componentDidMount () {
+    this.props.startup()
   }
 
   handleSendCatPicture () {
@@ -90,6 +95,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => ({
+  startup: () => dispatch(StartupActions.startup()),
   ignore: () => dispatch({ type: 'ignore' }),
   faster: () => dispatch(LogoActions.changeSpeed(10)),
   slower: () => dispatch(LogoActions.changeSpeed(50)),

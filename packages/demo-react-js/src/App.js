@@ -48,6 +48,10 @@ class App extends Component {
     )
   }
 
+  componentDidMount () {
+    this.props.startup()
+  }
+
   renderMessage () {
     const { fetching, name, url, message, sha } = this.props
     if (fetching) {
