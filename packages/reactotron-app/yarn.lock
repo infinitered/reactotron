@@ -5012,9 +5012,9 @@ react@^15.3.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
-reactotron-core-server@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/reactotron-core-server/-/reactotron-core-server-1.4.0.tgz#ebf995311ce374fdce8f1a8fbbfc3b16c37d0220"
+reactotron-core-server@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/reactotron-core-server/-/reactotron-core-server-1.5.0.tgz#f8844e48a7f117f60493d0dd331ec28905c1fd14"
   dependencies:
     mobx "^2.5.1"
     ramda "^0.22.1"
