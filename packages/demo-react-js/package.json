@@ -28,7 +28,6 @@
     "start": "react-scripts start",
     "build-prod": "react-scripts build",
     "eject": "react-scripts eject",
-    "copy-internal-deps": "./copy-internal-deps.sh",
     "lint": "standard"
   },
   "standard": {
