@@ -52,6 +52,7 @@
     "parser": "babel-eslint"
   },
   "dependencies": {
+    "json-stringify-safe": "^5.0.1",
     "ramda": "^0.22.1",
     "ramdasauce": "^1.1.1",
     "socket.io": "^1.4.8"

@@ -8,6 +8,7 @@ import apiResponse from './plugins/api-response'
 import clear from './plugins/clear'
 import { start } from './stopwatch'
 export { start } from './stopwatch'
+import scrub from './scrub'
 
 export const CorePlugins = [
   image(),
@@ -128,7 +129,15 @@ export class Client {
    * Sends a command to the server
    */
   send (type, payload = {}, important = false) {
-    this.socket && this.socket.emit('command', { type, payload, important: !!important })
+    // jet if we don't have a socket
+    if (!this.socket) return
+
+    // send this command
+    this.socket.emit('command', {
+      type,
+      payload: scrub(payload),
+      important: !!important
+    })
   }
 
   /**
