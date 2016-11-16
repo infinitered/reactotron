@@ -10,6 +10,7 @@
   "dependencies": {
     "apisauce": "^0.6.0",
     "es6-symbol": "^3.1.0",
+    "json-stringify-safe": "^5.0.1",
     "ramda": "^0.22.0",
     "ramdasauce": "^1.0.0",
     "react": "15.3.2",
@@ -17,7 +18,6 @@
     "react-native-view-shot": "^1.1.2",
     "react-redux": "^4.4.5",
     "reactotron-apisauce": "^1.5.0",
-    "reactotron-core-client": "^1.5.0",
     "reactotron-react-native": "^1.5.0",
     "reactotron-redux": "^1.5.0",
     "reactotron-redux-saga": "^1.5.1",

@@ -2758,6 +2758,10 @@ json-stable-stringify@^1.0.0, json-stable-stringify@^1.0.1:
   dependencies:
     jsonify "~0.0.0"
 
+json-stringify-safe:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
+
 json3@3.2.6:
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/json3/-/json3-3.2.6.tgz#f6efc93c06a04de9aec53053df2559bb19e2038b"
@@ -3769,9 +3773,9 @@ reactotron-react-native@^1.5.0:
     socket.io "^1.4.8"
     socket.io-client "^1.4.8"
 
-reactotron-redux-saga@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/reactotron-redux-saga/-/reactotron-redux-saga-1.5.0.tgz#c518f53be0aa29bd0499a63ac0b75674b699e0d7"
+reactotron-redux-saga@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/reactotron-redux-saga/-/reactotron-redux-saga-1.5.1.tgz#57c21b7caa25d69153e4628d5b3218ebda78eea5"
   dependencies:
     ramda "^0.22.1"
     ramdasauce "^1.1.1"

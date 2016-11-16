@@ -4655,9 +4655,9 @@ reactotron-react-js@^1.5.0:
     socket.io-client "^1.4.8"
     stacktrace-js "^1.3.1"
 
-reactotron-redux-saga@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/reactotron-redux-saga/-/reactotron-redux-saga-1.5.0.tgz#c518f53be0aa29bd0499a63ac0b75674b699e0d7"
+reactotron-redux-saga@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/reactotron-redux-saga/-/reactotron-redux-saga-1.5.1.tgz#57c21b7caa25d69153e4628d5b3218ebda78eea5"
   dependencies:
     ramda "^0.22.1"
     ramdasauce "^1.1.1"
