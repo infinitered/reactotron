@@ -133,7 +133,7 @@ export default (reactotron, options) => {
     }
 
     reactotron.send('saga.task.complete', {
-      triggerType,
+      triggerType: triggerType || effectInfo.description,
       description: sagaDescription,
       duration: Math.round(duration),
       children
