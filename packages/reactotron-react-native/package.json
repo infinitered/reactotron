@@ -1,6 +1,6 @@
 {
   "name": "reactotron-react-native",
-  "version": "1.5.0",
+  "version": "1.5.2",
   "description": "A development tool to explore, inspect, and diagnose your React Native apps.",
   "main": "dist/index.js",
   "scripts": {
@@ -68,6 +68,6 @@
     "ramdasauce": "^1.1.1",
     "socket.io": "^1.4.8",
     "socket.io-client": "^1.4.8",
-    "reactotron-core-client": "^1.5.0"
+    "reactotron-core-client": "^1.5.2"
   }
 }
