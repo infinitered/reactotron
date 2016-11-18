@@ -64,9 +64,8 @@ Welcome to flavour country.
 
 Reactotron is sponsored by [Infinite Red](https://infinite.red) who encourage this type of open-source hacking & sharing.  They specialize in React, React Native, and Elixir. :heart:
 
+![](./docs/images/readme/ir_logo_500w.png)
 
-![](./docs/images/readme/ir_logo_500w.png | =250)
-
-[<img src='https://infinite.red/images/ir-logo-7ebf9ed9d02e2805bb2c94309efa5176.svg' />](https://infinite.red)
+[<img src='/reactotron/reactotron/raw/master/docs/images/readme/ir_logo_500w.png' width='250' />](https://infinite.red)
 
 Also, shout out to [Kevin VanGelder](https://github.com/kevinvangelder), who spawned the idea for Reactotron by saying, "Hey, you know what would be cool? A REPL. We should do that."  He singlehandedly devoured months of my spare time.
