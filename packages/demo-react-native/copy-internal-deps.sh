@@ -14,7 +14,7 @@ rm -rf ./node_modules/reactotron-react-native
 mkdir -p ./node_modules/reactotron-react-native
 cp ../reactotron-react-native/dist/index.js ./node_modules/reactotron-react-native/index.js
 
-reactotron-core-client
+# reactotron-core-client
 cd ../reactotron-core-client
 yarn run build
 cd ../demo-react-native

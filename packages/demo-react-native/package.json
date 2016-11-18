@@ -23,7 +23,7 @@
     "reactotron-redux-saga": "^1.5.1",
     "redux": "^3.6.0",
     "redux-logger": "^2.6.1",
-    "redux-saga": "^0.12.1",
+    "redux-saga": "^0.13.0",
     "seamless-immutable": "^6.0.1",
     "socket.io": "^1.4.8"
   },
