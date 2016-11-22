@@ -1,6 +1,6 @@
 # ![](./docs/images/readme/Reactotron-64.png) Reactotron
 
-<script async defer src="https://slack.yourdomain.com/slackin.js?large"></script>
+<script async defer src="https://reactotron-slack.herokuapp.com/slackin.js?large"></script>
 
 [Less Talk More Action](./docs/installing.md)
 
