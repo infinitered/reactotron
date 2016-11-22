@@ -1,12 +1,12 @@
-# ![CLI](./docs/images/readme/Reactotron-64.png) Reactotron
+# ![](./docs/images/readme/Reactotron-64.png) Reactotron
 
-[![Join the chat at https://gitter.im/reactotron/reactotron](https://badges.gitter.im/reactotron/reactotron.svg)](https://gitter.im/reactotron/reactotron?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+<script async defer src="https://slack.yourdomain.com/slackin.js?large"></script>
 
 [Less Talk More Action](./docs/installing.md)
 
 # What is Reactotron?
 
-A CLI and OS X app for inspecting your [React JS](https://facebook.github.io/react/) and [React Native](https://facebook.github.io/react-native/) apps.
+An OS X app for inspecting your [React JS](https://facebook.github.io/react/) and [React Native](https://facebook.github.io/react-native/) apps.
 
 Use it to:
 
@@ -22,20 +22,11 @@ Use it to:
 
 You plug it into your app as a dev dependency so it adds nothing to your product builds.
 
-The app comes in two forms which share the same [guts](https://github.com/reactotron/reactotron/tree/master/packages/reactotron-core-client):
-
 ### Desktop
 
 Reactotron on the left, demo React Native app on the right.
 
 ![Desktop](./docs/images/readme/reactotron-demo-app.gif)
-
-### Command Line
-
-![CLI](./docs/images/readme/reactotron-demo-cli.gif)
-
-Welcome to flavour country.
-
 
 # Documentation
 
@@ -59,11 +50,3 @@ Welcome to flavour country.
 * What's Inside This Repo?
 * Contributors Quick Start
 
-
-# Special Thanks
-
-Reactotron is sponsored by [Infinite Red](https://infinite.red) who encourage this type of open-source hacking & sharing.  They specialize in React, React Native, and Elixir. :heart:
-
-<img src="https://raw.githubusercontent.com/reactotron/reactotron/master/docs/images/readme/ir_logo_500w.png" width="250px">
-
-Also, shout out to [Kevin VanGelder](https://github.com/kevinvangelder), who spawned the idea for Reactotron by saying, "Hey, you know what would be cool? A REPL. We should do that."  He singlehandedly devoured months of my spare time.
