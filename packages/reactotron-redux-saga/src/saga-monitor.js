@@ -162,7 +162,10 @@ export default (reactotron, options) => {
       // hook the promise to capture the resolve or reject
       result.done.then(
         onTaskResult,
-        error => effectRejected(effectId, error)
+        error => {
+          effectRejected(effectId, error)
+          prettyLogSagaError(error)
+        }
       )
     } else {
       // this is an effect and we are complete
@@ -208,6 +211,32 @@ export default (reactotron, options) => {
     const effectInfo = effects[effectId]
     updateDuration(effectInfo)
     effectInfo.status = CANCELLED
+  }
+
+  // ---
+
+  // This gets called when a task is failing. We need to do some leg work to make friendly errors
+  const prettyLogSagaError = (error) => {
+    // NOTE: error.message <- Friendly error message
+    // NOTE: error.stack <- non Friendly error stack trace
+
+    // Make sure this exists... if it does we are likely in RN
+    if (options.parseErrorStack) {
+      const parsedStacktrace = options.parseErrorStack(error);
+      options.symbolicateStackTrace(parsedStacktrace).then(symbolcatedStack => {
+        const mappedStack = symbolcatedStack.map(stackFrame => ({
+          fileName: stackFrame.file,
+          functionName: stackFrame.methodName,
+          lineNumber: stackFrame.lineNumber
+        }));
+
+        reactotron.send('log', {
+          level: 'error',
+          message: error.message,
+          stack: mappedStack
+        })
+      });
+    }
   }
 
   // the interface for becoming a redux-saga monitor
