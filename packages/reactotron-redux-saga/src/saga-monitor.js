@@ -213,7 +213,7 @@ export default (reactotron, options) => {
     effectInfo.status = CANCELLED
   }
 
-  // ---
+  // ---------------- Saga Error Logging --------------------
 
   // This gets called when a task is failing. We need to do some leg work to make friendly errors
   const prettyLogSagaError = (error) => {
@@ -228,14 +228,14 @@ export default (reactotron, options) => {
           fileName: stackFrame.file,
           functionName: stackFrame.methodName,
           lineNumber: stackFrame.lineNumber
-        }));
+        }))
 
         reactotron.send('log', {
           level: 'error',
           message: error.message,
           stack: mappedStack
         })
-      });
+      })
     }
   }
 
