@@ -26,6 +26,7 @@ const DEFAULTS = {
   name: 'reactotron-core-client', // some human-friendly session name
   secure: false, // use wss instead of ws
   plugins: CorePlugins, // needed to make society function
+  safeRecursion: true, // when on, it ensures objects are safe for transport (at the cost of CPU)
   onCommand: cmd => null, // the function called when we receive a command
   onConnect: () => null, // fires when we connect
   onDisconnect: () => null // fires when we disconnect
@@ -132,10 +133,15 @@ export class Client {
     // jet if we don't have a socket
     if (!this.socket) return
 
+    // we may or may not want to introduce a first-line defense against socket.io serialization
+    // issues.
+    // NOTE(steve): right now the function id is trapped inside scrub.  Can we split?
+    const actualPayload = this.options.safeRecursion ? scrub(payload) : payload
+
     // send this command
     this.socket.emit('command', {
       type,
-      payload: scrub(payload),
+      payload: actualPayload,
       important: !!important
     })
   }
