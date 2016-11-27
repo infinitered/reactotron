@@ -32,7 +32,7 @@ if (!window.navigator || !window.navigator.userAgent) {
 // the order of user agent being set first.  Also, it's a var so it doesn't get
 // hoisted.
 
-var io = require('socket.io-client/socket.io')
+var io = require('socket.io-client/dist/socket.io')
 
 // ---------------------
 // DEFAULT CONFIGURATION
