@@ -194,6 +194,33 @@ export class Client {
     return this
   }
 
+  reportError (error) {
+    if (this.options.parseErrorStack && this.options.symbolicateStackTrace) {
+      const parsedStacktrace = this.options.parseErrorStack(error)
+
+      this.options.symbolicateStackTrace(parsedStacktrace).then(symbolcatedStack => {
+        const mappedStack = symbolcatedStack.map(stackFrame => ({
+          fileName: stackFrame.file,
+          functionName: stackFrame.methodName,
+          lineNumber: stackFrame.lineNumber
+        }))
+
+        this.send('log', {
+          level: 'error',
+          message: error.message,
+          stack: mappedStack
+        })
+      })
+
+      return;
+    }
+
+    this.send('log', {
+      level: 'error',
+      ...error
+    })
+  }
+
 }
 
 // convenience factory function

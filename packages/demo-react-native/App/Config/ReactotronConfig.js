@@ -1,3 +1,5 @@
+import parseErrorStack from 'parseErrorStack'
+import symbolicateStackTrace from 'symbolicateStackTrace'
 import Reactotron, { trackGlobalErrors } from 'reactotron-react-native'
 import tronsauce from 'reactotron-apisauce'
 import { reactotronRedux } from 'reactotron-redux'
@@ -5,7 +7,7 @@ import sagaPlugin from 'reactotron-redux-saga'
 
 if (__DEV__) {
   Reactotron
-    .configure({ name: 'React Native Demo' })
+    .configure({ name: 'React Native Demo', parseErrorStack, symbolicateStackTrace })
     .use(tronsauce())
     .use(reactotronRedux({
       isActionImportant: action => action.type === 'something.important',
