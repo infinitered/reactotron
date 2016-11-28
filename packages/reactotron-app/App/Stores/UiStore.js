@@ -237,6 +237,12 @@ class UI {
     this.commandProperties[messageId].set(key, value)
   }
 
+  /**
+   * Asks the client to the file in the editor
+   */
+  @action openInEditor = (file, lineNumber) =>
+    this.server.openInEditor({ file, lineNumber })
+
 }
 
 export default UI

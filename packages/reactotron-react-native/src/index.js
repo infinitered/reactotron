@@ -6,6 +6,7 @@
 import getHost from './get-host'
 
 export trackGlobalErrors from './plugins/track-global-errors'
+export openInEditor from './plugins/open-in-editor'
 
 // ------------
 // SECOND PARTY

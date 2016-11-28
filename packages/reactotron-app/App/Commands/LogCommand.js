@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { inject, observer } from 'mobx-react'
 import Command from '../Shared/Command'
 import { take, replace, merge, map } from 'ramda'
 import Colors from '../Theme/Colors'
@@ -28,7 +29,8 @@ const Styles = {
   stackFrame: {
     marginBottom: 10,
     flex: 1,
-    wordBreak: 'break-all'
+    wordBreak: 'break-all',
+    cursor: 'pointer'
   },
   number: {
     paddingRight: 7,
@@ -55,6 +57,8 @@ const Styles = {
   }
 }
 
+@inject('session')
+@observer
 class LogCommand extends Component {
 
   static propTypes = {
@@ -71,12 +75,17 @@ class LogCommand extends Component {
   }
 
   renderStackFrame (stackFrame, number) {
+    const { session } = this.props
+    const { ui } = session
     const key = `stack-${number}`
     let { fileName, functionName, lineNumber } = stackFrame
     fileName = fileName && replace('webpack://', '', fileName)
     functionName = functionName && replace('webpack://', '', functionName)
+    const onClickStackFrame = e =>
+      ui.openInEditor(fileName, lineNumber)
+
     return (
-      <div key={key} style={Styles.stackFrame}>
+      <div key={key} style={Styles.stackFrame} onClick={onClickStackFrame}>
         <span style={Styles.number}>{number}.</span>
         <span style={Styles.functionName}>{functionName || '(anonymous function)'}</span>
         <span style={Styles.stackLabel}>:</span>

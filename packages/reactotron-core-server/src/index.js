@@ -239,6 +239,14 @@ class Server {
     this.send('state.restore.request', { state })
   }
 
+  /**
+   * Sends a request for the client to open the file in editor.
+   */
+  openInEditor (details) {
+    const { file, lineNumber } = details
+    this.send('editor.open', { file, lineNumber })
+  }
+
 }
 
 export default Server
