@@ -162,12 +162,7 @@ export default (reactotron, options) => {
       // hook the promise to capture the resolve or reject
       result.done.then(
         onTaskResult,
-        error => {
-          effectRejected(effectId, error)
-
-          //if (!error.reactotronWasHere) reactotron.reportError(error)
-          //error.reactotronWasHere = true
-        }
+        error => effectRejected(effectId, error)
       )
     } else {
       // this is an effect and we are complete
