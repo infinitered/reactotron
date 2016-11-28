@@ -6,6 +6,6 @@ export default pluginConfig => reactotron => ({
   features: {
     // spawn a saga monitor with the given options
     createSagaMonitor: options => createSagaMonitor(reactotron, options),
-    handleSagaError: error => { console.log(error); reactotron.reportError(error); }
+    handleSagaError: error => reactotron.reportError(error)
   }
 })
