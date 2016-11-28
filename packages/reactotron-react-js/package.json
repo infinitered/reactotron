@@ -36,11 +36,11 @@
     "babelrc-rollup": "^3.0.0",
     "mockery": "^1.7.0",
     "nyc": "^8.1.0",
+    "react": ">=15.3.0",
+    "react-dom": ">=15.3.0",
     "rollup": "^0.35.10",
     "rollup-plugin-babel": "^2.6.1",
-    "standard": "^8.0.0",
-    "react": ">=15.3.0",
-    "react-dom": ">=15.3.0"
+    "standard": "^8.0.0"
   },
   "ava": {
     "require": [
@@ -62,11 +62,10 @@
   },
   "dependencies": {
     "json-stringify-safe": "^5.0.1",
-    "stacktrace-js": "^1.3.1",
     "ramda": "^0.22.1",
     "ramdasauce": "^1.1.0",
-    "socket.io": "^1.4.8",
-    "socket.io-client": "^1.4.8",
-    "reactotron-core-client": "^1.5.2"
+    "reactotron-core-client": "^1.5.2",
+    "socket.io-client": "^1.7.1",
+    "stacktrace-js": "^1.3.1"
   }
 }

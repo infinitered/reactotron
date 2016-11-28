@@ -1,6 +1,6 @@
 {
   "name": "reactotron-react-native",
-  "version": "1.5.3",
+  "version": "1.5.2",
   "description": "A development tool to explore, inspect, and diagnose your React Native apps.",
   "main": "dist/index.js",
   "scripts": {
@@ -35,12 +35,12 @@
     "babel-preset-stage-1": "^6.13.0",
     "mockery": "^2.0.0",
     "nyc": "^8.1.0",
+    "react": ">=15.2.1",
+    "react-native": ">=0.31.0",
     "react-native-mock": "^0.2.5",
     "rollup": "^0.36.3",
     "rollup-plugin-babel": "^2.6.1",
-    "standard": "^8.0.0",
-    "react": ">=15.2.1",
-    "react-native": ">=0.31.0"
+    "standard": "^8.0.0"
   },
   "ava": {
     "require": [
@@ -66,8 +66,7 @@
     "json-stringify-safe": "^5.0.1",
     "ramda": "^0.22.1",
     "ramdasauce": "^1.1.1",
-    "socket.io": "^1.7.0",
-    "socket.io-client": "^1.4.8",
-    "reactotron-core-client": "^1.5.2"
+    "reactotron-core-client": "^1.5.2",
+    "socket.io-client": "^1.7.1"
   }
 }
