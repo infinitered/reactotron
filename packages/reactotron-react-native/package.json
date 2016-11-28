@@ -67,6 +67,6 @@
     "ramda": "^0.22.1",
     "ramdasauce": "^1.1.1",
     "reactotron-core-client": "^1.5.2",
-    "socket.io-client": "^1.7.1"
+    "socket.io-client": "~1.7.1"
   }
 }
