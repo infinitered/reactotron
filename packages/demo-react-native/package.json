@@ -1,6 +1,6 @@
 {
   "name": "DemoReactNative",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -17,10 +17,10 @@
     "react-native": "^0.37.0",
     "react-native-view-shot": "^1.1.2",
     "react-redux": "^4.4.5",
-    "reactotron-apisauce": "^1.5.2",
-    "reactotron-react-native": "^1.5.2",
-    "reactotron-redux": "^1.5.2",
-    "reactotron-redux-saga": "^1.5.2",
+    "reactotron-apisauce": "^1.5.3",
+    "reactotron-react-native": "^1.5.3",
+    "reactotron-redux": "^1.5.3",
+    "reactotron-redux-saga": "^1.5.3",
     "redux": "^3.6.0",
     "redux-logger": "^2.6.1",
     "redux-saga": "^0.13.0",
