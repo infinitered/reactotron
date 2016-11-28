@@ -14,7 +14,7 @@ if (__DEV__) {
       except: ['ignore']
     }))
     .use(trackGlobalErrors({
-      veto: frame => frame.fileName.indexOf('/node_modules/react-native/') >= 0
+      veto: frame => frame.fileName.indexOf('/node_modules/redux-saga/') >= 0
     }))
     .use(openInEditor())
     .use(sagaPlugin())

@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import { inject, observer } from 'mobx-react'
 import Command from '../Shared/Command'
-import { take, replace, merge, map } from 'ramda'
+import { take, replace, merge, map, split, last } from 'ramda'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import Content from '../Shared/Content'
+import ReactTooltip from 'react-tooltip'
 
-const STACK_TITLE = 'YE OLDE STACK TRACE'
 const PREVIEW_LENGTH = 500
 
 const getName = level => {
@@ -18,6 +18,13 @@ const getName = level => {
   }
 }
 
+const stackFrameBaseStyle = {
+  marginBottom: 10,
+  flex: 1,
+  wordBreak: 'break-all',
+  cursor: 'pointer'
+}
+
 const Styles = {
   container: {
     paddingTop: 4
@@ -26,24 +33,37 @@ const Styles = {
     marginTop: 10,
     ...AppStyles.Layout.vbox
   },
+  stackTable: {
+  },
   stackFrame: {
-    marginBottom: 10,
-    flex: 1,
-    wordBreak: 'break-all',
-    cursor: 'pointer'
+    ...stackFrameBaseStyle
+  },
+  stackFrameNodeModule: {
+    ...stackFrameBaseStyle,
+    opacity: 0.4
   },
   number: {
-    paddingRight: 7,
-    color: Colors.constant
+    color: Colors.constant,
+    textAlign: 'right',
+    width: 50,
+    paddingRight: 10,
+    paddingTop: 3
   },
-  stackMiddle: {
+  functionName: {
+    paddingRight: 10,
+    paddingTop: 3
   },
   fileName: {
-    wordBreak: 'break-all'
+    wordBreak: 'break-all',
+    paddingRight: 10,
+    paddingTop: 3
   },
   lineNumber: {
     color: Colors.bold,
-    wordBreak: 'break-all'
+    wordBreak: 'break-all',
+    width: 50,
+    textAlign: 'right',
+    paddingTop: 3
   },
   stackLabel: {
     color: Colors.foregroundDark,
@@ -54,6 +74,28 @@ const Styles = {
     color: Colors.constant,
     paddingBottom: 10,
     wordBreak: 'break-all'
+  },
+  headerFrame: {
+    textAlign: 'left',
+    width: 50,
+    paddingRight: 10
+  },
+  headerFunction: {
+    textAlign: 'left'
+  },
+  headerFile: {
+    textAlign: 'left'
+  },
+  headerLineNumber: {
+    textAlign: 'right',
+    width: 50
+  },
+  errorMessage: {
+    wordBreak: 'break-all',
+    fontSize: 24,
+    paddingBottom: 5,
+    marginBottom: 10,
+    borderBottom: `1px solid ${Colors.tag}`
   }
 }
 
@@ -79,19 +121,26 @@ class LogCommand extends Component {
     const { ui } = session
     const key = `stack-${number}`
     let { fileName, functionName, lineNumber } = stackFrame
+    const justTheFile = last(split('/', fileName))
     fileName = fileName && replace('webpack://', '', fileName)
     functionName = functionName && replace('webpack://', '', functionName)
+    const isNodeModule = fileName.indexOf('/node_modules/') >= 0
     const onClickStackFrame = e =>
       ui.openInEditor(fileName, lineNumber)
 
+    const style = isNodeModule ? Styles.stackFrameNodeModule : Styles.stackFrame
+    const tooltip = fileName
+
     return (
-      <div key={key} style={Styles.stackFrame} onClick={onClickStackFrame}>
-        <span style={Styles.number}>{number}.</span>
-        <span style={Styles.functionName}>{functionName || '(anonymous function)'}</span>
-        <span style={Styles.stackLabel}>:</span>
-        <span style={Styles.filename}>{fileName} : </span>
-        <span style={Styles.lineNumber}>{lineNumber}</span>
-      </div>
+      <tr key={key} style={style} onClick={onClickStackFrame}>
+        <td style={Styles.number}>{number}.</td>
+        <td style={Styles.functionName}>{functionName || '(anonymous function)'}</td>
+        <td style={Styles.fileName} data-tip={tooltip} >
+          {justTheFile}
+          <ReactTooltip place='bottom' class='tooltipThemeReducedWidth' />
+        </td>
+        <td style={Styles.lineNumber}>{lineNumber}</td>
+      </tr>
     )
   }
 
@@ -99,11 +148,22 @@ class LogCommand extends Component {
     let i = 0
     return (
       <div style={Styles.stack}>
-        <div style={Styles.stackTitle}>{STACK_TITLE}</div>
-        {map(stackFrame => {
-          i++
-          return this.renderStackFrame(stackFrame, i)
-        }, stack)}
+        <table style={Styles.stackTable} width='100%'>
+          <thead>
+            <tr>
+              <th style={Styles.headerFrame}>Frame</th>
+              <th style={Styles.headerFunction}>Function</th>
+              <th style={Styles.headerFile}>File</th>
+              <th style={Styles.headerLineNumber}>line</th>
+            </tr>
+          </thead>
+          <tbody>
+            {map(stackFrame => {
+              i++
+              return this.renderStackFrame(stackFrame, i)
+            }, stack)}
+          </tbody>
+        </table>
       </div>
     )
   }
@@ -128,7 +188,8 @@ class LogCommand extends Component {
     return (
       <Command command={command} title={title} preview={preview}>
         <div style={containerTypes}>
-          <Content value={message} />
+          {!stack && <Content value={message} />}
+          {stack && <div style={Styles.errorMessage}>{ message }</div>}
           {stack && this.renderStack(stack)}
         </div>
       </Command>
