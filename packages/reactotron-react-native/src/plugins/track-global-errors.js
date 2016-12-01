@@ -77,13 +77,18 @@ export default options => reactotron => {
         const parsedStacktrace = parseErrorStack(error)
 
         symbolicateStackTrace(parsedStacktrace).then(goodStack => {
-          const mappedStack = goodStack.map(stackFrame => ({
+          let stack = goodStack.map(stackFrame => ({
             fileName: stackFrame.file,
             functionName: stackFrame.methodName,
             lineNumber: stackFrame.lineNumber
           }))
 
-          this.error(error.message, mappedStack)
+          // does the dev want us to keep each frame?
+          if (config.veto) {
+            stack = reject(config.veto, stack)
+          }
+
+          reactotron.error(error.message, stack)
         })
 
         return
