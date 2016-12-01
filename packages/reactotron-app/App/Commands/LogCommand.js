@@ -1,13 +1,18 @@
 import React, { Component, PropTypes } from 'react'
 import { inject, observer } from 'mobx-react'
 import Command from '../Shared/Command'
-import { take, replace, merge, map, split, last } from 'ramda'
+import { max, min, slice, is, join, take, replace, merge, map, split, last, takeLast } from 'ramda'
+import { isNilOrEmpty, dotPath } from 'ramdasauce'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import Content from '../Shared/Content'
 import ReactTooltip from 'react-tooltip'
+import fs from 'fs'
 
 const PREVIEW_LENGTH = 500
+const SOURCE_LINES_UP = 5
+const SOURCE_LINES_DOWN = 5
+const SOURCE_FILE_PATH_COUNT = 3
 
 const getName = level => {
   switch (level) {
@@ -19,10 +24,19 @@ const getName = level => {
 }
 
 const stackFrameBaseStyle = {
-  marginBottom: 10,
-  flex: 1,
+  ...AppStyles.Layout.hbox,
+  padding: 6,
   wordBreak: 'break-all',
   cursor: 'pointer'
+}
+
+const selectionStyle = {
+  color: Colors.tag,
+  backgroundColor: Colors.backgroundDarker,
+  borderLeft: `1px solid ${Colors.tag}`,
+  borderRight: `1px solid ${Colors.subtleLine}`,
+  borderTop: `1px solid ${Colors.subtleLine}`,
+  borderBottom: `1px solid ${Colors.subtleLine}`
 }
 
 const Styles = {
@@ -34,13 +48,19 @@ const Styles = {
     ...AppStyles.Layout.vbox
   },
   stackTable: {
+    ...AppStyles.Layout.vbox
   },
   stackFrame: {
-    ...stackFrameBaseStyle
+    ...stackFrameBaseStyle,
+    ...AppStyles.Layout.hbox,
+    padding: 6
   },
   stackFrameNodeModule: {
     ...stackFrameBaseStyle,
     opacity: 0.4
+  },
+  selectedStackFrame: {
+    ...selectionStyle
   },
   number: {
     color: Colors.constant,
@@ -50,20 +70,17 @@ const Styles = {
     paddingTop: 3
   },
   functionName: {
-    paddingRight: 10,
-    paddingTop: 3
+    flex: 1
   },
   fileName: {
-    wordBreak: 'break-all',
-    paddingRight: 10,
-    paddingTop: 3
+    flex: 1,
+    wordBreak: 'break-all'
   },
   lineNumber: {
-    color: Colors.bold,
+    color: Colors.constant,
     wordBreak: 'break-all',
     width: 50,
-    textAlign: 'right',
-    paddingTop: 3
+    textAlign: 'right'
   },
   stackLabel: {
     color: Colors.foregroundDark,
@@ -75,27 +92,68 @@ const Styles = {
     paddingBottom: 10,
     wordBreak: 'break-all'
   },
+  theadRow: {
+    ...AppStyles.Layout.hbox,
+    padding: 6,
+    color: Colors.foregroundDark
+  },
   headerFrame: {
-    textAlign: 'left',
-    width: 50,
-    paddingRight: 10
+    textAlign: 'right',
+    width: 60,
+    paddingRight: 5
   },
   headerFunction: {
-    textAlign: 'left'
+    textAlign: 'left',
+    flex: 1
   },
   headerFile: {
+    flex: 1,
     textAlign: 'left'
   },
   headerLineNumber: {
     textAlign: 'right',
-    width: 50
+    width: 60
   },
   errorMessage: {
     wordBreak: 'break-all',
-    fontSize: 24,
+    marginBottom: 30,
+    color: Colors.tag,
+    paddingLeft: 10,
+    paddingTop: 20,
+    paddingBottom: 20,
+    ...selectionStyle
+  },
+  sourceFilename: {
+    paddingTop: 5,
     paddingBottom: 5,
-    marginBottom: 10,
-    borderBottom: `1px solid ${Colors.tag}`
+    marginBottom: 5,
+    color: Colors.tag,
+    borderBottom: `1px solid ${Colors.line}`
+  },
+  sourceCode: {
+    ...AppStyles.Layout.vbox,
+    paddingBottom: 10
+  },
+  sourceLine: {
+    ...AppStyles.Layout.hbox,
+    paddingTop: 6,
+    paddingBottom: 6,
+    cursor: 'pointer',
+    color: Colors.foregroundDark
+  },
+  sourceLineHighlight: {
+    opacity: 1,
+    ...selectionStyle
+  },
+  sourceLineNumber: {
+    width: 60,
+    paddingRight: 15,
+    color: Colors.constant,
+    textAlign: 'right'
+  },
+  sourceLineCode: {
+    flex: 1,
+    whiteSpace: 'pre-wrap'
   }
 }
 
@@ -107,13 +165,110 @@ class LogCommand extends Component {
     command: PropTypes.object.isRequired
   }
 
-  constructor (props) {
-    super(props)
-    this.renderStackFrame = this.renderStackFrame.bind(this)
+  state = {
+    lines: null,
+    lineNumber: null
   }
 
-  shouldComponentUpdate (nextProps) {
-    return this.props.command.id !== nextProps.command.id
+  constructor (props) {
+    super(props)
+    this.loadingSource = false
+    this.renderStackFrame = this.renderStackFrame.bind(this)
+    this.fetchLines = this.fetchLines.bind(this)
+    this.renderSource = this.renderSource.bind(this)
+    this.fetchLines()
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    return this.props.command.id !== nextProps.command.id ||
+      this.state.lines !== nextState.lines
+  }
+
+  fetchLines () {
+    // prevent-reentry
+    if (this.loadingSource) return
+    if (!this.state) return
+    this.loadingSource = true
+    // fetch the top stack frame
+    const frame = dotPath('props.command.payload.stack.0', this)
+    // jet if we don't have it'
+    if (isNilOrEmpty(frame)) return
+    const { fileName, lineNumber } = frame
+    if (isNilOrEmpty(fileName)) return
+    const partialFileName = join('/', takeLast(SOURCE_FILE_PATH_COUNT, split('/', fileName)))
+
+    // kick-off a file read async
+    fs.readFile(fileName, 'utf-8', (err, data) => {
+      // die quietly for we have failed
+      if (err) { return }
+      if (data && is(String, data)) {
+        try {
+          let sourceLines
+          let lineCounter = 0
+          const lineBreak = /\n/g
+          const contents = split(lineBreak, data)
+          // should just load it all?
+          const showWholeFile = contents.length < SOURCE_LINES_UP + SOURCE_LINES_DOWN
+
+          if (showWholeFile) {
+            sourceLines = slice(0, contents.length, contents)
+          } else {
+            const lo = max(0, lineNumber - SOURCE_LINES_UP)
+            const hi = min(contents.length - 1, lineNumber + SOURCE_LINES_UP)
+            sourceLines = slice(lo, hi, contents)
+            lineCounter = lo - 1
+          }
+
+          // create a new structure of lines
+          const lines = map(line => {
+            lineCounter = lineCounter + 1
+            const source = replace(/\t/, '  ', line)
+            return {
+              isSelected: lineCounter === lineNumber,
+              lineNumber: lineCounter,
+              source
+            }
+          }, sourceLines)
+
+          // kick it back to React
+          this.setState({ lines, lineNumber, fileName, partialFileName })
+        } catch (e) {
+        }
+      }
+    })
+  }
+
+  renderSource () {
+    const { lines, fileName, partialFileName } = this.state
+    if (isNilOrEmpty(lines)) return null
+    const { ui } = this.props.session
+
+    // render a line of code
+    const renderLine = line => {
+      const { lineNumber, source, isSelected } = line
+      const key = `line-${lineNumber}`
+      const style = isSelected ? merge(Styles.sourceLine, Styles.sourceLineHighlight) : Styles.sourceLine
+      const onClickStackFrame = e =>
+        ui.openInEditor(fileName, lineNumber)
+
+      return (
+        <div style={style} key={key} onClick={onClickStackFrame}>
+          <div style={Styles.sourceLineNumber}>
+            {lineNumber}
+          </div>
+          <div style={Styles.sourceLineCode}>
+            {source}
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div style={Styles.sourceCode}>
+        <div style={Styles.sourceFilename}>{partialFileName}</div>
+        { map(renderLine, lines) }
+      </div>
+    )
   }
 
   renderStackFrame (stackFrame, number) {
@@ -127,43 +282,43 @@ class LogCommand extends Component {
     const isNodeModule = fileName.indexOf('/node_modules/') >= 0
     const onClickStackFrame = e =>
       ui.openInEditor(fileName, lineNumber)
+    const isSelected = number === 1
 
-    const style = isNodeModule ? Styles.stackFrameNodeModule : Styles.stackFrame
+    let style = isNodeModule ? Styles.stackFrameNodeModule : Styles.stackFrame
+    if (isSelected) {
+      style = merge(style, Styles.selectedStackFrame)
+    }
     const tooltip = fileName
-
     return (
-      <tr key={key} style={style} onClick={onClickStackFrame}>
-        <td style={Styles.number}>{number}.</td>
-        <td style={Styles.functionName}>{functionName || '(anonymous function)'}</td>
-        <td style={Styles.fileName} data-tip={tooltip} >
+      <div key={key} style={style} onClick={onClickStackFrame}>
+        <div style={Styles.functionName}>{functionName || '(anonymous function)'}</div>
+        <div style={Styles.fileName} data-tip={tooltip} >
           {justTheFile}
           <ReactTooltip place='bottom' class='tooltipThemeReducedWidth' />
-        </td>
-        <td style={Styles.lineNumber}>{lineNumber}</td>
-      </tr>
+        </div>
+        <div style={Styles.lineNumber}>{lineNumber}</div>
+      </div>
     )
   }
 
   renderStack (stack) {
+    this.fetchLines()
+
     let i = 0
     return (
       <div style={Styles.stack}>
-        <table style={Styles.stackTable} width='100%'>
-          <thead>
-            <tr>
-              <th style={Styles.headerFrame}>Frame</th>
-              <th style={Styles.headerFunction}>Function</th>
-              <th style={Styles.headerFile}>File</th>
-              <th style={Styles.headerLineNumber}>line</th>
-            </tr>
-          </thead>
-          <tbody>
-            {map(stackFrame => {
-              i++
-              return this.renderStackFrame(stackFrame, i)
-            }, stack)}
-          </tbody>
-        </table>
+        <div style={Styles.sourceFilename}>Stack Trace</div>
+        <div style={Styles.stackTable}>
+          <div style={Styles.theadRow}>
+            <div style={Styles.headerFunction}>Function</div>
+            <div style={Styles.headerFile}>File</div>
+            <div style={Styles.headerLineNumber}>line</div>
+          </div>
+          {map(stackFrame => {
+            i++
+            return this.renderStackFrame(stackFrame, i)
+          }, stack)}
+        </div>
       </div>
     )
   }
@@ -182,6 +337,7 @@ class LogCommand extends Component {
     const { message, stack } = payload
     const title = getName(level)
     const containerTypes = merge(Styles.container, { color: level === 'debug' ? Colors.foreground : Colors.foreground })
+    const hasLines = !!this.state.lines
 
     let preview = this.getPreview(message)
 
@@ -190,6 +346,7 @@ class LogCommand extends Component {
         <div style={containerTypes}>
           {!stack && <Content value={message} />}
           {stack && <div style={Styles.errorMessage}>{ message }</div>}
+          {stack && hasLines && this.renderSource()}
           {stack && this.renderStack(stack)}
         </div>
       </Command>

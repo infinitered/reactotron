@@ -4,6 +4,11 @@ import Reactotron, { trackGlobalErrors, openInEditor } from 'reactotron-react-na
 import tronsauce from 'reactotron-apisauce'
 import { reactotronRedux } from 'reactotron-redux'
 import sagaPlugin from 'reactotron-redux-saga'
+import { test } from 'ramda'
+
+console.disableYellowBox = true
+
+const vetoTest = test(/(YellowBox|redux-saga|node_modules\/react-native)/)
 
 if (__DEV__) {
   Reactotron
@@ -14,7 +19,7 @@ if (__DEV__) {
       except: ['ignore']
     }))
     .use(trackGlobalErrors({
-      veto: frame => frame.fileName.indexOf('/node_modules/redux-saga/') >= 0
+      veto: frame => vetoTest(frame.fileName)
     }))
     .use(openInEditor())
     .use(sagaPlugin())

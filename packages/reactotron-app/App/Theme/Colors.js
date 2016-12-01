@@ -5,6 +5,7 @@ import { createStyling } from 'react-base16-styling'
 
 const getStylingFromBase16 = base16Theme => ({
   roles: {
+    backgroundDarker: Color(base16Theme.base00).darken(0.1).hslString(),
     background: base16Theme.base00, // base00 - Default Background
     backgroundSubtleLight: Color(base16Theme.base00).lighten(0.05).hslString(),
     backgroundSubtleDark: Color(base16Theme.base00).darken(0.3).hslString(),
