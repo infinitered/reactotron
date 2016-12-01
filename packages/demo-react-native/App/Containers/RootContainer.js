@@ -7,6 +7,7 @@ import Repo from '../Components/Repo'
 import { Actions as RepoActions } from '../Redux/RepoRedux'
 import { Actions as LogoActions } from '../Redux/LogoRedux'
 import { Actions as StartupActions } from '../Redux/StartupRedux'
+import { Actions as ErrorActions } from '../Redux/ErrorRedux'
 import makeErrorForFun from '../Lib/ErrorMaker'
 import RNViewShot from 'react-native-view-shot'
 
@@ -80,6 +81,10 @@ class RootContainer extends Component {
             <Button text='Screenshot' onPress={this.handleScreenshot} />
             <Button text='Cats!' onPress={this.handleSendCatPicture} />
           </View>
+          <View style={Styles.buttons}>
+            <Button text='Error Saga' onPress={this.props.bombSaga} />
+            <Button text='Error Saga Put' onPress={this.props.bombPut} />
+          </View>
         </View>
       </ScrollView>
     )
@@ -109,7 +114,9 @@ const mapDispatchToProps = dispatch => ({
   bomb: () => {
     console.tron.log('wait for it...')
     setTimeout(() => { makeErrorForFun('boom') }, 500)
-  }
+  },
+  bombSaga: () => dispatch(ErrorActions.throwSagaError()),
+  bombPut: () => dispatch(ErrorActions.throwPutError())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootContainer)
