@@ -11,7 +11,7 @@ export const Actions = {
 
 export const INITIAL_STATE = { }
 
-const throwAnError = (state) => {({ ...state, error: speed.test })}
+const throwAnError = (state) => { ({ ...state, error: speed.test }) } // eslint-disable-line
 
 // actions ->
 const reducerMap = {

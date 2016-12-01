@@ -218,7 +218,7 @@ export class Client {
         })
       })
 
-      return;
+      return
     }
 
     this.send('log', {
