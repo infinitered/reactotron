@@ -4,6 +4,11 @@
 import { merge, map, reject } from 'ramda'
 import { NativeModules } from 'react-native'
 
+// a few functions to help source map errors -- these seem to be not available immediately
+// so we're lazy loading.
+let parseErrorStack
+let symbolicateStackTrace
+
 // defaults
 const PLUGIN_DEFAULTS = {
   veto: null // frame -> boolean
@@ -63,10 +68,36 @@ export default options => reactotron => {
   // auto start this
   trackGlobalErrors()
 
+  // manually fire an error
+  function reportError (error) {
+    try {
+      parseErrorStack = parseErrorStack || require('react-native/Libraries/Core/Devtools/parseErrorStack')
+      symbolicateStackTrace = symbolicateStackTrace || require('react-native/Libraries/Core/Devtools/symbolicateStackTrace')
+      if (parseErrorStack && symbolicateStackTrace) {
+        const parsedStacktrace = parseErrorStack(error)
+
+        symbolicateStackTrace(parsedStacktrace).then(goodStack => {
+          const mappedStack = goodStack.map(stackFrame => ({
+            fileName: stackFrame.file,
+            functionName: stackFrame.methodName,
+            lineNumber: stackFrame.lineNumber
+          }))
+
+          this.error(error.message, mappedStack)
+        })
+
+        return
+      }
+    } catch (e) {
+      // nothing happened. move along.
+    }
+  }
+
   // the reactotron plugin interface
   return {
     // attach these functions to the Reactotron
     features: {
+      reportError,
       trackGlobalErrors,
       untrackGlobalErrors
     }

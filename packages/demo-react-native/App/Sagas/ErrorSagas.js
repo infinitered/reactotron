@@ -1,14 +1,17 @@
 import { call, put } from 'redux-saga/effects'
 import * as Error from '../Redux/ErrorRedux'
-
-function aDummyFunction () {
-}
+import { dismantleBomb } from '../Lib/BombSquad'
 
 export function * sagaError () {
-  yield call(aDummyFunction)
-  object.that.doesnt.exist() // eslint-disable-line
+  yield call(dismantleBomb, false)
+  yield call(dismantleBomb, true)
 }
 
-export function * putError () {
-  yield put.sync({ type: Error.Types.PutThrow })
+export function * putError (action) {
+  const { isSync } = action
+  if (isSync) {
+    yield put.sync({ type: Error.Types.PutThrow })
+  } else {
+    yield put({ type: Error.Types.PutThrow })
+  }
 }

@@ -1,5 +1,3 @@
-import parseErrorStack from 'parseErrorStack'
-import symbolicateStackTrace from 'symbolicateStackTrace'
 import Reactotron, { trackGlobalErrors, openInEditor } from 'reactotron-react-native'
 import tronsauce from 'reactotron-apisauce'
 import { reactotronRedux } from 'reactotron-redux'
@@ -12,7 +10,7 @@ const vetoTest = test(/(YellowBox|redux-saga|node_modules\/react-native)/)
 
 if (__DEV__) {
   Reactotron
-    .configure({ name: 'React Native Demo', parseErrorStack, symbolicateStackTrace })
+    .configure({ name: 'React Native Demo' })
     .use(tronsauce())
     .use(reactotronRedux({
       isActionImportant: action => action.type === 'something.important',

@@ -76,14 +76,52 @@ class RootContainer extends Component {
             bigger={bigger} smaller={smaller} faster={faster} slower={slower}
             reset={reset}
           />
+
           <View style={Styles.buttons}>
-            <Button text='Error Tyme!' onPress={this.props.bomb} />
             <Button text='Screenshot' onPress={this.handleScreenshot} />
             <Button text='Cats!' onPress={this.handleSendCatPicture} />
           </View>
+
           <View style={Styles.buttons}>
-            <Button text='Error Saga' onPress={this.props.bombSaga} />
-            <Button text='Error Saga Put' onPress={this.props.bombPut} />
+            <Text style={Styles.errorTitle}>
+              Handles Various Sources of Errors
+            </Text>
+          </View>
+
+          <View style={Styles.buttons}>
+            <Button
+              text='Component Error'
+              onPress={this.props.bomb}
+              style={{ width: 200 }}
+            />
+          </View>
+          <View style={Styles.buttons}>
+            <Button
+              text='Try/Catch Exceptions'
+              onPress={this.props.silentBomb}
+              style={{ width: 200 }}
+            />
+          </View>
+          <View style={Styles.buttons}>
+            <Button
+              text='Saga Error'
+              onPress={this.props.bombSaga}
+              style={{ width: 200 }}
+            />
+          </View>
+          <View style={Styles.buttons}>
+            <Button
+              text='Saga Error in PUT (async)'
+              onPress={this.props.bombPut}
+              style={{ width: 200 }}
+            />
+          </View>
+          <View style={Styles.buttons}>
+            <Button
+              text='Saga Error in PUT (sync)'
+              onPress={this.props.bombPutSync}
+              style={{ width: 200 }}
+            />
           </View>
         </View>
       </ScrollView>
@@ -111,12 +149,21 @@ const mapDispatchToProps = dispatch => ({
   requestReactNative: () => dispatch(RepoActions.request('facebook/react-native')),
   requestMobx: () => dispatch(RepoActions.request('mobxjs/mobx')),
   requestRedux: () => dispatch(RepoActions.request('reactjs/redux')),
+  bombPutSync: () => dispatch(ErrorActions.throwPutError(true)),
+  bombPut: () => dispatch(ErrorActions.throwPutError(false)),
+  silentBomb: () => {
+    // you may have try/catch blocks in your code
+    try {
+      console.foo()
+    } catch (e) {
+      // now you can log those errors
+      console.tron.reportError(e)
+    }
+  },
   bomb: () => {
     console.tron.log('wait for it...')
     setTimeout(() => { makeErrorForFun('Boom goes the error message.') }, 500)
   },
-  bombSaga: () => dispatch(ErrorActions.throwSagaError()),
-  bombPut: () => dispatch(ErrorActions.throwPutError())
+  bombSaga: () => dispatch(ErrorActions.throwSagaError())
 })
-
 export default connect(mapStateToProps, mapDispatchToProps)(RootContainer)
