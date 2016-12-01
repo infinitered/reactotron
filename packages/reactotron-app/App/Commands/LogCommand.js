@@ -10,8 +10,8 @@ import ReactTooltip from 'react-tooltip'
 import fs from 'fs'
 
 const PREVIEW_LENGTH = 500
-const SOURCE_LINES_UP = 5
-const SOURCE_LINES_DOWN = 5
+const SOURCE_LINES_UP = 3
+const SOURCE_LINES_DOWN = 3
 const SOURCE_FILE_PATH_COUNT = 3
 
 const getName = level => {
@@ -203,32 +203,33 @@ class LogCommand extends Component {
       if (err) { return }
       if (data && is(String, data)) {
         try {
-          let sourceLines
+          let lines
           let lineCounter = 0
           const lineBreak = /\n/g
           const contents = split(lineBreak, data)
-          // should just load it all?
-          const showWholeFile = contents.length < SOURCE_LINES_UP + SOURCE_LINES_DOWN
-
-          if (showWholeFile) {
-            sourceLines = slice(0, contents.length, contents)
-          } else {
-            const lo = max(0, lineNumber - SOURCE_LINES_UP)
-            const hi = min(contents.length - 1, lineNumber + SOURCE_LINES_UP)
-            sourceLines = slice(lo, hi, contents)
-            lineCounter = lo - 1
-          }
 
           // create a new structure of lines
-          const lines = map(line => {
+          const sourceLines = map(line => {
             lineCounter = lineCounter + 1
+            // i am sorry my tab-based brethern.
             const source = replace(/\t/, '  ', line)
             return {
               isSelected: lineCounter === lineNumber,
               lineNumber: lineCounter,
               source
             }
-          }, sourceLines)
+          }, contents)
+
+          // should just load it all?
+          const showWholeFile = contents.length < SOURCE_LINES_UP + SOURCE_LINES_DOWN
+
+          if (showWholeFile) {
+            lines = sourceLines
+          } else {
+            const lo = max(0, lineNumber - SOURCE_LINES_UP - 1)
+            const hi = min(contents.length - 1, lineNumber + SOURCE_LINES_UP)
+            lines = slice(lo, hi, sourceLines)
+          }
 
           // kick it back to React
           this.setState({ lines, lineNumber, fileName, partialFileName })

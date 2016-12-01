@@ -164,7 +164,9 @@ export default (reactotron, options) => {
         onTaskResult,
         error => {
           effectRejected(effectId, error)
-          if (!error.reactotronWasHere) reactotron.reportError(error)
+          if (!error.reactotronWasHere) {
+            reactotron.reportError(error)
+          }
           error.reactotronWasHere = true
         }
       )

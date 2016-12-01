@@ -2,7 +2,8 @@ import {StyleSheet} from 'react-native'
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: '#4A90E2'
+    backgroundColor: '#4A90E2',
+    flex: 1
   },
   content: {
   },
@@ -18,6 +19,12 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#FFD898'
+  },
+  errorTitle: {
+    paddingTop: 30,
+    fontSize: 16,
+    textAlign: 'center',
+    color: 'white'
   },
   subtitle: {
     fontSize: 18,

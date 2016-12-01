@@ -1,18 +1,16 @@
-import parseErrorStack from 'parseErrorStack'
-import symbolicateStackTrace from 'symbolicateStackTrace'
 import Reactotron, { trackGlobalErrors, openInEditor } from 'reactotron-react-native'
 import tronsauce from 'reactotron-apisauce'
 import { reactotronRedux } from 'reactotron-redux'
 import sagaPlugin from 'reactotron-redux-saga'
 import { test } from 'ramda'
 
-console.disableYellowBox = true
+// console.disableYellowBox = true
 
-const vetoTest = test(/(YellowBox|redux-saga|node_modules\/react-native)/)
+const vetoTest = test(/(node_modules\/react\/)/)
 
 if (__DEV__) {
   Reactotron
-    .configure({ name: 'React Native Demo', parseErrorStack, symbolicateStackTrace })
+    .configure({ name: 'React Native Demo' })
     .use(tronsauce())
     .use(reactotronRedux({
       isActionImportant: action => action.type === 'something.important',

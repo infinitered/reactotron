@@ -6,13 +6,13 @@ export const Types = {
 
 export const Actions = {
   throwSagaError: () => ({ type: Types.Saga }),
-  throwPutError: () => ({ type: Types.Put })
+  throwPutError: (isSync = false) => ({ type: Types.Put, isSync })
 }
 
 export const INITIAL_STATE = { }
 
 const throwAnError = (state) =>
-  ({ ...state, error: speed.test }) // eslint-disable-line 
+  ({ ...state, error: this.doesNotExist() })
 
 // actions ->
 const reducerMap = {
