@@ -122,10 +122,6 @@ export class Client {
     return this
   }
 
-  testing () {
-    return true
-  }
-
   /**
    * Sends a command to the server
    */
