@@ -7,6 +7,9 @@ html, body {
   font-size: 0.94em;
   -webkit-user-select: none;
 }
+th {
+  font-weight: normal;
+}
 
 ::-webkit-scrollbar {
   background-color: transparent;
@@ -52,5 +55,4 @@ a.closeButton--jss-0-1 { display: none; }
   word-break: normal;
   background-color: 'white';
   width: 300px;
-
 }
