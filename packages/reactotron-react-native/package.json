@@ -59,7 +59,8 @@
   "standard": {
     "parser": "babel-eslint",
     "globals": [
-      "__DEV__"
+      "__DEV__",
+      "fetch"
     ]
   },
   "dependencies": {

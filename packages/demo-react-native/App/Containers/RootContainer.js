@@ -113,7 +113,7 @@ const mapDispatchToProps = dispatch => ({
   requestRedux: () => dispatch(RepoActions.request('reactjs/redux')),
   bomb: () => {
     console.tron.log('wait for it...')
-    setTimeout(() => { makeErrorForFun('boom') }, 500)
+    setTimeout(() => { makeErrorForFun('Boom goes the error message.') }, 500)
   },
   bombSaga: () => dispatch(ErrorActions.throwSagaError()),
   bombPut: () => dispatch(ErrorActions.throwPutError())
