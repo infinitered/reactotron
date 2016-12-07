@@ -4,7 +4,7 @@ import { reactotronRedux } from 'reactotron-redux'
 import sagaPlugin from 'reactotron-redux-saga'
 import { test } from 'ramda'
 
-// console.disableYellowBox = true
+console.disableYellowBox = true
 
 const vetoTest = test(/(node_modules\/react\/)/)
 
