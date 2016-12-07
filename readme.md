@@ -15,7 +15,7 @@ Use it to:
 * perform quick performance benchmarks
 * subscribe to parts of your application state
 * display messages similar to console.log
-* track global errors with source-mapped stack traces
+* track global errors with source-mapped stack traces including saga stack traces!
 * dispatch actions like a government-run mind control experiment
 * hot swap your app's state
 * track your sagas
@@ -34,6 +34,7 @@ Reactotron on the left, demo React Native app on the right.
 * Quick start for [React JS](./docs/quick-start-react-js.md)
 * Quick start for [React Native](./docs/quick-start-react-native.md)
 * [Tracking errors globally](./docs/plugin-track-global-errors.md)
+* [Open in editor](./docs/plugin-open-in-editor.md)
 * Integrating with [Redux](./docs/plugin-redux.md)
 * Integrating with [Redux Saga](./docs/plugin-redux-saga.md)
 * Networking monitoring with [Apisauce](./docs/plugin-apisauce.md)
