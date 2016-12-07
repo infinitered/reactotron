@@ -37,15 +37,17 @@ export default (reactotron, trackerOptions = {}) => {
         // stop the timer
         const ms = elapsed()
 
+        var unwrappedAction = action.type === 'PERFORM_ACTION' && action.action ? action.action : action
+
         // action not blacklisted?
-        if (!contains(action.type, exceptions)) {
+        if (!contains(unwrappedAction.type, exceptions)) {
           // check if the app considers this important
           let important = false
           if (trackerOptions && typeof trackerOptions.isActionImportant === 'function') {
-            important = !!trackerOptions.isActionImportant(action)
+            important = !!trackerOptions.isActionImportant(unwrappedAction)
           }
 
-          reactotron.reportReduxAction(action, ms, important)
+          reactotron.reportReduxAction(unwrappedAction, ms, important)
         }
 
         return result
