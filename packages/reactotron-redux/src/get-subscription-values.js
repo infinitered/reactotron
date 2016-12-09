@@ -1,9 +1,9 @@
 import R from 'ramda'
 import RS from 'ramdasauce'
-
 // fishes out the values for the subscriptions in state and returns them
 export default (subscriptions, state) =>
   R.pipe(
+    R.map(R.when(R.isNil, R.always(''))),
     R.filter(RS.endsWith('.*')),
     R.map((key) => {
       const keyMinusWildcard = R.slice(0, -2, key)
@@ -16,10 +16,13 @@ export default (subscriptions, state) =>
       }
       return []
     }),
-    R.concat(subscriptions),
+    R.concat(R.map(R.when(R.isNil, R.always('')), subscriptions)),
     R.flatten,
     R.reject(RS.endsWith('.*')),
     R.uniq,
     R.sortBy(R.identity),
-    R.map(key => ({ path: key, value: RS.dotPath(key, state) }))
+    R.map(key => ({
+      path: key,
+      value: RS.isNilOrEmpty(key) ? state : RS.dotPath(key, state)
+    }))
   )(subscriptions)
