@@ -3181,9 +3181,9 @@ react@>=15.3.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
-reactotron-core-client@^1.5.3:
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-1.5.3.tgz#4fc251c27dfb62eb64fde06d52c91c6858695f1e"
+reactotron-core-client@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-1.6.0.tgz#3d449887144c944875f59c756898ac2d1eaee71f"
   dependencies:
     json-stringify-safe "^5.0.1"
     ramda "^0.22.1"
