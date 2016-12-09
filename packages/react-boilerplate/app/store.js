@@ -8,18 +8,18 @@ import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
 
-let storeCreator = createStore;
-let sagaMiddleware;
-
-if (process.env.NODE_ENV === 'development') {
-  const Reactotron = require('reactotron-react-js').default; // eslint-disable-line global-require
-  storeCreator = Reactotron.createStore;
-  sagaMiddleware = createSagaMiddleware({ sagaMonitor: Reactotron.createSagaMonitor() });;
-} else {
-  sagaMiddleware = createSagaMiddleware();
-}
-
 export default function configureStore(initialState = {}, history) {
+  let storeCreator = createStore;
+  let sagaMiddleware;
+
+  if (process.env.NODE_ENV === 'development') {
+    const Reactotron = require('reactotron-react-js').default; // eslint-disable-line global-require
+    storeCreator = Reactotron.createStore;
+    sagaMiddleware = createSagaMiddleware({ sagaMonitor: Reactotron.createSagaMonitor() });;
+  } else {
+    sagaMiddleware = createSagaMiddleware();
+  }
+
   // Create the store with two middlewares
   // 1. sagaMiddleware: Makes redux-sagas work
   // 2. routerMiddleware: Syncs the location/URL path to the state
