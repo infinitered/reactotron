@@ -25,6 +25,10 @@ import FontFaceObserver from 'fontfaceobserver';
 import { useScroll } from 'react-router-scroll';
 import configureStore from './store';
 
+if (process.env.NODE_ENV === 'development') {
+  require('./reactotron-config'); // eslint-disable-line global-require
+}
+
 // Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider';
 
