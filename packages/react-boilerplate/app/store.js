@@ -10,15 +10,15 @@ import createReducer from './reducers';
 
 export default function configureStore(initialState = {}, history) {
   let storeCreator = createStore;
-  let sagaMiddleware;
+  let sagaMonitor;
 
   if (process.env.NODE_ENV === 'development') {
     const Reactotron = require('reactotron-react-js').default; // eslint-disable-line global-require
     storeCreator = Reactotron.createStore;
-    sagaMiddleware = createSagaMiddleware({ sagaMonitor: Reactotron.createSagaMonitor() });;
-  } else {
-    sagaMiddleware = createSagaMiddleware();
+    sagaMonitor = Reactotron.createSagaMonitor();
   }
+
+  sagaMiddleware = createSagaMiddleware({ sagaMonitor });
 
   // Create the store with two middlewares
   // 1. sagaMiddleware: Makes redux-sagas work
