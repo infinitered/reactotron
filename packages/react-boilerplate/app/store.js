@@ -18,7 +18,7 @@ export default function configureStore(initialState = {}, history) {
     sagaMonitor = Reactotron.createSagaMonitor();
   }
 
-  sagaMiddleware = createSagaMiddleware({ sagaMonitor });
+  const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
 
   // Create the store with two middlewares
   // 1. sagaMiddleware: Makes redux-sagas work
