@@ -6,7 +6,7 @@ import getCleanedState from './state-cleaner'
 export default (subscriptions, state) => {
   const cleanedState = getCleanedState(state)
 
-  R.pipe(
+  return R.pipe(
     R.map(R.when(R.isNil, R.always(''))),
     R.filter(RS.endsWith('.*')),
     R.map((key) => {
