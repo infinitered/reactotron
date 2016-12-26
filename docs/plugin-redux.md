@@ -50,6 +50,7 @@ import { reactotronRedux } from 'reactotron-redux'
 Reactotron
   .configure({ name: 'React Native Demo' })
   .use(reactotronRedux()) //  <- here i am!
+  .connect() //Don't forget about me!
 ```
 
 Then, where you create your Redux store, instead of using Redux's `createStore`,

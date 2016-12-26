@@ -1,6 +1,6 @@
 {
   "name": "DemoReactNative",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -14,18 +14,18 @@
     "ramda": "^0.22.0",
     "ramdasauce": "^1.0.0",
     "react": "^15.4.1",
-    "react-native": "^0.39.0",
-    "react-native-view-shot": "^1.1.2",
-    "react-redux": "^4.4.5",
+    "react-native": "^0.39.2",
+    "react-native-view-shot": "^1.5.1",
+    "react-redux": "^5.0.1",
     "reactotron-apisauce": "^1.6.0",
     "reactotron-react-native": "^1.6.0",
-    "reactotron-redux": "^1.6.0",
+    "reactotron-redux": "^1.6.1",
     "reactotron-redux-saga": "^1.6.0",
     "redux": "^3.6.0",
     "redux-logger": "^2.6.1",
     "redux-saga": "^0.13.0",
-    "seamless-immutable": "^6.0.1",
-    "socket.io-client": "~1.7.1"
+    "seamless-immutable": "^7.0.0",
+    "socket.io-client": "^1.7.2"
   },
   "standard": {
     "parser": "babel-eslint",
@@ -35,6 +35,6 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.1.0",
-    "standard": "^8.0.0"
+    "standard": "^8.6.0"
   }
 }
