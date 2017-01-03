@@ -71,8 +71,8 @@ export default options => reactotron => {
   // manually fire an error
   function reportError (error) {
     try {
-      parseErrorStack = parseErrorStack || require('react-native/Libraries/Core/Devtools/parseErrorStack')
-      symbolicateStackTrace = symbolicateStackTrace || require('react-native/Libraries/Core/Devtools/symbolicateStackTrace')
+      parseErrorStack = parseErrorStack || require('react-native/Libraries/JavaScriptAppEngine/Initialization/parseErrorStack')
+      symbolicateStackTrace = symbolicateStackTrace || require('react-native/Libraries/JavaScriptAppEngine/Initialization/symbolicateStackTrace')
       if (parseErrorStack && symbolicateStackTrace) {
         const parsedStacktrace = parseErrorStack(error)
 
