@@ -15,6 +15,7 @@ export default (reactotron, trackerOptions = {}) => {
   // assemble a crack team of options to use
   const options = merge(DEFAULTS, trackerOptions)
   const exceptions = concat([DEFAULT_REPLACER_TYPE], options.except || [])
+  const exceptionPatterns = options.exceptionPatterns || [];
 
   // the store enhancer
   return next => (reducer, initialState, enhancer) => {
@@ -39,8 +40,10 @@ export default (reactotron, trackerOptions = {}) => {
 
         var unwrappedAction = action.type === 'PERFORM_ACTION' && action.action ? action.action : action
 
+        const exceptionPattern = exceptionPatterns.reduce((prev, pattern) => pattern(unwrappedAction.type) || prev, false);
+
         // action not blacklisted?
-        if (!contains(unwrappedAction.type, exceptions)) {
+        if (!exceptionPattern && !contains(unwrappedAction.type, exceptions)) {
           // check if the app considers this important
           let important = false
           if (trackerOptions && typeof trackerOptions.isActionImportant === 'function') {
