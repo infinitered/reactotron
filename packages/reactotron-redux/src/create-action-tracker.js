@@ -1,4 +1,4 @@
-import { contains, is, concat, merge } from 'ramda'
+import { is, concat, merge } from 'ramda'
 import { DEFAULT_REPLACER_TYPE } from './replacement-reducer'
 
 const DEFAULTS = {
@@ -39,24 +39,24 @@ export default (reactotron, trackerOptions = {}) => {
 
         var unwrappedAction = action.type === 'PERFORM_ACTION' && action.action ? action.action : action
 
-        const checkException = (exception, actionType) => {
-          switch (typeof exception) {
-            case 'string':
-              return actionType === exception;
-            case 'function':
-              return exception(actionType);
-            case 'object':
-              return exception.test(actionType);
-              break;
-            default:
-              return false;
+        // if matchException is true, actionType is matched with exception
+        const matchException = (exception, actionType) => {
+          if (typeof exception === 'string') {
+            return actionType === exception
+          } else if (typeof exception === 'function') {
+            return actionType === exception
+          } else if (exception instanceof RegExp) {
+            return exception.test(actionType)
+          } else {
+            return false
           }
         }
 
-        const checkExceptions = exceptions.reduce((prev, exception) => checkExcpetion(exception, unwrappedAction.type) || prev, false);
+        const matchExceptions = exceptions.reduce((prev, exception) => matchException(exception, unwrappedAction.type) || prev, false)
 
         // action not blacklisted?
-        if (!checkExcpetions) {
+        // if matchException is true, action.type is matched with exception
+        if (!matchExceptions) {
           // check if the app considers this important
           let important = false
           if (trackerOptions && typeof trackerOptions.isActionImportant === 'function') {
