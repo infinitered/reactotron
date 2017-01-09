@@ -11,5 +11,10 @@ export default {
     })
   ],
   dest: 'dist/index.js',
-  exports: 'named'
+  exports: 'named',
+  external: [
+    'ramda',
+    'react-native',
+    'reactotron-core-client'
+  ]
 }

@@ -10,5 +10,10 @@ export default {
       presets: ['es2015-rollup', 'stage-1']
     })
   ],
-  dest: 'dist/index.js'
+  dest: 'dist/index.js',
+  external: [
+    'redux-saga/utils',
+    'ramda',
+    'ramdasauce'
+  ]
 }

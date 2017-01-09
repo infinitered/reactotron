@@ -11,5 +11,11 @@ export default {
     })
   ],
   dest: 'dist/index.js',
-  exports: 'named'
+  exports: 'named',
+  external: [
+    'ramda',
+    'mobx',
+    'ramdasauce',
+    'socket.io'
+  ]
 }
