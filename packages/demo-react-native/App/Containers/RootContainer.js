@@ -166,4 +166,5 @@ const mapDispatchToProps = dispatch => ({
   },
   bombSaga: () => dispatch(ErrorActions.throwSagaError())
 })
-export default connect(mapStateToProps, mapDispatchToProps)(RootContainer)
+
+export default console.tron.overlay(connect(mapStateToProps, mapDispatchToProps)(RootContainer))

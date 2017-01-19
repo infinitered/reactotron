@@ -63,6 +63,7 @@ class UI {
     Mousetrap.bind(`${Keystroke.mousetrap}+1`, this.switchTab.bind(this, 'timeline'))
     Mousetrap.bind(`${Keystroke.mousetrap}+2`, this.switchTab.bind(this, 'subscriptions'))
     Mousetrap.bind(`${Keystroke.mousetrap}+3`, this.switchTab.bind(this, 'backups'))
+    Mousetrap.bind(`${Keystroke.mousetrap}+4`, this.switchTab.bind(this, 'native'))
     Mousetrap.bind(`${Keystroke.mousetrap}+/`, this.switchTab.bind(this, 'help'))
     Mousetrap.bind(`${Keystroke.mousetrap}+?`, this.switchTab.bind(this, 'help'))
   }
@@ -242,6 +243,12 @@ class UI {
    */
   @action openInEditor = (file, lineNumber) =>
     this.server.openInEditor({ file, lineNumber })
+
+  /**
+   * Sets the properties of the overlay shown on the React Native app.
+   */
+  @action setOverlay = props =>
+    this.server.send('overlay', props)
 
 }
 
