@@ -7,6 +7,7 @@ import getHost from './get-host'
 
 export trackGlobalErrors from './plugins/track-global-errors'
 export openInEditor from './plugins/open-in-editor'
+export overlay from './plugins/overlay.js'
 
 // ------------
 // SECOND PARTY

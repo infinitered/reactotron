@@ -7,7 +7,8 @@ export default {
     babel({
       babelrc: false,
       runtimeHelpers: true,
-      presets: ['es2015-rollup', 'stage-1']
+      presets: ['es2015-rollup', 'stage-1'],
+      plugins: ['babel-plugin-transform-react-jsx']
     })
   ],
   dest: 'dist/index.js',
@@ -15,6 +16,8 @@ export default {
   external: [
     'ramda',
     'react-native',
-    'reactotron-core-client'
+    'reactotron-core-client',
+    'mitt',
+    'react'
   ]
 }
