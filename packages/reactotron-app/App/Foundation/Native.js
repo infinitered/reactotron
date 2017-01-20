@@ -5,12 +5,13 @@ import { inject, observer } from 'mobx-react'
 import NativeHeader from './NativeHeader'
 import fs from 'fs'
 import { nativeImage } from 'electron'
-import { F } from 'ramda'
+import { F, pick } from 'ramda'
 import NativeOverlayLayoutType from './NativeOverlayLayoutType'
 import NativeOverlayAlignment from './NativeOverlayAlignment'
 import NativeOverlayScale from './NativeOverlayScale'
 import NativeOverlayResizeMode from './NativeOverlayResizeMode'
 import NativeOverlayOpacity from './NativeOverlayOpacity'
+import NativeOverlayMargins from './NativeOverlayMargins'
 
 const Styles = {
   container: {
@@ -30,8 +31,8 @@ const Styles = {
   },
   sectionTitle: {
     color: Colors.tag,
-    marginBottom: 5,
-    marginTop: 10
+    marginBottom: 10,
+    marginTop: 20
   },
   row: {
     ...AppStyles.Layout.hbox,
@@ -77,7 +78,7 @@ class Native extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      opacity: 0.7,
+      opacity: 0.5,
       scale: 1,
       width: null,
       height: null,
@@ -85,7 +86,11 @@ class Native extends Component {
       alignItems: 'center',
       growToWindow: false,
       resizeMode: null,
-      layoutType: 'image'
+      layoutType: 'image',
+      marginTop: 0,
+      marginRight: 0,
+      marginBottom: 0,
+      marginLeft: 0
     }
     this.handleDrop = this.handleDrop.bind(this)
     this.import = this.import.bind(this)
@@ -94,6 +99,7 @@ class Native extends Component {
     this.handleScaleChange = this.handleScaleChange.bind(this)
     this.handleResizeModeChange = this.handleResizeModeChange.bind(this)
     this.handleOpacityChange = this.handleOpacityChange.bind(this)
+    this.handleMarginsChange = this.handleMarginsChange.bind(this)
     this.removeImage = this.removeImage.bind(this)
   }
 
@@ -184,6 +190,22 @@ class Native extends Component {
     if (this.state.uri) {
       ui.setOverlay({ opacity })
     }
+  }
+
+
+  /**
+   * Fires when the the user changes any of the margins
+   *
+   * @param {any} newMargins An object with one of the 4 margins & its value.
+   *
+   * @memberOf Native
+   */
+  handleMarginsChange (newMargins) {
+    const { ui } = this.props.session
+    const oldMargins = pick(['marginTop', 'marginRight', 'marginBottom', 'marginLeft'], this.state)
+    const margins = { ...oldMargins, ...newMargins }
+    this.setState(margins)
+    ui.setOverlay(margins)
   }
 
   /**
@@ -301,6 +323,23 @@ class Native extends Component {
     )
   }
 
+  renderMargins () {
+    if (!this.state.uri) return <div />
+
+    return (
+      <div>
+        <div style={Styles.sectionTitle}>Margins</div>
+        <NativeOverlayMargins
+          marginTop={this.state.marginTop}
+          marginRight={this.state.marginRight}
+          marginBottom={this.state.marginBottom}
+          marginLeft={this.state.marginLeft}
+          onChange={this.handleMarginsChange}
+          />
+      </div>
+    )
+  }
+
   render () {
     return (
       <div style={Styles.container}>
@@ -323,6 +362,7 @@ class Native extends Component {
           { this.renderResizeMode() }
           { this.renderAlignment() }
           { this.renderOpacity() }
+          { this.renderMargins() }
         </div>
       </div>
     )

@@ -71,8 +71,18 @@ class FullScreenOverlay extends Component {
    * Draw.
    */
   render () {
-    const { uri, width, height, growToWindow, resizeMode } = this.state
-    const imageStyle = { width, height }
+    const {
+      uri,
+      width,
+      height,
+      growToWindow,
+      resizeMode,
+      marginLeft = 0,
+      marginRight = 0,
+      marginTop = 0,
+      marginBottom = 0
+    } = this.state
+    const imageStyle = { width, height, marginTop, marginRight, marginBottom, marginLeft }
     if (growToWindow) {
       const windowSize = Dimensions.get('window')
       imageStyle.width = windowSize.width
