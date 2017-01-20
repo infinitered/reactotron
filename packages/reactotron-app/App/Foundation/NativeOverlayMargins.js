@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import Colors from '../Theme/Colors'
 
-
 const Styles = {
   container: {
   },

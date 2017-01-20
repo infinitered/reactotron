@@ -192,7 +192,6 @@ class Native extends Component {
     }
   }
 
-
   /**
    * Fires when the the user changes any of the margins
    *
