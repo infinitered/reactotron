@@ -29,7 +29,7 @@ class NativeOverlayMargins extends React.PureComponent {
     marginLeft: PropTypes.number,
     marginRight: PropTypes.number,
     marginTop: PropTypes.number,
-    marginBottom: PropTypes.nubmer,
+    marginBottom: PropTypes.number,
     onChange: PropTypes.func.isRequired
   }
 
