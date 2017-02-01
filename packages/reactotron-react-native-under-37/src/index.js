@@ -3,7 +3,7 @@
 // -----------
 
 // import validate from './validate'
-import getHost from './get-host'
+import getHost from 'rn-host-detect';
 
 export trackGlobalErrors from './plugins/track-global-errors'
 export openInEditor from './plugins/open-in-editor'
