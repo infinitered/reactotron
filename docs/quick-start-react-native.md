@@ -2,7 +2,7 @@
 
 ## Installing Reactotron.app
 
-Let’s [download the desktop app](https://github.com/reactotron/reactotron/releases/download/v1.0.0/Reactotron.app.zip) to start.  It’s OS X only at this point, but will shortly make available on Windows and Linux.
+Let’s [download the desktop app](https://github.com/reactotron/reactotron/releases/download/v1.6.0/Reactotron.app.zip) to start.  It’s OS X only at this point, but will shortly make available on Windows and Linux.
 
 Unzip & run.
 
