@@ -1,19 +1,17 @@
 {
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "lerna run build",
-    "clean": "lerna clean",
-    "test": "lerna run test",
+    "clean": "lerna clean --yes",
+    "build": "lerna run build --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce' --scope 'reactotron-react-native' --scope 'reactotron-react-js' --scope 'reactotron-cli'",
+    "copy-internal-deps": "cd packages/demo-react-native && ./copy-internal-deps.sh && cd ../..",
+    "test": "lerna run test --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce' --scope 'reactotron-react-native' --scope 'reactotron-react-js' --scope 'reactotron-cli'",
     "lint": "lerna run lint",
-    "copy-internal-deps": "lerna run copy-internal-deps",
-    "yarn": "lerna exec yarn",
-    "welcome": "./scripts/welcome.sh",
-    "e2e": "npm run bootstrap && npm run build && npm run lint && npm run copy-internal-deps && npm run test"
+    "welcome": "npm run clean && npm run bootstrap && npm run build && npm run copy-internal-deps && npm run lint"
   },
   "devDependencies": {
-    "lerna": "2.0.0-beta.30"
+    "lerna": "^2.0.0-beta.36"
   },
   "dependencies": {
-    "stringify-object": "^2.4.0"
+    "stringify-object": "^3.1.0"
   }
 }

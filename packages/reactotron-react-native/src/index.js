@@ -2,9 +2,6 @@
 // FIRST PARTY
 // -----------
 
-// import validate from './validate'
-import getHost from 'rn-host-detect';
-
 export trackGlobalErrors from './plugins/track-global-errors'
 export openInEditor from './plugins/open-in-editor'
 export overlay from './plugins/overlay.js'
@@ -19,6 +16,7 @@ import { createClient } from 'reactotron-core-client'
 // THIRD PARTY
 // -----------
 
+import getHost from 'rn-host-detect'
 var io = require('socket.io-client/dist/socket.io')
 
 // ---------------------
