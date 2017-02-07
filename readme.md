@@ -1,7 +1,6 @@
 # ![](./docs/images/readme/Reactotron-64.png) Reactotron
 
 [![Slackin](https://infiniteredcommunity.herokuapp.com/badge.svg)](https://infiniteredcommunity.herokuapp.com/)
-[![Slack Status](https://reactotron-slack.herokuapp.com/badge.svg)](https://reactotron-slack.herokuapp.com)
 
 [Less Talk More Action](./docs/installing.md)
 
