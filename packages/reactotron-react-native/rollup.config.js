@@ -18,6 +18,7 @@ export default {
     'react-native',
     'reactotron-core-client',
     'mitt',
-    'react'
+    'react',
+    'rn-host-detect'
   ]
 }

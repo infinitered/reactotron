@@ -27,18 +27,19 @@
     "react-native": ">=0.31.0"
   },
   "devDependencies": {
-    "ava": "^0.17.0",
-    "babel-core": "^6.14.0",
+    "ava": "^0.18.1",
+    "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.0",
-    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-es2015": "^6.22.0",
     "babel-preset-es2015-rollup": "^3.0.0",
-    "babel-preset-stage-1": "^6.13.0",
+    "babel-preset-react-native": "^1.9.1",
+    "babel-preset-stage-1": "^6.22.0",
     "mockery": "^2.0.0",
-    "nyc": "^10.0.0",
+    "nyc": "^10.1.2",
     "react": ">=15.2.1",
-    "react-native": ">=0.31.0",
-    "react-native-mock": "^0.2.5",
-    "rollup": "^0.41.1",
+    "react-native": "^0.41.2",
+    "react-native-mock": "^0.3.1",
+    "rollup": "^0.41.4",
     "rollup-plugin-babel": "^2.6.1",
     "standard": "^8.0.0"
   },
@@ -47,14 +48,7 @@
       "babel-core/register",
       "react-native-mock/mock",
       "./test/_setup"
-    ],
-    "babel": {
-      "babelrc": false,
-      "presets": [
-        "es2015",
-        "stage-1"
-      ]
-    }
+    ]
   },
   "standard": {
     "parser": "babel-eslint",
@@ -65,8 +59,8 @@
   },
   "dependencies": {
     "json-stringify-safe": "^5.0.1",
-    "ramda": "^0.22.1",
-    "ramdasauce": "^1.1.1",
+    "ramda": "^0.23.0",
+    "ramdasauce": "^1.2.0",
     "reactotron-core-client": "^1.6.0",
     "rn-host-detect": "^1.0.1",
     "socket.io-client": "~1.7.1"

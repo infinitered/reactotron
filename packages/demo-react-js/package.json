@@ -14,7 +14,7 @@
     "standard": "^8.6.0"
   },
   "dependencies": {
-    "apisauce": "^0.7.0",
+    "apisauce": "^0.10.0",
     "ramda": "^0.22.1",
     "ramdasauce": "^1.1.1",
     "react": "^15.4.1",
