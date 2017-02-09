@@ -35,6 +35,7 @@ Reactotron on the left, demo React Native app on the right.
 * Quick start for [React Native](./docs/quick-start-react-native.md)
 * [Tracking errors globally](./docs/plugin-track-global-errors.md)
 * [Open in editor](./docs/plugin-open-in-editor.md)
+* [Image Overlays](./docs/plugin-overlay.md)
 * Integrating with [Redux](./docs/plugin-redux.md)
 * Integrating with [Redux Saga](./docs/plugin-redux-saga.md)
 * Networking monitoring with [Apisauce](./docs/plugin-apisauce.md)
