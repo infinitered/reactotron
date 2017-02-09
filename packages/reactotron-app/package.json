@@ -1,7 +1,7 @@
 {
   "name": "reactotron-app",
   "productName": "Reactotron",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "Reactotron desktop mode engage!",
   "main": "main.js",
   "scripts": {
@@ -90,7 +90,7 @@
     "react-modal-dialog": "3.0.2",
     "react-tap-event-plugin": "^2.0.1",
     "react-tooltip": "^3.2.4",
-    "reactotron-core-server": "^1.6.0",
+    "reactotron-core-server": "^1.7.0",
     "socket.io": "^1.7.2",
     "source-map-support": "^0.4.11",
     "stringify-object": "^3.0.0"
