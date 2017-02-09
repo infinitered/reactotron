@@ -19,6 +19,7 @@ Use it to:
 * dispatch actions like a government-run mind control experiment
 * hot swap your app's state
 * track your sagas
+* show image overlay in React Native
 
 You plug it into your app as a dev dependency so it adds nothing to your product builds.
 

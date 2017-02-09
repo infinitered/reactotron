@@ -5,9 +5,8 @@
 Clone & switch to the right branch.
 
 ```
-git clone git@github.com:skellock/reactotron.git
+git clone git@github.com:infinitered/reactotron.git
 cd reactotron
-git checkout next
 ```
 
 Install `lerna` and run the setup script to install the dependencies & run tests.

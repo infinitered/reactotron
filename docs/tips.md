@@ -97,14 +97,3 @@ console.tron.display({
 })
 ```
 
-### Stack Overflow Error While Logging?
-
-There's an issue with one of the dependencies (socket.io) where trying to `console.tron.log` something that has a 
-circular reference will result in a stack overflow.
-
-So in `@1.5.2`, we implemented a safety check to repair any problems with that.
-
-Problem is, it's slow for extremely large payloads.  You can turn this off in `@1.5.3` by adding `safeRecursion: false`
-into your `configure({})` statement in your `ReactotronConfig.js`.
-
-A longer term fix is on the way.  And I'm looking forward to the day I can delete this section.
