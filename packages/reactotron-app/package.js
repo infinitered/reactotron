@@ -50,7 +50,7 @@ if (version) {
   // use the same version as the currently-installed electron-prebuilt
   exec('npm list electron-prebuilt --depth 0 --dev', (err, stdout) => {
     if (err) {
-      DEFAULT_OPTS.version = '1.4.0'
+      DEFAULT_OPTS.version = '1.4.15'
     } else {
       DEFAULT_OPTS.version = R.pipe(
         R.split(/\s/),
