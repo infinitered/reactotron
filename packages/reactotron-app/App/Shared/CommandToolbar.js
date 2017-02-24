@@ -33,6 +33,12 @@ const CopyApiResponseButton = props =>
 const CopyApiRequestButton = props =>
   <Button icon='call-made' onClick={props.onClick} tip='Copy JSON request to clipboard' />
 
+const CopyLogButton = props =>
+  <Button icon='content-copy' onClick={props.onClick} tip='Copy text to clipboard' />
+
+const CopyDisplayButton = props =>
+  <Button icon='content-copy' onClick={props.onClick} tip='Copy text to clipboard' />
+
 @inject('session')
 @observer
 class CommandToolbar extends Component {
@@ -63,6 +69,42 @@ class CommandToolbar extends Component {
 
     ui.setActionToDispatch(newAction)
     event.stopPropagation()
+  }
+
+  // copy the log to the clipboard
+  handleCopyLogToClipboard = event => {
+    event.stopPropagation()
+
+    try {
+      const payload = dotPath('props.command.payload', this) || {}
+      const { level, stack, message } = payload
+      if (!message) return
+      if (level === 'error' && stack) {
+        clipboard.writeText(JSON.stringify({ message, stack }, 2, 2))
+      } else if (typeof message === 'string') {
+        clipboard.writeText(message)
+      } else if (typeof message === 'object') {
+        const text = JSON.stringify(message, 2, 2)
+        clipboard.writeText(text)
+      }
+    } catch (e) {
+    }
+  }
+
+  // copy the display to the clipboard
+  handleCopyDisplayToClipboard = event => {
+    event.stopPropagation()
+    try {
+      const message = dotPath('props.command.payload.value', this)
+      if (!message) return
+      if (typeof message === 'string') {
+        clipboard.writeText(message)
+      } else if (typeof message === 'object') {
+        const text = JSON.stringify(message, 2, 2)
+        clipboard.writeText(text)
+      }
+    } catch (e) {
+    }
   }
 
   // copy api response to clipboard
@@ -116,6 +158,8 @@ class CommandToolbar extends Component {
     const showCopyApiResponse = command.type === 'api.response'
     const showCopyApiRequest = command.type === 'api.response' && !isNilOrEmpty(requestBody)
     const showToggleViewSagaDetails = command.type === 'saga.task.complete'
+    const showCopyLog = command.type === 'log'
+    const showCopyDisplay = command.type === 'display'
 
     return (
       <div style={Styles.container}>
@@ -133,6 +177,12 @@ class CommandToolbar extends Component {
         }
         {showToggleViewSagaDetails &&
           <ToggleSagaViewDetailButton onClick={this.handleToggleViewSagaDetails} />
+        }
+        {showCopyLog &&
+          <CopyLogButton onClick={this.handleCopyLogToClipboard} />
+        }
+        {showCopyDisplay &&
+          <CopyDisplayButton onClick={this.handleCopyDisplayToClipboard} />
         }
       </div>
     )

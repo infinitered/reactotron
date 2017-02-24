@@ -121,6 +121,8 @@ const Styles = {
     paddingLeft: 10,
     paddingTop: 20,
     paddingBottom: 20,
+    WebkitUserSelect: 'text',
+    cursor: 'text',
     ...selectionStyle
   },
   sourceFilename: {
