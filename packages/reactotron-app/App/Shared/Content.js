@@ -29,7 +29,7 @@ class Content extends Component {
   renderString () {
     const { value } = this.props
     return (
-      <div>
+      <div style={{ WebkitUserSelect: 'text', cursor: 'text' }}>
         {map(this.breakIntoSpans, split('\n', trim(value)))}
       </div>
     )
@@ -49,7 +49,7 @@ class Content extends Component {
   renderMysteryMeat () {
     const { value } = this.props
     return (
-      <div>{String(value)}</div>
+      <div style={{ WebkitUserSelect: 'text', cursor: 'text' }}>{String(value)}</div>
     )
   }
 
