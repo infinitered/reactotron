@@ -63,6 +63,10 @@ class HelpKeystrokes extends Component {
               <div style={Styles.helpDetail}>view state snapshots</div>
             </div>
             <div style={Styles.helpShortcut}>
+              <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='4' /></div>
+              <div style={Styles.helpDetail}>view React Native tools</div>
+            </div>
+            <div style={Styles.helpShortcut}>
               <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='/' /></div>
               <div style={Styles.helpDetail}>view help</div>
             </div>
