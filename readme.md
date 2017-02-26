@@ -1,4 +1,4 @@
-# ![](./docs/images/readme/Reactotron-64.png) Reactotron
+# ![](./docs/images/readme/Reactotron-128.png)
 
 [![Slackin](https://infiniteredcommunity.herokuapp.com/badge.svg)](https://infiniteredcommunity.herokuapp.com/)
 
