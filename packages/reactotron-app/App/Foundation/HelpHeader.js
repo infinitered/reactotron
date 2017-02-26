@@ -3,7 +3,7 @@ import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import { inject, observer } from 'mobx-react'
 
-const TITLE = 'Using and Abusing Reactotron'
+const TITLE = 'Using Reactotron'
 
 const Styles = {
   container: {
