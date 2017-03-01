@@ -6,6 +6,7 @@ import { isNilOrEmpty } from 'ramdasauce'
 
 /* eslint-disable no-cond-assign */
 export default effect => {
+  if (!effect) return SagaConstants.UNKNOWN
   if (effect.root) return effect.saga.name
   let data
   if (data = asEffect.take(effect)) return data.pattern || 'channel'
