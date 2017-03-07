@@ -18,7 +18,7 @@ Either upgrade to NPM 3 or teach me how to fix this!  It must be possible!  Help
 
 If you have tethered an iOS device to your development machine and have deployed your React Native app (in DEBUG mode) to the device, Reactotron needs to know the host of the machine in order to connect.
 
-Go to the file in your React Native app that configures Reactotron. This file is named "Reactotron.config". Uncomment the 'host' line under `.configure` and set it to the ip address of your host machine. Don't forget to add a comma after this line!
+Go to the file in your React Native app that configures Reactotron. This file is named "ReactotronConfig.js". Uncomment the 'host' line under `.configure` and set it to the ip address of your host machine. Don't forget to add a comma after this line!
 
 The configuration should look something like this:
 
