@@ -32,7 +32,7 @@ class MyApp extends Component {
 }
 
 // let's wrap it, so the overlay stays on top!
-class MyAppWithBenefits = console.tron.overlay(MyApp)
+const MyAppWithBenefits = console.tron.overlay(MyApp)
 
 export default MyAppWithBenefits
 ```
