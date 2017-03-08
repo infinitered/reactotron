@@ -1,4 +1,4 @@
-import Reactotron, { trackGlobalErrors, openInEditor, overlay } from 'reactotron-react-native'
+import Reactotron, { trackGlobalErrors, openInEditor, overlay, asyncStorage } from 'reactotron-react-native'
 import tronsauce from 'reactotron-apisauce'
 import { reactotronRedux } from 'reactotron-redux'
 import sagaPlugin from 'reactotron-redux-saga'
@@ -22,6 +22,7 @@ if (__DEV__) {
     .use(openInEditor())
     .use(sagaPlugin())
     .use(overlay())
+    .use(asyncStorage())
     .connect()
 
   console.tron = Reactotron
