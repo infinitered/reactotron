@@ -62,7 +62,7 @@ class RootContainer extends Component {
   }
 
   handleAsyncClear () {
-    AsyncStorage.clear();
+    AsyncStorage.clear()
   }
 
   render () {
