@@ -26,7 +26,8 @@ export default options => reactotron => {
   const reactotronShipStorageValues = () => {
     AsyncStorage.getAllKeys((err, keys) => AsyncStorage.multiGet(keys, (err, values) => {
       // Send an array of arrays
-      reactotron.send('storage.updated', values)
+      //reactotron.send('storage.updated', values)
+      reactotron.display({ name: 'AsyncStorage', value: { value: values }, preview: 'All the values' })
     }))
   }
 
