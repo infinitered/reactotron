@@ -61,7 +61,7 @@ class RootContainer extends Component {
     AsyncStorage.removeItem('singleSet')
   }
 
-  handleAsyncMultiSet () {
+  handleAsyncClear () {
     AsyncStorage.clear();
   }
 
@@ -151,8 +151,8 @@ class RootContainer extends Component {
           </View>
           <View style={Styles.buttons}>
             <Button
-              text='Async Storage MULTISET'
-              onPress={this.handleAsyncMultiSet}
+              text='Async Storage CLEAR'
+              onPress={this.handleAsyncClear}
               style={{ width: 200 }}
             />
           </View>
