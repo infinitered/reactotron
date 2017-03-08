@@ -97,3 +97,30 @@ console.tron.display({
 })
 ```
 
+## Redux and Immutable data
+If you're using [reactotron-redux](https://github.com/infinitered/reactotron/blob/master/docs/plugin-redux.md)
+and an immutable library such as [seamless-immutable](https://github.com/rtfeldman/seamless-immutable) you need to make sure you transform your state back into an immutable object when using State Snapshots.
+
+To do so you can use the `onRestore` callback like this:
+
+```js
+  .use(reactotronRedux({
+    // Fires when Reactotron uploads a new copy of the state tree.
+    onRestore: state => Immutable(state)
+  }))
+```
+
+However if only some of your reducers are immutable and the rest are mutable you can selectively transform
+the state like this:
+
+```js
+  .use(reactotronRedux({
+    // Fires when Reactotron uploads a new copy of the state tree.
+    onRestore: state => {
+      return { ...Immutable(state), nav: state.nav }
+    }
+  }))
+```
+
+This will `nav` mutable. Note this is what you want to do when using 
+[react-navigation's default reducer](https://github.com/react-community/react-navigation/blob/master/docs/guides/Redux-Integration.md).
