@@ -12,5 +12,6 @@ export default [
   'api.response',
   'benchmark.report',
   'display',
-  'clear'
+  'clear',
+  'storage.updated'
 ]

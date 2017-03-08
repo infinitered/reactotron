@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Text } from 'react-native'
+import { ScrollView, View, Text, AsyncStorage, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import Styles from './Styles/RootContainerStyles'
 import Button from '../Components/Button'
@@ -51,6 +51,18 @@ class RootContainer extends Component {
         uri => console.tron.display({ name: 'Screenshot', preview: 'App screenshot', image: { uri } }),
         error => console.tron.error('Oops, snapshot failed', error)
       )
+  }
+
+  handleAsyncSet () {
+    AsyncStorage.setItem('singleSet', new Date().toISOString(), () => Alert.alert('I even call the original callback!'))
+  }
+
+  handleAsyncRemove () {
+    AsyncStorage.removeItem('singleSet')
+  }
+
+  handleAsyncClear () {
+    AsyncStorage.clear()
   }
 
   render () {
@@ -120,6 +132,27 @@ class RootContainer extends Component {
             <Button
               text='Saga Error in PUT (sync)'
               onPress={this.props.bombPutSync}
+              style={{ width: 200 }}
+            />
+          </View>
+          <View style={Styles.buttons}>
+            <Button
+              text='Async Storage SET'
+              onPress={this.handleAsyncSet}
+              style={{ width: 200 }}
+            />
+          </View>
+          <View style={Styles.buttons}>
+            <Button
+              text='Async Storage REMOVE'
+              onPress={this.handleAsyncRemove}
+              style={{ width: 200 }}
+            />
+          </View>
+          <View style={Styles.buttons}>
+            <Button
+              text='Async Storage CLEAR'
+              onPress={this.handleAsyncClear}
               style={{ width: 200 }}
             />
           </View>
