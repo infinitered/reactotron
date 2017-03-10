@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== 'production') {
     .use(sagaPlugin())
     .connect()
 
-  Reactotron.clear()
+  // Reactotron.clear()
 
   console.tron = Reactotron
 }

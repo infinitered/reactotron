@@ -1,14 +1,25 @@
 import test from 'ava'
 import { createClient } from '../src'
-import getFreePort from './_get-free-port'
-import socketClient from 'socket.io-client'
-import socketServer from 'socket.io'
+import WebSocket from 'ws'
+import { createServer } from 'http'
+
+let server
+let wss
+let port
+test.cb.beforeEach(t => {
+  server = createServer()
+  wss = new WebSocket.Server({ server })
+  server.listen(() => {
+    port = server.address().port
+    t.end()
+  })
+})
+
+const createSocket = path => new WebSocket(path)
 
 test.cb('plugins support send', t => {
   const mockType = 'type'
   const mockPayload = 'payload'
-
-  // odd way to hold on to the plugin's send function
   let capturedSend
 
   // the plugin to extract the send function
@@ -17,25 +28,29 @@ test.cb('plugins support send', t => {
     return {}
   }
 
-  getFreePort(port => {
-    // the server waits for the command
-    socketServer(port)
-      .on('connection', socket => {
-        // send through the one we recieved in the plugin
-        capturedSend(mockType, mockPayload)
+  // create the client, add the plugin, and connect
+  const client = createClient({
+    createSocket,
+    port,
+    onConnect: () => {
+      // send through the one we recieved in the plugin
+      capturedSend(mockType, mockPayload)
+    }
+  }).use(plugin())
 
-        // fires the server receives a command
-        socket.on('command', ({type, payload}) => {
-          if (type === 'client.intro') return
-          t.is(type, mockType)
-          t.deepEqual(payload, mockPayload)
-          t.end()
-        })
-      })
-
-    // create the client, add the plugin, and connect
-    createClient({ io: socketClient, port: port })
-      .use(plugin())
-      .connect()
+  // the server waits for the command
+  wss.on('connection', ws => {
+    // fires the server receives a command
+    ws.on('message', message => {
+      const { type, payload } = JSON.parse(message)
+      if (type === 'client.intro') return
+      t.deepEqual(payload, mockPayload)
+      t.end()
+      server.close()
+    })
   })
+
+  client.connect()
+  // setTimeout(() => {
+  // }, 50)
 })

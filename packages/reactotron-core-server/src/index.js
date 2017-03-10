@@ -1,8 +1,18 @@
-import { merge, length, find, propEq, without, contains, forEach, pluck, reject } from 'ramda'
+import {
+  merge,
+  length,
+  find,
+  propEq,
+  without,
+  contains,
+  forEach,
+  pluck,
+  reject
+} from 'ramda'
 import Commands from './commands'
 import validate from './validation'
 import { observable, computed, asFlat } from 'mobx'
-import socketIO from 'socket.io'
+import WebSocket from 'ws'
 
 const DEFAULTS = {
   port: 9090, // the port to live (required)
@@ -20,17 +30,17 @@ class Server {
   messageId = 0
   subscriptions = []
   partialConnections = []
-  io
+  wss
 
   /**
    * Holds the commands the client has sent.
    */
-  commands = new Commands()
+  commands = new Commands();
 
   /**
    * Holds the currently connected clients.
    */
-  @observable connections = asFlat([])
+  @observable connections = asFlat([]);
 
   /**
    * How many people are connected?
@@ -43,8 +53,9 @@ class Server {
     this.send = this.send.bind(this)
   }
 
-  findConnectionById = id => find(propEq('id', id), this.connections)
-  findPartialConnectionById = id => find(propEq('id', id), this.partialConnections)
+  findConnectionById = id => find(propEq('id', id), this.connections);
+  findPartialConnectionById = id =>
+    find(propEq('id', id), this.partialConnections);
 
   /**
    * Set the configuration options.
@@ -66,14 +77,14 @@ class Server {
     const { onCommand, onConnect, onDisconnect } = this.options
 
     // start listening
-    this.io = socketIO(port)
+    this.wss = new WebSocket.Server({ port })
 
     // register events
-    this.io.on('connection', socket => {
+    this.wss.on('connection', socket => {
       // a wild client appears
       const partialConnection = {
         id: socket.id,
-        address: socket.request.connection.remoteAddress,
+        address: 'dunno', // socket.request.connection.remoteAddress,
         socket
       }
 
@@ -87,10 +98,16 @@ class Server {
       socket.on('disconnect', () => {
         onDisconnect(socket.id)
         // remove them from the list partial list
-        this.partialConnections = reject(propEq('id', socket.id), this.partialConnections)
+        this.partialConnections = reject(
+          propEq('id', socket.id),
+          this.partialConnections
+        )
 
         // remove them from the main connections list
-        const severingConnection = find(propEq('id', socket.id), this.connections)
+        const severingConnection = find(
+          propEq('id', socket.id),
+          this.connections
+        )
         if (severingConnection) {
           this.connections.remove(severingConnection)
           onDisconnect && onDisconnect(severingConnection)
@@ -98,24 +115,41 @@ class Server {
       })
 
       // when we receive a command from the client
-      socket.on('command', ({ type, important, payload }) => {
+      socket.on('message', incoming => {
+        const message = JSON.parse(incoming)
+        const { type, important, payload } = message
         this.messageId++
         const date = new Date()
-        const fullCommand = { type, important, payload, messageId: this.messageId, date }
+        const fullCommand = {
+          type,
+          important,
+          payload,
+          messageId: this.messageId,
+          date
+        }
 
         // for client intros
         if (type === 'client.intro') {
           // find them in the partial connection list
-          const partialConnection = find(propEq('id', socket.id), this.partialConnections)
+          const partialConnection = find(
+            propEq('id', socket.id),
+            this.partialConnections
+          )
 
           // add their address in
           fullCommand.payload.address = partialConnection.address
 
           // remove them from the partial connections list
-          this.partialConnections = reject(propEq('id', socket.id), this.partialConnections)
+          this.partialConnections = reject(
+            propEq('id', socket.id),
+            this.partialConnections
+          )
 
           // bestow the payload onto the connection
-          const connection = merge(payload, { id: socket.id, address: partialConnection.address })
+          const connection = merge(payload, {
+            id: socket.id,
+            address: partialConnection.address
+          })
 
           // then trigger the connection
           this.connections.push(connection)
@@ -157,8 +191,11 @@ class Server {
   stop () {
     const { onStop } = this.options
     this.started = false
-    forEach(s => s && s.connected && s.disconnect(), pluck('socket', this.connections))
-    this.io.close()
+    forEach(
+      s => s && s.connected && s.disconnect(),
+      pluck('socket', this.connections)
+    )
+    this.wss.close()
 
     // trigger the stop message
     onStop && onStop()
@@ -170,7 +207,11 @@ class Server {
    * Sends a command to the client
    */
   send (type, payload) {
-    this.io.sockets.emit('command', { type, payload })
+    this.wss.clients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify({ type, payload }))
+      }
+    })
   }
 
   /**
@@ -256,7 +297,7 @@ class Server {
 export default Server
 
 // convenience factory function
-export const createServer = (options) => {
+export const createServer = options => {
   const server = new Server()
   server.configure(options)
   return server
