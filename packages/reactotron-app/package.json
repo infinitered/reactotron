@@ -92,7 +92,6 @@
     "react-tap-event-plugin": "^2.0.1",
     "react-tooltip": "^3.3.0",
     "reactotron-core-server": "^1.11.1",
-    "socket.io": "^1.7.3",
     "source-map-support": "^0.4.14",
     "stringify-object": "^3.0.0"
   },

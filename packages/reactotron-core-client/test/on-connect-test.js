@@ -1,28 +1,35 @@
 import test from 'ava'
 import { createClient } from '../src'
-import socketServer from 'socket.io'
-import socketClient from 'socket.io-client'
-import getFreePort from './_get-free-port'
+import WebSocket from 'ws'
+import { createServer } from 'http'
+
+let server
+let wss // eslint-disable-line
+let port
+test.cb.beforeEach(t => {
+  server = createServer()
+  wss = new WebSocket.Server({ server })
+  server.listen(() => {
+    port = server.address().port
+    t.end()
+  })
+})
+const createSocket = path => new WebSocket(path)
 
 test.cb('fires onConnect upon successful connection', t => {
-  getFreePort(port => {
-    // plan to see 1 assertion
-    t.plan(1)
+  // plan to see 1 assertion
+  t.plan(1)
 
-    // setup a server
-    socketServer(port)
-
-    // setup the client
-    const client = createClient({
-      io: socketClient,
-      port: port,
-      onConnect: () => {
-        t.pass(true)
-        t.end()
-      }
-    })
-
-    // kick it off
-    client.connect()
+  // setup the client
+  const client = createClient({
+    createSocket,
+    port: port,
+    onConnect: () => {
+      t.pass()
+      t.end()
+    }
   })
+
+  // kick it off
+  client.connect()
 })

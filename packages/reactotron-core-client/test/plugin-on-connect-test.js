@@ -1,8 +1,21 @@
 import test from 'ava'
 import { createClient } from '../src'
-import getFreePort from './_get-free-port'
-import socketClient from 'socket.io-client'
-import socketServer from 'socket.io'
+import WebSocket from 'ws'
+import { createServer } from 'http'
+
+let server
+let wss // eslint-disable-line
+let port
+test.cb.beforeEach(t => {
+  server = createServer()
+  wss = new WebSocket.Server({ server })
+  server.listen(() => {
+    port = server.address().port
+    t.end()
+  })
+})
+
+const createSocket = path => new WebSocket(path)
 
 test.cb('plugins support onConnect', t => {
   // this plugin supports onConnect
@@ -10,16 +23,12 @@ test.cb('plugins support onConnect', t => {
     onConnect: () => {
       t.pass()
       t.end()
+      server.close()
     }
   })
 
-  getFreePort(port => {
-    // fire up a server
-    socketServer(port)
-
-    // create a client & add the plugin
-    createClient({ io: socketClient, port })
-      .use(plugin)
-      .connect()
-  })
+  // create a client & add the plugin
+  createClient({ createSocket, port })
+    .use(plugin)
+    .connect()
 })

@@ -1,8 +1,21 @@
 import test from 'ava'
 import { createClient } from '../src'
-import getFreePort from './_get-free-port'
-import socketClient from 'socket.io-client'
-import socketServer from 'socket.io'
+import WebSocket from 'ws'
+import { createServer } from 'http'
+
+let server
+let wss
+let port
+test.cb.beforeEach(t => {
+  server = createServer()
+  wss = new WebSocket.Server({ server })
+  server.listen(() => {
+    port = server.address().port
+    t.end()
+  })
+})
+
+const createSocket = path => new WebSocket(path)
 
 test.cb('plugins support command', t => {
   const mockType = 'type'
@@ -19,16 +32,13 @@ test.cb('plugins support command', t => {
     }
   }
 
-  getFreePort(port => {
-    // the server waits for the command
-    socketServer(port)
-      .on('connection', socket => {
-        socket.emit('command', {type: mockType, payload: mockPayload})
-      })
-
-    // create the client, add the plugin, and connect
-    const client = createClient({ io: socketClient, port: port })
-    client.use(plugin())
-    client.connect()
+  // the server waits for the command
+  wss.on('connection', socket => {
+    socket.send(JSON.stringify({type: mockType, payload: mockPayload}))
   })
+
+  // create the client, add the plugin, and connect
+  const client = createClient({ createSocket, port })
+  client.use(plugin())
+  client.connect()
 })

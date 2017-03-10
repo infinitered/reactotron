@@ -1,10 +1,12 @@
 import test from 'ava'
 import { createClient, CorePlugins } from '../src'
-import socketClient from 'socket.io-client'
 import plugin from '../src/plugins/api-response'
+import WebSocket from 'ws'
+
+const createSocket = path => new WebSocket(path)
 
 test('apiResponse', t => {
-  const client = createClient({ io: socketClient })
+  const client = createClient({ createSocket })
   let type
   let request
   let response

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "apisauce": "^0.11.0",
+    "babel-runtime": "^6.22.0",
     "es6-symbol": "^3.1.1",
     "mitt": "^1.1.2",
     "ramda": "^0.23.0",
@@ -27,7 +28,6 @@
     "redux-saga": "^0.14.6",
     "rn-host-detect": "^1.1.3",
     "seamless-immutable": "^7.1.2",
-    "socket.io-client": "^1.7.3"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.2",

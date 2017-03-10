@@ -1,15 +1,17 @@
 import test from 'ava'
 import { createClient } from '../src'
-import io from './_fake-io'
 import R from 'ramda'
+import WebSocket from 'ws'
+
+const createSocket = path => new WebSocket(path)
 
 test('features must be an object if they appear', t => {
-  const client = createClient({ io })
+  const client = createClient({ createSocket })
   t.throws(() => client.use(reactotron => ({ features: 1 })))
 })
 
 test('some names are not allowed', t => {
-  const client = createClient({ io })
+  const client = createClient({ createSocket })
   const createPlugin = features => reactotron => ({features})
 
   const badPlugins = R.map(
@@ -23,7 +25,7 @@ test('some names are not allowed', t => {
 })
 
 test('features can be added and called', t => {
-  const client = createClient({ io })
+  const client = createClient({ createSocket })
   const plugin = () => reactotron => {
     const features = {
       magic: () => 42
@@ -36,7 +38,7 @@ test('features can be added and called', t => {
 })
 
 test('you can overwrite other feature names', t => {
-  const client = createClient({ io })
+  const client = createClient({ createSocket })
   const createPlugin = number => reactotron => ({ features: { hello: () => number } })
   client.use(createPlugin(69))
   t.is(client.hello(), 69)

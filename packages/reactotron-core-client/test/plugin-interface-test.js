@@ -1,15 +1,17 @@
 import test from 'ava'
 import { createClient, CorePlugins } from '../src'
-import io from './_fake-io'
+import WebSocket from 'ws'
+
+const createSocket = path => new WebSocket(path)
 
 test('client accepts plugins', t => {
-  const client = createClient({ io })
+  const client = createClient({ createSocket })
   t.truthy(client.plugins)
   t.is(client.plugins.length, CorePlugins.length)
 })
 
 test('plugins are functions', t => {
-  const client = createClient({ io })
+  const client = createClient({ createSocket })
   t.throws(() => client.use())
   t.throws(() => client.use(null))
   t.throws(() => client.use(''))
@@ -17,7 +19,7 @@ test('plugins are functions', t => {
 })
 
 test('plugins are invoke and return an object', t => {
-  const client = createClient({ io })
+  const client = createClient({ createSocket })
   t.throws(() => client.use(() => null))
   t.throws(() => client.use(() => 1))
   t.throws(() => client.use(() => ''))
@@ -27,14 +29,14 @@ test('plugins are invoke and return an object', t => {
 })
 
 test('plugins can literally do nothing', t => {
-  const client = createClient({ io })
+  const client = createClient({ createSocket })
   const empty = reactotron => ({})
   client.use(empty)
   t.is(client.plugins.length, CorePlugins.length + 1)
 })
 
 test.cb('initialized with the config object', t => {
-  const client = createClient({ io })
+  const client = createClient({ createSocket })
   client.use(reactotron => {
     t.is(typeof reactotron, 'object')
     t.is(reactotron, client)
@@ -48,7 +50,7 @@ test.cb('initialized with the config object', t => {
 test('can be added in createClient', t => {
   const createPlugin = (name, value) => reactotron => ({ features: { [name]: () => value } })
   const client = createClient({
-    io,
+    createSocket,
     plugins: [
       createPlugin('sayHello', 'hello'),
       createPlugin('sayGoodbye', 'goodbye')
@@ -60,6 +62,6 @@ test('can be added in createClient', t => {
 })
 
 test('plugins in createClient must be an array', t => {
-  const client = createClient({ io, plugins: 5 })
+  const client = createClient({ createSocket, plugins: 5 })
   t.is(client.plugins.length, 0)
 })
