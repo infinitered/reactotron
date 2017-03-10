@@ -12,7 +12,6 @@ export default {
   dest: 'dist/index.js',
   external: [
     'ramda',
-    'ramdasauce',
-    'json-stringify-safe'
+    'ramdasauce'
   ]
 }

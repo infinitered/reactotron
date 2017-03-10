@@ -8,11 +8,11 @@ It is used by `reactotron-react-dom` and `reactotron-react-native`.
 
 ```js
 import { createClient } from 'reactotron-core-client'
-import io from 'socket.io-client'
 
 // setup a reactotron client
 const client = createClient({
-  io,
+  // injected in for compatibility
+  createSocket: path => new WebSocket(path),
 
   host: 'localhost',
   port: 9090,
@@ -166,20 +166,9 @@ client.display({
 
 ```
 
-# Why are we passing socket.io down?
+# Why are we passing createSocket down?
 
-It might seem wierd to pass the `io` function in.  The problem I'm trying to solve here
-is that React Native and React have really different initialization patterns.
 
-On React Native, we have to patch the `User-Agent`.  On React JS, we have to make
-sure the require happens a certain way or we suffer the wrath of WebPack warnings.
-
-I don't want to worry about that at this library, so we pass it down and assume
-the environment is sane.
-
-Not unlike how `window` or `console` might work on their respective platforms.
-
-For the record.  I don't like this.  But the rest of socket.io is stellar!
 
 # Messages
 

@@ -6,7 +6,7 @@ import networking from './plugins/networking'
 import { createClient } from 'reactotron-core-client'
 import getHost from 'rn-host-detect'
 
-var io = require('socket.io-client/dist/socket.io')
+
 
 export { trackGlobalErrors, openInEditor, overlay, asyncStorage, networking }
 // ---------------------
@@ -14,7 +14,7 @@ export { trackGlobalErrors, openInEditor, overlay, asyncStorage, networking }
 // ---------------------
 
 const DEFAULTS = {
-  io,
+  createSocket: path => new WebSocket(path), // eslint-disable-line
   host: getHost('localhost'),
   port: 9090,
   name: 'React Native App',

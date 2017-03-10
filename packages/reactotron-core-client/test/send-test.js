@@ -1,28 +1,44 @@
 import test from 'ava'
 import { createClient } from '../src'
-import socketServer from 'socket.io'
-import socketClient from 'socket.io-client'
-import getFreePort from './_get-free-port'
+import WebSocket from 'ws'
+import { createServer } from 'http'
+
+let server
+let wss
+let port
+test.cb.beforeEach(t => {
+  server = createServer()
+  wss = new WebSocket.Server({ server })
+  server.listen(() => {
+    port = server.address().port
+    t.end()
+  })
+})
+
+const createSocket = path => new WebSocket(path)
 
 const mockType = 'GO!'
 const mockPayload = [1, 2, 'three', { four: true }]
 
 test.cb('sends a valid command', t => {
-  getFreePort(port => {
-    // the server waits for the command
-    const server = socketServer(port)
-    server.on('connection', socket => {
-      socket.on('command', ({type, payload}) => {
-        if (type === 'client.intro') return
-        t.is(type, mockType)
-        t.deepEqual(payload, mockPayload)
-        t.end()
-      })
+  // the server waits for the command
+  wss.on('connection', ws => {
+    ws.on('message', message => {
+      const { type, payload } = JSON.parse(message)
+      if (type === 'client.intro') return
+      t.is(type, mockType)
+      t.deepEqual(payload, mockPayload)
+      t.end()
     })
-
-    // client should send the command
-    const client = createClient({ io: socketClient, port: port })
-    client.connect()
-    client.send(mockType, mockPayload)
   })
+
+  // client should send the command
+  const client = createClient({
+    createSocket,
+    port,
+    onConnect: () => {
+      client.send(mockType, mockPayload)
+    }
+  })
+  client.connect()
 })
