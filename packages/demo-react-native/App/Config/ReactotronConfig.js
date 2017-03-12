@@ -1,5 +1,5 @@
 import Reactotron, { trackGlobalErrors, openInEditor, overlay, asyncStorage } from 'reactotron-react-native'
-import tronsauce from 'reactotron-apisauce'
+import apisauce from 'reactotron-apisauce'
 import { reactotronRedux } from 'reactotron-redux'
 import sagaPlugin from 'reactotron-redux-saga'
 import { test } from 'ramda'
@@ -11,7 +11,9 @@ const vetoTest = test(/(node_modules\/react\/)/)
 if (__DEV__) {
   Reactotron
     .configure({ name: 'React Native Demo' })
-    .use(tronsauce())
+    .use(apisauce({
+      ignoreContentTypes: /^(image)\/.*$/i
+    }))
     .use(reactotronRedux({
       isActionImportant: action => action.type === 'something.important',
       except: ['ignore']

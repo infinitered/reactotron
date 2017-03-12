@@ -29,10 +29,13 @@ export function * request (api, action) {
       const entry = RS.dotPath('0', data)
       const { commit, author, html_url: url } = entry
       const { message, tree } = commit
-      const { login, avatar_url } = author
+      const { login, avatar_url: avatar } = author
       const { sha } = tree
       // record the last commit's message
-      yield put(Repo.Actions.receive(message, url, login, sha, avatar_url))
+      yield put(Repo.Actions.receive(message, url, login, sha, avatar))
+      if (avatar) {
+        yield call(api.get, avatar, null, { headers: { 'Accept': '*' } })
+      }
     } else {
       yield put(Repo.Actions.failure(`uh oh: ${problem} status: ${status}`))
     }
