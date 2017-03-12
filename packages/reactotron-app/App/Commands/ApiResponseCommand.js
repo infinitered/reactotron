@@ -51,7 +51,9 @@ const Styles = {
   url: {
     wordBreak: 'break-all',
     color: Colors.constant,
-    paddingBottom: 10
+    paddingBottom: 10,
+    WebkitUserSelect: 'text',
+    cursor: 'text'
   },
   headerTitle: {
     margin: 0,
