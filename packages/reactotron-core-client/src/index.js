@@ -8,7 +8,7 @@ import apiResponse from './plugins/api-response'
 import clear from './plugins/clear'
 import { start } from './stopwatch'
 export { start } from './stopwatch'
-import scrub from './scrub'
+import serialize from './serialize'
 
 export const CorePlugins = [
   image(),
@@ -129,10 +129,13 @@ export class Client {
     // jet if we don't have a socket
     if (!this.socket) return
 
-    // we may or may not want to introduce a first-line defense against socket.io serialization
-    // issues.
-    // NOTE(steve): right now the function id is trapped inside scrub.  Can we split?
-    const actualPayload = this.options.safeRecursion ? scrub(payload) : payload
+    // Do a cycle of serialization -> deserialization to ensure
+    // circular deps are weeded out.
+    //
+    // NOTE(steve): socket.io is going away shortly, so there will
+    // be no need to deserialize as we'll be sending text over the
+    // wire.
+    const actualPayload = JSON.parse(serialize(payload))
 
     // send this command
     this.socket.emit('command', {
@@ -146,7 +149,13 @@ export class Client {
    * Sends a custom command to the server to displays nicely.
    */
   display ({ name, value, preview, image, important = false }) {
-    this.send('display', { name, value, preview, image }, important)
+    const payload = {
+      name,
+      value: value || null,
+      preview: preview || null,
+      image: image || null
+    }
+    this.send('display', payload, important)
   }
 
   /**
