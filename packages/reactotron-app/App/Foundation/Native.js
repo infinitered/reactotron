@@ -19,15 +19,12 @@ const Styles = {
     margin: 0,
     flex: 1
   },
-  backups: {
-    margin: 0,
-    padding: 0,
-    overflowY: 'auto',
-    overflowX: 'hidden'
-  },
-  overlayContainer: {
+  content: {
+    paddingBottom: 20,
     paddingLeft: 20,
-    paddingRight: 20
+    paddingRight: 20,
+    overflowY: 'scroll',
+    overflowX: 'hidden'
   },
   sectionTitle: {
     color: Colors.tag,
@@ -343,7 +340,7 @@ class Native extends Component {
     return (
       <div style={Styles.container}>
         <NativeHeader />
-        <div style={Styles.overlayContainer}>
+        <div style={Styles.content}>
           <div style={Styles.sectionTitle}>Overlay Image</div>
           <div style={Styles.backups}>
             <div
