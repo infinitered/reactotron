@@ -3,6 +3,8 @@ import { is, asEffect } from 'redux-saga/utils'
 import * as SagaConstants from './saga-constants'
 
 export default effect => {
+  if (!effect) return SagaConstants.UNKNOWN
+  if (effect instanceof Promise) return SagaConstants.PROMISE
   if (asEffect.take(effect)) return SagaConstants.TAKE
   if (asEffect.put(effect)) return SagaConstants.PUT
   if (asEffect.call(effect)) return SagaConstants.CALL
