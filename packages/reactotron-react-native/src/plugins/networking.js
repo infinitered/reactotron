@@ -38,7 +38,7 @@ export default (pluginConfig = {}) => reactotron => {
     requestCache[reactotronCounter] = {
       data: data,
       xhr,
-      started: Date.now()
+      stopTimer: reactotron.startTimer()
     }
   }
 
@@ -59,7 +59,7 @@ export default (pluginConfig = {}) => reactotron => {
     requestCache[rid] = null
 
     // assemble the request object
-    const { data, started } = cachedRequest
+    const { data, stopTimer } = cachedRequest
     const tronRequest = {
       url: url || cachedRequest.xhr._url,
       method: xhr._method || null,
@@ -99,11 +99,8 @@ export default (pluginConfig = {}) => reactotron => {
       headers: xhr.responseHeaders || null
     }
 
-    // a highly technical and incredibly precision timing method
-    const duration = started ? Date.now() - started : -1
-
     // send this off to Reactotron
-    reactotron.apiResponse(tronRequest, tronResponse, duration)
+    reactotron.apiResponse(tronRequest, tronResponse, stopTimer())
   }
 
   // register our monkey-patch
