@@ -12,6 +12,7 @@ export default {
   ],
   dest: 'dist/index.js',
   external: [
-    'ramdasauce'
+    'ramdasauce',
+    'ramda'
   ]
 }

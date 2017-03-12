@@ -1,28 +1,45 @@
-import RS from 'ramdasauce'
-
-// apisauce uses axios, so let's deconstruct that format
-const convertResponse = (source) => {
-  const url = RS.dotPath('config.url', source)
-  const method = RS.dotPath('config.method', source)
-  const requestData = RS.dotPath('config.data', source)
-  const requestHeaders = RS.dotPath('config.headers', source)
-  const requestParams = RS.dotPath('config.params', source)
-  const duration = RS.dotPath('duration', source)
-  const status = RS.dotPath('status', source)
-  const body = RS.dotPath('data', source)
-  const responseHeaders = RS.dotPath('headers', source)
-  const request = {
-    url, method, data: requestData || null, headers: requestHeaders, params: requestParams || null
-  }
-  const response = { body, status, headers: responseHeaders }
-
-  return [ request, response, duration ]
-}
+import { test } from 'ramda'
+import { dotPath } from 'ramdasauce'
 
 /**
- * Sends an apisauce response to the server.
+ * Don't include the response bodies for images by default.
  */
-export default () => reactotron => {
+const DEFAULT_CONTENT_TYPES_RX = /^(image)\/.*$/i
+
+/**
+ * Sets up the apisauce reactotron plugin
+ */
+export default (options = {}) => reactotron => {
+  // a RegExp to suppess adding the body cuz it costs a lot to serialize
+  const ignoreContentTypes = options.ignoreContentTypes || DEFAULT_CONTENT_TYPES_RX
+
+  // apisauce uses axios, so let's deconstruct that format
+  const convertResponse = (source) => {
+    // the request
+    const url = dotPath('config.url', source)
+    const method = dotPath('config.method', source)
+    const requestData = dotPath('config.data', source)
+    const requestHeaders = dotPath('config.headers', source)
+    const requestParams = dotPath('config.params', source)
+    const request = {
+      url, method, data: requestData || null, headers: requestHeaders, params: requestParams || null
+    }
+
+    // there response
+    const status = dotPath('status', source)
+    const responseHeaders = dotPath('headers', source) || {}
+    const contentType = responseHeaders['content-type'] || responseHeaders['Content-Type']
+    const bodyData = dotPath('data', source)
+    const useRealBody = (typeof bodyData === 'string' || typeof bodyData === 'object') && !(test(ignoreContentTypes, contentType || ''))
+    const body = useRealBody ? bodyData : `~~~ skipped ~~~`
+    const response = { body, status, headers: responseHeaders }
+
+    // the duration
+    const duration = dotPath('duration', source)
+
+    // return all 3
+    return [ request, response, duration ]
+  }
   return {
     features: {
       apisauce: (source) => reactotron.apiResponse(...convertResponse(source))
