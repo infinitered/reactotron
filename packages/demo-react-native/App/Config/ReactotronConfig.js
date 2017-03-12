@@ -32,7 +32,7 @@ if (__DEV__) {
     .use(openInEditor())
     .use(sagaPlugin())
     .use(overlay())
-    .use(asyncStorage())
+    .use(asyncStorage({ ignore: ['secret'] }))
     .connect()
 
   console.tron = Reactotron

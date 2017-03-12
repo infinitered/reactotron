@@ -13,5 +13,7 @@ export default [
   'benchmark.report',
   'display',
   'clear',
-  'storage.updated'
+  'asyncStorage.values.request',
+  'asyncStorage.values.response',
+  'asyncStorage.values.change'
 ]

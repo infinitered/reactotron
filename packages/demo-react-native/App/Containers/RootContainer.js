@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Text, AsyncStorage, Alert } from 'react-native'
+import { ScrollView, View, Text, AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
 import Styles from './Styles/RootContainerStyles'
 import Button from '../Components/Button'
@@ -54,7 +54,7 @@ class RootContainer extends Component {
   }
 
   handleAsyncSet () {
-    AsyncStorage.setItem('singleSet', new Date().toISOString(), () => Alert.alert('I even call the original callback!'))
+    AsyncStorage.setItem('singleSet', new Date().toISOString(), () => console.tron.log('After setting async storage.'))
   }
 
   handleAsyncRemove () {
