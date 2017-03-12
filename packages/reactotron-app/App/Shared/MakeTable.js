@@ -19,7 +19,9 @@ const Styles = {
     paddingRight: 10,
     wordBreak: 'break-all',
     textAlign: 'left',
-    color: Colors.foregroundDark
+    color: Colors.foregroundDark,
+    WebkitUserSelect: 'text',
+    cursor: 'text'
   },
   value: {
     flex: 1,
@@ -48,7 +50,7 @@ export function colorForValue (value) {
 
 const makeRow = ([key, value]) => {
   const textValue = textForValue(value)
-  const valueStyle = merge(Styles.value, { color: colorForValue(value) })
+  const valueStyle = merge(Styles.value, { color: colorForValue(value), WebkitUserSelect: 'text', cursor: 'text' })
 
   return (
     <div key={key} style={Styles.row}>
