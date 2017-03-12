@@ -62,8 +62,7 @@ const Styles = {
     textOverflow: 'ellipsis',
     display: '-webkit-box',
     flex: 1,
-    wordBreak: 'break-all',
-
+    wordBreak: 'break-all'
   },
   duration: {
     color: Colors.foregroundDark,
