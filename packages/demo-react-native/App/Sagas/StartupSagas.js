@@ -1,4 +1,5 @@
 import { put } from 'redux-saga/effects'
+import { AsyncStorage } from 'react-native'
 
 function testRecursion () {
   if (!__DEV__) return
@@ -25,10 +26,22 @@ function testFunctionNames () {
   })
 }
 
+async function addStuffToAsyncStorage () {
+  const exists = await AsyncStorage.getItem('addedAt')
+  if (exists) return
+  await AsyncStorage.multiSet([
+    ['secret', 'should not go to reactotron.'],
+    ['not.secret', 'this should go to reactotron though'],
+    ['stringify', JSON.stringify({ hello: { nested: 100 } })],
+    ['addedAt', new Date().toISOString()]
+  ])
+}
+
 // process STARTUP actions
 export function * startup () {
   testRecursion()
   testFunctionNames()
+  addStuffToAsyncStorage()
   // we can yield promises to sagas now... if that's how you roll
   yield new Promise(resolve => { resolve() }) // eslint-disable-line
   yield put({ type: 'HELLO' })

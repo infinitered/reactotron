@@ -28,6 +28,12 @@ const GROUPS = [
     ]
   },
   {
+    name: 'Async Storage',
+    items: [
+      { value: 'asyncStorage.values.change', text: 'Changes' }
+    ]
+  },
+  {
     name: 'Redux & Sagas',
     items: [
       { value: 'state.action.complete', text: 'Action' },

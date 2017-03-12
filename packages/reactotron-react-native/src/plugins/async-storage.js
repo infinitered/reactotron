@@ -1,18 +1,19 @@
 /**
  * Provides async storage information to Reactotron
  */
-import { merge, map, reject } from 'ramda'
+import { merge, reject, contains } from 'ramda'
 import { AsyncStorage } from 'react-native'
 
 // defaults
 const PLUGIN_DEFAULTS = {
-
+  ignore: []
 }
 
 // our plugin entry point
 export default options => reactotron => {
   // setup configuration
   const config = merge(PLUGIN_DEFAULTS, options || {})
+  const ignore = config['ignore'] || []
 
   let swizzSetItem = null
   let swizzRemoveItem = null
@@ -23,14 +24,28 @@ export default options => reactotron => {
   let swizzMultiMerge = null
   let isSwizzled = false
 
+  /**
+   * Sends the contents of AsyncStorage to Reactotron.
+   */
   const reactotronShipStorageValues = () => {
-    AsyncStorage.getAllKeys((err, keys) => AsyncStorage.multiGet(keys, (err, values) => {
-      // Send an array of arrays
-      //reactotron.send('storage.updated', values)
-      reactotron.display({ name: 'AsyncStorage', value: { value: values }, preview: 'All the values' })
-    }))
+    AsyncStorage.getAllKeys(
+      (_, keys) => AsyncStorage.multiGet(keys, (_, values = []) => {
+        const valuesToSend = reject(
+          item => contains(item[0], ignore),
+          values
+        )
+        // NOTE(steve): for now let's ship everything... until we get a UI in place
+        // to make request/response calls
+        reactotron.send('asyncStorage.values.change', valuesToSend)
+      })
+    )
   }
 
+  /**
+   * Swizzles one of the AsyncStorage public api functions.
+   *
+   * @param {function} originalMethod - The original function to override.
+   */
   const reactotronStorageHijacker = originalMethod => (...args) => {
     // Depending on the call we could have the callback in one of any of the three args, walk backwards till we find the callback
     let oldCallback = args.length > 0 ? args[args.length - 1] : null
@@ -89,7 +104,7 @@ export default options => reactotron => {
     AsyncStorage.multiRemove = swizzMultiRemove
     AsyncStorage.multiMerge = swizzMultiMerge
 
-    isSwizzled = false;
+    isSwizzled = false
   }
 
   reactotronShipStorageValues()

@@ -20,6 +20,7 @@ Use it to:
 * hot swap your app's state
 * track your sagas
 * show image overlay in React Native
+* track your Async Storage in React Native
 
 You plug it into your app as a dev dependency so it adds nothing to your product builds.
 
@@ -37,6 +38,7 @@ Reactotron on the left, demo React Native app on the right.
 * [Tracking errors globally](./docs/plugin-track-global-errors.md)
 * [Open in editor](./docs/plugin-open-in-editor.md)
 * [Image Overlays](./docs/plugin-overlay.md)
+* [Async Storage](./docs/plugin-async-storage.md)
 * Integrating with [Redux](./docs/plugin-redux.md)
 * Integrating with [Redux Saga](./docs/plugin-redux-saga.md)
 * Networking monitoring with [Apisauce](./docs/plugin-apisauce.md)
