@@ -61,7 +61,9 @@ const Styles = {
     WebkitBoxOrient: 'vertical',
     textOverflow: 'ellipsis',
     display: '-webkit-box',
-    flex: 1
+    flex: 1,
+    wordBreak: 'break-all',
+
   },
   duration: {
     color: Colors.foregroundDark,
