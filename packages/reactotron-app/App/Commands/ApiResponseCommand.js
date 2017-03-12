@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Command from '../Shared/Command'
 import { dotPath, isNilOrEmpty } from 'ramdasauce'
-import { toUpper, equals, isNil } from 'ramda'
+import { pipe, toUpper, equals, isNil, replace } from 'ramda'
 import makeTable from '../Shared/MakeTable'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
@@ -129,13 +129,17 @@ class ApiResponseCommand extends Component {
     const { duration } = payload
     const status = dotPath('response.status', payload)
     const url = dotPath('request.url', payload)
+    const smallUrl = pipe(
+      replace(/^http(s):\/\/[a-zA-Z0-9.]*/i, ''),
+      replace(/\?.*$/i, ''),
+    )(url)
     const method = toUpper(dotPath('request.method', payload) || '')
     const requestHeaders = dotPath('request.headers', payload)
     const responseHeaders = dotPath('response.headers', payload)
     const requestBody = getRequestText(dotPath('request.data', payload))
     const responseBody = dotPath('response.body', payload)
     const requestParams = dotPath('request.params', payload)
-    const subtitle = `${status} ${method} in ${duration || '?'}ms`
+    const subtitle = `${method} ${smallUrl}`
     const preview = subtitle
     const summary = { 'Status Code': status, 'Method': method, 'Duration (ms)': duration }
 
