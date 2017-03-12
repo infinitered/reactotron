@@ -10,6 +10,7 @@ export const CANCEL = 'CANCEL'
 export const SELECT = 'SELECT'
 export const PARALLEL = 'PARALLEL'
 export const ITERATOR = 'ITERATOR'
+export const PROMISE = 'PROMISE' // not from redux-saga
 export const UNKNOWN = 'UNKNOWN' // not from redux-saga
 
 // monitoring statuses

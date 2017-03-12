@@ -29,5 +29,7 @@ function testFunctionNames () {
 export function * startup () {
   testRecursion()
   testFunctionNames()
+  // we can yield promises to sagas now... if that's how you roll
+  yield new Promise(resolve => { resolve() }) // eslint-disable-line
   yield put({ type: 'HELLO' })
 }

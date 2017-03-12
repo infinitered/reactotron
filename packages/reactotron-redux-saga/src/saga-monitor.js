@@ -108,15 +108,15 @@ export default (reactotron, options) => {
         children.push({
           depth,
           effectId: sourceEffectInfo.effectId,
-          parentEffectId: sourceEffectInfo.parentEffectId,
-          name: sourceEffectInfo.name,
-          description: sourceEffectInfo.description,
+          parentEffectId: sourceEffectInfo.parentEffectId || null,
+          name: sourceEffectInfo.name || null,
+          description: sourceEffectInfo.description || null,
           duration: Math.round(sourceEffectInfo.duration),
-          status: sourceEffectInfo.status,
-          winner: sourceEffectInfo.winner,
-          loser: sourceEffectInfo.loser,
-          result: sourceEffectInfo.result,
-          extra
+          status: sourceEffectInfo.status || null,
+          winner: sourceEffectInfo.winner || null,
+          loser: sourceEffectInfo.loser || null,
+          result: sourceEffectInfo.result || null,
+          extra: extra || null
         })
 
         // rerun this function for our children
