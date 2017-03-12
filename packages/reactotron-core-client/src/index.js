@@ -29,7 +29,13 @@ const DEFAULTS = {
   safeRecursion: true, // when on, it ensures objects are safe for transport (at the cost of CPU)
   onCommand: cmd => null, // the function called when we receive a command
   onConnect: () => null, // fires when we connect
-  onDisconnect: () => null // fires when we disconnect
+  onDisconnect: () => null, // fires when we disconnect
+  socketIoProperties: {
+    reconnection: true,
+    reconnectionDelay: 2000,
+    reconnectionDelayMax: 5000,
+    reconnectionAttempts: 5
+  } // socketIO settings
 }
 
 // these are not for you.
@@ -76,14 +82,15 @@ export class Client {
    */
   connect () {
     this.connected = true
-    const { io, secure, host, port, name, userAgent, environment, reactotronVersion } = this.options
+    const { io, secure, host, port, name, userAgent, environment, reactotronVersion, socketIoProperties } = this.options
     const { onCommand, onConnect, onDisconnect } = this.options
 
     // establish a socket.io connection to the server
     const protocol = secure ? 'wss' : 'ws'
     const socket = io(`${protocol}://${host}:${port}`, {
       jsonp: false,
-      transports: ['websocket', 'polling']
+      transports: ['websocket', 'polling'],
+      ...socketIoProperties
     })
 
     // fires when we talk to the server

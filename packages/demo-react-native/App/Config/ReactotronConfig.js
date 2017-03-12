@@ -10,7 +10,15 @@ const vetoTest = test(/(node_modules\/react\/)/)
 
 if (__DEV__) {
   Reactotron
-    .configure({ name: 'React Native Demo' })
+    .configure({
+      name: 'React Native Demo',
+      socketIoProperties: {
+        reconnection: true,
+        reconnectionDelay: 2000,
+        reconnectionDelayMax: 5000,
+        reconnectionAttempts: 10
+      }
+    })
     .use(apisauce({
       ignoreContentTypes: /^(image)\/.*$/i
     }))
