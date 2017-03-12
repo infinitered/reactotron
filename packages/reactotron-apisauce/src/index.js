@@ -12,7 +12,7 @@ const convertResponse = (source) => {
   const body = RS.dotPath('data', source)
   const responseHeaders = RS.dotPath('headers', source)
   const request = {
-    url, method, data: requestData, headers: requestHeaders, params: requestParams
+    url, method, data: requestData || null, headers: requestHeaders, params: requestParams || null
   }
   const response = { body, status, headers: responseHeaders }
 
