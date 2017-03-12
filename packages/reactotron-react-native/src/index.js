@@ -4,8 +4,9 @@
 
 export trackGlobalErrors from './plugins/track-global-errors'
 export openInEditor from './plugins/open-in-editor'
-export overlay from './plugins/overlay.js'
-export asyncStorage from './plugins/async-storage.js'
+export overlay from './plugins/overlay'
+export asyncStorage from './plugins/async-storage'
+export networking from './plugins/networking'
 
 // ------------
 // SECOND PARTY

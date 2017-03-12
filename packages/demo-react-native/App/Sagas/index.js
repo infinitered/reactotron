@@ -7,7 +7,7 @@ import { request as requestRepo } from './RepoSagas'
 import { sagaError, putError } from './ErrorSagas'
 import ApiSauce from 'apisauce'
 
-import Reactotron from 'reactotron-react-native'
+// import Reactotron from 'reactotron-react-native'
 
 const api = ApiSauce.create({
   baseURL: 'https://api.github.com',
@@ -16,7 +16,7 @@ const api = ApiSauce.create({
   }
 })
 
-api.addMonitor(Reactotron.apisauce)
+// api.addMonitor(console.tron.apisauce)
 
 export default function * rootSaga () {
   yield [

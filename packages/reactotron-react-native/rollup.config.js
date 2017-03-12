@@ -19,6 +19,7 @@ export default {
     'reactotron-core-client',
     'mitt',
     'react',
-    'rn-host-detect'
+    'rn-host-detect',
+    'react-native/Libraries/Network/XHRInterceptor'
   ]
 }
