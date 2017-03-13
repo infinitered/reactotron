@@ -4,10 +4,30 @@
 export default () => reactotron => {
   return {
     features: {
-      log: (message, important = false) => reactotron.send('log', { level: 'debug', message }, !!important),
-      debug: (message, important = false) => reactotron.send('log', { level: 'debug', message }, !!important),
-      warn: message => reactotron.send('log', { level: 'warn', message }, true),
-      error: (message, stack) => reactotron.send('log', { level: 'error', message, stack }, true)
+      log: (message, important = false) =>
+        reactotron.send(
+          'log',
+          { level: 'debug', message: message || null },
+          !!important
+        ),
+      debug: (message, important = false) =>
+        reactotron.send(
+          'log',
+          { level: 'debug', message: message || null },
+          !!important
+        ),
+      warn: message =>
+        reactotron.send(
+          'log',
+          { level: 'warn', message: message || null },
+          true
+        ),
+      error: (message, stack) =>
+        reactotron.send(
+          'log',
+          { level: 'error', message: message || null, stack: stack || null },
+          true
+        )
     }
   }
 }
