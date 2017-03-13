@@ -1,6 +1,6 @@
 # Open In Editor
 
-Both `reactotron-react-native` ships with a plugin called `openInEditor`.
+Both `reactotron-react-native` and `reactotron-react-js` ships with a plugin called `openInEditor`.
 
 With this enabled, you can now click on the error line of code to have the file open in your editor.
 
