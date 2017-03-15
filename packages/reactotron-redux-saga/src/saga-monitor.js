@@ -2,12 +2,12 @@ import { is } from 'redux-saga/utils'
 import getEffectName from './get-effect-name'
 import getEffectDescription from './get-effect-description'
 import { ITERATOR, CALL, PUT, FORK, RACE, PENDING, RESOLVED, REJECTED, CANCELLED } from './saga-constants'
-import { reject, values, pluck, isNil, split, pathOr, last, forEach, propEq, filter, __ } from 'ramda'
+import { reject, values, pluck, isNil, split, pathOr, last, forEach, propEq, filter, __, omit, map } from 'ramda'
 
 // creates a saga monitor
 export default (reactotron, options) => {
   // a lookup table of effects - keys are numbers, values are objects
-  const effects = {}
+  let effects = {}
 
   // filtering that effect table
   const byParentId = propEq('parentEffectId', __)
@@ -17,6 +17,9 @@ export default (reactotron, options) => {
 
   // start a relative timer
   const timer = reactotron.startTimer()
+
+  // ---------------- Sending Effect Updates ----------------
+  const sendReactotronEffectTree = () => reactotron.send('saga.effect.update', effects)
 
   // ---------------- Starting -----------------------------
 
@@ -39,6 +42,9 @@ export default (reactotron, options) => {
 
     // store it
     effects[effectId] = effectInfo
+
+    // send it
+    sendReactotronEffectTree()
   }
 
   // ---------------- Finishing ----------------------------
@@ -138,6 +144,8 @@ export default (reactotron, options) => {
       duration: Math.round(duration),
       children
     })
+
+    effects = omit(map(String, pluck('effectId', children)), effects)
   }
 
   // redux-saga calls this when an effect is resolved (successfully or not)
@@ -178,6 +186,9 @@ export default (reactotron, options) => {
         setRaceWinner(effectId, result)
       }
     }
+
+    // send it
+    sendReactotronEffectTree()
   }
 
   // flags on of the children as the winner
@@ -205,6 +216,9 @@ export default (reactotron, options) => {
     if (effectInfo.name === RACE) {
       setRaceWinner(effectId, error)
     }
+
+    // send it
+    sendReactotronEffectTree()
   }
 
   // ---------------- Cancelling ---------------------------
@@ -214,6 +228,9 @@ export default (reactotron, options) => {
     const effectInfo = effects[effectId]
     updateDuration(effectInfo)
     effectInfo.status = CANCELLED
+
+    // send it
+    sendReactotronEffectTree()
   }
 
   // the interface for becoming a redux-saga monitor
