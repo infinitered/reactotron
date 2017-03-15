@@ -9,6 +9,7 @@ export default [
   'state.values.change',
   'state.backup.response',
   'saga.task.complete',
+  'saga.effect.update',
   'api.response',
   'benchmark.report',
   'display',
