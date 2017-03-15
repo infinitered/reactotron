@@ -103,3 +103,7 @@ Reactotron.
 
 `onRestore` is the opposite of `onBackup`.  It will fire when the Reactotron app
 sends a new copy of state to the app.
+
+
+# Using saga? 
+Go configure the [plugin](https://github.com/infinitered/reactotron/blob/master/docs/plugin-redux-saga.md) next
