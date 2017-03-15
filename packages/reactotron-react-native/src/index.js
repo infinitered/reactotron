@@ -2,11 +2,19 @@
 // FIRST PARTY
 // -----------
 
-export trackGlobalErrors from './plugins/track-global-errors'
-export openInEditor from './plugins/open-in-editor'
-export overlay from './plugins/overlay'
-export asyncStorage from './plugins/async-storage'
-export networking from './plugins/networking'
+import trackGlobalErrors from './plugins/track-global-errors'
+import openInEditor from './plugins/open-in-editor'
+import overlay from './plugins/overlay'
+import asyncStorage from './plugins/async-storage'
+import networking from './plugins/networking'
+
+export {
+  trackGlobalErrors,
+  openInEditor,
+  overlay,
+  asyncStorage,
+  networking
+}
 
 // ------------
 // SECOND PARTY
@@ -40,6 +48,18 @@ const DEFAULTS = {
 // -----------
 // Create the default reactotron.
 const reactotron = createClient(DEFAULTS)
+
+// -------------
+// PLUGIN HELPER
+// -------------
+reactotron.useAllIncluded = options => {
+  return reactotron
+            .use(trackGlobalErrors(options.trackGlobalErrors || {}))
+            .use(openInEditor(options.openInEditor || {}))
+            .use(overlay())
+            .use(asyncStorage(options.asyncStorage || {}))
+            .use(networking(options.networking || {}))
+}
 
 // send it back
 export default reactotron

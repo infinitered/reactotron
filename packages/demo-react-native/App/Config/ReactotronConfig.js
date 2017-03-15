@@ -24,6 +24,11 @@ if (__DEV__) {
       reconnectionAttempts: 10
     }
   })
+    .useAllIncluded({
+      trackGlobalErrors: { veto: frame => vetoTest(frame.fileName) },
+      networking: { ignoreContentTypes: /^(image)\/.*$/i },
+      asyncStorage: { ignore: ['secret'] }
+    })
     // .use(apisauce({}))
     .use(
       reactotronRedux({
@@ -31,16 +36,7 @@ if (__DEV__) {
         except: ['ignore']
       })
     )
-    .use(
-      trackGlobalErrors({
-        veto: frame => vetoTest(frame.fileName)
-      })
-    )
-    .use(networking({ ignoreContentTypes: /^(image)\/.*$/i }))
-    .use(openInEditor())
     .use(sagaPlugin())
-    .use(overlay())
-    .use(asyncStorage({ ignore: ['secret'] }))
     .connect()
 
   console.tron = Reactotron
