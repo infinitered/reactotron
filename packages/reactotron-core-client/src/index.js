@@ -142,7 +142,9 @@ export class Client {
     // NOTE(steve): socket.io is going away shortly, so there will
     // be no need to deserialize as we'll be sending text over the
     // wire.
-    const actualPayload = JSON.parse(serialize(payload))
+    const actualPayload = this.options.safeRecursion
+      ? JSON.parse(serialize(payload))
+      : payload
 
     // send this command
     this.socket.emit('command', {
