@@ -38,7 +38,7 @@ const GROUPS = [
     items: [
       { value: 'state.action.complete', text: 'Action' },
       { value: 'saga.task.complete', text: 'Saga' },
-      { value: 'state.values.response', text: 'Subscription Changed' }
+      { value: 'state.values.change', text: 'Subscription Changed' }
     ]
   }
 ]
