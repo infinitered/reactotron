@@ -55,3 +55,6 @@ Reactotron on the left, demo React Native app on the right.
 * What's Inside This Repo?
 * Contributors Quick Start
 
+## Premium Support
+
+[Reactotron](https://github.com/infinitered/reactotron), as open source projects, is free to use and always will be. [Infinite Red](https://infinite.red/) offers premium Reactotron support and general mobile app design/development services. Email us at [hello@infinite.red](mailto:hello@infinite.red) to get in touch with us for more details.
