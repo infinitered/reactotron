@@ -1,4 +1,6 @@
 {
+  "name": "reactotron-monorepo",
+  "version": "0.0.1",
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
@@ -6,7 +8,7 @@
     "copy-internal-deps": "cd packages/demo-react-native && ./copy-internal-deps.sh && cd ../..",
     "test": "lerna run test --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce' --scope 'reactotron-react-native' --scope 'reactotron-react-js' --scope 'reactotron-cli'",
     "lint": "lerna run lint",
-    "welcome": "npm run clean && npm run bootstrap && npm run build && npm run copy-internal-deps && npm run lint"
+    "welcome": "yarn run clean && yarn run bootstrap -- --ignore-engines && yarn run build && yarn run copy-internal-deps && yarn run lint -s"
   },
   "devDependencies": {
     "lerna": "^2.0.0-beta.38"

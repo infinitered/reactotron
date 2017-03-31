@@ -5,3 +5,5 @@ npm-debug.log
 .vscode
 yarn.lock
 yarn-error.log
+.happypack
+haul-debug.log*

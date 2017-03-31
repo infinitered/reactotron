@@ -3,7 +3,7 @@ import { reducer as repoReducer } from './RepoRedux'
 import { reducer as logoReducer } from './LogoRedux'
 import { reducer as errorReducer } from './ErrorRedux'
 import { not, contains } from 'ramda'
-import createLogger from 'redux-logger'
+import { createLogger } from 'redux-logger'
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from '../Sagas'
 
