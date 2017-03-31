@@ -8,13 +8,7 @@ import overlay from './plugins/overlay'
 import asyncStorage from './plugins/async-storage'
 import networking from './plugins/networking'
 
-export {
-  trackGlobalErrors,
-  openInEditor,
-  overlay,
-  asyncStorage,
-  networking
-}
+export { trackGlobalErrors, openInEditor, overlay, asyncStorage, networking }
 
 // ------------
 // SECOND PARTY
@@ -52,13 +46,13 @@ const reactotron = createClient(DEFAULTS)
 // -------------
 // PLUGIN HELPER
 // -------------
-reactotron.useAllIncluded = options => {
+reactotron.useReactNative = (options = {}) => {
   return reactotron
-            .use(trackGlobalErrors(options.trackGlobalErrors || {}))
-            .use(openInEditor(options.openInEditor || {}))
-            .use(overlay())
-            .use(asyncStorage(options.asyncStorage || {}))
-            .use(networking(options.networking || {}))
+    .use(trackGlobalErrors(options.trackGlobalErrors || {}))
+    .use(openInEditor(options.openInEditor || {}))
+    .use(overlay())
+    .use(asyncStorage(options.asyncStorage || {}))
+    .use(networking(options.networking || {}))
 }
 
 // send it back
