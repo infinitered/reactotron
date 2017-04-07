@@ -1,5 +1,6 @@
 import { is, concat, merge } from 'ramda'
 import { DEFAULT_REPLACER_TYPE } from './replacement-reducer'
+import { any } from 'ramda'
 
 const DEFAULTS = {
   // except: [] // which actions
@@ -44,7 +45,7 @@ export default (reactotron, trackerOptions = {}) => {
           if (typeof exception === 'string') {
             return actionType === exception
           } else if (typeof exception === 'function') {
-            return actionType === exception
+            return exception(actionType)
           } else if (exception instanceof RegExp) {
             return exception.test(actionType)
           } else {
@@ -52,7 +53,7 @@ export default (reactotron, trackerOptions = {}) => {
           }
         }
 
-        const matchExceptions = exceptions.reduce((prev, exception) => matchException(exception, unwrappedAction.type) || prev, false)
+        const matchExceptions = any(exception => matchException(exception, unwrappedAction.type), exceptions)
 
         // action not blacklisted?
         // if matchException is true, action.type is matched with exception
