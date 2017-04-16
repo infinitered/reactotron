@@ -16,6 +16,7 @@ npm install
 npm run welcome
 ```
 
+You may need to install `rollup` globally.
 
 ### Code Style
 
@@ -50,7 +51,7 @@ How we current get around this is by:
 
 Many tears were shed and this is the least shitty solution I could muster.
 
-In the root, you can run `npm copy-internal-deps` to make them copy over.
+In the root, you can run `npm run copy-internal-deps` to make them copy over.
 
 But since you're copying built dependencies, you'll need to run `npm run build` first
 if you're doing this to bring forward changes in those dependency libraries.
