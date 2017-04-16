@@ -9,7 +9,6 @@ const isSubscription = propEq('type', 'state.values.change')
 const isSubscriptionCommandWithEmptyChanges = command => isSubscription(command) && dotPath('payload.changes.length', command) === 0
 
 class Session {
-
   // commands to exlude in the timeline
   @observable commandsHiddenInTimeline = []
 
@@ -19,7 +18,7 @@ class Session {
   // checks if it was the exact same as last time
   isSubscriptionValuesSameAsLastTime (command) {
     if (!isSubscription(command)) return false
-    const rawChanges = command.payload && command.payload.changes || []
+    const rawChanges = command.payload ? command.payload.changes : []
     const newSubscriptions = fromPairs(map(change => ([change.path, change.value]), rawChanges))
     const isNew = !equals(this.subscriptions, newSubscriptions)
 
@@ -88,7 +87,6 @@ class Session {
       show => { this.ui.showWatchPanel = show }
     )
   }
-
 }
 
 export default Session

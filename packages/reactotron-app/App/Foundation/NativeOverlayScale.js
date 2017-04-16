@@ -25,7 +25,6 @@ const Styles = {
 }
 
 class NativeOverlayScale extends Component {
-
   static propTypes = {
     scale: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired
@@ -54,7 +53,6 @@ class NativeOverlayScale extends Component {
       </div>
     )
   }
-
 }
 
 export default NativeOverlayScale

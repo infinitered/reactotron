@@ -17,7 +17,6 @@ const Styles = {
 }
 
 class Checkbox extends Component {
-
   static propTypes = {
     label: PropTypes.string,
     checked: PropTypes.bool.isRequired,

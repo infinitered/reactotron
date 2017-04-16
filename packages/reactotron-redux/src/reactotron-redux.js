@@ -68,9 +68,7 @@ export default (pluginConfig = {}) => reactotron => {
           // run our state through our onRestore
           const state = onRestore(payload.state, reduxStore.getState())
           reduxStore.dispatch({ type: restoreActionType, state })
-          return
         }
-
       }
     },
 

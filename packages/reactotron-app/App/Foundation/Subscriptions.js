@@ -45,7 +45,6 @@ const Styles = {
 @inject('session')
 @observer
 class WatchPanel extends Component {
-
   constructor (props) {
     super(props)
     this.renderWatch = this.renderWatch.bind(this)

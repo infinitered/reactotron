@@ -46,7 +46,6 @@ const Styles = {
 @inject('session')
 @observer
 export default class VisualRoot extends Component {
-
   render () {
     const { session } = this.props
     const { ui } = session

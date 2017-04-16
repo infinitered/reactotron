@@ -249,7 +249,6 @@ class UI {
    */
   @action setOverlay = props =>
     this.server.send('overlay', props)
-
 }
 
 export default UI

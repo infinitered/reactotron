@@ -54,7 +54,6 @@ const Styles = {
 @inject('session')
 @observer
 class BackupsHeader extends Component {
-
   render () {
     const { ui } = this.props.session
 
@@ -72,7 +71,6 @@ class BackupsHeader extends Component {
       </div>
     )
   }
-
 }
 
 export default BackupsHeader

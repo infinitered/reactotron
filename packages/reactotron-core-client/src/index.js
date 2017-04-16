@@ -6,9 +6,10 @@ import benchmark from './plugins/benchmark'
 import stateResponses from './plugins/state-responses'
 import apiResponse from './plugins/api-response'
 import clear from './plugins/clear'
-import { start } from './stopwatch'
-export { start } from './stopwatch'
 import serialize from './serialize'
+import { start } from './stopwatch'
+
+export { start } from './stopwatch'
 
 export const CorePlugins = [
   image(),
@@ -46,7 +47,6 @@ const isReservedFeature = R.contains(R.__, [
 ])
 
 export class Client {
-
   // the configuration options
   options = R.merge({}, DEFAULTS)
   connected = false
@@ -220,7 +220,6 @@ export class Client {
     // chain-friendly
     return this
   }
-
 }
 
 // convenience factory function

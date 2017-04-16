@@ -45,7 +45,6 @@ const Styles = {
 @inject('session')
 @observer
 class Backups extends Component {
-
   constructor (props) {
     super(props)
     this.renderBackup = this.renderBackup.bind(this)

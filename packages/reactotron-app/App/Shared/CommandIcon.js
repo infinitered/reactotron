@@ -41,7 +41,6 @@ const getIcon = (command) => {
 }
 
 class CommandIcon extends Component {
-
   static propTypes = {
     command: PropTypes.object.isRequired
   }

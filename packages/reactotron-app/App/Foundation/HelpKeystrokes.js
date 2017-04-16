@@ -41,7 +41,6 @@ const Styles = {
 }
 
 class HelpKeystrokes extends Component {
-
   render () {
     return (
       <div style={Styles.container}>

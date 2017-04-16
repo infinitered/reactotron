@@ -81,7 +81,6 @@ const INITIAL_STATE = {
 }
 
 class ApiResponseCommand extends Component {
-
   static propTypes = {
     command: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired
   }
@@ -133,7 +132,7 @@ class ApiResponseCommand extends Component {
     const url = dotPath('request.url', payload)
     const smallUrl = pipe(
       replace(/^http(s):\/\/[a-zA-Z0-9.]*/i, ''),
-      replace(/\?.*$/i, ''),
+      replace(/\?.*$/i, '')
     )(url)
     const method = toUpper(dotPath('request.method', payload) || '')
     const requestHeaders = dotPath('request.headers', payload)

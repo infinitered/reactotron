@@ -71,7 +71,6 @@ const Styles = {
 @inject('session')
 @observer
 class Native extends Component {
-
   constructor (props) {
     super(props)
     this.state = {

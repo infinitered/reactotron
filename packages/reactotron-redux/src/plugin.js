@@ -77,9 +77,7 @@ const createPlugin = (store, pluginConfig = {}) => {
             // run our state through our onRestore
             const state = onRestore(payload.state)
             store.dispatch({ type: restoreActionType, state })
-            return
           }
-
         }
       }
     }

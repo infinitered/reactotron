@@ -11,7 +11,6 @@ const Styles = {
 }
 
 class NativeOverlayAlignment extends Component {
-
   static propTypes = {
     justifyContent: PropTypes.string.isRequired,
     alignItems: PropTypes.string.isRequired,
@@ -95,7 +94,6 @@ class NativeOverlayAlignment extends Component {
       </div>
     )
   }
-
 }
 
 export default NativeOverlayAlignment

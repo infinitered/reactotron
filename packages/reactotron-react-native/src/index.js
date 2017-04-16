@@ -1,28 +1,14 @@
-// -----------
-// FIRST PARTY
-// -----------
-
 import trackGlobalErrors from './plugins/track-global-errors'
 import openInEditor from './plugins/open-in-editor'
 import overlay from './plugins/overlay'
 import asyncStorage from './plugins/async-storage'
 import networking from './plugins/networking'
-
-export { trackGlobalErrors, openInEditor, overlay, asyncStorage, networking }
-
-// ------------
-// SECOND PARTY
-// ------------
-
 import { createClient } from 'reactotron-core-client'
-
-// -----------
-// THIRD PARTY
-// -----------
-
 import getHost from 'rn-host-detect'
+
 var io = require('socket.io-client/dist/socket.io')
 
+export { trackGlobalErrors, openInEditor, overlay, asyncStorage, networking }
 // ---------------------
 // DEFAULT CONFIGURATION
 // ---------------------

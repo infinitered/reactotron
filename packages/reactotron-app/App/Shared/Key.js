@@ -16,7 +16,6 @@ const Styles = {
 }
 
 class Key extends Component {
-
   static propTypes = {
     text: PropTypes.string.isRequired
   }
@@ -30,7 +29,6 @@ class Key extends Component {
       </span>
     )
   }
-
 }
 
 export default Key

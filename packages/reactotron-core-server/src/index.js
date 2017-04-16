@@ -14,7 +14,6 @@ const DEFAULTS = {
 }
 
 class Server {
-
   // the configuration options
   @observable options = merge({}, DEFAULTS)
   started = false
@@ -246,7 +245,6 @@ class Server {
     const { file, lineNumber } = details
     this.send('editor.open', { file, lineNumber })
   }
-
 }
 
 export default Server

@@ -53,7 +53,6 @@ const Styles = {
 @inject('session')
 @observer
 class NativeHeader extends Component {
-
   render () {
     return (
       <div style={Styles.container}>
@@ -67,7 +66,6 @@ class NativeHeader extends Component {
       </div>
     )
   }
-
 }
 
 export default NativeHeader

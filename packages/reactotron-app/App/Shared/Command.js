@@ -85,7 +85,6 @@ const Styles = {
 
 @observer
 class Command extends Component {
-
   static propTypes = {
     command: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
@@ -150,7 +149,6 @@ class Command extends Component {
       </div>
     )
   }
-
 }
 
 export default Command

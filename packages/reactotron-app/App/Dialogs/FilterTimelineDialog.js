@@ -131,7 +131,6 @@ const Styles = {
 @inject('session')
 @observer
 class FilterTimelineDialog extends Component {
-
   render () {
     const { session } = this.props
     const { ui } = session

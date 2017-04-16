@@ -16,7 +16,6 @@ const Styles = {
 }
 
 class Timestamp extends Component {
-
   static propTypes = {
     date: PropTypes.object.isRequired,
     style: PropTypes.object

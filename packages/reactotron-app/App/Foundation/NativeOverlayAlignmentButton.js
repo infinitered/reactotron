@@ -15,7 +15,6 @@ const Styles = {
 }
 
 class NativeOverlayAlignmentButton extends Component {
-
   static propTypes = {
     onClick: PropTypes.func.isRequired,
     justifyContent: PropTypes.string.isRequired,
@@ -38,7 +37,6 @@ class NativeOverlayAlignmentButton extends Component {
       </div>
     )
   }
-
 }
 
 export default NativeOverlayAlignmentButton

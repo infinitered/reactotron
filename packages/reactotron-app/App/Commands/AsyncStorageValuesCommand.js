@@ -11,7 +11,6 @@ const mapIndexed = addIndex(map)
 const COMMAND_TITLE = 'ASYNC STORAGE'
 
 class AsyncStorageValuesCommand extends Component {
-
   static propTypes = {
     command: PropTypes.object.isRequired
   }

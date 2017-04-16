@@ -83,7 +83,6 @@ const makeStep = (step, idx, last, totalDuration) => {
 }
 
 class BenchmarkReportCommand extends Component {
-
   static propTypes = {
     command: PropTypes.object.isRequired
   }
