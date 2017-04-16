@@ -25,7 +25,6 @@ const Styles = {
 }
 
 class NativeOverlayResize extends Component {
-
   static propTypes = {
     resizeMode: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired
@@ -52,7 +51,6 @@ class NativeOverlayResize extends Component {
       </div>
     )
   }
-
 }
 
 export default NativeOverlayResize

@@ -42,7 +42,6 @@ const CopyDisplayButton = props =>
 @inject('session')
 @observer
 class CommandToolbar extends Component {
-
   static propTypes = {
     command: PropTypes.object.isRequired
   }
@@ -187,7 +186,6 @@ class CommandToolbar extends Component {
       </div>
     )
   }
-
 }
 
 export default CommandToolbar

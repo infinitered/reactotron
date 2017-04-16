@@ -4,9 +4,7 @@
   "description": "A development tool to explore, inspect, and diagnose your React Native apps.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "ava",
-    "watch": "ava --watch",
-    "coverage": "nyc ava",
+    "test": "exit 0",
     "build": "rollup -c",
     "lint": "standard",
     "build:watch": "node watch.js"
@@ -28,7 +26,7 @@
     "react-native": ">=0.31.0"
   },
   "devDependencies": {
-    "ava": "^0.18.1",
+    "ava": "^0.19.1",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.0",
     "babel-preset-es2015": "^6.22.0",
@@ -36,20 +34,17 @@
     "babel-preset-react-native": "^1.9.1",
     "babel-preset-stage-1": "^6.22.0",
     "execa": "^0.6.3",
-    "mockery": "^2.0.0",
     "node-watch": "^0.5.2",
     "nyc": "^10.1.2",
-    "react": "~15.4.2",
+    "react": "15.4.2",
     "react-native": "0.42.3",
-    "react-native-mock": "^0.3.1",
     "rollup": "^0.41.4",
     "rollup-plugin-babel": "^2.6.1",
-    "standard": "^8.0.0"
+    "standard": "^10.0.2"
   },
   "ava": {
     "require": [
       "babel-core/register",
-      "react-native-mock/mock",
       "./test/_setup"
     ]
   },
@@ -62,6 +57,7 @@
   },
   "dependencies": {
     "json-stringify-safe": "^5.0.1",
+    "mitt": "^1.1.1",
     "ramda": "^0.23.0",
     "ramdasauce": "^1.2.0",
     "reactotron-core-client": "^1.9.1",

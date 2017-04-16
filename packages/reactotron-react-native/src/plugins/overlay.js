@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 import FullScreenOverlay from './full-screen-overlay'
-import mitt from '../mitt'
+import mitt from 'mitt'
 
 /**
  * Provides an image.

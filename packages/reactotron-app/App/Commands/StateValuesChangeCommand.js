@@ -16,7 +16,6 @@ const Styles = {
 }
 
 class StateValuesChangeCommand extends Component {
-
   static propTypes = {
     command: PropTypes.object.isRequired
   }

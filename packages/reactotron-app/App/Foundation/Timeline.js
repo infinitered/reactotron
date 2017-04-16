@@ -22,7 +22,6 @@ const Styles = {
 @inject('session')
 @observer
 class Timeline extends Component {
-
   // fires when we will update
   componentWillUpdate () {
     const node = this.refs.commands
@@ -63,7 +62,6 @@ class Timeline extends Component {
       </div>
     )
   }
-
 }
 
 export default Timeline

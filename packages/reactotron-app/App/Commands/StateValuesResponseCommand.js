@@ -22,7 +22,6 @@ const Styles = {
 }
 
 class StateValuesResponseCommand extends Component {
-
   static propTypes = {
     command: PropTypes.object.isRequired
   }

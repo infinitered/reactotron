@@ -42,7 +42,6 @@ const ReleaseIcon = require('react-icons/lib/go/squirrel')
 const TwitterIcon = require('react-icons/lib/fa/twitter')
 
 class HelpFeedback extends Component {
-
   constructor (props) {
     super(props)
     this.openRepo = () => shell.openExternal('https://github.com/infinitered/reactotron')

@@ -90,8 +90,6 @@ export default options => reactotron => {
 
           reactotron.error(error.message, stack)
         })
-
-        return
       }
     } catch (e) {
       // nothing happened. move along.

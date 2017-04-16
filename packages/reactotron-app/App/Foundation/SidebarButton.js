@@ -19,7 +19,6 @@ const Styles = {
 }
 
 class SidebarButton extends Component {
-
   static propTypes = {
     icon: PropTypes.string.isRequired,
     text: PropTypes.string,
@@ -38,7 +37,6 @@ class SidebarButton extends Component {
       </div>
     )
   }
-
 }
 
 export default SidebarButton

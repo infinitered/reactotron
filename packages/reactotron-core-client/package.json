@@ -24,7 +24,7 @@
     "README.md"
   ],
   "devDependencies": {
-    "ava": "^0.18.1",
+    "ava": "^0.19.1",
     "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.0",
@@ -34,8 +34,8 @@
     "nyc": "^10.1.2",
     "rollup": "^0.41.4",
     "rollup-plugin-babel": "^2.6.1",
-    "standard": "^8.0.0",
-    "socket.io": "^1.7.0"
+    "socket.io": "^1.7.0",
+    "standard": "^10.0.2"
   },
   "ava": {
     "require": [

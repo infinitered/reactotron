@@ -97,7 +97,6 @@ const INSTRUCTIONS = <div>
 @inject('session')
 @observer
 class StateWatchDialog extends Component {
-
   handleChange = (e) => {
     const { session } = this.props
     session.ui.watchToAdd = e.target.value

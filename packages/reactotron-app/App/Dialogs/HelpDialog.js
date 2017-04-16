@@ -85,7 +85,6 @@ const Styles = {
 @inject('session')
 @observer
 class StateDispatchDialog extends Component {
-
   handleChange = (e) => {
     const { session } = this.props
     session.ui.actionToDispatch = e.target.value

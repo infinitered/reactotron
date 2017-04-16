@@ -29,7 +29,6 @@ const Styles = {
 @inject('session')
 @observer
 class Sidebar extends Component {
-
   constructor (props) {
     super(props)
     this.handleClickTimeline = () => { this.props.session.ui.switchTab('timeline') }
@@ -61,7 +60,6 @@ class Sidebar extends Component {
       </div>
     )
   }
-
 }
 
 export default Sidebar

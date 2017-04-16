@@ -1,6 +1,6 @@
 import { not, contains } from 'ramda'
 import { createStore, applyMiddleware } from 'redux'
-import createLogger from 'redux-logger'
+import { createLogger } from 'redux-logger'
 import createSagaMiddleware from 'redux-saga'
 import rootReducer from './RootReducer'
 import rootSaga from '../Sagas'

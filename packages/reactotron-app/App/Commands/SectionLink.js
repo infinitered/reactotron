@@ -25,7 +25,6 @@ const Styles = {
 }
 
 class SectionLink extends Component {
-
   static propTypes = {
     isActive: PropTypes.bool.isRequired,
     text: PropTypes.string.isRequired,
@@ -42,7 +41,6 @@ class SectionLink extends Component {
       </div>
     )
   }
-
 }
 
 export default SectionLink

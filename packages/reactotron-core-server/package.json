@@ -23,7 +23,7 @@
     "README.md"
   ],
   "devDependencies": {
-    "ava": "^0.18.1",
+    "ava": "^0.19.1",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.0",
     "babel-plugin-transform-async-to-generator": "^6.22.0",
@@ -35,7 +35,7 @@
     "nyc": "^10.1.2",
     "rollup": "^0.41.4",
     "rollup-plugin-babel": "^2.6.1",
-    "standard": "^8.0.0"
+    "standard": "^10.0.2"
   },
   "ava": {
     "require": [
@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "mobx": "^2.5.1",
-    "ramda": "^0.22.1",
+    "ramda": "^0.23.0",
     "ramdasauce": "^1.1.1",
     "socket.io": "^1.4.8"
   }

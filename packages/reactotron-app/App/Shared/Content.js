@@ -7,7 +7,6 @@ import makeTable from './MakeTable'
 const NULL_TEXT = '¯\\_(ツ)_/¯'
 
 class Content extends Component {
-
   static propTypes = {
     value: PropTypes.oneOfType([ PropTypes.object, PropTypes.array, PropTypes.string, PropTypes.number, PropTypes.bool ]),
     treeLevel: PropTypes.number
