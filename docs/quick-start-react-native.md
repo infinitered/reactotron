@@ -40,7 +40,8 @@ I like a separate file for initializing.  Create `ReactotronConfig.js` in your e
 import Reactotron from 'reactotron-react-native'
 
 Reactotron
-  .configure() // we can use plugins here -- more on this later
+  .configure() // controls connection & communication settings
+  .useReactNative() // add all built-in react native plugins
   .connect() // let's connect!
 ```
 
