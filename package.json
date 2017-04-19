@@ -4,14 +4,14 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
-    "build": "lerna run build --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce' --scope 'reactotron-react-native' --scope 'reactotron-react-js' --scope 'reactotron-cli'",
+    "build": "lerna run build --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce' --scope 'reactotron-react-native' --scope 'reactotron-react-js'",
     "copy-internal-deps": "cd packages/demo-react-native && ./copy-internal-deps.sh && cd ../..",
-    "test": "lerna run test --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce' --scope 'reactotron-react-native' --scope 'reactotron-react-js' --scope 'reactotron-cli'",
+    "test": "lerna run test --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce' --scope 'reactotron-react-native' --scope 'reactotron-react-js'",
     "lint": "lerna run lint",
     "welcome": "yarn run clean && yarn run bootstrap -- --ignore-engines && yarn run build && yarn run copy-internal-deps && yarn run lint -s"
   },
   "devDependencies": {
-    "lerna": "^2.0.0-beta.38"
+    "lerna": "^2.0.0-rc.3"
   },
   "dependencies": {
     "stringify-object": "^3.2.0"
