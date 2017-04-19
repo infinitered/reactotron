@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react'
 import IconFilter from 'react-icons/lib/md/filter-list'
 import IconClear from 'react-icons/lib/md/delete-sweep'
 
-const TITLE = 'Event Timeline'
+const TITLE = 'Timeline'
 
 const toolbarButton = {
   cursor: 'pointer'
