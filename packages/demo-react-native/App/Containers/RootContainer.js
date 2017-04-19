@@ -12,7 +12,6 @@ import makeErrorForFun from '../Lib/ErrorMaker'
 import RNViewShot from 'react-native-view-shot'
 
 class RootContainer extends Component {
-
   constructor (props) {
     super(props)
     this.handlePress = this.handlePress.bind(this)
@@ -160,7 +159,6 @@ class RootContainer extends Component {
       </ScrollView>
     )
   }
-
 }
 
 const mapStateToProps = (state) => {

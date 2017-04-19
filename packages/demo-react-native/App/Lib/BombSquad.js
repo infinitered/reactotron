@@ -4,4 +4,3 @@ export function dismantleBomb (cutTheRedWire) {
     this.isSparta('👢') // this is madness!
   }
 }
-

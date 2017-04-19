@@ -7,7 +7,6 @@ import { merge } from 'ramda'
 const ROTATION = { inputRange: [0, 1], outputRange: ['0deg', '360deg'] }
 
 class Repo extends Component {
-
   static propTypes = {
     repo: PropTypes.string,
     name: PropTypes.string,
