@@ -23,7 +23,7 @@ const DEFAULT_OPTS = {
   dir: './',
   name: appName,
   asar: shouldUseAsar,
-  'app-bundle-id': 'com.reactotron.app',
+  appBundleId: 'com.reactotron.app',
   ignore: [
     '^/test($|/)',
     '^/release($|/)',
@@ -44,17 +44,17 @@ if (icon) {
 const version = argv.version || argv.v
 
 if (version) {
-  DEFAULT_OPTS.version = version
+  DEFAULT_OPTS.electronVersion = version
   startPack()
 } else {
-  // use the same version as the currently-installed electron-prebuilt
-  exec('npm list electron-prebuilt --depth 0 --dev', (err, stdout) => {
+  // use the same version as the currently-installed electron
+  exec('npm list electron --depth 0 --dev', (err, stdout) => {
     if (err) {
-      DEFAULT_OPTS.version = '1.4.15'
+      DEFAULT_OPTS.electronVersion = '1.6.5'
     } else {
-      DEFAULT_OPTS.version = R.pipe(
+      DEFAULT_OPTS.electronVersion = R.pipe(
         R.split(/\s/),
-        R.find(RS.startsWith('electron-prebuilt@')),
+        R.find(RS.startsWith('electron@')),
         R.split('@'),
         R.last
       )(stdout)
@@ -77,30 +77,34 @@ function startPack () {
   build(electronCfg)
     .then(() => build(cfg))
     .then(() => del('release'))
-    .then(paths => {
-      if (shouldBuildAll) {
-        // build for all platforms
-        const archs = ['ia32', 'x64']
-        const platforms = ['linux', 'win32', 'darwin']
+    .then(() => pack('darwin', 'x64'))
+    .then(() => pack('linux', 'ia32'))
+    .then(() => pack('linux', 'x64'))
+    .then(() => pack('win32', 'ia32'))
+    .then(() => pack('win32', 'x64'))
+    // .then(paths => {
+    //   if (shouldBuildAll) {
+    //     // build for all platforms
+    //     const archs = ['ia32', 'x64']
+    //     const platforms = ['linux', 'win32', 'darwin']
 
-        platforms.forEach(plat => {
-          archs.forEach(arch => {
-            pack(plat, arch, log(plat, arch))
-          })
-        })
-      } else {
-        // build for current platform only
-        pack(os.platform(), os.arch(), log(os.platform(), os.arch()))
-      }
-    })
+    //     platforms.forEach(plat => {
+    //       archs.forEach(arch => {
+    //         pack(plat, arch, log(plat, arch))
+    //       })
+    //     })
+    //   } else {
+    //     // build for current platform only
+    //     pack(os.platform(), os.arch(), log(os.platform(), os.arch()))
+    //   }
+    // })
     .catch(err => {
       console.error(err)
     })
 }
 
-function pack (plat, arch, cb) {
-  // there is no darwin ia32 electron
-  if (plat === 'darwin' && arch === 'ia32') return
+function pack (plat, arch) {
+  console.log(`starting ${plat} for ${arch}`)
 
   const iconObj = {
     icon: DEFAULT_OPTS.icon + (() => {
@@ -118,11 +122,20 @@ function pack (plat, arch, cb) {
     platform: plat,
     arch,
     prune: true,
-    'app-version': pkg.version || DEFAULT_OPTS.version,
+    appVersion: pkg.version || DEFAULT_OPTS.version,
     out: `release/${plat}-${arch}`
   })
 
-  packager(opts, cb)
+  return new Promise((resolve, reject) => {
+    const cb = (err, goods) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(goods)
+      }
+    }
+    packager(opts, cb)
+  })
 }
 
 function log (plat, arch) {
