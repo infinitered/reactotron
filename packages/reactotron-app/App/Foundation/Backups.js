@@ -6,6 +6,7 @@ import { map } from 'ramda'
 import BackupsHeader from './BackupsHeader'
 import moment from 'moment'
 import IconDelete from 'react-icons/lib/md/delete'
+import Empty from '../Foundation/EmptyState'
 
 const Styles = {
   container: {
@@ -50,6 +51,16 @@ class Backups extends Component {
     this.renderBackup = this.renderBackup.bind(this)
   }
 
+  renderEmpty () {
+    return (
+      <Empty icon='import-export' title='No Snapshots'>
+        <p>
+          To take a snapshot of your current Redux store, press the Download button in the top right
+          corner of this window.
+        </p>
+      </Empty>
+    )
+  }
   renderBackup (backup, indent = 0) {
     const { ui } = this.props.session
     const { restoreState } = ui
@@ -66,19 +77,26 @@ class Backups extends Component {
     return (
       <div style={Styles.row} key={key} onClick={restore}>
         <div style={Styles.name}>{name}</div>
-        <IconDelete size={Styles.iconSize} style={Styles.delete} onClick={deleteState} />
+        <IconDelete
+          size={Styles.iconSize}
+          style={Styles.delete}
+          onClick={deleteState}
+        />
       </div>
     )
   }
 
   render () {
     const { backups } = this.props.session
+    const isEmpty = backups.length === 0
     return (
       <div style={Styles.container}>
         <BackupsHeader />
-        <div style={Styles.backups}>
-          {map(this.renderBackup, backups)}
-        </div>
+        {isEmpty
+          ? this.renderEmpty()
+          : <div style={Styles.backups}>
+            {map(this.renderBackup, backups)}
+          </div>}
       </div>
     )
   }

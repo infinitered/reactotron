@@ -4,6 +4,8 @@ import getCommandComponent from '../Commands'
 import TimelineHeader from './TimelineHeader'
 import { map, isNil } from 'ramda'
 import AppStyles from '../Theme/AppStyles'
+import Empty from '../Foundation/EmptyState'
+
 
 const Styles = {
   container: {
@@ -42,9 +44,18 @@ class Timeline extends Component {
     node.scrollTop = this.scrollTop + node.scrollHeight - this.scrollHeight
   }
 
+  renderEmpty () {
+    return (
+      <Empty icon='reorder' title='No Activity'>
+        <p>Once your app connects and starts sending events, they will appear here.</p>
+      </Empty>
+    )
+  }
+
   render () {
     // grab the commands, but sdrawkcab
     const commands = this.props.session.commands
+    const isEmpty = commands.length === 0
 
     const renderItem = command => {
       const CommandComponent = getCommandComponent(command)
@@ -55,7 +66,7 @@ class Timeline extends Component {
     return (
       <div style={Styles.container}>
         <TimelineHeader />
-
+        { isEmpty && this.renderEmpty() }
         <div style={Styles.commands} ref='commands'>
           {map(renderItem, commands)}
         </div>

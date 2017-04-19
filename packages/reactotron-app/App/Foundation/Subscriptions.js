@@ -6,6 +6,9 @@ import { is, map, merge } from 'ramda'
 import ObjectTree from '../Shared/ObjectTree'
 import { colorForValue, textForValue } from '../Shared/MakeTable'
 import SubscriptionsHeader from './SubscriptionsHeader'
+import Empty from '../Foundation/EmptyState'
+import Key from '../Shared/Key'
+import Keystroke from '../Lib/Keystroke'
 
 const Styles = {
   container: {
@@ -37,8 +40,8 @@ const Styles = {
     flex: 0.7,
     wordBreak: 'break-all'
   },
-  title: {
-    color: Colors.tag
+  message: {
+    lineHeight: 1.8
   }
 }
 
@@ -69,14 +72,29 @@ class WatchPanel extends Component {
     )
   }
 
+  renderEmpty () {
+    return (
+      <Empty icon='notifications-none' title='No Subscriptions'>
+        <p style={Styles.message}>
+          You can subscribe to state changes in your
+          redux store by pressing <Key text={Keystroke.modifierName} /> + <Key text='N' />.</p>
+      </Empty>
+    )
+  }
+
   render () {
     const { watches } = this.props.session
+    const isEmpty = watches.length === 0
+
     return (
       <div style={Styles.container}>
         <SubscriptionsHeader />
-        <div style={Styles.watches}>
-          {map(this.renderWatch, watches)}
-        </div>
+        { isEmpty && this.renderEmpty() }
+        { !isEmpty &&
+          <div style={Styles.watches}>
+            {map(this.renderWatch, watches)}
+          </div>
+        }
       </div>
     )
   }
