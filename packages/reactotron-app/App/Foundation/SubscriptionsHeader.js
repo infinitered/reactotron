@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react'
 import IconAdd from 'react-icons/lib/md/add'
 import IconClear from 'react-icons/lib/md/delete-forever'
 
-const TITLE = 'State Subscriptions'
+const TITLE = 'Redux Subscriptions'
 
 const toolbarButton = {
   cursor: 'pointer'

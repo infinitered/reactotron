@@ -7,7 +7,7 @@ import { inject, observer } from 'mobx-react'
 const Styles = {
   container: {
     zIndex: 5,
-    width: 80,
+    maxWidth: 115,
     backgroundColor: Colors.backgroundSubtleDark,
     boxShadow: `0px 0px 30px ${Colors.glow}`,
     borderRight: `1px solid ${Colors.chromeLine}`,
@@ -47,14 +47,14 @@ class Sidebar extends Component {
       <div style={Styles.container}>
         <div style={Styles.content}>
           <div style={Styles.tabs}>
-            <SidebarButton text='Timeline' icon='reorder' isActive={ui.tab === 'timeline'} onClick={this.handleClickTimeline} />
-            <SidebarButton text='Subs' icon='notifications-none' isActive={ui.tab === 'subscriptions'} onClick={this.handleClickSubscriptions} />
-            <SidebarButton text='State Backups' icon='import-export' isActive={ui.tab === 'backups'} onClick={this.handleClickBackups} />
+            <SidebarButton text='Timeline' icon='reorder' hideTopBorder isActive={ui.tab === 'timeline'} onClick={this.handleClickTimeline} />
+            <SidebarButton text='Redux Subscriptions' icon='notifications-none' isActive={ui.tab === 'subscriptions'} onClick={this.handleClickSubscriptions} />
+            <SidebarButton text='Redux Snapshots' icon='import-export' isActive={ui.tab === 'backups'} onClick={this.handleClickBackups} />
             <SidebarButton text='React Native' icon='phone-iphone' isActive={ui.tab === 'native'} onClick={this.handleClickNative} />
           </div>
           <div style={Styles.spacer} />
           <div>
-            <SidebarButton text='Help' icon='live-help' isActive={ui.tab === 'help'} onClick={this.handleClickHelp} />
+            <SidebarButton text='Help' icon='live-help' hideTopBorder isActive={ui.tab === 'help'} onClick={this.handleClickHelp} />
           </div>
         </div>
       </div>
