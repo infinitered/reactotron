@@ -1,3 +1,3 @@
 module.exports = ({ platform }) => ({
-  entry: `./index.${platform}.js`,
-});
+  entry: `./index.${platform}.js`
+})

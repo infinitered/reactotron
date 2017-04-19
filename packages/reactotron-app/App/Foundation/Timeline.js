@@ -6,7 +6,6 @@ import { map, isNil } from 'ramda'
 import AppStyles from '../Theme/AppStyles'
 import Empty from '../Foundation/EmptyState'
 
-
 const Styles = {
   container: {
     ...AppStyles.Layout.vbox,
