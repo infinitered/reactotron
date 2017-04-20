@@ -1,7 +1,7 @@
 {
   "name": "reactotron-app",
   "productName": "Reactotron",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "Reactotron desktop mode engage!",
   "main": "main.js",
   "scripts": {
@@ -54,8 +54,8 @@
     "cross-env": "^4.0.0",
     "css-loader": "^0.28.0",
     "del": "^2.2.1",
-    "electron-packager": "^8.5.1",
     "electron": "1.6.6",
+    "electron-packager": "^8.5.1",
     "electron-rebuild": "^1.5.7",
     "express": "^4.14.1",
     "extract-text-webpack-plugin": "^1.0.1",
@@ -90,7 +90,7 @@
     "react-modal-dialog": "3.0.2",
     "react-tap-event-plugin": "^2.0.1",
     "react-tooltip": "^3.3.0",
-    "reactotron-core-server": "^1.9.0",
+    "reactotron-core-server": "^1.10.0",
     "socket.io": "^1.7.3",
     "source-map-support": "^0.4.14",
     "stringify-object": "^3.0.0"
