@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "reactotron-app",
   "productName": "Reactotron",
   "version": "1.10.0",
