@@ -1,7 +1,6 @@
 'use strict'
 
 require('babel-polyfill')
-const os = require('os')
 const webpack = require('webpack')
 const electronCfg = require('./webpack.config.electron.js')
 const cfg = require('./webpack.config.production.js')
@@ -17,7 +16,6 @@ const RS = require('ramdasauce')
 
 const appName = argv.name || argv.n || pkg.productName
 const shouldUseAsar = argv.asar || argv.a || false
-const shouldBuildAll = argv.all || false
 
 const DEFAULT_OPTS = {
   dir: './',
@@ -45,7 +43,7 @@ const version = argv.version || argv.v
 
 if (version) {
   DEFAULT_OPTS.electronVersion = version
-  startPack()
+  doEverything()
 } else {
   // use the same version as the currently-installed electron
   exec('npm list electron --depth 0 --dev', (err, stdout) => {
@@ -59,7 +57,7 @@ if (version) {
         R.last
       )(stdout)
     }
-    startPack()
+    doEverything()
   })
 }
 
@@ -72,8 +70,8 @@ function build (cfg) {
   })
 }
 
-function startPack () {
-  console.log('start pack...')
+function doEverything () {
+  console.log('start builds...')
   build(electronCfg)
     .then(() => build(cfg))
     .then(() => del('release'))
@@ -82,30 +80,12 @@ function startPack () {
     .then(() => pack('linux', 'x64'))
     .then(() => pack('win32', 'ia32'))
     .then(() => pack('win32', 'x64'))
-    // .then(paths => {
-    //   if (shouldBuildAll) {
-    //     // build for all platforms
-    //     const archs = ['ia32', 'x64']
-    //     const platforms = ['linux', 'win32', 'darwin']
-
-    //     platforms.forEach(plat => {
-    //       archs.forEach(arch => {
-    //         pack(plat, arch, log(plat, arch))
-    //       })
-    //     })
-    //   } else {
-    //     // build for current platform only
-    //     pack(os.platform(), os.arch(), log(os.platform(), os.arch()))
-    //   }
-    // })
     .catch(err => {
       console.error(err)
     })
 }
 
 function pack (plat, arch) {
-  console.log(`starting ${plat} for ${arch}`)
-
   const iconObj = {
     icon: DEFAULT_OPTS.icon + (() => {
       let extension = '.png'
@@ -136,11 +116,4 @@ function pack (plat, arch) {
     }
     packager(opts, cb)
   })
-}
-
-function log (plat, arch) {
-  return (err, filepath) => {
-    if (err) return console.error(err)
-    console.log(`${plat}-${arch} finished!`)
-  }
 }
