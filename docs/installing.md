@@ -1,10 +1,10 @@
 Reactotron comes in two versions.  A desktop version (available on macOS, Linux, and Windows) or a CLI (available only on macOS).
 
-# Installing the OS X Application
+# Installing the Application
 
 ### Via Direct Download
 
-[Download OS X App](https://github.com/infinitered/reactotron/releases/download/v1.10.0/Reactotron.app.zip) from GitHub release and drop the Reactotron.app to the Applications folder.
+[Download macOS App](https://github.com/infinitered/reactotron/releases/download/v1.10.0/Reactotron.app.zip) from GitHub release and drop the Reactotron.app to the Applications folder.
 
 [Download 32 bit Linux App](https://github.com/infinitered/reactotron/releases/download/v1.10.0/Reactotron-linux-ia32.zip) or [64 bit Linux App](https://github.com/infinitered/reactotron/releases/download/v1.10.0/Reactotron-linux-x64.zip).
 
