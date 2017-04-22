@@ -29,6 +29,9 @@ class UI {
   // the watch dialog
   @observable showStateWatchDialog = false
 
+  // the rename dialog
+  @observable showRenameStateDialog = false
+
   // wheter or not to show the timeline filter dialog
   @observable showFilterTimelineDialog = false
 
@@ -84,6 +87,8 @@ class UI {
   @action submitCurrentForm = () => {
     if (this.showStateWatchDialog) {
       this.submitStateWatch()
+    } else if (this.showRenameStateDialog) {
+      this.submitRenameState()
     }
   }
 
@@ -97,6 +102,10 @@ class UI {
     this.server.stateValuesSubscribe(this.watchToAdd)
     this.showStateWatchDialog = false
     this.watchToAdd = null
+  }
+
+  @action submitRenameState = () => {
+    this.showRenameStateDialog = false
   }
 
   @action removeStateWatch = (path) => {
@@ -143,6 +152,14 @@ class UI {
 
   @action closeStateWatchDialog = () => {
     this.showStateWatchDialog = false
+  }
+
+  @action openRenameStateDialog = () => {
+    this.showRenameStateDialog = true
+  }
+
+  @action closeRenameStateDialog = () => {
+    this.showRenameStateDialog = false
   }
 
   @action openStateDispatchDialog = () => {
