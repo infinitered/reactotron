@@ -6,7 +6,7 @@
 
 # What is Reactotron?
 
-An OS X app for inspecting your [React JS](https://facebook.github.io/react/) and [React Native](https://facebook.github.io/react-native/) apps.
+A macOS, Windows, and Linux app for inspecting your [React JS](https://facebook.github.io/react/) and [React Native](https://facebook.github.io/react-native/) apps.
 
 Use it to:
 
