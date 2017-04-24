@@ -104,7 +104,8 @@ class UI {
     this.watchToAdd = null
   }
 
-  @action submitRenameState = () => {
+  @action submitRenameState = state => {
+    this.server.commands['state.backup.response'].name = 'kung fu'
     this.showRenameStateDialog = false
   }
 
@@ -161,6 +162,10 @@ class UI {
   @action closeRenameStateDialog = () => {
     this.showRenameStateDialog = false
   }
+
+  // @action renameState = state => {
+  //   this.server.commands['state.backup.response'].name = 'kung fu'
+  // }
 
   @action openStateDispatchDialog = () => {
     this.showStateDispatchDialog = true
