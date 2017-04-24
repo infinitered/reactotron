@@ -86,7 +86,7 @@ const Styles = {
 class RenameStateDialog extends Component {
   handleChange = (e) => {
     const { session } = this.props
-    session.ui.actionToDispatch = e.target.value
+    session.ui.backupStateName = e.target.value
   }
 
   render () {
@@ -107,11 +107,11 @@ class RenameStateDialog extends Component {
               <div style={Styles.body}>
                 <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
                 <input
+                  autoFocus
                   placeholder={INPUT_PLACEHOLDER}
                   style={Styles.textField}
                   type='text'
                   ref='textField'
-                  onKeyPress={this.handleKeyPress}
                   onChange={this.handleChange}
                 />
               </div>

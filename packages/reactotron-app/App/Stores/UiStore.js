@@ -38,6 +38,9 @@ class UI {
   // the current watch to add
   @observable watchToAdd
 
+  // the current name of a backup
+  @observable backupStateName
+
   // the current action to dispatch
   @observable actionToDispatch
 
@@ -104,9 +107,10 @@ class UI {
     this.watchToAdd = null
   }
 
-  @action submitRenameState = state => {
-    this.server.commands['state.backup.response'].name = 'kung fu'
+  @action submitRenameState = () => {
+    this.currentBackupState.name = this.backupStateName
     this.showRenameStateDialog = false
+    this.backupStateName = null
   }
 
   @action removeStateWatch = (path) => {
@@ -155,17 +159,14 @@ class UI {
     this.showStateWatchDialog = false
   }
 
-  @action openRenameStateDialog = () => {
+  @action openRenameStateDialog = backup => {
     this.showRenameStateDialog = true
+    this.currentBackupState = backup
   }
 
   @action closeRenameStateDialog = () => {
     this.showRenameStateDialog = false
   }
-
-  // @action renameState = state => {
-  //   this.server.commands['state.backup.response'].name = 'kung fu'
-  // }
 
   @action openStateDispatchDialog = () => {
     this.showStateDispatchDialog = true

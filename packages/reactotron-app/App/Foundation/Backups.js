@@ -76,8 +76,7 @@ class Backups extends Component {
       event.stopPropagation()
     }
     const renameState = event => {
-      ui.openRenameStateDialog()
-      backup.name = 'yo'
+      ui.openRenameStateDialog(backup)
       event.stopPropagation()
     }
 
