@@ -157,7 +157,8 @@ export class Client {
   /**
    * Sends a custom command to the server to displays nicely.
    */
-  display ({ name, value, preview, image, important = false }) {
+  display (config = {}) {
+    const { name, value, preview, image, important = false } = config
     const payload = {
       name,
       value: value || null,
