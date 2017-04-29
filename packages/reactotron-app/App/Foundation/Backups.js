@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import { inject, observer } from 'mobx-react'
-import { map } from 'ramda'
 import BackupsHeader from './BackupsHeader'
 import moment from 'moment'
 import IconDelete from 'react-icons/lib/md/delete'
+import IconRename from 'react-icons/lib/md/create'
 import Empty from '../Foundation/EmptyState'
 
 const Styles = {
@@ -38,8 +38,9 @@ const Styles = {
     paddingRight: 10,
     cursor: 'pointer'
   },
-  delete: {
-    cursor: 'pointer'
+  button: {
+    cursor: 'pointer',
+    paddingLeft: 10
   }
 }
 
@@ -61,6 +62,7 @@ class Backups extends Component {
       </Empty>
     )
   }
+
   renderBackup (backup, indent = 0) {
     const { ui } = this.props.session
     const { restoreState } = ui
@@ -68,18 +70,27 @@ class Backups extends Component {
     const restore = restoreState.bind(this, state)
     const { messageId, date } = backup
     const key = `backup-${messageId}`
-    const name = moment(date).format('dddd @ h:mm:ss a')
+    const name = backup.payload.name || moment(date).format('dddd @ h:mm:ss a')
     const deleteState = event => {
       ui.deleteState(backup)
+      event.stopPropagation()
+    }
+    const renameState = event => {
+      ui.openRenameStateDialog(backup)
       event.stopPropagation()
     }
 
     return (
       <div style={Styles.row} key={key} onClick={restore}>
         <div style={Styles.name}>{name}</div>
+        <IconRename
+          size={Styles.iconSize}
+          style={Styles.button}
+          onClick={renameState}
+        />
         <IconDelete
           size={Styles.iconSize}
-          style={Styles.delete}
+          style={Styles.button}
           onClick={deleteState}
         />
       </div>
@@ -87,7 +98,7 @@ class Backups extends Component {
   }
 
   render () {
-    const { backups } = this.props.session
+    const backups = this.props.session.backups.slice()
     const isEmpty = backups.length === 0
     return (
       <div style={Styles.container}>
@@ -95,7 +106,7 @@ class Backups extends Component {
         {isEmpty
           ? this.renderEmpty()
           : <div style={Styles.backups}>
-            {map(this.renderBackup, backups)}
+            {backups.map(this.renderBackup)}
           </div>}
       </div>
     )

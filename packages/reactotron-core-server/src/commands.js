@@ -24,7 +24,7 @@ class Commands {
     // create an observable list for each (named after the type)
     R.forEach(type => {
       extendObservable(this, {
-        [type]: asFlat([])
+        [type]: observable([])
       })
       // this[type] = observable([])
     }, CommandTypes)
