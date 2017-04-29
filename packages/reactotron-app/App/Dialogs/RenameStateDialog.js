@@ -1,18 +1,15 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import moment from 'moment'
 import { ModalPortal, ModalBackground, ModalDialog } from 'react-modal-dialog'
 import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
-import Keystroke from '../Lib/Keystroke'
 
 const ESCAPE_KEYSTROKE = 'Esc'
 const ESCAPE_HINT = 'Cancel'
 const ENTER_KEYSTROKE = `Enter`
 const ENTER_HINT = 'Rename'
-const DIALOG_TITLE = 'Rename State Snapshot'
-const INPUT_PLACEHOLDER = 'Snapshot ' + moment().format('dddd @ h:mm:ss a')
+const DIALOG_TITLE = 'Rename Redux Snapshot'
+const INPUT_PLACEHOLDER = ''
 const FIELD_LABEL = 'New Name'
 
 const Styles = {
@@ -84,7 +81,12 @@ const Styles = {
 @inject('session')
 @observer
 class RenameStateDialog extends Component {
-  handleChange = (e) => {
+  constructor (props) {
+    super(props)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange (e) {
     const { session } = this.props
     session.ui.backupStateName = e.target.value
   }
@@ -94,8 +96,6 @@ class RenameStateDialog extends Component {
     const open = ui.showRenameStateDialog
     if (!open) return null
 
-    // need to find a less hacky way of doing this
-    setTimeout(() => ReactDOM.findDOMNode(this.refs.dispatchField).focus(), 1)
     return (
       <ModalPortal>
         <ModalBackground onClose={ui.closeRenameStateDialog}>
@@ -112,15 +112,20 @@ class RenameStateDialog extends Component {
                   style={Styles.textField}
                   type='text'
                   ref='textField'
+                  defaultValue={ui.backupStateName}
                   onChange={this.handleChange}
                 />
               </div>
               <div style={Styles.keystrokes}>
                 <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
+                  <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span>
+                  {' '}
+                  {ESCAPE_HINT}
                 </div>
                 <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
+                  <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span>
+                  {' '}
+                  {ENTER_HINT}
                 </div>
               </div>
             </div>

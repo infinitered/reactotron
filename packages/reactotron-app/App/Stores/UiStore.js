@@ -108,7 +108,7 @@ class UI {
   }
 
   @action submitRenameState = () => {
-    this.currentBackupState.name = this.backupStateName
+    this.currentBackupState.payload.name = this.backupStateName
     this.showRenameStateDialog = false
     this.backupStateName = null
   }
@@ -161,6 +161,7 @@ class UI {
 
   @action openRenameStateDialog = backup => {
     this.showRenameStateDialog = true
+    this.backupStateName = backup.payload.name
     this.currentBackupState = backup
   }
 

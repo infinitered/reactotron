@@ -126,6 +126,12 @@ class Server {
           this.subscriptions = pluck('path', payload.changes || [])
         }
 
+        // assign a name to the backups since the client doesn't pass one.  without it, we have to
+        // call extendObservable instead of a standard assignment, which is very confusing.
+        if (type === 'state.backup.response') {
+          fullCommand.payload.name = null
+        }
+
         // clear
         if (type === 'clear') {
           this.commands.all.clear()

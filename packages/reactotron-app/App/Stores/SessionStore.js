@@ -1,6 +1,6 @@
 import UiStore from './UiStore'
 import { createServer } from 'reactotron-core-server'
-import { action, observable, computed, reaction } from 'mobx'
+import { action, observable, computed, reaction, observe } from 'mobx'
 import { contains, last, isNil, reject, equals, reverse, pipe, propEq, map, fromPairs } from 'ramda'
 import { dotPath } from 'ramdasauce'
 import shallowDiff from '../Lib/ShallowDiff'
@@ -54,7 +54,7 @@ class Session {
   }
 
   @computed get backups () {
-    return this.server.commands['state.backup.response'].toJS().reverse()
+    return this.server.commands['state.backup.response']
   }
 
   // are commands of this type hidden?
@@ -86,6 +86,13 @@ class Session {
       () => this.watches.length > 0,
       show => { this.ui.showWatchPanel = show }
     )
+
+    // when a new backup arrives, open the editor to rename it
+    observe(this.backups, change => {
+      if (change.type === 'splice' && change.added.length === 1) {
+        this.ui.openRenameStateDialog(change.added[0])
+      }
+    })
   }
 }
 

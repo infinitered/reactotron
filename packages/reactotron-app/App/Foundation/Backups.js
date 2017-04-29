@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import { inject, observer } from 'mobx-react'
-import { map } from 'ramda'
 import BackupsHeader from './BackupsHeader'
 import moment from 'moment'
 import IconDelete from 'react-icons/lib/md/delete'
@@ -63,6 +62,7 @@ class Backups extends Component {
       </Empty>
     )
   }
+
   renderBackup (backup, indent = 0) {
     const { ui } = this.props.session
     const { restoreState } = ui
@@ -70,7 +70,7 @@ class Backups extends Component {
     const restore = restoreState.bind(this, state)
     const { messageId, date } = backup
     const key = `backup-${messageId}`
-    const name = backup.name || moment(date).format('dddd @ h:mm:ss a')
+    const name = backup.payload.name || moment(date).format('dddd @ h:mm:ss a')
     const deleteState = event => {
       ui.deleteState(backup)
       event.stopPropagation()
@@ -98,7 +98,7 @@ class Backups extends Component {
   }
 
   render () {
-    const { backups } = this.props.session
+    const backups = this.props.session.backups.slice()
     const isEmpty = backups.length === 0
     return (
       <div style={Styles.container}>
@@ -106,7 +106,7 @@ class Backups extends Component {
         {isEmpty
           ? this.renderEmpty()
           : <div style={Styles.backups}>
-            {map(this.renderBackup, backups)}
+            {backups.map(this.renderBackup)}
           </div>}
       </div>
     )
