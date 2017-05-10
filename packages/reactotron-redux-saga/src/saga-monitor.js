@@ -44,7 +44,7 @@ export default (reactotron, options) => {
     effects[effectId] = effectInfo
 
     // send it
-    sendReactotronEffectTree()
+    //sendReactotronEffectTree()
   }
 
   // ---------------- Finishing ----------------------------
@@ -145,7 +145,7 @@ export default (reactotron, options) => {
       children
     })
 
-    effects = omit(map(String, pluck('effectId', children)), effects)
+    //effects = omit(map(String, pluck('effectId', children)), effects)
   }
 
   // redux-saga calls this when an effect is resolved (successfully or not)
@@ -188,7 +188,7 @@ export default (reactotron, options) => {
     }
 
     // send it
-    sendReactotronEffectTree()
+    //sendReactotronEffectTree()
   }
 
   // flags on of the children as the winner
@@ -218,7 +218,7 @@ export default (reactotron, options) => {
     }
 
     // send it
-    sendReactotronEffectTree()
+    //sendReactotronEffectTree()
   }
 
   // ---------------- Cancelling ---------------------------
@@ -230,7 +230,7 @@ export default (reactotron, options) => {
     effectInfo.status = CANCELLED
 
     // send it
-    sendReactotronEffectTree()
+    //sendReactotronEffectTree()
   }
 
   // the interface for becoming a redux-saga monitor
