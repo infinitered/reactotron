@@ -9,9 +9,6 @@ import clear from './plugins/clear'
 import serialize from './serialize'
 import { start } from './stopwatch'
 
-export { start } from './stopwatch'
-import serialize from './serialize'
-
 export const CorePlugins = [
   image(),
   logger(),

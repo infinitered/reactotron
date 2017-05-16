@@ -10,8 +10,6 @@ import getHost from 'rn-host-detect'
 // THIRD PARTY
 // -----------
 
-import getHost from 'rn-host-detect'
-
 export { trackGlobalErrors, openInEditor, overlay, asyncStorage, networking }
 // ---------------------
 // DEFAULT CONFIGURATION
