@@ -35,7 +35,7 @@
     "nyc": "^10.3.2",
     "rollup": "^0.41.6",
     "rollup-plugin-babel": "^2.6.1",
-    "standard": "^10.0.2"
+    "standard": "^10.0.2",
     "sinon": "^1.17.7",
     "ws": "^2.2.0"
   },
