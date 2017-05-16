@@ -15,7 +15,6 @@ export default {
   external: [
     'ramda',
     'mobx',
-    'ramdasauce',
-    'socket.io'
+    'ramdasauce'
   ]
 }
