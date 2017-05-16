@@ -9,9 +9,6 @@ import clear from './plugins/clear'
 import serialize from './serialize'
 import { start } from './stopwatch'
 
-export { start } from './stopwatch'
-import serialize from './serialize'
-
 export const CorePlugins = [
   image(),
   logger(),
@@ -31,13 +28,7 @@ const DEFAULTS = {
   safeRecursion: true, // when on, it ensures objects are safe for transport (at the cost of CPU)
   onCommand: cmd => null, // the function called when we receive a command
   onConnect: () => null, // fires when we connect
-  onDisconnect: () => null, // fires when we disconnect
-  socketIoProperties: {
-    reconnection: true,
-    reconnectionDelay: 2000,
-    reconnectionDelayMax: 5000,
-    reconnectionAttempts: 5
-  } // socketIO settings
+  onDisconnect: () => null // fires when we disconnect
 }
 
 // these are not for you.
