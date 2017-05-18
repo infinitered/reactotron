@@ -8,7 +8,8 @@
     "watch": "ava --watch",
     "coverage": "nyc ava",
     "build": "rollup -c",
-    "lint": "standard"
+    "lint": "standard",
+    "build:watch": "node watch.js"
   },
   "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-core-server",
   "author": "Steve Kellock",
@@ -33,6 +34,8 @@
     "babel-preset-es2015-rollup": "^3.0.0",
     "babel-preset-stage-0": "^6.24.1",
     "nyc": "^10.3.2",
+    "execa": "^0.6.3",
+    "node-watch": "^0.5.4",
     "rollup": "^0.41.4",
     "rollup-plugin-babel": "^2.6.1",
     "standard": "^10.0.2"
@@ -55,7 +58,7 @@
   "dependencies": {
     "mobx": "^2.5.1",
     "ramda": "^0.23.0",
-    "ws": "^2.2.0",
-    "ramdasauce": "^1.2.0"
+    "ramdasauce": "^1.2.0",
+    "ws": "^2.2.0"
   }
 }
