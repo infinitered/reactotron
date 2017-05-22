@@ -69,7 +69,7 @@ export default options => reactotron => {
       }
     ]
 
-    originalMethod(...newArgs)
+    return originalMethod(...newArgs)
   }
 
   const trackAsyncStorage = () => {
