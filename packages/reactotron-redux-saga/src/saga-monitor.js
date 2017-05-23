@@ -2,7 +2,8 @@ import { is } from 'redux-saga/utils'
 import getEffectName from './get-effect-name'
 import getEffectDescription from './get-effect-description'
 import { ITERATOR, CALL, PUT, FORK, RACE, PENDING, RESOLVED, REJECTED, CANCELLED } from './saga-constants'
-import { reject, values, pluck, isNil, split, pathOr, last, forEach, propEq, filter, __, omit, map } from 'ramda'
+import { reject, values, pluck, isNil, split, pathOr, last, forEach, propEq, filter, __ } from 'ramda'
+// import { reject, values, pluck, isNil, split, pathOr, last, forEach, propEq, filter, __, map, omit } from 'ramda'
 
 // creates a saga monitor
 export default (reactotron, options) => {
@@ -19,7 +20,7 @@ export default (reactotron, options) => {
   const timer = reactotron.startTimer()
 
   // ---------------- Sending Effect Updates ----------------
-  const sendReactotronEffectTree = () => reactotron.send('saga.effect.update', effects)
+  // const sendReactotronEffectTree = () => reactotron.send('saga.effect.update', effects)
 
   // ---------------- Starting -----------------------------
 
@@ -44,7 +45,7 @@ export default (reactotron, options) => {
     effects[effectId] = effectInfo
 
     // send it
-    //sendReactotronEffectTree()
+    // sendReactotronEffectTree()
   }
 
   // ---------------- Finishing ----------------------------
@@ -145,7 +146,7 @@ export default (reactotron, options) => {
       children
     })
 
-    //effects = omit(map(String, pluck('effectId', children)), effects)
+    // effects = omit(map(String, pluck('effectId', children)), effects)
   }
 
   // redux-saga calls this when an effect is resolved (successfully or not)
@@ -188,7 +189,7 @@ export default (reactotron, options) => {
     }
 
     // send it
-    //sendReactotronEffectTree()
+    // sendReactotronEffectTree()
   }
 
   // flags on of the children as the winner
@@ -218,7 +219,7 @@ export default (reactotron, options) => {
     }
 
     // send it
-    //sendReactotronEffectTree()
+    // sendReactotronEffectTree()
   }
 
   // ---------------- Cancelling ---------------------------
@@ -230,7 +231,7 @@ export default (reactotron, options) => {
     effectInfo.status = CANCELLED
 
     // send it
-    //sendReactotronEffectTree()
+    // sendReactotronEffectTree()
   }
 
   // the interface for becoming a redux-saga monitor
