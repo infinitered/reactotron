@@ -24,10 +24,19 @@ class Commands {
     // create an observable list for each (named after the type)
     R.forEach(type => {
       extendObservable(this, {
-        [type]: observable([])
+        [type]: asFlat([])
       })
       // this[type] = observable([])
     }, CommandTypes)
+
+    // NOTE(steve):
+    //   These types of messages need to be deeply observable because
+    //   their contents will be mutated. I am bad and deserve your
+    //   shameful glare.
+    extendObservable(this, {
+      'state.backup.response': observable([])
+    })
+
     this.maximumListSize = maximumListSize
     this.allMaximumListSize = allMaximumListSize
   }

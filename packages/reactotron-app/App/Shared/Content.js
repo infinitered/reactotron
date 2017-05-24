@@ -1,10 +1,12 @@
 import React, { Component, PropTypes } from 'react'
-import { map, trim, split, isNil } from 'ramda'
+import { map, trim, split } from 'ramda'
 import ObjectTree from './ObjectTree'
 import isShallow from '../Lib/IsShallow'
 import makeTable from './MakeTable'
+import Colors from '../Theme/Colors'
 
-const NULL_TEXT = '¯\\_(ツ)_/¯'
+const OMG_NULL = <div style={{ color: Colors.tag }}>null</div>
+const OMG_UNDEFINED = <div style={{ color: Colors.tag }}>undefined</div>
 
 class Content extends Component {
   static propTypes = {
@@ -54,7 +56,8 @@ class Content extends Component {
 
   render () {
     const { value } = this.props
-    if (isNil(value)) return <div>{NULL_TEXT}</div>
+    if (value === null) return OMG_NULL
+    if (value === undefined) return OMG_UNDEFINED
     const valueType = typeof value
     switch (valueType) {
       case 'string': return this.renderString()
