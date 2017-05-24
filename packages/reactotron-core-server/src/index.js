@@ -3,6 +3,7 @@ import Commands from './commands'
 import validate from './validation'
 import { observable, computed, asFlat } from 'mobx'
 import socketIO from 'socket.io'
+import { repair } from './repairSerialization'
 
 const DEFAULTS = {
   port: 9090, // the port to live (required)
@@ -103,6 +104,7 @@ class Server {
         const date = new Date()
         const fullCommand = { type, important, payload, messageId: this.messageId, date }
 
+        repair(payload)
         // for client intros
         if (type === 'client.intro') {
           // find them in the partial connection list
