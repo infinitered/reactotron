@@ -11,7 +11,7 @@
     "welcome": "yarn run clean && yarn run bootstrap -- --ignore-engines && yarn run build && yarn run copy-internal-deps && yarn run lint -s"
   },
   "devDependencies": {
-    "lerna": "^2.0.0-rc.3"
+    "lerna": "^2.0.0-rc.4"
   },
   "dependencies": {
     "stringify-object": "^3.2.0"
