@@ -1,6 +1,6 @@
 import React from 'react'
 import Colors from '../Theme/Colors'
-import { merge, map, toPairs, identity, isNil, T, cond, always, equals, omit } from 'ramda'
+import { merge, map, toPairs, identity, isNil, T, cond, always, equals } from 'ramda'
 
 const NULL_TEXT = 'null'
 const UNDEFINED_TEXT = 'undefined'
