@@ -1,6 +1,6 @@
 {
   "name": "reactotron-redux",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "description": "A Reactotron plugin for Redux.",
   "main": "dist/index.js",
   "scripts": {
@@ -22,7 +22,6 @@
     "LICENSE",
     "README.md"
   ],
-  "peerDependencies": {},
   "devDependencies": {
     "ava": "^0.19.1",
     "babel-core": "^6.24.1",
@@ -54,7 +53,7 @@
   "dependencies": {
     "ramda": "^0.23.0",
     "ramdasauce": "^1.2.0",
-    "reactotron-core-client": "^1.10.0",
+    "reactotron-core-client": "^1.11.0",
     "redux": "^3.6.0"
   }
 }
