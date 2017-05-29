@@ -67,7 +67,7 @@ class Server {
     const { onCommand, onConnect, onDisconnect } = this.options
 
     // start listening
-    this.io = socketIO(port)
+    this.io = socketIO(port, { pingTimeout: 30000 })
 
     // register events
     this.io.on('connection', socket => {
