@@ -136,8 +136,7 @@ Hooking up to redux requires some [additional set up](https://github.com/infinit
 
 Well, at this point, we have a complicated version of `console.log`.
 
-Where Reactotron starts to shine is when you start plugging into [Redux](https://github.com/infinitered/reactotron/blob/master/docs/plugin-redux.md), tracking global errors, and watching network requests.
-
+Where Reactotron starts to shine is when you start plugging into [Redux](./plugin-redux.md), tracking global errors, and watching network requests.
 
 Check out our [Demo](../packages/demo-react-native) for more goodies.
 
