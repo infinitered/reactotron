@@ -11,7 +11,6 @@ const mapIndexed = addIndex(map)
 const COMMAND_TITLE = 'ASYNC STORAGE'
 
 class AsyncStorageValuesCommand extends Component {
-
   static propTypes = {
     command: PropTypes.object.isRequired
   }
@@ -43,12 +42,12 @@ class AsyncStorageValuesCommand extends Component {
 
   render () {
     const { command } = this.props
-    const { payload = [] } = command
-    const rows = mapIndexed(this.renderItem, payload)
+    const { preview, value = [] } = command.payload
+    const rows = mapIndexed(this.renderItem, value)
     return (
-      <Command command={command} title={COMMAND_TITLE}>
+      <Command command={command} title={COMMAND_TITLE} preview={preview}>
         <div style={Styles.watches}>
-          {rows}
+          {rows.length > 0 ? rows : 'Empty storage.'}
         </div>
       </Command>
     )

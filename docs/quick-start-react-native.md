@@ -2,7 +2,7 @@
 
 ## Installing Reactotron.app
 
-Let’s [download the desktop app](https://github.com/reactotron/reactotron/releases/download/v1.6.0/Reactotron.app.zip) to start.  It’s OS X only at this point, but will shortly make available on Windows and Linux.
+Let’s [download the desktop app](./installing.md) to start.  You can download for Linux, Windows, and Mac.
 
 Unzip & run.
 
@@ -40,7 +40,8 @@ I like a separate file for initializing.  Create `ReactotronConfig.js` in your e
 import Reactotron from 'reactotron-react-native'
 
 Reactotron
-  .configure() // we can use plugins here -- more on this later
+  .configure() // controls connection & communication settings
+  .useReactNative() // add all built-in react native plugins
   .connect() // let's connect!
 ```
 
@@ -127,11 +128,15 @@ Reactotron.display({
 })
 ```
 
+## Monitor your Redux store state changes
+
+Hooking up to redux requires some [additional set up](https://github.com/infinitered/reactotron/blob/master/docs/plugin-redux.md).
+
 ## Now What?
 
-Well, at this point, we have a complicated version of `console.log`.  
+Well, at this point, we have a complicated version of `console.log`.
 
-Where Reactotron starts to shine is when you start plugging into [Redux](https://github.com/infinitered/reactotron/blob/master/docs/plugin-redux.md), tracking global errors, and watching network requests.
+Where Reactotron starts to shine is when you start plugging into [Redux](./plugin-redux.md), tracking global errors, and watching network requests.
 
 Check out our [Demo](../packages/demo-react-native) for more goodies.
 

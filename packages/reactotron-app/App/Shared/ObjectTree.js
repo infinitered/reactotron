@@ -16,7 +16,6 @@ const Styles = {
 }
 
 class ObjectTree extends Component {
-
   static propTypes = {
     object: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     level: PropTypes.number
@@ -43,7 +42,6 @@ class ObjectTree extends Component {
       </div>
     )
   }
-
 }
 
 export default ObjectTree

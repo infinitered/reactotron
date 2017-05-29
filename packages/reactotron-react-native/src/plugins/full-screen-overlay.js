@@ -19,7 +19,6 @@ const Styles = {
  * @extends {Component}
  */
 class FullScreenOverlay extends Component {
-
   /** The types of the properties. */
   static propTypes = {
     /**
@@ -101,7 +100,6 @@ class FullScreenOverlay extends Component {
       </View>
     )
   }
-
 }
 
 export default FullScreenOverlay

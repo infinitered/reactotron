@@ -57,7 +57,6 @@ const Styles = {
 @inject('session')
 @observer
 class Footer extends Component {
-
   render () {
     const { server } = this.props.session
     const { port } = server.options
@@ -79,7 +78,6 @@ class Footer extends Component {
       </div>
     )
   }
-
 }
 
 export default Footer

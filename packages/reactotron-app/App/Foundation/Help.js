@@ -42,7 +42,6 @@ const Styles = {
 }
 
 class Help extends Component {
-
   render () {
     return (
       <div style={Styles.container}>

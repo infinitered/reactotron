@@ -9,4 +9,3 @@ export default {
   mousetrap: isMac ? 'command' : 'ctrl',
   modifierName: isMac ? '⌘' : 'CTRL'
 }
-

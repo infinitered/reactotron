@@ -6,6 +6,7 @@ import StateKeysAndValuesDialog from '../Dialogs/StateKeysAndValuesDialog'
 import StateDispatchDialog from '../Dialogs/StateDispatchDialog'
 import HelpDialog from '../Dialogs/HelpDialog'
 import StateWatchDialog from '../Dialogs/StateWatchDialog'
+import RenameStateDialog from '../Dialogs/RenameStateDialog'
 import FilterTimelineDialog from '../Dialogs/FilterTimelineDialog'
 import Subscriptions from './Subscriptions'
 import Backups from './Backups'
@@ -46,7 +47,6 @@ const Styles = {
 @inject('session')
 @observer
 export default class VisualRoot extends Component {
-
   render () {
     const { session } = this.props
     const { ui } = session
@@ -88,6 +88,7 @@ export default class VisualRoot extends Component {
         <StateDispatchDialog />
         <HelpDialog />
         <StateWatchDialog />
+        <RenameStateDialog />
         <FilterTimelineDialog />
       </div>
     )

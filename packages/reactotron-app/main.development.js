@@ -8,9 +8,7 @@ if (process.env.NODE_ENV === 'development') {
   require('electron-debug')()
 }
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit()
-})
+app.on('window-all-closed', app.quit)
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
@@ -37,17 +35,11 @@ app.on('ready', () => {
     mainWindow.focus()
   })
 
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
-
   if (process.platform === 'darwin') {
     template = [{
       label: 'Reactotron',
       submenu: [
         { label: 'About Reactotron', selector: 'orderFrontStandardAboutPanel:' },
-        { type: 'separator' },
-        { label: 'Services', submenu: [] },
         { type: 'separator' },
         { label: 'Hide Reactotron', accelerator: 'Command+H', selector: 'hide:' },
         { label: 'Hide Others', accelerator: 'Command+Shift+H', selector: 'hideOtherApplications:' },
@@ -80,14 +72,13 @@ app.on('ready', () => {
         { type: 'checkbox', label: 'Always On Top', click () { toggleAlwaysOnTop() } },
         { type: 'separator' },
         { label: 'Minimize', accelerator: 'Command+M', selector: 'performMiniaturize:' },
-        { label: 'Close', accelerator: 'Command+W', selector: 'performClose:' },
         { type: 'separator' },
         { label: 'Bring All to Front', selector: 'arrangeInFront:' }
       ]
     }, {
       label: 'Help',
       submenu: [
-        { label: 'Visit on Github', click () { shell.openExternal('https://github.com/reactotron/reactotron') } }
+        { label: 'Visit on Github', click () { shell.openExternal('https://github.com/infinitered/reactotron') } }
       ]
     }]
 
@@ -97,8 +88,6 @@ app.on('ready', () => {
     template = [{
       label: '&File',
       submenu: [
-        { label: '&Open', accelerator: 'Ctrl+O' },
-        { label: '&Close', accelerator: 'Ctrl+W', click () { mainWindow.close() } }
       ]
     }, {
       label: '&View',
@@ -113,7 +102,7 @@ app.on('ready', () => {
     }, {
       label: 'Help',
       submenu: [
-        { label: 'Visit on Github', click () { shell.openExternal('https://github.com/reactotron/reactotron') } }
+        { label: 'Visit on Github', click () { shell.openExternal('https://github.com/infinitered/reactotron') } }
       ]
     }]
     menu = Menu.buildFromTemplate(template)

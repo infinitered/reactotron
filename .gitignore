@@ -3,5 +3,9 @@ lerna-debug.log
 npm-debug.log*
 npm-debug.log
 .vscode
+.idea
 yarn.lock
 yarn-error.log
+.happypack
+haul-debug.log*
+jsconfig.json

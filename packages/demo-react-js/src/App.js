@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import logo from './logo.svg'
 import './App.css'
 import { connect } from 'react-redux'
@@ -25,7 +26,6 @@ const Styles = {
 }
 
 class App extends Component {
-
   static propTypes = {
     startup: PropTypes.func.isRequired,
     message: PropTypes.string,

@@ -87,7 +87,6 @@ const Styles = {
 @inject('session')
 @observer
 class StateKeysAndValuesDialog extends Component {
-
   constructor (props) {
     super(props)
     this.state = {

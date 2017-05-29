@@ -1,6 +1,6 @@
 import UiStore from './UiStore'
 import { createServer } from 'reactotron-core-server'
-import { action, observable, computed, reaction } from 'mobx'
+import { action, observable, computed, reaction, observe } from 'mobx'
 import { contains, last, isNil, reject, equals, reverse, pipe, propEq, map, fromPairs } from 'ramda'
 import { dotPath } from 'ramdasauce'
 import shallowDiff from '../Lib/ShallowDiff'
@@ -9,7 +9,6 @@ const isSubscription = propEq('type', 'state.values.change')
 const isSubscriptionCommandWithEmptyChanges = command => isSubscription(command) && dotPath('payload.changes.length', command) === 0
 
 class Session {
-
   // commands to exlude in the timeline
   @observable commandsHiddenInTimeline = []
 
@@ -19,7 +18,7 @@ class Session {
   // checks if it was the exact same as last time
   isSubscriptionValuesSameAsLastTime (command) {
     if (!isSubscription(command)) return false
-    const rawChanges = command.payload && command.payload.changes || []
+    const rawChanges = command.payload ? command.payload.changes : []
     const newSubscriptions = fromPairs(map(change => ([change.path, change.value]), rawChanges))
     const isNew = !equals(this.subscriptions, newSubscriptions)
 
@@ -55,7 +54,7 @@ class Session {
   }
 
   @computed get backups () {
-    return this.server.commands['state.backup.response'].toJS().reverse()
+    return this.server.commands['state.backup.response']
   }
 
   // are commands of this type hidden?
@@ -87,8 +86,14 @@ class Session {
       () => this.watches.length > 0,
       show => { this.ui.showWatchPanel = show }
     )
-  }
 
+    // when a new backup arrives, open the editor to rename it
+    observe(this.backups, change => {
+      if (change.type === 'splice' && change.added.length === 1) {
+        this.ui.openRenameStateDialog(change.added[0])
+      }
+    })
+  }
 }
 
 export default Session

@@ -14,7 +14,6 @@ const Styles = {
 }
 
 class CommandToolbarButton extends Component {
-
   static propTypes = {
     tip: PropTypes.string,
     icon: PropTypes.string.isRequired,
@@ -31,7 +30,6 @@ class CommandToolbarButton extends Component {
       </div>
     )
   }
-
 }
 
 export default CommandToolbarButton

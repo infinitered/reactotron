@@ -83,7 +83,6 @@ const Styles = {
 @inject('session')
 @observer
 class SagaTaskCompleteCommand extends Component {
-
   static propTypes = {
     command: PropTypes.object.isRequired
   }

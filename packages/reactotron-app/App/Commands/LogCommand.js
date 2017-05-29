@@ -162,7 +162,6 @@ const Styles = {
 @inject('session')
 @observer
 class LogCommand extends Component {
-
   static propTypes = {
     command: PropTypes.object.isRequired
   }

@@ -6,9 +6,10 @@ import benchmark from './plugins/benchmark'
 import stateResponses from './plugins/state-responses'
 import apiResponse from './plugins/api-response'
 import clear from './plugins/clear'
-import { start } from './stopwatch'
-export { start } from './stopwatch'
 import serialize from './serialize'
+import { start } from './stopwatch'
+
+export { start } from './stopwatch'
 
 export const CorePlugins = [
   image(),
@@ -46,7 +47,6 @@ const isReservedFeature = R.contains(R.__, [
 ])
 
 export class Client {
-
   // the configuration options
   options = R.merge({}, DEFAULTS)
   connected = false
@@ -142,7 +142,9 @@ export class Client {
     // NOTE(steve): socket.io is going away shortly, so there will
     // be no need to deserialize as we'll be sending text over the
     // wire.
-    const actualPayload = JSON.parse(serialize(payload))
+    const actualPayload = this.options.safeRecursion
+      ? JSON.parse(serialize(payload))
+      : payload
 
     // send this command
     this.socket.emit('command', {
@@ -155,7 +157,8 @@ export class Client {
   /**
    * Sends a custom command to the server to displays nicely.
    */
-  display ({ name, value, preview, image, important = false }) {
+  display (config = {}) {
+    const { name, value, preview, image, important = false } = config
     const payload = {
       name,
       value: value || null,
@@ -218,7 +221,6 @@ export class Client {
     // chain-friendly
     return this
   }
-
 }
 
 // convenience factory function

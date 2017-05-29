@@ -25,7 +25,6 @@ const Styles = {
 }
 
 class NativeOverlayLayoutType extends Component {
-
   static propTypes = {
     layoutType: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired
@@ -51,7 +50,6 @@ class NativeOverlayLayoutType extends Component {
       </div>
     )
   }
-
 }
 
 export default NativeOverlayLayoutType

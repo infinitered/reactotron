@@ -41,7 +41,6 @@ const Styles = {
 }
 
 class HelpKeystrokes extends Component {
-
   render () {
     return (
       <div style={Styles.container}>
@@ -56,11 +55,11 @@ class HelpKeystrokes extends Component {
             </div>
             <div style={Styles.helpShortcut}>
               <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='2' /></div>
-              <div style={Styles.helpDetail}>view subscriptions</div>
+              <div style={Styles.helpDetail}>view redux subscriptions</div>
             </div>
             <div style={Styles.helpShortcut}>
               <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='3' /></div>
-              <div style={Styles.helpDetail}>view state snapshots</div>
+              <div style={Styles.helpDetail}>view redux snapshots</div>
             </div>
             <div style={Styles.helpShortcut}>
               <div style={Styles.helpLabel}><Key text={Keystroke.modifierName} />+<Key text='4' /></div>

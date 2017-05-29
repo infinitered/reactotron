@@ -1,3 +1,4 @@
+#!/bin/sh
 # Hello.
 #
 # React Native doesn't properly support symlinks (or perhaps it does now?), so this

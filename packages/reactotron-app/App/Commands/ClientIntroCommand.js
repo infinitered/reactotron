@@ -5,7 +5,6 @@ import makeTable from '../Shared/MakeTable'
 const COMMAND_TITLE = 'CONNECTION'
 
 class ClientIntroCommand extends Component {
-
   static propTypes = {
     command: PropTypes.object.isRequired
   }

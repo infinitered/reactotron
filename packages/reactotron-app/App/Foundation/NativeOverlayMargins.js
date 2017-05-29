@@ -24,7 +24,6 @@ const Styles = {
 }
 
 class NativeOverlayMargins extends React.PureComponent {
-
   static propTypes = {
     marginLeft: PropTypes.number,
     marginRight: PropTypes.number,
@@ -59,7 +58,6 @@ class NativeOverlayMargins extends React.PureComponent {
       </div>
     )
   }
-
 }
 
 export default NativeOverlayMargins

@@ -25,7 +25,6 @@ const Styles = {
 }
 
 class NativeOverlayOpacity extends Component {
-
   static propTypes = {
     opacity: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired
@@ -56,7 +55,6 @@ class NativeOverlayOpacity extends Component {
       </div>
     )
   }
-
 }
 
 export default NativeOverlayOpacity

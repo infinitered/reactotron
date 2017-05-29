@@ -23,7 +23,4 @@ npm publish
 cd ../reactotron-core-server
 npm run build
 npm publish
-cd ../reactotron-cli
-npm run build
-npm publish
 cd ../..

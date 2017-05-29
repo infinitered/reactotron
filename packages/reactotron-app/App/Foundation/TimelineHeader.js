@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react'
 import IconFilter from 'react-icons/lib/md/filter-list'
 import IconClear from 'react-icons/lib/md/delete-sweep'
 
-const TITLE = 'Event Timeline'
+const TITLE = 'Timeline'
 
 const toolbarButton = {
   cursor: 'pointer'
@@ -58,7 +58,6 @@ const Styles = {
 @inject('session')
 @observer
 class TimelineHeader extends Component {
-
   render () {
     const { ui } = this.props.session
 
@@ -77,7 +76,6 @@ class TimelineHeader extends Component {
       </div>
     )
   }
-
 }
 
 export default TimelineHeader

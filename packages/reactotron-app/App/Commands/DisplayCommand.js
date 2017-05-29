@@ -14,7 +14,6 @@ const Styles = {
 }
 
 class DisplayCommand extends Component {
-
   static propTypes = {
     command: PropTypes.object.isRequired
   }

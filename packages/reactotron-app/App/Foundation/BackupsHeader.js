@@ -4,7 +4,7 @@ import AppStyles from '../Theme/AppStyles'
 import { inject, observer } from 'mobx-react'
 import IconAdd from 'react-icons/lib/md/file-download'
 
-const TITLE = 'State Snapshots'
+const TITLE = 'Redux Snapshots'
 
 const toolbarButton = {
   cursor: 'pointer'
@@ -54,7 +54,6 @@ const Styles = {
 @inject('session')
 @observer
 class BackupsHeader extends Component {
-
   render () {
     const { ui } = this.props.session
 
@@ -72,7 +71,6 @@ class BackupsHeader extends Component {
       </div>
     )
   }
-
 }
 
 export default BackupsHeader

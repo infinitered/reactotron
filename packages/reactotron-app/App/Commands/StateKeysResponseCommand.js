@@ -72,7 +72,6 @@ class StateKey extends Component {
 @inject('session')
 @observer
 class StateKeysResponseCommand extends Component {
-
   static propTypes = {
     command: PropTypes.object.isRequired
   }

@@ -12,7 +12,6 @@ export const ALL_MAXIMUM_LIST_SIZE = 1000
  *   For example: this['log'] gets the list of log commands.
  */
 class Commands {
-
   /**
    * It's all the comands.  Like all of them.
    */
@@ -29,6 +28,15 @@ class Commands {
       })
       // this[type] = observable([])
     }, CommandTypes)
+
+    // NOTE(steve):
+    //   These types of messages need to be deeply observable because
+    //   their contents will be mutated. I am bad and deserve your
+    //   shameful glare.
+    extendObservable(this, {
+      'state.backup.response': observable([])
+    })
+
     this.maximumListSize = maximumListSize
     this.allMaximumListSize = allMaximumListSize
   }
@@ -56,7 +64,6 @@ class Commands {
       list.shift()
     }
   }
-
 }
 
 export default Commands

@@ -3,6 +3,7 @@ import Commands from './commands'
 import validate from './validation'
 import { observable, computed, asFlat } from 'mobx'
 import socketIO from 'socket.io'
+import { repair } from './repairSerialization'
 
 const DEFAULTS = {
   port: 9090, // the port to live (required)
@@ -14,7 +15,6 @@ const DEFAULTS = {
 }
 
 class Server {
-
   // the configuration options
   @observable options = merge({}, DEFAULTS)
   started = false
@@ -104,6 +104,7 @@ class Server {
         const date = new Date()
         const fullCommand = { type, important, payload, messageId: this.messageId, date }
 
+        repair(payload)
         // for client intros
         if (type === 'client.intro') {
           // find them in the partial connection list
@@ -125,6 +126,12 @@ class Server {
         // refresh subscriptions
         if (type === 'state.values.change') {
           this.subscriptions = pluck('path', payload.changes || [])
+        }
+
+        // assign a name to the backups since the client doesn't pass one.  without it, we have to
+        // call extendObservable instead of a standard assignment, which is very confusing.
+        if (type === 'state.backup.response') {
+          fullCommand.payload.name = null
         }
 
         // clear
@@ -246,7 +253,6 @@ class Server {
     const { file, lineNumber } = details
     this.send('editor.open', { file, lineNumber })
   }
-
 }
 
 export default Server

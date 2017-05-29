@@ -38,7 +38,7 @@ const GROUPS = [
     items: [
       { value: 'state.action.complete', text: 'Action' },
       { value: 'saga.task.complete', text: 'Saga' },
-      { value: 'state.values.response', text: 'Subscription Changed' }
+      { value: 'state.values.change', text: 'Subscription Changed' }
     ]
   }
 ]
@@ -131,7 +131,6 @@ const Styles = {
 @inject('session')
 @observer
 class FilterTimelineDialog extends Component {
-
   render () {
     const { session } = this.props
     const { ui } = session

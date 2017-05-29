@@ -4,7 +4,6 @@ import Styles from './Styles/ButtonStyles'
 import { merge } from 'ramda'
 
 class Button extends Component {
-
   static propTypes = {
     onPress: PropTypes.func,
     text: PropTypes.string,
@@ -22,7 +21,6 @@ class Button extends Component {
       </TouchableOpacity>
     )
   }
-
 }
 
 export default Button

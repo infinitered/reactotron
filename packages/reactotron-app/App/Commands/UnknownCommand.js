@@ -5,7 +5,6 @@ import ObjectTree from '../Shared/ObjectTree'
 const COMMAND_TITLE = 'UNKNOWN'
 
 class UnknownCommand extends Component {
-
   static propTypes = {
     command: PropTypes.object.isRequired
   }

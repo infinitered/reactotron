@@ -28,7 +28,6 @@ const Styles = {
 @inject('session')
 @observer
 class TimelineHeader extends Component {
-
   render () {
     return (
       <div style={Styles.container}>
@@ -38,7 +37,6 @@ class TimelineHeader extends Component {
       </div>
     )
   }
-
 }
 
 export default TimelineHeader
