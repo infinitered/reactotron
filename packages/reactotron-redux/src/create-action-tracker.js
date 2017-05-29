@@ -1,6 +1,5 @@
-import { is, concat, merge } from 'ramda'
+import { is, concat, merge, any } from 'ramda'
 import { DEFAULT_REPLACER_TYPE } from './replacement-reducer'
-import { any } from 'ramda'
 
 const DEFAULTS = {
   // except: [] // which actions
