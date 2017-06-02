@@ -1,4 +1,4 @@
-# Async Storage
+# Networking
 
 Included in `reactotron-react-native` is a plugin called `networking` which allows you to track all XMLHttpRequests in React Native.
 
