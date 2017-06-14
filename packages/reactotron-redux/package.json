@@ -1,6 +1,6 @@
 {
   "name": "reactotron-redux",
-  "version": "1.11.1",
+  "version": "1.11.2",
   "description": "A Reactotron plugin for Redux.",
   "main": "dist/index.js",
   "scripts": {
