@@ -32,7 +32,7 @@ const DEFAULTS = {
 }
 
 // these are not for you.
-const isReservedFeature = R.contains(R.__, [
+const isReservedFeature = <any>R.contains(R.__, [
   'options', 'connected', 'socket', 'plugins',
   'configure', 'connect', 'send', 'use',
   'startTimer'
@@ -40,7 +40,7 @@ const isReservedFeature = R.contains(R.__, [
 
 export class Client {
   // the configuration options
-  options = R.merge({}, DEFAULTS)
+  options: any = R.merge({}, DEFAULTS)
   connected = false
   socket = null
   plugins = []
@@ -168,7 +168,7 @@ export class Client {
   /**
    * Sends a custom command to the server to displays nicely.
    */
-  display (config = {}) {
+  display (config: any = {}) {
     const { name, value, preview, image, important = false } = config
     const payload = {
       name,
@@ -183,7 +183,7 @@ export class Client {
    * Client libraries can hijack this to report errors.
    */
   reportError (error) {
-    this.error(error)
+    (<any>this).error(error)
   }
 
   /**
