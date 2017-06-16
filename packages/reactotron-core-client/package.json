@@ -33,7 +33,7 @@
     "sinon": "^1.17.7",
     "standard": "^10.0.2",
     "tslib": "^1.7.1",
-    "typescript": "^2.3.4",
+    "typescript": "^2.4.0",
     "ws": "^2.2.0"
   },
   "ava": {
