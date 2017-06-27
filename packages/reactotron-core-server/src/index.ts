@@ -110,7 +110,7 @@ class Server {
           this.connections
         )
         if (severingConnection) {
-          this.connections.remove(severingConnection)
+          (<any>this.connections).remove(severingConnection)
           onDisconnect && onDisconnect(severingConnection)
         }
       })
@@ -170,7 +170,7 @@ class Server {
 
         // clear
         if (type === 'clear') {
-          this.commands.all.clear()
+          (<any>this.commands).all.clear()
         } else {
           this.commands.addCommand(fullCommand)
           onCommand(fullCommand)
@@ -300,7 +300,7 @@ export default Server
 
 // convenience factory function
 export const createServer = options => {
-  const server = new Server()
+  const server = new Server(null)
   server.configure(options)
   return server
 }

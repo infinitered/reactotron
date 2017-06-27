@@ -12,6 +12,9 @@ export const ALL_MAXIMUM_LIST_SIZE = 1000
  *   For example: this['log'] gets the list of log commands.
  */
 class Commands {
+  maximumListSize: number
+  allMaximumListSize: number
+
   /**
    * It's all the comands.  Like all of them.
    */
