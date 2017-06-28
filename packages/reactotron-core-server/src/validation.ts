@@ -4,7 +4,7 @@ import RS from 'ramdasauce'
 /**
  * Is this a valid port?
  */
-const isPortValid = <(port) => boolean>R.allPass([
+const isPortValid = R.allPass([
   R.complement(R.isNil),
   R.is(Number),
   RS.isWithin(1, 65535)
@@ -13,7 +13,7 @@ const isPortValid = <(port) => boolean>R.allPass([
 /**
  * Is this a valid command?
  */
-const isOnCommandValid = <(onCommand) => boolean>R.allPass([
+const isOnCommandValid = R.allPass([
   R.complement(R.isNil)
 ])
 
