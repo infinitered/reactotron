@@ -4,7 +4,7 @@ import RS from 'ramdasauce'
 /**
  * Is this a valid port?
  */
-const isPortValid = R.allPass([
+const isPortValid = <(port) => boolean>R.allPass([
   R.complement(R.isNil),
   R.is(Number),
   RS.isWithin(1, 65535)
@@ -13,7 +13,7 @@ const isPortValid = R.allPass([
 /**
  * Is this a valid command?
  */
-const isOnCommandValid = R.allPass([
+const isOnCommandValid = <(onCommand) => boolean>R.allPass([
   R.complement(R.isNil)
 ])
 
@@ -21,7 +21,7 @@ const isOnCommandValid = R.allPass([
  * Ensures the options are sane to run this baby.  Throw if not.  These
  * are basically sanity checks.
  */
-export default options => {
+export default (options: { port: number, onCommand: () => any }) => {
   const { port, onCommand } = options
 
   if (!isPortValid(port)) throw new Error('invalid port')
