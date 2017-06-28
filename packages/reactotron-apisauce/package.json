@@ -53,7 +53,7 @@
     "parser": "babel-eslint"
   },
   "dependencies": {
-    "apisauce": "^0.13.0",
+    "apisauce": "^0.14.0",
     "ramda": "^0.23.0",
     "ramdasauce": "^1.2.0",
     "reactotron-core-client": "^1.11.1"
