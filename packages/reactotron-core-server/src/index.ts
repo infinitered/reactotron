@@ -118,6 +118,7 @@ class Server {
       // when we receive a command from the client
       socket.on('message', incoming => {
         const message = JSON.parse(incoming)
+        repair(message)
         const { type, important, payload } = message
         this.messageId++
         const date = new Date()
@@ -129,7 +130,6 @@ class Server {
           date
         }
 
-        repair(payload)
         // for client intros
         if (type === 'client.intro') {
           // find them in the partial connection list
