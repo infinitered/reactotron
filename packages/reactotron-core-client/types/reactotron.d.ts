@@ -1,0 +1,3 @@
+interface Console {
+    tron: any
+}

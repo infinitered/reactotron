@@ -26,14 +26,15 @@ replacements['~~~ -Infinity ~~~'] = -Infinity
  * @param  {*} payload The object
  * @return {*}         The same object with some values replaced.
  */
-export function repair (payload) {
+export function repair (payload: any) {
   // we only want objects
   if (typeof payload !== 'object') return payload
 
   // the recursive iterator
-  function walker (obj) {
+  function walker (obj: object) {
     let k
-    const has = Object.prototype.hasOwnProperty.bind(obj)
+    // NOTE: Object.prototype.hasOwnProperty IS defined however the bind to the object throws the def off.
+    const has = <(key: string) => boolean>Object.prototype.hasOwnProperty.bind(obj)
     for (k in obj) {
       if (has(k)) {
         switch (typeof obj[k]) {

@@ -24,19 +24,16 @@
     "README.md"
   ],
   "devDependencies": {
+    "@types/node": "^7.0.31",
+    "@types/ramda": "github:types/npm-ramda",
     "ava": "^0.19.1",
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.24.1",
-    "babel-eslint": "^7.2.3",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-es2015-rollup": "^3.0.0",
-    "babel-preset-stage-1": "^6.24.1",
     "nyc": "^10.3.2",
     "rollup": "^0.41.6",
-    "rollup-plugin-babel": "^2.6.1",
-    "standard": "^10.0.2",
+    "rollup-plugin-typescript2": "^0.4.3",
     "sinon": "^1.17.7",
+    "standard": "^10.0.2",
+    "tslib": "^1.7.1",
+    "typescript": "^2.4.0",
     "ws": "^2.2.0"
   },
   "ava": {

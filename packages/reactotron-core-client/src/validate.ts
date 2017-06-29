@@ -10,7 +10,7 @@ const onCommandValid = (fn) => typeof fn === 'function'
  * Ensures the options are sane to run this baby.  Throw if not.  These
  * are basically sanity checks.
  */
-const validate = (options) => {
+const validate = (options: any) => {
   const { createSocket, host, port, onCommand } = options
 
   if (!isCreateSocketValid(createSocket)) throw new Error('invalid createSocket function')
