@@ -21,7 +21,7 @@ npm install --save-dev reactotron-redux
 
 # Features
 
-* track when actions are dispatch including timing
+* track when actions are dispatched including timing
 * subscribe to changes within the state tree
 * pull values out on demand
 * view list of keys
@@ -64,7 +64,7 @@ const store = Reactotron.createStore(rootReducer, compose(middleware))
 # Options
 
 `reactotronRedux()` accepts an optional parameter which is an object you can use
-ton configure
+to configure
 
 #### except
 
@@ -81,8 +81,8 @@ reactotronRedux({
 
 #### isActionImportant
 
-`isActionImportant` is a function which receives and action and returns a boolean.
-`true` will be cause the action to show up in the Reactotron app with a highlight.
+`isActionImportant` is a function which receives an action and returns a boolean.
+`true` will cause the action to show up in the Reactotron app with a highlight.
 
 ```js
 reactotronRedux({
@@ -93,7 +93,7 @@ reactotronRedux({
 #### onBackup
 
 `onBackup` fires when we're about to transfer a copy of your Redux global state
-tree and send it to the server.  It accepts a object called `state` and returns
+tree and send it to the server.  It accepts an object called `state` and returns
 an object called `state`.
 
 You can use this to prevent big, sensitive, or transient data from going to
