@@ -30,11 +30,6 @@ npm install --save-dev reactotron-redux
 * hot swap your app state on the fly
 
 
-# Installing
-
-`npm i --save-dev reactotron-redux`
-
-
 # Configuring
 
 Two files need to change to hookup Reactotron to Redux.  First, in your
