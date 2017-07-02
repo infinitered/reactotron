@@ -65,8 +65,8 @@ to configure
 
 `except` is an array of strings that match actions flowing through Redux.
 
-If you have some actions you'd rather just not see (for example, `redux-saga`)
-triggers a little bit of noise, you can suppress them:
+If you have some actions you'd rather just not see (for example, `redux-saga`
+triggers a little bit of noise), you can suppress them:
 
 ```js
 reactotronRedux({
