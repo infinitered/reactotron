@@ -85,7 +85,7 @@ function serialize (source) {
     }
   }
 
-  return JSON.stringify(source, serializer(null), 2)
+  return JSON.stringify(source, serializer(null))
 }
 
 export default serialize

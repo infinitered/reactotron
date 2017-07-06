@@ -23,8 +23,8 @@
     "README.md"
   ],
   "devDependencies": {
-    "ava": "^0.19.1",
-    "babel-core": "^6.22.1",
+    "ava": "^0.20.0",
+    "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -32,8 +32,8 @@
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-es2015-rollup": "^3.0.0",
     "babel-preset-stage-0": "^6.24.1",
-    "nyc": "^10.3.2",
-    "rollup": "^0.41.4",
+    "nyc": "^11.0.3",
+    "rollup": "^0.43.0",
     "rollup-plugin-babel": "^2.6.1",
     "standard": "^10.0.2"
   },
@@ -54,8 +54,8 @@
   },
   "dependencies": {
     "mobx": "^2.5.1",
-    "ramda": "^0.23.0",
-    "ramdasauce": "^1.1.1",
+    "ramda": "^0.24.1",
+    "ramdasauce": "^2.0.0",
     "socket.io": "~1.7.3"
   }
 }
