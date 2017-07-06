@@ -68,7 +68,6 @@ test('tests end to end for the action tracker', t => {
   t.is(capturedType, 'state.action.complete')
   t.is(capturedPayload.name, 'add')
   t.deepEqual(capturedPayload.action, action)
-  t.true(capturedPayload.ms >= 0)
   t.is(importantCount, 1)
   t.true(capturedImportant)
 })

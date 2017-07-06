@@ -20,6 +20,7 @@ export default {
     'mitt',
     'react',
     'rn-host-detect',
-    'react-native/Libraries/Network/XHRInterceptor'
+    'react-native/Libraries/Network/XHRInterceptor',
+    'prop-types'
   ]
 }
