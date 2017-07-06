@@ -1,6 +1,6 @@
 {
   "name": "reactotron-react-js",
-  "version": "1.11.1",
+  "version": "1.12.0",
   "description": "A development tool to explore, inspect, and diagnose your React JS/DOM apps.",
   "main": "dist/index.js",
   "scripts": {
@@ -64,7 +64,7 @@
     "json-stringify-safe": "^5.0.1",
     "ramda": "^0.23.0",
     "ramdasauce": "^1.2.0",
-    "reactotron-core-client": "^1.11.1",
+    "reactotron-core-client": "^1.12.0",
     "socket.io-client": "~1.7.3",
     "stacktrace-js": "^1.3.1"
   }
