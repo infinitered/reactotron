@@ -64,7 +64,7 @@ export class Client {
     this.options = newOptions
 
     // if we have plugins, let's add them here
-    if (R.isArrayLike(this.options.plugins)) {
+    if (R.has('length', this.options.plugins)) {
       R.forEach(this.use.bind(this), this.options.plugins)
     }
 

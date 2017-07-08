@@ -42,7 +42,7 @@ app.on('ready', () => {
         { label: 'About Reactotron', selector: 'orderFrontStandardAboutPanel:' },
         { type: 'separator' },
         { label: 'Hide Reactotron', accelerator: 'Command+H', selector: 'hide:' },
-        { label: 'Hide Others', accelerator: 'Command+Shift+H', selector: 'hideOtherApplications:' },
+        { label: 'Hide Others', accelerator: 'Command+Option+H', selector: 'hideOtherApplications:' },
         { label: 'Show All', selector: 'unhideAllApplications:' },
         { type: 'separator' },
         { label: 'Quit', accelerator: 'Command+Q', click () { app.quit() } }
