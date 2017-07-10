@@ -8,27 +8,9 @@ Unzip & run.
 
 ![Installing The App](./images/quick-start-react-js/installing.jpg)
 
+## Configure Reactotron with your project
 
-## From Scratch
-
-Let's start a brand new app from scratch.  If you want to use your own, skip to the next section.
-
-Download `react-native-cli` if you haven't yet:
-```
-npm i -g react-native-cli
-```
-
-Then spin up a brand new React Native app.
-```
-react-native init ReactotronDemo
-cd ReactotronDemo
-```
-
-You'll need to run this in an emulator for Android or the simulator for iOS.  Facebook has some [great guides](http://facebook.github.io/react-native/docs/getting-started.html#content) on getting started.
-
-## Installing Reactotron
-
-Let's install Reactotron as a dev dependency.
+Let's install Reactotron on your project as a dev dependency. Don't have a React Native project yet? [Follow the Getting Started guide in the React Native documentation](https://facebook.github.io/react-native/docs/getting-started.html).
 
 ```
 npm i --save-dev reactotron-react-native
@@ -45,7 +27,7 @@ Reactotron
   .connect() // let's connect!
 ```
 
-Finally, we import this on startup in `index.ios.js` and `index.android.js` on line 1:
+Finally, we import this on startup in `App.js` (Create React Native App) or `index.ios.js` and `index.android.js` (react-native-cli) on line 1:
 
 ```js
 import './ReactotronConfig'
@@ -69,7 +51,7 @@ Pretty underwhelming huh?
 
 Let's do some classic programming.
 
-Open up `index.ios.js` or `index.android.js`.
+Open up `App.js` (Create React Native App) or `index.ios.js` / `index.android.js` (react-native-cli).
 
 Right after the line you just added in the previous step lets put this:
 

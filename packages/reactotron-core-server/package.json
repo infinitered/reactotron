@@ -1,6 +1,6 @@
 {
   "name": "reactotron-core-server",
-  "version": "1.11.2",
+  "version": "1.12.0",
   "description": "Grants Reactotron servers the ability to talk to a Reactotron client.",
   "main": "dist/index.js",
   "scripts": {
@@ -26,11 +26,11 @@
   "devDependencies": {
     "@types/node": "^7.0.31",
     "@types/ramda": "github:types/npm-ramda",
-    "ava": "^0.19.1",
+    "ava": "^0.20.0",
     "execa": "^0.6.3",
     "node-watch": "^0.5.4",
-    "nyc": "^10.3.2",
-    "rollup": "^0.41.4",
+    "nyc": "^11.0.3",
+    "rollup": "^0.43.0",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-typescript2": "^0.4.3",
     "standard": "^10.0.2",
@@ -54,8 +54,8 @@
   },
   "dependencies": {
     "mobx": "^2.5.1",
-    "ramda": "^0.23.0",
-    "ramdasauce": "^1.2.0",
+    "ramda": "^0.24.1",
+    "ramdasauce": "^2.0.0",
     "ws": "^2.2.0"
   }
 }

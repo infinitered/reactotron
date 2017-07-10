@@ -99,7 +99,7 @@ class Server {
       socket.on('disconnect', () => {
         onDisconnect(socket.id)
         // remove them from the list partial list
-        this.partialConnections = reject(
+        this.partialConnections = <any[]>reject(
           propEq('id', socket.id),
           this.partialConnections
         )
@@ -133,7 +133,7 @@ class Server {
         // for client intros
         if (type === 'client.intro') {
           // find them in the partial connection list
-          const partialConnection = find(
+          const partialConnection = <any>find(
             propEq('id', socket.id),
             this.partialConnections
           )
@@ -142,7 +142,7 @@ class Server {
           fullCommand.payload.address = partialConnection.address
 
           // remove them from the partial connections list
-          this.partialConnections = reject(
+          this.partialConnections = <any[]>reject(
             propEq('id', socket.id),
             this.partialConnections
           )
