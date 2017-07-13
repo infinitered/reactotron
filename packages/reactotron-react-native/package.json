@@ -22,7 +22,7 @@
     "README.md"
   ],
   "peerDependencies": {
-    "react": ">=15.2.1 || 16.0.0-alpha-6 || 16.0.0-alpha-12",
+    "react": ">=15.2.1 || 16.0.0-alpha.6 || 16.0.0-alpha.12",
     "react-native": ">=0.40.0"
   },
   "devDependencies": {
