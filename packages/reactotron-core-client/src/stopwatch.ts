@@ -1,20 +1,21 @@
 /// <reference types="node" />
+
 const hasHirezNodeTimer = false && typeof process === 'object' && process && process.hrtime && typeof process.hrtime === 'function'
 
 // the default timer
-const defaultPerformanceNow = (started?) => Date.now()
+const defaultPerformanceNow = (started?: number) => Date.now()
 
 // try to find the browser-based performance timer
 const nativePerformance = typeof window !== 'undefined' && window && (window.performance || (<any>window).msPerformance || (<any>window).webkitPerformance)
 
 // if we do find it, let's setup to call it
-const nativePerformanceNow = () => nativePerformance.now()
+const nativePerformanceNow = (): number => nativePerformance.now()
 
 // the function we're trying to assign
 let performanceNow = defaultPerformanceNow
 
 // accepts an already started time and returns the number of milliseconds
-let delta = started => performanceNow() - started
+let delta = (started: number) => performanceNow() - started
 
 // node will use a high rez timer
 if (hasHirezNodeTimer) {

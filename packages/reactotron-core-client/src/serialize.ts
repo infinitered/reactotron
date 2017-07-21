@@ -20,7 +20,7 @@ const NEGATIVE_INFINITY = '~~~ -Infinity ~~~'
  *
  * @param {Function} fn - The function to name.
  */
-function getFunctionName (fn) {
+function getFunctionName (fn: any): string {
   const n = fn.name
   if (n === null || n === undefined || n === '') {
     return ANONYMOUS

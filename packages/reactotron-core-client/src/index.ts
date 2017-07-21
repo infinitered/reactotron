@@ -1,4 +1,7 @@
+/// <reference path="../types/reactotron.d.ts" />
+
 import R from 'ramda'
+import WebSocket from 'ws'
 import validate from './validate'
 import logger from './plugins/logger'
 import image from './plugins/image'
@@ -9,6 +12,22 @@ import clear from './plugins/clear'
 import serialize from './serialize'
 import { start } from './stopwatch'
 
+export interface Options {
+  createSocket?: (path: string) => WebSocket,
+  host?: string,
+  port?: number,
+  name?: string,
+  secure?: boolean,
+  plugins?: any[], // TODO: Better Type?
+  safeRecursion?: boolean,
+  onCommand?: (cmd: string) => void,
+  onConnect?: () => void,
+  onDisconnect?: () => void,
+  userAgent?: string,
+  environment?: string,
+  reactotronVersion?: string
+}
+
 export const CorePlugins = [
   image(),
   logger(),
@@ -18,7 +37,7 @@ export const CorePlugins = [
   clear()
 ]
 
-const DEFAULTS = {
+const DEFAULTS: Options = {
   createSocket: null, // a function supplied by the upstream libs to create a websocket client
   host: 'localhost', // the server to connect (required)
   port: 9090, // the port to connect (required)
@@ -32,6 +51,7 @@ const DEFAULTS = {
 }
 
 // these are not for you.
+// TODO: Better Type?
 const isReservedFeature = <any>R.contains(R.__, [
   'options', 'connected', 'socket', 'plugins',
   'configure', 'connect', 'send', 'use',
@@ -40,11 +60,11 @@ const isReservedFeature = <any>R.contains(R.__, [
 
 export class Client {
   // the configuration options
-  options: any = R.merge({}, DEFAULTS)
+  options: Options = R.merge({}, DEFAULTS)
   connected = false
-  socket = null
-  plugins = []
-  sendQueue = []
+  socket: WebSocket = null
+  plugins = [] // TODO: Better Type?
+  sendQueue = [] // TODO: Better Type?
   isReady = false
 
   startTimer = () => start()
@@ -57,7 +77,7 @@ export class Client {
   /**
    * Set the configuration options.
    */
-  configure (options = {}) {
+  configure (options: Options = {}): Client {
     // options get merged & validated before getting set
     const newOptions = R.merge(this.options, options)
     validate(newOptions)
@@ -74,7 +94,7 @@ export class Client {
   /**
    * Connect to the Reactotron server.
    */
-  connect () {
+  connect (): Client {
     this.connected = true
     const { createSocket, secure, host, port, name, userAgent, environment, reactotronVersion } = this.options
     const { onCommand, onConnect, onDisconnect } = this.options
@@ -113,7 +133,7 @@ export class Client {
     }
 
     // fires when we receive a command, just forward it off
-    const onMessage = data => {
+    const onMessage = (data: any) => {
       const command = JSON.parse(data)
       // trigger our own command handler
       onCommand && onCommand(command)
@@ -189,7 +209,7 @@ export class Client {
   /**
    * Adds a plugin to the system
    */
-  use (pluginCreator) {
+  use (pluginCreator: (client: Client) => any): Client {
     // we're supposed to be given a function
     if (typeof pluginCreator !== 'function') throw new Error('plugins must be a function')
 
@@ -205,7 +225,7 @@ export class Client {
       if (!R.is(Object, plugin.features)) throw new Error('features must be an object')
 
       // here's how we're going to inject these in
-      const inject = (key) => {
+      const inject = (key: string) => {
         // grab the function
         const featureFunction = plugin.features[key]
 
@@ -235,7 +255,7 @@ export class Client {
 }
 
 // convenience factory function
-export const createClient = (options) => {
+export const createClient = (options: Options) => {
   const client = new Client()
   client.configure(options)
   return client

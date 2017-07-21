@@ -26,6 +26,7 @@
   "devDependencies": {
     "@types/node": "^7.0.31",
     "@types/ramda": "github:types/npm-ramda",
+    "@types/ws": "^3.0.2",
     "ava": "^0.20.0",
     "nyc": "^11.0.3",
     "rollup": "^0.43.0",
