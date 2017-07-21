@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target":"es5",
+        "target": "es5",
         "module": "commonjs",
         "noImplicitAny": false, // Might be worth setting to true after we get good typing in
         "removeComments": false,
