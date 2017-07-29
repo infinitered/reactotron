@@ -24,6 +24,11 @@ const isOnCommandValid = R.allPass([
 export default (options: { port: number, onCommand: (command: any) => any }) => {
   const { port, onCommand } = options
 
-  if (!isPortValid(port)) throw new Error('invalid port')
-  if (!isOnCommandValid(onCommand)) throw new Error('onCommand is required')
+  if (!isPortValid(port)) {
+    throw new Error('invalid port')
+  }
+
+  if (!isOnCommandValid(onCommand)) {
+    throw new Error('onCommand is required')
+  }
 }

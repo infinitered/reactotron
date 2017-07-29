@@ -23,7 +23,7 @@ class Commands {
   /**
    * Constructor with an optional overrideable max list size.
    */
-  constructor (maximumListSize = DEFAULT_MAXIMUM_LIST_SIZE, allMaximumListSize = ALL_MAXIMUM_LIST_SIZE) {
+  constructor(maximumListSize = DEFAULT_MAXIMUM_LIST_SIZE, allMaximumListSize = ALL_MAXIMUM_LIST_SIZE) {
     // create an observable list for each (named after the type)
     R.forEach(type => {
       extendObservable(this, {
@@ -47,13 +47,15 @@ class Commands {
   /**
    * Here's action.  Put it in the right list please.
    */
-  @action addCommand (command) {
+  @action addCommand(command) {
     // which command type?
     const { type } = command
     // grab that list
     const list = this[type]
     // but if we can't, jet
-    if (R.isNil(list)) return
+    if (R.isNil(list)) {
+      return
+    }
     // add this to the all list
     this.all.push(command)
     // enforce the all cap

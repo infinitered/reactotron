@@ -26,34 +26,36 @@ replacements['~~~ -Infinity ~~~'] = -Infinity
  * @param  {*} payload The object
  * @return {*}         The same object with some values replaced.
  */
-export function repair (payload: any) {
+export function repair(payload: any) {
   // we only want objects
-  if (typeof payload !== 'object') return payload
+  if (typeof payload !== 'object') {
+    return payload
+  }
 
   // the recursive iterator
-  function walker (obj: object) {
+  function walker(obj: object) {
     let k
     // NOTE: Object.prototype.hasOwnProperty IS defined however the bind to the object throws the def off.
-    const has = <(key: string) => boolean>Object.prototype.hasOwnProperty.bind(obj)
+    const has = Object.prototype.hasOwnProperty.bind(obj) as (key: string) => boolean
     for (k in obj) {
       if (has(k)) {
         switch (typeof obj[k]) {
-          // should we recurse thru sub-objects and arrays?
-          case 'object':
-            walker(obj[k])
-            break
+        // should we recurse thru sub-objects and arrays?
+        case 'object':
+          walker(obj[k])
+          break
 
-          // mutate in-place with one of our replacements
-          case 'string':
-            if (obj[k].toLowerCase() in replacements) {
-              // look for straight up replacements
-              obj[k] = replacements[obj[k].toLowerCase()]
-            } else if (obj[k].length > 9) {
-              // fancy function replacements
-              if (obj[k].startsWith('~~~ ') && obj[k].endsWith(' ~~~')) {
-                obj[k] = obj[k].replace(/~~~/g, '')
-              }
+        // mutate in-place with one of our replacements
+        case 'string':
+          if (obj[k].toLowerCase() in replacements) {
+            // look for straight up replacements
+            obj[k] = replacements[obj[k].toLowerCase()]
+          } else if (obj[k].length > 9) {
+            // fancy function replacements
+            if (obj[k].startsWith('~~~ ') && obj[k].endsWith(' ~~~')) {
+              obj[k] = obj[k].replace(/~~~/g, '')
             }
+          }
         }
       }
     }

@@ -8,7 +8,7 @@
     "watch": "ava --watch",
     "coverage": "nyc ava",
     "build": "rollup -c",
-    "lint": "standard",
+    "lint": "tslint -c tslint.json src/**/*.ts",
     "build:watch": "node watch.js"
   },
   "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-core-server",
@@ -33,8 +33,11 @@
     "rollup": "^0.43.0",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-typescript2": "^0.4.3",
-    "standard": "^10.0.2",
     "tslib": "^1.7.1",
+    "tslint": "^5.5.0",
+    "tslint-eslint-rules": "^4.1.1",
+    "tslint-react": "^3.1.0",
+    "tslint-react-recommended": "^1.0.9",
     "typescript": "^2.4.0"
   },
   "ava": {

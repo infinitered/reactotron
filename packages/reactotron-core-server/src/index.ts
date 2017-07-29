@@ -36,32 +36,32 @@ class Server {
   /**
    * Holds the commands the client has sent.
    */
-  commands = new Commands();
+  commands = new Commands()
 
   /**
    * Holds the currently connected clients.
    */
-  @observable connections = asFlat([]);
+  @observable connections = asFlat([])
 
   /**
    * How many people are connected?
    */
-  @computed get connectionCount () {
+  @computed get connectionCount() {
     return length(this.connections)
   }
 
-  constructor (createTransport) {
+  constructor(createTransport) {
     this.send = this.send.bind(this)
   }
 
-  findConnectionById = id => find(propEq('id', id), this.connections);
+  findConnectionById = id => find(propEq('id', id), this.connections)
   findPartialConnectionById = id =>
-    find(propEq('id', id), this.partialConnections);
+    find(propEq('id', id), this.partialConnections)
 
   /**
    * Set the configuration options.
    */
-  configure (options = {}) {
+  configure(options = {}) {
     // options get merged & validated before getting set
     const newOptions = merge(this.options, options)
     validate(newOptions)
@@ -72,7 +72,7 @@ class Server {
   /**
    * Starts the server
    */
-  start () {
+  start() {
     this.started = true
     const { port, onStart } = this.options
     const { onCommand, onConnect, onDisconnect } = this.options
@@ -99,10 +99,10 @@ class Server {
       socket.on('disconnect', () => {
         onDisconnect(socket.id)
         // remove them from the list partial list
-        this.partialConnections = <any[]>reject(
+        this.partialConnections = reject(
           propEq('id', socket.id),
           this.partialConnections
-        )
+        ) as any
 
         // remove them from the main connections list
         const severingConnection = find(
@@ -110,7 +110,7 @@ class Server {
           this.connections
         )
         if (severingConnection) {
-          (<any>this.connections).remove(severingConnection)
+          (this.connections as any).remove(severingConnection)
           onDisconnect && onDisconnect(severingConnection)
         }
       })
@@ -133,24 +133,24 @@ class Server {
         // for client intros
         if (type === 'client.intro') {
           // find them in the partial connection list
-          const partialConnection = <any>find(
+          const partConn = find(
             propEq('id', socket.id),
             this.partialConnections
-          )
+          ) as any
 
           // add their address in
-          fullCommand.payload.address = partialConnection.address
+          fullCommand.payload.address = partConn.address
 
           // remove them from the partial connections list
-          this.partialConnections = <any[]>reject(
+          this.partialConnections = reject(
             propEq('id', socket.id),
             this.partialConnections
-          )
+          ) as any
 
           // bestow the payload onto the connection
           const connection = merge(payload, {
             id: socket.id,
-            address: partialConnection.address
+            address: partConn.address
           })
 
           // then trigger the connection
@@ -170,7 +170,7 @@ class Server {
 
         // clear
         if (type === 'clear') {
-          (<any>this.commands).all.clear()
+          (this.commands as any).all.clear()
         } else {
           this.commands.addCommand(fullCommand)
           onCommand(fullCommand)
@@ -190,7 +190,7 @@ class Server {
   /**
    * Stops the server
    */
-  stop () {
+  stop() {
     const { onStop } = this.options
     this.started = false
     forEach(
@@ -208,7 +208,7 @@ class Server {
   /**
    * Sends a command to the client
    */
-  send (type, payload) {
+  send(type, payload) {
     this.wss.clients.forEach(client => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify({ type, payload }))
@@ -219,37 +219,40 @@ class Server {
   /**
    * Sends a request to the client for state values.
    */
-  stateValuesRequest (path) {
+  stateValuesRequest(path) {
     this.send('state.values.request', { path })
   }
 
   /**
    * Sends a request to the client for keys for a state object.
    */
-  stateKeysRequest (path) {
+  stateKeysRequest(path) {
     this.send('state.keys.request', { path })
   }
 
   /**
    * Dispatches an action through to the state.
    */
-  stateActionDispatch (action) {
+  stateActionDispatch(action) {
     this.send('state.action.dispatch', { action })
   }
 
   /**
    * Sends a list of subscribed paths to the client for state subscription.
    */
-  stateValuesSendSubscriptions () {
+  stateValuesSendSubscriptions() {
     this.send('state.values.subscribe', { paths: this.subscriptions })
   }
 
   /**
    * Subscribe to a path in the client's state.
    */
-  stateValuesSubscribe (path) {
+  stateValuesSubscribe(path) {
     // prevent duplicates
-    if (contains(path, this.subscriptions)) return
+    if (contains(path, this.subscriptions)) {
+      return
+    }
+
     // subscribe
     this.subscriptions.push(path)
     this.stateValuesSendSubscriptions()
@@ -258,9 +261,12 @@ class Server {
   /**
    * Unsubscribe from this path.
    */
-  stateValuesUnsubscribe (path) {
+  stateValuesUnsubscribe(path) {
     // if it doesn't exist, jet
-    if (!contains(path, this.subscriptions)) return
+    if (!contains(path, this.subscriptions)) {
+      return
+    }
+
     this.subscriptions = without([path], this.subscriptions)
     this.stateValuesSendSubscriptions()
   }
@@ -268,7 +274,7 @@ class Server {
   /**
    * Clears the subscriptions.
    */
-  stateValuesClearSubscriptions () {
+  stateValuesClearSubscriptions() {
     this.subscriptions = []
     this.stateValuesSendSubscriptions()
   }
@@ -276,21 +282,21 @@ class Server {
   /**
    * Asks the client for a copy of the current state.
    */
-  stateBackupRequest () {
+  stateBackupRequest() {
     this.send('state.backup.request', {})
   }
 
   /**
    * Asks the client to substitute this new state.  Good luck!  Hope it is compatible!
    */
-  stateRestoreRequest (state) {
+  stateRestoreRequest(state) {
     this.send('state.restore.request', { state })
   }
 
   /**
    * Sends a request for the client to open the file in editor.
    */
-  openInEditor (details) {
+  openInEditor(details) {
     const { file, lineNumber } = details
     this.send('editor.open', { file, lineNumber })
   }
