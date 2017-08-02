@@ -6,8 +6,9 @@ const defaultPerformanceNow = () => Date.now()
 // try to find the browser-based performance timer
 const nativePerformance = typeof window !== 'undefined' && window && (window.performance || window.msPerformance || window.webkitPerformance)
 
+// TODO: broken in 0.47, so guarded
 // if we do find it, let's setup to call it
-const nativePerformanceNow = () => nativePerformance.now()
+const nativePerformanceNow = () => nativePerformance.now && nativePerformance.now()
 
 // the function we're trying to assign
 let performanceNow = defaultPerformanceNow
