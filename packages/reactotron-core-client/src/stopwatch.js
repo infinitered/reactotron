@@ -24,9 +24,6 @@ if (hasHirezNodeTimer) {
   performanceNow = () => nativePerformance.now && nativePerformance.now()
 }
 
-// this is the interface the callers will use
-// export const performanceNow = nativePerformance ? nativePerformanceOurs : defaultPerformanceNow
-
 /**
  * Starts a lame, low-res timer.  Returns a function which when invoked,
  * gives you the number of milliseconds since passing.  ish.
