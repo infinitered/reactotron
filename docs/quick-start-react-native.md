@@ -19,12 +19,24 @@ npm i --save-dev reactotron-react-native
 I like a separate file for initializing.  Create `ReactotronConfig.js` in your editor of choice and paste this:
 
 ```js
-import Reactotron from 'reactotron-react-native'
+import Reactotron, {
+  trackGlobalErrors,
+  openInEditor,
+  overlay,
+  asyncStorage,
+  networking
+} from 'reactotron-react-native'
 
-Reactotron
-  .configure() // controls connection & communication settings
-  .useReactNative() // add all built-in react native plugins
-  .connect() // let's connect!
+  Reactotron
+    .configure({
+      name: 'React Native Demo'
+    })
+  .use(trackGlobalErrors())
+  .use(openInEditor())
+  .use(overlay())
+  .use(asyncStorage())
+  .use(networking())
+  .connect()
 ```
 
 Finally, we import this on startup in `App.js` (Create React Native App) or `index.ios.js` and `index.android.js` (react-native-cli) on line 1:
