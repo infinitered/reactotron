@@ -24,7 +24,7 @@ export default () => reactotron => {
     features: {
       overlay: WrappedComponent => props => (
         <View style={{ flex: 1 }}>
-          <WrappedComponent />
+          <WrappedComponent {...props} />
           <FullScreenOverlay emitter={emitter} />
         </View>
       )
