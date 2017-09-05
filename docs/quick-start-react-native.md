@@ -27,6 +27,29 @@ Reactotron
   .connect() // let's connect!
 ```
 
+Or using a more advanced way to customize which plugins to include:
+
+```js
+import Reactotron, {
+  trackGlobalErrors,
+  openInEditor,
+  overlay,
+  asyncStorage,
+  networking
+} from 'reactotron-react-native'
+
+  Reactotron
+    .configure({
+      name: 'React Native Demo'
+    })
+    .use(trackGlobalErrors())
+    .use(openInEditor())
+    .use(overlay())
+    .use(asyncStorage())
+    .use(networking())
+    .connect()
+```
+
 Finally, we import this on startup in `App.js` (Create React Native App) or `index.ios.js` and `index.android.js` (react-native-cli) on line 1:
 
 ```js
