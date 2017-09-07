@@ -1,6 +1,6 @@
 # reactotron-redux
 
-Converts responses sent via (apisauce)[https://github.com/skellock/apisauce] into
+Converts responses sent via [apisauce](https://github.com/skellock/apisauce) into
 Reactotron.
 
 # Installing
@@ -38,3 +38,4 @@ api.addMonitor(response => {
 })
 
 // see https://github.com/skellock/apisauce for more details.
+```
