@@ -88,7 +88,7 @@ Next, inside the `render()` function, put this as the first line:
 Reactotron.log('hello rendering world')
 ```
 
-Save that file and refresh your web page if you don't have live reloading.
+Save that file and refresh your app if you don't have live reloading.
 
 Now Reactotron looks like this:
 
