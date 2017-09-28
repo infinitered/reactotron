@@ -26,16 +26,16 @@ cd win32-ia32
 mv Reactotron-win32-ia32 Reactotron
 zip -r Reactotron-win32-ia32.zip Reactotron
 mv Reactotron-win32-ia32.zip ../
-# cd ../
-#
-# # 64 bit windows
+cd ../
+
+# 64 bit windows
 cd win32-x64
 mv Reactotron-win32-x64 Reactotron
 zip -r Reactotron-win32-x64.zip Reactotron
 mv Reactotron-win32-x64.zip ../
-# cd ..
-#
-# # 32 bit linux
+cd ..
+
+# 32 bit linux
 cd linux-ia32
 mv Reactotron-linux-ia32 Reactotron
 zip -r Reactotron-linux-ia32.zip Reactotron
