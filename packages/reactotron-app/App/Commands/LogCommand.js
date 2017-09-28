@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import Command from '../Shared/Command'
 import { max, min, slice, is, join, take, replace, merge, map, split, last, takeLast } from 'ramda'

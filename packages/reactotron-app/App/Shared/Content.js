@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { map, trim, split } from 'ramda'
 import ObjectTree from './ObjectTree'
 import isShallow from '../Lib/IsShallow'

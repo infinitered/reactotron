@@ -56,4 +56,3 @@ cd ..
 # zip -r Reactotron.zip Reactotron.app
 # mv Reactotron.zip ../../
 # cd ../..
-

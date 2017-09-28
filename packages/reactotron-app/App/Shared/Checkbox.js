@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import IconUnchecked from 'react-icons/lib/md/check-box-outline-blank'
 import IconChecked from 'react-icons/lib/md/check-box'
 import Colors from '../Theme/Colors'
