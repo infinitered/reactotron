@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import BenchmarkIcon from 'react-icons/lib/md/assignment-turned-in'
 import DebugIcon from 'react-icons/lib/md/info'
 import WarningIcon from 'react-icons/lib/md/warning'

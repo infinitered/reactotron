@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
 import { mergeAll } from 'ramda'
