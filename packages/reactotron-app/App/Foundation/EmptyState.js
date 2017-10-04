@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Colors from '../Theme/Colors'
 
@@ -37,26 +37,24 @@ const Styles = {
   }
 }
 
-class EmptyState extends Component {
-  static propTypes = {
-    icon: PropTypes.node.isRequired,
-    title: PropTypes.string.isRequired,
-    children: PropTypes.node
-  }
-
-  render () {
-    const { icon, title } = this.props
-    const Icon = require(`react-icons/lib/md/${icon}`)
-    return (
-      <div style={Styles.container}>
-        <div style={Styles.well}>
-          <Icon size={100} />
-          <div style={Styles.title}>{ title }</div>
-          <div style={Styles.message}>{ this.props.children }</div>
-        </div>
+const EmptyState = props => {
+  const { icon, title } = props
+  const Icon = require(`react-icons/lib/md/${icon}`)
+  return (
+    <div style={Styles.container}>
+      <div style={Styles.well}>
+        <Icon size={100} />
+        <div style={Styles.title}>{title}</div>
+        <div style={Styles.message}>{props.children}</div>
       </div>
-    )
-  }
+    </div>
+  )
+}
+
+EmptyState.propTypes = {
+  icon: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node
 }
 
 export default EmptyState
