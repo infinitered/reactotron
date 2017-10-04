@@ -108,14 +108,18 @@ class StateKeysAndValuesDialog extends Component {
     }
   }
 
+  componentDidUpdate() {
+    const field = ReactDOM.findDOMNode(this.field)
+
+    field && field.focus()
+  }
+
   render () {
     const { ui } = this.props.session
     const open = ui.showStateFindDialog
     const isKeys = ui.keysOrValues === 'keys'
     if (!open) return null
 
-    // need to find a less hacky way of doing this
-    setTimeout(() => ReactDOM.findDOMNode(this.refs.textField).focus(), 1)
     return (
       <ModalPortal>
         <ModalBackground onClose={ui.closeStateFindDialog}>
@@ -133,7 +137,7 @@ class StateKeysAndValuesDialog extends Component {
                   placeholder={INPUT_PLACEHOLDER}
                   style={Styles.textField}
                   type='text'
-                  ref='textField'
+                  ref={node => (this.field = node)}
                   onKeyPress={this.handleKeyPress}
                   onChange={this.handleChange}
                 />
