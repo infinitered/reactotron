@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { ModalPortal, ModalBackground, ModalDialog } from 'react-modal-dialog'
 import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
@@ -128,11 +128,7 @@ const Styles = {
   }
 }
 
-@inject('session')
-@observer
-class FilterTimelineDialog extends Component {
-  render () {
-    const { session } = this.props
+const FilterTimelineDialog = inject('session')(observer(({ session }) => {
     const { ui } = session
     if (!ui.showFilterTimelineDialog) return null
 
@@ -175,7 +171,6 @@ class FilterTimelineDialog extends Component {
         </ModalBackground>
       </ModalPortal>
     )
-  }
-}
+}))
 
 export default FilterTimelineDialog

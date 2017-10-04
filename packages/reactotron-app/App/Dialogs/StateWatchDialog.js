@@ -102,13 +102,16 @@ class StateWatchDialog extends Component {
     session.ui.watchToAdd = e.target.value
   }
 
+  componentDidUpdate() {
+      const field = ReactDOM.findDOMNode(this.field)
+
+      field && field.focus()
+  }
+
   render () {
     const { ui } = this.props.session
-    const open = ui.showStateWatchDialog
-    if (!open) return null
+    if (!ui.showStateWatchDialog) return null
 
-    // need to find a less hacky way of doing this
-    setTimeout(() => ReactDOM.findDOMNode(this.refs.textField).focus(), 1)
     return (
       <ModalPortal>
         <ModalBackground onClose={ui.closeStateWatchDialog}>
@@ -126,7 +129,7 @@ class StateWatchDialog extends Component {
                   placeholder={INPUT_PLACEHOLDER}
                   style={Styles.textField}
                   type='text'
-                  ref='textField'
+                  ref={node => (this.field = node)}
                   onKeyPress={this.handleKeyPress}
                   onChange={this.handleChange}
                 />
