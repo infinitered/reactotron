@@ -31,7 +31,7 @@ const Timestamp = props => {
   )
 }
 
-Timestamp.ropTypes = {
+Timestamp.propTypes = {
   date: PropTypes.object.isRequired,
   style: PropTypes.object
 }
