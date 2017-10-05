@@ -1,10 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Colors from '../Theme/Colors'
 
 const Styles = {
-  container: {
-  },
+  container: {},
   row: {
     display: 'flex',
     flexDirection: 'row'
@@ -25,32 +24,38 @@ const Styles = {
   }
 }
 
-class NativeOverlayLayoutType extends Component {
-  static propTypes = {
-    layoutType: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired
+const NativeOverlayLayoutType = props => {
+  const { onChange, layoutType } = props
+  const makeHandler = newlayoutType => event => {
+    event.stopPropagation()
+    event.preventDefault()
+    onChange(newlayoutType)
+    return false
   }
+  const makeButtonStyle = value =>
+    layoutType === value
+      ? { ...Styles.button, ...Styles.buttonActive }
+      : Styles.button
 
-  render () {
-    const { onChange, layoutType } = this.props
-    const makeHandler = newlayoutType => event => {
-      event.stopPropagation()
-      event.preventDefault()
-      onChange(newlayoutType)
-      return false
-    }
-    const makeButtonStyle = value =>
-      layoutType === value ? { ...Styles.button, ...Styles.buttonActive } : Styles.button
-
-    return (
-      <div style={Styles.container}>
-        <div style={Styles.row}>
-          <button style={makeButtonStyle('image')} onClick={makeHandler('image')}>Image</button>
-          <button style={makeButtonStyle('screen')} onClick={makeHandler('screen')}>Screen</button>
-        </div>
+  return (
+    <div style={Styles.container}>
+      <div style={Styles.row}>
+        <button style={makeButtonStyle('image')} onClick={makeHandler('image')}>
+          Image
+        </button>
+        <button
+          style={makeButtonStyle('screen')}
+          onClick={makeHandler('screen')}
+        >
+          Screen
+        </button>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
+NativeOverlayLayoutType.propTypes = {
+  layoutType: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
+}
 export default NativeOverlayLayoutType
