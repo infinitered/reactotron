@@ -4,7 +4,6 @@
   "description": "A development tool to explore, inspect, and diagnose your React JS/DOM apps.",
   "main": "dist/index.js",
   "scripts": {
-    "test-nope": "ava",
     "watch": "ava --watch",
     "coverage": "nyc ava",
     "build": "rollup -c",
