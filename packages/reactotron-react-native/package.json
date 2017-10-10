@@ -4,7 +4,6 @@
   "description": "A development tool to explore, inspect, and diagnose your React Native apps.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "exit 0",
     "build": "rollup -c",
     "lint": "standard",
     "build:watch": "node watch.js"
