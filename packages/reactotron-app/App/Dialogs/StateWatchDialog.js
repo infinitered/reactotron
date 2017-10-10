@@ -102,10 +102,10 @@ class StateWatchDialog extends Component {
     session.ui.watchToAdd = e.target.value
   }
 
-  componentDidUpdate() {
-      const field = ReactDOM.findDOMNode(this.field)
+  componentDidUpdate () {
+    const field = ReactDOM.findDOMNode(this.field)
 
-      field && field.focus()
+    field && field.focus()
   }
 
   render () {

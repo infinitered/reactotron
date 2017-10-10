@@ -67,6 +67,7 @@
     "node-libs-browser": "^2.0.0",
     "standard": "^10.0.2",
     "style-loader": "^0.16.1",
+    "sumchecker": "^2.0.2",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.10.0",
@@ -95,10 +96,6 @@
     "reactotron-core-server": "^1.12.0",
     "source-map-support": "^0.4.14",
     "stringify-object": "^3.0.0"
-  },
-  "devEngines": {
-    "node": "6.x",
-    "npm": "3.x"
   },
   "standard": {
     "parser": "babel-eslint"

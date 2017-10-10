@@ -79,7 +79,7 @@ const Styles = {
 }
 
 const RenameStateDialog = inject('session')(observer(({ session }) => {
-  const { ui } = session;
+  const { ui } = session
   if (!ui.showRenameStateDialog) return null
 
   return (
@@ -99,7 +99,7 @@ const RenameStateDialog = inject('session')(observer(({ session }) => {
                 type='text'
                 ref='textField'
                 defaultValue={ui.backupStateName}
-                onChange={e => ui.backupStateName = e.target.value}
+                onChange={e => (ui.backupStateName = e.target.value)}
               />
             </div>
             <div style={Styles.keystrokes}>

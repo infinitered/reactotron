@@ -108,7 +108,7 @@ class StateKeysAndValuesDialog extends Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     const field = ReactDOM.findDOMNode(this.field)
 
     field && field.focus()
