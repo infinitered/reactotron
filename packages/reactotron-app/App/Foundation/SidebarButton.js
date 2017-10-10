@@ -42,7 +42,7 @@ const SidebarButton = props => {
   return (
     <div style={containerStyles} onClick={onClick}>
       <Icon size={Styles.iconSize} />
-      <div style={Styles.text}>{this.props.text}</div>
+      <div style={Styles.text}>{props.text}</div>
     </div>
   )
 }
