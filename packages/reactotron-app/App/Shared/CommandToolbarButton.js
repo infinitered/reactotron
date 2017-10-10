@@ -20,7 +20,7 @@ const CommandToolbarButton = props => {
   return (
     <div data-tip={tip} onClick={onClick} style={Styles.container}>
       <Icon size={Styles.iconSize} style={Styles.icon} />
-      <ReactTooltip place="bottom" className="tooltipTheme" />
+      <ReactTooltip place='bottom' className='tooltipTheme' />
     </div>
   )
 }

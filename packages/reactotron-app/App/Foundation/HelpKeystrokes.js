@@ -46,31 +46,31 @@ const HelpKeystrokes = () => (
         <div style={Styles.category}>Navigation</div>
         <div style={Styles.helpShortcut}>
           <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="1" />
+            <Key text={Keystroke.modifierName} />+<Key text='1' />
           </div>
           <div style={Styles.helpDetail}>view timeline</div>
         </div>
         <div style={Styles.helpShortcut}>
           <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="2" />
+            <Key text={Keystroke.modifierName} />+<Key text='2' />
           </div>
           <div style={Styles.helpDetail}>view redux subscriptions</div>
         </div>
         <div style={Styles.helpShortcut}>
           <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="3" />
+            <Key text={Keystroke.modifierName} />+<Key text='3' />
           </div>
           <div style={Styles.helpDetail}>view redux snapshots</div>
         </div>
         <div style={Styles.helpShortcut}>
           <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="4" />
+            <Key text={Keystroke.modifierName} />+<Key text='4' />
           </div>
           <div style={Styles.helpDetail}>view React Native tools</div>
         </div>
         <div style={Styles.helpShortcut}>
           <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="/" />
+            <Key text={Keystroke.modifierName} />+<Key text='/' />
           </div>
           <div style={Styles.helpDetail}>view help</div>
         </div>
@@ -80,31 +80,31 @@ const HelpKeystrokes = () => (
         <div style={Styles.category}>State Goodies</div>
         <div style={Styles.helpShortcut}>
           <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="F" />
+            <Key text={Keystroke.modifierName} />+<Key text='F' />
           </div>
           <div style={Styles.helpDetail}>find keys or values</div>
         </div>
         <div style={Styles.helpShortcut}>
           <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="⬆" />+<Key text="F" />
+            <Key text={Keystroke.modifierName} />+<Key text='⬆' />+<Key text='F' />
           </div>
           <div style={Styles.helpDetail}>filter timeline</div>
         </div>
         <div style={Styles.helpShortcut}>
           <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="N" />
+            <Key text={Keystroke.modifierName} />+<Key text='N' />
           </div>
           <div style={Styles.helpDetail}>new subscription</div>
         </div>
         <div style={Styles.helpShortcut}>
           <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="D" />
+            <Key text={Keystroke.modifierName} />+<Key text='D' />
           </div>
           <div style={Styles.helpDetail}>dispatch an action</div>
         </div>
         <div style={Styles.helpShortcut}>
           <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="S" />
+            <Key text={Keystroke.modifierName} />+<Key text='S' />
           </div>
           <div style={Styles.helpDetail}>take a snapshot of current state</div>
         </div>
@@ -114,7 +114,7 @@ const HelpKeystrokes = () => (
         <div style={Styles.category}>Miscellaneous</div>
         <div style={Styles.helpShortcut}>
           <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="K" />
+            <Key text={Keystroke.modifierName} />+<Key text='K' />
           </div>
           <div style={Styles.helpDetail}>klear!</div>
         </div>
