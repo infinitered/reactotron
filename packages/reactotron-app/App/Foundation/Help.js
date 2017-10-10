@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import HelpHeader from './HelpHeader'
 import HelpKeystrokes from './HelpKeystrokes'
 import HelpFeedback from './HelpFeedback'
 
-const FEEDBACK = 'Let\'s Connect!'
+const FEEDBACK = "Let's Connect!"
 const KEYSTROKES = 'Keystrokes'
 
 const logoUrl = require('../Theme/Reactotron-128.png')
@@ -41,26 +41,21 @@ const Styles = {
   }
 }
 
-class Help extends Component {
-  render () {
-    return (
-      <div style={Styles.container}>
-        <HelpHeader />
-        <div style={Styles.content}>
-          <div style={Styles.logoPanel}>
-            <img src={logoUrl} style={Styles.logo} />
-          </div>
-
-          <div style={Styles.title}>{FEEDBACK}</div>
-          <HelpFeedback />
-
-          <div style={Styles.title}>{KEYSTROKES}</div>
-          <HelpKeystrokes />
-
-        </div>
+const Help = () => (
+  <div style={Styles.container}>
+    <HelpHeader />
+    <div style={Styles.content}>
+      <div style={Styles.logoPanel}>
+        <img src={logoUrl} style={Styles.logo} />
       </div>
-    )
-  }
-}
+
+      <div style={Styles.title}>{FEEDBACK}</div>
+      <HelpFeedback />
+
+      <div style={Styles.title}>{KEYSTROKES}</div>
+      <HelpKeystrokes />
+    </div>
+  </div>
+)
 
 export default Help

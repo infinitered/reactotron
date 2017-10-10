@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { ModalPortal, ModalBackground, ModalDialog } from 'react-modal-dialog'
 import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
@@ -78,62 +78,47 @@ const Styles = {
   }
 }
 
-@inject('session')
-@observer
-class RenameStateDialog extends Component {
-  constructor (props) {
-    super(props)
-    this.handleChange = this.handleChange.bind(this)
-  }
+const RenameStateDialog = inject('session')(observer(({ session }) => {
+  const { ui } = session;
+  if (!ui.showRenameStateDialog) return null
 
-  handleChange (e) {
-    const { session } = this.props
-    session.ui.backupStateName = e.target.value
-  }
-
-  render () {
-    const { ui } = this.props.session
-    const open = ui.showRenameStateDialog
-    if (!open) return null
-
-    return (
-      <ModalPortal>
-        <ModalBackground onClose={ui.closeRenameStateDialog}>
-          <ModalDialog style={Styles.dialog}>
-            <div style={Styles.container}>
-              <div style={Styles.header}>
-                <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
+  return (
+    <ModalPortal>
+      <ModalBackground onClose={ui.closeRenameStateDialog}>
+        <ModalDialog style={Styles.dialog}>
+          <div style={Styles.container}>
+            <div style={Styles.header}>
+              <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
+            </div>
+            <div style={Styles.body}>
+              <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
+              <input
+                autoFocus
+                placeholder={INPUT_PLACEHOLDER}
+                style={Styles.textField}
+                type='text'
+                ref='textField'
+                defaultValue={ui.backupStateName}
+                onChange={e => ui.backupStateName = e.target.value}
+              />
+            </div>
+            <div style={Styles.keystrokes}>
+              <div style={Styles.hotkey}>
+                <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span>
+                {' '}
+                {ESCAPE_HINT}
               </div>
-              <div style={Styles.body}>
-                <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
-                <input
-                  autoFocus
-                  placeholder={INPUT_PLACEHOLDER}
-                  style={Styles.textField}
-                  type='text'
-                  ref='textField'
-                  defaultValue={ui.backupStateName}
-                  onChange={this.handleChange}
-                />
-              </div>
-              <div style={Styles.keystrokes}>
-                <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span>
-                  {' '}
-                  {ESCAPE_HINT}
-                </div>
-                <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span>
-                  {' '}
-                  {ENTER_HINT}
-                </div>
+              <div style={Styles.hotkey}>
+                <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span>
+                {' '}
+                {ENTER_HINT}
               </div>
             </div>
-          </ModalDialog>
-        </ModalBackground>
-      </ModalPortal>
-    )
-  }
-}
+          </div>
+        </ModalDialog>
+      </ModalBackground>
+    </ModalPortal>
+  )
+}))
 
 export default RenameStateDialog

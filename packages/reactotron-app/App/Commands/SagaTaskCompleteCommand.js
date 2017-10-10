@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Command from '../Shared/Command'
 import Colors from '../Theme/Colors'
 import Content from '../Shared/Content'

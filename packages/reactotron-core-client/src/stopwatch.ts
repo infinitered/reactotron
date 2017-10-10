@@ -8,25 +8,22 @@ const defaultPerformanceNow = (started?: number) => Date.now()
 // try to find the browser-based performance timer
 const nativePerformance = typeof window !== 'undefined' && window && (window.performance || (<any>window).msPerformance || (<any>window).webkitPerformance)
 
-// if we do find it, let's setup to call it
-const nativePerformanceNow = (): number => nativePerformance.now()
-
 // the function we're trying to assign
 let performanceNow = defaultPerformanceNow
 
 // accepts an already started time and returns the number of milliseconds
 let delta = (started: number) => performanceNow() - started
 
-// node will use a high rez timer
 if (hasHirezNodeTimer) {
   performanceNow = (<any>process.hrtime)
   delta = started => performanceNow(started)[1] / 1000000
+} else if (global.nativePerformanceNow) {
+  // react native 47
+  performanceNow = global.nativePerformanceNow
 } else if (nativePerformance) {
-  performanceNow = nativePerformanceNow
+  // browsers + safely check for react native < 47
+  performanceNow = () => nativePerformance.now && nativePerformance.now()
 }
-
-// this is the interface the callers will use
-// export const performanceNow = nativePerformance ? nativePerformanceNow : defaultPerformanceNow
 
 /**
  * Starts a lame, low-res timer.  Returns a function which when invoked,
