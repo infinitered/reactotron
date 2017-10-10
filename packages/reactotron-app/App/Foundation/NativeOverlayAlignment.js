@@ -17,45 +17,22 @@ const NativeOverlayAlignment = props => {
     <div style={Styles.container}>
       <div style={Styles.row}>
         <NativeOverlayAlignmentButton
-          justifyContent="flex-start"
-          alignItems="flex-start"
+          justifyContent='flex-start'
+          alignItems='flex-start'
           selectedJustifyContent={justifyContent}
           selectedAlignItems={alignItems}
           onClick={onChange}
         />
         <NativeOverlayAlignmentButton
-          justifyContent="flex-start"
-          alignItems="center"
+          justifyContent='flex-start'
+          alignItems='center'
           selectedJustifyContent={justifyContent}
           selectedAlignItems={alignItems}
           onClick={onChange}
         />
         <NativeOverlayAlignmentButton
-          justifyContent="flex-start"
-          alignItems="flex-end"
-          selectedJustifyContent={justifyContent}
-          selectedAlignItems={alignItems}
-          onClick={onChange}
-        />
-      </div>
-      <div style={Styles.row}>
-        <NativeOverlayAlignmentButton
-          justifyContent="center"
-          alignItems="flex-start"
-          selectedJustifyContent={justifyContent}
-          selectedAlignItems={alignItems}
-          onClick={onChange}
-        />
-        <NativeOverlayAlignmentButton
-          justifyContent="center"
-          alignItems="center"
-          selectedJustifyContent={justifyContent}
-          selectedAlignItems={alignItems}
-          onClick={onChange}
-        />
-        <NativeOverlayAlignmentButton
-          justifyContent="center"
-          alignItems="flex-end"
+          justifyContent='flex-start'
+          alignItems='flex-end'
           selectedJustifyContent={justifyContent}
           selectedAlignItems={alignItems}
           onClick={onChange}
@@ -63,22 +40,45 @@ const NativeOverlayAlignment = props => {
       </div>
       <div style={Styles.row}>
         <NativeOverlayAlignmentButton
-          justifyContent="flex-end"
-          alignItems="flex-start"
+          justifyContent='center'
+          alignItems='flex-start'
           selectedJustifyContent={justifyContent}
           selectedAlignItems={alignItems}
           onClick={onChange}
         />
         <NativeOverlayAlignmentButton
-          justifyContent="flex-end"
-          alignItems="center"
+          justifyContent='center'
+          alignItems='center'
           selectedJustifyContent={justifyContent}
           selectedAlignItems={alignItems}
           onClick={onChange}
         />
         <NativeOverlayAlignmentButton
-          justifyContent="flex-end"
-          alignItems="flex-end"
+          justifyContent='center'
+          alignItems='flex-end'
+          selectedJustifyContent={justifyContent}
+          selectedAlignItems={alignItems}
+          onClick={onChange}
+        />
+      </div>
+      <div style={Styles.row}>
+        <NativeOverlayAlignmentButton
+          justifyContent='flex-end'
+          alignItems='flex-start'
+          selectedJustifyContent={justifyContent}
+          selectedAlignItems={alignItems}
+          onClick={onChange}
+        />
+        <NativeOverlayAlignmentButton
+          justifyContent='flex-end'
+          alignItems='center'
+          selectedJustifyContent={justifyContent}
+          selectedAlignItems={alignItems}
+          onClick={onChange}
+        />
+        <NativeOverlayAlignmentButton
+          justifyContent='flex-end'
+          alignItems='flex-end'
           selectedJustifyContent={justifyContent}
           selectedAlignItems={alignItems}
           onClick={onChange}
