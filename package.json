@@ -9,7 +9,7 @@
     "copy-internal-deps": "cd packages/demo-react-native && ./copy-internal-deps.sh && cd ../..",
     "test": "lerna run test --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce'",
     "lint": "lerna run lint",
-    "welcome": "yarn run clean && yarn run bootstrap -- --ignore-engines && yarn run build && yarn run copy-internal-deps && yarn run lint -s"
+    "welcome": "yarn run clean && yarn run bootstrap && yarn run build && yarn run copy-internal-deps && yarn run lint -s"
   },
   "devDependencies": {
     "lerna": "^2.4.0"

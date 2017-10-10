@@ -1,5 +1,15 @@
 # Contributing
 
+### Dev Tools
+
+Make sure you've got the latest `yarn` (1.2.0) and the latest `node` (8.6.0).  There are some 
+issues with older combos of these.  =)
+
+Also if you encounter a problem with `electron 1.6.8` passing checksums, there was a bug in
+earlier versions of node with their checksum process.  Clear your Yarn cache `yarn cache clean` to
+grab the latests copies.
+
+
 ### Getting Started
 
 Clone & switch to the right branch.
@@ -12,8 +22,8 @@ cd reactotron
 Install `lerna` and run the setup script to install the dependencies & run tests.
 
 ```
-npm install
-npm run welcome
+yarn install
+yarn welcome
 ```
 
 
@@ -54,3 +64,4 @@ In the root, you can run `npm copy-internal-deps` to make them copy over.
 
 But since you're copying built dependencies, you'll need to run `npm run build` first
 if you're doing this to bring forward changes in those dependency libraries.
+
