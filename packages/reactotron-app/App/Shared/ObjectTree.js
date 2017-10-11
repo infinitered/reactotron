@@ -27,7 +27,9 @@ const ObjectTree = props => {
         theme={Styles.theme}
         invertTheme={Colors.invertTheme}
         getItemString={(type, data, itemType, itemString) => {
-          if (type === 'Object') { return <span style={Styles.muted}>{itemType}</span> }
+          if (type === 'Object') {
+            return <span style={Styles.muted}>{itemType}</span>
+          }
           return (
             <span style={Styles.muted}>
               {itemType} {itemString}

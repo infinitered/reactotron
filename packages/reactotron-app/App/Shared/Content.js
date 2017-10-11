@@ -11,7 +11,13 @@ const OMG_UNDEFINED = <div style={{ color: Colors.tag }}>undefined</div>
 
 class Content extends Component {
   static propTypes = {
-    value: PropTypes.oneOfType([ PropTypes.object, PropTypes.array, PropTypes.string, PropTypes.number, PropTypes.bool ]),
+    value: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array,
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool
+    ]),
     treeLevel: PropTypes.number
   }
 
@@ -24,7 +30,10 @@ class Content extends Component {
   breakIntoSpans (part) {
     this.spanCount++
     return (
-      <span key={`span-${this.spanCount}`}>{part}<br /></span>
+      <span key={`span-${this.spanCount}`}>
+        {part}
+        <br />
+      </span>
     )
   }
 
@@ -50,9 +59,7 @@ class Content extends Component {
 
   renderMysteryMeat () {
     const { value } = this.props
-    return (
-      <div style={{ WebkitUserSelect: 'text', cursor: 'text' }}>{String(value)}</div>
-    )
+    return <div style={{ WebkitUserSelect: 'text', cursor: 'text' }}>{String(value)}</div>
   }
 
   render () {
@@ -61,10 +68,14 @@ class Content extends Component {
     if (value === undefined) return OMG_UNDEFINED
     const valueType = typeof value
     switch (valueType) {
-      case 'string': return this.renderString()
-      case 'object': return this.renderObject()
-      case 'array': return this.renderArray()
-      default: return this.renderMysteryMeat()
+      case 'string':
+        return this.renderString()
+      case 'object':
+        return this.renderObject()
+      case 'array':
+        return this.renderArray()
+      default:
+        return this.renderMysteryMeat()
     }
   }
 }

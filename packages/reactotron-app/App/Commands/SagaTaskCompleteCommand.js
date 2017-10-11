@@ -14,16 +14,14 @@ const COMMAND_TITLE = 'SAGA'
 const INDENT_SPACE = 20
 
 const STATUS_MAP = {
-  'RESOLVED': <IconStatusResolved size={18} />,
-  'REJECTED': <IconStatusRejected />,
-  'CANCELLED': <IconStatusCancelled />
+  RESOLVED: <IconStatusResolved size={18} />,
+  REJECTED: <IconStatusRejected />,
+  CANCELLED: <IconStatusCancelled />
 }
 
 const Styles = {
-  details: {
-  },
-  effects: {
-  },
+  details: {},
+  effects: {},
   giant: {
     borderTop: `1px solid ${Colors.line}`,
     marginTop: 10,
@@ -49,8 +47,7 @@ const Styles = {
     color: Colors.tag,
     paddingRight: 20
   },
-  count: {
-  },
+  count: {},
   duration: {
     textAlign: 'right',
     flex: 1
@@ -61,8 +58,7 @@ const Styles = {
   effectDescription: {
     paddingBottom: 4
   },
-  winning: {
-  },
+  winning: {},
   losing: {
     textDecoration: 'line-through',
     color: Colors.foregroundDark
@@ -116,22 +112,21 @@ class SagaTaskCompleteCommand extends Component {
       <div key={key} style={Styles.effect}>
         <div style={Styles.effectNameContainer}>
           <span style={effectNameStyle}>
-            <span style={Styles.effectStatus}>
-              { STATUS_MAP[status] }
-            </span>
-            { name }
+            <span style={Styles.effectStatus}>{STATUS_MAP[status]}</span>
+            {name}
           </span>
         </div>
         <div style={Styles.effectExtra}>
-          { extra &&
+          {extra && (
             <div>
               <div style={Styles.effectDescription}>{description}</div>
-              { showInOut && <Content value={{ in: extra, out: result }} treeLevel={0} /> }
+              {showInOut && <Content value={{ in: extra, out: result }} treeLevel={0} />}
             </div>
-          }
+          )}
         </div>
         <div style={effectDurationStyle}>
-          {duration}<span style={Styles.ms}>ms</span>
+          {duration}
+          <span style={Styles.ms}>ms</span>
         </div>
       </div>
     )
@@ -148,11 +143,12 @@ class SagaTaskCompleteCommand extends Component {
       <Command command={command} title={COMMAND_TITLE} preview={preview}>
         <div style={Styles.effects}>
           <div style={Styles.effectTitle}>
-            <div style={Styles.triggerType}>
-              {description || triggerType}
-            </div>
+            <div style={Styles.triggerType}>{description || triggerType}</div>
             <div style={Styles.count}>{effectTitle}</div>
-            <div style={Styles.duration}>{duration}<span style={Styles.ms}>ms</span></div>
+            <div style={Styles.duration}>
+              {duration}
+              <span style={Styles.ms}>ms</span>
+            </div>
           </div>
           {map(this.renderEffect, children)}
         </div>

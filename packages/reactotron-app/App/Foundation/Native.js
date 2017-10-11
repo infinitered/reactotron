@@ -224,20 +224,21 @@ class Native extends Component {
     event.stopPropagation()
     event.preventDefault()
     const { ui } = this.props.session
-    this.setState({ uri: null, width: null, height: null, scale: 1, alignItems: 'center', justifyContent: 'center' })
+    this.setState({
+      uri: null,
+      width: null,
+      height: null,
+      scale: 1,
+      alignItems: 'center',
+      justifyContent: 'center'
+    })
     ui.setOverlay({ uri: null })
   }
 
   renderImagePreview () {
     const { uri } = this.state
     if (uri) {
-      return (
-        <img
-          src={uri}
-          style={Styles.overlayPreview}
-          onClick={this.removeImage}
-        />
-      )
+      return <img src={uri} style={Styles.overlayPreview} onClick={this.removeImage} />
     } else {
       return <p>Drop Image Here</p>
     }
@@ -253,7 +254,7 @@ class Native extends Component {
         <NativeOverlayLayoutType
           layoutType={this.state.layoutType}
           onChange={this.handleLayoutTypeChange}
-          />
+        />
       </div>
     )
   }
@@ -269,7 +270,7 @@ class Native extends Component {
           alignItems={this.state.alignItems}
           justifyContent={this.state.justifyContent}
           onChange={this.handleAlignmentChange}
-          />
+        />
       </div>
     )
   }
@@ -281,10 +282,7 @@ class Native extends Component {
     return (
       <div>
         <div style={Styles.sectionTitle}>Scale</div>
-        <NativeOverlayScale
-          scale={this.state.scale}
-          onChange={this.handleScaleChange}
-          />
+        <NativeOverlayScale scale={this.state.scale} onChange={this.handleScaleChange} />
       </div>
     )
   }
@@ -299,7 +297,7 @@ class Native extends Component {
         <NativeOverlayResizeMode
           resizeMode={this.state.resizeMode}
           onChange={this.handleResizeModeChange}
-          />
+        />
       </div>
     )
   }
@@ -310,10 +308,7 @@ class Native extends Component {
     return (
       <div>
         <div style={Styles.sectionTitle}>Opacity</div>
-        <NativeOverlayOpacity
-          opacity={this.state.opacity}
-          onChange={this.handleOpacityChange}
-          />
+        <NativeOverlayOpacity opacity={this.state.opacity} onChange={this.handleOpacityChange} />
       </div>
     )
   }
@@ -330,7 +325,7 @@ class Native extends Component {
           marginBottom={this.state.marginBottom}
           marginLeft={this.state.marginLeft}
           onChange={this.handleMarginsChange}
-          />
+        />
       </div>
     )
   }
@@ -348,16 +343,16 @@ class Native extends Component {
               onDragOver={F}
               onDragLeave={F}
               onDragEnd={F}
-              >
-              { this.renderImagePreview() }
+            >
+              {this.renderImagePreview()}
             </div>
           </div>
-          { this.renderLayoutType() }
-          { this.renderScale() }
-          { this.renderResizeMode() }
-          { this.renderAlignment() }
-          { this.renderOpacity() }
-          { this.renderMargins() }
+          {this.renderLayoutType()}
+          {this.renderScale()}
+          {this.renderResizeMode()}
+          {this.renderAlignment()}
+          {this.renderOpacity()}
+          {this.renderMargins()}
         </div>
       </div>
     )

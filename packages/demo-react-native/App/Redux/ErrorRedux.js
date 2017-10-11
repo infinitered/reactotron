@@ -9,10 +9,9 @@ export const Actions = {
   throwPutError: (isSync = false) => ({ type: Types.Put, isSync })
 }
 
-export const INITIAL_STATE = { }
+export const INITIAL_STATE = {}
 
-const throwAnError = (state) =>
-  ({ ...state, error: this.doesNotExist() })
+const throwAnError = state => ({ ...state, error: this.doesNotExist() })
 
 // actions ->
 const reducerMap = {

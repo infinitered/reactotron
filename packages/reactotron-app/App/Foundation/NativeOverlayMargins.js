@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import Colors from '../Theme/Colors'
 
 const Styles = {
-  container: {
-  },
+  container: {},
   row: {
     display: 'flex',
     flexDirection: 'row',
@@ -48,13 +47,33 @@ class NativeOverlayMargins extends React.PureComponent {
       <div style={Styles.container}>
         <div style={Styles.row}>
           <div style={Styles.label}>Top</div>
-          <input style={Styles.field} onChange={makeHandler('marginTop')} value={marginTop} tabIndex={10} />
+          <input
+            style={Styles.field}
+            onChange={makeHandler('marginTop')}
+            value={marginTop}
+            tabIndex={10}
+          />
           <div style={Styles.label}>Right</div>
-          <input style={Styles.field} onChange={makeHandler('marginRight')} value={marginRight} tabIndex={11} />
+          <input
+            style={Styles.field}
+            onChange={makeHandler('marginRight')}
+            value={marginRight}
+            tabIndex={11}
+          />
           <div style={Styles.label}>Bottom</div>
-          <input style={Styles.field} onChange={makeHandler('marginBottom')} value={marginBottom} tabIndex={12} />
+          <input
+            style={Styles.field}
+            onChange={makeHandler('marginBottom')}
+            value={marginBottom}
+            tabIndex={12}
+          />
           <div style={Styles.label}>Left</div>
-          <input style={Styles.field} onChange={makeHandler('marginLeft')} value={marginLeft} tabIndex={13} />
+          <input
+            style={Styles.field}
+            onChange={makeHandler('marginLeft')}
+            value={marginLeft}
+            tabIndex={13}
+          />
         </div>
       </div>
     )

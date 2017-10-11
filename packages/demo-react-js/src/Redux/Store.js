@@ -19,18 +19,18 @@ const logger = createLogger({
 // a function which can create our store and auto-persist the data
 export default () => {
   // create the saga middleware
-  const sagaMonitor = process.env.NODE_ENV !== 'production'
-    ? console.tron.createSagaMonitor()
-    : null
+  const sagaMonitor =
+    process.env.NODE_ENV !== 'production' ? console.tron.createSagaMonitor() : null
   const sagaMiddleware = createSagaMiddleware({ sagaMonitor })
 
   // add our normal middleware to the list
   const middleware = applyMiddleware(logger, sagaMiddleware)
 
   // create the store with a root reducer & a composed list of enhancers
-  const store = process.env.NODE_ENV === 'production'
-    ? createStore(rootReducer, middleware)
-    : console.tron.createStore(rootReducer, middleware)
+  const store =
+    process.env.NODE_ENV === 'production'
+      ? createStore(rootReducer, middleware)
+      : console.tron.createStore(rootReducer, middleware)
 
   // kick off the root saga
   sagaMiddleware.run(rootSaga)

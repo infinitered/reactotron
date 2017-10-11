@@ -18,11 +18,7 @@ function testFunctionNames () {
     const babelNamesThis = () => {}
     console.tron.display({
       name: 'FUNCTION NAMES',
-      value: [
-        babelNamesThis,
-        () => true,
-        function namedFunction () {}
-      ]
+      value: [babelNamesThis, () => true, function namedFunction () {}]
     })
   }
 }

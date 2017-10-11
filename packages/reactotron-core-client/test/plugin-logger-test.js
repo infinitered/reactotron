@@ -6,7 +6,9 @@ import plugin from '../src/plugins/logger'
 test('the 4 functions send the right data', t => {
   const client = createClient({ io: socketClient })
   const results = []
-  client.send = (type, payload) => { results.push({type, payload}) }
+  client.send = (type, payload) => {
+    results.push({ type, payload })
+  }
   client.use(plugin())
   t.is(client.plugins.length, CorePlugins.length + 1)
   t.is(typeof client.log, 'function')

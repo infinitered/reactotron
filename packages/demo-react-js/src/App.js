@@ -41,9 +41,7 @@ class App extends Component {
     return (
       <div>
         <h3 className='App-error-title'>Big Ol Error</h3>
-        <p className='App-error'>
-          { error }
-        </p>
+        <p className='App-error'>{error}</p>
       </div>
     )
   }
@@ -55,14 +53,18 @@ class App extends Component {
   renderMessage () {
     const { fetching, name, url, message, sha } = this.props
     if (fetching) {
-      return (<p className='App-message'>Hang tight</p>)
+      return <p className='App-message'>Hang tight</p>
     }
 
     return (
       <div>
-        <p className='App-message'><b>{name}</b></p>
         <p className='App-message'>
-          <a href={url} target='somewhere'>{message}</a>
+          <b>{name}</b>
+        </p>
+        <p className='App-message'>
+          <a href={url} target='somewhere'>
+            {message}
+          </a>
         </p>
         <p className='App-sha'>{sha}</p>
       </div>
@@ -81,30 +83,50 @@ class App extends Component {
         <div className='App-header'>
           <h2>Reactotron Demo</h2>
           <div>
-            <button style={Styles.button} onClick={this.props.slower}>Slow</button>
-            <button style={Styles.button} onClick={this.props.faster}>Fast</button>
-            <button style={Styles.button} onClick={this.props.bigger}>Big</button>
-            <button style={Styles.button} onClick={this.props.smaller}>Small</button>
+            <button style={Styles.button} onClick={this.props.slower}>
+              Slow
+            </button>
+            <button style={Styles.button} onClick={this.props.faster}>
+              Fast
+            </button>
+            <button style={Styles.button} onClick={this.props.bigger}>
+              Big
+            </button>
+            <button style={Styles.button} onClick={this.props.smaller}>
+              Small
+            </button>
           </div>
           <img src={logo} style={logoStyles} alt='logo' onClick={this.props.handleLogoPress} />
         </div>
-        { repo &&
-          <h3 className='App-message-title'>Latest Commit From {repo}</h3> }
-        { avatar &&
-          <div><img src={avatar} style={Styles.avatar} alt='avatar' /></div>
-        }
-        <button style={Styles.button} onClick={this.props.requestReactotron}>Reactotron</button>
-        <button style={Styles.button} onClick={this.props.requestReactNative}>React Native</button>
-        <button style={Styles.button} onClick={this.props.requestMobx}>Mobx</button>
-        <button style={Styles.button} onClick={this.props.requestRedux}>Redux</button>
-        <button style={Styles.button} onClick={this.props.requestBad}>Bad</button>
+        {repo && <h3 className='App-message-title'>Latest Commit From {repo}</h3>}
+        {avatar && (
+          <div>
+            <img src={avatar} style={Styles.avatar} alt='avatar' />
+          </div>
+        )}
+        <button style={Styles.button} onClick={this.props.requestReactotron}>
+          Reactotron
+        </button>
+        <button style={Styles.button} onClick={this.props.requestReactNative}>
+          React Native
+        </button>
+        <button style={Styles.button} onClick={this.props.requestMobx}>
+          Mobx
+        </button>
+        <button style={Styles.button} onClick={this.props.requestRedux}>
+          Redux
+        </button>
+        <button style={Styles.button} onClick={this.props.requestBad}>
+          Bad
+        </button>
 
-        { error ? this.renderError() : this.renderMessage() }
+        {error ? this.renderError() : this.renderMessage()}
 
         <div>
-          <button style={Styles.button} onClick={this.props.display}>Custom Messages</button>
+          <button style={Styles.button} onClick={this.props.display}>
+            Custom Messages
+          </button>
         </div>
-
       </div>
     )
   }
@@ -125,15 +147,22 @@ const mapDispatchToProps = dispatch => ({
   requestBad: () => dispatch(RepoActions.request('zzzz/zzzzz')),
   handleLogoPress: () => {
     if (console.tron) console.tron.log('wait for it...')
-    setTimeout(() => { makeErrorForFun('boom') }, 500)
+    setTimeout(() => {
+      makeErrorForFun('boom')
+    }, 500)
   },
   display: () => {
     if (console.tron) {
-      console.tron.display({ name: 'HELLO', value: 'You\'re awesome.', preview: 'Guess what?' })
-      console.tron.display({ name: 'DANGER', value: 9001, important: true, preview: 'It\'s over 9000!' })
+      console.tron.display({ name: 'HELLO', value: "You're awesome.", preview: 'Guess what?' })
+      console.tron.display({
+        name: 'DANGER',
+        value: 9001,
+        important: true,
+        preview: "It's over 9000!"
+      })
       console.tron.display({
         name: 'ORDER',
-        preview: 'Here\'s your order...',
+        preview: "Here's your order...",
         value: {
           app: { color: 'green', vegetable: 'spinach', variant: 'baby', salad: true },
           main: { type: 'poutine' },

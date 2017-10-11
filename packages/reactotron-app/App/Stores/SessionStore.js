@@ -6,7 +6,8 @@ import { dotPath } from 'ramdasauce'
 import shallowDiff from '../Lib/ShallowDiff'
 
 const isSubscription = propEq('type', 'state.values.change')
-const isSubscriptionCommandWithEmptyChanges = command => isSubscription(command) && dotPath('payload.changes.length', command) === 0
+const isSubscriptionCommandWithEmptyChanges = command =>
+  isSubscription(command) && dotPath('payload.changes.length', command) === 0
 
 class Session {
   // commands to exlude in the timeline
@@ -19,7 +20,7 @@ class Session {
   isSubscriptionValuesSameAsLastTime (command) {
     if (!isSubscription(command)) return false
     const rawChanges = command.payload ? command.payload.changes : []
-    const newSubscriptions = fromPairs(map(change => ([change.path, change.value]), rawChanges))
+    const newSubscriptions = fromPairs(map(change => [change.path, change.value], rawChanges))
     const isNew = !equals(this.subscriptions, newSubscriptions)
 
     // 🚨🚨🚨 side effect alert 🚨🚨🚨
@@ -35,7 +36,8 @@ class Session {
     return !isNew
   }
 
-  @computed get commands () {
+  @computed
+  get commands () {
     return pipe(
       dotPath('server.commands.all'),
       reject(isSubscriptionCommandWithEmptyChanges),
@@ -45,7 +47,8 @@ class Session {
     )(this)
   }
 
-  @computed get watches () {
+  @computed
+  get watches () {
     const changeCommands = this.server.commands['state.values.change']
     if (isNil(changeCommands)) return []
     if (changeCommands.length === 0) return []
@@ -53,7 +56,8 @@ class Session {
     return dotPath('payload.changes', recentCommand) || []
   }
 
-  @computed get backups () {
+  @computed
+  get backups () {
     return this.server.commands['state.backup.response']
   }
 
@@ -63,7 +67,8 @@ class Session {
   }
 
   // toggles whether a command type is to be ignored or not
-  @action toggleCommandVisibility (commandType) {
+  @action
+  toggleCommandVisibility (commandType) {
     const hidden = this.isCommandHidden(commandType)
     if (hidden) {
       this.commandsHiddenInTimeline.remove(commandType)
@@ -84,7 +89,9 @@ class Session {
     // hide or show the watch panel depending if we have watches
     reaction(
       () => this.watches.length > 0,
-      show => { this.ui.showWatchPanel = show }
+      show => {
+        this.ui.showWatchPanel = show
+      }
     )
 
     // when a new backup arrives, open the editor to rename it

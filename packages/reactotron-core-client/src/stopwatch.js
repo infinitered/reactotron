@@ -1,10 +1,18 @@
-const hasHirezNodeTimer = false && typeof process === 'object' && process && process.hrtime && typeof process.hrtime === 'function'
+const hasHirezNodeTimer =
+  false &&
+  typeof process === 'object' &&
+  process &&
+  process.hrtime &&
+  typeof process.hrtime === 'function'
 
 // the default timer
 const defaultPerformanceNow = () => Date.now()
 
 // try to find the browser-based performance timer
-const nativePerformance = typeof window !== 'undefined' && window && (window.performance || window.msPerformance || window.webkitPerformance)
+const nativePerformance =
+  typeof window !== 'undefined' &&
+  window &&
+  (window.performance || window.msPerformance || window.webkitPerformance)
 
 // the function we're trying to assign
 let performanceNow = defaultPerformanceNow

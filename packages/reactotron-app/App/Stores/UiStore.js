@@ -74,11 +74,13 @@ class UI {
     Mousetrap.bind(`${Keystroke.mousetrap}+?`, this.switchTab.bind(this, 'help'))
   }
 
-  @action switchTab = (newTab) => {
+  @action
+  switchTab = newTab => {
     this.tab = newTab
   }
 
-  @action popState = () => {
+  @action
+  popState = () => {
     if (this.showStateFindDialog) {
       this.closeStateFindDialog()
     }
@@ -87,7 +89,8 @@ class UI {
     }
   }
 
-  @action submitCurrentForm = () => {
+  @action
+  submitCurrentForm = () => {
     if (this.showStateWatchDialog) {
       this.submitStateWatch()
     } else if (this.showRenameStateDialog) {
@@ -95,45 +98,51 @@ class UI {
     }
   }
 
-  @action submitCurrentFormDelicately = () => {
+  @action
+  submitCurrentFormDelicately = () => {
     if (this.showStateDispatchDialog) {
       this.submitStateDispatch()
     }
   }
 
-  @action submitStateWatch = () => {
+  @action
+  submitStateWatch = () => {
     this.server.stateValuesSubscribe(this.watchToAdd)
     this.showStateWatchDialog = false
     this.watchToAdd = null
   }
 
-  @action submitRenameState = () => {
+  @action
+  submitRenameState = () => {
     this.currentBackupState.payload.name = this.backupStateName
     this.showRenameStateDialog = false
     this.backupStateName = null
   }
 
-  @action removeStateWatch = (path) => {
+  @action
+  removeStateWatch = path => {
     this.server.stateValuesUnsubscribe(path)
   }
 
-  @action clearStateWatches = () => {
+  @action
+  clearStateWatches = () => {
     this.server.stateValuesClearSubscriptions()
   }
 
-  @action setActionToDispatch (action) {
+  @action
+  setActionToDispatch (action) {
     this.actionToDispatch = action
     this.showStateDispatchDialog = true
   }
 
-  @action submitStateDispatch = () => {
+  @action
+  submitStateDispatch = () => {
     // try not to blow up the frame
     let action = null
     try {
       // brackets are need on chromium side, huh.
       action = eval('(' + this.actionToDispatch + ')') // eslint-disable-line
-    } catch (e) {
-    }
+    } catch (e) {}
     // jet if not valid
     if (isNilOrEmpty(action)) return
 
@@ -143,65 +152,80 @@ class UI {
     this.showStateDispatchDialog = false
   }
 
-  @action openStateFindDialog = () => {
+  @action
+  openStateFindDialog = () => {
     this.showStateFindDialog = true
   }
 
-  @action closeStateFindDialog = () => {
+  @action
+  closeStateFindDialog = () => {
     this.showStateFindDialog = false
   }
 
-  @action openStateWatchDialog = () => {
+  @action
+  openStateWatchDialog = () => {
     this.showStateWatchDialog = true
   }
 
-  @action closeStateWatchDialog = () => {
+  @action
+  closeStateWatchDialog = () => {
     this.showStateWatchDialog = false
   }
 
-  @action openRenameStateDialog = backup => {
+  @action
+  openRenameStateDialog = backup => {
     this.showRenameStateDialog = true
     this.backupStateName = backup.payload.name
     this.currentBackupState = backup
   }
 
-  @action closeRenameStateDialog = () => {
+  @action
+  closeRenameStateDialog = () => {
     this.showRenameStateDialog = false
   }
 
-  @action openStateDispatchDialog = () => {
+  @action
+  openStateDispatchDialog = () => {
     this.showStateDispatchDialog = true
   }
 
-  @action toggleHelpDialog = () => {
+  @action
+  toggleHelpDialog = () => {
     this.showHelpDialog = !this.showHelpDialog
   }
 
-  @action openHelpDialog = () => {
+  @action
+  openHelpDialog = () => {
     this.showHelpDialog = true
   }
 
-  @action closeStateDispatchDialog = () => {
+  @action
+  closeStateDispatchDialog = () => {
     this.showStateDispatchDialog = false
   }
 
-  @action closeHelpDialog = () => {
+  @action
+  closeHelpDialog = () => {
     this.showHelpDialog = false
   }
 
-  @action openFilterTimelineDialog = () => {
+  @action
+  openFilterTimelineDialog = () => {
     this.showFilterTimelineDialog = true
   }
 
-  @action closeFilterTimelineDialog = () => {
+  @action
+  closeFilterTimelineDialog = () => {
     this.showFilterTimelineDialog = false
   }
 
-  @action reset = () => {
+  @action
+  reset = () => {
     this.server.commands.all.clear()
   }
 
-  @action getStateKeysOrValues = (path) => {
+  @action
+  getStateKeysOrValues = path => {
     if (this.keysOrValues === 'keys') {
       this.getStateKeys(path)
     } else {
@@ -209,19 +233,23 @@ class UI {
     }
   }
 
-  @action getStateValues = (path) => {
+  @action
+  getStateValues = path => {
     this.server.stateValuesRequest(path)
   }
 
-  @action getStateKeys = (path) => {
+  @action
+  getStateKeys = path => {
     this.server.stateKeysRequest(path)
   }
 
-  @action dispatchAction = action => {
+  @action
+  dispatchAction = action => {
     this.server.stateActionDispatch(action)
   }
 
-  @action toggleKeysValues = () => {
+  @action
+  toggleKeysValues = () => {
     if (this.keysOrValues === 'keys') {
       this.keysOrValues = 'values'
     } else {
@@ -229,7 +257,8 @@ class UI {
     }
   }
 
-  @action toggleWatchPanel = () => {
+  @action
+  toggleWatchPanel = () => {
     this.showWatchPanel = !this.showWatchPanel
   }
 
@@ -240,7 +269,8 @@ class UI {
   @action restoreState = state => this.server.stateRestoreRequest(state)
 
   // removes an existing state object
-  @action deleteState = state => {
+  @action
+  deleteState = state => {
     this.server.commands['state.backup.response'].remove(state)
   }
 
@@ -254,7 +284,8 @@ class UI {
     }
   }
 
-  @action setCommandProperty = (messageId, key, value) => {
+  @action
+  setCommandProperty = (messageId, key, value) => {
     // console.log('setting', messageId, key, value, this.commandProperties)
     if (!this.commandProperties[messageId]) {
       this.commandProperties[messageId] = observable(asMap({}))
@@ -265,14 +296,12 @@ class UI {
   /**
    * Asks the client to the file in the editor
    */
-  @action openInEditor = (file, lineNumber) =>
-    this.server.openInEditor({ file, lineNumber })
+  @action openInEditor = (file, lineNumber) => this.server.openInEditor({ file, lineNumber })
 
   /**
    * Sets the properties of the overlay shown on the React Native app.
    */
-  @action setOverlay = props =>
-    this.server.send('overlay', props)
+  @action setOverlay = props => this.server.send('overlay', props)
 }
 
 export default UI

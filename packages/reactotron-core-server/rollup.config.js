@@ -12,10 +12,5 @@ export default {
   ],
   dest: 'dist/index.js',
   exports: 'named',
-  external: [
-    'ramda',
-    'mobx',
-    'ramdasauce',
-    'socket.io'
-  ]
+  external: ['ramda', 'mobx', 'ramdasauce', 'socket.io']
 }

@@ -11,7 +11,7 @@ const Reactotron = process.env.NODE_ENV !== 'production' && require('reactotron-
 const api = ApiSauce.create({
   baseURL: 'https://api.github.com',
   headers: {
-    'Accept': 'application/vnd.github.v3+json'
+    Accept: 'application/vnd.github.v3+json'
   }
 })
 

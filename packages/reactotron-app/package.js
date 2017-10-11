@@ -22,15 +22,13 @@ const DEFAULT_OPTS = {
   name: appName,
   asar: shouldUseAsar,
   appBundleId: 'com.reactotron.app',
-  ignore: [
-    '^/test($|/)',
-    '^/release($|/)',
-    '^/main.development.js'
-  ].concat(devDeps.map(name => `/node_modules/${name}($|/)`))
-  .concat(
-    deps.filter(name => !electronCfg.externals.includes(name))
-      .map(name => `/node_modules/${name}($|/)`)
-  )
+  ignore: ['^/test($|/)', '^/release($|/)', '^/main.development.js']
+    .concat(devDeps.map(name => `/node_modules/${name}($|/)`))
+    .concat(
+      deps
+        .filter(name => !electronCfg.externals.includes(name))
+        .map(name => `/node_modules/${name}($|/)`)
+    )
 }
 
 const icon = argv.icon || argv.i || 'App/App'
@@ -87,15 +85,17 @@ function doEverything () {
 
 function pack (plat, arch) {
   const iconObj = {
-    icon: DEFAULT_OPTS.icon + (() => {
-      let extension = '.png'
-      if (plat === 'darwin') {
-        extension = '.icns'
-      } else if (plat === 'win32') {
-        extension = '.ico'
-      }
-      return extension
-    })()
+    icon:
+      DEFAULT_OPTS.icon +
+      (() => {
+        let extension = '.png'
+        if (plat === 'darwin') {
+          extension = '.icns'
+        } else if (plat === 'win32') {
+          extension = '.ico'
+        }
+        return extension
+      })()
   }
 
   const opts = Object.assign({}, DEFAULT_OPTS, iconObj, {

@@ -53,7 +53,7 @@ function testFalsyThings () {
           emptyString: '',
           undefined: undefined,
           null: null,
-          list: [ false, 0, '', undefined, null ]
+          list: [false, 0, '', undefined, null]
         }
       }
     }
@@ -80,6 +80,6 @@ export function * startup () {
   // we can yield promises to sagas now... if that's how you roll
   yield new Promise(resolve => {
     resolve()
-  }); // eslint-disable-line
+  }) // eslint-disable-line
   yield put({ type: 'HELLO' })
 }

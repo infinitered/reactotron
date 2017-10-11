@@ -4,7 +4,10 @@ export default (reactotron, action, ms, important = false) => {
 
   // convert from symbol to type if necessary
   if (typeof name === 'symbol') {
-    name = name.toString().replace(/^Symbol\(/, '').replace(/\)$/, '')
+    name = name
+      .toString()
+      .replace(/^Symbol\(/, '')
+      .replace(/\)$/, '')
   }
 
   // off ya go!

@@ -43,10 +43,14 @@ export function colorForValue (value) {
   if (isNil(value)) return Colors.tag
   const valueType = typeof value
   switch (valueType) {
-    case 'boolean': return Colors.constant
-    case 'string': return Colors.foreground
-    case 'number': return Colors.constant
-    default: return Colors.foreground
+    case 'boolean':
+      return Colors.constant
+    case 'string':
+      return Colors.foreground
+    case 'number':
+      return Colors.constant
+    default:
+      return Colors.foreground
   }
 }
 
@@ -61,15 +65,9 @@ const makeRow = ([key, value]) => {
   return (
     <div key={key} style={Styles.row}>
       <div style={Styles.key}>{key}</div>
-      <div style={valueStyle}>
-        {textValue}
-      </div>
+      <div style={valueStyle}>{textValue}</div>
     </div>
   )
 }
 
-export default headers => (
-  <div>
-    {map(makeRow, toPairs(headers))}
-  </div>
-)
+export default headers => <div>{map(makeRow, toPairs(headers))}</div>

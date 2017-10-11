@@ -65,7 +65,7 @@ class Timeline extends Component {
     return (
       <div style={Styles.container}>
         <TimelineHeader />
-        { isEmpty && this.renderEmpty() }
+        {isEmpty && this.renderEmpty()}
         <div style={Styles.commands} ref='commands'>
           {map(renderItem, commands)}
         </div>

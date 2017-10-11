@@ -28,12 +28,9 @@ export default options => reactotron => {
    * Sends the contents of AsyncStorage to Reactotron.
    */
   const reactotronShipStorageValues = (methodName, args) => {
-    AsyncStorage.getAllKeys(
-      (_, keys) => AsyncStorage.multiGet(keys, (_, values = []) => {
-        const valuesToSend = reject(
-          item => contains(item[0], ignore),
-          values
-        )
+    AsyncStorage.getAllKeys((_, keys) =>
+      AsyncStorage.multiGet(keys, (_, values = []) => {
+        const valuesToSend = reject(item => contains(item[0], ignore), values)
         // NOTE(steve): for now let's ship everything... until we get a UI in place
         // to make request/response calls
         let previewArgs = ''

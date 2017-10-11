@@ -29,9 +29,7 @@ const GROUPS = [
   },
   {
     name: 'Async Storage',
-    items: [
-      { value: 'asyncStorage.values.change', text: 'Changes' }
-    ]
+    items: [{ value: 'asyncStorage.values.change', text: 'Changes' }]
   },
   {
     name: 'Redux & Sagas',
@@ -51,8 +49,7 @@ const Styles = {
     backgroundColor: Colors.background,
     color: Colors.foreground
   },
-  examples: {
-  },
+  examples: {},
   example: {
     padding: 0,
     margin: '0 0 0 40px',
@@ -114,8 +111,7 @@ const Styles = {
     lineHeight: '40px',
     backgroundColor: 'inherit'
   },
-  group: {
-  },
+  group: {},
   groupName: {
     fontSize: 18,
     marginTop: 10,
@@ -124,53 +120,50 @@ const Styles = {
     paddingBottom: 2,
     borderBottom: `1px solid ${Colors.highlight}`
   },
-  option: {
-  }
+  option: {}
 }
 
-const FilterTimelineDialog = inject('session')(observer(({ session }) => {
-  const { ui } = session
-  if (!ui.showFilterTimelineDialog) return null
+const FilterTimelineDialog = inject('session')(
+  observer(({ session }) => {
+    const { ui } = session
+    if (!ui.showFilterTimelineDialog) return null
 
-  const groups = GROUPS.map((opt, optIdx) => {
-    const options = opt.items.map((itm, itmIdx) => {
-      const isChecked = session.isCommandHidden(itm.value)
-      const onToggle = () => session.toggleCommandVisibility(itm.value)
+    const groups = GROUPS.map((opt, optIdx) => {
+      const options = opt.items.map((itm, itmIdx) => {
+        const isChecked = session.isCommandHidden(itm.value)
+        const onToggle = () => session.toggleCommandVisibility(itm.value)
 
-      return <Checkbox key={itmIdx} checked={isChecked} label={itm.text} onToggle={onToggle} />
+        return <Checkbox key={itmIdx} checked={isChecked} label={itm.text} onToggle={onToggle} />
+      })
+
+      return (
+        <div style={Styles.group} key={optIdx}>
+          <div style={Styles.groupName}>{opt.name}</div>
+          <div style={Styles.option}>{options}</div>
+        </div>
+      )
     })
 
     return (
-      <div style={Styles.group} key={optIdx}>
-        <div style={Styles.groupName}>{opt.name}</div>
-        <div style={Styles.option}>
-          {options}
-        </div>
-      </div>
-    )
-  })
-
-  return (
-    <ModalPortal>
-      <ModalBackground onClose={ui.closeFilterTimelineDialog}>
-        <ModalDialog style={Styles.dialog}>
-          <div style={Styles.container}>
-            <div style={Styles.header}>
-              <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
-            </div>
-            <div style={Styles.body}>
-              {groups}
-            </div>
-            <div style={Styles.keystrokes}>
-              <div style={Styles.hotkey}>
-                <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
+      <ModalPortal>
+        <ModalBackground onClose={ui.closeFilterTimelineDialog}>
+          <ModalDialog style={Styles.dialog}>
+            <div style={Styles.container}>
+              <div style={Styles.header}>
+                <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
+              </div>
+              <div style={Styles.body}>{groups}</div>
+              <div style={Styles.keystrokes}>
+                <div style={Styles.hotkey}>
+                  <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
+                </div>
               </div>
             </div>
-          </div>
-        </ModalDialog>
-      </ModalBackground>
-    </ModalPortal>
-  )
-}))
+          </ModalDialog>
+        </ModalBackground>
+      </ModalPortal>
+    )
+  })
+)
 
 export default FilterTimelineDialog

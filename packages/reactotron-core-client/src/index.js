@@ -41,8 +41,14 @@ const DEFAULTS = {
 
 // these are not for you.
 const isReservedFeature = R.contains(R.__, [
-  'options', 'connected', 'socket', 'plugins',
-  'configure', 'connect', 'send', 'use',
+  'options',
+  'connected',
+  'socket',
+  'plugins',
+  'configure',
+  'connect',
+  'send',
+  'use',
   'startTimer'
 ])
 
@@ -82,7 +88,17 @@ export class Client {
    */
   connect () {
     this.connected = true
-    const { io, secure, host, port, name, userAgent, environment, reactotronVersion, socketIoProperties } = this.options
+    const {
+      io,
+      secure,
+      host,
+      port,
+      name,
+      userAgent,
+      environment,
+      reactotronVersion,
+      socketIoProperties
+    } = this.options
     const { onCommand, onConnect, onDisconnect } = this.options
 
     // establish a socket.io connection to the server
@@ -142,9 +158,7 @@ export class Client {
     // NOTE(steve): socket.io is going away shortly, so there will
     // be no need to deserialize as we'll be sending text over the
     // wire.
-    const actualPayload = this.options.safeRecursion
-      ? JSON.parse(serialize(payload))
-      : payload
+    const actualPayload = this.options.safeRecursion ? JSON.parse(serialize(payload)) : payload
 
     // send this command
     this.socket.emit('command', {
@@ -194,12 +208,12 @@ export class Client {
       if (!R.is(Object, plugin.features)) throw new Error('features must be an object')
 
       // here's how we're going to inject these in
-      const inject = (key) => {
+      const inject = key => {
         // grab the function
         const featureFunction = plugin.features[key]
 
         // only functions may pass
-        if (typeof featureFunction !== 'function') throw new Error(`feature ${key} is not a function`)
+        if (typeof featureFunction !== 'function') { throw new Error(`feature ${key} is not a function`) }
 
         // ditch reserved names
         if (isReservedFeature(key)) throw new Error(`feature ${key} is a reserved name`)
@@ -224,7 +238,7 @@ export class Client {
 }
 
 // convenience factory function
-export const createClient = (options) => {
+export const createClient = options => {
   const client = new Client()
   client.configure(options)
   return client

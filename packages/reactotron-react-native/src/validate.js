@@ -8,7 +8,7 @@ const isPortValid = R.allPass([R.complement(R.isNil), R.is(Number), RS.isWithin(
  * Ensures the options are sane to run this baby.  Throw if not.  These
  * are basically sanity checks.
  */
-const validate = (options) => {
+const validate = options => {
   const { host, port } = options
 
   if (!isHostValid(host)) throw new Error('invalid host')

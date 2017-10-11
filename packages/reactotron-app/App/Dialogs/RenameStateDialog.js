@@ -78,47 +78,45 @@ const Styles = {
   }
 }
 
-const RenameStateDialog = inject('session')(observer(({ session }) => {
-  const { ui } = session
-  if (!ui.showRenameStateDialog) return null
+const RenameStateDialog = inject('session')(
+  observer(({ session }) => {
+    const { ui } = session
+    if (!ui.showRenameStateDialog) return null
 
-  return (
-    <ModalPortal>
-      <ModalBackground onClose={ui.closeRenameStateDialog}>
-        <ModalDialog style={Styles.dialog}>
-          <div style={Styles.container}>
-            <div style={Styles.header}>
-              <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
-            </div>
-            <div style={Styles.body}>
-              <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
-              <input
-                autoFocus
-                placeholder={INPUT_PLACEHOLDER}
-                style={Styles.textField}
-                type='text'
-                ref='textField'
-                defaultValue={ui.backupStateName}
-                onChange={e => (ui.backupStateName = e.target.value)}
-              />
-            </div>
-            <div style={Styles.keystrokes}>
-              <div style={Styles.hotkey}>
-                <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span>
-                {' '}
-                {ESCAPE_HINT}
+    return (
+      <ModalPortal>
+        <ModalBackground onClose={ui.closeRenameStateDialog}>
+          <ModalDialog style={Styles.dialog}>
+            <div style={Styles.container}>
+              <div style={Styles.header}>
+                <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
               </div>
-              <div style={Styles.hotkey}>
-                <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span>
-                {' '}
-                {ENTER_HINT}
+              <div style={Styles.body}>
+                <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
+                <input
+                  autoFocus
+                  placeholder={INPUT_PLACEHOLDER}
+                  style={Styles.textField}
+                  type='text'
+                  ref='textField'
+                  defaultValue={ui.backupStateName}
+                  onChange={e => (ui.backupStateName = e.target.value)}
+                />
+              </div>
+              <div style={Styles.keystrokes}>
+                <div style={Styles.hotkey}>
+                  <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
+                </div>
+                <div style={Styles.hotkey}>
+                  <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
+                </div>
               </div>
             </div>
-          </div>
-        </ModalDialog>
-      </ModalBackground>
-    </ModalPortal>
-  )
-}))
+          </ModalDialog>
+        </ModalBackground>
+      </ModalPortal>
+    )
+  })
+)
 
 export default RenameStateDialog

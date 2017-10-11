@@ -25,10 +25,8 @@ const Styles = {
     WebkitUserSelect: 'all',
     wordBreak: 'break-all'
   },
-  null: {
-  },
-  empty: {
-  },
+  null: {},
+  empty: {},
   keyList: {
     ...AppStyles.Layout.hbox,
     flexWrap: 'wrap'
@@ -102,11 +100,7 @@ class StateKeysResponseCommand extends Component {
     if (isNil(keys)) return <div style={Styles.null}>{NULL_MESSAGE}></div>
     if (keys.length === 0) return <div style={Styles.empty}>{EMPTY_MESSAGE}</div>
 
-    return (
-      <div style={Styles.keyList}>
-        {map(this.renderKey, sortKeys(keys))}
-      </div>
-    )
+    return <div style={Styles.keyList}>{map(this.renderKey, sortKeys(keys))}</div>
   }
 
   render () {
@@ -118,7 +112,9 @@ class StateKeysResponseCommand extends Component {
     return (
       <Command command={command} title={COMMAND_TITLE} startsOpen>
         <div style={Styles.container}>
-          <div style={Styles.path}><span style={Styles.pathLabel}>{PATH_LABEL}</span> {pathText}</div>
+          <div style={Styles.path}>
+            <span style={Styles.pathLabel}>{PATH_LABEL}</span> {pathText}
+          </div>
           {this.renderKeys(keys)}
         </div>
       </Command>

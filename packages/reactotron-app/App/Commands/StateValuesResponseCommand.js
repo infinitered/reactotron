@@ -40,7 +40,9 @@ class StateValuesResponseCommand extends Component {
     return (
       <Command command={command} title={COMMAND_TITLE} startsOpen>
         <div style={Styles.container}>
-          <div style={Styles.path}><span style={Styles.pathLabel}>{PATH_LABEL}</span> {pathText}</div>
+          <div style={Styles.path}>
+            <span style={Styles.pathLabel}>{PATH_LABEL}</span> {pathText}
+          </div>
           <Content value={value} />
         </div>
       </Command>

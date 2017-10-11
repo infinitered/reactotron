@@ -44,13 +44,7 @@ test('medium sized funk', t => {
   mockPayload.string = 'String'
   mockPayload.number = 69
   mockPayload.object = o
-  mockPayload.list = [
-    o,
-    mockPayload.string,
-    'literally a string',
-    mockPayload.number,
-    o
-  ]
+  mockPayload.list = [o, mockPayload.string, 'literally a string', mockPayload.number, o]
   mockPayload.fn = function hello () {}
   mockPayload.anonymous = () => {}
 
