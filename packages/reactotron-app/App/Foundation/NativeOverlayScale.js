@@ -33,9 +33,7 @@ const NativeOverlayScale = props => {
     return false
   }
   const makeButtonStyle = value =>
-    scale === value
-      ? { ...Styles.button, ...Styles.buttonActive }
-      : Styles.button
+    scale === value ? { ...Styles.button, ...Styles.buttonActive } : Styles.button
 
   return (
     <div style={Styles.container}>

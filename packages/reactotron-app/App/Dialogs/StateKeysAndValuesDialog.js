@@ -14,8 +14,15 @@ const TAB_KEYSTROKE = 'Tab'
 const TAB_HINT = 'Keys/Values'
 const DIALOG_TITLE_KEYS = 'State Keys'
 const DIALOG_TITLE_VALUES = 'State Values'
-const STATE_VALUES_INSTRUCTIONS = (<span>Retrieves a value from the state tree at the given path <span style={{color: Colors.bold}}>and all values below it</span>.</span>)
-const STATE_KEYS_INSTRUCTIONS = (<span>Retrieves a list of keys located at the given path in the state tree.</span>)
+const STATE_VALUES_INSTRUCTIONS = (
+  <span>
+    Retrieves a value from the state tree at the given path{' '}
+    <span style={{ color: Colors.bold }}>and all values below it</span>.
+  </span>
+)
+const STATE_KEYS_INSTRUCTIONS = (
+  <span>Retrieves a list of keys located at the given path in the state tree.</span>
+)
 const FIELD_LABEL = 'Path'
 
 const Styles = {
@@ -94,15 +101,15 @@ class StateKeysAndValuesDialog extends Component {
     }
   }
 
-  handleChange = (e) => {
+  handleChange = e => {
     this.setState({ path: e.target.value })
   }
 
-  handleKeyPress = (e) => {
+  handleKeyPress = e => {
     const { ui } = this.props.session
     const { path } = this.state
     if (e.key === 'Enter') {
-      this.setState({path: null})
+      this.setState({ path: null })
       ui.getStateKeysOrValues(path)
       ui.closeStateFindDialog()
     }

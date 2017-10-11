@@ -28,7 +28,9 @@ function percentStyle (start, length, total) {
   const stop5 = `${graphEmpty} 0%`
   const stop6 = `${graphEmpty} ${p3}%`
 
-  return {'background': `-webkit-linear-gradient(left, ${stop1}, ${stop2}, ${stop3}, ${stop4}, ${stop5}, ${stop6})`}
+  return {
+    background: `-webkit-linear-gradient(left, ${stop1}, ${stop2}, ${stop3}, ${stop4}, ${stop5}, ${stop6})`
+  }
 }
 
 const Styles = {
@@ -70,15 +72,18 @@ const makeStep = (step, idx, last, totalDuration) => {
   const pct = Number(delta / totalDuration * 100.0).toFixed(0)
   const startedAt = Number(time - delta).toFixed(0)
   const endedAt = Number(time).toFixed(0)
-  const timeText = `${startedAt} - ${endedAt} ${{MS_LABEL}} (${pct}%)`
+  const timeText = `${startedAt} - ${endedAt} ${{ MS_LABEL }} (${pct}%)`
   const key = `step-${idx}`
-  const titleText = (last && isNilOrEmpty(title)) ? LAST_STEP_DEFAULT : title
+  const titleText = last && isNilOrEmpty(title) ? LAST_STEP_DEFAULT : title
   const pStyle = percentStyle(step.time - step.delta, step.delta, totalDuration)
   const stepStyle = merge(merge(Styles.step, last && Styles.stepLast), pStyle)
   return (
     <div data-tip={timeText} key={key} style={stepStyle}>
       <div style={Styles.stepTitle}>{titleText}</div>
-      <div style={Styles.delta}>{delta}{MS_LABEL}</div>
+      <div style={Styles.delta}>
+        {delta}
+        {MS_LABEL}
+      </div>
     </div>
   )
 }
@@ -106,11 +111,10 @@ class BenchmarkReportCommand extends Component {
     return (
       <Command command={command} title={COMMAND_TITLE} duration={duration} preview={preview}>
         <div style={Styles.reportTitle}>{title}</div>
-        {
-          mapIndexed(
-            (step, idx) => makeStep(step, idx, idx === steps.length - 2, duration),
-            tail(steps))
-        }
+        {mapIndexed(
+          (step, idx) => makeStep(step, idx, idx === steps.length - 2, duration),
+          tail(steps)
+        )}
       </Command>
     )
   }

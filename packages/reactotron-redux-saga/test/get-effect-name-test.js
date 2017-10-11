@@ -7,7 +7,9 @@ import * as Effects from 'redux-saga/effects'
 import { createMockTask } from 'redux-saga/utils'
 
 // a mock generator function to feed into fx below
-function * lol () { yield Effects.put({ type: 'LOL' }) }
+function * lol () {
+  yield Effects.put({ type: 'LOL' })
+}
 
 test('the effect and saga constants line up', t => {
   t.is(getEffectName(Effects.take()), SagaConstants.TAKE)

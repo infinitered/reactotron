@@ -39,7 +39,8 @@ test('tests end to end for the action tracker', t => {
 
   // things to make sure our internal middleware chains dispatch properly
   const initialState = { i: 7 }
-  const fun = (state = initialState, action) => action.type === 'add' ? { ...state, i: state.i + 1 } : state
+  const fun = (state = initialState, action) =>
+    action.type === 'add' ? { ...state, i: state.i + 1 } : state
   const rootReducer = combineReducers({ fun })
   const action = { type: 'add', foo: 'bar' }
 

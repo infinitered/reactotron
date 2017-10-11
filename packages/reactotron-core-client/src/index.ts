@@ -13,18 +13,18 @@ import serialize from './serialize'
 import { start } from './stopwatch'
 
 export interface Options {
-  createSocket?: (path: string) => WebSocket,
-  host?: string,
-  port?: number,
-  name?: string,
-  secure?: boolean,
-  plugins?: any[], // TODO: Better Type?
-  safeRecursion?: boolean,
-  onCommand?: (cmd: string) => void,
-  onConnect?: () => void,
-  onDisconnect?: () => void,
-  userAgent?: string,
-  environment?: string,
+  createSocket?: (path: string) => WebSocket
+  host?: string
+  port?: number
+  name?: string
+  secure?: boolean
+  plugins?: any[] // TODO: Better Type?
+  safeRecursion?: boolean
+  onCommand?: (cmd: string) => void
+  onConnect?: () => void
+  onDisconnect?: () => void
+  userAgent?: string
+  environment?: string
   reactotronVersion?: string
 }
 
@@ -34,7 +34,7 @@ export const CorePlugins = [
   benchmark(),
   stateResponses(),
   apiResponse(),
-  clear()
+  clear(),
 ]
 
 const DEFAULTS: Options = {
@@ -47,15 +47,21 @@ const DEFAULTS: Options = {
   safeRecursion: true, // when on, it ensures objects are safe for transport (at the cost of CPU)
   onCommand: cmd => null, // the function called when we receive a command
   onConnect: () => null, // fires when we connect
-  onDisconnect: () => null // fires when we disconnect
+  onDisconnect: () => null, // fires when we disconnect
 }
 
 // these are not for you.
 // TODO: Better Type?
 const isReservedFeature = <any>R.contains(R.__, [
-  'options', 'connected', 'socket', 'plugins',
-  'configure', 'connect', 'send', 'use',
-  'startTimer'
+  'options',
+  'connected',
+  'socket',
+  'plugins',
+  'configure',
+  'connect',
+  'send',
+  'use',
+  'startTimer',
 ])
 
 export class Client {
@@ -69,7 +75,7 @@ export class Client {
 
   startTimer = () => start()
 
-  constructor () {
+  constructor() {
     // we will be invoking send from callbacks other than inside this file
     this.send = this.send.bind(this)
   }
@@ -77,7 +83,7 @@ export class Client {
   /**
    * Set the configuration options.
    */
-  configure (options: Options = {}): Client {
+  configure(options: Options = {}): Client {
     // options get merged & validated before getting set
     const newOptions = R.merge(this.options, options)
     validate(newOptions)
@@ -94,9 +100,18 @@ export class Client {
   /**
    * Connect to the Reactotron server.
    */
-  connect (): Client {
+  connect(): Client {
     this.connected = true
-    const { createSocket, secure, host, port, name, userAgent, environment, reactotronVersion } = this.options
+    const {
+      createSocket,
+      secure,
+      host,
+      port,
+      name,
+      userAgent,
+      environment,
+      reactotronVersion,
+    } = this.options
     const { onCommand, onConnect, onDisconnect } = this.options
 
     // establish a connection to the server
@@ -163,14 +178,14 @@ export class Client {
   /**
    * Sends a command to the server
    */
-  send (type, payload = {}, important = false) {
+  send(type, payload = {}, important = false) {
     // jet if we don't have a socket
     if (!this.socket) return
 
     const fullMessage = {
       type,
       payload: payload,
-      important: !!important
+      important: !!important,
     }
 
     const serializedMessage = serialize(fullMessage)
@@ -182,19 +197,18 @@ export class Client {
       // queue it up until we can connect
       this.sendQueue.push(serializedMessage)
     }
-
   }
 
   /**
    * Sends a custom command to the server to displays nicely.
    */
-  display (config: any = {}) {
+  display(config: any = {}) {
     const { name, value, preview, image, important = false } = config
     const payload = {
       name,
       value: value || null,
       preview: preview || null,
-      image: image || null
+      image: image || null,
     }
     this.send('display', payload, important)
   }
@@ -202,14 +216,14 @@ export class Client {
   /**
    * Client libraries can hijack this to report errors.
    */
-  reportError (error) {
-    (<any>this).error(error)
+  reportError(error) {
+    ;(<any>this).error(error)
   }
 
   /**
    * Adds a plugin to the system
    */
-  use (pluginCreator: (client: Client) => any): Client {
+  use(pluginCreator: (client: Client) => any): Client {
     // we're supposed to be given a function
     if (typeof pluginCreator !== 'function') throw new Error('plugins must be a function')
 
@@ -230,7 +244,9 @@ export class Client {
         const featureFunction = plugin.features[key]
 
         // only functions may pass
-        if (typeof featureFunction !== 'function') throw new Error(`feature ${key} is not a function`)
+        if (typeof featureFunction !== 'function') {
+          throw new Error(`feature ${key} is not a function`)
+        }
 
         // ditch reserved names
         if (isReservedFeature(key)) throw new Error(`feature ${key} is a reserved name`)

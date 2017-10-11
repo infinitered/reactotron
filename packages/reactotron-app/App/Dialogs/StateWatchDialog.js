@@ -22,8 +22,7 @@ const Styles = {
     backgroundColor: Colors.background,
     color: Colors.foreground
   },
-  examples: {
-  },
+  examples: {},
   example: {
     padding: 0,
     margin: '0 0 0 40px',
@@ -87,17 +86,19 @@ const Styles = {
   }
 }
 
-const INSTRUCTIONS = <div>
-  <p>Enter a path you would like to subscribe.  Here are some examples to get you started:</p>
-  <p style={Styles.example}>user.firstName</p>
-  <p style={Styles.example}>repo</p>
-  <p style={Styles.example}>repo.*</p>
-</div>
+const INSTRUCTIONS = (
+  <div>
+    <p>Enter a path you would like to subscribe. Here are some examples to get you started:</p>
+    <p style={Styles.example}>user.firstName</p>
+    <p style={Styles.example}>repo</p>
+    <p style={Styles.example}>repo.*</p>
+  </div>
+)
 
 @inject('session')
 @observer
 class StateWatchDialog extends Component {
-  handleChange = (e) => {
+  handleChange = e => {
     const { session } = this.props
     session.ui.watchToAdd = e.target.value
   }
@@ -119,9 +120,7 @@ class StateWatchDialog extends Component {
             <div style={Styles.container}>
               <div style={Styles.header}>
                 <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
-                <p style={Styles.subtitle}>
-                  {INSTRUCTIONS}
-                </p>
+                <p style={Styles.subtitle}>{INSTRUCTIONS}</p>
               </div>
               <div style={Styles.body}>
                 <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>

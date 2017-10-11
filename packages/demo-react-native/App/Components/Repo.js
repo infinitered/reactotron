@@ -47,7 +47,7 @@ class Repo extends Component {
     this.animation = Animated.sequence([
       Animated.timing(this.state.spinny, { toValue: 1, duration, easing })
       // Animated.timing(this.state.spinny, { toValue: 0, duration: 0 })
-    ]).start(({finished}) => {
+    ]).start(({ finished }) => {
       if (finished) {
         this.animate()
       } else {
@@ -58,9 +58,7 @@ class Repo extends Component {
 
   getAnimationStyle () {
     return {
-      transform: [
-        { rotate: this.state.spinny.interpolate(ROTATION) }
-      ]
+      transform: [{ rotate: this.state.spinny.interpolate(ROTATION) }]
     }
   }
 
@@ -68,7 +66,11 @@ class Repo extends Component {
     const { repo, name, avatar, message, size } = this.props
     const avatarSource = avatar && { uri: avatar }
 
-    const avatarStyles = merge(Styles.avatar, { width: size, height: size, borderRadius: size * 0.5 })
+    const avatarStyles = merge(Styles.avatar, {
+      width: size,
+      height: size,
+      borderRadius: size * 0.5
+    })
     const centerStyles = merge(Styles.center, this.getAnimationStyle())
     return (
       <View style={Styles.container}>

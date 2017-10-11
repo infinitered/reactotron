@@ -5,7 +5,8 @@ import StackTrace from 'stacktrace-js'
 import { merge } from 'ramda'
 
 // what to say whe we can't resolve source maps
-const CANNOT_RESOLVE_ERROR = 'Unable to resolve error.  Either support CORS by changing webpack\'s devtool to "source-map" or run in offline mode.'
+const CANNOT_RESOLVE_ERROR =
+  'Unable to resolve error.  Either support CORS by changing webpack\'s devtool to "source-map" or run in offline mode.'
 
 // defaults
 const PLUGIN_DEFAULTS = {
@@ -25,12 +26,9 @@ export default options => reactotron => {
   // we could have used window.addEventListener("error", ...) but that doesn't work on all browsers
   function windowOnError (msg, file, line, col, error) {
     // resolve the stack trace
-    StackTrace
-      .fromError(error, { offline: config.offline })
+    StackTrace.fromError(error, { offline: config.offline })
       // then try to send it up to the server
-      .then(stackFrames =>
-        reactotron.error(msg, stackFrames)
-      )
+      .then(stackFrames => reactotron.error(msg, stackFrames))
       // can't resolve, well, let the user know, but still upload something sane
       .catch(resolvingError =>
         reactotron.error({

@@ -23,11 +23,14 @@ class Commands {
   /**
    * Constructor with an optional overrideable max list size.
    */
-  constructor(maximumListSize = DEFAULT_MAXIMUM_LIST_SIZE, allMaximumListSize = ALL_MAXIMUM_LIST_SIZE) {
+  constructor(
+    maximumListSize = DEFAULT_MAXIMUM_LIST_SIZE,
+    allMaximumListSize = ALL_MAXIMUM_LIST_SIZE
+  ) {
     // create an observable list for each (named after the type)
     R.forEach(type => {
       extendObservable(this, {
-        [type]: asFlat([])
+        [type]: asFlat([]),
       })
       // this[type] = observable([])
     }, CommandTypes)
@@ -37,7 +40,7 @@ class Commands {
     //   their contents will be mutated. I am bad and deserve your
     //   shameful glare.
     extendObservable(this, {
-      'state.backup.response': observable([])
+      'state.backup.response': observable([]),
     })
 
     this.maximumListSize = maximumListSize
@@ -47,7 +50,8 @@ class Commands {
   /**
    * Here's action.  Put it in the right list please.
    */
-  @action addCommand(command) {
+  @action
+  addCommand(command) {
     // which command type?
     const { type } = command
     // grab that list

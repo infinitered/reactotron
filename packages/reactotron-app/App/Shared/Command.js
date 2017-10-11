@@ -132,7 +132,9 @@ class Command extends Component {
             <Timestamp date={date} style={timestampStyle} />
             <div style={Styles.title}>
               <span style={titleTextStyle}>
-                {isDisplay && <DisplayIcon size={Styles.displayIconSize} style={Styles.displayIcon} />}
+                {isDisplay && (
+                  <DisplayIcon size={Styles.displayIconSize} style={Styles.displayIcon} />
+                )}
                 {title}
               </span>
             </div>
@@ -141,11 +143,7 @@ class Command extends Component {
             {isOpen && <span style={Styles.spacer} />}
             <Icon size={20} style={Styles.icon} />
           </div>
-          {isOpen &&
-            <div style={Styles.children}>
-              {children}
-            </div>
-          }
+          {isOpen && <div style={Styles.children}>{children}</div>}
         </div>
       </div>
     )

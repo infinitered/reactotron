@@ -30,16 +30,16 @@ test.cb('receives a valid command', t => {
   const client = createClient({
     createSocket,
     port: port,
-    onCommand: ({type, payload}) => {
+    onCommand: ({ type, payload }) => {
       t.is(type, mockType)
       t.deepEqual(payload, mockPayload)
       t.end()
-    }
+    },
   })
 
   // when the server gets a connection, send the command
   wss.on('connection', socket => {
-    socket.send(JSON.stringify({type: mockType, payload: mockPayload}))
+    socket.send(JSON.stringify({ type: mockType, payload: mockPayload }))
     server.close()
   })
 

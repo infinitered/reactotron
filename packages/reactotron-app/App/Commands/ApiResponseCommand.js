@@ -43,12 +43,10 @@ const NO_REQUEST_BODY = 'Nothing sent.'
 const NO_REQUEST_PARAMS = 'No params sent.'
 
 const Styles = {
-  container: {
-  },
+  container: {},
   method: {},
   status: {},
-  duration: {
-  },
+  duration: {},
   url: {
     wordBreak: 'break-all',
     color: Colors.constant,
@@ -123,18 +121,17 @@ class ApiResponseCommand extends Component {
   render () {
     const { command } = this.props
     const {
-      showRequestHeaders, showResponseHeaders,
-      showRequestBody, showResponseBody,
+      showRequestHeaders,
+      showResponseHeaders,
+      showRequestBody,
+      showResponseBody,
       showRequestParams
     } = this.state
     const { payload } = command
     const { duration } = payload
     const status = dotPath('response.status', payload)
     const url = dotPath('request.url', payload)
-    const smallUrl = pipe(
-      replace(/^http(s):\/\/[a-zA-Z0-9.]*/i, ''),
-      replace(/\?.*$/i, '')
-    )(url)
+    const smallUrl = pipe(replace(/^http(s):\/\/[a-zA-Z0-9.]*/i, ''), replace(/\?.*$/i, ''))(url)
     const method = toUpper(dotPath('request.method', payload) || '')
     const requestHeaders = dotPath('request.headers', payload)
     const responseHeaders = dotPath('response.headers', payload)
@@ -143,32 +140,60 @@ class ApiResponseCommand extends Component {
     const requestParams = dotPath('request.params', payload)
     const subtitle = `${method} ${smallUrl}`
     const preview = subtitle
-    const summary = { 'Status Code': status, 'Method': method, 'Duration (ms)': duration }
+    const summary = { 'Status Code': status, Method: method, 'Duration (ms)': duration }
 
     return (
       <Command command={command} title={COMMAND_TITLE} duration={duration} preview={preview}>
         <div style={Styles.container}>
-
           <div style={Styles.url}>{url}</div>
 
           {makeTable(summary)}
 
           <div style={Styles.sectionLinks}>
-            <SectionLink text={RESPONSE_BODY_TITLE} isActive={showResponseBody} onClick={this.toggleResponseBody} />
-            <SectionLink text={RESPONSE_HEADER_TITLE} isActive={showResponseHeaders} onClick={this.toggleResponseHeaders} />
-            {!isNilOrEmpty(requestBody) && <SectionLink text={REQUEST_BODY_TITLE} isActive={showRequestBody} onClick={this.toggleRequestBody} />}
-            {!isNilOrEmpty(requestParams) && <SectionLink text={REQUEST_PARAMS_TITLE} isActive={showRequestParams} onClick={this.toggleRequestParams} />}
-            <SectionLink text={REQUEST_HEADER_TITLE} isActive={showRequestHeaders} onClick={this.toggleRequestHeaders} />
+            <SectionLink
+              text={RESPONSE_BODY_TITLE}
+              isActive={showResponseBody}
+              onClick={this.toggleResponseBody}
+            />
+            <SectionLink
+              text={RESPONSE_HEADER_TITLE}
+              isActive={showResponseHeaders}
+              onClick={this.toggleResponseHeaders}
+            />
+            {!isNilOrEmpty(requestBody) && (
+              <SectionLink
+                text={REQUEST_BODY_TITLE}
+                isActive={showRequestBody}
+                onClick={this.toggleRequestBody}
+              />
+            )}
+            {!isNilOrEmpty(requestParams) && (
+              <SectionLink
+                text={REQUEST_PARAMS_TITLE}
+                isActive={showRequestParams}
+                onClick={this.toggleRequestParams}
+              />
+            )}
+            <SectionLink
+              text={REQUEST_HEADER_TITLE}
+              isActive={showRequestHeaders}
+              onClick={this.toggleRequestHeaders}
+            />
           </div>
 
           <div style={Styles.content}>
             {showResponseBody && <Content value={responseBody} />}
             {showResponseHeaders && makeTable(responseHeaders)}
-            {showRequestBody && (isNilOrEmpty(requestBody) ? NO_REQUEST_BODY : <Content value={requestBody} treeLevel={1} />)}
-            {showRequestParams && (isNilOrEmpty(requestParams) ? NO_REQUEST_PARAMS : <Content value={requestParams} />)}
+            {showRequestBody &&
+              (isNilOrEmpty(requestBody) ? (
+                NO_REQUEST_BODY
+              ) : (
+                <Content value={requestBody} treeLevel={1} />
+              ))}
+            {showRequestParams &&
+              (isNilOrEmpty(requestParams) ? NO_REQUEST_PARAMS : <Content value={requestParams} />)}
             {showRequestHeaders && makeTable(requestHeaders)}
           </div>
-
         </div>
       </Command>
     )

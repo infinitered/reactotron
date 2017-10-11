@@ -8,7 +8,9 @@ const createSocket = path => new WebSocket(path)
 test('the image function send the right data', t => {
   const client = createClient({ createSocket })
   const results = []
-  client.send = (type, payload) => { results.push({type, payload}) }
+  client.send = (type, payload) => {
+    results.push({ type, payload })
+  }
   client.use(plugin())
   t.is(client.plugins.length, CorePlugins.length + 1)
   t.is(typeof client.image, 'function')

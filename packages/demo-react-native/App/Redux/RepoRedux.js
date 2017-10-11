@@ -5,9 +5,16 @@ export const Types = {
 }
 
 export const Actions = {
-  request: (repo) => ({ type: Types.Request, repo }),
-  receive: (message, url, name, sha, avatar) => ({ type: Types.Receive, message, url, name, sha, avatar }),
-  failure: (error) => ({ type: Types.Failure, error })
+  request: repo => ({ type: Types.Request, repo }),
+  receive: (message, url, name, sha, avatar) => ({
+    type: Types.Receive,
+    message,
+    url,
+    name,
+    sha,
+    avatar
+  }),
+  failure: error => ({ type: Types.Failure, error })
 }
 
 export const INITIAL_STATE = {
@@ -22,8 +29,7 @@ export const INITIAL_STATE = {
 }
 
 // we're going out for the repo message
-const request = (state, { repo }) =>
-  ({ ...INITIAL_STATE, fetching: true, repo })
+const request = (state, { repo }) => ({ ...INITIAL_STATE, fetching: true, repo })
 
 // we've got a repo message
 const receive = (state, { message, url, name, sha, avatar }) => {
@@ -31,8 +37,7 @@ const receive = (state, { message, url, name, sha, avatar }) => {
 }
 
 // we failed to get the repo message :(
-const failure = (state, action) =>
-  ({ ...state, fetching: false, error: action.error })
+const failure = (state, action) => ({ ...state, fetching: false, error: action.error })
 
 // actions ->
 const reducerMap = {

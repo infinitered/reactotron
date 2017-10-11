@@ -20,11 +20,7 @@ test('apiResponse', t => {
   client.use(plugin())
   t.is(client.plugins.length, CorePlugins.length + 1)
   t.is(typeof client.apiResponse, 'function')
-  client.apiResponse(
-    {a: 1},
-    {b: 2},
-    12
-  )
+  client.apiResponse({ a: 1 }, { b: 2 }, 12)
   t.is(type, 'api.response')
   t.deepEqual(request, { a: 1 })
   t.deepEqual(response, { b: 2 })

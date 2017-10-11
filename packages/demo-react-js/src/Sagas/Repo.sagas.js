@@ -6,7 +6,10 @@ import * as Repo from '../Redux/Repo.redux'
 export function * request (api, action) {
   // make the call to github
   const { repo } = action
-  const { ok, data, status, problem } = yield call(api.get, `/repos/${repo}/commits`, { x: 1, fake: true })
+  const { ok, data, status, problem } = yield call(api.get, `/repos/${repo}/commits`, {
+    x: 1,
+    fake: true
+  })
   yield call(delay, 200)
   // are we good?
   if (ok) {

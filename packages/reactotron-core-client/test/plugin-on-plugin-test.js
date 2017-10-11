@@ -12,7 +12,7 @@ test.cb('plugins support onPlugin', t => {
 
   // make a plugin to capture onPlugin
   const plugin = () => send => ({
-    onPlugin: (instance) => {
+    onPlugin: instance => {
       t.is(instance, client)
       t.pass()
       t.end()

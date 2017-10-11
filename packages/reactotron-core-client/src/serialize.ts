@@ -66,9 +66,12 @@ function serialize (source) {
 
       // known types that have easy resolving
       switch (typeof value) {
-        case 'string': return value
-        case 'number': return value
-        case 'function': return getFunctionName(value)
+        case 'string':
+          return value
+        case 'number':
+          return value
+        case 'function':
+          return getFunctionName(value)
       }
 
       if (stack.length > 0) {

@@ -29,8 +29,7 @@ const Styles = {
     marginBottom: 8,
     color: Colors.foregroundLight
   },
-  text: {
-  },
+  text: {},
   spacer: {
     flex: 1
   }
@@ -46,7 +45,8 @@ class HelpFeedback extends Component {
     super(props)
     this.openRepo = () => shell.openExternal('https://github.com/infinitered/reactotron')
     this.feedback = () => shell.openExternal('https://github.com/infinitered/reactotron/issues/new')
-    this.checkUpdates = () => shell.openExternal('https://github.com/infinitered/reactotron/releases')
+    this.checkUpdates = () =>
+      shell.openExternal('https://github.com/infinitered/reactotron/releases')
     this.twitter = () => shell.openExternal('https://twitter.com/reactotron')
   }
 

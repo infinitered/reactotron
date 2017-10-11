@@ -44,7 +44,7 @@ test.cb('parses responses', t => {
         t.is(request.method, 'get')
         t.is(request.headers['Accept'], 'application/json')
         t.falsy(request.data)
-        t.deepEqual(response.body, {a: 'ok', b: 1})
+        t.deepEqual(response.body, { a: 'ok', b: 1 })
         t.is(response.status, 200)
         t.is(response.headers['x-powered-by'], 'Express')
         t.true(duration > 0)

@@ -8,10 +8,7 @@ const config = {
 
   devtool: 'cheap-module-eval-source-map',
 
-  entry: [
-    'webpack-hot-middleware/client?path=http://localhost:3001/__webpack_hmr',
-    './App/index'
-  ],
+  entry: ['webpack-hot-middleware/client?path=http://localhost:3001/__webpack_hmr', './App/index'],
 
   output: {
     ...baseConfig.output,
@@ -25,10 +22,7 @@ const config = {
 
       {
         test: /\.global\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader?sourceMap'
-        ]
+        loaders: ['style-loader', 'css-loader?sourceMap']
       },
 
       {

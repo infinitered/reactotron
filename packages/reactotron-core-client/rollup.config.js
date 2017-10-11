@@ -7,8 +7,5 @@ export default {
     typescript()
   ],
   dest: 'dist/index.js',
-  external: [
-    'ramda',
-    'ramdasauce'
-  ]
+  external: ['ramda', 'ramdasauce', 'json-stringify-safe']
 }

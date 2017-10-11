@@ -3,15 +3,15 @@ import WebSocket from 'ws'
 
 const createSocket = path => new WebSocket(path)
 
-const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time))
+const sleep = time => new Promise(resolve => setTimeout(resolve, time))
 
 const client = createClient({ createSocket })
 
 // possible messages
-const sendDebug = (message) => client.debug(message)
-const sendWarn = (message) => client.warn(message)
-const sendError = (message) => client.error(message)
-const sendBenchmark = async (title) => {
+const sendDebug = message => client.debug(message)
+const sendWarn = message => client.warn(message)
+const sendError = message => client.error(message)
+const sendBenchmark = async title => {
   const bench = client.benchmark(title)
   await sleep(50)
   bench.step('about to sleep')
@@ -20,7 +20,7 @@ const sendBenchmark = async (title) => {
   await sleep(5)
   bench.last('cleaning up')
 }
-const sendAction = (action) =>
+const sendAction = action =>
   client.send('state.action.complete', { ms: 123, name: action.type, action })
 
 // send a bunch of messages
@@ -58,11 +58,12 @@ const shotgun = async () => {
   I hope you enjoy.  Thank you.  And have a wonderful day. \
   `
   sendAction({ type: 'POST_GIANT_MESSAGE', message: giant })
-  sendAction({ type: 'OBJECTS_LOLS',
+  sendAction({
+    type: 'OBJECTS_LOLS',
     theGoods: {
       cities: ['Toronto', 'Halifax'],
       towns: ['Tiny', 'Pictou'],
-      thingsAroundMyOffice: { 'htc': 'vive', 'yeti': 'blue' },
+      thingsAroundMyOffice: { htc: 'vive', yeti: 'blue' },
       trueThing: true,
       falseThing: false,
       undefinedThing: undefined,

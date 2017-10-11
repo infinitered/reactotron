@@ -1,8 +1,30 @@
 import { is } from 'redux-saga/utils'
 import getEffectName from './get-effect-name'
 import getEffectDescription from './get-effect-description'
-import { ITERATOR, CALL, PUT, FORK, RACE, PENDING, RESOLVED, REJECTED, CANCELLED } from './saga-constants'
-import { reject, values, pluck, isNil, split, pathOr, last, forEach, propEq, filter, __ } from 'ramda'
+import {
+  ITERATOR,
+  CALL,
+  PUT,
+  FORK,
+  RACE,
+  PENDING,
+  RESOLVED,
+  REJECTED,
+  CANCELLED
+} from './saga-constants'
+import {
+  reject,
+  values,
+  pluck,
+  isNil,
+  split,
+  pathOr,
+  last,
+  forEach,
+  propEq,
+  filter,
+  __
+} from 'ramda'
 // import { reject, values, pluck, isNil, split, pathOr, last, forEach, propEq, filter, __, map, omit } from 'ramda'
 
 // creates a saga monitor
@@ -127,16 +149,10 @@ export default (reactotron, options) => {
         })
 
         // rerun this function for our children
-        forEach(
-          x => buildChild(depth + 1, x),
-          getChildEffectIds(effectId)
-        )
+        forEach(x => buildChild(depth + 1, x), getChildEffectIds(effectId))
       }
       const xs = getChildEffectIds(effectId)
-      forEach(
-        effectId => buildChild(0, effectId),
-        xs
-      )
+      forEach(effectId => buildChild(0, effectId), xs)
     }
 
     reactotron.send('saga.task.complete', {
@@ -169,16 +185,13 @@ export default (reactotron, options) => {
       }
 
       // hook the promise to capture the resolve or reject
-      result.done.then(
-        onTaskResult,
-        error => {
-          effectRejected(effectId, error)
-          if (!error.reactotronWasHere) {
-            reactotron.reportError(error)
-          }
-          error.reactotronWasHere = true
+      result.done.then(onTaskResult, error => {
+        effectRejected(effectId, error)
+        if (!error.reactotronWasHere) {
+          reactotron.reportError(error)
         }
-      )
+        error.reactotronWasHere = true
+      })
     } else {
       // this is an effect and we are complete
       effectInfo.status = RESOLVED
@@ -198,8 +211,12 @@ export default (reactotron, options) => {
     const children = getChildEffectInfos(effectId)
     const winningChildren = filter(byLabel(winnerLabel), children)
     const losingChildren = reject(byLabel(winnerLabel), children)
-    const setWinner = effectInfo => { effectInfo.winner = true }
-    const setLoser = effectInfo => { effectInfo.loser = true }
+    const setWinner = effectInfo => {
+      effectInfo.winner = true
+    }
+    const setLoser = effectInfo => {
+      effectInfo.loser = true
+    }
 
     // set the 1 (hopefully 1) winner -- but i'm not sure
     forEach(setWinner, winningChildren)

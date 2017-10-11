@@ -17,10 +17,14 @@ const SOURCE_FILE_PATH_COUNT = 3
 
 const getName = level => {
   switch (level) {
-    case 'debug': return 'DEBUG'
-    case 'warn': return 'WARNING'
-    case 'error': return 'ERROR'
-    default: return 'LOG'
+    case 'debug':
+      return 'DEBUG'
+    case 'warn':
+      return 'WARNING'
+    case 'error':
+      return 'ERROR'
+    default:
+      return 'LOG'
   }
 }
 
@@ -182,8 +186,7 @@ class LogCommand extends Component {
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    return this.props.command.id !== nextProps.command.id ||
-      this.state.lines !== nextState.lines
+    return this.props.command.id !== nextProps.command.id || this.state.lines !== nextState.lines
   }
 
   fetchLines () {
@@ -202,7 +205,9 @@ class LogCommand extends Component {
     // kick-off a file read async
     fs.readFile(fileName, 'utf-8', (err, data) => {
       // die quietly for we have failed
-      if (err) { return }
+      if (err) {
+        return
+      }
       if (data && is(String, data)) {
         try {
           let lines
@@ -235,8 +240,7 @@ class LogCommand extends Component {
 
           // kick it back to React
           this.setState({ lines, lineNumber, fileName, partialFileName })
-        } catch (e) {
-        }
+        } catch (e) {}
       }
     })
   }
@@ -250,18 +254,15 @@ class LogCommand extends Component {
     const renderLine = line => {
       const { lineNumber, source, isSelected } = line
       const key = `line-${lineNumber}`
-      const style = isSelected ? merge(Styles.sourceLine, Styles.sourceLineHighlight) : Styles.sourceLine
-      const onClickStackFrame = e =>
-        ui.openInEditor(fileName, lineNumber)
+      const style = isSelected
+        ? merge(Styles.sourceLine, Styles.sourceLineHighlight)
+        : Styles.sourceLine
+      const onClickStackFrame = e => ui.openInEditor(fileName, lineNumber)
 
       return (
         <div style={style} key={key} onClick={onClickStackFrame}>
-          <div style={Styles.sourceLineNumber}>
-            {lineNumber}
-          </div>
-          <div style={Styles.sourceLineCode}>
-            {source}
-          </div>
+          <div style={Styles.sourceLineNumber}>{lineNumber}</div>
+          <div style={Styles.sourceLineCode}>{source}</div>
         </div>
       )
     }
@@ -269,7 +270,7 @@ class LogCommand extends Component {
     return (
       <div style={Styles.sourceCode}>
         <div style={Styles.sourceFilename}>{partialFileName}</div>
-        { map(renderLine, lines) }
+        {map(renderLine, lines)}
       </div>
     )
   }
@@ -283,8 +284,7 @@ class LogCommand extends Component {
     fileName = fileName && replace('webpack://', '', fileName)
     functionName = functionName && replace('webpack://', '', functionName)
     const isNodeModule = fileName.indexOf('/node_modules/') >= 0
-    const onClickStackFrame = e =>
-      ui.openInEditor(fileName, lineNumber)
+    const onClickStackFrame = e => ui.openInEditor(fileName, lineNumber)
     const isSelected = number === 1
 
     let style = isNodeModule ? Styles.stackFrameNodeModule : Styles.stackFrame
@@ -295,7 +295,7 @@ class LogCommand extends Component {
     return (
       <div key={key} style={style} onClick={onClickStackFrame}>
         <div style={Styles.functionName}>{functionName || '(anonymous function)'}</div>
-        <div style={Styles.fileName} data-tip={tooltip} >
+        <div style={Styles.fileName} data-tip={tooltip}>
           {justTheFile}
           <ReactTooltip place='bottom' class='tooltipThemeReducedWidth' />
         </div>
@@ -339,7 +339,9 @@ class LogCommand extends Component {
     const { level } = payload
     const { message, stack } = payload
     const title = getName(level)
-    const containerTypes = merge(Styles.container, { color: level === 'debug' ? Colors.foreground : Colors.foreground })
+    const containerTypes = merge(Styles.container, {
+      color: level === 'debug' ? Colors.foreground : Colors.foreground
+    })
     const hasLines = !!this.state.lines
 
     let preview = this.getPreview(message)
@@ -348,7 +350,7 @@ class LogCommand extends Component {
       <Command command={command} title={title} preview={preview}>
         <div style={containerTypes}>
           {!stack && <Content value={message} />}
-          {stack && <div style={Styles.errorMessage}>{ message }</div>}
+          {stack && <div style={Styles.errorMessage}>{message}</div>}
           {stack && hasLines && this.renderSource()}
           {stack && this.renderStack(stack)}
         </div>

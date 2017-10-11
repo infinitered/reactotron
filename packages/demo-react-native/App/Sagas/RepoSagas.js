@@ -16,10 +16,7 @@ export function * request (api, action) {
   try {
     // make the call to github
     const { repo } = action
-    const { ok, data, status, problem } = yield call(
-      api.get,
-      `/repos/${repo}/commits`
-    )
+    const { ok, data, status, problem } = yield call(api.get, `/repos/${repo}/commits`)
     yield call(sampleNestedGenerator)
 
     yield race([call(sampleNestedGenerator), call(muchSlowerGenerator)])

@@ -7,7 +7,7 @@ test.cb('keeps track of connections', t => {
   getFreePort(port => {
     const server = createServer({
       port,
-      onCommand: ({type, payload}) => {
+      onCommand: ({ type, payload }) => {
         t.is(server.connections.length, 1)
         t.end()
       }
@@ -19,7 +19,7 @@ test.cb('keeps track of connections', t => {
     // add 1
     const client1 = socketClient(`ws://localhost:${port}`)
     client1.on('connect', () => {
-      client1.emit('command', {type: 'client.intro', payload: {}})
+      client1.emit('command', { type: 'client.intro', payload: {} })
     })
   })
 })

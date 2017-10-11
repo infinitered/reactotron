@@ -1,14 +1,4 @@
-import {
-  merge,
-  length,
-  find,
-  propEq,
-  without,
-  contains,
-  forEach,
-  pluck,
-  reject
-} from 'ramda'
+import { merge, length, find, propEq, without, contains, forEach, pluck, reject } from 'ramda'
 import Commands from './commands'
 import validate from './validation'
 import { observable, computed, asFlat } from 'mobx'
@@ -21,7 +11,7 @@ const DEFAULTS = {
   onStart: () => null, // handles inbound commands
   onStop: () => null, // handles inbound commands
   onConnect: connection => null, // notify connections
-  onDisconnect: connection => null // notify disconnections
+  onDisconnect: connection => null, // notify disconnections
 }
 
 class Server {
@@ -46,7 +36,8 @@ class Server {
   /**
    * How many people are connected?
    */
-  @computed get connectionCount() {
+  @computed
+  get connectionCount() {
     return length(this.connections)
   }
 
@@ -55,8 +46,7 @@ class Server {
   }
 
   findConnectionById = id => find(propEq('id', id), this.connections)
-  findPartialConnectionById = id =>
-    find(propEq('id', id), this.partialConnections)
+  findPartialConnectionById = id => find(propEq('id', id), this.partialConnections)
 
   /**
    * Set the configuration options.
@@ -86,7 +76,7 @@ class Server {
       const partialConnection = {
         id: socket.id,
         address: 'dunno', // socket.request.connection.remoteAddress,
-        socket
+        socket,
       }
 
       // tuck them away in a "almost connected status"
@@ -99,18 +89,12 @@ class Server {
       socket.on('disconnect', () => {
         onDisconnect(socket.id)
         // remove them from the list partial list
-        this.partialConnections = reject(
-          propEq('id', socket.id),
-          this.partialConnections
-        ) as any
+        this.partialConnections = reject(propEq('id', socket.id), this.partialConnections) as any
 
         // remove them from the main connections list
-        const severingConnection = find(
-          propEq('id', socket.id),
-          this.connections
-        )
+        const severingConnection = find(propEq('id', socket.id), this.connections)
         if (severingConnection) {
-          (this.connections as any).remove(severingConnection)
+          ;(this.connections as any).remove(severingConnection)
           onDisconnect && onDisconnect(severingConnection)
         }
       })
@@ -127,30 +111,24 @@ class Server {
           important,
           payload,
           messageId: this.messageId,
-          date
+          date,
         }
 
         // for client intros
         if (type === 'client.intro') {
           // find them in the partial connection list
-          const partConn = find(
-            propEq('id', socket.id),
-            this.partialConnections
-          ) as any
+          const partConn = find(propEq('id', socket.id), this.partialConnections) as any
 
           // add their address in
           fullCommand.payload.address = partConn.address
 
           // remove them from the partial connections list
-          this.partialConnections = reject(
-            propEq('id', socket.id),
-            this.partialConnections
-          ) as any
+          this.partialConnections = reject(propEq('id', socket.id), this.partialConnections) as any
 
           // bestow the payload onto the connection
           const connection = merge(payload, {
             id: socket.id,
-            address: partConn.address
+            address: partConn.address,
           })
 
           // then trigger the connection
@@ -170,7 +148,7 @@ class Server {
 
         // clear
         if (type === 'clear') {
-          (this.commands as any).all.clear()
+          ;(this.commands as any).all.clear()
         } else {
           this.commands.addCommand(fullCommand)
           onCommand(fullCommand)
@@ -193,10 +171,7 @@ class Server {
   stop() {
     const { onStop } = this.options
     this.started = false
-    forEach(
-      s => s && s.connected && s.disconnect(),
-      pluck('socket', this.connections)
-    )
+    forEach(s => s && s.connected && s.disconnect(), pluck('socket', this.connections))
     this.wss.close()
 
     // trigger the stop message

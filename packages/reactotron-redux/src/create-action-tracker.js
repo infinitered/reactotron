@@ -37,7 +37,8 @@ export default (reactotron, trackerOptions = {}) => {
         // stop the timer
         const ms = elapsed()
 
-        var unwrappedAction = action.type === 'PERFORM_ACTION' && action.action ? action.action : action
+        var unwrappedAction =
+          action.type === 'PERFORM_ACTION' && action.action ? action.action : action
 
         // if matchException is true, actionType is matched with exception
         const matchException = (exception, actionType) => {
@@ -52,7 +53,10 @@ export default (reactotron, trackerOptions = {}) => {
           }
         }
 
-        const matchExceptions = any(exception => matchException(exception, unwrappedAction.type), exceptions)
+        const matchExceptions = any(
+          exception => matchException(exception, unwrappedAction.type),
+          exceptions
+        )
 
         // action not blacklisted?
         // if matchException is true, action.type is matched with exception

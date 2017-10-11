@@ -11,10 +11,8 @@ const ESCAPE_HINT = 'Cancel'
 const ENTER_KEYSTROKE = `${Keystroke.modifierName} + Enter`
 const ENTER_HINT = 'Dispatch'
 const DIALOG_TITLE = 'Dispatch Action'
-const INSTRUCTIONS = (
-  <span> Create an action that will be dispatched to the client to run.</span>
-)
-const INPUT_PLACEHOLDER = '{ type: \'RepoMessage.Request\' }'
+const INSTRUCTIONS = <span> Create an action that will be dispatched to the client to run.</span>
+const INPUT_PLACEHOLDER = "{ type: 'RepoMessage.Request' }"
 const FIELD_LABEL = 'Action'
 
 const Styles = {
@@ -86,7 +84,7 @@ const Styles = {
 @inject('session')
 @observer
 class StateDispatchDialog extends Component {
-  handleChange = (e) => {
+  handleChange = e => {
     const { session } = this.props
     session.ui.actionToDispatch = e.target.value
   }
@@ -108,9 +106,7 @@ class StateDispatchDialog extends Component {
             <div style={Styles.container}>
               <div style={Styles.header}>
                 <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
-                <p style={Styles.subtitle}>
-                  {INSTRUCTIONS}
-                </p>
+                <p style={Styles.subtitle}>{INSTRUCTIONS}</p>
               </div>
               <div style={Styles.body}>
                 <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>

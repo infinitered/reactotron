@@ -34,7 +34,7 @@ test.cb('plugins support command', t => {
 
   // the server waits for the command
   wss.on('connection', socket => {
-    socket.send(JSON.stringify({type: mockType, payload: mockPayload}))
+    socket.send(JSON.stringify({ type: mockType, payload: mockPayload }))
   })
 
   // create the client, add the plugin, and connect

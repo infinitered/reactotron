@@ -27,10 +27,7 @@ const Styles = {
 
 const SectionLink = props => {
   const { isActive = false, text, onClick } = props
-  const containerStyles = merge(
-    Styles.container,
-    isActive ? Styles.containerActive : {}
-  )
+  const containerStyles = merge(Styles.container, isActive ? Styles.containerActive : {})
   const textStyles = merge(Styles.text, isActive ? Styles.textActive : {})
 
   return (

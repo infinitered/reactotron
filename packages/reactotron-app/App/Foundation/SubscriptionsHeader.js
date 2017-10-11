@@ -69,8 +69,16 @@ class SubscriptionsHeader extends Component {
             <div style={Styles.title}>{TITLE}</div>
           </div>
           <div style={Styles.right}>
-            <IconAdd size={Styles.iconSize} style={Styles.toolbarAdd} onClick={ui.openStateWatchDialog} />
-            <IconClear size={Styles.iconSize} style={Styles.toolbarClear} onClick={ui.clearStateWatches} />
+            <IconAdd
+              size={Styles.iconSize}
+              style={Styles.toolbarAdd}
+              onClick={ui.openStateWatchDialog}
+            />
+            <IconClear
+              size={Styles.iconSize}
+              style={Styles.toolbarClear}
+              onClick={ui.clearStateWatches}
+            />
           </div>
         </div>
       </div>

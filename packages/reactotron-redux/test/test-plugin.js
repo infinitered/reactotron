@@ -7,7 +7,7 @@ test('has the right interface', t => {
   }
   const reactotron = {
     send: (type, payload) => {},
-    stateValuesChange: (paths) => null
+    stateValuesChange: paths => null
   }
   t.is(typeof reduxotron, 'function')
   const createPlugin = reduxotron(store)

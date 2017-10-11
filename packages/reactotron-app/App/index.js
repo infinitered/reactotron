@@ -5,11 +5,7 @@ import './app.global.css'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 
-render(
-  <App />
-  ,
-  document.getElementById('root')
-)
+render(<App />, document.getElementById('root'))
 
 document.addEventListener('dragover', event => event.preventDefault())
 document.addEventListener('drop', event => event.preventDefault())

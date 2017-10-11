@@ -4,18 +4,12 @@ import RS from 'ramdasauce'
 /**
  * Is this a valid port?
  */
-const isPortValid = R.allPass([
-  R.complement(R.isNil),
-  R.is(Number),
-  RS.isWithin(1, 65535)
-])
+const isPortValid = R.allPass([R.complement(R.isNil), R.is(Number), RS.isWithin(1, 65535)])
 
 /**
  * Is this a valid command?
  */
-const isOnCommandValid = R.allPass([
-  R.complement(R.isNil)
-])
+const isOnCommandValid = R.allPass([R.complement(R.isNil)])
 
 /**
  * Ensures the options are sane to run this baby.  Throw if not.  These

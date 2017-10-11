@@ -54,20 +54,24 @@ class WatchPanel extends Component {
   }
 
   renderWatch (watch, indent = 0) {
-    const unsubscribe = (path) => {
+    const unsubscribe = path => {
       this.props.session.ui.removeStateWatch(path)
     }
     const key = `watch-${watch.path}`
-    const value = is(Object, watch.value) ? <ObjectTree object={{value: watch.value}} /> : textForValue(watch.value)
+    const value = is(Object, watch.value) ? (
+      <ObjectTree object={{ value: watch.value }} />
+    ) : (
+      textForValue(watch.value)
+    )
     const watchValueStyles = merge(Styles.watchValue, { color: colorForValue(watch.value) })
     return (
       <div style={Styles.watch} key={key}>
         <div style={Styles.watchLeft}>
-          <div style={Styles.watchPath} onClick={unsubscribe.bind(this, watch.path)}>{watch.path}</div>
+          <div style={Styles.watchPath} onClick={unsubscribe.bind(this, watch.path)}>
+            {watch.path}
+          </div>
         </div>
-        <div style={watchValueStyles}>
-          {value}
-        </div>
+        <div style={watchValueStyles}>{value}</div>
       </div>
     )
   }
@@ -76,8 +80,9 @@ class WatchPanel extends Component {
     return (
       <Empty icon='notifications-none' title='No Subscriptions'>
         <p style={Styles.message}>
-          You can subscribe to state changes in your
-          redux store by pressing <Key text={Keystroke.modifierName} /> + <Key text='N' />.</p>
+          You can subscribe to state changes in your redux store by pressing{' '}
+          <Key text={Keystroke.modifierName} /> + <Key text='N' />.
+        </p>
       </Empty>
     )
   }
@@ -89,12 +94,8 @@ class WatchPanel extends Component {
     return (
       <div style={Styles.container}>
         <SubscriptionsHeader />
-        { isEmpty && this.renderEmpty() }
-        { !isEmpty &&
-          <div style={Styles.watches}>
-            {map(this.renderWatch, watches)}
-          </div>
-        }
+        {isEmpty && this.renderEmpty()}
+        {!isEmpty && <div style={Styles.watches}>{map(this.renderWatch, watches)}</div>}
       </div>
     )
   }
