@@ -33,9 +33,7 @@ const NativeOverlayOpacity = props => {
     return false
   }
   const makeButtonStyle = value =>
-    opacity === value
-      ? { ...Styles.button, ...Styles.buttonActive }
-      : Styles.button
+    opacity === value ? { ...Styles.button, ...Styles.buttonActive } : Styles.button
 
   return (
     <div style={Styles.container}>

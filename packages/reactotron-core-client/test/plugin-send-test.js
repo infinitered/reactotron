@@ -19,19 +19,18 @@ test.cb('plugins support send', t => {
 
   getFreePort(port => {
     // the server waits for the command
-    socketServer(port)
-      .on('connection', socket => {
-        // send through the one we recieved in the plugin
-        capturedSend(mockType, mockPayload)
+    socketServer(port).on('connection', socket => {
+      // send through the one we recieved in the plugin
+      capturedSend(mockType, mockPayload)
 
-        // fires the server receives a command
-        socket.on('command', ({type, payload}) => {
-          if (type === 'client.intro') return
-          t.is(type, mockType)
-          t.deepEqual(payload, mockPayload)
-          t.end()
-        })
+      // fires the server receives a command
+      socket.on('command', ({ type, payload }) => {
+        if (type === 'client.intro') return
+        t.is(type, mockType)
+        t.deepEqual(payload, mockPayload)
+        t.end()
       })
+    })
 
     // create the client, add the plugin, and connect
     createClient({ io: socketClient, port: port })

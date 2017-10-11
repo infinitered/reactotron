@@ -28,15 +28,17 @@ class AsyncStorageValuesCommand extends Component {
   renderItem (item, idx) {
     const [asyncStorageKey, asyncStorageValue] = item
     const key = `item-${idx}`
-    const value = is(Object, asyncStorageValue) ? <ObjectTree object={{value: asyncStorageValue}} /> : textForValue(asyncStorageValue)
+    const value = is(Object, asyncStorageValue) ? (
+      <ObjectTree object={{ value: asyncStorageValue }} />
+    ) : (
+      textForValue(asyncStorageValue)
+    )
     return (
       <div style={Styles.item} key={key}>
         <div style={Styles.itemLeft}>
           <div style={Styles.key}>{asyncStorageKey}</div>
         </div>
-        <div style={Styles.value}>
-          {value}
-        </div>
+        <div style={Styles.value}>{value}</div>
       </div>
     )
   }
@@ -47,9 +49,7 @@ class AsyncStorageValuesCommand extends Component {
     const rows = mapIndexed(this.renderItem, value)
     return (
       <Command command={command} title={COMMAND_TITLE} preview={preview}>
-        <div style={Styles.watches}>
-          {rows.length > 0 ? rows : 'Empty storage.'}
-        </div>
+        <div style={Styles.watches}>{rows.length > 0 ? rows : 'Empty storage.'}</div>
       </Command>
     )
   }

@@ -5,8 +5,8 @@ export const Types = {
 }
 
 export const Actions = {
-  changeSpeed: (speed) => ({ type: Types.Speed, speed }),
-  changeSize: (size) => ({ type: Types.Size, size }),
+  changeSpeed: speed => ({ type: Types.Speed, speed }),
+  changeSize: size => ({ type: Types.Size, size }),
   reset: () => ({ type: Types.Reset })
 }
 

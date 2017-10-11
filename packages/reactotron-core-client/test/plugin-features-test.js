@@ -10,15 +10,24 @@ test('features must be an object if they appear', t => {
 
 test('some names are not allowed', t => {
   const client = createClient({ io })
-  const createPlugin = features => reactotron => ({features})
+  const createPlugin = features => reactotron => ({ features })
 
-  const badPlugins = R.map(
-    name => createPlugin({ [name]: R.identity }),
-    ['options', 'connected', 'socket', 'plugins', 'configure', 'connect', 'send', 'use', 'startTimer']
-  )
+  const badPlugins = R.map(name => createPlugin({ [name]: R.identity }), [
+    'options',
+    'connected',
+    'socket',
+    'plugins',
+    'configure',
+    'connect',
+    'send',
+    'use',
+    'startTimer'
+  ])
 
   R.forEach(plugin => {
-    t.throws(() => { client.use(plugin) })
+    t.throws(() => {
+      client.use(plugin)
+    })
   }, badPlugins)
 })
 

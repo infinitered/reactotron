@@ -12,7 +12,7 @@ import ApiSauce from 'apisauce'
 const api = ApiSauce.create({
   baseURL: 'https://api.github.com',
   headers: {
-    'Accept': 'application/vnd.github.v3+json'
+    Accept: 'application/vnd.github.v3+json'
   }
 })
 

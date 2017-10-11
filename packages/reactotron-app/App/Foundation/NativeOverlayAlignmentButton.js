@@ -16,20 +16,9 @@ const Styles = {
 }
 
 const NativeOverlayAlignmentButton = props => {
-  const {
-    selectedJustifyContent,
-    selectedAlignItems,
-    onClick,
-    justifyContent,
-    alignItems
-  } = props
-  const isActive =
-    selectedJustifyContent === justifyContent &&
-    selectedAlignItems === alignItems
-  const containerStyles = merge(
-    Styles.container,
-    isActive ? Styles.containerActive : {}
-  )
+  const { selectedJustifyContent, selectedAlignItems, onClick, justifyContent, alignItems } = props
+  const isActive = selectedJustifyContent === justifyContent && selectedAlignItems === alignItems
+  const containerStyles = merge(Styles.container, isActive ? Styles.containerActive : {})
   const handleClick = event => {
     event.stopPropagation()
     event.preventDefault()

@@ -20,7 +20,7 @@ class UnknownCommand extends Component {
 
     return (
       <Command command={command} title={COMMAND_TITLE} preview={type}>
-        <ObjectTree object={{payload}} />
+        <ObjectTree object={{ payload }} />
       </Command>
     )
   }

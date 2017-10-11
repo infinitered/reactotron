@@ -29,7 +29,7 @@ test.cb('sends a valid command', t => {
 
     // when the client connects, send a command trigger
     client.on('connect', () => {
-      client.emit('command', {type: 'trigger'})
+      client.emit('command', { type: 'trigger' })
     })
   })
 })

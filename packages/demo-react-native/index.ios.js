@@ -11,7 +11,4 @@ class DemoReactNative extends Component {
   }
 }
 
-AppRegistry.registerComponent(
-  'DemoReactNative',
-  () => DemoReactNative
-)
+AppRegistry.registerComponent('DemoReactNative', () => DemoReactNative)

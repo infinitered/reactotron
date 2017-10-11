@@ -39,21 +39,22 @@ class RootContainer extends Component {
       filename: 'cat.jpg',
       width: 400,
       height: 400,
-      caption: 'D\'awwwwwww'
+      caption: "D'awwwwwww"
     })
   }
 
   handleScreenshot () {
-    RNViewShot
-      .takeSnapshot(this.refs.foo, { result: 'data-uri' })
-      .then(
-        uri => console.tron.display({ name: 'Screenshot', preview: 'App screenshot', image: { uri } }),
-        error => console.tron.error('Oops, snapshot failed', error)
-      )
+    RNViewShot.takeSnapshot(this.refs.foo, { result: 'data-uri' }).then(
+      uri =>
+        console.tron.display({ name: 'Screenshot', preview: 'App screenshot', image: { uri } }),
+      error => console.tron.error('Oops, snapshot failed', error)
+    )
   }
 
   handleAsyncSet () {
-    AsyncStorage.setItem('singleSet', new Date().toISOString(), () => console.tron.log('After setting async storage.'))
+    AsyncStorage.setItem('singleSet', new Date().toISOString(), () =>
+      console.tron.log('After setting async storage.')
+    )
   }
 
   handleAsyncRemove () {
@@ -82,9 +83,16 @@ class RootContainer extends Component {
             <Button text='React Native' onPress={this.props.requestReactNative} />
           </View>
           <Repo
-            avatar={avatar} repo={repo} name={name} message={message}
-            size={size} speed={speed}
-            bigger={bigger} smaller={smaller} faster={faster} slower={slower}
+            avatar={avatar}
+            repo={repo}
+            name={name}
+            message={message}
+            size={size}
+            speed={speed}
+            bigger={bigger}
+            smaller={smaller}
+            faster={faster}
+            slower={slower}
             reset={reset}
           />
 
@@ -94,17 +102,11 @@ class RootContainer extends Component {
           </View>
 
           <View style={Styles.buttons}>
-            <Text style={Styles.errorTitle}>
-              Handles Various Sources of Errors
-            </Text>
+            <Text style={Styles.errorTitle}>Handles Various Sources of Errors</Text>
           </View>
 
           <View style={Styles.buttons}>
-            <Button
-              text='Component Error'
-              onPress={this.props.bomb}
-              style={{ width: 200 }}
-            />
+            <Button text='Component Error' onPress={this.props.bomb} style={{ width: 200 }} />
           </View>
           <View style={Styles.buttons}>
             <Button
@@ -114,11 +116,7 @@ class RootContainer extends Component {
             />
           </View>
           <View style={Styles.buttons}>
-            <Button
-              text='Saga Error'
-              onPress={this.props.bombSaga}
-              style={{ width: 200 }}
-            />
+            <Button text='Saga Error' onPress={this.props.bombSaga} style={{ width: 200 }} />
           </View>
           <View style={Styles.buttons}>
             <Button
@@ -135,11 +133,7 @@ class RootContainer extends Component {
             />
           </View>
           <View style={Styles.buttons}>
-            <Button
-              text='Async Storage SET'
-              onPress={this.handleAsyncSet}
-              style={{ width: 200 }}
-            />
+            <Button text='Async Storage SET' onPress={this.handleAsyncSet} style={{ width: 200 }} />
           </View>
           <View style={Styles.buttons}>
             <Button
@@ -161,7 +155,7 @@ class RootContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     ...state.repo,
     ...state.logo
@@ -193,7 +187,9 @@ const mapDispatchToProps = dispatch => ({
   },
   bomb: () => {
     console.tron.log('wait for it...')
-    setTimeout(() => { makeErrorForFun('Boom goes the error message.') }, 500)
+    setTimeout(() => {
+      makeErrorForFun('Boom goes the error message.')
+    }, 500)
   },
   bombSaga: () => dispatch(ErrorActions.throwSagaError())
 })

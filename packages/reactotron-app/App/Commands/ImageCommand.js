@@ -6,8 +6,7 @@ import Colors from '../Theme/Colors'
 const COMMAND_TITLE = 'IMAGE'
 
 const Styles = {
-  imageContainer: {
-  },
+  imageContainer: {},
   image: {
     maxWidth: '100%',
     maxHeight: '100%'

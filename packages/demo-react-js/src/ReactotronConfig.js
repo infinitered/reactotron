@@ -5,8 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
   const { reactotronRedux } = require('reactotron-redux')
   const sagaPlugin = require('reactotron-redux-saga')
 
-  Reactotron
-    .configure({ name: 'Demo Time!', secure: false })
+  Reactotron.configure({ name: 'Demo Time!', secure: false })
     .use(tronsauce())
     .use(reactotronRedux())
     .use(trackGlobalErrors({ offline: false }))

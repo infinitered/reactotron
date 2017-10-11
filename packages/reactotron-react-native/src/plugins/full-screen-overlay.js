@@ -62,7 +62,14 @@ class FullScreenOverlay extends Component {
   createContainerStyle () {
     const { opacity, justifyContent, alignItems } = this.state
     const { width, height } = Dimensions.get('window')
-    const containerStyle = { ...Styles.container, opacity, width, height, justifyContent, alignItems }
+    const containerStyle = {
+      ...Styles.container,
+      opacity,
+      width,
+      height,
+      justifyContent,
+      alignItems
+    }
 
     return containerStyle
   }
@@ -88,15 +95,14 @@ class FullScreenOverlay extends Component {
       imageStyle.width = windowSize.width
       imageStyle.height = windowSize.height
     }
-    const image = uri
-      ? <Image source={{ uri }} style={imageStyle} resizeMode={growToWindow ? resizeMode : null} />
-      : <View />
+    const image = uri ? (
+      <Image source={{ uri }} style={imageStyle} resizeMode={growToWindow ? resizeMode : null} />
+    ) : (
+      <View />
+    )
 
     return (
-      <View
-        style={this.createContainerStyle()}
-        pointerEvents='none'
-      >
+      <View style={this.createContainerStyle()} pointerEvents='none'>
         {image}
       </View>
     )

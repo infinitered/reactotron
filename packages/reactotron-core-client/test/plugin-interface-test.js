@@ -49,10 +49,7 @@ test('can be added in createClient', t => {
   const createPlugin = (name, value) => reactotron => ({ features: { [name]: () => value } })
   const client = createClient({
     io,
-    plugins: [
-      createPlugin('sayHello', 'hello'),
-      createPlugin('sayGoodbye', 'goodbye')
-    ]
+    plugins: [createPlugin('sayHello', 'hello'), createPlugin('sayGoodbye', 'goodbye')]
   })
 
   t.is(client.sayHello(), 'hello')

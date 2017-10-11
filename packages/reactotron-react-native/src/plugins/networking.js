@@ -12,8 +12,7 @@ export default (pluginConfig = {}) => reactotron => {
   const options = merge(DEFAULTS, pluginConfig)
 
   // a RegExp to suppess adding the body cuz it costs a lot to serialize
-  const ignoreContentTypes = options.ignoreContentTypes ||
-    DEFAULT_CONTENT_TYPES_RX
+  const ignoreContentTypes = options.ignoreContentTypes || DEFAULT_CONTENT_TYPES_RX
 
   // a XHR call tracker
   let reactotronCounter = 1000
@@ -71,14 +70,14 @@ export default (pluginConfig = {}) => reactotron => {
     let body = null
 
     // what type of content is this?
-    const contentType = (xhr.responseHeaders &&
-      xhr.responseHeaders['content-type']) ||
+    const contentType =
+      (xhr.responseHeaders && xhr.responseHeaders['content-type']) ||
       (xhr.responseHeaders && xhr.responseHeaders['Content-Type']) ||
       ''
 
     // can we use the real response?
-    const useRealResponse = (typeof response === 'string' ||
-      typeof response === 'object') &&
+    const useRealResponse =
+      (typeof response === 'string' || typeof response === 'object') &&
       !test(ignoreContentTypes, contentType || '')
 
     // prepare the right body to send

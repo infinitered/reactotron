@@ -12,7 +12,7 @@ test.cb('handles incoming dispatch calls', t => {
   }
   const reactotron = {
     send: (type, payload) => {},
-    stateValuesChange: (paths) => null
+    stateValuesChange: paths => null
   }
   const createPlugin = reduxotron(store)
   const plugin = createPlugin(reactotron)

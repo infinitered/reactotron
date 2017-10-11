@@ -14,7 +14,7 @@ export default (options = {}) => reactotron => {
   const ignoreContentTypes = options.ignoreContentTypes || DEFAULT_CONTENT_TYPES_RX
 
   // apisauce uses axios, so let's deconstruct that format
-  const convertResponse = (source) => {
+  const convertResponse = source => {
     // the request
     const url = dotPath('config.url', source)
     const method = dotPath('config.method', source)
@@ -22,7 +22,11 @@ export default (options = {}) => reactotron => {
     const requestHeaders = dotPath('config.headers', source)
     const requestParams = dotPath('config.params', source)
     const request = {
-      url, method, data: requestData || null, headers: requestHeaders, params: requestParams || null
+      url,
+      method,
+      data: requestData || null,
+      headers: requestHeaders,
+      params: requestParams || null
     }
 
     // there response
@@ -30,7 +34,9 @@ export default (options = {}) => reactotron => {
     const responseHeaders = dotPath('headers', source) || {}
     const contentType = responseHeaders['content-type'] || responseHeaders['Content-Type']
     const bodyData = dotPath('data', source)
-    const useRealBody = (typeof bodyData === 'string' || typeof bodyData === 'object') && !(test(ignoreContentTypes, contentType || ''))
+    const useRealBody =
+      (typeof bodyData === 'string' || typeof bodyData === 'object') &&
+      !test(ignoreContentTypes, contentType || '')
     const body = useRealBody ? bodyData : `~~~ skipped ~~~`
     const response = { body, status, headers: responseHeaders }
 
@@ -38,11 +44,11 @@ export default (options = {}) => reactotron => {
     const duration = dotPath('duration', source)
 
     // return all 3
-    return [ request, response, duration ]
+    return [request, response, duration]
   }
   return {
     features: {
-      apisauce: (source) => reactotron.apiResponse(...convertResponse(source))
+      apisauce: source => reactotron.apiResponse(...convertResponse(source))
     }
   }
 }

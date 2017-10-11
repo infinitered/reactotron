@@ -19,7 +19,7 @@ test.cb('receives a valid command', t => {
     const client = createClient({
       io: socketClient,
       port: port,
-      onCommand: ({type, payload}) => {
+      onCommand: ({ type, payload }) => {
         t.is(type, mockType)
         t.deepEqual(payload, mockPayload)
         t.end()
@@ -29,7 +29,7 @@ test.cb('receives a valid command', t => {
     // when the server gets a connection, send the command
     const server = socketServer(port)
     server.on('connection', socket => {
-      server.sockets.emit('command', {type: mockType, payload: mockPayload})
+      server.sockets.emit('command', { type: mockType, payload: mockPayload })
     })
 
     // kick it off

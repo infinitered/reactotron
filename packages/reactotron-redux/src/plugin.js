@@ -41,9 +41,8 @@ const createPlugin = (store, pluginConfig = {}) => {
     store.subscribe(sendSubscriptionsIfNeeded)
 
     return {
-
       // fires
-      onCommand: ({type, payload}) => {
+      onCommand: ({ type, payload }) => {
         switch (type) {
           // client is asking for keys
           case 'state.keys.request':
@@ -92,7 +91,10 @@ const createPlugin = (store, pluginConfig = {}) => {
 
     // convert from symbol to type if necessary
     if (typeof name === 'symbol') {
-      name = name.toString().replace(/^Symbol\(/, '').replace(/\)$/, '')
+      name = name
+        .toString()
+        .replace(/^Symbol\(/, '')
+        .replace(/\)$/, '')
     }
 
     // off ya go!

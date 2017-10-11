@@ -33,9 +33,7 @@ const NativeOverlayLayoutType = props => {
     return false
   }
   const makeButtonStyle = value =>
-    layoutType === value
-      ? { ...Styles.button, ...Styles.buttonActive }
-      : Styles.button
+    layoutType === value ? { ...Styles.button, ...Styles.buttonActive } : Styles.button
 
   return (
     <div style={Styles.container}>
@@ -43,10 +41,7 @@ const NativeOverlayLayoutType = props => {
         <button style={makeButtonStyle('image')} onClick={makeHandler('image')}>
           Image
         </button>
-        <button
-          style={makeButtonStyle('screen')}
-          onClick={makeHandler('screen')}
-        >
+        <button style={makeButtonStyle('screen')} onClick={makeHandler('screen')}>
           Screen
         </button>
       </div>

@@ -19,26 +19,33 @@ const TIP_SAGA_VIEW_DETAILS = 'Toggle saga details'
 const TIP_REPLAY_ACTION = 'Repeat this action.'
 const TIP_CUSTOMIZE_REPLAY_ACTION = 'Edit and dispatch this action.'
 
-const ToggleSagaViewDetailButton = props =>
+const ToggleSagaViewDetailButton = props => (
   <Button icon='list' onClick={props.onClick} tip={TIP_SAGA_VIEW_DETAILS} />
+)
 
-const ReplayButton = props =>
+const ReplayButton = props => (
   <Button icon='repeat' onClick={props.onClick} tip={TIP_REPLAY_ACTION} />
+)
 
-const CustomizeReplayButton = props =>
+const CustomizeReplayButton = props => (
   <Button icon='code' onClick={props.onClick} tip={TIP_CUSTOMIZE_REPLAY_ACTION} />
+)
 
-const CopyApiResponseButton = props =>
+const CopyApiResponseButton = props => (
   <Button icon='call-received' onClick={props.onClick} tip='Copy JSON response to clipboard' />
+)
 
-const CopyApiRequestButton = props =>
+const CopyApiRequestButton = props => (
   <Button icon='call-made' onClick={props.onClick} tip='Copy JSON request to clipboard' />
+)
 
-const CopyLogButton = props =>
+const CopyLogButton = props => (
   <Button icon='content-copy' onClick={props.onClick} tip='Copy text to clipboard' />
+)
 
-const CopyDisplayButton = props =>
+const CopyDisplayButton = props => (
   <Button icon='content-copy' onClick={props.onClick} tip='Copy text to clipboard' />
+)
 
 @inject('session')
 @observer
@@ -87,8 +94,7 @@ class CommandToolbar extends Component {
         const text = JSON.stringify(message, 2, 2)
         clipboard.writeText(text)
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   // copy the display to the clipboard
@@ -103,8 +109,7 @@ class CommandToolbar extends Component {
         const text = JSON.stringify(message, 2, 2)
         clipboard.writeText(text)
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   // copy api response to clipboard
@@ -118,8 +123,7 @@ class CommandToolbar extends Component {
       const text = JSON.stringify(body, 2, 2)
 
       clipboard.writeText(text)
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   // copy api request to clipboard
@@ -163,27 +167,21 @@ class CommandToolbar extends Component {
 
     return (
       <div style={Styles.container}>
-        {showReplayAction &&
-          <ReplayButton onClick={this.handleReplayAction} />
-        }
-        {showCustomizeReplayAction &&
+        {showReplayAction && <ReplayButton onClick={this.handleReplayAction} />}
+        {showCustomizeReplayAction && (
           <CustomizeReplayButton onClick={this.handleCustomizeReplayAction} />
-        }
-        {showCopyApiResponse &&
+        )}
+        {showCopyApiResponse && (
           <CopyApiResponseButton onClick={this.handleCopyApiResponseToClipboard} />
-        }
-        {showCopyApiRequest &&
+        )}
+        {showCopyApiRequest && (
           <CopyApiRequestButton onClick={this.handleCopyApiRequestToClipboard} />
-        }
-        {showToggleViewSagaDetails &&
+        )}
+        {showToggleViewSagaDetails && (
           <ToggleSagaViewDetailButton onClick={this.handleToggleViewSagaDetails} />
-        }
-        {showCopyLog &&
-          <CopyLogButton onClick={this.handleCopyLogToClipboard} />
-        }
-        {showCopyDisplay &&
-          <CopyDisplayButton onClick={this.handleCopyDisplayToClipboard} />
-        }
+        )}
+        {showCopyLog && <CopyLogButton onClick={this.handleCopyLogToClipboard} />}
+        {showCopyDisplay && <CopyDisplayButton onClick={this.handleCopyDisplayToClipboard} />}
       </div>
     )
   }

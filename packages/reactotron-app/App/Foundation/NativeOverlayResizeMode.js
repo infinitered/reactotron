@@ -33,26 +33,18 @@ const NativeOverlayResize = props => {
     return false
   }
   const makeButtonStyle = value =>
-    resizeMode === value
-      ? { ...Styles.button, ...Styles.buttonActive }
-      : Styles.button
+    resizeMode === value ? { ...Styles.button, ...Styles.buttonActive } : Styles.button
 
   return (
     <div style={Styles.container}>
       <div style={Styles.row}>
-        <button
-          style={makeButtonStyle('stretch')}
-          onClick={makeHandler('stretch')}
-        >
+        <button style={makeButtonStyle('stretch')} onClick={makeHandler('stretch')}>
           Stretch
         </button>
         <button style={makeButtonStyle('cover')} onClick={makeHandler('cover')}>
           Cover
         </button>
-        <button
-          style={makeButtonStyle('contain')}
-          onClick={makeHandler('contain')}
-        >
+        <button style={makeButtonStyle('contain')} onClick={makeHandler('contain')}>
           Contain
         </button>
       </div>

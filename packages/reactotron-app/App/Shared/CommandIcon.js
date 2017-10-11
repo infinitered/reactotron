@@ -14,9 +14,7 @@ const Styles = {
   iconSize: 40
 }
 
-const benchmark = (
-  <BenchmarkIcon size={Styles.iconSize} color={Styles.iconColor} />
-)
+const benchmark = <BenchmarkIcon size={Styles.iconSize} color={Styles.iconColor} />
 const debug = <DebugIcon size={Styles.iconSize} color={Styles.iconColor} />
 const warning = <WarningIcon size={Styles.iconSize} color={Styles.iconColor} />
 const error = <ErrorIcon size={Styles.iconSize} color={Styles.iconColor} />

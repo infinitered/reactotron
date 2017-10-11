@@ -9,14 +9,11 @@ export default (subscriptions, state) => {
   return R.pipe(
     R.map(R.when(R.isNil, R.always(''))),
     R.filter(RS.endsWith('.*')),
-    R.map((key) => {
+    R.map(key => {
       const keyMinusWildcard = R.slice(0, -2, key)
       const value = RS.dotPath(keyMinusWildcard, cleanedState)
       if (R.is(Object, value) && !RS.isNilOrEmpty(value)) {
-        return R.pipe(
-          R.keys,
-          R.map((key) => `${keyMinusWildcard}.${key}`)
-        )(value)
+        return R.pipe(R.keys, R.map(key => `${keyMinusWildcard}.${key}`))(value)
       }
       return []
     }),

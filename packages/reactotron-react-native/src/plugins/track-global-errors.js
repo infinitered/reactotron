@@ -31,12 +31,15 @@ export default options => reactotron => {
     // then convert & transport it
     try {
       // rewrite the stack frames to be in the format we're expecting
-      let stack = map(frame => ({
-        functionName: frame.methodName === '<unknown>' ? null : frame.methodName,
-        lineNumber: frame.lineNumber,
-        columnNumber: frame.column,
-        fileName: frame.file
-      }), prettyStack)
+      let stack = map(
+        frame => ({
+          functionName: frame.methodName === '<unknown>' ? null : frame.methodName,
+          lineNumber: frame.lineNumber,
+          columnNumber: frame.column,
+          fileName: frame.file
+        }),
+        prettyStack
+      )
 
       // does the dev want us to keep each frame?
       if (config.veto) {
@@ -73,8 +76,11 @@ export default options => reactotron => {
   // manually fire an error
   function reportError (error) {
     try {
-      parseErrorStack = parseErrorStack || require('react-native/Libraries/Core/Devtools/parseErrorStack')
-      symbolicateStackTrace = symbolicateStackTrace || require('react-native/Libraries/Core/Devtools/symbolicateStackTrace')
+      parseErrorStack =
+        parseErrorStack || require('react-native/Libraries/Core/Devtools/parseErrorStack')
+      symbolicateStackTrace =
+        symbolicateStackTrace ||
+        require('react-native/Libraries/Core/Devtools/symbolicateStackTrace')
       if (parseErrorStack && symbolicateStackTrace) {
         const parsedStacktrace = parseErrorStack(error)
 

@@ -21,10 +21,9 @@ test.cb('plugins support command', t => {
 
   getFreePort(port => {
     // the server waits for the command
-    socketServer(port)
-      .on('connection', socket => {
-        socket.emit('command', {type: mockType, payload: mockPayload})
-      })
+    socketServer(port).on('connection', socket => {
+      socket.emit('command', { type: mockType, payload: mockPayload })
+    })
 
     // create the client, add the plugin, and connect
     const client = createClient({ io: socketClient, port: port })

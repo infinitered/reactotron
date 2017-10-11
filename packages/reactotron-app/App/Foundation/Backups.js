@@ -83,16 +83,8 @@ class Backups extends Component {
     return (
       <div style={Styles.row} key={key} onClick={restore}>
         <div style={Styles.name}>{name}</div>
-        <IconRename
-          size={Styles.iconSize}
-          style={Styles.button}
-          onClick={renameState}
-        />
-        <IconDelete
-          size={Styles.iconSize}
-          style={Styles.button}
-          onClick={deleteState}
-        />
+        <IconRename size={Styles.iconSize} style={Styles.button} onClick={renameState} />
+        <IconDelete size={Styles.iconSize} style={Styles.button} onClick={deleteState} />
       </div>
     )
   }
@@ -103,11 +95,11 @@ class Backups extends Component {
     return (
       <div style={Styles.container}>
         <BackupsHeader />
-        {isEmpty
-          ? this.renderEmpty()
-          : <div style={Styles.backups}>
-            {backups.map(this.renderBackup)}
-          </div>}
+        {isEmpty ? (
+          this.renderEmpty()
+        ) : (
+          <div style={Styles.backups}>{backups.map(this.renderBackup)}</div>
+        )}
       </div>
     )
   }

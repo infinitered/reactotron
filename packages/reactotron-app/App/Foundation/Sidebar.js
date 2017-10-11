@@ -31,12 +31,24 @@ const Styles = {
 class Sidebar extends Component {
   constructor (props) {
     super(props)
-    this.handleClickTimeline = () => { this.props.session.ui.switchTab('timeline') }
-    this.handleClickSubscriptions = () => { this.props.session.ui.switchTab('subscriptions') }
-    this.handleClickHelp = () => { this.props.session.ui.switchTab('help') }
-    this.handleClickSettings = () => { this.props.session.ui.switchTab('settings') }
-    this.handleClickBackups = () => { this.props.session.ui.switchTab('backups') }
-    this.handleClickNative = () => { this.props.session.ui.switchTab('native') }
+    this.handleClickTimeline = () => {
+      this.props.session.ui.switchTab('timeline')
+    }
+    this.handleClickSubscriptions = () => {
+      this.props.session.ui.switchTab('subscriptions')
+    }
+    this.handleClickHelp = () => {
+      this.props.session.ui.switchTab('help')
+    }
+    this.handleClickSettings = () => {
+      this.props.session.ui.switchTab('settings')
+    }
+    this.handleClickBackups = () => {
+      this.props.session.ui.switchTab('backups')
+    }
+    this.handleClickNative = () => {
+      this.props.session.ui.switchTab('native')
+    }
   }
 
   render () {
@@ -47,14 +59,41 @@ class Sidebar extends Component {
       <div style={Styles.container}>
         <div style={Styles.content}>
           <div style={Styles.tabs}>
-            <SidebarButton text='Timeline' icon='reorder' hideTopBorder isActive={ui.tab === 'timeline'} onClick={this.handleClickTimeline} />
-            <SidebarButton text='Redux Subscriptions' icon='notifications-none' isActive={ui.tab === 'subscriptions'} onClick={this.handleClickSubscriptions} />
-            <SidebarButton text='Redux Snapshots' icon='import-export' isActive={ui.tab === 'backups'} onClick={this.handleClickBackups} />
-            <SidebarButton text='React Native' icon='phone-iphone' isActive={ui.tab === 'native'} onClick={this.handleClickNative} />
+            <SidebarButton
+              text='Timeline'
+              icon='reorder'
+              hideTopBorder
+              isActive={ui.tab === 'timeline'}
+              onClick={this.handleClickTimeline}
+            />
+            <SidebarButton
+              text='Redux Subscriptions'
+              icon='notifications-none'
+              isActive={ui.tab === 'subscriptions'}
+              onClick={this.handleClickSubscriptions}
+            />
+            <SidebarButton
+              text='Redux Snapshots'
+              icon='import-export'
+              isActive={ui.tab === 'backups'}
+              onClick={this.handleClickBackups}
+            />
+            <SidebarButton
+              text='React Native'
+              icon='phone-iphone'
+              isActive={ui.tab === 'native'}
+              onClick={this.handleClickNative}
+            />
           </div>
           <div style={Styles.spacer} />
           <div>
-            <SidebarButton text='Help' icon='live-help' hideTopBorder isActive={ui.tab === 'help'} onClick={this.handleClickHelp} />
+            <SidebarButton
+              text='Help'
+              icon='live-help'
+              hideTopBorder
+              isActive={ui.tab === 'help'}
+              onClick={this.handleClickHelp}
+            />
           </div>
         </div>
       </div>

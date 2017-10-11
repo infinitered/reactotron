@@ -3,7 +3,7 @@ import { createClient } from '../src'
 import io from './_fake-io'
 
 test('has defaults', t => {
-  const client = createClient({io})
+  const client = createClient({ io })
   t.is(client.options.host, 'localhost')
   t.is(client.options.port, 9090)
   t.is(client.options.name, 'reactotron-core-client')

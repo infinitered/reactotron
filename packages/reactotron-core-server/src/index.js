@@ -36,7 +36,8 @@ class Server {
   /**
    * How many people are connected?
    */
-  @computed get connectionCount () {
+  @computed
+  get connectionCount () {
     return length(this.connections)
   }
 
@@ -258,7 +259,7 @@ class Server {
 export default Server
 
 // convenience factory function
-export const createServer = (options) => {
+export const createServer = options => {
   const server = new Server()
   server.configure(options)
   return server
