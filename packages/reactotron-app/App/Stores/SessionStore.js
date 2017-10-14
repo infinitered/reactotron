@@ -4,7 +4,7 @@ import { action, observable, computed, reaction, observe } from 'mobx'
 import { contains, last, isNil, reject, equals, reverse, pipe, propEq, map, fromPairs } from 'ramda'
 import { dotPath } from 'ramdasauce'
 import shallowDiff from '../Lib/ShallowDiff'
-import Commands from '../Lib/commands';
+import Commands from '../Lib/commands'
 
 const isSubscription = propEq('type', 'state.values.change')
 const isSubscriptionCommandWithEmptyChanges = command =>
