@@ -82,7 +82,7 @@ class Session {
   }
 
   handleCommand = command => {
-    if (command.type === '') {
+    if (command.type === 'clear') {
       this.commandsManager.all.clear()
     } else {
       this.commandsManager.addCommand(command)
