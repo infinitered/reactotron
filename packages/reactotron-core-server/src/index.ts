@@ -1,7 +1,5 @@
 import { merge, length, find, propEq, without, contains, forEach, pluck, reject } from 'ramda'
-import Commands from './commands'
 import validate from './validation'
-import { observable, computed, asFlat } from 'mobx'
 import { repair } from './repairSerialization'
 import WebSocket from 'ws'
 
@@ -16,7 +14,7 @@ const DEFAULTS = {
 
 class Server {
   // the configuration options
-  @observable options = merge({}, DEFAULTS)
+  options = merge({}, DEFAULTS)
   started = false
   messageId = 0
   subscriptions = []
@@ -24,22 +22,9 @@ class Server {
   wss
 
   /**
-   * Holds the commands the client has sent.
-   */
-  commands = new Commands()
-
-  /**
    * Holds the currently connected clients.
    */
-  @observable connections = asFlat([])
-
-  /**
-   * How many people are connected?
-   */
-  @computed
-  get connectionCount() {
-    return length(this.connections)
-  }
+  connections = []
 
   constructor(createTransport) {
     this.send = this.send.bind(this)
@@ -146,13 +131,7 @@ class Server {
           fullCommand.payload.name = null
         }
 
-        // clear
-        if (type === 'clear') {
-          ;(this.commands as any).all.clear()
-        } else {
-          this.commands.addCommand(fullCommand)
-          onCommand(fullCommand)
-        }
+        onCommand(fullCommand)
       })
 
       // resend the subscriptions to the client upon connecting
@@ -171,9 +150,9 @@ class Server {
   stop() {
     const { onStop } = this.options
     this.started = false
-    forEach(s => s && s.connected && s.disconnect(), pluck('socket', this.connections))
+    forEach(s => s && (s as any).connected && (s as any).disconnect(), pluck('socket', this.connections))
     this.wss.close()
-
+,
     // trigger the stop message
     onStop && onStop()
 

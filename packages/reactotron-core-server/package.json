@@ -56,7 +56,6 @@
     "parser": "babel-eslint"
   },
   "dependencies": {
-    "mobx": "^2.5.1",
     "ramda": "^0.24.1",
     "ramdasauce": "^2.0.0",
     "ws": "^2.2.0"

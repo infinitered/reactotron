@@ -51,8 +51,9 @@ class UI {
   // from the command toolbar to the command
   commandProperties = {}
 
-  constructor (server) {
+  constructor (server, commandsManager) {
     this.server = server
+    this.commandsManager = commandsManager
 
     Mousetrap.prototype.stopCallback = () => false
 
@@ -221,7 +222,7 @@ class UI {
 
   @action
   reset = () => {
-    this.server.commands.all.clear()
+    this.commandsManager.all.clear()
   }
 
   @action
@@ -271,7 +272,7 @@ class UI {
   // removes an existing state object
   @action
   deleteState = state => {
-    this.server.commands['state.backup.response'].remove(state)
+    this.commandsManager['state.backup.response'].remove(state)
   }
 
   getCommandProperty = (messageId, key) => {

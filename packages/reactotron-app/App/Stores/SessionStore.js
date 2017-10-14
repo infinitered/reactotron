@@ -4,6 +4,7 @@ import { action, observable, computed, reaction, observe } from 'mobx'
 import { contains, last, isNil, reject, equals, reverse, pipe, propEq, map, fromPairs } from 'ramda'
 import { dotPath } from 'ramdasauce'
 import shallowDiff from '../Lib/ShallowDiff'
+import Commands from '../Lib/commands';
 
 const isSubscription = propEq('type', 'state.values.change')
 const isSubscriptionCommandWithEmptyChanges = command =>
@@ -12,6 +13,8 @@ const isSubscriptionCommandWithEmptyChanges = command =>
 class Session {
   // commands to exlude in the timeline
   @observable commandsHiddenInTimeline = []
+
+  commandsManager = new Commands()
 
   // holds the last known state of the subscription values
   subscriptions = {}
@@ -39,7 +42,7 @@ class Session {
   @computed
   get commands () {
     return pipe(
-      dotPath('server.commands.all'),
+      dotPath('commandsManager.all'),
       reject(isSubscriptionCommandWithEmptyChanges),
       reject(this.isSubscriptionValuesSameAsLastTime),
       reject(command => contains(command.type, this.commandsHiddenInTimeline)),
@@ -49,7 +52,7 @@ class Session {
 
   @computed
   get watches () {
-    const changeCommands = this.server.commands['state.values.change']
+    const changeCommands = this.commandsManager['state.values.change']
     if (isNil(changeCommands)) return []
     if (changeCommands.length === 0) return []
     const recentCommand = last(changeCommands)
@@ -58,7 +61,7 @@ class Session {
 
   @computed
   get backups () {
-    return this.server.commands['state.backup.response']
+    return this.commandsManager['state.backup.response']
   }
 
   // are commands of this type hidden?
@@ -78,13 +81,21 @@ class Session {
     return !hidden
   }
 
+  handleCommand = command => {
+    if (command.type === '') {
+      this.commandsManager.all.clear()
+    } else {
+      this.commandsManager.addCommand(command)
+    }
+  }
+
   constructor (port = 9090) {
-    this.server = createServer({ port })
+    this.server = createServer({ port, onCommand: this.handleCommand })
     this.server.start()
     this.isSubscriptionValuesSameAsLastTime = this.isSubscriptionValuesSameAsLastTime.bind(this)
 
     // create the ui store
-    this.ui = new UiStore(this.server)
+    this.ui = new UiStore(this.server, this.commandsManager)
 
     // hide or show the watch panel depending if we have watches
     reaction(
