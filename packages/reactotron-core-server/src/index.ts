@@ -152,7 +152,7 @@ class Server {
     this.started = false
     forEach(s => s && (s as any).connected && (s as any).disconnect(), pluck('socket', this.connections))
     this.wss.close()
-,
+
     // trigger the stop message
     onStop && onStop()
 
