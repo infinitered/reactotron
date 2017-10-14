@@ -68,6 +68,8 @@
     "standard": "^10.0.3",
     "style-loader": "^0.19.0",
     "sumchecker": "^2.0.2",
+    "ts-loader": "^2.3.7",
+    "typescript": "^2.5.3",
     "url-loader": "^0.6.2",
     "webpack": "^3.7.1",
     "webpack-dev-middleware": "^1.12.0",
