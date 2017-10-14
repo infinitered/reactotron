@@ -5,7 +5,7 @@ export default {
     loaders: [
       {
         test: /\.jsx?$/,
-        loaders: ['babel-loader'],
+        loader: 'babel-loader',
         exclude: /node_modules/
       },
       {
@@ -14,7 +14,7 @@ export default {
       },
       {
         test: /\.png$/,
-        loader: 'url'
+        loader: 'url-loader'
       }
     ]
   },
@@ -24,8 +24,8 @@ export default {
     libraryTarget: 'commonjs2'
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
-    packageMains: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main']
+    extensions: ['.js', '.jsx'],
+    mainFields: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main']
   },
   plugins: [],
   externals: [
