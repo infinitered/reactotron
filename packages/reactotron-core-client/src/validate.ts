@@ -15,10 +15,21 @@ const onCommandValid = (fn: (cmd: string) => any) => typeof fn === 'function'
 const validate = (options: Options) => {
   const { createSocket, host, port, onCommand } = options
 
-  if (!isCreateSocketValid(createSocket)) throw new Error('invalid createSocket function')
-  if (!isHostValid(host)) throw new Error('invalid host')
-  if (!isPortValid(port)) throw new Error('invalid port')
-  if (!onCommandValid(onCommand)) throw new Error('invalid onCommand handler')
+  if (!isCreateSocketValid(createSocket)) {
+    throw new Error('invalid createSocket function')
+  }
+
+  if (!isHostValid(host)) {
+    throw new Error('invalid host')
+  }
+
+  if (!isPortValid(port)) {
+    throw new Error('invalid port')
+  }
+
+  if (!onCommandValid(onCommand)) {
+    throw new Error('invalid onCommand handler')
+  }
 }
 
 export default validate

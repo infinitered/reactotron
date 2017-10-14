@@ -25,7 +25,7 @@
   ],
   "devDependencies": {
     "@types/node": "^7.0.31",
-    "@types/ramda": "github:types/npm-ramda",
+    "@types/ramda": "^0.24.17",
     "ava": "^0.20.0",
     "execa": "^0.6.3",
     "node-watch": "^0.5.4",

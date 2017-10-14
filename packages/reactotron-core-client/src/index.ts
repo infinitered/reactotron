@@ -1,5 +1,3 @@
-/// <reference path="../types/reactotron.d.ts" />
-
 import R from 'ramda'
 import WebSocket from 'ws'
 import validate from './validate'
@@ -52,7 +50,7 @@ const DEFAULTS: Options = {
 
 // these are not for you.
 // TODO: Better Type?
-const isReservedFeature = <any>R.contains(R.__, [
+const isReservedFeature = R.contains(R.__, [
   'options',
   'connected',
   'socket',
@@ -62,7 +60,7 @@ const isReservedFeature = <any>R.contains(R.__, [
   'send',
   'use',
   'startTimer',
-])
+]) as any
 
 export class Client {
   // the configuration options
@@ -180,11 +178,13 @@ export class Client {
    */
   send(type, payload = {}, important = false) {
     // jet if we don't have a socket
-    if (!this.socket) return
+    if (!this.socket) {
+      return
+    }
 
     const fullMessage = {
       type,
-      payload: payload,
+      payload,
       important: !!important,
     }
 
@@ -203,12 +203,12 @@ export class Client {
    * Sends a custom command to the server to displays nicely.
    */
   display(config: any = {}) {
-    const { name, value, preview, image, important = false } = config
+    const { name, value, preview, image: img, important = false } = config
     const payload = {
       name,
       value: value || null,
       preview: preview || null,
-      image: image || null,
+      image: img || null,
     }
     this.send('display', payload, important)
   }
@@ -217,7 +217,7 @@ export class Client {
    * Client libraries can hijack this to report errors.
    */
   reportError(error) {
-    ;(<any>this).error(error)
+    (this as any).error(error)
   }
 
   /**
@@ -225,18 +225,24 @@ export class Client {
    */
   use(pluginCreator: (client: Client) => any): Client {
     // we're supposed to be given a function
-    if (typeof pluginCreator !== 'function') throw new Error('plugins must be a function')
+    if (typeof pluginCreator !== 'function') {
+      throw new Error('plugins must be a function')
+    }
 
     // execute it immediately passing the send function
     const plugin = pluginCreator.bind(this)(this)
 
     // ensure we get an Object-like creature back
-    if (!R.is(Object, plugin)) throw new Error('plugins must return an object')
+    if (!R.is(Object, plugin)) {
+      throw new Error('plugins must return an object')
+    }
 
     // do we have features to mixin?
     if (plugin.features) {
       // validate
-      if (!R.is(Object, plugin.features)) throw new Error('features must be an object')
+      if (!R.is(Object, plugin.features)) {
+        throw new Error('features must be an object')
+      }
 
       // here's how we're going to inject these in
       const inject = (key: string) => {
@@ -249,7 +255,9 @@ export class Client {
         }
 
         // ditch reserved names
-        if (isReservedFeature(key)) throw new Error(`feature ${key} is a reserved name`)
+        if (isReservedFeature(key)) {
+          throw new Error(`feature ${key} is a reserved name`)
+        }
 
         // ok, let's glue it up... and lose all respect from elite JS champions.
         this[key] = featureFunction
