@@ -1,17 +1,42 @@
-import typescript from 'rollup-plugin-typescript2'
 import commonjs from 'rollup-plugin-commonjs'
+import filesize from 'rollup-plugin-filesize'
+import uglify from 'rollup-plugin-uglify'
+import sourcemaps from 'rollup-plugin-sourcemaps'
+import ramda from 'rollup-plugin-ramda'
 
 export default {
-  entry: 'src/index.ts',
-  format: 'cjs',
+  input: 'compiled/reactotron-core-server.js',
+  sourcemap: true,
   plugins: [
-    typescript(),
     commonjs({
       include: 'node_modules/**',
-      ignoreGlobals: false
-    })
+      ignoreGlobals: false,
+    }),
+    ramda(),
+    sourcemaps(),
+    uglify(),
+    filesize(),
   ],
-  dest: 'dist/index.js',
-  exports: 'named',
-  external: ['ramda', 'mitt', 'ramdasauce', 'ws']
+  output: {
+    file: 'dist/reactotron-core-server.js',
+    format: 'cjs',
+    exports: 'named',
+  },
+  external: [
+    'ramda/src/merge',
+    'ramda/src/find',
+    'ramda/src/propEq',
+    'ramda/src/without',
+    'ramda/src/contains',
+    'ramda/src/forEach',
+    'ramda/src/pluck',
+    'ramda/src/reject',
+    'ramda/src/allPass',
+    'ramda/src/complement',
+    'ramda/src/isNil',
+    'ramda/src/is',
+    'mitt',
+    'ramdasauce',
+    'ws',
+  ],
 }
