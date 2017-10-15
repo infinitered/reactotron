@@ -50,7 +50,7 @@ const DEFAULTS: Options = {
 
 // these are not for you.
 // TODO: Better Type?
-const isReservedFeature = R.contains(R.__, [
+const isReservedFeature = R.contains((R as any).__, [
   'options',
   'connected',
   'socket',

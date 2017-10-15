@@ -1,36 +1,71 @@
-import { merge, length, find, propEq, without, contains, forEach, pluck, reject } from 'ramda'
-import WebSocket from 'ws'
+import { merge, find, propEq, without, contains, forEach, pluck, reject } from 'ramda'
+import { Server as WebSocketServer, OPEN } from 'ws'
 import * as mitt from 'mitt'
 import validate from './validation'
-import { repair } from './repairSerialization'
+import { repair } from './repair-serialization'
+import {
+  ServerOptions,
+  PartialConnection,
+  ServerEvent,
+  CommandEvent,
+  WebSocketEvent,
+} from './types'
 
-const DEFAULTS = {
-  port: 9090, // the port to live (required)
+/**
+ * The default server options.
+ */
+const DEFAULTS: ServerOptions = {
+  port: 9090,
 }
 
-class Server {
-  emitter: mitt.Emitter = new mitt()
+/**
+ * The Reactotron server.
+ */
+export default class Server {
+  /**
+   * An event emitter which fires events from connected clients.
+   */
+  emitter = new mitt()
 
-  // the configuration options
-  options = merge({}, DEFAULTS)
+  /**
+   * Additional server configuration.
+   */
+  options: ServerOptions = merge({}, DEFAULTS)
+
+  /**
+   * A unique id which is assigned to each inbound message.
+   */
   messageId = 0
-  subscriptions = []
-  partialConnections = []
-  wss
+
+  /**
+   * Which redux state locations we are subscribing to.
+   */
+  subscriptions: string[] = []
+
+  /**
+   * Clients who are in the process of connecting but haven't yet handshaked.
+   */
+  partialConnections: PartialConnection[] = []
+
+  /**
+   * The web socket.
+   */
+  wss: WebSocketServer
 
   /**
    * Holds the currently connected clients.
    */
   connections = []
 
-  constructor(createTransport) {
-    this.send = this.send.bind(this)
-  }
+  /**
+   * Have we started the server?
+   */
+  started: boolean = false
 
   /**
    * Set the configuration options.
    */
-  configure(options = {}) {
+  configure(options: ServerOptions = DEFAULTS) {
     // options get merged & validated before getting set
     const newOptions = merge(this.options, options)
     validate(newOptions)
@@ -39,34 +74,34 @@ class Server {
   }
 
   /**
-   * Turns on an event listener
+   * Listens to an event.
    */
-  on(type: string, handler: () => null) {
-    this.emitter.on(type, handler)
+  on(event: ServerEvent, handler: CommandEvent | WebSocketEvent) {
+    this.emitter.on(event, handler)
   }
 
   /**
    * Turns off an event listener
    */
-  off(type: string, handler: () => null) {
+  off(type: ServerEvent, handler: (any) => any) {
     this.emitter.off(type, handler)
   }
 
   /**
    * Starts the server
    */
-  start() {
+  start = () => {
     const { port } = this.options
 
     // start listening
-    this.wss = new WebSocket.Server({ port })
+    this.wss = new WebSocketServer({ port })
 
     // register events
-    this.wss.on('connection', socket => {
+    this.wss.on('connection', (socket, request) => {
       // a wild client appears
       const partialConnection = {
-        id: socket.id,
-        address: 'dunno', // socket.request.connection.remoteAddress,
+        id: (socket as any).id, // issue
+        address: request.socket.remoteAddress,
         socket,
       }
 
@@ -79,10 +114,13 @@ class Server {
       // when this client disconnects
       socket.on('disconnect', () => {
         // remove them from the list partial list
-        this.partialConnections = reject(propEq('id', socket.id), this.partialConnections) as any
+        this.partialConnections = reject(
+          propEq('id', (socket as any).id),
+          this.partialConnections,
+        ) as any
 
         // remove them from the main connections list
-        const severingConnection = find(propEq('id', socket.id), this.connections)
+        const severingConnection = find(propEq('id', (socket as any).id), this.connections)
         if (severingConnection) {
           (this.connections as any).remove(severingConnection)
           this.emitter.emit('disconnect', severingConnection)
@@ -91,7 +129,7 @@ class Server {
 
       // when we receive a command from the client
       socket.on('message', incoming => {
-        const message = JSON.parse(incoming)
+        const message = JSON.parse(incoming as string)
         repair(message)
         const { type, important, payload } = message
         this.messageId++
@@ -107,17 +145,20 @@ class Server {
         // for client intros
         if (type === 'client.intro') {
           // find them in the partial connection list
-          const partConn = find(propEq('id', socket.id), this.partialConnections) as any
+          const partConn = find(propEq('id', (socket as any).id), this.partialConnections) as any
 
           // add their address in
           fullCommand.payload.address = partConn.address
 
           // remove them from the partial connections list
-          this.partialConnections = reject(propEq('id', socket.id), this.partialConnections) as any
+          this.partialConnections = reject(
+            propEq('id', (socket as any).id),
+            this.partialConnections,
+          ) as any
 
           // bestow the payload onto the connection
           const connection = merge(payload, {
-            id: socket.id,
+            id: (socket as any).id,
             address: partConn.address,
           })
 
@@ -146,6 +187,8 @@ class Server {
     // trigger the start message
     this.emitter.emit('start')
 
+    this.started = true
+
     return this
   }
 
@@ -153,11 +196,15 @@ class Server {
    * Stops the server
    */
   stop() {
-    forEach(s => s && (s as any).connected && (s as any).disconnect(), pluck('socket', this.connections))
+    forEach(
+      s => s && (s as any).connected && (s as any).disconnect(),
+      pluck('socket', this.connections),
+    )
     this.wss.close()
 
     // trigger the stop message
     this.emitter.emit('stop')
+    this.started = false
 
     return this
   }
@@ -165,9 +212,9 @@ class Server {
   /**
    * Sends a command to the client
    */
-  send(type, payload) {
+  send = (type, payload) => {
     this.wss.clients.forEach(client => {
-      if (client.readyState === WebSocket.OPEN) {
+      if (client.readyState === OPEN) {
         client.send(JSON.stringify({ type, payload }))
       }
     })
@@ -216,11 +263,9 @@ class Server {
   }
 }
 
-export default Server
-
 // convenience factory function
-export const createServer = options => {
-  const server = new Server(null)
+export const createServer = (options?: ServerOptions) => {
+  const server = new Server()
   server.configure(options)
   return server
 }

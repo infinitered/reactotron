@@ -2,63 +2,58 @@
   "name": "reactotron-core-server",
   "version": "1.12.0",
   "description": "Grants Reactotron servers the ability to talk to a Reactotron client.",
-  "main": "dist/index.js",
+  "main": "dist/reactotron-core-server.js",
   "scripts": {
-    "test": "ava",
-    "watch": "ava --watch",
-    "coverage": "nyc ava",
-    "build": "rollup -c",
-    "lint": "tslint -c tslint.json src/**/*.ts",
+    "compile": "tsc",
+    "test": "jest",
+    "build": "npm-run-all clean compile rollup",
+    "rollup": "rollup -c",
+    "clean": "trash dist compiled",
+    "lint": "tslint -c ../../tslint.json -p tsconfig.json",
     "build:watch": "node watch.js"
   },
-  "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-core-server",
+  "repository": "infinitered/reactotron",
   "author": "Steve Kellock",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/reactotron/reactotron/issues"
+    "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/reactotron/reactotron",
-  "files": [
-    "dist",
-    "LICENSE",
-    "README.md"
-  ],
+  "homepage": "https://github.com/infinitered/reactotron",
+  "files": ["dist", "LICENSE", "README.md"],
+  "typings": "dist/types/reactotron-core-server.d.ts",
   "devDependencies": {
-    "@types/node": "^7.0.31",
+    "@types/jest": "^21.1.2",
+    "@types/node": "^8.0.34",
     "@types/ramda": "^0.24.17",
-    "ava": "^0.20.0",
-    "execa": "^0.6.3",
+    "@types/ws": "^3.2.0",
+    "execa": "^0.8.0",
+    "get-port": "^3.2.0",
+    "jest": "^21.2.1",
     "node-watch": "^0.5.4",
-    "nyc": "^11.0.3",
-    "rollup": "^0.43.0",
-    "rollup-plugin-commonjs": "^8.0.2",
-    "rollup-plugin-typescript2": "^0.4.3",
-    "tslib": "^1.7.1",
-    "tslint": "^5.5.0",
-    "tslint-eslint-rules": "^4.1.1",
-    "tslint-react": "^3.1.0",
-    "tslint-react-recommended": "^1.0.9",
-    "typescript": "^2.4.0"
-  },
-  "ava": {
-    "require": [
-      "babel-core/register"
-    ],
-    "babel": {
-      "babelrc": false,
-      "presets": [
-        "es2015",
-        "stage-1"
-      ]
-    }
-  },
-  "standard": {
-    "parser": "babel-eslint"
+    "npm-run-all": "^4.1.1",
+    "prettier": "^1.7.4",
+    "rollup": "^0.50.0",
+    "rollup-plugin-commonjs": "^8.2.1",
+    "rollup-plugin-filesize": "^1.4.2",
+    "rollup-plugin-ramda": "^1.0.5",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-uglify": "^2.0.1",
+    "trash-cli": "^1.4.0",
+    "ts-jest": "^21.1.2",
+    "tslib": "^1.8.0",
+    "tslint": "^5.7.0",
+    "typescript": "^2.5.3"
   },
   "dependencies": {
     "mitt": "^1.1.2",
     "ramda": "^0.25.0",
-    "ramdasauce": "^2.1.0",
     "ws": "^3.2.0"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "./node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": ["ts", "tsx", "js"]
   }
 }

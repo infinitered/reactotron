@@ -2,8 +2,10 @@
 .happypack
 .idea
 .nyc_output
+.rpt2_cache
 .vscode
 build
+compiled
 coverage
 dist
 haul-debug.log*
