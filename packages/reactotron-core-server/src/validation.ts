@@ -7,22 +7,13 @@ import RS from 'ramdasauce'
 const isPortValid = R.allPass([R.complement(R.isNil), R.is(Number), RS.isWithin(1, 65535)])
 
 /**
- * Is this a valid command?
- */
-const isOnCommandValid = R.allPass([R.complement(R.isNil)])
-
-/**
  * Ensures the options are sane to run this baby.  Throw if not.  These
  * are basically sanity checks.
  */
-export default (options: { port: number, onCommand: (command: any) => any }) => {
-  const { port, onCommand } = options
+export default (options: { port: number }) => {
+  const { port } = options
 
   if (!isPortValid(port)) {
     throw new Error('invalid port')
-  }
-
-  if (!isOnCommandValid(onCommand)) {
-    throw new Error('onCommand is required')
   }
 }

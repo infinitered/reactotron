@@ -90,7 +90,10 @@ class Session {
   }
 
   constructor (port = 9090) {
-    this.server = createServer({ port, onCommand: this.handleCommand })
+    this.server = createServer({ port })
+
+    this.server.on('command', this.handleCommand)
+
     this.server.start()
     this.isSubscriptionValuesSameAsLastTime = this.isSubscriptionValuesSameAsLastTime.bind(this)
 

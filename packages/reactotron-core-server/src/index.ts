@@ -1,21 +1,18 @@
 import { merge, length, find, propEq, without, contains, forEach, pluck, reject } from 'ramda'
+import WebSocket from 'ws'
+import * as mitt from 'mitt'
 import validate from './validation'
 import { repair } from './repairSerialization'
-import WebSocket from 'ws'
 
 const DEFAULTS = {
   port: 9090, // the port to live (required)
-  onCommand: command => null, // handles inbound commands
-  onStart: () => null, // handles inbound commands
-  onStop: () => null, // handles inbound commands
-  onConnect: connection => null, // notify connections
-  onDisconnect: connection => null, // notify disconnections
 }
 
 class Server {
+  emitter: mitt.Emitter = new mitt()
+
   // the configuration options
   options = merge({}, DEFAULTS)
-  started = false
   messageId = 0
   subscriptions = []
   partialConnections = []
@@ -30,9 +27,6 @@ class Server {
     this.send = this.send.bind(this)
   }
 
-  findConnectionById = id => find(propEq('id', id), this.connections)
-  findPartialConnectionById = id => find(propEq('id', id), this.partialConnections)
-
   /**
    * Set the configuration options.
    */
@@ -45,12 +39,24 @@ class Server {
   }
 
   /**
+   * Turns on an event listener
+   */
+  on(type: string, handler: () => null) {
+    this.emitter.on(type, handler)
+  }
+
+  /**
+   * Turns off an event listener
+   */
+  off(type: string, handler: () => null) {
+    this.emitter.off(type, handler)
+  }
+
+  /**
    * Starts the server
    */
   start() {
-    this.started = true
-    const { port, onStart } = this.options
-    const { onCommand, onConnect, onDisconnect } = this.options
+    const { port } = this.options
 
     // start listening
     this.wss = new WebSocket.Server({ port })
@@ -68,19 +74,18 @@ class Server {
       this.partialConnections.push(partialConnection)
 
       // trigger onConnect
-      onConnect(partialConnection)
+      this.emitter.emit('connect', partialConnection)
 
       // when this client disconnects
       socket.on('disconnect', () => {
-        onDisconnect(socket.id)
         // remove them from the list partial list
         this.partialConnections = reject(propEq('id', socket.id), this.partialConnections) as any
 
         // remove them from the main connections list
         const severingConnection = find(propEq('id', socket.id), this.connections)
         if (severingConnection) {
-          ;(this.connections as any).remove(severingConnection)
-          onDisconnect && onDisconnect(severingConnection)
+          (this.connections as any).remove(severingConnection)
+          this.emitter.emit('disconnect', severingConnection)
         }
       })
 
@@ -131,7 +136,7 @@ class Server {
           fullCommand.payload.name = null
         }
 
-        onCommand(fullCommand)
+        this.emitter.emit('command', fullCommand)
       })
 
       // resend the subscriptions to the client upon connecting
@@ -139,7 +144,7 @@ class Server {
     })
 
     // trigger the start message
-    onStart && onStart()
+    this.emitter.emit('start')
 
     return this
   }
@@ -148,13 +153,11 @@ class Server {
    * Stops the server
    */
   stop() {
-    const { onStop } = this.options
-    this.started = false
     forEach(s => s && (s as any).connected && (s as any).disconnect(), pluck('socket', this.connections))
     this.wss.close()
 
     // trigger the stop message
-    onStop && onStop()
+    this.emitter.emit('stop')
 
     return this
   }
