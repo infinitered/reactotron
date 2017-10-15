@@ -174,27 +174,6 @@ class Server {
   }
 
   /**
-   * Sends a request to the client for state values.
-   */
-  stateValuesRequest(path) {
-    this.send('state.values.request', { path })
-  }
-
-  /**
-   * Sends a request to the client for keys for a state object.
-   */
-  stateKeysRequest(path) {
-    this.send('state.keys.request', { path })
-  }
-
-  /**
-   * Dispatches an action through to the state.
-   */
-  stateActionDispatch(action) {
-    this.send('state.action.dispatch', { action })
-  }
-
-  /**
    * Sends a list of subscribed paths to the client for state subscription.
    */
   stateValuesSendSubscriptions() {
@@ -234,28 +213,6 @@ class Server {
   stateValuesClearSubscriptions() {
     this.subscriptions = []
     this.stateValuesSendSubscriptions()
-  }
-
-  /**
-   * Asks the client for a copy of the current state.
-   */
-  stateBackupRequest() {
-    this.send('state.backup.request', {})
-  }
-
-  /**
-   * Asks the client to substitute this new state.  Good luck!  Hope it is compatible!
-   */
-  stateRestoreRequest(state) {
-    this.send('state.restore.request', { state })
-  }
-
-  /**
-   * Sends a request for the client to open the file in editor.
-   */
-  openInEditor(details) {
-    const { file, lineNumber } = details
-    this.send('editor.open', { file, lineNumber })
   }
 }
 
