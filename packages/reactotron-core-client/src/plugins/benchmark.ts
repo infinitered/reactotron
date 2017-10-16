@@ -23,6 +23,6 @@ export default () => reactotron => {
   }
 
   return {
-    features: { benchmark }
+    features: { benchmark },
   }
 }

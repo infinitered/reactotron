@@ -1,5 +1,5 @@
-import R from 'ramda'
-import WebSocket from 'ws'
+import { merge, has, forEach, head, tail, contains, isEmpty, is, keys } from 'ramda'
+import * as WebSocket from 'ws'
 import validate from './validate'
 import logger from './plugins/logger'
 import image from './plugins/image'
@@ -9,24 +9,9 @@ import apiResponse from './plugins/api-response'
 import clear from './plugins/clear'
 import serialize from './serialize'
 import { start } from './stopwatch'
+import { ClientOptions } from './client-options'
 
-export interface Options {
-  createSocket?: (path: string) => WebSocket
-  host?: string
-  port?: number
-  name?: string
-  secure?: boolean
-  plugins?: any[] // TODO: Better Type?
-  safeRecursion?: boolean
-  onCommand?: (cmd: string) => void
-  onConnect?: () => void
-  onDisconnect?: () => void
-  userAgent?: string
-  environment?: string
-  reactotronVersion?: string
-}
-
-export const CorePlugins = [
+export const corePlugins = [
   image(),
   logger(),
   benchmark(),
@@ -35,61 +20,79 @@ export const CorePlugins = [
   clear(),
 ]
 
-const DEFAULTS: Options = {
-  createSocket: null, // a function supplied by the upstream libs to create a websocket client
-  host: 'localhost', // the server to connect (required)
-  port: 9090, // the port to connect (required)
-  name: 'reactotron-core-client', // some human-friendly session name
-  secure: false, // use wss instead of ws
-  plugins: CorePlugins, // needed to make society function
-  safeRecursion: true, // when on, it ensures objects are safe for transport (at the cost of CPU)
-  onCommand: cmd => null, // the function called when we receive a command
-  onConnect: () => null, // fires when we connect
-  onDisconnect: () => null, // fires when we disconnect
+const DEFAULT_OPTIONS: ClientOptions = {
+  createSocket: null,
+  host: 'localhost',
+  port: 9090,
+  name: 'reactotron-core-client',
+  secure: false,
+  plugins: corePlugins,
+  safeRecursion: true,
+  onCommand: command => null,
+  onConnect: () => null,
+  onDisconnect: () => null,
 }
 
 // these are not for you.
-// TODO: Better Type?
-const isReservedFeature = R.contains((R as any).__, [
-  'options',
-  'connected',
-  'socket',
-  'plugins',
-  'configure',
-  'connect',
-  'send',
-  'use',
-  'startTimer',
-]) as any
+const isReservedFeature = (value: string) =>
+  contains(value, [
+    'options',
+    'connected',
+    'socket',
+    'plugins',
+    'configure',
+    'connect',
+    'send',
+    'use',
+    'startTimer',
+  ])
 
 export class Client {
   // the configuration options
-  options: Options = R.merge({}, DEFAULTS)
+  options: ClientOptions = merge({}, DEFAULT_OPTIONS)
+
+  /**
+   * Are we connected to a server?
+   */
   connected = false
+
+  /**
+   * The socket we're using.
+   */
   socket: WebSocket = null
-  plugins = [] // TODO: Better Type?
-  sendQueue = [] // TODO: Better Type?
+
+  /**
+   * Available plugins.
+   */
+  plugins: any[] = []
+
+  /**
+   * Messages that need to be sent.
+   */
+  sendQueue: any[] = []
+
+  /**
+   * Are we ready to start communicating?
+   */
   isReady = false
 
+  /**
+   * Starts a timer and returns a function you can call to stop it and return the elapsed time.
+   */
   startTimer = () => start()
-
-  constructor() {
-    // we will be invoking send from callbacks other than inside this file
-    this.send = this.send.bind(this)
-  }
 
   /**
    * Set the configuration options.
    */
-  configure(options: Options = {}): Client {
+  configure(options: ClientOptions = {}): Client {
     // options get merged & validated before getting set
-    const newOptions = R.merge(this.options, options)
+    const newOptions = merge(this.options, options)
     validate(newOptions)
     this.options = newOptions
 
     // if we have plugins, let's add them here
-    if (R.has('length', this.options.plugins)) {
-      R.forEach(this.use.bind(this), this.options.plugins)
+    if (has('length', this.options.plugins)) {
+      forEach(this.use.bind(this), this.options.plugins)
     }
 
     return this
@@ -122,15 +125,15 @@ export class Client {
       onConnect && onConnect()
 
       // trigger our plugins onConnect
-      R.forEach(plugin => plugin.onConnect && plugin.onConnect(), this.plugins)
+      forEach(plugin => plugin.onConnect && plugin.onConnect(), this.plugins)
       this.isReady = true
       // introduce ourselves
       this.send('client.intro', { host, port, name, userAgent, reactotronVersion, environment })
 
       // flush the send queue
-      while (!R.isEmpty(this.sendQueue)) {
-        const h = R.head(this.sendQueue)
-        this.sendQueue = R.tail(this.sendQueue)
+      while (!isEmpty(this.sendQueue)) {
+        const h = head(this.sendQueue)
+        this.sendQueue = tail(this.sendQueue)
         this.socket.send(h)
       }
     }
@@ -142,7 +145,7 @@ export class Client {
       onDisconnect && onDisconnect()
 
       // as well as the plugin's onDisconnect
-      R.forEach(plugin => plugin.onDisconnect && plugin.onDisconnect(), this.plugins)
+      forEach(plugin => plugin.onDisconnect && plugin.onDisconnect(), this.plugins)
     }
 
     // fires when we receive a command, just forward it off
@@ -152,7 +155,7 @@ export class Client {
       onCommand && onCommand(command)
 
       // trigger our plugins onCommand
-      R.forEach(plugin => plugin.onCommand && plugin.onCommand(command), this.plugins)
+      forEach(plugin => plugin.onCommand && plugin.onCommand(command), this.plugins)
     }
 
     // this is ws style from require('ws') on node js
@@ -176,7 +179,7 @@ export class Client {
   /**
    * Sends a command to the server
    */
-  send(type, payload = {}, important = false) {
+  send = (type, payload = {}, important = false) => {
     // jet if we don't have a socket
     if (!this.socket) {
       return
@@ -216,14 +219,14 @@ export class Client {
   /**
    * Client libraries can hijack this to report errors.
    */
-  reportError(error) {
-    (this as any).error(error)
+  reportError(this: any, error) {
+    this.error(error)
   }
 
   /**
    * Adds a plugin to the system
    */
-  use(pluginCreator: (client: Client) => any): Client {
+  use(pluginCreator?: (client: Client) => any): Client {
     // we're supposed to be given a function
     if (typeof pluginCreator !== 'function') {
       throw new Error('plugins must be a function')
@@ -233,14 +236,14 @@ export class Client {
     const plugin = pluginCreator.bind(this)(this)
 
     // ensure we get an Object-like creature back
-    if (!R.is(Object, plugin)) {
+    if (!is(Object, plugin)) {
       throw new Error('plugins must return an object')
     }
 
     // do we have features to mixin?
     if (plugin.features) {
       // validate
-      if (!R.is(Object, plugin.features)) {
+      if (!is(Object, plugin.features)) {
         throw new Error('features must be an object')
       }
 
@@ -264,7 +267,7 @@ export class Client {
       }
 
       // let's inject
-      R.forEach(inject, R.keys(plugin.features))
+      forEach(inject, keys(plugin.features))
     }
 
     // add it to the list
@@ -279,7 +282,7 @@ export class Client {
 }
 
 // convenience factory function
-export const createClient = (options: Options) => {
+export const createClient = (options?: ClientOptions) => {
   const client = new Client()
   client.configure(options)
   return client

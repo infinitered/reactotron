@@ -31,7 +31,7 @@ cd ../reactotron-core-client
 yarn run build
 cd ../demo-react-native
 mkdir -p ./node_modules/reactotron-react-native/node_modules/reactotron-core-client
-cp ../reactotron-core-client/dist/index.js ./node_modules/reactotron-react-native/node_modules/reactotron-core-client/index.js
+cp ../reactotron-core-client/dist/reactotron-core-client.js ./node_modules/reactotron-react-native/node_modules/reactotron-core-client/index.js
 
 # reactotron-redux
 cd ../reactotron-redux

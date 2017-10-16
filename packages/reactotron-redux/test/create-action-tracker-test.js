@@ -1,6 +1,6 @@
 import test from 'ava'
 import createPlugin from '../src/reactotron-redux'
-import { createClient, CorePlugins } from 'reactotron-core-client'
+import { createClient, corePlugins } from 'reactotron-core-client'
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 
 test('tests end to end for the action tracker', t => {
@@ -28,7 +28,7 @@ test('tests end to end for the action tracker', t => {
   }
 
   // create a Reactotron Client
-  const client = createClient({ io, plugins: CorePlugins })
+  const client = createClient({ io, plugins: corePlugins })
 
   // configure it with our plugin
   client.use(createPlugin({ isActionImportant }))

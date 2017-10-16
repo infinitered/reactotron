@@ -1,6 +1,6 @@
 import test from 'ava'
 import createEnhancer from '../src/store-enhancer'
-import { createClient, CorePlugins } from 'reactotron-core-client'
+import { createClient, corePlugins } from 'reactotron-core-client'
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 
 test('detect invalid reactotron client', t => {
@@ -35,7 +35,7 @@ test('tests pretty much everything', t => {
   }
 
   // grab the enhancer
-  const client = createClient({ io, plugins: CorePlugins })
+  const client = createClient({ io, plugins: corePlugins })
   const enhancer = createEnhancer(client, { isActionImportant })
   t.is(typeof enhancer, 'function')
 
