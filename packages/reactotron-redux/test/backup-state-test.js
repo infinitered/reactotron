@@ -1,6 +1,6 @@
 import test from 'ava'
 import createEnhancer from '../src/store-enhancer'
-import { createClient, CorePlugins } from 'reactotron-core-client'
+import { createClient, corePlugins } from 'reactotron-core-client'
 import { createStore, combineReducers } from 'redux'
 
 test('tests pretty much everything', t => {
@@ -12,7 +12,7 @@ test('tests pretty much everything', t => {
   }
 
   // grab the enhancer
-  const client = createClient({ io, plugins: CorePlugins })
+  const client = createClient({ io, plugins: corePlugins })
   const enhancer = createEnhancer(client, {})
 
   // things to make sure our internal middleware chains dispatch properly

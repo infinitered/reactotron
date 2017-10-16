@@ -20,7 +20,7 @@ const NEGATIVE_INFINITY = '~~~ -Infinity ~~~'
  *
  * @param {Function} fn - The function to name.
  */
-function getFunctionName (fn: any): string {
+function getFunctionName(fn: any): string {
   const n = fn.name
   if (n === null || n === undefined || n === '') {
     return ANONYMOUS
@@ -34,7 +34,7 @@ function getFunctionName (fn: any): string {
  *
  *  @param {any} source - The victim.
  */
-function serialize (source) {
+function serialize(source) {
   const stack = []
   const keys = []
 
@@ -44,8 +44,8 @@ function serialize (source) {
    * @param {*} key - The key currently visited.
    * @param {*} value - The value to replace.
    */
-  function serializer (replacer) {
-    return function (key, value) {
+  function serializer(replacer) {
+    return function(this: any, key, value) {
       // slam dunks
       if (value === true) return true
 

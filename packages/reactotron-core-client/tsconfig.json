@@ -1,15 +1,20 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "noImplicitAny": false, // Might be worth setting to true after we get good typing in
-        "removeComments": false,
-        "preserveConstEnums": true,
-        "sourceMap": true,
-        "allowSyntheticDefaultImports": true,
-        "moduleResolution": "node"
-    },
-    "include": [
-        "src/**/*"
-    ]
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": false,
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es2015", "dom"],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "outDir": "compiled",
+    "sourceMap": true,
+    "target": "es5",
+    "typeRoots": ["node_modules/@types"]
+  },
+  "include": ["src"]
 }
