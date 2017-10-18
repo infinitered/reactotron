@@ -1,5 +1,5 @@
 import React from 'react'
-import { ModalPortal, ModalBackground, ModalDialog } from 'react-modal-dialog'
+import Modal from 'react-modal'
 import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
@@ -14,7 +14,6 @@ const Styles = {
   dialog: {
     borderRadius: 4,
     padding: 4,
-    width: 450,
     backgroundColor: Colors.background,
     color: Colors.foreground
   },
@@ -85,47 +84,47 @@ const StateDispatchDialog = inject('session')(
     if (!session.ui.showHelpDialog) return null
 
     return (
-      <ModalPortal>
-        <ModalBackground onClose={session.ui.closeHelpDialog}>
-          <ModalDialog style={Styles.dialog}>
-            <div style={Styles.container}>
-              <div style={Styles.header}>
-                <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
-                <p style={Styles.subtitle}>{INSTRUCTIONS}</p>
-              </div>
-              <div style={Styles.body}>
-                <div style={Styles.group}>Working With State</div>
-                <div style={Styles.helpShortcut}>
-                  <div style={Styles.helpLabel}>{Keystroke.modifierName} + F</div>
-                  <div style={Styles.helpDetail}>find keys or values</div>
-                </div>
-                <div style={Styles.helpShortcut}>
-                  <div style={Styles.helpLabel}>{Keystroke.modifierName} + N</div>
-                  <div style={Styles.helpDetail}>new subscription</div>
-                </div>
-                <div style={Styles.helpShortcut}>
-                  <div style={Styles.helpLabel}>{Keystroke.modifierName} + D</div>
-                  <div style={Styles.helpDetail}>dispatch an action</div>
-                </div>
-                <div style={Styles.group}>Miscellaneous</div>
-                <div style={Styles.helpShortcut}>
-                  <div style={Styles.helpLabel}>{Keystroke.modifierName} + K</div>
-                  <div style={Styles.helpDetail}>klear!</div>
-                </div>
-                <div style={Styles.helpShortcut}>
-                  <div style={Styles.helpLabel}>{Keystroke.modifierName} + /</div>
-                  <div style={Styles.helpDetail}>toggle help</div>
-                </div>
-              </div>
-              <div style={Styles.keystrokes}>
-                <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
-                </div>
-              </div>
+      <Modal
+        isOpen
+        onRequestClose={session.ui.closeHelpDialog}
+        style={{ content: Styles.dialog, overlay: { zIndex: 5 } }}
+      >
+        <div style={Styles.container}>
+          <div style={Styles.header}>
+            <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
+            <p style={Styles.subtitle}>{INSTRUCTIONS}</p>
+          </div>
+          <div style={Styles.body}>
+            <div style={Styles.group}>Working With State</div>
+            <div style={Styles.helpShortcut}>
+              <div style={Styles.helpLabel}>{Keystroke.modifierName} + F</div>
+              <div style={Styles.helpDetail}>find keys or values</div>
             </div>
-          </ModalDialog>
-        </ModalBackground>
-      </ModalPortal>
+            <div style={Styles.helpShortcut}>
+              <div style={Styles.helpLabel}>{Keystroke.modifierName} + N</div>
+              <div style={Styles.helpDetail}>new subscription</div>
+            </div>
+            <div style={Styles.helpShortcut}>
+              <div style={Styles.helpLabel}>{Keystroke.modifierName} + D</div>
+              <div style={Styles.helpDetail}>dispatch an action</div>
+            </div>
+            <div style={Styles.group}>Miscellaneous</div>
+            <div style={Styles.helpShortcut}>
+              <div style={Styles.helpLabel}>{Keystroke.modifierName} + K</div>
+              <div style={Styles.helpDetail}>klear!</div>
+            </div>
+            <div style={Styles.helpShortcut}>
+              <div style={Styles.helpLabel}>{Keystroke.modifierName} + /</div>
+              <div style={Styles.helpDetail}>toggle help</div>
+            </div>
+          </div>
+          <div style={Styles.keystrokes}>
+            <div style={Styles.hotkey}>
+              <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
+            </div>
+          </div>
+        </div>
+      </Modal>
     )
   })
 )

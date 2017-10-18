@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { ModalPortal, ModalBackground, ModalDialog } from 'react-modal-dialog'
+import Modal from 'react-modal'
 import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
@@ -19,7 +19,6 @@ const Styles = {
   dialog: {
     borderRadius: 4,
     padding: 4,
-    width: 450,
     backgroundColor: Colors.background,
     color: Colors.foreground
   },
@@ -89,49 +88,49 @@ class StateDispatchDialog extends Component {
     session.ui.actionToDispatch = e.target.value
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     const field = ReactDOM.findDOMNode(this.field)
 
     field && field.focus()
   }
 
-  render () {
+  render() {
     const { ui } = this.props.session
     if (!ui.showStateDispatchDialog) return null
 
     return (
-      <ModalPortal>
-        <ModalBackground onClose={ui.closeStateDispatchDialog}>
-          <ModalDialog style={Styles.dialog}>
-            <div style={Styles.container}>
-              <div style={Styles.header}>
-                <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
-                <p style={Styles.subtitle}>{INSTRUCTIONS}</p>
-              </div>
-              <div style={Styles.body}>
-                <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
-                <textarea
-                  placeholder={INPUT_PLACEHOLDER}
-                  style={Styles.dispatchField}
-                  type='text'
-                  ref={node => (this.field = node)}
-                  value={ui.actionToDispatch}
-                  onKeyPress={this.handleKeyPress}
-                  onChange={this.handleChange}
-                />
-              </div>
-              <div style={Styles.keystrokes}>
-                <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
-                </div>
-                <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
-                </div>
-              </div>
+      <Modal
+        isOpen
+        onRequestClose={ui.closeStateDispatchDialog}
+        style={{ content: Styles.dialog, overlay: { zIndex: 5 } }}
+      >
+        <div style={Styles.container}>
+          <div style={Styles.header}>
+            <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
+            <p style={Styles.subtitle}>{INSTRUCTIONS}</p>
+          </div>
+          <div style={Styles.body}>
+            <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
+            <textarea
+              placeholder={INPUT_PLACEHOLDER}
+              style={Styles.dispatchField}
+              type='text'
+              ref={node => (this.field = node)}
+              value={ui.actionToDispatch}
+              onKeyPress={this.handleKeyPress}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div style={Styles.keystrokes}>
+            <div style={Styles.hotkey}>
+              <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
             </div>
-          </ModalDialog>
-        </ModalBackground>
-      </ModalPortal>
+            <div style={Styles.hotkey}>
+              <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
+            </div>
+          </div>
+        </div>
+      </Modal>
     )
   }
 }

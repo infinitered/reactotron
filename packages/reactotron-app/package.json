@@ -92,7 +92,7 @@
     "react-dom": "^15.3.1",
     "react-icons": "^2.2.7",
     "react-json-tree": "^0.10.9",
-    "react-modal-dialog": "3.0.2",
+    "react-modal": "^3.0.3",
     "react-tap-event-plugin": "^2.0.1",
     "react-tooltip": "^3.3.1",
     "reactotron-core-server": "^1.12.0",
