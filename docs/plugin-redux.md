@@ -46,6 +46,8 @@ Reactotron
   .configure({ name: 'React Native Demo' })
   .use(reactotronRedux()) //  <- here i am!
   .connect() //Don't forget about me!
+
+export default Reactotron;
 ```
 
 Then, where you create your Redux store, instead of using Redux's `createStore`,
@@ -53,6 +55,7 @@ you can use Reactotron's `createStore` which has the same interface.
 
 
 ```js
+import Reactotron from "./ReactotronConfig";
 const store = Reactotron.createStore(rootReducer, compose(middleware))
 ```
 
