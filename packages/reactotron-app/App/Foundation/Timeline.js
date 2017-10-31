@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import getCommandComponent from '../Commands'
 import TimelineHeader from './TimelineHeader'
-import { map, isNil } from 'ramda'
+import { map, isNil, filter } from 'ramda'
 import AppStyles from '../Theme/AppStyles'
 import Empty from '../Foundation/EmptyState'
 
@@ -20,9 +20,58 @@ const Styles = {
   }
 }
 
+const propertyExist = (r, ...properties) => {
+  for(let key of properties) {
+      if (r[key]) r = r[key];
+      else return false;
+  }
+
+  return true;
+};
+
+const matchProperty = (r, regexp, ...properties) => {
+  for(let key of properties) {
+      if (r[key]) r = r[key];
+      else return false;
+  }
+
+  return r.match && r.match(regexp) !== null;
+};
+
+const buildTree = (L, previousTree) => {
+    if (!previousTree) previousTree = {};
+
+    return L.reduce((tree, c) => {
+      if(propertyExist(c, "type")) {
+        if (!tree[c.type]) tree[c.type] = [];
+        tree[c.type].push(c);
+      }
+
+      if (propertyExist(c, "payload", "preview")) {
+        if (!tree[c.payload.preview]) tree[c.payload.preview] = [];
+        tree[c.payload.preview].push(c);
+      }
+
+      if (propertyExist(c, "payload", "name")) {
+        if (!tree[c.payload.name]) tree[c.payload.name] = [];
+        tree[c.payload.name].push(c);
+      }
+
+      return tree;
+    }, previousTree);
+};
+
 @inject('session')
 @observer
 class Timeline extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            inputValue: "",
+            currentlyShowing: props.session.commands,
+            searchTree: buildTree(props.session.commands),
+        };
+    }
   // fires when we will update
   componentWillUpdate () {
     const node = this.refs.commands
@@ -43,12 +92,47 @@ class Timeline extends Component {
     node.scrollTop = this.scrollTop + node.scrollHeight - this.scrollHeight
   }
 
+  componentWillReceiveProps(nextProps) {
+      let {commands: current} = this.props.session,
+          {commands: next}    = nextProps.session;
+
+      if (current.length === next.length) {
+          return;
+      }
+
+      this.setState({
+          searchTree: buildTree(next.slice(current.length), this.state.searchTree),
+      });
+  }
+
   renderEmpty () {
     return (
       <Empty icon='reorder' title='No Activity'>
         <p>Once your app connects and starts sending events, they will appear here.</p>
       </Empty>
     )
+  }
+
+  onFilter = (t) => {
+    let {commands} = this.props.session;
+
+    if (this.state.inputValue) {
+        commands = t.length < this.state.inputValue.length 
+            ? commands
+            : this.state.currentlyShowing;
+    }
+    
+    let regexp = new RegExp(t.replace(/\s/, "."), "i");
+    this.setState({
+        inputValue: t,
+        currentlyShowing: filter((c) => this.filterCommands(regexp, c), commands),
+    });
+  }
+
+  filterCommands = (regexp, c) => {
+      return matchProperty(c, regexp, "type")
+        || matchProperty(c, regexp, "payload", "preview")
+        || matchProperty(c, regexp, "payload", "name");
   }
 
   render () {
@@ -64,10 +148,10 @@ class Timeline extends Component {
 
     return (
       <div style={Styles.container}>
-        <TimelineHeader />
+        <TimelineHeader onFilter={this.onFilter} />
         {isEmpty && this.renderEmpty()}
         <div style={Styles.commands} ref='commands'>
-          {map(renderItem, commands)}
+          {map(renderItem, this.state.currentlyShowing)}
         </div>
       </div>
     )

@@ -4,11 +4,11 @@
   "version": "0.0.2",
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "clean": "lerna clean --yes",
-    "build": "lerna run build --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce' --scope 'reactotron-react-native' --scope 'reactotron-react-js'",
+    "clean": "./node_modules/.bin/lerna clean --yes",
+    "build": "./node_modules/.bin/lerna run build --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce' --scope 'reactotron-react-native' --scope 'reactotron-react-js'",
     "copy-internal-deps": "cd packages/demo-react-native && ./copy-internal-deps.sh && cd ../..",
-    "test": "lerna run test --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce'",
-    "lint": "lerna run lint",
+    "test": "./node_modules/.bin/lerna run test --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce'",
+    "lint": "./node_modules/.bin/lerna run lint",
     "welcome": "yarn run clean && yarn run bootstrap && yarn run build && yarn run copy-internal-deps && yarn run lint -s",
     "format": "prettier --write \"**/*.{js,jsx}\" && standard --fix"
   },
