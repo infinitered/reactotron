@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import getCommandComponent from '../Commands'
 import TimelineHeader from './TimelineHeader'
-import { map, isNil, filter, uniq, flatten } from 'ramda'
+import { map, isNil, filter, uniq, flatten, tail } from 'ramda'
+import { dotPath } from 'ramdasauce'
 import AppStyles from '../Theme/AppStyles'
 import Empty from '../Foundation/EmptyState'
 
@@ -57,29 +58,33 @@ const buildTree = (L, previousTree) => {
     previousTree = {}
   }
 
-  return L.reduce((tree, c) => {
-    if (propertyExist(c, 'type')) {
-      if (!tree[c.type]) tree[c.type] = []
-      tree[c.type].push(c)
-    }
+  return L.reduce(
+    (tree, c) =>
+      [
+        'type',
+        'payload.triggerType',
+        'payload.preview',
+        'payload.name',
+        'payload.level',
+      ].reduce((tree, key) => {
+        if (dotPath(key, c)) {
+          let root = c
+          let props = key.split('.')
 
-    if (propertyExist(c, 'payload', 'triggerType')) {
-      if (!tree[c.payload.triggerType]) tree[c.payload.triggerType] = []
-      tree[c.payload.triggerType].push(c)
-    }
+          props.slice(0, -1).forEach(prop => {
+            root = c[prop]
+          })
 
-    if (propertyExist(c, 'payload', 'preview')) {
-      if (!tree[c.payload.preview]) tree[c.payload.preview] = []
-      tree[c.payload.preview].push(c)
-    }
+          const value = root[props[props.length - 1]]
 
-    if (propertyExist(c, 'payload', 'name')) {
-      if (!tree[c.payload.name]) tree[c.payload.name] = []
-      tree[c.payload.name].push(c)
-    }
+          if (!tree[value]) tree[value] = []
+          tree[value].push(c)
+        }
 
-    return tree
-  }, previousTree)
+        return tree
+      }, tree),
+    previousTree
+  )
 }
 
 const getCommandsFromTree = (tree, regexp) => {
