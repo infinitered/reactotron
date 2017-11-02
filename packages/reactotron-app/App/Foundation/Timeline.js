@@ -212,10 +212,15 @@ class Timeline extends Component {
     const { session } = this.props
 
     const renderTimeline = categories =>
-      mapl(
+      map(
         this.renderItem,
-        uniq(flatten(Object.keys(categories).map(key => categories[key]))),
-        timelineAmount
+        uniq(
+          flatten(
+            Object.keys(categories).map(key =>
+              mapl(command => command, categories[key], timelineAmount)
+            )
+          )
+        ).sort((c1, c2) => c2.date - c1.date)
       )
 
     const renderCategories = categories =>
