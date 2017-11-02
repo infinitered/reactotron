@@ -179,17 +179,8 @@ class Timeline extends Component {
     this.filterDelay = setTimeout(() => {
       this.setState({
         inputValue: t,
-        // currentlyShowing: filter((c) => this.filterCommands(regexp, c), commands),
       })
     }, 300)
-  }
-
-  filterCommands = (regexp, c) => {
-    return (
-      matchProperty(c, regexp, 'type') ||
-      matchProperty(c, regexp, 'payload', 'preview') ||
-      matchProperty(c, regexp, 'payload', 'name')
-    )
   }
 
   renderItem = command => {
