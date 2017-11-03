@@ -4,6 +4,7 @@ import AppStyles from '../Theme/AppStyles'
 import { inject, observer } from 'mobx-react'
 import IconFilter from 'react-icons/lib/md/filter-list'
 import IconClear from 'react-icons/lib/md/delete-sweep'
+import IconSearch from 'react-icons/lib/md/search'
 
 const TITLE = 'Timeline'
 
@@ -52,12 +53,37 @@ const Styles = {
   toolbarFilter: {
     ...toolbarButton,
     paddingRight: 8
+  },
+  searchInput: {
+    padding: 10,
+
+    backgroundColor: Colors.backgroundSubtleDark,
+    border: 'none',
+    marginRight: 16,
+    color: Colors.foregroundDark,
+    fontSize: 14
+  },
+
+  searchContainer: {
+    position: 'relative'
+  },
+
+  searchIconSize: 28,
+  searchIcon: {
+    position: 'absolute',
+    top: 6,
+    right: 20,
+    color: Colors.foregroundDark
   }
 }
 
 @inject('session')
 @observer
 class TimelineHeader extends Component {
+  getValue = evt => {
+    this.props.onFilter(evt.target.value)
+  }
+
   render () {
     const { ui } = this.props.session
 
@@ -69,6 +95,13 @@ class TimelineHeader extends Component {
             <div style={Styles.title}>{TITLE}</div>
           </div>
           <div style={Styles.right}>
+            <div style={Styles.searchContainer}>
+              <input
+                style={Styles.searchInput}
+                onInput={this.props.onFilter ? this.getValue : undefined}
+              />
+              <IconSearch size={Styles.searchIconSize} style={Styles.searchIcon} />
+            </div>
             <IconFilter
               size={Styles.iconSize}
               style={Styles.toolbarFilter}
