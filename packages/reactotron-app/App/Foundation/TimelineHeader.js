@@ -9,7 +9,7 @@ import IconSearch from 'react-icons/lib/md/search'
 const TITLE = 'Timeline'
 
 const toolbarButton = {
-  cursor: 'pointer',
+  cursor: 'pointer'
 }
 
 const Styles = {
@@ -18,41 +18,41 @@ const Styles = {
     backgroundColor: Colors.backgroundSubtleLight,
     borderBottom: `1px solid ${Colors.chromeLine}`,
     color: Colors.foregroundDark,
-    boxShadow: `0px 0px 30px ${Colors.glow}`,
+    boxShadow: `0px 0px 30px ${Colors.glow}`
   },
   content: {
     height: 60,
     paddingLeft: 10,
     paddingRight: 10,
     ...AppStyles.Layout.hbox,
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   left: {
     ...AppStyles.Layout.hbox,
-    width: 100,
+    width: 100
   },
   right: {
     ...AppStyles.Layout.hbox,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   center: {
     ...AppStyles.Layout.vbox,
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   title: {
     color: Colors.foregroundLight,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   iconSize: 32,
   toolbarClear: {
-    ...toolbarButton,
+    ...toolbarButton
   },
   toolbarFilter: {
     ...toolbarButton,
-    paddingRight: 8,
+    paddingRight: 8
   },
   searchInput: {
     padding: 10,
@@ -61,11 +61,11 @@ const Styles = {
     border: 'none',
     marginRight: 16,
     color: Colors.foregroundDark,
-    fontSize: 14,
+    fontSize: 14
   },
 
   searchContainer: {
-    position: 'relative',
+    position: 'relative'
   },
 
   searchIconSize: 28,
@@ -73,8 +73,8 @@ const Styles = {
     position: 'absolute',
     top: 6,
     right: 20,
-    color: Colors.foregroundDark,
-  },
+    color: Colors.foregroundDark
+  }
 }
 
 @inject('session')
@@ -84,7 +84,7 @@ class TimelineHeader extends Component {
     this.props.onFilter(evt.target.value)
   }
 
-  render() {
+  render () {
     const { ui } = this.props.session
 
     return (

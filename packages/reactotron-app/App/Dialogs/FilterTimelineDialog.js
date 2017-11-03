@@ -16,8 +16,8 @@ const GROUPS = [
     items: [
       { value: 'log', text: 'Log' },
       { value: 'image', text: 'Image' },
-      { value: 'display', text: 'Custom Display' },
-    ],
+      { value: 'display', text: 'Custom Display' }
+    ]
   },
   {
     name: 'General',
@@ -26,21 +26,21 @@ const GROUPS = [
       { value: 'benchmark.report', text: 'Benchmark' },
       { value: 'api.response', text: 'API' },
       { value: 'query.preserve', text: 'Preserve Query Store on Clear' },
-      { value: 'query.timeline', text: 'Show Query as a Timeline' },
-    ],
+      { value: 'query.timeline', text: 'Show Query as a Timeline' }
+    ]
   },
   {
     name: 'Async Storage',
-    items: [{ value: 'asyncStorage.values.change', text: 'Changes' }],
+    items: [{ value: 'asyncStorage.values.change', text: 'Changes' }]
   },
   {
     name: 'Redux & Sagas',
     items: [
       { value: 'state.action.complete', text: 'Action' },
       { value: 'saga.task.complete', text: 'Saga' },
-      { value: 'state.values.change', text: 'Subscription Changed' },
-    ],
-  },
+      { value: 'state.values.change', text: 'Subscription Changed' }
+    ]
+  }
 ]
 
 const Styles = {
@@ -49,40 +49,40 @@ const Styles = {
     padding: 4,
     width: 450,
     backgroundColor: Colors.background,
-    color: Colors.foreground,
+    color: Colors.foreground
   },
   examples: {},
   example: {
     padding: 0,
     margin: '0 0 0 40px',
-    color: Colors.bold,
+    color: Colors.bold
   },
   container: {
-    ...AppStyles.Layout.vbox,
+    ...AppStyles.Layout.vbox
   },
   keystrokes: {
     ...AppStyles.Layout.hbox,
     alignSelf: 'center',
     paddingTop: 10,
     paddingBottom: 20,
-    fontSize: 13,
+    fontSize: 13
   },
   hotkey: {
-    padding: '0 10px',
+    padding: '0 10px'
   },
   keystroke: {
     backgroundColor: Colors.backgroundHighlight,
     color: Colors.foreground,
     padding: '4px 8px',
-    borderRadius: 4,
+    borderRadius: 4
   },
   header: {
     ...AppStyles.Layout.vbox,
-    padding: '1em 2em 0em',
+    padding: '1em 2em 0em'
   },
   body: {
     ...AppStyles.Layout.vbox,
-    padding: '1em 2em 4em',
+    padding: '1em 2em 4em'
   },
   title: {
     margin: 0,
@@ -90,18 +90,18 @@ const Styles = {
     textAlign: 'left',
     fontWeight: 'normal',
     fontSize: 24,
-    color: Colors.heading,
+    color: Colors.heading
   },
   subtitle: {
     color: Colors.foreground,
     textAlign: 'left',
     padding: 0,
-    margin: 0,
+    margin: 0
   },
   fieldLabel: {
     color: Colors.heading,
     fontSize: 13,
-    textTransform: 'uppercase',
+    textTransform: 'uppercase'
   },
   textField: {
     borderTop: 0,
@@ -111,7 +111,7 @@ const Styles = {
     fontSize: 23,
     color: Colors.foregroundLight,
     lineHeight: '40px',
-    backgroundColor: 'inherit',
+    backgroundColor: 'inherit'
   },
   group: {},
   groupName: {
@@ -120,12 +120,12 @@ const Styles = {
     marginBottom: 10,
     color: Colors.foregroundLight,
     paddingBottom: 2,
-    borderBottom: `1px solid ${Colors.highlight}`,
+    borderBottom: `1px solid ${Colors.highlight}`
   },
   option: {},
 
   numberContainer: {
-    position: 'relative',
+    position: 'relative'
   },
 
   inputStyle: {
@@ -138,8 +138,8 @@ const Styles = {
     paddingLeft: 10,
     paddingTop: 4,
     paddingBottom: 4,
-    paddingRight: 10,
-  },
+    paddingRight: 10
+  }
 }
 
 const FilterTimelineDialog = inject('session')(
