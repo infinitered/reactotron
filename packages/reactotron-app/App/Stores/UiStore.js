@@ -121,10 +121,20 @@ class UI {
     this.isTimelineSearchVisible = false
   }
 
+  @action
   showTimelineSearch = () => {
     this.isTimelineSearchVisible = false // hack to ensure the reaction on the timeline header works (sheesh.)
     this.isTimelineSearchVisible = true
     this.switchTab('timeline')
+  }
+
+  @action
+  toggleTimelineSearch = () => {
+    if (this.isTimelineSearchVisible) {
+      this.hideTimelineSearch()
+    } else {
+      this.showTimelineSearch()
+    }
   }
 
   @action
