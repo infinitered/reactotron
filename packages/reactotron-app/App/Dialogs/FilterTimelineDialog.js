@@ -24,9 +24,7 @@ const GROUPS = [
     items: [
       { value: 'client.intro', text: 'Connection' },
       { value: 'benchmark.report', text: 'Benchmark' },
-      { value: 'api.response', text: 'API' },
-      { value: 'query.preserve', text: 'Preserve Query Store on Clear' },
-      { value: 'query.timeline', text: 'Show Query as a Timeline' }
+      { value: 'api.response', text: 'API' }
     ]
   },
   {
