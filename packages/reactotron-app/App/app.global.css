@@ -56,3 +56,7 @@ a.closeButton--jss-0-1 { display: none; }
   background-color: 'white';
   width: 300px;
 }
+
+*::-webkit-input-placeholder {
+  opacity: 0.2;
+}

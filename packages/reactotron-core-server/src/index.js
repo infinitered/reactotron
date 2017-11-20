@@ -254,6 +254,15 @@ class Server {
     const { file, lineNumber } = details
     this.send('editor.open', { file, lineNumber })
   }
+
+  /**
+   * Sends a custom message to the client.
+   *
+   * @param {string} value The string to send
+   */
+  sendCustomMessage (value) {
+    this.send('custom', value)
+  }
 }
 
 export default Server

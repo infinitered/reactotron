@@ -48,6 +48,12 @@ class UI {
   // show the watch panel?
   @observable showWatchPanel = false
 
+  /** The message we are currently composing to send to the client. */
+  @observable customMessage = ''
+
+  // show the send custom message dialog
+  @observable showSendCustomDialog = false
+
   // show the timeline search
   @observable isTimelineSearchVisible = false
 
@@ -81,6 +87,7 @@ class UI {
     Mousetrap.bind(`${Keystroke.mousetrap}+4`, this.switchTab.bind(this, 'native'))
     Mousetrap.bind(`${Keystroke.mousetrap}+?`, this.switchTab.bind(this, 'help'))
     Mousetrap.bind(`${Keystroke.mousetrap}+f`, this.showTimelineSearch)
+    Mousetrap.bind(`${Keystroke.mousetrap}+.`, this.openSendCustomDialog)
   }
 
   @action
@@ -149,7 +156,8 @@ class UI {
       this.showStateFindDialog ||
       this.showStateDispatchDialog ||
       this.showFilterTimelineDialog ||
-      this.showRenameStateDialog
+      this.showRenameStateDialog ||
+      this.showSendCustomDialog
     )
   }
 
@@ -169,6 +177,8 @@ class UI {
       this.submitStateWatch()
     } else if (this.showRenameStateDialog) {
       this.submitRenameState()
+    } else if (this.showSendCustomDialog) {
+      this.submitCurrentMessage()
     }
   }
 
@@ -191,6 +201,13 @@ class UI {
     this.currentBackupState.payload.name = this.backupStateName
     this.showRenameStateDialog = false
     this.backupStateName = null
+  }
+
+  @action
+  submitCurrentMessage = () => {
+    this.sendCustomMessage(this.customMessage)
+    this.customMessage = ''
+    this.showSendCustomDialog = false
   }
 
   @action
@@ -294,6 +311,16 @@ class UI {
   }
 
   @action
+  openSendCustomDialog = () => {
+    this.showSendCustomDialog = true
+  }
+
+  @action
+  closeSendCustomDialog = () => {
+    this.showSendCustomDialog = false
+  }
+
+  @action
   reset = () => {
     this.server.commands.all.clear()
   }
@@ -320,6 +347,16 @@ class UI {
   @action
   dispatchAction = action => {
     this.server.stateActionDispatch(action)
+  }
+
+  @action
+  sendCustomMessage = value => {
+    this.server.sendCustomMessage(value)
+  }
+
+  @action
+  setCustomMessage = value => {
+    this.customMessage = value
   }
 
   @action
