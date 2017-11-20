@@ -9,7 +9,7 @@ const Styles = {
     color: Colors.foreground
   },
   helpLabel: {
-    width: 160
+    width: 180
   },
   key: {
     color: Colors.foregroundLight,
@@ -120,7 +120,13 @@ const HelpKeystrokes = () => (
         </div>
         <div style={Styles.helpShortcut}>
           <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text='Backspace' />
+            <Key text={Keystroke.modifierName} />+<Key text='.' />
+          </div>
+          <div style={Styles.helpDetail}>send a custom command</div>
+        </div>
+        <div style={Styles.helpShortcut}>
+          <div style={Styles.helpLabel}>
+            <Key text={Keystroke.modifierName} />+<Key text='BKSP' />
           </div>
           <div style={Styles.helpDetail}>clear the timeline</div>
         </div>
