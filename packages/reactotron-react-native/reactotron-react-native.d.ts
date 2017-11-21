@@ -47,6 +47,35 @@ declare module 'reactotron-react-native' {
     overlay?: false
   }
 
+  export interface ReactotronCommand {
+    /**
+     * The type of command.
+     */
+    type: string
+    /**
+     * The data belonging to the command.
+     */
+    payload: any
+  }
+
+  export interface ReactotronPlugin {
+    features: any
+    /**
+     * Fires when a command from the reactotron app arrives.
+     */
+    onCommand: (command: ReactotronCommand) => void
+    /**
+     * Fires when connecting to the reactotron app.
+     */
+    onConnect: () => void
+    /**
+     * Fires when disconnected from the reactotron app.
+     */
+    onDisconnect: () => void
+  }
+
+  // export type ReactotronUseMiddleware = (tron?: Reactotron) => ReactotronMiddleware
+
   /**
    * Reactotron.
    */
@@ -65,6 +94,11 @@ declare module 'reactotron-react-native' {
      * Use the pack of ReactNative plugins.
      */
     useReactNative(options?: ReactotronUseReactNativeOptions): Reactotron
+
+    /**
+     * Uses some generic middleware.
+     */
+    use(middleware: (tron: Reactotron) => void): Reactotron
 
     /**
      * Clears the Reactotron app.
