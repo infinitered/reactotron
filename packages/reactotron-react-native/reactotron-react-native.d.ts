@@ -59,19 +59,22 @@ declare module 'reactotron-react-native' {
   }
 
   export interface ReactotronPlugin {
-    features: any
+    /**
+     * Additional functions or objects to place on the Reactotron namespace.
+     */
+    features?: { [name: string]: any }
     /**
      * Fires when a command from the reactotron app arrives.
      */
-    onCommand: (command: ReactotronCommand) => void
+    onCommand?: (command: ReactotronCommand) => void
     /**
      * Fires when connecting to the reactotron app.
      */
-    onConnect: () => void
+    onConnect?: () => void
     /**
      * Fires when disconnected from the reactotron app.
      */
-    onDisconnect: () => void
+    onDisconnect?: () => void
   }
 
   // export type ReactotronUseMiddleware = (tron?: Reactotron) => ReactotronMiddleware
@@ -96,9 +99,9 @@ declare module 'reactotron-react-native' {
     useReactNative(options?: ReactotronUseReactNativeOptions): Reactotron
 
     /**
-     * Uses some generic middleware.
+     * Registers a plugin.
      */
-    use(middleware: (tron: Reactotron) => void): Reactotron
+    use(middleware: (tron: Reactotron) => ReactotronPlugin): Reactotron
 
     /**
      * Clears the Reactotron app.
