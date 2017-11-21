@@ -14,7 +14,7 @@ Use it to:
 * show API requests & responses
 * perform quick performance benchmarks
 * subscribe to parts of your application state
-* display messages similar to console.log
+* display messages similar to `console.log`
 * track global errors with source-mapped stack traces including saga stack traces!
 * dispatch actions like a government-run mind control experiment
 * hot swap your app's state
