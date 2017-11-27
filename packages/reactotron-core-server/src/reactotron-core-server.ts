@@ -261,6 +261,15 @@ export default class Server {
     this.subscriptions = []
     this.stateValuesSendSubscriptions()
   }
+
+  /**
+   * Sends a custom message to the client.
+   *
+   * @param {string} value The string to send
+   */
+  sendCustomMessage (value) {
+    this.send('custom', value)
+  }
 }
 
 // convenience factory function
