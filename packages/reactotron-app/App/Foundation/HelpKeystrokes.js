@@ -9,7 +9,7 @@ const Styles = {
     color: Colors.foreground
   },
   helpLabel: {
-    width: 160
+    width: 180
   },
   key: {
     color: Colors.foregroundLight,
@@ -80,7 +80,7 @@ const HelpKeystrokes = () => (
         <div style={Styles.category}>State Goodies</div>
         <div style={Styles.helpShortcut}>
           <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text='F' />
+            <Key text={Keystroke.modifierName} />+<Key text='K' />
           </div>
           <div style={Styles.helpDetail}>find keys or values</div>
         </div>
@@ -114,9 +114,21 @@ const HelpKeystrokes = () => (
         <div style={Styles.category}>Miscellaneous</div>
         <div style={Styles.helpShortcut}>
           <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text='K' />
+            <Key text={Keystroke.modifierName} />+<Key text='F' />
           </div>
-          <div style={Styles.helpDetail}>klear!</div>
+          <div style={Styles.helpDetail}>search for text in timeline</div>
+        </div>
+        <div style={Styles.helpShortcut}>
+          <div style={Styles.helpLabel}>
+            <Key text={Keystroke.modifierName} />+<Key text='.' />
+          </div>
+          <div style={Styles.helpDetail}>send a custom command</div>
+        </div>
+        <div style={Styles.helpShortcut}>
+          <div style={Styles.helpLabel}>
+            <Key text={Keystroke.modifierName} />+<Key text='BKSP' />
+          </div>
+          <div style={Styles.helpDetail}>clear the timeline</div>
         </div>
       </div>
     </div>

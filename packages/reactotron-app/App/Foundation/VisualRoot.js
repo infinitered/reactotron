@@ -8,6 +8,7 @@ import HelpDialog from '../Dialogs/HelpDialog'
 import StateWatchDialog from '../Dialogs/StateWatchDialog'
 import RenameStateDialog from '../Dialogs/RenameStateDialog'
 import FilterTimelineDialog from '../Dialogs/FilterTimelineDialog'
+import SendCustomDialog from '../Dialogs/SendCustomDialog'
 import Subscriptions from './Subscriptions'
 import Backups from './Backups'
 import Native from './Native'
@@ -90,6 +91,7 @@ export default class VisualRoot extends Component {
         <StateWatchDialog />
         <RenameStateDialog />
         <FilterTimelineDialog />
+        <SendCustomDialog />
       </div>
     )
   }

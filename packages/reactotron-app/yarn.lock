@@ -5011,6 +5011,12 @@ ramdasauce@^2.0.0, ramdasauce@^2.1.0:
   dependencies:
     ramda "^0.24.1"
 
+ramdasauce@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/ramdasauce/-/ramdasauce-2.1.0.tgz#65ea157a9cfc17841a7dd6499d3f9f421dc2eb36"
+  dependencies:
+    ramda "^0.24.1"
+
 randomatic@^1.1.3:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/randomatic/-/randomatic-1.1.7.tgz#c7abe9cc8b87c0baa876b19fde83fd464797e38c"
@@ -5138,9 +5144,9 @@ react@^15.3.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-reactotron-core-server@^1.12.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/reactotron-core-server/-/reactotron-core-server-1.12.0.tgz#3c54110e43d87f3f322d60e63e1d8bd3c94195ce"
+reactotron-core-server@^1.13.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/reactotron-core-server/-/reactotron-core-server-1.13.0.tgz#6d478c552a0bfb57fe3042e89ef218524c98b71d"
   dependencies:
     mobx "^2.5.1"
     ramda "^0.24.1"

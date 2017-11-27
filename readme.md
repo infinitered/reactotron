@@ -14,7 +14,7 @@ Use it to:
 * show API requests & responses
 * perform quick performance benchmarks
 * subscribe to parts of your application state
-* display messages similar to console.log
+* display messages similar to `console.log`
 * track global errors with source-mapped stack traces including saga stack traces!
 * dispatch actions like a government-run mind control experiment
 * hot swap your app's state
@@ -39,6 +39,7 @@ Reactotron on the left, demo React Native app on the right.
 * [Open in editor](./docs/plugin-open-in-editor.md)
 * [Image Overlays](./docs/plugin-overlay.md)
 * [Async Storage](./docs/plugin-async-storage.md)
+* [Networking](./docs/plugin-networking.md)
 * Integrating with [Redux](./docs/plugin-redux.md)
 * Integrating with [Redux Saga](./docs/plugin-redux-saga.md)
 * Networking monitoring with [Apisauce](./docs/plugin-apisauce.md)
@@ -49,7 +50,6 @@ Reactotron on the left, demo React Native app on the right.
 #### Coming Soon
 
 * API Docs
-* Integrating with Fetch
 * Creating your own plugins
 * The JSON interface between client & server (coming soon...)
 * What's Inside This Repo?

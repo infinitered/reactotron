@@ -17,6 +17,20 @@ const Styles = {
     padding: 0,
     overflowY: 'auto',
     overflowX: 'hidden'
+  },
+
+  categoryLabel: {
+    color: '#606060',
+    paddingLeft: 20,
+    fontSize: 12,
+    paddingTop: 10
+  },
+
+  loadMore: {
+    color: '#606060',
+    textAlign: 'center',
+    padding: 20,
+    fontSize: 16
   }
 }
 
@@ -39,7 +53,7 @@ class Timeline extends Component {
     if (this.isPinned) return
     const node = this.refs.commands
     // scroll to the place we were before
-    // TODO: this falls apart as we reach max queue size as the scrollHeigh no longer changes
+    // TODO: this falls apart as we reach max queue size as the scrollHeight no longer changes
     node.scrollTop = this.scrollTop + node.scrollHeight - this.scrollHeight
   }
 
@@ -51,23 +65,24 @@ class Timeline extends Component {
     )
   }
 
-  render () {
-    // grab the commands, but sdrawkcab
-    const commands = this.props.session.commands
-    const isEmpty = commands.length === 0
+  renderItem = command => {
+    const CommandComponent = getCommandComponent(command)
+    if (isNil(CommandComponent)) return null
 
-    const renderItem = command => {
-      const CommandComponent = getCommandComponent(command)
-      if (isNil(CommandComponent)) return null
-      return <CommandComponent key={command.messageId} command={command} />
-    }
+    return <CommandComponent key={command.messageId} command={command} />
+  }
+
+  render () {
+    const { session } = this.props
+    const { commands } = session
+    const isEmpty = commands.length === 0
 
     return (
       <div style={Styles.container}>
-        <TimelineHeader />
+        <TimelineHeader onFilter={this.onFilter} />
         {isEmpty && this.renderEmpty()}
         <div style={Styles.commands} ref='commands'>
-          {map(renderItem, commands)}
+          {map(this.renderItem, commands)}
         </div>
       </div>
     )

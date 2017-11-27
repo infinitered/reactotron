@@ -1,7 +1,8 @@
-import { observable, action, asMap } from 'mobx'
+import { computed, observable, action, asMap } from 'mobx'
 import Mousetrap from '../Lib/Mousetrap.min.js'
 import { isNilOrEmpty } from 'ramdasauce'
 import Keystroke from '../Lib/Keystroke'
+import { trim } from 'ramda'
 
 /**
  * Handles UI state.
@@ -47,6 +48,20 @@ class UI {
   // show the watch panel?
   @observable showWatchPanel = false
 
+  /** The message we are currently composing to send to the client. */
+  @observable customMessage = ''
+
+  // show the send custom message dialog
+  @observable showSendCustomDialog = false
+
+  // show the timeline search
+  @observable isTimelineSearchVisible = false
+
+  /**
+   * The current search phrase used to narrow down visible commands.
+   */
+  @observable searchPhrase = ''
+
   // additional properties that some commands may want... a way to communicate
   // from the command toolbar to the command
   commandProperties = {}
@@ -57,8 +72,8 @@ class UI {
 
     Mousetrap.prototype.stopCallback = () => false
 
-    Mousetrap.bind(`${Keystroke.mousetrap}+k`, this.reset)
-    Mousetrap.bind(`${Keystroke.mousetrap}+f`, this.openStateFindDialog)
+    Mousetrap.bind(`${Keystroke.mousetrap}+backspace`, this.reset)
+    Mousetrap.bind(`${Keystroke.mousetrap}+k`, this.openStateFindDialog)
     Mousetrap.bind(`${Keystroke.mousetrap}+shift+f`, this.openFilterTimelineDialog)
     Mousetrap.bind(`${Keystroke.mousetrap}+d`, this.openStateDispatchDialog)
     Mousetrap.bind(`${Keystroke.mousetrap}+s`, this.backupState)
@@ -71,8 +86,63 @@ class UI {
     Mousetrap.bind(`${Keystroke.mousetrap}+2`, this.switchTab.bind(this, 'subscriptions'))
     Mousetrap.bind(`${Keystroke.mousetrap}+3`, this.switchTab.bind(this, 'backups'))
     Mousetrap.bind(`${Keystroke.mousetrap}+4`, this.switchTab.bind(this, 'native'))
-    Mousetrap.bind(`${Keystroke.mousetrap}+/`, this.switchTab.bind(this, 'help'))
     Mousetrap.bind(`${Keystroke.mousetrap}+?`, this.switchTab.bind(this, 'help'))
+    Mousetrap.bind(`${Keystroke.mousetrap}+f`, this.showTimelineSearch)
+    Mousetrap.bind(`${Keystroke.mousetrap}+.`, this.openSendCustomDialog)
+  }
+
+  @action
+  setSearchPhrase = value => {
+    this.searchPhrase = value
+  }
+
+  /**
+   * Get the scrubbed search phrase.
+   */
+  @computed
+  get cleanedSearchPhrase () {
+    return trim(this.searchPhrase || '')
+  }
+
+  /**
+   * The regular expression we will be using to search commands.
+   */
+  @computed
+  get searchRegexp () {
+    try {
+      return new RegExp(this.cleanedSearchPhrase.replace(/\s/, '.'), 'i')
+    } catch (e) {
+      return null
+    }
+  }
+
+  /**
+   * Is this search phrase useable?
+   */
+  @computed
+  get isValidSearchPhrase () {
+    return Boolean(this.searchRegexp)
+  }
+
+  @action
+  hideTimelineSearch = () => {
+    this.isTimelineSearchVisible = false
+  }
+
+  @action
+  showTimelineSearch = () => {
+    this.isTimelineSearchVisible = false // hack to ensure the reaction on the timeline header works (sheesh.)
+    this.isTimelineSearchVisible = true
+    this.switchTab('timeline')
+  }
+
+  @action
+  toggleTimelineSearch = () => {
+    if (this.isTimelineSearchVisible) {
+      this.hideTimelineSearch()
+    } else {
+      this.showTimelineSearch()
+    }
   }
 
   @action
@@ -80,14 +150,26 @@ class UI {
     this.tab = newTab
   }
 
+  @computed
+  get isModalShowing () {
+    return (
+      this.showStateWatchDialog ||
+      this.showStateFindDialog ||
+      this.showStateDispatchDialog ||
+      this.showFilterTimelineDialog ||
+      this.showRenameStateDialog ||
+      this.showSendCustomDialog
+    )
+  }
+
   @action
-  popState = () => {
+  popState = e => {
     if (this.showStateFindDialog) {
       this.closeStateFindDialog()
-    }
-    if (this.showHelpDialog) {
+    } else if (this.showHelpDialog) {
       this.closeHelpDialog()
     }
+    return false
   }
 
   @action
@@ -96,6 +178,8 @@ class UI {
       this.submitStateWatch()
     } else if (this.showRenameStateDialog) {
       this.submitRenameState()
+    } else if (this.showSendCustomDialog) {
+      this.submitCurrentMessage()
     }
   }
 
@@ -118,6 +202,13 @@ class UI {
     this.currentBackupState.payload.name = this.backupStateName
     this.showRenameStateDialog = false
     this.backupStateName = null
+  }
+
+  @action
+  submitCurrentMessage = () => {
+    this.sendCustomMessage(this.customMessage)
+    this.customMessage = ''
+    this.showSendCustomDialog = false
   }
 
   @action
@@ -221,6 +312,16 @@ class UI {
   }
 
   @action
+  openSendCustomDialog = () => {
+    this.showSendCustomDialog = true
+  }
+
+  @action
+  closeSendCustomDialog = () => {
+    this.showSendCustomDialog = false
+  }
+
+  @action
   reset = () => {
     this.commandsManager.all.clear()
   }
@@ -247,6 +348,16 @@ class UI {
   @action
   dispatchAction = action => {
     this.server.send('state.action.dispatch', { action })
+  }
+
+  @action
+  sendCustomMessage = value => {
+    this.server.sendCustomMessage(value)
+  }
+
+  @action
+  setCustomMessage = value => {
+    this.customMessage = value
   }
 
   @action

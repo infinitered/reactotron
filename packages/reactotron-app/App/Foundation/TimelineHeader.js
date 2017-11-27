@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
+import { reaction } from 'mobx'
 import { inject, observer } from 'mobx-react'
 import IconFilter from 'react-icons/lib/md/filter-list'
 import IconClear from 'react-icons/lib/md/delete-sweep'
+import IconSearch from 'react-icons/lib/md/search'
 
 const TITLE = 'Timeline'
 
@@ -26,40 +28,89 @@ const Styles = {
     ...AppStyles.Layout.hbox,
     justifyContent: 'space-between'
   },
-  left: {
-    ...AppStyles.Layout.hbox,
-    width: 100
-  },
-  right: {
-    ...AppStyles.Layout.hbox,
-    justifyContent: 'flex-end',
-    alignItems: 'center'
-  },
-  center: {
-    ...AppStyles.Layout.vbox,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  title: {
-    color: Colors.foregroundLight,
-    textAlign: 'center'
-  },
+  left: { ...AppStyles.Layout.hbox, width: 100 },
+  right: { ...AppStyles.Layout.hbox, justifyContent: 'flex-end', alignItems: 'center', width: 100 },
+  center: { ...AppStyles.Layout.vbox, flex: 1, alignItems: 'center', justifyContent: 'center' },
+  title: { color: Colors.foregroundLight, textAlign: 'center' },
   iconSize: 32,
-  toolbarClear: {
-    ...toolbarButton
+  toolbarClear: { ...toolbarButton },
+  toolbarFilter: { ...toolbarButton, paddingRight: 8 },
+  searchContainer: {
+    position: 'relative',
+    display: 'flex',
+    paddingBottom: 10,
+    paddingTop: 4,
+    paddingRight: 10
   },
-  toolbarFilter: {
-    ...toolbarButton,
-    paddingRight: 8
-  }
+  searchLabel: { fontSize: 12, paddingLeft: 10, paddingRight: 10 },
+  searchInput: {
+    borderRadius: 4,
+    padding: 10,
+    flex: 1,
+    backgroundColor: Colors.backgroundSubtleDark,
+    border: 'none',
+    color: Colors.foregroundDark,
+    fontSize: 14
+  },
+  searchIconSize: 28,
+  searchIcon: { paddingRight: 7, cursor: 'pointer' },
+  searchIconEnabled: { color: 'white' }
 }
 
 @inject('session')
 @observer
 class TimelineHeader extends Component {
+  getValue = evt => {
+    this.props.onFilter(evt.target.value)
+  }
+
+  /**
+   * Moves the focus to the search input.
+   *
+   * This is called when we show the search ui.
+   */
+  setFocusToSearch = () => {
+    // unclear why i need to do this after a timeout?  is it because
+    // i'm rendering?
+    setTimeout(() => {
+      this.searchInput.focus()
+    }, 10)
+  }
+
+  componentDidMount () {
+    // when the isTimelineSearchVisible becomes `true`...
+    this.unsubscribe = reaction(
+      () => this.props.session.ui.isTimelineSearchVisible,
+      value => {
+        if (value) {
+          this.setFocusToSearch()
+        }
+      }
+    )
+  }
+
+  componentWillUnmount () {
+    this.unsubscribe && this.unsubscribe()
+  }
+
+  handleKeyDown = e => {
+    // have to do this here
+    if (e.keyCode === 27) {
+      this.props.session.ui.hideTimelineSearch()
+    }
+  }
+
   render () {
     const { ui } = this.props.session
+    const { isTimelineSearchVisible } = ui
+    const searchIconStyle = {
+      ...Styles.searchIcon,
+      ...(isTimelineSearchVisible ? Styles.searchIconEnabled : {})
+    }
+    const searchContainerStyle = {
+      ...Styles.searchContainer,
+      ...(!isTimelineSearchVisible ? { display: 'none' } : {})
+    }
 
     return (
       <div style={Styles.container}>
@@ -69,6 +120,11 @@ class TimelineHeader extends Component {
             <div style={Styles.title}>{TITLE}</div>
           </div>
           <div style={Styles.right}>
+            <IconSearch
+              size={Styles.searchIconSize}
+              style={searchIconStyle}
+              onClick={ui.toggleTimelineSearch}
+            />
             <IconFilter
               size={Styles.iconSize}
               style={Styles.toolbarFilter}
@@ -76,6 +132,17 @@ class TimelineHeader extends Component {
             />
             <IconClear size={Styles.iconSize} style={Styles.toolbarClear} onClick={ui.reset} />
           </div>
+        </div>
+        <div style={searchContainerStyle}>
+          <p style={Styles.searchLabel}>Search</p>
+          <input
+            ref={ref => (this.searchInput = ref)}
+            style={Styles.searchInput}
+            onInput={this.props.onFilter ? this.getValue : undefined}
+            onChange={e => ui.setSearchPhrase(e.target.value)}
+            onKeyDown={this.handleKeyDown}
+            value={ui.searchPhrase}
+          />
         </div>
       </div>
     )

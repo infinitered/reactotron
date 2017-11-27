@@ -1,6 +1,8 @@
 {
   "lerna": "2.4.0",
-  "version": "1.12.3",
+  "version": "1.13.2",
   "npmClient": "yarn",
-  "npmClientArgs": ["--ignore-engines"]
+  "npmClientArgs": [
+    "--ignore-engines"
+  ]
 }

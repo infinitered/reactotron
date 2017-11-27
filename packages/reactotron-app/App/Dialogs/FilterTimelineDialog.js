@@ -119,7 +119,24 @@ const Styles = {
     paddingBottom: 2,
     borderBottom: `1px solid ${Colors.highlight}`
   },
-  option: {}
+  option: {},
+
+  numberContainer: {
+    position: 'relative'
+  },
+
+  inputStyle: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    backgroundColor: Colors.backgroundSubtleDark,
+    color: Colors.foregroundDark,
+    border: 'none',
+    paddingLeft: 10,
+    paddingTop: 4,
+    paddingBottom: 4,
+    paddingRight: 10
+  }
 }
 
 const FilterTimelineDialog = inject('session')(
