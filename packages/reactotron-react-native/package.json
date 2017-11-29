@@ -38,6 +38,7 @@
     "node-watch": "^0.5.5",
     "nyc": "^11.0.3",
     "react": "^15.6.1",
+    "redux": "^3.7.2",
     "react-native": "^0.46.0",
     "rollup": "^0.43.0",
     "rollup-plugin-babel": "^2.6.1",

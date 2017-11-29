@@ -1,4 +1,6 @@
 declare module 'reactotron-react-native' {
+  import Redux from 'redux'
+
   export interface ReactotronConfigureOptions {
     name?: string
     host?: string
@@ -130,6 +132,11 @@ declare module 'reactotron-react-native' {
      * Prints a custom display message.
      */
     display(options: ReactotronDisplayOptions): void
+
+    /**
+     * Create a Redux Store
+     */
+    createStore: Redux.StoreCreator
   }
 
   var instance: Reactotron
