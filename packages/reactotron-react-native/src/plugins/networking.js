@@ -27,6 +27,11 @@ export default (pluginConfig = {}) => reactotron => {
    * @param {*} instance - The XMLHTTPRequest instance.
    */
   function onSend (data, xhr) {
+    if (options.skipRequestUrls && test(options.skipRequestUrls, xhr._url)) {
+      xhr._skipReactotron = true
+      return
+    }
+
     // bump the counter
     reactotronCounter++
 
@@ -52,6 +57,10 @@ export default (pluginConfig = {}) => reactotron => {
    * @param {*} xhr - The XMLHttpRequest instance.
    */
   function onResponse (status, timeout, response, url, type, xhr) {
+    if (xhr._skipReactotron) {
+      return
+    }
+
     // fetch and clear the request data from the cache
     const rid = xhr._trackingName
     const cachedRequest = requestCache[rid] || {}
