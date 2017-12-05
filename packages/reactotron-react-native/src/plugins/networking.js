@@ -27,7 +27,7 @@ export default (pluginConfig = {}) => reactotron => {
    * @param {*} instance - The XMLHTTPRequest instance.
    */
   function onSend (data, xhr) {
-    if (options.skipRequestUrls && test(options.skipRequestUrls, xhr._url)) {
+    if (options.ignoreUrls && test(options.ignoreUrls, xhr._url)) {
       xhr._skipReactotron = true
       return
     }

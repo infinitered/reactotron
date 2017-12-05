@@ -25,11 +25,11 @@ You're done.
 
 `networking()` also accepts an object with two options:
 - `ignoreContentTypes`: a regular expression which, when matched against the `Content-Type` response header, will prevent the data from being displayed in Reactotron.  You typically want to do this for images (which is the default).
-- `skipRequestUrls`: a regular expression which, when matched against the URL of the XHR, will prevent the request from being tracked in Reactotron. Can be useful for ignoring noisy logging requests.
+- `ignoreUrls`: a regular expression which, when matched against the URL of the XHR, will prevent the request from being tracked in Reactotron. Can be useful for ignoring noisy logging requests.
 
 ```js
 networking({
   ignoreContentTypes: /^(image)\/.*$/i,
-  skipRequestUrls: /\/(logs|symbolicate)$/,
+  ignoreUrls: /\/(logs|symbolicate)$/,
 })
 ```
