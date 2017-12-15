@@ -1170,6 +1170,10 @@ boom@5.x.x:
   dependencies:
     hoek "4.x.x"
 
+bowser@^1.7.3:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/bowser/-/bowser-1.8.1.tgz#49785777e7302febadb1a5b71d9a646520ed310d"
+
 brace-expansion@^1.1.7:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.8.tgz#c07b211c7c952ec1f8efd51a77ef0d1d3990a292"
@@ -1731,6 +1735,12 @@ css-color-names@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
 
+css-in-js-utils@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/css-in-js-utils/-/css-in-js-utils-2.0.0.tgz#5af1dd70f4b06b331f48d22a3d86e0786c0b9435"
+  dependencies:
+    hyphenate-style-name "^1.0.2"
+
 css-loader@^0.28.0:
   version "0.28.7"
   resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.28.7.tgz#5f2ee989dd32edd907717f953317656160999c1b"
@@ -1774,12 +1784,6 @@ css-selector-tokenizer@^0.7.0:
     cssesc "^0.1.0"
     fastparse "^1.1.1"
     regexpu-core "^1.0.0"
-
-css-vendor@^0.3.1:
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/css-vendor/-/css-vendor-0.3.8.tgz#6421cfd3034ce664fe7673972fd0119fc28941fa"
-  dependencies:
-    is-in-browser "^1.0.2"
 
 cssesc@^0.1.0:
   version "0.1.0"
@@ -3098,10 +3102,6 @@ hoek@4.x.x:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.0.tgz#72d9d0754f7fe25ca2d01ad8f8f9a9449a89526d"
 
-hoist-non-react-statics@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.1.0.tgz#3227305f91f338ae06a6271f00005299eaf41b2c"
-
 hoist-non-react-statics@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
@@ -3157,6 +3157,10 @@ http-signature@~1.2.0:
 https-browserify@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
+
+hyphenate-style-name@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz#31160a36930adaf1fc04c6074f7eb41465d4ec4b"
 
 iconv-lite@0.4.19, iconv-lite@~0.4.13:
   version "0.4.19"
@@ -3226,6 +3230,13 @@ inherits@2.0.1:
 ini@~1.3.0:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.4.tgz#0537cb79daf59b59a1a517dff706c86ec039162e"
+
+inline-style-prefixer@*:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/inline-style-prefixer/-/inline-style-prefixer-3.0.8.tgz#8551b8e5b4d573244e66a34b04f7d32076a2b534"
+  dependencies:
+    bowser "^1.7.3"
+    css-in-js-utils "^2.0.0"
 
 inquirer@^0.12.0:
   version "0.12.0"
@@ -3342,10 +3353,6 @@ is-glob@^2.0.0, is-glob@^2.0.1:
   resolved "https://registry.yarnpkg.com/is-glob/-/is-glob-2.0.1.tgz#d096f926a3ded5600f3fdfd91198cb0888c2d863"
   dependencies:
     is-extglob "^1.0.0"
-
-is-in-browser@^1.0.2:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/is-in-browser/-/is-in-browser-1.1.3.tgz#56ff4db683a078c6082eb95dad7dc62e1d04f835"
 
 is-my-json-valid@^2.10.0:
   version "2.16.1"
@@ -3571,28 +3578,6 @@ jsprim@^1.2.2:
     extsprintf "1.3.0"
     json-schema "0.2.3"
     verror "1.10.0"
-
-jss-camel-case@^1.0.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/jss-camel-case/-/jss-camel-case-1.1.0.tgz#bad8924370a4f3ef85c085f91cb0c9847bf4faab"
-
-jss-nested@^1.0.1:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/jss-nested/-/jss-nested-1.0.3.tgz#147b5c3c7b208709391c1516c8d02ab275c195de"
-
-jss-px@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/jss-px/-/jss-px-1.0.0.tgz#15a3de2e8963bb720dff1d8b4e2916f90abc6180"
-
-jss-vendor-prefixer@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/jss-vendor-prefixer/-/jss-vendor-prefixer-1.0.1.tgz#d764f04794cae77a2de1aeddc41436a714fab170"
-  dependencies:
-    css-vendor "^0.3.1"
-
-jss@^3.1.0:
-  version "3.11.1"
-  resolved "https://registry.yarnpkg.com/jss/-/jss-3.11.1.tgz#8b56f437f35d3371f276af679200df84ef31a23d"
 
 jsx-ast-utils@^1.3.4:
   version "1.4.1"
@@ -4047,6 +4032,12 @@ mute-stream@0.0.5:
 nan@^2.3.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.7.0.tgz#d95bf721ec877e08db276ed3fc6eb78f9083ad46"
+
+narcissus@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/narcissus/-/narcissus-1.0.0.tgz#2462a07c4598ce9065eb41b2abbdb30d0e30f46e"
+  dependencies:
+    inline-style-prefixer "*"
 
 natural-compare@^1.4.0:
   version "1.4.0"
@@ -5012,37 +5003,26 @@ react-icons@^2.2.1:
   dependencies:
     react-icon-base "2.1.0"
 
-react-json-tree@^0.10.7:
-  version "0.10.9"
-  resolved "https://registry.yarnpkg.com/react-json-tree/-/react-json-tree-0.10.9.tgz#7263173a2cc8bf05eac63b0419c3ce75b232e284"
+react-json-tree@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/react-json-tree/-/react-json-tree-0.11.0.tgz#f5b17e83329a9c76ae38be5c04fda3a7fd684a35"
   dependencies:
     babel-runtime "^6.6.1"
     prop-types "^15.5.8"
     react-base16-styling "^0.5.1"
 
-react-jss@^2.0.6:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/react-jss/-/react-jss-2.1.1.tgz#8c856b780825ca79f328f932ac4939444dacc450"
-  dependencies:
-    hoist-non-react-statics "1.1.0"
-
-react-modal-dialog@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/react-modal-dialog/-/react-modal-dialog-3.0.2.tgz#ea9b659d2fbcf7a4f8094717750fdeecb5aa9db0"
+react-modal-dialog@^4.0.7:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/react-modal-dialog/-/react-modal-dialog-4.0.7.tgz#3926da2dfa91ff09f2d3149549e8d6ee5cbad9b5"
   dependencies:
     active-event-stack "^1.0.0"
     classnames "^2.1.2"
     dynamics.js "^1.1.0"
     immutable "^3.7.4"
-    jss "^3.1.0"
-    jss-camel-case "^1.0.0"
-    jss-nested "^1.0.1"
-    jss-px "^1.0.0"
-    jss-vendor-prefixer "^1.0.0"
     keycode "^2.1.0"
     lodash "^3.9.3"
+    narcissus "^1.0.0"
     react-center-component "^3.0.0"
-    react-jss "^2.0.6"
 
 react-proxy@^1.1.7:
   version "1.1.8"
@@ -5771,7 +5751,7 @@ string_decoder@~1.0.3:
   dependencies:
     safe-buffer "~5.1.0"
 
-stringify-object@^3.0.0:
+stringify-object@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/stringify-object/-/stringify-object-3.2.1.tgz#2720c2eff940854c819f6ee252aaeb581f30624d"
   dependencies:
