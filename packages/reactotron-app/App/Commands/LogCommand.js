@@ -3,8 +3,25 @@ import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import Command from '../Shared/Command'
 import {
-  max, min, slice, is, join, take, replace, merge, map, split, last, takeLast,
-  lt, keys, length, pickBy, when, always, pipe, isNil
+  max,
+  min,
+  slice,
+  is,
+  join,
+  take,
+  replace,
+  merge,
+  map,
+  split,
+  last,
+  takeLast,
+  lt,
+  keys,
+  length,
+  pickBy,
+  when,
+  always,
+  isNil
 } from 'ramda'
 import { isNilOrEmpty, dotPath } from 'ramdasauce'
 import Colors from '../Theme/Colors'
@@ -338,16 +355,14 @@ class LogCommand extends Component {
     } else if (is(Object, message)) {
       const moreKeys = lt(OBJECT_KEYS_COUNT, length(keys(message)))
       let i = 0
-      const previewMessage = moreKeys
-        ? pickBy(() => i++ < OBJECT_KEYS_COUNT, message)
-        : message;
+      const previewMessage = moreKeys ? pickBy(() => i++ < OBJECT_KEYS_COUNT, message) : message
 
       const preview = stringifyObject(previewMessage, {
         transform: (obj, prop, originalResult) => {
           if (is(Object, obj[prop])) {
-            return '{...}';
+            return '{...}'
           } else {
-            return take(OBJECT_PROPERTY_PREVIEW_LENGTH, originalResult);
+            return take(OBJECT_PROPERTY_PREVIEW_LENGTH, originalResult)
           }
         }
       })

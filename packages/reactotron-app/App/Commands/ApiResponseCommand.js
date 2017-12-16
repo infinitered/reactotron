@@ -131,7 +131,7 @@ class ApiResponseCommand extends Component {
     const { duration } = payload
     const status = dotPath('response.status', payload)
     const url = dotPath('request.url', payload)
-    const smallUrl = pipe(replace(/^http(s):\/\/[^\/]+/i, ''), replace(/\?.*$/i, ''))(url)
+    const smallUrl = pipe(replace(/^http(s):\/\/[^/]+/i, ''), replace(/\?.*$/i, ''))(url)
     const method = toUpper(dotPath('request.method', payload) || '')
     const requestHeaders = dotPath('request.headers', payload)
     const responseHeaders = dotPath('response.headers', payload)
