@@ -2,18 +2,41 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import Command from '../Shared/Command'
-import { max, min, slice, is, join, take, replace, merge, map, split, last, takeLast } from 'ramda'
+import {
+  max,
+  min,
+  slice,
+  is,
+  join,
+  take,
+  replace,
+  merge,
+  map,
+  split,
+  last,
+  takeLast,
+  lt,
+  keys,
+  length,
+  pickBy,
+  when,
+  always,
+  isNil
+} from 'ramda'
 import { isNilOrEmpty, dotPath } from 'ramdasauce'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import Content from '../Shared/Content'
 import ReactTooltip from 'react-tooltip'
 import fs from 'fs'
+import stringifyObject from 'stringify-object'
 
 const PREVIEW_LENGTH = 500
 const SOURCE_LINES_UP = 3
 const SOURCE_LINES_DOWN = 3
 const SOURCE_FILE_PATH_COUNT = 3
+const OBJECT_KEYS_COUNT = 5
+const OBJECT_PROPERTY_PREVIEW_LENGTH = 80
 
 const getName = level => {
   switch (level) {
@@ -328,7 +351,25 @@ class LogCommand extends Component {
 
   getPreview (message) {
     if (typeof message === 'string') {
-      return `${take(PREVIEW_LENGTH, message)}`
+      return take(PREVIEW_LENGTH, message)
+    } else if (is(Object, message)) {
+      const moreKeys = lt(OBJECT_KEYS_COUNT, length(keys(message)))
+      let i = 0
+      const previewMessage = moreKeys ? pickBy(() => i++ < OBJECT_KEYS_COUNT, message) : message
+
+      const preview = stringifyObject(previewMessage, {
+        transform: (obj, prop, originalResult) => {
+          if (is(Object, obj[prop])) {
+            return '{...}'
+          } else {
+            return take(OBJECT_PROPERTY_PREVIEW_LENGTH, originalResult)
+          }
+        }
+      })
+
+      return when(always(moreKeys), replace(/\s\}$/i, ', ...}'))(preview)
+    } else if (isNil(message)) {
+      return String(message)
     }
     return null
   }
