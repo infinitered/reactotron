@@ -40,7 +40,7 @@ const COMMON_MATCHING_PATHS = [
 
 class Session {
   // commands to exlude in the timeline
-  @observable commandsHiddenInTimeline = []
+  @observable commandsHiddenInTimeline = JSON.parse(localStorage.getItem('commandsHiddenInTimeline')) || []
 
   // holds the last known state of the subscription values
   subscriptions = {}
@@ -137,6 +137,7 @@ class Session {
     } else {
       this.commandsHiddenInTimeline.push(commandType)
     }
+    localStorage.setItem('commandsHiddenInTimeline', JSON.stringify(this.commandsHiddenInTimeline))
     return !hidden
   }
 
