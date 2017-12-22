@@ -350,7 +350,7 @@ class LogCommand extends Component {
   }
 
   getPreview (message) {
-    if (typeof message === 'string') {
+    if (is(String, message)) {
       return take(PREVIEW_LENGTH, message)
     } else if (is(Object, message)) {
       const moreKeys = lt(OBJECT_KEYS_COUNT, length(keys(message)))
@@ -368,7 +368,7 @@ class LogCommand extends Component {
       })
 
       return when(always(moreKeys), replace(/\s\}$/i, ', ...}'))(preview)
-    } else if (isNil(message)) {
+    } else if (isNil(message) || is(Boolean, message) || is(Number, message)) {
       return String(message)
     }
     return null
