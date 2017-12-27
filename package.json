@@ -5,7 +5,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
-    "build": "lerna run build --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce' --scope 'reactotron-react-native' --scope 'reactotron-react-js'",
+    "build": "lerna run build --scope 'reactotron-core-*' --scope 'reactotron-mst' --scope 'reactotron-redux*' --scope 'reactotron-apisauce' --scope 'reactotron-react-native' --scope 'reactotron-react-js'",
     "copy-internal-deps": "cd packages/demo-react-native && ./copy-internal-deps.sh && cd ../..",
     "test": "lerna run test --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce'",
     "lint": "lerna run lint",
