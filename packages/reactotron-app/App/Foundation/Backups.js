@@ -56,7 +56,7 @@ class Backups extends Component {
     return (
       <Empty icon='import-export' title='No Snapshots'>
         <p>
-          To take a snapshot of your current Redux store, press the Download button in the top right
+          To take a snapshot of your current redux or mobx-state-tree store, press the Download button in the top right
           corner of this window.
         </p>
       </Empty>
