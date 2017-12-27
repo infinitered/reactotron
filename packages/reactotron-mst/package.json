@@ -21,8 +21,7 @@
   "homepage": "https://github.com/reactotron/reactotron",
   "files": [
     "dist",
-    "LICENSE",
-    "README.md"
+    "LICENSE"
   ],
   "lint-staged": {
     "*.ts": ["prettier --write", "tslint --fix", "git add"],
