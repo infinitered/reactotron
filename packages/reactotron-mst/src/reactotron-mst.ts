@@ -118,8 +118,7 @@ export function mst(opts: MstPluginOptions = {}) {
           trackedNodes[nodeName] = { node, modelType }
           attachReactotronToMstNode(node)
         }
-      } catch (e) {
-        // TODO: figure out the warning system.
+      } catch {
       }
     }
 
@@ -138,7 +137,6 @@ export function mst(opts: MstPluginOptions = {}) {
        */
       addMiddleware(node, (call: any, next: any) => {
         const path = getPath(call.context)
-        const displayPath = replace(/^\./, "", replace("/", ".", path))
 
         // action related data
         const action = { args: call.args, name: call.name, path }
@@ -164,10 +162,14 @@ export function mst(opts: MstPluginOptions = {}) {
         // measure the speed
         const ms = elapsed()
 
+        // add nice display name
+        const displayPath = replace(/^\./, "", replace("/", ".", path))
+        let name = replace(/^\./, "", `${nodeName ? nodeName : ""}${displayPath}.${call.name}`)
+
         // fire this off to reactotron
         if (!restoring) {
           reactotron.send("state.action.complete", {
-            name: `${nodeName ? nodeName : ""}${displayPath}.${call.name}`,
+            name,
             action,
             mst: mstPayload,
             ms,
@@ -287,6 +289,7 @@ export function mst(opts: MstPluginOptions = {}) {
      * @param node The tree to grab the state data from
      */
     function sendSubscriptions(state: any) {
+      // this is unreadable
       const changes = pipe(
         map(when(isNil, always(""))) as any,
         filter(endsWith(".*")),
@@ -309,9 +312,7 @@ export function mst(opts: MstPluginOptions = {}) {
         })),
       )(subscriptions)
 
-      // if (!isEmpty(changes)) {
       reactotron.stateValuesChange(changes)
-      // }
     }
 
     // --- Reactotron Hooks ---------------------------------
