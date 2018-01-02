@@ -118,8 +118,7 @@ export function mst(opts: MstPluginOptions = {}) {
           trackedNodes[nodeName] = { node, modelType }
           attachReactotronToMstNode(node)
         }
-      } catch {
-      }
+      } catch {}
     }
 
     /**
@@ -135,7 +134,7 @@ export function mst(opts: MstPluginOptions = {}) {
       /**
        * Make some middleware that allows us to track actions.
        */
-      addMiddleware(node, (call: any, next: any) => {
+      addMiddleware(node, (call, next) => {
         const path = getPath(call.context)
 
         // action related data
