@@ -20,6 +20,7 @@ import {
   endsWith,
   filter,
   flatten,
+  has,
   identity,
   is,
   isEmpty,
@@ -41,6 +42,24 @@ import {
 
 const dotPath = (fullPath: string, o: any) => path(split(".", fullPath), o)
 const isNilOrEmpty = (value: any) => isNil(value) || isEmpty(value)
+const isReactNativeEvent = (value: any) =>
+  has("nativeEvent", value) && has("target", value) && has("type", value)
+
+/**
+ * Sadly, this protects calls from endless stack traces.  We have to filter
+ * out some things that are known circular troublemakers.
+ *
+ * @param args A call's args.
+ */
+const convertUnsafeArguments = (args: any) => {
+  const theseArgs = Array.isArray(args) ? args : [args]
+  return theseArgs.map((arg: any) => {
+    if (isReactNativeEvent(arg)) {
+      return "ReactNativeEvent"
+    }
+    return arg
+  })
+}
 
 // --- Interfaces ---------------------------------
 
@@ -135,10 +154,20 @@ export function mst(opts: MstPluginOptions = {}) {
        * Make some middleware that allows us to track actions.
        */
       addMiddleware(node, (call, next) => {
+        // only actions for now
+        const skip = call.type !== "action"
+
+        // skip this middleware?
+        if (skip) {
+          return next(call)
+        }
+
+        // grab the arguments
+        const args = convertUnsafeArguments(call.args)
         const path = getPath(call.context)
 
         // action related data
-        const action = { args: call.args, name: call.name, path }
+        const action = { args: args, name: call.name, path }
 
         // mst internal data
         const mstPayload = {
