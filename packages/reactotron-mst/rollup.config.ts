@@ -13,7 +13,7 @@ export default {
     { file: pkg.main, name: camelCase(libraryName), format: "umd", sourcemap: true },
     { file: pkg.module, format: "es", sourcemap: true },
   ],
-  external: ["ramda"],
+  external: ["ramda", "mobx-state-tree", "mobx"],
   watch: {
     include: "dist/es/**",
   },
