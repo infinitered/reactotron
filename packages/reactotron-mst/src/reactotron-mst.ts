@@ -162,9 +162,9 @@ export function mst(opts: MstPluginOptions = {}) {
         const ms = elapsed()
 
         // add nice display name
-        const displayPath = replace(/^\./, "", replace("/", ".", path))
-        let name = replace(/^\./, "", `${nodeName ? nodeName : ""}${displayPath}.${call.name}`)
-
+        const displayPath = replace(/^\./, "", replace(/\//g, ".", path))
+        let name = replace(/^\./, "", `${nodeName ? nodeName : ""}${displayPath}.${call.name}()`)
+        name = replace("/", ".", name)
         // fire this off to reactotron
         if (!restoring) {
           reactotron.send("state.action.complete", {
