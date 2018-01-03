@@ -67,13 +67,13 @@ class Sidebar extends Component {
               onClick={this.handleClickTimeline}
             />
             <SidebarButton
-              text='Redux Subscriptions'
+              text='State Subscriptions'
               icon='notifications-none'
               isActive={ui.tab === 'subscriptions'}
               onClick={this.handleClickSubscriptions}
             />
             <SidebarButton
-              text='Redux Snapshots'
+              text='State Snapshots'
               icon='import-export'
               isActive={ui.tab === 'backups'}
               onClick={this.handleClickBackups}

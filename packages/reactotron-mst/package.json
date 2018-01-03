@@ -1,0 +1,65 @@
+{
+  "name": "reactotron-mst",
+  "version": "1.14.0",
+  "description": "A Reactotron plugin for mobx-state-tree.",
+  "main": "dist/reactotron-mst.umd.js",
+  "module": "dist/reactotron-mst.es5.js",
+  "typings": "dist/types/reactotron-mst.d.ts",
+  "scripts": {
+    "prepare": "yarn build",
+    "prebuild": "rimraf dist",
+    "build": "tsc && tsc --module commonjs --outDir dist/lib && rollup -c rollup.config.ts",
+    "lint": "tslint -p .",
+    "precommit": "lint-staged"
+  },
+  "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-mst",
+  "author": "Steve Kellock",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reactotron/reactotron/issues"
+  },
+  "homepage": "https://github.com/reactotron/reactotron",
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "tslint --fix",
+      "git add"
+    ],
+    "*.md": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^8.5.2",
+    "@types/ramda": "^0.25.9",
+    "husky": "^0.14.3",
+    "lint-staged": "^6.0.0",
+    "mobx": "^3.4.1",
+    "mobx-state-tree": "^1.3.1",
+    "prettier": "^1.9.2",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.53.0",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "tslint": "^5.8.0",
+    "tslint-config-prettier": "^1.6.0",
+    "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "ramda": "^0.25.0"
+  },
+  "peerDependencies": {
+    "mobx": "^3.4.1",
+    "mobx-state-tree": "^1.3.1"
+  }
+}

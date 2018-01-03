@@ -32,7 +32,7 @@ const GROUPS = [
     items: [{ value: 'asyncStorage.values.change', text: 'Changes' }]
   },
   {
-    name: 'Redux & Sagas',
+    name: 'State & Sagas',
     items: [
       { value: 'state.action.complete', text: 'Action' },
       { value: 'saga.task.complete', text: 'Saga' },

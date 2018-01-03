@@ -4,7 +4,7 @@ import AppStyles from '../Theme/AppStyles'
 import { inject, observer } from 'mobx-react'
 import IconAdd from 'react-icons/lib/md/file-download'
 
-const TITLE = 'Redux Snapshots'
+const TITLE = 'State Snapshots'
 
 const toolbarButton = {
   cursor: 'pointer'
