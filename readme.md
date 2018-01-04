@@ -17,7 +17,7 @@ Use it to:
 * display messages similar to `console.log`
 * track global errors with source-mapped stack traces including saga stack traces!
 * dispatch actions like a government-run mind control experiment
-* hot swap your app's state
+* hot swap your app's state using Redux or mobx-state-tree
 * track your sagas
 * show image overlay in React Native
 * track your Async Storage in React Native
@@ -40,6 +40,7 @@ Reactotron on the left, demo React Native app on the right.
 * [Image Overlays](./docs/plugin-overlay.md)
 * [Async Storage](./docs/plugin-async-storage.md)
 * [Networking](./docs/plugin-networking.md)
+* Integrating with [mobx-state-tree](./docs/plugin-mst.md)
 * Integrating with [Redux](./docs/plugin-redux.md)
 * Integrating with [Redux Saga](./docs/plugin-redux-saga.md)
 * Networking monitoring with [Apisauce](./docs/plugin-apisauce.md)
@@ -51,7 +52,7 @@ Reactotron on the left, demo React Native app on the right.
 
 * API Docs
 * Creating your own plugins
-* The JSON interface between client & server (coming soon...)
+* The JSON interface between client & server
 * What's Inside This Repo?
 * Contributors Quick Start
 

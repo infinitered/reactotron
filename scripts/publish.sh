@@ -14,6 +14,9 @@ npm publish
 cd ../reactotron-redux
 npm run build
 npm publish
+cd ../reactotron-mst
+npm run build
+npm publish
 cd ../reactotron-react-js
 npm run build
 npm publish

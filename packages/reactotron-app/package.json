@@ -2,7 +2,7 @@
   "private": true,
   "name": "reactotron-app",
   "productName": "Reactotron",
-  "version": "1.14.0",
+  "version": "1.15.0",
   "description": "Reactotron desktop mode engage!",
   "main": "main.js",
   "scripts": {
@@ -100,6 +100,9 @@
     "stringify-object": "^3.2.1"
   },
   "standard": {
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "globals": [
+      "localStorage"
+    ]
   }
 }

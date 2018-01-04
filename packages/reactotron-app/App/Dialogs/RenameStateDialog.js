@@ -8,7 +8,7 @@ const ESCAPE_KEYSTROKE = 'Esc'
 const ESCAPE_HINT = 'Cancel'
 const ENTER_KEYSTROKE = `Enter`
 const ENTER_HINT = 'Rename'
-const DIALOG_TITLE = 'Rename Redux Snapshot'
+const DIALOG_TITLE = 'Rename State Snapshot'
 const INPUT_PLACEHOLDER = ''
 const FIELD_LABEL = 'New Name'
 

@@ -80,7 +80,7 @@ class WatchPanel extends Component {
     return (
       <Empty icon='notifications-none' title='No Subscriptions'>
         <p style={Styles.message}>
-          You can subscribe to state changes in your redux store by pressing{' '}
+          You can subscribe to state changes in your redux or mobx-state-tree store by pressing{' '}
           <Key text={Keystroke.modifierName} /> + <Key text='N' />.
         </p>
       </Empty>

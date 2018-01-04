@@ -5,7 +5,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
-    "build": "lerna run build --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce' --scope 'reactotron-react-native' --scope 'reactotron-react-js'",
+    "build": "lerna run build --scope 'reactotron-core-*' --scope 'reactotron-mst' --scope 'reactotron-redux*' --scope 'reactotron-apisauce' --scope 'reactotron-react-native' --scope 'reactotron-react-js'",
     "copy-internal-deps": "cd packages/demo-react-native && ./copy-internal-deps.sh && cd ../..",
     "test": "lerna run test --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce'",
     "lint": "lerna run lint",
@@ -17,7 +17,7 @@
     "babel-eslint": "^8.0.1",
     "husky": "^0.14.3",
     "jest": "^21.2.1",
-    "lerna": "^2.4.0",
+    "lerna": "^2.5.1",
     "lint-staged": "^4.2.3",
     "prettier": "^1.7.4",
     "standard": "^10.0.3",
