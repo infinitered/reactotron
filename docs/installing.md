@@ -26,7 +26,7 @@ brew cask install reactotron
 
 To update an existing installation of reactotron via brew, type:
 
-``
+```
 brew cask reinstall reactotron
 ```
 
