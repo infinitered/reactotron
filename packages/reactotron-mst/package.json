@@ -1,6 +1,6 @@
 {
   "name": "reactotron-mst",
-  "version": "1.14.0",
+  "version": "1.15.0",
   "description": "A Reactotron plugin for mobx-state-tree.",
   "main": "dist/reactotron-mst.umd.js",
   "module": "dist/reactotron-mst.es5.js",
