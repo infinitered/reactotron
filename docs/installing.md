@@ -24,6 +24,12 @@ Then simply type:
 brew cask install reactotron
 ```
 
+To update an existing installation of reactotron via brew, type:
+
+```
+brew cask reinstall reactotron
+```
+
 # Install the CLI
 
 If you like to kick it old-school and use the terminal, Reactotron is available via [NPM](https://www.npmjs.com/).
