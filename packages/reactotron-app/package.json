@@ -99,6 +99,9 @@
     "stringify-object": "^3.0.0"
   },
   "standard": {
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "globals": [
+      "localStorage"
+    ]
   }
 }
