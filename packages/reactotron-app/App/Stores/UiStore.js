@@ -66,8 +66,9 @@ class UI {
   // from the command toolbar to the command
   commandProperties = {}
 
-  constructor (server) {
+  constructor (server, commandsManager) {
     this.server = server
+    this.commandsManager = commandsManager
 
     Mousetrap.prototype.stopCallback = () => false
 
@@ -322,7 +323,7 @@ class UI {
 
   @action
   reset = () => {
-    this.server.commands.all.clear()
+    this.commandsManager.all.clear()
   }
 
   @action
@@ -336,17 +337,17 @@ class UI {
 
   @action
   getStateValues = path => {
-    this.server.stateValuesRequest(path)
+    this.server.send('state.values.request', { path })
   }
 
   @action
   getStateKeys = path => {
-    this.server.stateKeysRequest(path)
+    this.server.send('state.keys.request', { path })
   }
 
   @action
   dispatchAction = action => {
-    this.server.stateActionDispatch(action)
+    this.server.send('state.action.dispatch', { action })
   }
 
   @action
@@ -374,15 +375,15 @@ class UI {
   }
 
   // grab a copy of the state for backup purposes
-  @action backupState = () => this.server.stateBackupRequest()
+  @action backupState = () => this.server.send('state.backup.request', {})
 
   // change the state on the app to this
-  @action restoreState = state => this.server.stateRestoreRequest(state)
+  @action restoreState = state => this.server.send('state.restore.request', { state })
 
   // removes an existing state object
   @action
   deleteState = state => {
-    this.server.commands['state.backup.response'].remove(state)
+    this.commandsManager['state.backup.response'].remove(state)
   }
 
   getCommandProperty = (messageId, key) => {
@@ -407,7 +408,7 @@ class UI {
   /**
    * Asks the client to the file in the editor
    */
-  @action openInEditor = (file, lineNumber) => this.server.openInEditor({ file, lineNumber })
+  @action openInEditor = (file, lineNumber) => this.server.send('editor.open', { file, lineNumber })
 
   /**
    * Sets the properties of the overlay shown on the React Native app.

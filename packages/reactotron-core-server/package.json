@@ -2,60 +2,58 @@
   "name": "reactotron-core-server",
   "version": "1.13.0",
   "description": "Grants Reactotron servers the ability to talk to a Reactotron client.",
-  "main": "dist/index.js",
+  "main": "dist/reactotron-core-server.js",
   "scripts": {
-    "test": "ava",
-    "watch": "ava --watch",
-    "coverage": "nyc ava",
-    "build": "rollup -c",
-    "lint": "standard"
+    "compile": "tsc",
+    "test": "jest",
+    "build": "npm-run-all clean compile rollup",
+    "rollup": "rollup -c",
+    "clean": "trash dist compiled",
+    "lint": "tslint -c ../../tslint.json -p tsconfig.json",
+    "build:watch": "node watch.js"
   },
-  "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-core-server",
+  "repository": "infinitered/reactotron",
   "author": "Steve Kellock",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/reactotron/reactotron/issues"
+    "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/reactotron/reactotron",
-  "files": [
-    "dist",
-    "LICENSE",
-    "README.md"
-  ],
+  "homepage": "https://github.com/infinitered/reactotron",
+  "files": ["dist", "LICENSE", "README.md"],
+  "typings": "dist/types/reactotron-core-server.d.ts",
   "devDependencies": {
-    "ava": "^0.20.0",
-    "babel-core": "^6.25.0",
-    "babel-eslint": "^7.2.3",
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-plugin-transform-runtime": "^6.22.0",
-    "babel-preset-es2015": "^6.22.0",
-    "babel-preset-es2015-rollup": "^3.0.0",
-    "babel-preset-stage-0": "^6.24.1",
-    "nyc": "^11.0.3",
-    "rollup": "^0.43.0",
-    "rollup-plugin-babel": "^2.6.1",
-    "standard": "^10.0.2"
-  },
-  "ava": {
-    "require": [
-      "babel-core/register"
-    ],
-    "babel": {
-      "babelrc": false,
-      "presets": [
-        "es2015",
-        "stage-1"
-      ]
-    }
-  },
-  "standard": {
-    "parser": "babel-eslint"
+    "@types/jest": "^21.1.2",
+    "@types/node": "^8.0.34",
+    "@types/ramda": "^0.24.17",
+    "@types/ws": "^3.2.0",
+    "execa": "^0.8.0",
+    "get-port": "^3.2.0",
+    "jest": "^21.2.1",
+    "node-watch": "^0.5.4",
+    "npm-run-all": "^4.1.1",
+    "prettier": "^1.7.4",
+    "rollup": "^0.50.0",
+    "rollup-plugin-commonjs": "^8.2.1",
+    "rollup-plugin-filesize": "^1.4.2",
+    "rollup-plugin-ramda": "^1.0.5",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-uglify": "^2.0.1",
+    "trash-cli": "^1.4.0",
+    "ts-jest": "^21.1.2",
+    "tslib": "^1.8.0",
+    "tslint": "^5.7.0",
+    "typescript": "^2.5.3"
   },
   "dependencies": {
-    "mobx": "^2.5.1",
-    "ramda": "^0.24.1",
-    "ramdasauce": "^2.0.0",
-    "socket.io": "~1.7.3"
+    "mitt": "^1.1.2",
+    "ramda": "^0.25.0",
+    "ws": "^3.2.0"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "./node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": ["ts", "tsx", "js"]
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { ModalPortal, ModalBackground, ModalDialog } from 'react-modal-dialog'
+import Modal from 'react-modal'
 import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
@@ -29,7 +29,6 @@ const Styles = {
   dialog: {
     borderRadius: 4,
     padding: 4,
-    width: 450,
     backgroundColor: Colors.background,
     color: Colors.foreground
   },
@@ -94,7 +93,7 @@ const Styles = {
 @inject('session')
 @observer
 class StateKeysAndValuesDialog extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       path: null
@@ -115,55 +114,55 @@ class StateKeysAndValuesDialog extends Component {
     }
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     const field = ReactDOM.findDOMNode(this.field)
 
     field && field.focus()
   }
 
-  render () {
+  render() {
     const { ui } = this.props.session
     const open = ui.showStateFindDialog
     const isKeys = ui.keysOrValues === 'keys'
     if (!open) return null
 
     return (
-      <ModalPortal>
-        <ModalBackground onClose={ui.closeStateFindDialog}>
-          <ModalDialog style={Styles.dialog}>
-            <div style={Styles.container}>
-              <div style={Styles.header}>
-                <h1 style={Styles.title}>{isKeys ? DIALOG_TITLE_KEYS : DIALOG_TITLE_VALUES}</h1>
-                <p style={Styles.subtitle}>
-                  {isKeys ? STATE_KEYS_INSTRUCTIONS : STATE_VALUES_INSTRUCTIONS}
-                </p>
-              </div>
-              <div style={Styles.body}>
-                <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
-                <input
-                  placeholder={INPUT_PLACEHOLDER}
-                  style={Styles.textField}
-                  type='text'
-                  ref={node => (this.field = node)}
-                  onKeyPress={this.handleKeyPress}
-                  onChange={this.handleChange}
-                />
-              </div>
-              <div style={Styles.keystrokes}>
-                <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
-                </div>
-                <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{TAB_KEYSTROKE}</span> {TAB_HINT}
-                </div>
-                <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
-                </div>
-              </div>
+      <Modal
+        isOpen
+        onRequestClose={ui.closeStateFindDialog}
+        style={{ content: Styles.dialog, overlay: { zIndex: 5 } }}
+      >
+        <div style={Styles.container}>
+          <div style={Styles.header}>
+            <h1 style={Styles.title}>{isKeys ? DIALOG_TITLE_KEYS : DIALOG_TITLE_VALUES}</h1>
+            <p style={Styles.subtitle}>
+              {isKeys ? STATE_KEYS_INSTRUCTIONS : STATE_VALUES_INSTRUCTIONS}
+            </p>
+          </div>
+          <div style={Styles.body}>
+            <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
+            <input
+              placeholder={INPUT_PLACEHOLDER}
+              style={Styles.textField}
+              type='text'
+              ref={node => (this.field = node)}
+              onKeyPress={this.handleKeyPress}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div style={Styles.keystrokes}>
+            <div style={Styles.hotkey}>
+              <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
             </div>
-          </ModalDialog>
-        </ModalBackground>
-      </ModalPortal>
+            <div style={Styles.hotkey}>
+              <span style={Styles.keystroke}>{TAB_KEYSTROKE}</span> {TAB_HINT}
+            </div>
+            <div style={Styles.hotkey}>
+              <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
+            </div>
+          </div>
+        </div>
+      </Modal>
     )
   }
 }

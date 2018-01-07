@@ -22,8 +22,8 @@
     "README.md"
   ],
   "peerDependencies": {
-    "react": ">=15.3.0",
-    "react-dom": ">=15.3.0"
+    "react": ">=15.4.0",
+    "react-dom": ">=15.4.0"
   },
   "devDependencies": {
     "ava": "^0.19.1",
@@ -60,7 +60,6 @@
     ]
   },
   "dependencies": {
-    "json-stringify-safe": "^5.0.1",
     "ramda": "^0.23.0",
     "ramdasauce": "^1.2.0",
     "reactotron-core-client": "^1.13.0",

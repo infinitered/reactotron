@@ -1,5 +1,5 @@
 import React from 'react'
-import { ModalPortal, ModalBackground, ModalDialog } from 'react-modal-dialog'
+import Modal from 'react-modal'
 import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
@@ -45,7 +45,6 @@ const Styles = {
   dialog: {
     borderRadius: 4,
     padding: 4,
-    width: 450,
     backgroundColor: Colors.background,
     color: Colors.foreground
   },
@@ -162,23 +161,23 @@ const FilterTimelineDialog = inject('session')(
     })
 
     return (
-      <ModalPortal>
-        <ModalBackground onClose={ui.closeFilterTimelineDialog}>
-          <ModalDialog style={Styles.dialog}>
-            <div style={Styles.container}>
-              <div style={Styles.header}>
-                <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
-              </div>
-              <div style={Styles.body}>{groups}</div>
-              <div style={Styles.keystrokes}>
-                <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
-                </div>
-              </div>
+      <Modal
+        isOpen
+        onRequestClose={ui.closeFilterTimelineDialog}
+        style={{ content: Styles.dialog, overlay: { zIndex: 5 } }}
+      >
+        <div style={Styles.container}>
+          <div style={Styles.header}>
+            <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
+          </div>
+          <div style={Styles.body}>{groups}</div>
+          <div style={Styles.keystrokes}>
+            <div style={Styles.hotkey}>
+              <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
             </div>
-          </ModalDialog>
-        </ModalBackground>
-      </ModalPortal>
+          </div>
+        </div>
+      </Modal>
     )
   })
 )

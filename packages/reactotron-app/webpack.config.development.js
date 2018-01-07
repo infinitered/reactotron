@@ -4,8 +4,6 @@ import baseConfig from './webpack.config.base'
 const config = {
   ...baseConfig,
 
-  debug: true,
-
   devtool: 'cheap-module-eval-source-map',
 
   entry: ['webpack-hot-middleware/client?path=http://localhost:3001/__webpack_hmr', './App/index'],

@@ -1,0 +1,11 @@
+{
+  "extends": ["tslint-react-recommended"],
+  "rules": {
+    "ordered-imports": [false],
+    "quotemark": [true, "single", "jsx-single", "avoid-escape"],
+    "semicolon": [true, "never"],
+    "member-access": [false],
+    "member-ordering": [false],
+    "trailing-comma": [true, { "singleline": "never" }]
+  }
+}
