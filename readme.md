@@ -4,6 +4,12 @@
 
 [Less Talk More Action](./docs/installing.md)
 
+# Looking for Version 1?
+
+We're in the process of rolling out v2, so that's merged into `master` now.
+
+[Version 1.x](https://github.com/infinitered/reactotron/tree/v1.x) is located here if you're looking for what's currently shipping!
+
 # What is Reactotron?
 
 A macOS, Windows, and Linux app for inspecting your [React JS](https://facebook.github.io/react/) and [React Native](https://facebook.github.io/react-native/) apps.
