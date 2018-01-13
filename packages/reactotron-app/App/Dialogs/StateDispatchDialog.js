@@ -88,13 +88,13 @@ class StateDispatchDialog extends Component {
     session.ui.actionToDispatch = e.target.value
   }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     const field = ReactDOM.findDOMNode(this.field)
 
     field && field.focus()
   }
 
-  render() {
+  render () {
     const { ui } = this.props.session
     if (!ui.showStateDispatchDialog) return null
 

@@ -6,8 +6,6 @@ import networking from './plugins/networking'
 import { createClient } from 'reactotron-core-client'
 import getHost from 'rn-host-detect'
 
-
-
 export { trackGlobalErrors, openInEditor, overlay, asyncStorage, networking }
 // ---------------------
 // DEFAULT CONFIGURATION
