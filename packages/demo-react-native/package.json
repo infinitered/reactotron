@@ -6,7 +6,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "haul:ios": "haul start --platform ios",
     "haul:android": "haul start --platform android",
-    "test": "jest"
+    "test": "jest",
+    "storybook": "storybook start -p 7007 --skip-packager"
   },
   "dependencies": {
     "apisauce": "^0.14.0",
@@ -36,7 +37,14 @@
     "haul-cli": "^0.6.0",
     "jest": "^20.0.4",
     "react-test-renderer": "16.0.0-alpha.12",
-    "standard": "^10.0.2"
+    "standard": "^10.0.2",
+    "@storybook/react-native": "^3.3.9",
+    "@storybook/addon-actions": "^3.3.9",
+    "@storybook/addon-links": "^3.3.9",
+    "@storybook/addons": "^3.3.9",
+    "babel-core": "^6.26.0",
+    "react-dom": "16.0.0-alpha.12",
+    "prop-types": "^15.6.0"
   },
   "jest": {
     "preset": "react-native"

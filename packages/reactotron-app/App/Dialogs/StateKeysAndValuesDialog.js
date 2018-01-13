@@ -93,7 +93,7 @@ const Styles = {
 @inject('session')
 @observer
 class StateKeysAndValuesDialog extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       path: null
@@ -114,13 +114,13 @@ class StateKeysAndValuesDialog extends Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     const field = ReactDOM.findDOMNode(this.field)
 
     field && field.focus()
   }
 
-  render() {
+  render () {
     const { ui } = this.props.session
     const open = ui.showStateFindDialog
     const isKeys = ui.keysOrValues === 'keys'

@@ -3,12 +3,11 @@ import openInEditor from './plugins/open-in-editor'
 import overlay from './plugins/overlay'
 import asyncStorage from './plugins/async-storage'
 import networking from './plugins/networking'
+import storybook from './plugins/storybook'
 import { createClient } from 'reactotron-core-client'
 import getHost from 'rn-host-detect'
 
-
-
-export { trackGlobalErrors, openInEditor, overlay, asyncStorage, networking }
+export { trackGlobalErrors, openInEditor, overlay, asyncStorage, networking, storybook }
 // ---------------------
 // DEFAULT CONFIGURATION
 // ---------------------
@@ -58,6 +57,10 @@ reactotron.useReactNative = (options = {}) => {
 
   if (options.networking !== false) {
     reactotron.use(networking(options.networking))
+  }
+
+  if (options.storybook !== false) {
+    reactotron.use(storybook())
   }
 
   return reactotron
