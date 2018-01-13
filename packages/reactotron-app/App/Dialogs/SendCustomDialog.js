@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { ModalPortal, ModalBackground, ModalDialog } from 'react-modal-dialog'
+import Modal from 'react-modal'
 import { inject, observer } from 'mobx-react'
 import AppStyles from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
@@ -19,7 +19,6 @@ const Styles = {
   dialog: {
     borderRadius: 4,
     padding: 4,
-    width: 450,
     backgroundColor: Colors.background,
     color: Colors.foreground
   },
@@ -107,7 +106,7 @@ class SendCustomDialog extends Component {
     session.ui.setCustomMessage(e.target.value)
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     const field = ReactDOM.findDOMNode(this.field)
 
     field && field.focus()
@@ -120,51 +119,51 @@ class SendCustomDialog extends Component {
     e.preventDefault()
   }
 
-  render () {
+  render() {
     const { ui } = this.props.session
     if (!ui.showSendCustomDialog) return null
 
     return (
-      <ModalPortal>
-        <ModalBackground onClose={ui.closeSendCustomDialog}>
-          <ModalDialog style={Styles.dialog}>
-            <div style={Styles.container}>
-              <div style={Styles.header}>
-                <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
-                <div style={Styles.subtitle}>{INSTRUCTIONS}</div>
-              </div>
-              <div style={Styles.body}>
-                <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
-                <input
-                  placeholder={INPUT_PLACEHOLDER}
-                  style={Styles.textField}
-                  type='text'
-                  ref={node => (this.field = node)}
-                  value={ui.customMessage}
-                  onKeyPress={this.handleKeyPress}
-                  onChange={this.handleChange}
-                />
-                <small style={Styles.moreInfo}>
-                  See{' '}
-                  <a style={Styles.link} onClick={this.onMoreInfo}>
-                    this tip
+      <Modal
+        isOpen
+        onRequestClose={ui.closeSendCustomDialog}
+        style={{ content: Styles.dialog, overlay: { zIndex: 5 } }}
+      >
+        <div style={Styles.container}>
+          <div style={Styles.header}>
+            <h1 style={Styles.title}>{DIALOG_TITLE}</h1>
+            <div style={Styles.subtitle}>{INSTRUCTIONS}</div>
+          </div>
+          <div style={Styles.body}>
+            <label style={Styles.fieldLabel}>{FIELD_LABEL}</label>
+            <input
+              placeholder={INPUT_PLACEHOLDER}
+              style={Styles.textField}
+              type='text'
+              ref={node => (this.field = node)}
+              value={ui.customMessage}
+              onKeyPress={this.handleKeyPress}
+              onChange={this.handleChange}
+            />
+            <small style={Styles.moreInfo}>
+              See{' '}
+              <a style={Styles.link} onClick={this.onMoreInfo}>
+                this tip
                   </a>{' '}
-                  for creating your own middleware.
+              for creating your own middleware.
                 </small>
-              </div>
+          </div>
 
-              <div style={Styles.keystrokes}>
-                <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
-                </div>
-                <div style={Styles.hotkey}>
-                  <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
-                </div>
-              </div>
+          <div style={Styles.keystrokes}>
+            <div style={Styles.hotkey}>
+              <span style={Styles.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
             </div>
-          </ModalDialog>
-        </ModalBackground>
-      </ModalPortal>
+            <div style={Styles.hotkey}>
+              <span style={Styles.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
+            </div>
+          </div>
+        </div>
+      </Modal>
     )
   }
 }
