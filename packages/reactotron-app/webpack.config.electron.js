@@ -19,9 +19,10 @@ export default {
         warnings: false
       }
     }),
-    new webpack.BannerPlugin('require("source-map-support").install()', {
+    new webpack.BannerPlugin({
+      banner: 'require("source-map-support").install()',
       raw: true,
-      entryOnly: false
+      entryOnly: true
     }),
     new webpack.DefinePlugin({
       'process.env': {

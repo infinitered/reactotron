@@ -4,7 +4,7 @@
 export default () => reactotron => {
   return {
     features: {
-      clear: () => reactotron.send('clear'),
+      clear: () => reactotron.send("clear"),
     },
   }
 }

@@ -1,2 +1,8 @@
-.vscode
-package.json
+**/.vscode
+**/android
+**/build
+**/compiled
+**/dist
+**/ios
+**/package.json
+**/release

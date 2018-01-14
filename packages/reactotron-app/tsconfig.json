@@ -4,6 +4,7 @@
     "module": "commonjs",
     "noImplicitAny": false,
     "removeComments": false,
+    "experimentalDecorators": true,
     "preserveConstEnums": true,
     "lib": ["es2015", "dom"],
     "sourceMap": true,
@@ -12,5 +13,5 @@
     "allowJs": true,
     "jsx": "react"
   },
-  "include": ["App/**/*"]
+  "include": ["App"]
 }

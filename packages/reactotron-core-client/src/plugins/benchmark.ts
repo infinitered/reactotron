@@ -1,4 +1,4 @@
-import { length, last } from 'ramda'
+import { length, last } from "ramda"
 
 /**
  * Runs small high-unscientific benchmarks for you.
@@ -17,7 +17,7 @@ export default () => reactotron => {
     steps.push({ title, time: 0, delta: 0 })
     const stop = stopTitle => {
       step(stopTitle)
-      reactotron.send('benchmark.report', { title, steps })
+      reactotron.send("benchmark.report", { title, steps })
     }
     return { step, stop, last: stop }
   }

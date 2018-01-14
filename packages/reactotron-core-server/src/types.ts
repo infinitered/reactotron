@@ -1,4 +1,4 @@
-import * as WebSocket from 'ws'
+import * as WebSocket from "ws"
 
 /**
  * Configuration options for the Reactotron server.
@@ -37,27 +37,27 @@ export type ServerEvent =
   /**
    * When a command arrives from a client.
    */
-  | 'command'
+  | "command"
 
   /**
    * The server has started.
    */
-  | 'start'
+  | "start"
 
   /**
    * The server has stopped.
    */
-  | 'stop'
+  | "stop"
 
   /**
    * A client has connected.
    */
-  | 'connect'
+  | "connect"
 
   /**
    * A client has disconnected.
    */
-  | 'disconnect'
+  | "disconnect"
 
 /**
  * A command.
