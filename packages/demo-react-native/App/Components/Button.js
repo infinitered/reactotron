@@ -4,12 +4,6 @@ import Styles from './Styles/ButtonStyles'
 import { merge } from 'ramda'
 
 class Button extends Component {
-  static propTypes = {
-    onPress: PropTypes.func,
-    text: PropTypes.string,
-    style: PropTypes.object
-  }
-
   render () {
     const containerStyle = this.props.style
       ? merge(Styles.container, this.props.style)
@@ -21,6 +15,12 @@ class Button extends Component {
       </TouchableOpacity>
     )
   }
+}
+
+Button.propTypes = {
+  onPress: PropTypes.func,
+  text: PropTypes.string,
+  style: PropTypes.object
 }
 
 export default Button

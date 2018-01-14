@@ -10,7 +10,7 @@ import { Actions as StartupActions } from '../Redux/StartupRedux'
 import { Actions as ErrorActions } from '../Redux/ErrorRedux'
 import makeErrorForFun from '../Lib/ErrorMaker'
 import RNViewShot from 'react-native-view-shot'
-import { getStorybookUI, configure } from '@storybook/react-native';
+import { getStorybookUI, configure } from '@storybook/react-native'
 
 class RootContainer extends Component {
   constructor (props) {
@@ -200,14 +200,14 @@ const mapDispatchToProps = dispatch => ({
  * That is an exercise for the consumer though
  */
 configure(() => {
-  require('../../storybook/stories');
-}, module);
+  require('../../storybook/stories')
+}, module)
 
-const StorybookUIRoot = getStorybookUI({ port: 7007, onDeviceUI: true });
+const StorybookUIRoot = getStorybookUI({ port: 7007, onDeviceUI: true })
 
 class StorybookUIHMRRoot extends Component {
-  render() {
-    return <StorybookUIRoot />;
+  render () {
+    return <StorybookUIRoot />
   }
 }
 

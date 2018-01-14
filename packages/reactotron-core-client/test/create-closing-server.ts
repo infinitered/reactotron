@@ -1,4 +1,4 @@
-import * as WebSocket from 'ws'
+import * as WebSocket from "ws"
 
 /**
  * A server which shuts down after somebody connects.
@@ -8,7 +8,7 @@ import * as WebSocket from 'ws'
  */
 export function createClosingServer(port: number, onDone?: () => void) {
   const wss = new WebSocket.Server({ port })
-  wss.on('connection', () => {
+  wss.on("connection", () => {
     wss.close()
     onDone && onDone()
   })

@@ -9,6 +9,7 @@
     "build": "npm-run-all clean compile rollup",
     "rollup": "rollup -c",
     "clean": "trash dist compiled",
+    "format": "prettier --write {**,.}/*.ts && tslint -p . --fix",
     "lint": "tslint -c ../../tslint.json -p tsconfig.json",
     "build:watch": "node watch.js"
   },

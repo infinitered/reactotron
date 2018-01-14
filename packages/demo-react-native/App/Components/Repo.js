@@ -7,20 +7,6 @@ import { merge } from 'ramda'
 const ROTATION = { inputRange: [0, 1], outputRange: ['0deg', '360deg'] }
 
 class Repo extends Component {
-  static propTypes = {
-    repo: PropTypes.string,
-    name: PropTypes.string,
-    avatar: PropTypes.string,
-    message: PropTypes.string,
-    bigger: PropTypes.func,
-    smaller: PropTypes.func,
-    faster: PropTypes.func,
-    slower: PropTypes.func,
-    reset: PropTypes.func,
-    size: PropTypes.number,
-    speed: PropTypes.number
-  }
-
   constructor (props) {
     super(props)
     this.state = {
@@ -95,6 +81,20 @@ class Repo extends Component {
       </View>
     )
   }
+}
+
+Repo.propTypes = {
+  repo: PropTypes.string,
+  name: PropTypes.string,
+  avatar: PropTypes.string,
+  message: PropTypes.string,
+  bigger: PropTypes.func,
+  smaller: PropTypes.func,
+  faster: PropTypes.func,
+  slower: PropTypes.func,
+  reset: PropTypes.func,
+  size: PropTypes.number,
+  speed: PropTypes.number
 }
 
 export default Repo

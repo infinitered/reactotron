@@ -6,6 +6,7 @@
   "scripts": {
     "test": "ava",
     "watch": "ava --watch",
+    "format": "prettier --write {**,.}/*.js && standard --fix",
     "coverage": "nyc ava",
     "build": "rollup -c ",
     "lint": "standard"
@@ -31,6 +32,7 @@
     "babel-preset-stage-1": "^6.24.1",
     "mockery": "^2.1.0",
     "nyc": "^11.0.3",
+    "prettier": "^1.10.2",
     "rollup": "^0.43.0",
     "rollup-plugin-babel": "^2.6.1",
     "standard": "^10.0.2"

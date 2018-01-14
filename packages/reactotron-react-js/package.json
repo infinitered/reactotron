@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "watch": "ava --watch",
+    "format": "prettier --write {**,.}/*.js && standard --fix",
     "coverage": "nyc ava",
     "build": "rollup -c",
     "lint": "standard"
@@ -29,17 +30,18 @@
     "ava": "^0.19.1",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
-    "babel-eslint": "^7.2.2",
+    "babel-eslint": "^8.2.1",
     "babel-preset-es2015-rollup": "^3.0.0",
     "babel-preset-stage-1": "^6.24.1",
     "babelrc-rollup": "^3.0.0",
     "mockery": "^2.0.0",
     "nyc": "^10.2.0",
+    "prettier": "^1.10.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "rollup": "^0.41.6",
     "rollup-plugin-babel": "^2.6.1",
-    "standard": "^10.0.2"
+    "standard": "^10.0.3"
   },
   "ava": {
     "require": [

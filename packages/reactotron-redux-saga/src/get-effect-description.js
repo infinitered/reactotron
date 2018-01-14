@@ -25,7 +25,9 @@ export default effect => {
   let data
   if ((data = asEffect.take(effect))) return data.pattern || 'channel'
   if ((data = asEffect.put(effect))) return data.channel ? data.action : data.action.type
-  if ((data = asEffect.call(effect))) { return isNilOrEmpty(data.fn.name) ? '(anonymous)' : data.fn.name }
+  if ((data = asEffect.call(effect))) {
+    return isNilOrEmpty(data.fn.name) ? '(anonymous)' : data.fn.name
+  }
   if ((data = asEffect.cps(effect))) return data.fn.name
   if ((data = asEffect.fork(effect))) return data.fn.name
   if ((data = asEffect.join(effect))) return data.name

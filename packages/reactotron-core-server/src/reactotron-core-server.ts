@@ -267,7 +267,7 @@ export default class Server {
    *
    * @param {string} value The string to send
    */
-  sendCustomMessage (value) {
+  sendCustomMessage(value) {
     this.send('custom', value)
   }
 }

@@ -106,7 +106,7 @@ class SendCustomDialog extends Component {
     session.ui.setCustomMessage(e.target.value)
   }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     const field = ReactDOM.findDOMNode(this.field)
 
     field && field.focus()
@@ -119,7 +119,7 @@ class SendCustomDialog extends Component {
     e.preventDefault()
   }
 
-  render() {
+  render () {
     const { ui } = this.props.session
     if (!ui.showSendCustomDialog) return null
 

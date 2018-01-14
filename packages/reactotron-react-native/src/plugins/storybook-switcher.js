@@ -1,18 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Dimensions, View, Image } from 'react-native'
-
-const Styles = {
-  container: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 1000,
-    opacity: 0.25
-  }
-}
+import { View } from 'react-native'
 
 /** A component that can switch between storybook and the app
  *
@@ -20,18 +8,6 @@ const Styles = {
  * @extends {Component}
  */
 class StorybookSwitcher extends Component {
-  /** The types of the properties. */
-  static propTypes = {
-    /**
-     * An component that houses the storybook stories
-     */
-    storybookUi: PropTypes.element,
-    /**
-     * An emitter which can be subscribed to to listen for events.
-     */
-    emitter: PropTypes.object.isRequired
-  }
-
   /**
    * Creates an instance of FullScreenOverlay.
    *
@@ -60,15 +36,19 @@ class StorybookSwitcher extends Component {
     const { showStorybook } = this.state
     const { storybookUi: StorybookUi, children } = this.props
 
-    return (
-      <View style={{ flex: 1 }}>
-        {showStorybook
-          ? <StorybookUi />
-          : children
-        }
-      </View>
-    )
+    return <View style={{ flex: 1 }}>{showStorybook ? <StorybookUi /> : children}</View>
   }
+}
+
+StorybookSwitcher.propTypes = {
+  /**
+   * A component that houses the storybook stories.
+   */
+  storybookUi: PropTypes.element,
+  /**
+   * An emitter which can be subscribed to to listen for events.
+   */
+  emitter: PropTypes.object.isRequired
 }
 
 export default StorybookSwitcher

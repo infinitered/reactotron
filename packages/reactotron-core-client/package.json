@@ -8,6 +8,7 @@
   "scripts": {
     "build": "npm-run-all clean compile rollup",
     "clean": "trash dist compiled",
+    "format": "prettier --write {**,.}/*.ts && tslint -p . --fix",
     "compile": "tsc",
     "lint": "tslint -c ../../tslint.json -p tsconfig.json",
     "rollup": "rollup -c",

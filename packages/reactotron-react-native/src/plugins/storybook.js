@@ -1,10 +1,9 @@
 import React from 'react'
-import { View } from 'react-native'
 import StorybookSwitcher from './storybook-switcher'
 import mitt from 'mitt'
 
 /**
- * Provides an image.
+ * A plugin which provides .storybookSwitcher() on Reactotron.
  */
 export default () => reactotron => {
   const emitter = mitt()
@@ -25,10 +24,7 @@ export default () => reactotron => {
 
     features: {
       storybookSwitcher: storybookUi => WrappedComponent => props => (
-        <StorybookSwitcher
-          storybookUi={storybookUi}
-          emitter={emitter}
-        >
+        <StorybookSwitcher storybookUi={storybookUi} emitter={emitter}>
           <WrappedComponent {...props} />
         </StorybookSwitcher>
       )

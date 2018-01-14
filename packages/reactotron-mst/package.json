@@ -8,6 +8,7 @@
   "scripts": {
     "prepare": "yarn build",
     "prebuild": "rimraf dist",
+    "format": "prettier --write {**,.}/*.ts && tslint -p . --fix",
     "build": "tsc && tsc --module commonjs --outDir dist/lib && rollup -c rollup.config.ts",
     "lint": "tslint -p .",
     "precommit": "lint-staged"

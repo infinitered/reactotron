@@ -38,6 +38,58 @@
     imurmurhash "^0.1.4"
     slide "^1.1.5"
 
+"@babel/code-frame@7.0.0-beta.36":
+  version "7.0.0-beta.36"
+  resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-beta.36.tgz#2349d7ec04b3a06945ae173280ef8579b63728e4"
+  dependencies:
+    chalk "^2.0.0"
+    esutils "^2.0.2"
+    js-tokens "^3.0.0"
+
+"@babel/helper-function-name@7.0.0-beta.36":
+  version "7.0.0-beta.36"
+  resolved "https://registry.yarnpkg.com/@babel/helper-function-name/-/helper-function-name-7.0.0-beta.36.tgz#366e3bc35147721b69009f803907c4d53212e88d"
+  dependencies:
+    "@babel/helper-get-function-arity" "7.0.0-beta.36"
+    "@babel/template" "7.0.0-beta.36"
+    "@babel/types" "7.0.0-beta.36"
+
+"@babel/helper-get-function-arity@7.0.0-beta.36":
+  version "7.0.0-beta.36"
+  resolved "https://registry.yarnpkg.com/@babel/helper-get-function-arity/-/helper-get-function-arity-7.0.0-beta.36.tgz#f5383bac9a96b274828b10d98900e84ee43e32b8"
+  dependencies:
+    "@babel/types" "7.0.0-beta.36"
+
+"@babel/template@7.0.0-beta.36":
+  version "7.0.0-beta.36"
+  resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.0.0-beta.36.tgz#02e903de5d68bd7899bce3c5b5447e59529abb00"
+  dependencies:
+    "@babel/code-frame" "7.0.0-beta.36"
+    "@babel/types" "7.0.0-beta.36"
+    babylon "7.0.0-beta.36"
+    lodash "^4.2.0"
+
+"@babel/traverse@7.0.0-beta.36":
+  version "7.0.0-beta.36"
+  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.0.0-beta.36.tgz#1dc6f8750e89b6b979de5fe44aa993b1a2192261"
+  dependencies:
+    "@babel/code-frame" "7.0.0-beta.36"
+    "@babel/helper-function-name" "7.0.0-beta.36"
+    "@babel/types" "7.0.0-beta.36"
+    babylon "7.0.0-beta.36"
+    debug "^3.0.1"
+    globals "^11.1.0"
+    invariant "^2.2.0"
+    lodash "^4.2.0"
+
+"@babel/types@7.0.0-beta.36":
+  version "7.0.0-beta.36"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.0.0-beta.36.tgz#64f2004353de42adb72f9ebb4665fc35b5499d23"
+  dependencies:
+    esutils "^2.0.2"
+    lodash "^4.2.0"
+    to-fast-properties "^2.0.0"
+
 "@concordance/react@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@concordance/react/-/react-1.0.0.tgz#fcf3cad020e5121bfd1c61d05bc3516aac25f734"
@@ -396,14 +448,16 @@ babel-core@^6.25.0, babel-core@^6.26.0:
     slash "^1.0.0"
     source-map "^0.5.6"
 
-babel-eslint@^7.2.3:
-  version "7.2.3"
-  resolved "https://registry.yarnpkg.com/babel-eslint/-/babel-eslint-7.2.3.tgz#b2fe2d80126470f5c19442dc757253a897710827"
+babel-eslint@^8.2.1:
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/babel-eslint/-/babel-eslint-8.2.1.tgz#136888f3c109edc65376c23ebf494f36a3e03951"
   dependencies:
-    babel-code-frame "^6.22.0"
-    babel-traverse "^6.23.1"
-    babel-types "^6.23.0"
-    babylon "^6.17.0"
+    "@babel/code-frame" "7.0.0-beta.36"
+    "@babel/traverse" "7.0.0-beta.36"
+    "@babel/types" "7.0.0-beta.36"
+    babylon "7.0.0-beta.36"
+    eslint-scope "~3.7.1"
+    eslint-visitor-keys "^1.0.0"
 
 babel-generator@^6.1.0, babel-generator@^6.18.0, babel-generator@^6.24.1:
   version "6.24.1"
@@ -1029,7 +1083,7 @@ babel-template@^6.26.0:
     babylon "^6.18.0"
     lodash "^4.17.4"
 
-babel-traverse@^6.18.0, babel-traverse@^6.22.0, babel-traverse@^6.23.1, babel-traverse@^6.24.1:
+babel-traverse@^6.18.0, babel-traverse@^6.22.0, babel-traverse@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-traverse/-/babel-traverse-6.24.1.tgz#ab36673fd356f9a0948659e7b338d5feadb31695"
   dependencies:
@@ -1057,7 +1111,7 @@ babel-traverse@^6.26.0:
     invariant "^2.2.2"
     lodash "^4.17.4"
 
-babel-types@^6.18.0, babel-types@^6.19.0, babel-types@^6.22.0, babel-types@^6.23.0, babel-types@^6.24.1:
+babel-types@^6.18.0, babel-types@^6.19.0, babel-types@^6.22.0, babel-types@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-types/-/babel-types-6.24.1.tgz#a136879dc15b3606bda0d90c1fc74304c2ff0975"
   dependencies:
@@ -1075,6 +1129,10 @@ babel-types@^6.26.0:
     lodash "^4.17.4"
     to-fast-properties "^1.0.3"
 
+babylon@7.0.0-beta.36:
+  version "7.0.0-beta.36"
+  resolved "https://registry.yarnpkg.com/babylon/-/babylon-7.0.0-beta.36.tgz#3a3683ba6a9a1e02b0aa507c8e63435e39305b9e"
+
 babylon@^6.1.0, babylon@^6.15.0:
   version "6.16.1"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.16.1.tgz#30c5a22f481978a9e7f8cdfdf496b11d94b404d3"
@@ -1082,10 +1140,6 @@ babylon@^6.1.0, babylon@^6.15.0:
 babylon@^6.11.0:
   version "6.14.1"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.14.1.tgz#956275fab72753ad9b3435d7afe58f8bf0a29815"
-
-babylon@^6.17.0:
-  version "6.17.1"
-  resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.17.1.tgz#17f14fddf361b695981fe679385e4f1c01ebd86f"
 
 babylon@^6.18.0:
   version "6.18.0"
@@ -1261,6 +1315,14 @@ chalk@^1.0.0, chalk@^1.1.0, chalk@^1.1.1, chalk@^1.1.3:
     has-ansi "^2.0.0"
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
+
+chalk@^2.0.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.3.0.tgz#b5ea48efc9c1793dccc9b4767c93914d3f2d52ba"
+  dependencies:
+    ansi-styles "^3.1.0"
+    escape-string-regexp "^1.0.5"
+    supports-color "^4.0.0"
 
 chokidar@^1.4.2:
   version "1.6.1"
@@ -1556,6 +1618,12 @@ debug@^2.6.8:
   dependencies:
     ms "2.0.0"
 
+debug@^3.0.1:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+  dependencies:
+    ms "2.0.0"
+
 decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
@@ -1755,9 +1823,9 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-standard-jsx@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-standard-jsx/-/eslint-config-standard-jsx-4.0.1.tgz#cd4e463d0268e2d9e707f61f42f73f5b3333c642"
+eslint-config-standard-jsx@4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-standard-jsx/-/eslint-config-standard-jsx-4.0.2.tgz#009e53c4ddb1e9ee70b4650ffe63a7f39f8836e1"
 
 eslint-config-standard@10.2.1:
   version "10.2.1"
@@ -1820,6 +1888,17 @@ eslint-plugin-react@~6.10.0:
 eslint-plugin-standard@~3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-standard/-/eslint-plugin-standard-3.0.1.tgz#34d0c915b45edc6f010393c7eef3823b08565cf2"
+
+eslint-scope@~3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-3.7.1.tgz#3d63c3edfda02e06e01a452ad88caacc7cdcb6e8"
+  dependencies:
+    esrecurse "^4.1.0"
+    estraverse "^4.1.1"
+
+eslint-visitor-keys@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#3f3180fb2e291017716acb4c9d6d5b5c34a6a81d"
 
 eslint@~3.19.0:
   version "3.19.0"
@@ -2217,6 +2296,10 @@ glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.0.6:
     minimatch "^3.0.2"
     once "^1.3.0"
     path-is-absolute "^1.0.0"
+
+globals@^11.1.0:
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/globals/-/globals-11.1.0.tgz#632644457f5f0e3ae711807183700ebf2e4633e4"
 
 globals@^9.0.0, globals@^9.14.0:
   version "9.14.0"
@@ -2756,7 +2839,7 @@ json-stable-stringify@^1.0.0, json-stable-stringify@^1.0.1:
   dependencies:
     jsonify "~0.0.0"
 
-json-stringify-safe@~5.0.1:
+json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
 
@@ -3463,6 +3546,10 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
+prettier@^1.10.2:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.10.2.tgz#1af8356d1842276a99a5b5529c82dd9e9ad3cc93"
+
 pretty-ms@^0.2.1:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/pretty-ms/-/pretty-ms-0.2.2.tgz#da879a682ff33a37011046f13d627f67c73b84f6"
@@ -3530,6 +3617,14 @@ rc@^1.0.1, rc@^1.1.6, rc@~1.1.6:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
+
+reactotron-core-client@^1.13.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-1.13.0.tgz#7f82f6c902756c326b9c8a0baf5085d2a0b0f445"
+  dependencies:
+    json-stringify-safe "^5.0.1"
+    ramda "^0.24.1"
+    ramdasauce "^2.0.0"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"
@@ -3998,13 +4093,13 @@ standard-engine@~7.0.0:
     minimist "^1.1.0"
     pkg-conf "^2.0.0"
 
-standard@^10.0.2:
-  version "10.0.2"
-  resolved "https://registry.yarnpkg.com/standard/-/standard-10.0.2.tgz#974c1c53cc865b075a4b576e78441e1695daaf7b"
+standard@^10.0.3:
+  version "10.0.3"
+  resolved "https://registry.yarnpkg.com/standard/-/standard-10.0.3.tgz#7869bcbf422bdeeaab689a1ffb1fea9677dd50ea"
   dependencies:
     eslint "~3.19.0"
     eslint-config-standard "10.2.1"
-    eslint-config-standard-jsx "4.0.1"
+    eslint-config-standard-jsx "4.0.2"
     eslint-plugin-import "~2.2.0"
     eslint-plugin-node "~4.2.2"
     eslint-plugin-promise "~3.5.0"
@@ -4092,6 +4187,12 @@ supports-color@^3.1.2, supports-color@^3.2.3:
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
   dependencies:
     has-flag "^1.0.0"
+
+supports-color@^4.0.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-4.5.0.tgz#be7a0de484dec5c5cddf8b3d59125044912f635b"
+  dependencies:
+    has-flag "^2.0.0"
 
 symbol-observable@^0.2.2:
   version "0.2.4"
@@ -4184,6 +4285,10 @@ to-fast-properties@^1.0.1:
 to-fast-properties@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-1.0.3.tgz#b83571fa4d8c25b82e231b06e3a3055de4ca1a47"
+
+to-fast-properties@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
 
 tough-cookie@~2.3.0:
   version "2.3.2"
