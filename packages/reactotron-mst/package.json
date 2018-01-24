@@ -8,6 +8,7 @@
   "scripts": {
     "prepare": "yarn build",
     "prebuild": "rimraf dist",
+    "format": "prettier --write {**,.}/*.ts && tslint -p . --fix",
     "build": "tsc && tsc --module commonjs --outDir dist/lib && rollup -c rollup.config.ts",
     "lint": "tslint -p .",
     "precommit": "lint-staged"
@@ -52,7 +53,7 @@
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
-    "tslint": "^5.8.0",
+    "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.6.0",
     "typescript": "^2.6.2"
   },

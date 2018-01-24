@@ -1,3 +1,3 @@
 interface Console {
-    tron: any
+  tron: any
 }

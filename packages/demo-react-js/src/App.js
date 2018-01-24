@@ -26,16 +26,6 @@ const Styles = {
 }
 
 class App extends Component {
-  static propTypes = {
-    startup: PropTypes.func.isRequired,
-    message: PropTypes.string,
-    url: PropTypes.string,
-    name: PropTypes.string,
-    sha: PropTypes.string,
-    error: PropTypes.string,
-    fetching: PropTypes.bool
-  }
-
   renderError () {
     const { error } = this.props
     return (
@@ -130,6 +120,16 @@ class App extends Component {
       </div>
     )
   }
+}
+
+App.propTypes = {
+  startup: PropTypes.func.isRequired,
+  message: PropTypes.string,
+  url: PropTypes.string,
+  name: PropTypes.string,
+  sha: PropTypes.string,
+  error: PropTypes.string,
+  fetching: PropTypes.bool
 }
 
 const mapStateToProps = state => ({ ...state.repo, ...state.logo })

@@ -1,9 +1,9 @@
-import { createClient } from '../src/reactotron-core-client'
-import * as WebSocket from 'ws'
+import { createClient } from "../src/reactotron-core-client"
+import * as WebSocket from "ws"
 
 const createSocket = path => new WebSocket(path)
 
-test('plugins support onPlugin', done => {
+test("plugins support onPlugin", done => {
   // create a client
   const client = createClient({ createSocket })
 

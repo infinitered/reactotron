@@ -38,7 +38,7 @@ const config = {
 
   plugins: [
     ...baseConfig.plugins,
-    new webpack.optimize.OccurenceOrderPlugin(),
+    // new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       __DEV__: false,
       'process.env': {

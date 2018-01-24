@@ -1,4 +1,4 @@
-import { is } from 'ramda'
+import { is } from "ramda"
 
 /**
  * Sends API request/response information.
@@ -14,7 +14,7 @@ export default () => reactotron => {
           response.status >= 200 &&
           response.status <= 299
         const important = !ok
-        reactotron.send('api.response', { request, response, duration }, important)
+        reactotron.send("api.response", { request, response, duration }, important)
       },
     },
   }

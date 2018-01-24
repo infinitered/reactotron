@@ -1,5 +1,5 @@
-import { allPass, complement, isNil, is } from 'ramda'
-import { ServerOptions } from './types'
+import { allPass, complement, isNil, is } from "ramda"
+import { ServerOptions } from "./types"
 
 /**
  * Is this a valid port?
@@ -18,6 +18,6 @@ export default (options?: ServerOptions): void => {
   const { port } = options
 
   if (!isPortValid(port)) {
-    throw new Error('invalid port')
+    throw new Error("invalid port")
   }
 }

@@ -1,15 +1,15 @@
-import { merge, has, forEach, head, tail, contains, isEmpty, is, keys } from 'ramda'
-import * as WebSocket from 'ws'
-import validate from './validate'
-import logger from './plugins/logger'
-import image from './plugins/image'
-import benchmark from './plugins/benchmark'
-import stateResponses from './plugins/state-responses'
-import apiResponse from './plugins/api-response'
-import clear from './plugins/clear'
-import serialize from './serialize'
-import { start } from './stopwatch'
-import { ClientOptions } from './client-options'
+import { merge, has, forEach, head, tail, contains, isEmpty, is, keys } from "ramda"
+import * as WebSocket from "ws"
+import validate from "./validate"
+import logger from "./plugins/logger"
+import image from "./plugins/image"
+import benchmark from "./plugins/benchmark"
+import stateResponses from "./plugins/state-responses"
+import apiResponse from "./plugins/api-response"
+import clear from "./plugins/clear"
+import serialize from "./serialize"
+import { start } from "./stopwatch"
+import { ClientOptions } from "./client-options"
 
 export const corePlugins = [
   image(),
@@ -22,9 +22,9 @@ export const corePlugins = [
 
 const DEFAULT_OPTIONS: ClientOptions = {
   createSocket: null,
-  host: 'localhost',
+  host: "localhost",
   port: 9090,
-  name: 'reactotron-core-client',
+  name: "reactotron-core-client",
   secure: false,
   plugins: corePlugins,
   safeRecursion: true,
@@ -36,15 +36,15 @@ const DEFAULT_OPTIONS: ClientOptions = {
 // these are not for you.
 const isReservedFeature = (value: string) =>
   contains(value, [
-    'options',
-    'connected',
-    'socket',
-    'plugins',
-    'configure',
-    'connect',
-    'send',
-    'use',
-    'startTimer',
+    "options",
+    "connected",
+    "socket",
+    "plugins",
+    "configure",
+    "connect",
+    "send",
+    "use",
+    "startTimer",
   ])
 
 export class Client {
@@ -91,7 +91,7 @@ export class Client {
     this.options = newOptions
 
     // if we have plugins, let's add them here
-    if (has('length', this.options.plugins)) {
+    if (has("length", this.options.plugins)) {
       forEach(this.use.bind(this), this.options.plugins)
     }
 
@@ -116,7 +116,7 @@ export class Client {
     const { onCommand, onConnect, onDisconnect } = this.options
 
     // establish a connection to the server
-    const protocol = secure ? 'wss' : 'ws'
+    const protocol = secure ? "wss" : "ws"
     const socket = createSocket(`${protocol}://${host}:${port}`)
 
     // fires when we talk to the server
@@ -128,7 +128,7 @@ export class Client {
       forEach(plugin => plugin.onConnect && plugin.onConnect(), this.plugins)
       this.isReady = true
       // introduce ourselves
-      this.send('client.intro', { host, port, name, userAgent, reactotronVersion, environment })
+      this.send("client.intro", { host, port, name, userAgent, reactotronVersion, environment })
 
       // flush the send queue
       while (!isEmpty(this.sendQueue)) {
@@ -160,9 +160,9 @@ export class Client {
 
     // this is ws style from require('ws') on node js
     if (socket.on) {
-      socket.on('open', onOpen)
-      socket.on('close', onClose)
-      socket.on('message', onMessage)
+      socket.on("open", onOpen)
+      socket.on("close", onClose)
+      socket.on("message", onMessage)
     } else {
       // this is a browser
       socket.onopen = onOpen
@@ -213,7 +213,7 @@ export class Client {
       preview: preview || null,
       image: img || null,
     }
-    this.send('display', payload, important)
+    this.send("display", payload, important)
   }
 
   /**
@@ -228,8 +228,8 @@ export class Client {
    */
   use(pluginCreator?: (client: Client) => any): Client {
     // we're supposed to be given a function
-    if (typeof pluginCreator !== 'function') {
-      throw new Error('plugins must be a function')
+    if (typeof pluginCreator !== "function") {
+      throw new Error("plugins must be a function")
     }
 
     // execute it immediately passing the send function
@@ -237,14 +237,14 @@ export class Client {
 
     // ensure we get an Object-like creature back
     if (!is(Object, plugin)) {
-      throw new Error('plugins must return an object')
+      throw new Error("plugins must return an object")
     }
 
     // do we have features to mixin?
     if (plugin.features) {
       // validate
       if (!is(Object, plugin.features)) {
-        throw new Error('features must be an object')
+        throw new Error("features must be an object")
       }
 
       // here's how we're going to inject these in
@@ -253,7 +253,7 @@ export class Client {
         const featureFunction = plugin.features[key]
 
         // only functions may pass
-        if (typeof featureFunction !== 'function') {
+        if (typeof featureFunction !== "function") {
           throw new Error(`feature ${key} is not a function`)
         }
 
@@ -274,7 +274,7 @@ export class Client {
     this.plugins.push(plugin)
 
     // call the plugins onPlugin
-    plugin.onPlugin && typeof plugin.onPlugin === 'function' && plugin.onPlugin.bind(this)(this)
+    plugin.onPlugin && typeof plugin.onPlugin === "function" && plugin.onPlugin.bind(this)(this)
 
     // chain-friendly
     return this

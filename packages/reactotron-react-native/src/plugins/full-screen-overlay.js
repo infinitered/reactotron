@@ -20,14 +20,6 @@ const Styles = {
  * @extends {Component}
  */
 class FullScreenOverlay extends Component {
-  /** The types of the properties. */
-  static propTypes = {
-    /**
-     * An emitter which can be subscribed to to listen for events.
-     */
-    emitter: PropTypes.object.isRequired
-  }
-
   /**
    * Creates an instance of FullScreenOverlay.
    *
@@ -107,6 +99,13 @@ class FullScreenOverlay extends Component {
       </View>
     )
   }
+}
+
+FullScreenOverlay.propTypes = {
+  /**
+   * An emitter which can be subscribed to to listen for events.
+   */
+  emitter: PropTypes.object.isRequired
 }
 
 export default FullScreenOverlay

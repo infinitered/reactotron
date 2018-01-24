@@ -4,17 +4,17 @@ declare var global: any
 
 const hasHirezNodeTimer =
   false &&
-  typeof process === 'object' &&
+  typeof process === "object" &&
   process &&
   process.hrtime &&
-  typeof process.hrtime === 'function'
+  typeof process.hrtime === "function"
 
 // the default timer
 const defaultPerformanceNow = (started?: number) => Date.now()
 
 // try to find the browser-based performance timer
 const nativePerformance =
-  typeof window !== 'undefined' &&
+  typeof window !== "undefined" &&
   window &&
   (window.performance || (window as any).msPerformance || (window as any).webkitPerformance)
 

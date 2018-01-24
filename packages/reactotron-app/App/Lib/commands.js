@@ -1,4 +1,4 @@
-import { observable, action, extendObservable, asFlat } from 'mobx'
+import { observable, action, extendObservable, asFlat } from 'mobx' // eslint-disable-line
 import R from 'ramda'
 import CommandTypes from './types'
 
@@ -12,13 +12,14 @@ export const ALL_MAXIMUM_LIST_SIZE = 1000
  *   For example: this['log'] gets the list of log commands.
  */
 class Commands {
-  maximumListSize: number
-  allMaximumListSize: number
+  // es
+  maximumListSize = 0 // eslint-disable-line
+  allMaximumListSize = 0 // eslint-disable-line
 
   /**
    * It's all the comands.  Like all of them.
    */
-  @observable all = asFlat([])
+  @observable all = asFlat([]) // eslint-disable-line
 
   /**
    * Constructor with an optional overrideable max list size.

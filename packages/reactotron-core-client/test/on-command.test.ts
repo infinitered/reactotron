@@ -1,21 +1,21 @@
-import { createClient } from '../src/reactotron-core-client'
-import * as WebSocket from 'ws'
-import { createServer } from 'http'
-import * as getPort from 'get-port'
+import { createClient } from "../src/reactotron-core-client"
+import * as WebSocket from "ws"
+import { createServer } from "http"
+import * as getPort from "get-port"
 
 const createSocket = path => new WebSocket(path)
 
 const mock = {
-  type: 'TEST',
-  payload: [1, 2, 'three', { four: true }],
+  type: "TEST",
+  payload: [1, 2, "three", { four: true }],
 }
 
-test('the default onCommand does nothing', () => {
+test("the default onCommand does nothing", () => {
   const client = createClient({ createSocket })
   expect(client.options.onCommand({})).toBeFalsy()
 })
 
-test('receives a valid command', async done => {
+test("receives a valid command", async done => {
   const port = await getPort()
   const server = new WebSocket.Server({ port })
 
@@ -32,6 +32,6 @@ test('receives a valid command', async done => {
   })
 
   // when the server gets a connection, send the command
-  server.on('connection', socket => socket.send(JSON.stringify(mock)))
+  server.on("connection", socket => socket.send(JSON.stringify(mock)))
   client.connect()
 })

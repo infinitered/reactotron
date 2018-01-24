@@ -4,15 +4,15 @@
 // Mostly adapted from https://github.com/isaacs/json-stringify-safe
 
 // replacement tokens
-const UNDEFINED = '~~~ undefined ~~~'
+const UNDEFINED = "~~~ undefined ~~~"
 const NULL = `~~~ null ~~~`
 const FALSE = `~~~ false ~~~`
 const ZERO = `~~~ zero ~~~`
 const EMPTY_STRING = `~~~ empty string ~~~`
-const CIRCULAR = '~~~ Circular Reference ~~~'
-const ANONYMOUS = '~~~ anonymous function ~~~'
-const INFINITY = '~~~ Infinity ~~~'
-const NEGATIVE_INFINITY = '~~~ -Infinity ~~~'
+const CIRCULAR = "~~~ Circular Reference ~~~"
+const ANONYMOUS = "~~~ anonymous function ~~~"
+const INFINITY = "~~~ Infinity ~~~"
+const NEGATIVE_INFINITY = "~~~ -Infinity ~~~"
 // const NAN = '~~~ NaN ~~~'
 
 /**
@@ -22,7 +22,7 @@ const NEGATIVE_INFINITY = '~~~ -Infinity ~~~'
  */
 function getFunctionName(fn: any): string {
   const n = fn.name
-  if (n === null || n === undefined || n === '') {
+  if (n === null || n === undefined || n === "") {
     return ANONYMOUS
   } else {
     return `~~~ ${n}() ~~~`
@@ -62,15 +62,15 @@ function serialize(source) {
 
       // head shakers
       if (value === -0) return ZERO // eslint-disable-line
-      if (value === '') return EMPTY_STRING
+      if (value === "") return EMPTY_STRING
 
       // known types that have easy resolving
       switch (typeof value) {
-        case 'string':
+        case "string":
           return value
-        case 'number':
+        case "number":
           return value
-        case 'function':
+        case "function":
           return getFunctionName(value)
       }
 

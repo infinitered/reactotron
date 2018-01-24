@@ -10,7 +10,7 @@
     "test": "lerna run test --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce'",
     "lint": "lerna run lint",
     "welcome": "yarn run clean && yarn run bootstrap && yarn run build && yarn run copy-internal-deps && yarn run lint -s",
-    "format": "prettier --write \"**/*.{js,jsx}\" && standard --fix"
+    "format": "lerna run format"
   },
   "devDependencies": {
     "@types/jest": "^21.1.2",

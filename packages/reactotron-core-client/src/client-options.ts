@@ -1,4 +1,3 @@
-
 /**
  * Configuration options for the Reactotron Client.
  */

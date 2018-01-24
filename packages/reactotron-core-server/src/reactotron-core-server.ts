@@ -1,15 +1,15 @@
-import { merge, find, propEq, without, contains, forEach, pluck, reject } from 'ramda'
-import { Server as WebSocketServer, OPEN } from 'ws'
-import * as mitt from 'mitt'
-import validate from './validation'
-import { repair } from './repair-serialization'
+import { merge, find, propEq, without, contains, forEach, pluck, reject } from "ramda"
+import { Server as WebSocketServer, OPEN } from "ws"
+import * as mitt from "mitt"
+import validate from "./validation"
+import { repair } from "./repair-serialization"
 import {
   ServerOptions,
   PartialConnection,
   ServerEvent,
   CommandEvent,
   WebSocketEvent,
-} from './types'
+} from "./types"
 
 /**
  * The default server options.
@@ -97,7 +97,7 @@ export default class Server {
     this.wss = new WebSocketServer({ port })
 
     // register events
-    this.wss.on('connection', (socket, request) => {
+    this.wss.on("connection", (socket, request) => {
       // a wild client appears
       const partialConnection = {
         id: (socket as any).id, // issue
@@ -109,26 +109,26 @@ export default class Server {
       this.partialConnections.push(partialConnection)
 
       // trigger onConnect
-      this.emitter.emit('connect', partialConnection)
+      this.emitter.emit("connect", partialConnection)
 
       // when this client disconnects
-      socket.on('disconnect', () => {
+      socket.on("disconnect", () => {
         // remove them from the list partial list
         this.partialConnections = reject(
-          propEq('id', (socket as any).id),
+          propEq("id", (socket as any).id),
           this.partialConnections,
         ) as any
 
         // remove them from the main connections list
-        const severingConnection = find(propEq('id', (socket as any).id), this.connections)
+        const severingConnection = find(propEq("id", (socket as any).id), this.connections)
         if (severingConnection) {
           (this.connections as any).remove(severingConnection)
-          this.emitter.emit('disconnect', severingConnection)
+          this.emitter.emit("disconnect", severingConnection)
         }
       })
 
       // when we receive a command from the client
-      socket.on('message', incoming => {
+      socket.on("message", incoming => {
         const message = JSON.parse(incoming as string)
         repair(message)
         const { type, important, payload } = message
@@ -143,16 +143,16 @@ export default class Server {
         }
 
         // for client intros
-        if (type === 'client.intro') {
+        if (type === "client.intro") {
           // find them in the partial connection list
-          const partConn = find(propEq('id', (socket as any).id), this.partialConnections) as any
+          const partConn = find(propEq("id", (socket as any).id), this.partialConnections) as any
 
           // add their address in
           fullCommand.payload.address = partConn.address
 
           // remove them from the partial connections list
           this.partialConnections = reject(
-            propEq('id', (socket as any).id),
+            propEq("id", (socket as any).id),
             this.partialConnections,
           ) as any
 
@@ -167,17 +167,17 @@ export default class Server {
         }
 
         // refresh subscriptions
-        if (type === 'state.values.change') {
-          this.subscriptions = pluck('path', payload.changes || [])
+        if (type === "state.values.change") {
+          this.subscriptions = pluck("path", payload.changes || [])
         }
 
         // assign a name to the backups since the client doesn't pass one.  without it, we have to
         // call extendObservable instead of a standard assignment, which is very confusing.
-        if (type === 'state.backup.response') {
+        if (type === "state.backup.response") {
           fullCommand.payload.name = null
         }
 
-        this.emitter.emit('command', fullCommand)
+        this.emitter.emit("command", fullCommand)
       })
 
       // resend the subscriptions to the client upon connecting
@@ -185,7 +185,7 @@ export default class Server {
     })
 
     // trigger the start message
-    this.emitter.emit('start')
+    this.emitter.emit("start")
 
     this.started = true
 
@@ -198,12 +198,12 @@ export default class Server {
   stop() {
     forEach(
       s => s && (s as any).connected && (s as any).disconnect(),
-      pluck('socket', this.connections),
+      pluck("socket", this.connections),
     )
     this.wss.close()
 
     // trigger the stop message
-    this.emitter.emit('stop')
+    this.emitter.emit("stop")
     this.started = false
 
     return this
@@ -224,7 +224,7 @@ export default class Server {
    * Sends a list of subscribed paths to the client for state subscription.
    */
   stateValuesSendSubscriptions() {
-    this.send('state.values.subscribe', { paths: this.subscriptions })
+    this.send("state.values.subscribe", { paths: this.subscriptions })
   }
 
   /**
@@ -267,8 +267,8 @@ export default class Server {
    *
    * @param {string} value The string to send
    */
-  sendCustomMessage (value) {
-    this.send('custom', value)
+  sendCustomMessage(value) {
+    this.send("custom", value)
   }
 }
 
