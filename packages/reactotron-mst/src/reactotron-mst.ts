@@ -43,7 +43,7 @@ import {
 const dotPath = (fullPath: string, o: any) => path(split(".", fullPath), o)
 const isNilOrEmpty = (value: any) => isNil(value) || isEmpty(value)
 const isReactNativeEvent = (value: any) =>
-  value !== null && has("nativeEvent", value) && has("target", value) && has("type", value)
+  typeof value !== 'undefined' && value !== null && has("nativeEvent", value) && has("target", value) && has("type", value)
 
 /**
  * Sadly, this protects calls from endless stack traces.  We have to filter
