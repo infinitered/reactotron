@@ -23,7 +23,7 @@ const config = {
 
       {
         test: /\.global\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+        loader: 'style-loader!css-loader'
       },
 
       {

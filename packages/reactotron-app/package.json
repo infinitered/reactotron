@@ -36,6 +36,7 @@
   ],
   "homepage": "https://github.com/reactotron/reactotron#readme",
   "devDependencies": {
+    "@types/ws": "^4.0.1",
     "asar": "^0.13.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
