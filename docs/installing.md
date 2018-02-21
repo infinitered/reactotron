@@ -2,6 +2,8 @@ Reactotron comes in two versions.  A desktop version (available on macOS, Linux,
 
 # Installing the Application
 
+> :warning: If you are working with master for demo/setup - be sure to [download 2.0.0.alpha from the GitHub releases section](https://github.com/infinitered/reactotron/releases)
+
 ### Via Direct Download
 
 [Download macOS App](https://github.com/infinitered/reactotron/releases/download/v1.15.0/Reactotron.app.zip) from GitHub release and drop the Reactotron.app to the Applications folder.
