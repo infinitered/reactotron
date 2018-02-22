@@ -57,6 +57,9 @@ class UI {
   // show the timeline search
   @observable isTimelineSearchVisible = false
 
+  // hide the sidebar
+  @observable isSidebarVisible = true
+
   /**
    * The current search phrase used to narrow down visible commands.
    */
@@ -89,6 +92,7 @@ class UI {
     Mousetrap.bind(`${Keystroke.mousetrap}+?`, this.switchTab.bind(this, 'help'))
     Mousetrap.bind(`${Keystroke.mousetrap}+f`, this.showTimelineSearch)
     Mousetrap.bind(`${Keystroke.mousetrap}+.`, this.openSendCustomDialog)
+    Mousetrap.bind(`${Keystroke.mousetrap}+shift+s`, this.toggleSidebar)
   }
 
   @action
@@ -142,6 +146,25 @@ class UI {
       this.hideTimelineSearch()
     } else {
       this.showTimelineSearch()
+    }
+  }
+
+  @action
+  hideSidebar = () => {
+    this.isSidebarVisible = false
+  }
+
+  @action
+  showSidebar = () => {
+    this.isSidebarVisible = true
+  }
+
+  @action
+  toggleSidebar = () => {
+    if (this.isSidebarVisible) {
+      this.hideSidebar()
+    } else {
+      this.showSidebar()
     }
   }
 

@@ -11,7 +11,8 @@ const Styles = {
     backgroundColor: Colors.backgroundSubtleDark,
     boxShadow: `0px 0px 30px ${Colors.glow}`,
     borderRight: `1px solid ${Colors.chromeLine}`,
-    WebkitAppRegion: 'drag'
+    WebkitAppRegion: 'drag',
+    transition: 'margin 0.2s ease-out'
   },
   content: {
     ...AppStyles.Layout.vbox,
@@ -56,7 +57,7 @@ class Sidebar extends Component {
     const { ui } = session
 
     return (
-      <div style={Styles.container}>
+      <div style={{...Styles.container, ...(!ui.isSidebarVisible ? { marginLeft: -Styles.container.maxWidth } : {})}}>
         <div style={Styles.content}>
           <div style={Styles.tabs}>
             <SidebarButton

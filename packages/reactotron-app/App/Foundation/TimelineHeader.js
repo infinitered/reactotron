@@ -6,6 +6,7 @@ import { inject, observer } from 'mobx-react'
 import IconFilter from 'react-icons/lib/md/filter-list'
 import IconClear from 'react-icons/lib/md/delete-sweep'
 import IconSearch from 'react-icons/lib/md/search'
+import SidebarToggleButton from './SidebarToggleButton'
 
 const TITLE = 'Timeline'
 
@@ -28,7 +29,7 @@ const Styles = {
     ...AppStyles.Layout.hbox,
     justifyContent: 'space-between'
   },
-  left: { ...AppStyles.Layout.hbox, width: 100 },
+  left: { ...AppStyles.Layout.hbox, width: 100, alignItems: 'center' },
   right: { ...AppStyles.Layout.hbox, justifyContent: 'flex-end', alignItems: 'center', width: 100 },
   center: { ...AppStyles.Layout.vbox, flex: 1, alignItems: 'center', justifyContent: 'center' },
   title: { color: Colors.foregroundLight, textAlign: 'center' },
@@ -115,7 +116,9 @@ class TimelineHeader extends Component {
     return (
       <div style={Styles.container}>
         <div style={Styles.content}>
-          <div style={Styles.left} />
+          <div style={Styles.left}>
+            <SidebarToggleButton onClick={ui.toggleSidebar} isSidebarVisible={ui.isSidebarVisible} />
+          </div>
           <div style={Styles.center}>
             <div style={Styles.title}>{TITLE}</div>
           </div>
