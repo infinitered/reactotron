@@ -130,6 +130,12 @@ const HelpKeystrokes = () => (
           </div>
           <div style={Styles.helpDetail}>clear the timeline</div>
         </div>
+        <div style={Styles.helpShortcut}>
+          <div style={Styles.helpLabel}>
+            <Key text={Keystroke.modifierName} />+<Key text='⬆' />+<Key text='S' />
+          </div>
+          <div style={Styles.helpDetail}>toggle sidebar</div>
+        </div>
       </div>
     </div>
   </div>

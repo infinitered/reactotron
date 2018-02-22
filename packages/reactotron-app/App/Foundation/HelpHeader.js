@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import { inject, observer } from 'mobx-react'
+import SidebarToggleButton from './SidebarToggleButton'
 
 const TITLE = 'Using Reactotron'
 
@@ -15,9 +16,22 @@ const Styles = {
   },
   content: {
     height: 60,
+    paddingLeft: 10,
+    paddingRight: 10,
     ...AppStyles.Layout.hbox,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'space-between'
+  },
+  left: {
+    ...AppStyles.Layout.hbox,
+    width: 100,
+    alignItems: 'center'
+  },
+  right: {
+    width: 100,
+    ...AppStyles.Layout.hbox,
+    justifyContent: 'flex-end',
+    alignItems: 'center'
   },
   title: {
     color: Colors.foregroundLight,
@@ -27,16 +41,24 @@ const Styles = {
 
 @inject('session')
 @observer
-class TimelineHeader extends Component {
+class HelpHeader extends Component {
   render () {
+    const { ui } = this.props.session
+
     return (
       <div style={Styles.container}>
         <div style={Styles.content}>
-          <div style={Styles.title}>{TITLE}</div>
+          <div style={Styles.left}>
+            <SidebarToggleButton onClick={ui.toggleSidebar} isSidebarVisible={ui.isSidebarVisible} />
+          </div>
+          <div style={Styles.center}>
+            <div style={Styles.title}>{TITLE}</div>
+          </div>
+          <div style={Styles.right} />
         </div>
       </div>
     )
   }
 }
 
-export default TimelineHeader
+export default HelpHeader

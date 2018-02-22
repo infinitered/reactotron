@@ -4,6 +4,7 @@ import AppStyles from '../Theme/AppStyles'
 import { inject, observer } from 'mobx-react'
 import IconAdd from 'react-icons/lib/md/add'
 import IconClear from 'react-icons/lib/md/delete-forever'
+import SidebarToggleButton from './SidebarToggleButton'
 
 const TITLE = 'State Subscriptions'
 
@@ -28,7 +29,8 @@ const Styles = {
   },
   left: {
     ...AppStyles.Layout.hbox,
-    width: 100
+    width: 100,
+    alignItems: 'center'
   },
   right: {
     width: 100,
@@ -64,7 +66,9 @@ class SubscriptionsHeader extends Component {
     return (
       <div style={Styles.container}>
         <div style={Styles.content}>
-          <div style={Styles.left} />
+          <div style={Styles.left}>
+            <SidebarToggleButton onClick={ui.toggleSidebar} isSidebarVisible={ui.isSidebarVisible} />
+          </div>
           <div style={Styles.center}>
             <div style={Styles.title}>{TITLE}</div>
           </div>
