@@ -101,8 +101,15 @@ class TimelineHeader extends Component {
     }
   }
 
+  handleSelectedConnectionChange = e => {
+    const connectionId = e.target.value
+    const selectedConnection = this.props.session.connections.find(c => c.id == connectionId) || null
+
+    this.props.session.setSelectedConnection(selectedConnection)
+  }
+
   render () {
-    const { ui } = this.props.session
+    const { ui, connections, selectedConnection } = this.props.session
     const { isTimelineSearchVisible } = ui
     const searchIconStyle = {
       ...Styles.searchIcon,
@@ -113,6 +120,8 @@ class TimelineHeader extends Component {
       ...(!isTimelineSearchVisible ? { display: 'none' } : {})
     }
 
+    const selectedConnectionId = selectedConnection ? selectedConnection.id : -1
+
     return (
       <div style={Styles.container}>
         <div style={Styles.content}>
@@ -121,6 +130,22 @@ class TimelineHeader extends Component {
           </div>
           <div style={Styles.center}>
             <div style={Styles.title}>{TITLE}</div>
+            <div>
+              <select
+                value={selectedConnectionId}
+                onChange={this.handleSelectedConnectionChange}
+              >
+                <option value={-1}>All</option>
+                {connections.map(c => (
+                  <option
+                    key={c.id}
+                    value={c.id}
+                  >
+                    {c.id} - {c.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
           <div style={Styles.right}>
             <IconSearch

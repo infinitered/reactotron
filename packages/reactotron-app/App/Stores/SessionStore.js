@@ -42,6 +42,10 @@ const COMMON_MATCHING_PATHS = [
 class Session {
   // commands to exlude in the timeline
   @observable commandsHiddenInTimeline = JSON.parse(localStorage.getItem('commandsHiddenInTimeline')) || []
+  // Connections
+  @observable connections = []
+  // Selected Connection
+  @observable selectedConnection = null
 
   commandsManager = new Commands()
 
@@ -100,10 +104,17 @@ class Session {
     return true
   }
 
+  rejectCommandsFromOtherConnections = command => {
+    if (!this.selectedConnection) return false
+
+    return this.selectedConnection.id !== command.connectionId
+  }
+
   @computed
   get commands () {
     return pipe(
       dotPath('commandsManager.all'),
+      reject(this.rejectCommandsFromOtherConnections),
       reject(isSubscriptionCommandWithEmptyChanges),
       reject(this.isSubscriptionValuesSameAsLastTime),
       reject(command => contains(command.type, this.commandsHiddenInTimeline)),
@@ -144,6 +155,12 @@ class Session {
     return !hidden
   }
 
+  // Sets the selected connection
+  @action
+  setSelectedConnection (connection) {
+    this.selectedConnection = connection
+  }
+
   handleCommand = command => {
     if (command.type === 'clear') {
       this.commandsManager.all.clear()
@@ -152,10 +169,21 @@ class Session {
     }
   }
 
+  handleConnectionsChange = () => {
+    // TODO: See if we can be better at clearing instead of clearing everything then resetting every single time.
+    this.connections.clear()
+    this.connections.push(...this.server.connections)
+  }
+
   constructor (port = 9090) {
     this.server = createServer({ port })
 
     this.server.on('command', this.handleCommand)
+    this.server.on('connectionEstablished', this.handleConnectionsChange)
+    this.server.on('disconnect', (...args) => {
+      console.log('Disconnecting...')
+      this.handleConnectionsChange()
+    })
 
     this.server.start()
     this.isSubscriptionValuesSameAsLastTime = this.isSubscriptionValuesSameAsLastTime.bind(this)
