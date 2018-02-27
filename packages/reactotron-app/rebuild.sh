@@ -21,20 +21,6 @@ codesign -s "Developer ID Application: Steve Kellock (J9982RF89V)" -vvv --deep -
 # switch to the release temp dir
 cd release
 
-# 32 bit windows
-cd win32-ia32
-mv Reactotron-win32-ia32 Reactotron
-zip -r Reactotron-win32-ia32.zip Reactotron
-mv Reactotron-win32-ia32.zip ../
-cd ../
-
-# 64 bit windows
-cd win32-x64
-mv Reactotron-win32-x64 Reactotron
-zip -r Reactotron-win32-x64.zip Reactotron
-mv Reactotron-win32-x64.zip ../
-cd ..
-
 # 32 bit linux
 cd linux-ia32
 mv Reactotron-linux-ia32 Reactotron
@@ -47,6 +33,20 @@ cd linux-x64
 mv Reactotron-linux-x64 Reactotron
 zip -r Reactotron-linux-x64.zip Reactotron
 mv Reactotron-linux-x64.zip ../
+cd ..
+
+# 32 bit windows
+cd win32-ia32
+mv Reactotron-win32-ia32 Reactotron
+zip -r Reactotron-win32-ia32.zip Reactotron
+mv Reactotron-win32-ia32.zip ../
+cd ../
+
+# 64 bit windows
+cd win32-x64
+mv Reactotron-win32-x64 Reactotron
+zip -r Reactotron-win32-x64.zip Reactotron
+mv Reactotron-win32-x64.zip ../
 cd ..
 
 # macos
