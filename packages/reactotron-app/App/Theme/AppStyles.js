@@ -1,16 +1,8 @@
-const Layout = {
-  vbox: {
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'column'
-  },
-  hbox: {
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'row'
-  }
-}
+import Colors from '../Theme/Colors'
+import Layout from './LayoutStyles'
+import Modal from './ModalStyles'
 
 export default {
-  Layout
+  Layout,
+  Modal
 }

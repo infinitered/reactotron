@@ -9,6 +9,11 @@ const getStylingFromBase16 = base16Theme => ({
       .darken(0.1)
       .hsl()
       .string(),
+    modalOverlay: Color(base16Theme.base00)
+      .darken(0.4)
+      .hsl()
+      .fade(0.05)
+      .string(),
     background: base16Theme.base00, // base00 - Default Background
     backgroundSubtleLight: Color(base16Theme.base00)
       .lighten(0.05)
