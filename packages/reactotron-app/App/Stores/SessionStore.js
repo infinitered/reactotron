@@ -128,7 +128,16 @@ class Session {
     const changeCommands = this.commandsManager['state.values.change']
     if (isNil(changeCommands)) return []
     if (changeCommands.length === 0) return []
-    const recentCommand = last(changeCommands)
+
+    let connectionsChangeCommands = null
+    if (this.connections.length < 2) {
+      connectionsChangeCommands = changeCommands
+    } else {
+      if (!this.selectedConnection) return [] // If we have > 1 connection and "All" is selected jet since what we will show won't be "all"
+      connectionsChangeCommands = reject(c => c.connectionId === this.selectedConnection.id, changeCommands)
+    }
+
+    const recentCommand = last(connectionsChangeCommands)
     return dotPath('payload.changes', recentCommand) || []
   }
 
