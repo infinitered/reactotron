@@ -163,7 +163,13 @@ class Session {
 
   handleCommand = command => {
     if (command.type === 'clear') {
+      const newCommands = pipe(
+        dotPath('commandsManager.all'),
+        reject(c => c.connectionId === command.connectionId,),
+      )(this)
+
       this.commandsManager.all.clear()
+      this.commandsManager.all.push(...newCommands)
     } else {
       this.commandsManager.addCommand(command)
     }
@@ -173,6 +179,10 @@ class Session {
     // TODO: See if we can be better at clearing instead of clearing everything then resetting every single time.
     this.connections.clear()
     this.connections.push(...this.server.connections)
+
+    if (this.selectedConnection && !this.connections.find(c => c.id === this.selectedConnection.id)) {
+      this.selectedConnection = null
+    }
   }
 
   constructor (port = 9090) {

@@ -5,6 +5,7 @@ import { inject, observer } from 'mobx-react'
 import IconAdd from 'react-icons/lib/md/add'
 import IconClear from 'react-icons/lib/md/delete-forever'
 import SidebarToggleButton from './SidebarToggleButton'
+import ConnectionSelector from './ConnectionSelector'
 
 const TITLE = 'State Subscriptions'
 
@@ -71,6 +72,9 @@ class SubscriptionsHeader extends Component {
           </div>
           <div style={Styles.center}>
             <div style={Styles.title}>{TITLE}</div>
+            <div>
+              <ConnectionSelector />
+            </div>
           </div>
           <div style={Styles.right}>
             <IconAdd
