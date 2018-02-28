@@ -165,7 +165,7 @@ class Session {
     if (command.type === 'clear') {
       const newCommands = pipe(
         dotPath('commandsManager.all'),
-        reject(c => c.connectionId === command.connectionId,),
+        reject(c => c.connectionId === command.connectionId),
       )(this)
 
       this.commandsManager.all.clear()
@@ -190,10 +190,7 @@ class Session {
 
     this.server.on('command', this.handleCommand)
     this.server.on('connectionEstablished', this.handleConnectionsChange)
-    this.server.on('disconnect', (...args) => {
-      console.log('Disconnecting...')
-      this.handleConnectionsChange()
-    })
+    this.server.on('disconnect', this.handleConnectionsChange)
 
     this.server.start()
     this.isSubscriptionValuesSameAsLastTime = this.isSubscriptionValuesSameAsLastTime.bind(this)
