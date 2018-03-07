@@ -36,6 +36,13 @@ Stop the React Native packager and re-deploy the app to your tethered iOS device
 
 ## React Native Android
 
+#### Using Expo and Can't Connect?
+Make sure you are running your app using the command:
+
+    exp start --localhost
+
+Otherwise the app is not using the port 9000.
+
 #### Tethered and Can't Connect?
 
 If you're using an emulator like Genymotion or the one in Android Studio, or even if your own device, you can still use localhost (the default) to connect provided you __port forward__ back to your computer.
