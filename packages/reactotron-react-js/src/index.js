@@ -10,7 +10,7 @@ var DEFAULTS = {
   host: 'localhost',
   port: 9090,
   name: 'React JS App',
-  userAgent: window.navigator.userAgent,
+  userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : '',
   reactotronVersion: 'BETA' // TODO: figure this out for realz.  why is this hard?  it must be me.
 }
 
