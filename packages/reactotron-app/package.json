@@ -79,6 +79,7 @@
   "dependencies": {
     "color": "^2.0.0",
     "css-modules-require-hook": "^4.2.2",
+    "date-fns": "^1.29.0",
     "electron-debug": "^1.4.0",
     "font-awesome": "^4.7.0",
     "mobx": "^2.5.1",

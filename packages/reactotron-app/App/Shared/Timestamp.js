@@ -1,26 +1,19 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import moment from 'moment'
-import Colors from '../Theme/Colors'
+import React from "react"
+import PropTypes from "prop-types"
+import moment from "moment"
+import Colors from "../Theme/Colors"
+import { format } from "date-fns"
 
 const Styles = {
-  container: {
-    margin: 0,
-    padding: 0
-  },
-  left: {
-    color: Colors.foregroundDark
-  },
-  right: {
-    color: Colors.foreground
-  }
+  container: { margin: 0, padding: 0 },
+  left: { color: Colors.highlight },
+  right: { color: Colors.foreground },
 }
 
 const Timestamp = props => {
-  const date = moment(props.date)
-  const left = date.format('h:mm')
-  // const right = date.format('ss.SS')
-  const right = date.format(':ss')
+  const date = props.date
+  const left = format(date, "h:mm:")
+  const right = format(date, "ss.SS")
   const containerStyles = { ...Styles.container, ...props.style }
 
   return (
@@ -33,7 +26,7 @@ const Timestamp = props => {
 
 Timestamp.propTypes = {
   date: PropTypes.object.isRequired,
-  style: PropTypes.object
+  style: PropTypes.object,
 }
 
 export default Timestamp
