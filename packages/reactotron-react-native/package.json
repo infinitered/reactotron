@@ -1,6 +1,6 @@
 {
   "name": "reactotron-react-native",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.3",
   "description": "A development tool to explore, inspect, and diagnose your React Native apps.",
   "main": "dist/index.js",
   "scripts": {
@@ -65,7 +65,7 @@
     "prop-types": "^15.5.10",
     "ramda": "^0.24.1",
     "ramdasauce": "^2.0.0",
-    "reactotron-core-client": "^2.0.0-alpha.1",
+    "reactotron-core-client": "^2.0.0-alpha.3",
     "rn-host-detect": "^1.1.3"
   }
 }

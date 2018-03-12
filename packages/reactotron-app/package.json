@@ -2,7 +2,7 @@
   "private": true,
   "name": "reactotron-app",
   "productName": "Reactotron",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.3",
   "description": "Reactotron desktop mode engage!",
   "main": "main.js",
   "scripts": {
@@ -11,14 +11,14 @@
     "build-main": "cross-env NODE_ENV=production node -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.electron.js --progress --profile --colors",
     "build-renderer": "cross-env NODE_ENV=production node -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.production.js --progress --profile --colors",
     "build": "npm run build-main && npm run build-renderer",
-    "format": "prettier --write {**,.}/*.{js,ts,tsx} && standard '*.js' App --fix && tslint -p . --fix",
+    "format": "prettier --write {**,.}/*.{js,ts,tsx} && tslint -p . --fix",
     "start-prod": "cross-env NODE_ENV=production electron ./",
     "start-hot": "cross-env HOT=1 NODE_ENV=development electron -r babel-register ./main.development",
     "package": "cross-env NODE_ENV=production node -r babel-register package.js",
     "package-all": "npm run package -- --all",
     "postinstall-old": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
     "start": "concurrently --kill-others \"npm run hot-server\" \"npm run start-hot\"",
-    "lint": "standard '*.js' App && tslint -p ."
+    "lint": "tslint -p ."
   },
   "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-app",
   "author": {
@@ -65,7 +65,6 @@
     "minimist": "^1.2.0",
     "node-libs-browser": "^2.0.0",
     "prettier": "^1.10.2",
-    "standard": "^10.0.3",
     "style-loader": "^0.19.0",
     "sumchecker": "^2.0.2",
     "ts-loader": "^2.3.7",
@@ -80,6 +79,7 @@
   "dependencies": {
     "color": "^2.0.0",
     "css-modules-require-hook": "^4.2.2",
+    "date-fns": "^1.29.0",
     "electron-debug": "^1.4.0",
     "font-awesome": "^4.7.0",
     "mobx": "^2.5.1",
@@ -97,14 +97,8 @@
     "react-modal": "^3.0.3",
     "react-tap-event-plugin": "^2.0.1",
     "react-tooltip": "^3.3.1",
-    "reactotron-core-server": "^2.0.0-alpha.1",
+    "reactotron-core-server": "^2.0.0-alpha.3",
     "source-map-support": "^0.5.0",
     "stringify-object": "^3.2.1"
-  },
-  "standard": {
-    "parser": "babel-eslint",
-    "globals": [
-      "localStorage"
-    ]
   }
 }

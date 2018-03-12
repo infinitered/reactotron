@@ -12,6 +12,7 @@ import {
   IStateTreeNode,
   IType,
   onSnapshot,
+  IMiddlewareEvent,
 } from "mobx-state-tree"
 
 import {
@@ -83,7 +84,14 @@ interface NodeTracker {
   [name: string]: TrackedNode
 }
 
-export interface MstPluginOptions {}
+export type MstPluginFilter = (event: IMiddlewareEvent) => boolean
+
+export interface MstPluginOptions {
+  /**
+   * Fine-grain control over what gets sent to the Reactotron app.
+   */
+  filter?: MstPluginFilter
+}
 
 // --- The Reactotron Plugin ---------------------------------
 
@@ -110,6 +118,8 @@ export function mst(opts: MstPluginOptions = {}) {
 
     // a list of subscriptions the client is subscribing to
     let subscriptions: string[] = []
+
+    const mstFilter = opts.filter ? opts.filter : () => true
 
     // --- Connecting MST to Reactotron ---------------------------------
 
@@ -163,6 +173,12 @@ export function mst(opts: MstPluginOptions = {}) {
 
         // skip this middleware?
         if (skip) {
+          return next(call)
+        }
+
+        // userland opt-out
+        const shouldSend = mstFilter(call)
+        if (!shouldSend) {
           return next(call)
         }
 

@@ -32,7 +32,20 @@ class MyApp extends Component {
 }
 
 // let's wrap it, so the overlay stays on top!
-const MyAppWithBenefits = console.tron.overlay(MyApp)
+const MyAppWithBenefits = Reactotron.overlay(MyApp)
 
 export default MyAppWithBenefits
 ```
+
+# React Native Production Caveat
+
+One common gotcha here is when you make production builds since `reactotron-react-native` is likely setup in `devDependencies`.
+
+If you'd like to keep it like this (I recommend it!), then perhaps your code might look more like this:
+
+```js
+const MyAppWithBenefits = __DEV__ ? Reactotron.overlay(MyApp) : MyApp
+```
+
+Another option is to ship it in your `dependencies` (not recommended -- but sometimes you wanna run it on a device).
+

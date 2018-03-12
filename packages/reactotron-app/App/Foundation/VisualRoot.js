@@ -4,7 +4,6 @@ import AppStyles from '../Theme/AppStyles'
 import Timeline from './Timeline'
 import StateKeysAndValuesDialog from '../Dialogs/StateKeysAndValuesDialog'
 import StateDispatchDialog from '../Dialogs/StateDispatchDialog'
-import HelpDialog from '../Dialogs/HelpDialog'
 import StateWatchDialog from '../Dialogs/StateWatchDialog'
 import RenameStateDialog from '../Dialogs/RenameStateDialog'
 import FilterTimelineDialog from '../Dialogs/FilterTimelineDialog'
@@ -87,7 +86,6 @@ export default class VisualRoot extends Component {
         </div>
         <StateKeysAndValuesDialog />
         <StateDispatchDialog />
-        <HelpDialog />
         <StateWatchDialog />
         <RenameStateDialog />
         <FilterTimelineDialog />

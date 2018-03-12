@@ -56,9 +56,33 @@ const myTree = MyModel.create()
 Reactotron.trackMstNode(myTree)
 ```
 
+# Options
+
+When you `use()` the `reactotron-mst`, you can also pass options.
+
+### filter
+
+The `filter` property provides a way to control what is sent to Reactotron.  It is a function which takes an [`IMiddlewareEvent`](https://github.com/mobxjs/mobx-state-tree/blob/master/docs/middleware.md#call-attributes) and returns a `boolean`.  If you return `true`, the message will be sent to the Reactotron app.  `false` will ignore this message.
+
+Here's an example which will stop all `postProcessSnapshot`-based actions from jumping the wire.
+
+```ts
+import Tron from "reactotron-react-native"
+import { mst } from "reactotron-mst"
+
+const RX = /postProcessSnapshot/
+const filter = event => RX.test(event.name) === false
+
+Tron.use(mst({ filter }))
+```
+
+The default value for `filter` if you don't provide it is `() => true`, which means everything gets passed to Reactotron.
+
 # Troubleshooting
 
 The `trackMstNode()` function will only be available after you setup the `reactotron-mst` plugin. Make sure you do the previous setup step first or you'll see an error that says, `trackMstNode is not a function`.
+
+
 
 # Caveats
 
