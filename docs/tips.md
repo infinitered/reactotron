@@ -79,10 +79,10 @@ console.tron.log('Sweet Freedom!')
 
 ### Fancy Console Magic :tophat: :sparkles:
 
-You can add an important indicator light on any log by adding `true` as a second parameter.  _E.g._
+You can add an important indicator light by calling `logImportant`.  _E.g._
 ```js
 // or Reactotron.log
-console.tron.log('I am important', true)
+console.tron.logImportant('I am important')
 ```
 
 Additionally, you can access a more advanced message and indicator with `display`.

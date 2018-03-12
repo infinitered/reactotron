@@ -1,4 +1,4 @@
-declare module 'reactotron-react-native' {
+declare module "reactotron-react-native" {
   export interface ReactotronConfigureOptions {
     name?: string
     host?: string
@@ -112,20 +112,28 @@ declare module 'reactotron-react-native' {
     /**
      * Prints a value such a string, object, or array.
      *
-     * Examples:
+     * This is the same as console.log, except it sends it to the Reactotron app.
      *
-     * ```js
-     *   .log('hi')
-     *   .log({ objects: 'can', go: 'here' })
-     *   .log([1,2,3], true)
-     * ```
-     *
-     * @param {value} The value to launch.
-     * @param {important} If true, the value will be highlighted.
-     *
+     * @param value Anything you'd like to log.
      */
-    log(value: any, important?: boolean): void
-    error(value: any): void
+    log(...value: any[]): void
+
+    /**
+     * Prints a value such a string, object, or array.  It prints it highlighted
+     * within the Reactotron app so it's visually easy to recognize.  Great if you
+     * have a lot of messages flowing.
+     *
+     * @param value The value to log.
+     */
+    logImportant(...value: any[]): void
+
+    /**
+     * Logs an error with a stack trace.
+     *
+     * @param error
+     * @param stack
+     */
+    error(error: any, stack: any): void
 
     /**
      * Prints a custom display message.
