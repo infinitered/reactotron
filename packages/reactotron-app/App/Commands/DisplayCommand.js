@@ -1,35 +1,35 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import Command from '../Shared/Command'
-import Content from '../Shared/Content'
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import Command from "../Shared/Command"
+import Content from "../Shared/Content"
 
-const COMMAND_TITLE = 'DISPLAY'
+const COMMAND_TITLE = "DISPLAY"
 
 const Styles = {
   imageContainer: {},
   image: {
-    maxWidth: '100%',
-    maxHeight: '100%'
-  }
+    maxWidth: "100%",
+    maxHeight: "100%",
+  },
 }
 
 class DisplayCommand extends Component {
   static propTypes = {
-    command: PropTypes.object.isRequired
+    command: PropTypes.object.isRequired,
   }
 
-  shouldComponentUpdate (nextProps) {
+  shouldComponentUpdate(nextProps) {
     return this.props.command.id !== nextProps.command.id
   }
 
-  render () {
+  render() {
     const { command } = this.props
     const { payload, important } = command
     const { name, value, image, preview } = payload
 
     return (
       <Command
-        command={command}
+        {...this.props}
         title={name || COMMAND_TITLE}
         important={important}
         preview={preview}

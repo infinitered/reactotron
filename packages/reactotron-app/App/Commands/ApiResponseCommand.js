@@ -143,7 +143,7 @@ class ApiResponseCommand extends Component {
     const summary = { 'Status Code': status, Method: method, 'Duration (ms)': duration }
 
     return (
-      <Command command={command} title={COMMAND_TITLE} duration={duration} preview={preview}>
+      <Command {...this.props} title={COMMAND_TITLE} duration={duration} preview={preview}>
         <div style={Styles.container}>
           <div style={Styles.url}>{url}</div>
 

@@ -116,10 +116,10 @@ class Command extends Component {
 
   render () {
     const { isOpen } = this.state
-    const { command, children, title, preview } = this.props
+    const { command, children, title, preview, deltaTime } = this.props
     const { important, type } = command
     const isDisplay = type === 'display'
-    const { date, deltaTime } = command
+    const { date } = command
     const titleTextStyle = merge(Styles.titleText, important ? Styles.titleTextInverse : {})
     const topRowStyle = Styles.topRow
     const timestampStyle = Styles.timestamp

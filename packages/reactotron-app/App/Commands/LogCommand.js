@@ -388,7 +388,7 @@ class LogCommand extends Component {
     let preview = this.getPreview(message)
 
     return (
-      <Command command={command} title={title} preview={preview}>
+      <Command {...this.props} title={title} preview={preview}>
         <div style={containerTypes}>
           {!stack && <Content value={message} />}
           {stack && <div style={Styles.errorMessage}>{message}</div>}
