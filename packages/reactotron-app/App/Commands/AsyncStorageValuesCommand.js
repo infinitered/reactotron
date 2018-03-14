@@ -48,7 +48,7 @@ class AsyncStorageValuesCommand extends Component {
     const { preview, value = [] } = command.payload
     const rows = mapIndexed(this.renderItem, value)
     return (
-      <Command command={command} title={COMMAND_TITLE} preview={preview}>
+      <Command {...this.props} title={COMMAND_TITLE} preview={preview}>
         <div style={Styles.watches}>{rows.length > 0 ? rows : 'Empty storage.'}</div>
       </Command>
     )

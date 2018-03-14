@@ -20,7 +20,7 @@ class ClientIntroCommand extends Component {
     const preview = payload.name
 
     return (
-      <Command command={command} title={COMMAND_TITLE} preview={preview}>
+      <Command {...this.props} title={COMMAND_TITLE} preview={preview}>
         {makeTable(payload)}
       </Command>
     )

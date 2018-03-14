@@ -47,7 +47,7 @@ class StateValuesChangeCommand extends Component {
     const preview = join(' ', phrase)
 
     return (
-      <Command command={command} title={COMMAND_TITLE} preview={preview}>
+      <Command {...this.props} title={COMMAND_TITLE} preview={preview}>
         <div style={Styles.container}>
           {hasChanged && <Content value={changed} />}
           {hasAdded && <Content value={added} />}

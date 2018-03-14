@@ -16,7 +16,7 @@ const Styles = {
     ...AppStyles.Layout.hbox,
     marginTop: 0,
     alignItems: 'flex-start',
-    borderBottom: `1px solid ${Colors.line}`
+    borderBottom: `1px solid ${Colors.line}`,
   },
   containerOpen: {
     backgroundColor: Colors.backgroundSubtleLight
@@ -81,7 +81,7 @@ const Styles = {
     animation: 'fade-up 0.25s',
     willChange: 'transform opacity',
     padding: '0 40px 30px 40px'
-  }
+  },
 }
 
 @observer
@@ -116,7 +116,7 @@ class Command extends Component {
 
   render () {
     const { isOpen } = this.state
-    const { command, children, title, preview } = this.props
+    const { command, children, title, preview, deltaTime } = this.props
     const { important, type } = command
     const isDisplay = type === 'display'
     const { date } = command
@@ -129,7 +129,7 @@ class Command extends Component {
       <div style={containerStyles}>
         <div style={Styles.body}>
           <div style={topRowStyle} onClick={this.handleToggleOpen}>
-            <Timestamp date={date} style={timestampStyle} />
+            <Timestamp date={date} style={timestampStyle} deltaTime={deltaTime} />
             <div style={Styles.title}>
               <span style={titleTextStyle}>
                 {isDisplay && (

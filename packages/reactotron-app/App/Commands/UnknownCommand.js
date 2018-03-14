@@ -19,7 +19,7 @@ class UnknownCommand extends Component {
     const { payload, type } = command
 
     return (
-      <Command command={command} title={COMMAND_TITLE} preview={type}>
+      <Command {...this.props} title={COMMAND_TITLE} preview={type}>
         <ObjectTree object={{ payload }} />
       </Command>
     )
