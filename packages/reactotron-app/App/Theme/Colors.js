@@ -1,5 +1,5 @@
-import Color from 'color'
-import { createStyling } from 'react-base16-styling'
+import Color from "color"
+import { createStyling } from "react-base16-styling"
 
 // https://github.com/chriskempson/base16/blob/master/styling.md
 
@@ -33,7 +33,10 @@ const getStylingFromBase16 = base16Theme => ({
       .hsl()
       .string(),
     backgroundHighlight: base16Theme.base02, // base02 - Selection Background
-    highlight: base16Theme.base03, // base03 - Comments, Invisibles, Line Highlighting
+    highlight: Color(base16Theme.base03)
+      .lighten(0.3)
+      .hsl()
+      .string(), // base03 - Comments, Invisibles, Line Highlighting
     foregroundDark: base16Theme.base04, // base04 - Dark Foreground (Used for status bars)
     foreground: base16Theme.base05, // base05 - Default Foreground, Caret, Delimiters, Operators
     foregroundLight: base16Theme.base06, // base06 - Light Foreground (Not often used)
@@ -62,9 +65,9 @@ const getStylingFromBase16 = base16Theme => ({
     chromeLine: Color(base16Theme.base00)
       .lighten(0.25)
       .hsl()
-      .string()
+      .string(),
   },
-  theme: base16Theme // TODO: figure out why I'm doing this?
+  theme: base16Theme, // TODO: figure out why I'm doing this?
 })
 
 // the default theme until i figure out how to customize it on the fly
@@ -74,7 +77,7 @@ const getStylingFromBase16 = base16Theme => ({
 // const defaultTheme = 'mocha'
 // const defaultTheme = 'railscasts'
 // const defaultTheme = 'greenscreen'
-const defaultTheme = 'twilight'
+const defaultTheme = "twilight"
 
 // the natural or inverted look
 const invertTheme = false
@@ -86,13 +89,13 @@ const createStylingFromTheme = createStyling(getStylingFromBase16, {})
 const styling = createStylingFromTheme(defaultTheme)
 
 // fish out the roles because I haven't committed fully to styling in the components just yet
-const roles = styling('roles').style
+const roles = styling("roles").style
 
 // awkwardly expose the theme for the ObjectTree component
-const theme = styling('theme').style
+const theme = styling("theme").style
 
 export default {
   ...roles,
   theme,
-  invertTheme
+  invertTheme,
 }
