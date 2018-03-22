@@ -102,11 +102,13 @@ class UI {
   zoomLevel = 0
 
   zoomOut() {
-    webFrame.setZoomLevel(this.zoomLevel--)
+    this.zoomLevel--
+    webFrame.setZoomLevel(this.zoomLevel)
   }
 
   zoomIn() {
-    webFrame.setZoomLevel(this.zoomLevel++)
+    this.zoomLevel++
+    webFrame.setZoomLevel(this.zoomLevel)
   }
 
   resetZoom() {
