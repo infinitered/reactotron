@@ -1,8 +1,9 @@
-import { computed, observable, action, asMap } from 'mobx'
-import Mousetrap from '../Lib/Mousetrap.min.js'
-import { isNilOrEmpty } from 'ramdasauce'
-import Keystroke from '../Lib/Keystroke'
-import { trim } from 'ramda'
+import { computed, observable, action, asMap } from "mobx"
+import Mousetrap from "../Lib/Mousetrap.min.js"
+import { isNilOrEmpty } from "ramdasauce"
+import Keystroke from "../Lib/Keystroke"
+import { trim } from "ramda"
+import { webFrame } from "electron"
 
 /**
  * Handles UI state.
@@ -11,12 +12,12 @@ class UI {
   /**
    * Which tab are we on?
    */
-  @observable tab = 'timeline'
+  @observable tab = "timeline"
 
   /**
    * Targets state keys or values from the UI & commands.
    */
-  @observable keysOrValues = 'keys'
+  @observable keysOrValues = "keys"
 
   // whether or not to show the state find dialog
   @observable showStateFindDialog = false
@@ -49,7 +50,7 @@ class UI {
   @observable showWatchPanel = false
 
   /** The message we are currently composing to send to the client. */
-  @observable customMessage = ''
+  @observable customMessage = ""
 
   // show the send custom message dialog
   @observable showSendCustomDialog = false
@@ -63,13 +64,13 @@ class UI {
   /**
    * The current search phrase used to narrow down visible commands.
    */
-  @observable searchPhrase = ''
+  @observable searchPhrase = ""
 
   // additional properties that some commands may want... a way to communicate
   // from the command toolbar to the command
   commandProperties = {}
 
-  constructor (server, commandsManager) {
+  constructor(server, commandsManager) {
     this.server = server
     this.commandsManager = commandsManager
 
@@ -85,14 +86,34 @@ class UI {
     Mousetrap.bind(`enter`, this.submitCurrentForm)
     Mousetrap.bind(`${Keystroke.mousetrap}+enter`, this.submitCurrentFormDelicately)
     Mousetrap.bind(`${Keystroke.mousetrap}+n`, this.openStateWatchDialog)
-    Mousetrap.bind(`${Keystroke.mousetrap}+1`, this.switchTab.bind(this, 'timeline'))
-    Mousetrap.bind(`${Keystroke.mousetrap}+2`, this.switchTab.bind(this, 'subscriptions'))
-    Mousetrap.bind(`${Keystroke.mousetrap}+3`, this.switchTab.bind(this, 'backups'))
-    Mousetrap.bind(`${Keystroke.mousetrap}+4`, this.switchTab.bind(this, 'native'))
-    Mousetrap.bind(`${Keystroke.mousetrap}+?`, this.switchTab.bind(this, 'help'))
+    Mousetrap.bind(`${Keystroke.mousetrap}+1`, this.switchTab.bind(this, "timeline"))
+    Mousetrap.bind(`${Keystroke.mousetrap}+2`, this.switchTab.bind(this, "subscriptions"))
+    Mousetrap.bind(`${Keystroke.mousetrap}+3`, this.switchTab.bind(this, "backups"))
+    Mousetrap.bind(`${Keystroke.mousetrap}+4`, this.switchTab.bind(this, "native"))
+    Mousetrap.bind(`${Keystroke.mousetrap}+?`, this.switchTab.bind(this, "help"))
     Mousetrap.bind(`${Keystroke.mousetrap}+f`, this.showTimelineSearch)
     Mousetrap.bind(`${Keystroke.mousetrap}+.`, this.openSendCustomDialog)
     Mousetrap.bind(`${Keystroke.mousetrap}+shift+s`, this.toggleSidebar)
+    Mousetrap.bind(`${Keystroke.mousetrap}+-`, this.zoomOut.bind(this))
+    Mousetrap.bind(`${Keystroke.mousetrap}+=`, this.zoomIn.bind(this))
+    Mousetrap.bind(`${Keystroke.mousetrap}+0`, this.resetZoom.bind(this))
+  }
+
+  zoomLevel = 0
+
+  zoomOut() {
+    this.zoomLevel--
+    webFrame.setZoomLevel(this.zoomLevel)
+  }
+
+  zoomIn() {
+    this.zoomLevel++
+    webFrame.setZoomLevel(this.zoomLevel)
+  }
+
+  resetZoom() {
+    this.zoomLevel = 0
+    webFrame.setZoomLevel(this.zoomLevel)
   }
 
   @action
@@ -104,17 +125,17 @@ class UI {
    * Get the scrubbed search phrase.
    */
   @computed
-  get cleanedSearchPhrase () {
-    return trim(this.searchPhrase || '')
+  get cleanedSearchPhrase() {
+    return trim(this.searchPhrase || "")
   }
 
   /**
    * The regular expression we will be using to search commands.
    */
   @computed
-  get searchRegexp () {
+  get searchRegexp() {
     try {
-      return new RegExp(this.cleanedSearchPhrase.replace(/\s/, '.'), 'i')
+      return new RegExp(this.cleanedSearchPhrase.replace(/\s/, "."), "i")
     } catch (e) {
       return null
     }
@@ -124,7 +145,7 @@ class UI {
    * Is this search phrase useable?
    */
   @computed
-  get isValidSearchPhrase () {
+  get isValidSearchPhrase() {
     return Boolean(this.searchRegexp)
   }
 
@@ -137,7 +158,7 @@ class UI {
   showTimelineSearch = () => {
     this.isTimelineSearchVisible = false // hack to ensure the reaction on the timeline header works (sheesh.)
     this.isTimelineSearchVisible = true
-    this.switchTab('timeline')
+    this.switchTab("timeline")
   }
 
   @action
@@ -174,7 +195,7 @@ class UI {
   }
 
   @computed
-  get isModalShowing () {
+  get isModalShowing() {
     return (
       this.showStateWatchDialog ||
       this.showStateFindDialog ||
@@ -230,7 +251,7 @@ class UI {
   @action
   submitCurrentMessage = () => {
     this.sendCustomMessage(this.customMessage)
-    this.customMessage = ''
+    this.customMessage = ""
     this.showSendCustomDialog = false
   }
 
@@ -245,7 +266,7 @@ class UI {
   }
 
   @action
-  setActionToDispatch (action) {
+  setActionToDispatch(action) {
     this.actionToDispatch = action
     this.showStateDispatchDialog = true
   }
@@ -256,7 +277,7 @@ class UI {
     let action = null
     try {
       // brackets are need on chromium side, huh.
-      action = eval('(' + this.actionToDispatch + ')') // eslint-disable-line
+      action = eval("(" + this.actionToDispatch + ")") // eslint-disable-line
     } catch (e) {}
     // jet if not valid
     if (isNilOrEmpty(action)) return
@@ -351,7 +372,7 @@ class UI {
 
   @action
   getStateKeysOrValues = path => {
-    if (this.keysOrValues === 'keys') {
+    if (this.keysOrValues === "keys") {
       this.getStateKeys(path)
     } else {
       this.getStateValues(path)
@@ -360,17 +381,17 @@ class UI {
 
   @action
   getStateValues = path => {
-    this.server.send('state.values.request', { path })
+    this.server.send("state.values.request", { path })
   }
 
   @action
   getStateKeys = path => {
-    this.server.send('state.keys.request', { path })
+    this.server.send("state.keys.request", { path })
   }
 
   @action
   dispatchAction = action => {
-    this.server.send('state.action.dispatch', { action })
+    this.server.send("state.action.dispatch", { action })
   }
 
   @action
@@ -385,10 +406,10 @@ class UI {
 
   @action
   toggleKeysValues = () => {
-    if (this.keysOrValues === 'keys') {
-      this.keysOrValues = 'values'
+    if (this.keysOrValues === "keys") {
+      this.keysOrValues = "values"
     } else {
-      this.keysOrValues = 'keys'
+      this.keysOrValues = "keys"
     }
   }
 
@@ -398,15 +419,15 @@ class UI {
   }
 
   // grab a copy of the state for backup purposes
-  @action backupState = () => this.server.send('state.backup.request', {})
+  @action backupState = () => this.server.send("state.backup.request", {})
 
   // change the state on the app to this
-  @action restoreState = state => this.server.send('state.restore.request', { state })
+  @action restoreState = state => this.server.send("state.restore.request", { state })
 
   // removes an existing state object
   @action
   deleteState = state => {
-    this.commandsManager['state.backup.response'].remove(state)
+    this.commandsManager["state.backup.response"].remove(state)
   }
 
   getCommandProperty = (messageId, key) => {
@@ -431,12 +452,12 @@ class UI {
   /**
    * Asks the client to the file in the editor
    */
-  @action openInEditor = (file, lineNumber) => this.server.send('editor.open', { file, lineNumber })
+  @action openInEditor = (file, lineNumber) => this.server.send("editor.open", { file, lineNumber })
 
   /**
    * Sets the properties of the overlay shown on the React Native app.
    */
-  @action setOverlay = props => this.server.send('overlay', props)
+  @action setOverlay = props => this.server.send("overlay", props)
 }
 
 export default UI
