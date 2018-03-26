@@ -62,6 +62,6 @@
   },
   "peerDependencies": {
     "mobx": "^3.4.1 || ^4.1.0",
-    "mobx-state-tree": "^1.4.0 | ^2.0.2"
+    "mobx-state-tree": "^1.4.0 || ^2.0.2"
   }
 }
