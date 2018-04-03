@@ -185,7 +185,8 @@ export default (reactotron, options) => {
       }
 
       // hook the promise to capture the resolve or reject
-      result.done.then(onTaskResult, error => {
+      var promise = result.done ? result.done : result.toPromise()
+      promise.then(onTaskResult, error => {
         effectRejected(effectId, error)
         if (!error.reactotronWasHere) {
           reactotron.reportError(error)
