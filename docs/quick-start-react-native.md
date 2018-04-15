@@ -50,7 +50,11 @@ import Reactotron, {
     .connect()
 ```
 
-Finally, we import this on startup in `App.js` (Create React Native App) or `index.ios.js` and `index.android.js` (react-native-cli) on line 1:
+Finally, we import this on startup in
+- `App.js` (Create React Native App) or
+- `index.ios.js` and `index.android.js` (react-native < 0.49) or
+- `index.js` (react-native 0.49+)
+on line 1:
 
 ```js
 import './ReactotronConfig'
