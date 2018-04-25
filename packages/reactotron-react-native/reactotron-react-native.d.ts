@@ -7,7 +7,7 @@ declare module "reactotron-react-native" {
     reactotronVersion?: string
     environment?: string
   }
-  
+
   export interface ReactotronImageOptions {
     uri: string
     preview?: string
@@ -142,7 +142,7 @@ declare module "reactotron-react-native" {
      * @param error
      * @param stack
      */
-    error(error: any, stack: any): void
+    error(error: any, stack?: any): void
 
     /**
      * Prints a custom display message.
@@ -151,10 +151,24 @@ declare module "reactotron-react-native" {
 
     /**
      * Displays an image.
-     * 
+     *
      * @param options The image options.
      */
     image(options: ReactotronImageOptions): void
+
+    /**
+     * Provides a way to manually sourcemap an error and report the
+     * results to the Reactotron app.
+     *
+     * Generally you won't need to do this, however, there are certain
+     * types of errors in React Native that don't seem to do this by
+     * default.
+     *
+     * Yes, I'm looking at you Promise-based errors.
+     *
+     * @param error The error object.
+     */
+    reportError?(error: any): void
   }
 
   var instance: Reactotron
