@@ -7,13 +7,22 @@ declare module "reactotron-react-native" {
     reactotronVersion?: string
     environment?: string
   }
+  
+  export interface ReactotronImageOptions {
+    uri: string
+    preview?: string
+    filename?: string
+    width?: number
+    height?: number
+    caption?: string
+  }
 
   export interface ReactotronDisplayOptions {
     name: string
     value?: any
     preview?: string
     important?: boolean
-    image?: string
+    image?: string | ReactotronImageOptions
   }
 
   export interface ReactotronStackFrame {
@@ -139,6 +148,13 @@ declare module "reactotron-react-native" {
      * Prints a custom display message.
      */
     display(options: ReactotronDisplayOptions): void
+
+    /**
+     * Displays an image.
+     * 
+     * @param options The image options.
+     */
+    image(options: ReactotronImageOptions): void
   }
 
   var instance: Reactotron

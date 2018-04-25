@@ -26,6 +26,14 @@ class DisplayCommand extends Component {
     const { command } = this.props
     const { payload, important } = command
     const { name, value, image, preview } = payload
+    let imageUrl
+    if (image) {
+      if (typeof image === "string") {
+        imageUrl = image
+      } else {
+        imageUrl = image.uri
+      }
+    } 
 
     return (
       <Command
@@ -35,9 +43,9 @@ class DisplayCommand extends Component {
         preview={preview}
       >
         {value && <Content value={value} />}
-        {image && (
+        {imageUrl && (
           <div style={Styles.imageContainer}>
-            <img style={Styles.image} src={image.uri} />
+            <img style={Styles.image} src={imageUrl} />
           </div>
         )}
       </Command>
