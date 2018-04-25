@@ -37,7 +37,7 @@ class DisplayCommand extends Component {
         {value && <Content value={value} />}
         {image && (
           <div style={Styles.imageContainer}>
-            <img style={Styles.image} src={image.uri} />
+            <img style={Styles.image} src={image} />
           </div>
         )}
       </Command>
