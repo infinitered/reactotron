@@ -41,7 +41,7 @@ class DisplayCommand extends Component {
     const dimensions = width && height && `${width} x ${height}`
 
     return (
-      <Command command={command} title={COMMAND_TITLE} important={important} preview={preview}>
+      <Command {...this.props} title={COMMAND_TITLE} important={important} preview={preview}>
         <div style={Styles.imageContainer}>
           <img style={Styles.image} src={uri} />
           {caption && <div style={Styles.caption}>{caption}</div>}

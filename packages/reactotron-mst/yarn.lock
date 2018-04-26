@@ -684,13 +684,15 @@ minimatch@^3.0.0, minimatch@^3.0.4:
   dependencies:
     brace-expansion "^1.1.7"
 
-mobx-state-tree@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/mobx-state-tree/-/mobx-state-tree-1.3.1.tgz#9e1ba9b8b6ea183f1a4a2ae1f67bfa8f2bcae4fe"
+mobx-state-tree@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/mobx-state-tree/-/mobx-state-tree-2.0.2.tgz#74664b733f7d55e93ad8a77f92b353f3ba20a78d"
+  dependencies:
+    mobx "^4.0.2"
 
-mobx@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/mobx/-/mobx-3.4.1.tgz#37abe5ee882d401828d9f26c6c1a2f47614bbbef"
+mobx@^4.0.2, mobx@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-4.1.0.tgz#e4a9679cdafbe215b20e32ef93a7031845b3f1af"
 
 ms@2.0.0:
   version "2.0.0"

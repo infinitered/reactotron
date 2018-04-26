@@ -109,7 +109,7 @@ class BenchmarkReportCommand extends Component {
     const preview = `${title} in ${duration}ms`
 
     return (
-      <Command command={command} title={COMMAND_TITLE} duration={duration} preview={preview}>
+      <Command {...this.props} title={COMMAND_TITLE} duration={duration} preview={preview}>
         <div style={Styles.reportTitle}>{title}</div>
         {mapIndexed(
           (step, idx) => makeStep(step, idx, idx === steps.length - 2, duration),

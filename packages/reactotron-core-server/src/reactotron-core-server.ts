@@ -137,20 +137,30 @@ export default class Server {
         }
       })
 
+      const extractOrCreateDate = (dateString?: string) => {
+        if (!dateString) return new Date()
+        try {
+          return new Date(Date.parse(dateString))
+        } catch {
+          return new Date()
+        }
+      }
+
       // when we receive a command from the client
       socket.on("message", incoming => {
         const message = JSON.parse(incoming as string)
         repair(message)
-        const { type, important, payload } = message
+        const { type, important, payload, deltaTime = 0 } = message
         this.messageId++
-        const date = new Date()
+
         const fullCommand = {
           type,
           important,
           payload,
           connectionId: thisConnectionId,
           messageId: this.messageId,
-          date,
+          date: extractOrCreateDate(message.date),
+          deltaTime,
         }
 
         // for client intros

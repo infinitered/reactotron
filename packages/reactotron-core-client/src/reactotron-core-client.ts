@@ -77,6 +77,11 @@ export class Client {
   isReady = false
 
   /**
+   * The last time we sent a message.
+   */
+  lastMessageDate = new Date()
+
+  /**
    * Starts a timer and returns a function you can call to stop it and return the elapsed time.
    */
   startTimer = () => start()
@@ -185,10 +190,17 @@ export class Client {
       return
     }
 
+    // set the timing info
+    const date = new Date()
+    const deltaTime = date.getTime() - this.lastMessageDate.getTime()
+    this.lastMessageDate = date
+
     const fullMessage = {
       type,
       payload,
       important: !!important,
+      date: date.toISOString(),
+      deltaTime,
     }
 
     const serializedMessage = serialize(fullMessage)

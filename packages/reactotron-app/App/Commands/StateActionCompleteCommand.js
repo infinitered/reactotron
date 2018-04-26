@@ -30,7 +30,7 @@ class StateActionComplete extends Component {
     const preview = `${name}`
 
     return (
-      <Command command={command} title={COMMAND_TITLE} duration={ms} preview={preview}>
+      <Command {...this.props} title={COMMAND_TITLE} duration={ms} preview={preview}>
         <div style={Styles.container}>
           <div style={Styles.name}>{name}</div>
           <Content value={action} />

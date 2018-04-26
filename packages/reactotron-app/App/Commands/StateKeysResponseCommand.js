@@ -110,7 +110,7 @@ class StateKeysResponseCommand extends Component {
     const pathText = path || ROOT_TEXT
 
     return (
-      <Command command={command} title={COMMAND_TITLE} startsOpen>
+      <Command {...this.props} title={COMMAND_TITLE} startsOpen>
         <div style={Styles.container}>
           <div style={Styles.path}>
             <span style={Styles.pathLabel}>{PATH_LABEL}</span> {pathText}

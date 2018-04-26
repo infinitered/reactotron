@@ -140,7 +140,7 @@ class SagaTaskCompleteCommand extends Component {
     const effectTitle = `${children.length} Effect${children.length === 1 ? '' : 's'}`
 
     return (
-      <Command command={command} title={COMMAND_TITLE} preview={preview}>
+      <Command {...this.props} title={COMMAND_TITLE} preview={preview}>
         <div style={Styles.effects}>
           <div style={Styles.effectTitle}>
             <div style={Styles.triggerType}>{description || triggerType}</div>

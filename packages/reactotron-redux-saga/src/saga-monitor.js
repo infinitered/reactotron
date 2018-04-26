@@ -114,24 +114,26 @@ export default (reactotron, options) => {
         if (isNil(sourceEffectInfo)) return
 
         let extra = null
-        switch (sourceEffectInfo.name) {
-          case CALL:
-            extra = sourceEffectInfo.effect[sourceEffectInfo.name].args
-            break
+        if (sourceEffectInfo.effect) {
+          switch (sourceEffectInfo.name) {
+            case CALL:
+              extra = sourceEffectInfo.effect[sourceEffectInfo.name].args
+              break
 
-          case PUT:
-            extra = sourceEffectInfo.effect[sourceEffectInfo.name].action
-            break
+            case PUT:
+              extra = sourceEffectInfo.effect[sourceEffectInfo.name].action
+              break
 
-          // children handle this
-          case RACE:
-            break
+            // children handle this
+            case RACE:
+              break
 
-          // TODO: More of customizations needed here
+            // TODO: More of customizations needed here
 
-          default:
-            extra = sourceEffectInfo.effect[sourceEffectInfo.name]
-            break
+            default:
+              extra = sourceEffectInfo.effect[sourceEffectInfo.name]
+              break
+          }
         }
         // assemble the structure
         children.push({
@@ -185,7 +187,8 @@ export default (reactotron, options) => {
       }
 
       // hook the promise to capture the resolve or reject
-      result.done.then(onTaskResult, error => {
+      var promise = result.done ? result.done : result.toPromise()
+      promise.then(onTaskResult, error => {
         effectRejected(effectId, error)
         if (!error.reactotronWasHere) {
           reactotron.reportError(error)
