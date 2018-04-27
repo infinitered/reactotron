@@ -37,6 +37,9 @@ class UI {
   // wheter or not to show the timeline filter dialog
   @observable showFilterTimelineDialog = false
 
+  // the connection selection dialog
+  @observable showConnectionSelectionDialog = false
+
   // the current watch to add
   @observable watchToAdd
 
@@ -202,7 +205,8 @@ class UI {
       this.showStateDispatchDialog ||
       this.showFilterTimelineDialog ||
       this.showRenameStateDialog ||
-      this.showSendCustomDialog
+      this.showSendCustomDialog ||
+      this.showConnectionSelectionDialog
     )
   }
 
@@ -363,6 +367,16 @@ class UI {
   @action
   closeSendCustomDialog = () => {
     this.showSendCustomDialog = false
+  }
+
+  @action
+  openConnectionSelectionDialog = () => {
+    this.showConnectionSelectionDialog = true
+  }
+
+  @action
+  closeConnectionSelectionDialog = () => {
+    this.showConnectionSelectionDialog = false
   }
 
   @action

@@ -1,5 +1,20 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
+import Colors from '../Theme/Colors'
+
+const Styles = {
+  button: {
+    height: 30,
+    padding: '0 15px',
+    fontSize: 13,
+    marginRight: 4,
+    backgroundColor: Colors.subtleLine,
+    borderRadius: 2,
+    border: `1px solid ${Colors.backgroundSubtleDark}`,
+    cursor: 'pointer',
+    color: Colors.foregroundDark
+  }
+}
 
 @inject('session')
 @observer
@@ -14,21 +29,15 @@ class ConnectionSelector extends Component {
   }
 
   render() {
-    const { connections, selectedConnection } = this.props.session
+    const { session } = this.props
+    const { connections, selectedConnection, ui } = session
 
     if (connections.length < 2) return null
 
-    const selectedConnectionId = selectedConnection ? selectedConnection.id : -1
-
     return (
-      <select value={selectedConnectionId} onChange={this.handleSelectedConnectionChange}>
-        <option value={-1}>All</option>
-        {connections.map(c => (
-          <option key={c.id} value={c.id}>
-            {c.id} - {c.name}
-          </option>
-        ))}
-      </select>
+      <button style={Styles.button} onClick={ui.openConnectionSelectionDialog}>
+        Conn: {selectedConnection ? `${selectedConnection.id} - ${selectedConnection.name}` : 'All'}
+      </button>
     )
   }
 }
