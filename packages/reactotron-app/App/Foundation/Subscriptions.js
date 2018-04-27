@@ -102,9 +102,6 @@ class WatchPanel extends Component {
     const isEmpty = watches.length === 0
     const isManyConnections = connections.length > 1 && selectedConnection === null
 
-    console.log('isEmpty: ', isEmpty)
-    console.log('isManyConnections: ', isManyConnections)
-
     return (
       <div style={Styles.container}>
         <SubscriptionsHeader />
