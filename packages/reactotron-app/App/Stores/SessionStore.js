@@ -46,6 +46,7 @@ class Session {
   @observable connections = []
   // Selected Connection
   @observable selectedConnection = null
+  @observable customCommands = []
 
   commandsManager = new Commands()
 
@@ -179,6 +180,15 @@ class Session {
 
       this.commandsManager.all.clear()
       this.commandsManager.all.push(...newCommands)
+    } else if (command.type === 'customCommand.register') {
+      this.customCommands.push(command.payload)
+    } else if (command.type === 'customCommand.unregister') {
+      const newCustomCommands = pipe(
+        dotPath('customCommands'),
+        reject(c => c.id === command.payload.id),
+      )(this)
+      this.customCommands.clear()
+      this.customCommands.push(...newCustomCommands)
     } else {
       this.commandsManager.addCommand(command)
     }

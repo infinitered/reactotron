@@ -44,7 +44,7 @@ StorybookSwitcher.propTypes = {
   /**
    * A component that houses the storybook stories.
    */
-  storybookUi: PropTypes.element,
+  storybookUi: PropTypes.func,
   /**
    * An emitter which can be subscribed to to listen for events.
    */
