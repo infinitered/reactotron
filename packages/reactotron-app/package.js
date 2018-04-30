@@ -46,7 +46,7 @@ if (version) {
   // use the same version as the currently-installed electron
   exec("npm list electron --depth 0 --dev", (err, stdout) => {
     if (err) {
-      DEFAULT_OPTS.electronVersion = "1.6.8"
+      DEFAULT_OPTS.electronVersion = "1.8.6"
     } else {
       DEFAULT_OPTS.electronVersion = R.pipe(
         R.split(/\s/),
