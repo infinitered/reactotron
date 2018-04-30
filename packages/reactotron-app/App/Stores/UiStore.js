@@ -61,6 +61,9 @@ class UI {
   // hide the sidebar
   @observable isSidebarVisible = true
 
+  // If storybook is shown or not
+  @observable isStorybookShown = false
+
   /**
    * The current search phrase used to narrow down visible commands.
    */
@@ -458,6 +461,15 @@ class UI {
    * Sets the properties of the overlay shown on the React Native app.
    */
   @action setOverlay = props => this.server.send("overlay", props)
+
+  /**
+   * Toggles storybook
+   */
+  @action toggleStorybook = () => {
+    this.isStorybookShown = !this.isStorybookShown
+
+    this.server.send("storybook", this.isStorybookShown)
+  }
 }
 
 export default UI
