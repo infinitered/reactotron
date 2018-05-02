@@ -50,6 +50,7 @@ Reactotron on the left, demo React Native app on the right.
 * Integrating with [Redux](./docs/plugin-redux.md)
 * Integrating with [Redux Saga](./docs/plugin-redux-saga.md)
 * Networking monitoring with [Apisauce](./docs/plugin-apisauce.md)
+* [Storybook (React Native Only)](./docs/plugin-storybook.md)
 * [Troubleshooting](./docs/troubleshooting.md)
 * [Tips and Tricks](./docs/tips.md)
 * [Release Notes](https://github.com/reactotron/reactotron/releases)
