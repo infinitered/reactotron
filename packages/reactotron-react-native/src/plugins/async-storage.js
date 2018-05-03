@@ -1,7 +1,6 @@
 /**
  * Provides async storage information to Reactotron
  */
-import { merge, reject, contains } from 'ramda'
 import { AsyncStorage } from 'react-native'
 
 // defaults
@@ -12,7 +11,7 @@ const PLUGIN_DEFAULTS = {
 // our plugin entry point
 export default options => reactotron => {
   // setup configuration
-  const config = merge(PLUGIN_DEFAULTS, options || {})
+  const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
   const ignore = config['ignore'] || []
 
   let swizzSetItem = null
@@ -30,7 +29,7 @@ export default options => reactotron => {
   const reactotronShipStorageValues = (methodName, args) => {
     AsyncStorage.getAllKeys((_, keys) =>
       AsyncStorage.multiGet(keys, (_, values = []) => {
-        const valuesToSend = reject(item => contains(item[0], ignore), values)
+        const valuesToSend = values.filter(item => ignore.some(ig => ig === item[0]))
         // NOTE(steve): for now let's ship everything... until we get a UI in place
         // to make request/response calls
         let previewArgs = ''
