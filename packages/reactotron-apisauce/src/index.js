@@ -1,6 +1,3 @@
-import { test } from 'ramda'
-import { dotPath } from 'ramdasauce'
-
 /**
  * Don't include the response bodies for images by default.
  */
@@ -14,37 +11,33 @@ export default (options = {}) => reactotron => {
   const ignoreContentTypes = options.ignoreContentTypes || DEFAULT_CONTENT_TYPES_RX
 
   // apisauce uses axios, so let's deconstruct that format
-  const convertResponse = source => {
+  const convertResponse = (source = {}) => {
+    const config = source.config || {}
+
     // the request
-    const url = dotPath('config.url', source)
-    const method = dotPath('config.method', source)
-    const requestData = dotPath('config.data', source)
-    const requestHeaders = dotPath('config.headers', source)
-    const requestParams = dotPath('config.params', source)
     const request = {
-      url,
-      method,
-      data: requestData || null,
-      headers: requestHeaders,
-      params: requestParams || null
+      url: config.url,
+      method: config.method,
+      data: config.data || null,
+      headers: config.headers,
+      params: config.params || null
     }
 
-    // there response
-    const status = dotPath('status', source)
-    const responseHeaders = dotPath('headers', source) || {}
+    // the response
+    const responseHeaders = source.headers || {}
     const contentType = responseHeaders['content-type'] || responseHeaders['Content-Type']
-    const bodyData = dotPath('data', source)
     const useRealBody =
-      (typeof bodyData === 'string' || typeof bodyData === 'object') &&
-      !test(ignoreContentTypes, contentType || '')
-    const body = useRealBody ? bodyData : `~~~ skipped ~~~`
-    const response = { body, status, headers: responseHeaders }
-
-    // the duration
-    const duration = dotPath('duration', source)
+      (typeof source.data === 'string' || typeof source.data === 'object') &&
+      !ignoreContentTypes.test(contentType || '')
+    const body = useRealBody ? source.data : `~~~ skipped ~~~`
+    const response = {
+      body,
+      status: source.status,
+      headers: responseHeaders
+    }
 
     // return all 3
-    return [request, response, duration]
+    return [request, response, source.duration]
   }
   return {
     features: {
