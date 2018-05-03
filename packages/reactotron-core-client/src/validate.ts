@@ -1,10 +1,9 @@
-import { allPass, complement, isNil, is, isEmpty } from "ramda"
 import * as WebSocket from "ws"
 import { ClientOptions } from "./client-options"
 
-const isCreateSocketValid = (createSocket: (path: string) => WebSocket) => !isNil(createSocket)
-const isHostValid = allPass([is(String), complement(isEmpty)])
-const isPortValid = allPass([complement(isNil), is(Number), (n: number) => n >= 1 && n <= 65535])
+const isCreateSocketValid = (createSocket: (path: string) => WebSocket) => typeof createSocket !== "undefined" && createSocket !== null
+const isHostValid = (host: string): boolean => typeof host === "string" && host && host !== ""
+const isPortValid = (port: number): boolean => typeof port === "number" && port >= 1 && port <= 65535
 const onCommandValid = (fn: (cmd: string) => any) => typeof fn === "function"
 
 /**

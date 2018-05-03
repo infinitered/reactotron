@@ -23,12 +23,10 @@
     "url": "https://github.com/infinitered/reactotron/issues"
   },
   "dependencies": {
-    "ramda": "^0.25.0"
   },
   "devDependencies": {
     "@types/jest": "^21.1.2",
     "@types/node": "^8.0.34",
-    "@types/ramda": "^0.24.17",
     "@types/ws": "^3.2.0",
     "execa": "^0.8.0",
     "get-port": "^3.2.0",

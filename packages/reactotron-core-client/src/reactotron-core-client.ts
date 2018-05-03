@@ -1,4 +1,3 @@
-import { merge, has, forEach, head, tail, contains, isEmpty, is, keys } from "ramda"
 import * as WebSocket from "ws"
 import validate from "./validate"
 import logger from "./plugins/logger"
@@ -34,22 +33,22 @@ const DEFAULT_OPTIONS: ClientOptions = {
 }
 
 // these are not for you.
-const isReservedFeature = (value: string) =>
-  contains(value, [
-    "options",
-    "connected",
-    "socket",
-    "plugins",
-    "configure",
-    "connect",
-    "send",
-    "use",
-    "startTimer",
-  ])
+const reservedFeatures = [
+  "options",
+  "connected",
+  "socket",
+  "plugins",
+  "configure",
+  "connect",
+  "send",
+  "use",
+  "startTimer",
+]
+const isReservedFeature = (value: string) => reservedFeatures.some(res => res === value)
 
 export class Client {
   // the configuration options
-  options: ClientOptions = merge({}, DEFAULT_OPTIONS)
+  options: ClientOptions = Object.assign({}, DEFAULT_OPTIONS)
 
   /**
    * Are we connected to a server?
@@ -91,13 +90,13 @@ export class Client {
    */
   configure(options: ClientOptions = {}): Client {
     // options get merged & validated before getting set
-    const newOptions = merge(this.options, options)
+    const newOptions = Object.assign({}, this.options, options)
     validate(newOptions)
     this.options = newOptions
 
     // if we have plugins, let's add them here
-    if (has("length", this.options.plugins)) {
-      forEach(this.use.bind(this), this.options.plugins)
+    if (Array.isArray(this.options.plugins)) {
+      this.options.plugins.forEach(p => this.use(p))
     }
 
     return this
@@ -130,15 +129,15 @@ export class Client {
       onConnect && onConnect()
 
       // trigger our plugins onConnect
-      forEach(plugin => plugin.onConnect && plugin.onConnect(), this.plugins)
+      this.plugins.forEach(p => p.onConnect && p.onConnect())
       this.isReady = true
       // introduce ourselves
       this.send("client.intro", { host, port, name, userAgent, reactotronVersion, environment })
 
       // flush the send queue
-      while (!isEmpty(this.sendQueue)) {
-        const h = head(this.sendQueue)
-        this.sendQueue = tail(this.sendQueue)
+      while (this.sendQueue.length > 0) {
+        const h = this.sendQueue[0]
+        this.sendQueue = this.sendQueue.slice(1)
         this.socket.send(h)
       }
     }
@@ -150,7 +149,7 @@ export class Client {
       onDisconnect && onDisconnect()
 
       // as well as the plugin's onDisconnect
-      forEach(plugin => plugin.onDisconnect && plugin.onDisconnect(), this.plugins)
+      this.plugins.forEach(p => p.onDisconnect && p.onDisconnect())
     }
 
     // fires when we receive a command, just forward it off
@@ -160,7 +159,7 @@ export class Client {
       onCommand && onCommand(command)
 
       // trigger our plugins onCommand
-      forEach(plugin => plugin.onCommand && plugin.onCommand(command), this.plugins)
+      this.plugins.forEach(p => p.onCommand && p.onCommand(command))
     }
 
     // this is ws style from require('ws') on node js
@@ -248,14 +247,14 @@ export class Client {
     const plugin = pluginCreator.bind(this)(this)
 
     // ensure we get an Object-like creature back
-    if (!is(Object, plugin)) {
+    if (typeof plugin !== "object") {
       throw new Error("plugins must return an object")
     }
 
     // do we have features to mixin?
     if (plugin.features) {
       // validate
-      if (!is(Object, plugin.features)) {
+      if (typeof plugin.features !== "object") {
         throw new Error("features must be an object")
       }
 
@@ -279,7 +278,7 @@ export class Client {
       }
 
       // let's inject
-      forEach(inject, keys(plugin.features))
+      Object.keys(plugin.features).forEach(key => inject(key))
     }
 
     // add it to the list
