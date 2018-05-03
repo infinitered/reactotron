@@ -1,8 +1,7 @@
 /**
  * Provides a global error handler to report errors with sourcemap lookup.
  */
-import StackTrace from 'stacktrace-js'
-import { merge } from 'ramda'
+import StackTrace from "stacktrace-js"
 
 // what to say whe we can't resolve source maps
 const CANNOT_RESOLVE_ERROR =
@@ -10,13 +9,13 @@ const CANNOT_RESOLVE_ERROR =
 
 // defaults
 const PLUGIN_DEFAULTS = {
-  offline: false // true = don't do source maps lookup cross domain
+  offline: false, // true = don't do source maps lookup cross domain
 }
 
 // our plugin entry point
 export default options => reactotron => {
   // setup configuration
-  const config = merge(PLUGIN_DEFAULTS, options || {})
+  const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
 
   // holds the previous window.onerror when needed
   let swizzledOnError = null
@@ -24,7 +23,7 @@ export default options => reactotron => {
 
   // the functionality of our window.onerror.
   // we could have used window.addEventListener("error", ...) but that doesn't work on all browsers
-  function windowOnError (msg, file, line, col, error) {
+  function windowOnError(msg, file, line, col, error) {
     // resolve the stack trace
     StackTrace.fromError(error, { offline: config.offline })
       // then try to send it up to the server
@@ -34,7 +33,7 @@ export default options => reactotron => {
         reactotron.error({
           message: CANNOT_RESOLVE_ERROR,
           original: { msg, file, line, col, error },
-          resolvingError
+          resolvingError,
         })
       )
 
@@ -45,7 +44,7 @@ export default options => reactotron => {
   }
 
   // swizzles window.onerror dropping in our new one
-  function trackGlobalErrors () {
+  function trackGlobalErrors() {
     if (isSwizzled) return
     swizzledOnError = window.onerror
     window.onerror = windowOnError
@@ -53,7 +52,7 @@ export default options => reactotron => {
   }
 
   // restore the original
-  function untrackGlobalErrors () {
+  function untrackGlobalErrors() {
     if (!swizzledOnError) return
     window.onerror = swizzledOnError
     isSwizzled = false
@@ -67,7 +66,7 @@ export default options => reactotron => {
     // attach these functions to the Reactotron
     features: {
       trackGlobalErrors,
-      untrackGlobalErrors
-    }
+      untrackGlobalErrors,
+    },
   }
 }
