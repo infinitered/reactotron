@@ -2,20 +2,34 @@ import resolve from "rollup-plugin-node-resolve"
 import commonjs from "rollup-plugin-commonjs"
 import sourceMaps from "rollup-plugin-sourcemaps"
 import camelCase from "lodash.camelcase"
+import filesize from "rollup-plugin-filesize"
 
+// @ts-ignore
 const pkg = require("./package.json")
 
-const libraryName = "reactotron-mst"
+const LIBRARY_NAME = "reactotron-mst"
+const GLOBALS = ["ramda", "mobx-state-tree", "mobx"]
 
 export default {
-  input: `dist/es/${libraryName}.js`,
+  input: `build/es/${LIBRARY_NAME}.js`,
+  external: GLOBALS,
   output: [
-    { file: pkg.main, name: camelCase(libraryName), format: "umd", sourcemap: true },
-    { file: pkg.module, format: "es", sourcemap: true },
+    {
+      file: pkg.main,
+      name: camelCase(LIBRARY_NAME),
+      format: "umd",
+      sourcemap: true,
+      globals: GLOBALS,
+    },
+    {
+      file: pkg.module,
+      format: "es",
+      sourcemap: true,
+      globals: GLOBALS,
+    },
   ],
-  external: ["ramda", "mobx-state-tree", "mobx"],
   watch: {
-    include: "dist/es/**",
+    include: "build/es/**",
   },
-  plugins: [commonjs(), resolve(), sourceMaps()],
+  plugins: [commonjs(), resolve(), sourceMaps(), filesize()],
 }
