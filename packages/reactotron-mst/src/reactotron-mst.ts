@@ -133,12 +133,12 @@ export function mst(opts: MstPluginOptions = {}) {
     function trackMstNode(node: IStateTreeNode, nodeName: string = "default") {
       // sanity
       if (!node) {
-        return
+        return { kind: "required" }
       }
 
       // prevent double tracking
       if (trackedNodes[nodeName]) {
-        return
+        return { kind: "already-tracking" }
       }
 
       try {
@@ -147,11 +147,20 @@ export function mst(opts: MstPluginOptions = {}) {
 
         // we only want types
         if (modelType.isType) {
-          // track this
-          trackedNodes[nodeName] = { node, modelType }
-          attachReactotronToMstNode(node)
+          try {
+            attachReactotronToMstNode(node)
+            // track this
+            trackedNodes[nodeName] = { node, modelType }
+            return { kind: "ok" }
+          } catch (e) {
+            return { kind: "tracking-error", message: e.message }
+          }
+        } else {
+          return { kind: "invalid-node" }
         }
-      } catch {}
+      } catch (e) {
+        return { kind: "invalid-node" }
+      }
     }
 
     /**
@@ -274,7 +283,11 @@ export function mst(opts: MstPluginOptions = {}) {
       const action = command && command.payload && command.payload.action
       if (trackedNode && trackedNode.node && action) {
         const { node } = trackedNode
-        applyAction(node, action)
+        try {
+          applyAction(node, action)
+        } catch {
+          // TODO: should we return a message?
+        }
       }
     }
 

@@ -10,9 +10,10 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "declarationDir": "dist/types",
-    "outDir": "dist/es",
-    "typeRoots": ["node_modules/@types"]
+    "declarationDir": "dist",
+    "outDir": "build/es",
+    "noUnusedLocals": true,
+    "removeComments": true
   },
   "include": ["src"]
 }

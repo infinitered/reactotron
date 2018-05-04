@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "module": "commonjs",
+    "inlineSourceMap": true,
+    "sourceMap": false,
+    "outDir": "build"
+  },
+  "include": ["src", "test"]
+}

@@ -4,14 +4,22 @@
   "description": "A Reactotron plugin for mobx-state-tree.",
   "main": "dist/reactotron-mst.umd.js",
   "module": "dist/reactotron-mst.es5.js",
-  "typings": "dist/types/reactotron-mst.d.ts",
+  "typings": "dist/reactotron-mst.d.ts",
   "scripts": {
-    "prepare": "yarn build",
-    "prebuild": "rimraf dist",
+    "compile": "tsc",
+    "build": "rollup -c rollup.config.ts",
+    "clean": "npm-run-all clean:*",
+    "clean:build": "rimraf build",
+    "clean:dist": "rimraf dist",
     "format": "prettier --write {**,.}/*.ts && tslint -p . --fix",
-    "build": "tsc && tsc --module commonjs --outDir dist/lib && rollup -c rollup.config.ts",
     "lint": "tslint -p .",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "prepare": "yarn build",
+    "test:ci": "npm-run-all clean:* test:compile test",
+    "test:compile": "tsc -p tsconfig-test.json --pretty",
+    "test:compile:watch": "tsc -p tsconfig-test.json --pretty --watch",
+    "test": "ava",
+    "e2e": "npm-run-all clean:* compile test:compile test clean:* compile build"
   },
   "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-mst",
   "author": "Steve Kellock",
@@ -40,22 +48,27 @@
     ]
   },
   "devDependencies": {
+    "@types/lodash.camelcase": "^4.3.3",
     "@types/node": "^8.5.2",
     "@types/ramda": "^0.25.9",
+    "ava": "^0.25.0",
     "husky": "^0.14.3",
-    "lint-staged": "^6.0.0",
+    "lint-staged": "^7.0.5",
     "lodash.camelcase": "^4.3.0",
-    "mobx": "^4.1.0",
-    "mobx-state-tree": "^2.0.2",
-    "prettier": "^1.9.2",
+    "mobx": "^4.2.1",
+    "mobx-state-tree": "^2.0.4",
+    "npm-run-all": "^4.1.2",
+    "prettier": "^1.12.1",
     "rimraf": "^2.6.2",
-    "rollup": "^0.53.0",
-    "rollup-plugin-commonjs": "^8.2.6",
-    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup": "^0.58.2",
+    "rollup-plugin-commonjs": "^9.1.3",
+    "rollup-plugin-filesize": "^1.5.0",
+    "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
-    "tslint": "^5.9.1",
-    "tslint-config-prettier": "^1.6.0",
-    "typescript": "^2.6.2"
+    "testdouble": "^3.8.0",
+    "tslint": "^5.10.0",
+    "tslint-config-prettier": "^1.12.0",
+    "typescript": "^2.8.3"
   },
   "dependencies": {
     "ramda": "^0.25.0"
@@ -63,5 +76,10 @@
   "peerDependencies": {
     "mobx": "^3.4.1 || ^4.1.0",
     "mobx-state-tree": "^1.4.0 || ^2.0.2"
+  },
+  "ava": {
+    "files": [
+      "build/**/*.test.js"
+    ]
   }
 }
