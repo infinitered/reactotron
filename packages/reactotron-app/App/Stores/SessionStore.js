@@ -1,4 +1,5 @@
 import UiStore from './UiStore'
+import DevTrackerStore from './DevTrackerStore'
 import { createServer } from 'reactotron-core-server'
 import { action, observable, computed, reaction, observe } from 'mobx'
 import {
@@ -190,6 +191,11 @@ class Session {
       this.customCommands.clear()
       this.customCommands.push(...newCustomCommands)
     } else {
+      // If we are an error lets add that to our count!
+      if (command.type === 'log' && command.payload && command.payload.level === 'error') {
+        this.devTracker.addError()
+      }
+
       this.commandsManager.addCommand(command)
     }
   }
@@ -198,6 +204,12 @@ class Session {
     // TODO: See if we can be better at clearing instead of clearing everything then resetting every single time.
     this.connections.clear()
     this.connections.push(...this.server.connections)
+
+    if (this.server.connections.length > 0) {
+      this.devTracker.connectionStarted()
+    } else {
+      this.devTracker.connectionFinished()
+    }
 
     if (this.selectedConnection && !this.connections.find(c => c.id === this.selectedConnection.id)) {
       this.selectedConnection = null
@@ -216,6 +228,7 @@ class Session {
 
     // create the ui store
     this.ui = new UiStore(this.server, this.commandsManager)
+    this.devTracker = new DevTrackerStore();
 
     // hide or show the watch panel depending if we have watches
     reaction(
