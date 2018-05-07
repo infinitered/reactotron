@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import Colors from "../Theme/Colors"
 import AppStyles from "../Theme/AppStyles"
 import { inject, observer } from "mobx-react"
-import SidebarToggleButton from "./SidebarToggleButton"
 import SubNavButton from "./SubNavButton"
 
 const TITLE = "React Native"
@@ -71,20 +70,6 @@ class NativeHeader extends Component {
     this.props.session.ui.setNativeSubNav("storybook")
   }
 
-  get showOverlay() {
-    return this.props.session.ui.nativeSubNav === "image"
-  }
-
-  get showStorybook() {
-    return this.props.session.ui.nativeSubNav === "storybook"
-  }
-
-  getSubNavTitle() {
-    if (this.showOverlay) return TITLE_OVERLAY
-    if (this.showStorybook) return TITLE_STORYBOOK
-    return undefined
-  }
-
   render() {
     const { ui } = this.props.session
     const { nativeSubNav } = ui
@@ -93,7 +78,6 @@ class NativeHeader extends Component {
       <div style={Styles.container}>
         <div style={Styles.content}>
           <div style={Styles.center}>
-
             <SubNavButton
               icon="camera"
               hideTopBorder
