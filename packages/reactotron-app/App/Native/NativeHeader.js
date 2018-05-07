@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import Colors from "../Theme/Colors"
 import AppStyles from "../Theme/AppStyles"
 import { inject, observer } from "mobx-react"
-import SubNavButton from "./SubNavButton"
+import SubNavButton from "../Foundation/SubNavButton"
 
 const TITLE = "React Native"
 const TITLE_OVERLAY = "Overlay Image"

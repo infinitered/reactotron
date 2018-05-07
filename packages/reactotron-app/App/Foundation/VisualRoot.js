@@ -13,9 +13,9 @@ import Backups from "./Backups"
 import Sidebar from "./Sidebar"
 import Help from "./Help"
 import { inject, observer } from "mobx-react"
-import NativeHeader from "./NativeHeader"
-import NativeOverlay from "./NativeOverlay"
-import NativeStorybook from "./NativeStorybook"
+import NativeHeader from "../Native/NativeHeader"
+import NativeOverlay from "../Native/NativeOverlay"
+import NativeStorybook from "../Native/NativeStorybook"
 
 const Styles = {
   container: {
