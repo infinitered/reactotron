@@ -4670,15 +4670,6 @@ raf@^3.2.0:
   dependencies:
     performance-now "^2.1.0"
 
-ramda@^0.24.0, ramda@^0.24.1:
-  version "0.24.1"
-  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.24.1.tgz#c3b7755197f35b8dc3502228262c4c91ddb6b857"
-
-ramdasauce@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/ramdasauce/-/ramdasauce-2.0.0.tgz#d60d5f6424d16ab44028efaf0f4af1427b9cc3d3"
-  dependencies:
-    ramda "^0.24.0"
 
 random-bytes@~1.0.0:
   version "1.0.0"

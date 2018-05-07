@@ -1,7 +1,6 @@
 /**
  * Provides a global error handler to report errors..
  */
-import { merge, map, reject } from 'ramda'
 import { NativeModules } from 'react-native'
 
 // a few functions to help source map errors -- these seem to be not available immediately
@@ -19,7 +18,7 @@ const PLUGIN_DEFAULTS = {
 // our plugin entry point
 export default options => reactotron => {
   // setup configuration
-  const config = merge(PLUGIN_DEFAULTS, options || {})
+  const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
 
   let swizzled = null
   let isSwizzled = false
@@ -31,19 +30,18 @@ export default options => reactotron => {
     // then convert & transport it
     try {
       // rewrite the stack frames to be in the format we're expecting
-      let stack = map(
+      let stack = prettyStack.map(
         frame => ({
           functionName: frame.methodName === '<unknown>' ? null : frame.methodName,
           lineNumber: frame.lineNumber,
           columnNumber: frame.column,
           fileName: frame.file
-        }),
-        prettyStack
+        })
       )
 
       // does the dev want us to keep each frame?
       if (config.veto) {
-        stack = reject(config.veto, stack)
+        stack = stack.filter(frame => config.veto(frame))
       }
 
       // throw it over to us
@@ -93,7 +91,7 @@ export default options => reactotron => {
 
           // does the dev want us to keep each frame?
           if (config.veto) {
-            stack = reject(config.veto, stack)
+            stack = stack.filter(frame => config.veto(frame))
           }
 
           reactotron.error(error.message, stack)

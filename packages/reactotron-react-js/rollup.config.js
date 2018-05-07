@@ -1,19 +1,21 @@
-import babel from 'rollup-plugin-babel'
-import babelrc from 'babelrc-rollup'
+import babel from "rollup-plugin-babel"
+import filesize from "rollup-plugin-filesize"
 
-const pkg = require('./package.json')
+const pkg = require("./package.json")
 const external = Object.keys(pkg.dependencies)
 
 export default {
-  entry: 'src/index.js',
-  format: 'cjs',
+  input: "src/index.js",
   plugins: [
     babel({
-      babelrc: babelrc(),
-      presets: ['es2015-rollup', 'stage-1']
-    })
+      presets: ["es2015-rollup", "stage-1"],
+    }),
+    filesize(),
   ],
   external,
-  dest: 'dist/index.js',
-  exports: 'named'
+  output: {
+    file: "dist/index.js",
+    format: "cjs",
+    exports: "named",
+  },
 }

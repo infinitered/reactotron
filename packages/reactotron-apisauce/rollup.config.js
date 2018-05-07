@@ -1,15 +1,18 @@
-import babel from 'rollup-plugin-babel'
+import babel from "rollup-plugin-babel"
+import filesize from "rollup-plugin-filesize"
 
 export default {
-  entry: 'src/index.js',
-  format: 'cjs',
+  input: "src/index.js",
   plugins: [
     babel({
       babelrc: false,
       runtimeHelpers: true,
-      presets: ['es2015-rollup', 'stage-1']
-    })
+      presets: ["es2015-rollup", "stage-1"],
+    }),
+    filesize(),
   ],
-  dest: 'dist/index.js',
-  external: ['ramdasauce', 'ramda']
+  output: {
+    format: "cjs",
+    file: "dist/index.js",
+  },
 }

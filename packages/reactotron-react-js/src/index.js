@@ -1,5 +1,5 @@
-import { createClient } from 'reactotron-core-client'
-export trackGlobalErrors from './plugins/track-global-errors'
+import { createClient } from "reactotron-core-client"
+export trackGlobalErrors from "./plugins/track-global-errors"
 
 // ---------------------
 // DEFAULT CONFIGURATION
@@ -7,11 +7,11 @@ export trackGlobalErrors from './plugins/track-global-errors'
 
 var DEFAULTS = {
   createSocket: path => new WebSocket(path), // eslint-disable-line
-  host: 'localhost',
+  host: "localhost",
   port: 9090,
-  name: 'React JS App',
-  userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : '',
-  reactotronVersion: 'BETA' // TODO: figure this out for realz.  why is this hard?  it must be me.
+  name: "React JS App",
+  userAgent: typeof window !== "undefined" ? window.navigator.userAgent : "",
+  reactotronVersion: "BETA", // TODO: figure this out for realz.  why is this hard?  it must be me.
 }
 
 // -----------
