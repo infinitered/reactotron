@@ -4,7 +4,7 @@ import AppStyles from "../Theme/AppStyles"
 import { inject, observer } from "mobx-react"
 import IconChecked from "react-icons/lib/md/radio-button-checked"
 import IconUnchecked from "react-icons/lib/md/radio-button-unchecked"
-import IconWarning from "react-icons/lib/md/warning"
+import { WarningBar } from "../Shared/WarningBar"
 
 const Styles = {
   container: {
@@ -28,23 +28,9 @@ const Styles = {
   checkBoxItemOn: { ...AppStyles.Layout.hbox, alignItems: "center", flex: 0, paddingRight: 20 },
   checkBoxItemOff: { ...AppStyles.Layout.hbox, alignItems: "center", flex: 0, cursor: "pointer" },
   checkBoxText: { paddingLeft: 3, fontSize: "1.25rem", cursor: "pointer" },
-  beta: {
-    display: "flex",
-    flexDirection: "row",
-    color: Colors.warning,
-    backgroundColor: Colors.backgroundDarker,
-    borderTop: `1px solid ${Colors.chromeLine}`,
-    alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-  },
-  warningContainer: {
-    paddingRight: 20,
-  },
 }
 
 const ICON_SIZE = 32
-const WARNING_ICON_SIZE = 48
 
 @inject("session")
 @observer
@@ -80,20 +66,11 @@ class NativeStorybook extends Component {
             </div>
           </div>
         </div>
-        <div style={Styles.beta}>
-          <div style={Styles.warningContainer}>
-            <IconWarning size={WARNING_ICON_SIZE} />
-          </div>
-          <div>
-            <p>
-              <strong>Under Construction</strong>
-            </p>
-            <p>
-              This is preview feature. It requires a specific setup of Storybook within React
-              Native.
-            </p>
-          </div>
-        </div>
+        <WarningBar>
+          <p>
+            This is preview feature. It requires a specific setup of Storybook within React Native.
+          </p>
+        </WarningBar>
       </div>
     )
   }
