@@ -1,59 +1,59 @@
-import React, { Component } from 'react'
-import Colors from '../Theme/Colors'
-import AppStyles from '../Theme/AppStyles'
-import { inject, observer } from 'mobx-react'
-import { is, map, merge } from 'ramda'
-import ObjectTree from '../Shared/ObjectTree'
-import { colorForValue, textForValue } from '../Shared/MakeTable'
-import SubscriptionsHeader from './SubscriptionsHeader'
-import Empty from '../Foundation/EmptyState'
-import Key from '../Shared/Key'
-import Keystroke from '../Lib/Keystroke'
+import { inject, observer } from "mobx-react"
+import { is, map, merge } from "ramda"
+import React, { Component } from "react"
+import Keystroke from "../Lib/Keystroke"
+import Empty from "../Shared/EmptyState"
+import Key from "../Shared/Key"
+import { colorForValue, textForValue } from "../Shared/MakeTable"
+import ObjectTree from "../Shared/ObjectTree"
+import AppStyles from "../Theme/AppStyles"
+import Colors from "../Theme/Colors"
+import SubscriptionsHeader from "./SubscriptionsHeader"
 
 const Styles = {
   container: {
     ...AppStyles.Layout.vbox,
     margin: 0,
-    flex: 1
+    flex: 1,
   },
   watches: {
     margin: 0,
     padding: 0,
-    overflowY: 'auto',
-    overflowX: 'hidden'
+    overflowY: "auto",
+    overflowX: "hidden",
   },
   watch: {
     ...AppStyles.Layout.hbox,
-    padding: '15px 20px',
-    justifyContent: 'space-between',
-    borderBottom: `1px solid ${Colors.line}`
+    padding: "15px 20px",
+    justifyContent: "space-between",
+    borderBottom: `1px solid ${Colors.line}`,
   },
   watchLeft: {
     flex: 0.3,
-    wordBreak: 'break-all'
+    wordBreak: "break-all",
   },
   watchPath: {
-    cursor: 'pointer',
-    color: Colors.tag
+    cursor: "pointer",
+    color: Colors.tag,
   },
   watchValue: {
     flex: 0.7,
-    wordBreak: 'break-all'
+    wordBreak: "break-all",
   },
   message: {
-    lineHeight: 1.8
-  }
+    lineHeight: 1.8,
+  },
 }
 
-@inject('session')
+@inject("session")
 @observer
 class WatchPanel extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.renderWatch = this.renderWatch.bind(this)
   }
 
-  renderWatch (watch, indent = 0) {
+  renderWatch(watch, indent = 0) {
     const unsubscribe = path => {
       this.props.session.ui.removeStateWatch(path)
     }
@@ -76,18 +76,18 @@ class WatchPanel extends Component {
     )
   }
 
-  renderEmpty () {
+  renderEmpty() {
     return (
-      <Empty icon='notifications-none' title='No Subscriptions'>
+      <Empty icon="notifications-none" title="No Subscriptions">
         <p style={Styles.message}>
-          You can subscribe to state changes in your redux or mobx-state-tree store by pressing{' '}
-          <Key text={Keystroke.modifierName} /> + <Key text='N' />.
+          You can subscribe to state changes in your redux or mobx-state-tree store by pressing{" "}
+          <Key text={Keystroke.modifierName} /> + <Key text="N" />.
         </p>
       </Empty>
     )
   }
 
-  render () {
+  render() {
     const { watches } = this.props.session
     const isEmpty = watches.length === 0
 

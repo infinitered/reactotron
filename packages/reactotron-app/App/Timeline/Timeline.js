@@ -1,11 +1,10 @@
-import React, { Component } from "react"
 import { inject, observer } from "mobx-react"
+import { addIndex, isNil, map } from "ramda"
+import React, { Component } from "react"
 import getCommandComponent from "../Commands"
-import TimelineHeader from "./TimelineHeader"
-import { map, addIndex, isNil } from "ramda"
+import Empty from "../Shared/EmptyState"
 import AppStyles from "../Theme/AppStyles"
-import Empty from "../Foundation/EmptyState"
-import ApiResponseCommand from "../Commands/ApiResponseCommand"
+import TimelineHeader from "./TimelineHeader"
 
 const mapIndexed = addIndex(map)
 
