@@ -31,7 +31,36 @@ class DevTracker {
     get errorsPerSecond() {
         if (this.connectedSeconds === 0) return 0
 
-        return this.totalErrors / this.connectedSeconds
+        return Math.round((this.totalErrors / this.connectedSeconds) * 100) / 100
+    }
+
+    @computed
+    get formattedTime() {
+        let timeLeft = this.connectedSeconds
+        const days = Math.floor(timeLeft / 86400)
+        timeLeft %= 86400
+        let hours = Math.floor(timeLeft / 3600)
+        timeLeft %= 3600
+        let minutes = Math.floor(timeLeft / 60)
+        let seconds = timeLeft % 60
+
+        let timeString = []
+
+        if (days > 0) {
+            timeString.push(`${days} day${days > 1 ? 's' : ''}`)
+        }
+
+        if (hours > 0) {
+            timeString.push(`${hours} hour${hours > 1 ? 's' : ''}`)
+        }
+
+        if (minutes > 0) {
+            timeString.push(`${minutes} minute${minutes > 1 ? 's' : ''}`)
+        }
+
+        timeString.push(`${seconds} second${seconds > 1 ? 's' : ''}`)
+
+        return timeString.join(', ')
     }
 
     @computed
@@ -41,7 +70,7 @@ class DevTracker {
         // If we have been connected < a minute then we don't want to try and do predictions (which would be what happens when we divide by < 1)
         const connectedMinutes = this.connectedSeconds > 60 ? this.connectedSeconds / 60 : 1
 
-        return this.totalErrors / connectedMinutes
+        return Math.round((this.totalErrors / connectedMinutes) * 100) / 100
     }
 
     @computed
@@ -51,7 +80,7 @@ class DevTracker {
         // If we have been connected < a hour then we don't want to try and do predictions (which would be what happens when we divide by < 1)
         const connectedHours = this.connectedSeconds > 3600 ? this.connectedSeconds / 60 / 60 : 1
 
-        return this.totalErrors / connectedHours
+        return Math.round((this.totalErrors / connectedHours) * 100) / 100
     }
 
     @action

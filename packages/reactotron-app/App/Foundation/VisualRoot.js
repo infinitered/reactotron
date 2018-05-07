@@ -12,6 +12,7 @@ import ConnectionSelectionDialog from '../Dialogs/ConnectionSelectionDialog'
 import Subscriptions from './Subscriptions'
 import Backups from './Backups'
 import Native from './Native'
+import Stats from './Stats'
 import Sidebar from './Sidebar'
 import Help from './Help'
 import { inject, observer } from 'mobx-react'
@@ -57,6 +58,7 @@ export default class VisualRoot extends Component {
     const showSettings = ui.tab === 'settings'
     const showBackups = ui.tab === 'backups'
     const showNative = ui.tab === 'native'
+    const showStats = ui.tab === 'stats'
 
     return (
       <div style={Styles.container}>
@@ -78,6 +80,9 @@ export default class VisualRoot extends Component {
               </div>
               <div style={showNative ? Styles.page : Styles.pageHidden}>
                 <Native />
+              </div>
+              <div style={showStats ? Styles.page : Styles.pageHidden}>
+                <Stats />
               </div>
               <div style={showSettings ? Styles.page : Styles.pageHidden}>
                 <h1>Settings</h1>

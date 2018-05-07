@@ -50,6 +50,9 @@ class Sidebar extends Component {
     this.handleClickNative = () => {
       this.props.session.ui.switchTab('native')
     }
+    this.handleClickStats = () => {
+      this.props.session.ui.switchTab('stats')
+    }
   }
 
   render () {
@@ -84,6 +87,12 @@ class Sidebar extends Component {
               icon='phone-iphone'
               isActive={ui.tab === 'native'}
               onClick={this.handleClickNative}
+            />
+            <SidebarButton
+              text='Stats'
+              icon='assignment'
+              isActive={ui.tab === 'stats'}
+              onClick={this.handleClickStats}
             />
           </div>
           <div style={Styles.spacer} />

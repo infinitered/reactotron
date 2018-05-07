@@ -103,7 +103,7 @@ class TimelineHeader extends Component {
   }
 
   render () {
-    const { ui, devTracker } = this.props.session
+    const { ui } = this.props.session
     const { isTimelineSearchVisible } = ui
     const searchIconStyle = {
       ...Styles.searchIcon,
@@ -123,12 +123,7 @@ class TimelineHeader extends Component {
           <div style={Styles.center}>
             <div style={Styles.title}>{TITLE}</div>
             <div>
-              {/* <ConnectionSelector /> */}
-              conTime: {devTracker.connectedSeconds}
-              currErr: {devTracker.totalErrors}
-              EPS: {devTracker.errorsPerSecond}
-              EPM: {devTracker.errorsPerMinute}
-              EPH: {devTracker.errorsPerHour}
+              <ConnectionSelector />
             </div>
           </div>
           <div style={Styles.right}>
