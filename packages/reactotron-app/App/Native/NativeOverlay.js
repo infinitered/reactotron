@@ -1,56 +1,55 @@
-import React, { Component } from 'react'
-import Colors from '../Theme/Colors'
-import AppStyles from '../Theme/AppStyles'
-import { inject, observer } from 'mobx-react'
-import NativeHeader from './NativeHeader'
-import fs from 'fs'
-import { nativeImage } from 'electron'
-import { F, pick } from 'ramda'
-import NativeOverlayLayoutType from './NativeOverlayLayoutType'
-import NativeOverlayAlignment from './NativeOverlayAlignment'
-import NativeOverlayScale from './NativeOverlayScale'
-import NativeOverlayResizeMode from './NativeOverlayResizeMode'
-import NativeOverlayOpacity from './NativeOverlayOpacity'
-import NativeOverlayMargins from './NativeOverlayMargins'
+import React, { Component } from "react"
+import Colors from "../Theme/Colors"
+import AppStyles from "../Theme/AppStyles"
+import { inject, observer } from "mobx-react"
+import fs from "fs"
+import { nativeImage } from "electron"
+import { F, pick } from "ramda"
+import NativeOverlayLayoutType from "./NativeOverlayLayoutType"
+import NativeOverlayAlignment from "./NativeOverlayAlignment"
+import NativeOverlayScale from "./NativeOverlayScale"
+import NativeOverlayResizeMode from "./NativeOverlayResizeMode"
+import NativeOverlayOpacity from "./NativeOverlayOpacity"
+import NativeOverlayMargins from "./NativeOverlayMargins"
 
 const Styles = {
   container: {
     ...AppStyles.Layout.vbox,
     margin: 0,
-    flex: 1
+    flex: 1,
   },
   content: {
     paddingBottom: 20,
     paddingLeft: 20,
     paddingRight: 20,
-    overflowY: 'scroll',
-    overflowX: 'hidden'
+    overflowY: "scroll",
+    overflowX: "hidden",
   },
   sectionTitle: {
     color: Colors.tag,
     marginBottom: 10,
-    marginTop: 20
+    marginTop: 20,
   },
   row: {
     ...AppStyles.Layout.hbox,
-    padding: '15px 20px',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    padding: "15px 20px",
+    justifyContent: "space-between",
+    alignItems: "center",
     borderBottom: `1px solid ${Colors.line}`,
-    cursor: 'pointer'
+    cursor: "pointer",
   },
   name: {
     color: Colors.tag,
-    textAlign: 'left',
-    flex: 1
+    textAlign: "left",
+    flex: 1,
   },
   iconSize: 24,
   upload: {
     paddingRight: 10,
-    cursor: 'pointer'
+    cursor: "pointer",
   },
   delete: {
-    cursor: 'pointer'
+    cursor: "pointer",
   },
   dropZone: {
     ...AppStyles.Layout.vbox,
@@ -59,12 +58,12 @@ const Styles = {
     backgroundColor: Colors.subtleLine,
     borderRadius: 2,
     border: `1px solid ${Colors.backgroundSubtleDark}`,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   overlayPreview: {
-    maxWidth: '100%',
-    maxHeight: '100%'
+    maxWidth: "100%",
+    maxHeight: "100%",
   },
   button: {
     height: 30,
@@ -78,29 +77,29 @@ const Styles = {
     color: Colors.foregroundDark,
   },
   buttonActive: {
-    color: Colors.bold
-  }
+    color: Colors.bold,
+  },
 }
 
-@inject('session')
+@inject("session")
 @observer
-class Native extends Component {
-  constructor (props) {
+class NativeOverlay extends Component {
+  constructor(props) {
     super(props)
     this.state = {
       opacity: 0.5,
       scale: 1,
       width: null,
       height: null,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       growToWindow: false,
       resizeMode: null,
-      layoutType: 'image',
+      layoutType: "image",
       marginTop: 0,
       marginRight: 0,
       marginBottom: 0,
-      marginLeft: 0
+      marginLeft: 0,
     }
     this.handleDrop = this.handleDrop.bind(this)
     this.import = this.import.bind(this)
@@ -120,7 +119,7 @@ class Native extends Component {
    *
    * @memberOf Native
    */
-  handleDrop (event) {
+  handleDrop(event) {
     event.preventDefault()
     event.stopPropagation()
     if (event.dataTransfer.files.length !== 1) return false
@@ -136,7 +135,7 @@ class Native extends Component {
    *
    * @memberOf Native
    */
-  import (path) {
+  import(path) {
     const { ui } = this.props.session
     const { opacity, scale, justifyContent, alignItems, resizeMode, growToWindow } = this.state
 
@@ -156,33 +155,33 @@ class Native extends Component {
           alignItems,
           opacity,
           growToWindow,
-          resizeMode
+          resizeMode,
         })
       }
     })
   }
 
-  handleAlignmentChange (justifyContent, alignItems) {
+  handleAlignmentChange(justifyContent, alignItems) {
     const { ui } = this.props.session
     this.setState({ justifyContent, alignItems })
     ui.setOverlay({ justifyContent, alignItems })
   }
 
-  handleLayoutTypeChange (layoutType) {
+  handleLayoutTypeChange(layoutType) {
     const { ui } = this.props.session
     const { resizeMode, width, height, scale } = this.state
-    const growToWindow = layoutType === 'screen'
-    const newResizeMode = growToWindow ? 'stretch' : resizeMode
+    const growToWindow = layoutType === "screen"
+    const newResizeMode = growToWindow ? "stretch" : resizeMode
     this.setState({ layoutType, growToWindow, resizeMode: newResizeMode })
     ui.setOverlay({
       growToWindow,
       resizeMode: newResizeMode,
       width: growToWindow ? width : width * scale,
-      height: growToWindow ? height : height * scale
+      height: growToWindow ? height : height * scale,
     })
   }
 
-  handleScaleChange (scale) {
+  handleScaleChange(scale) {
     const { ui } = this.props.session
     const { width, height } = this.state
     this.setState({ scale })
@@ -191,7 +190,7 @@ class Native extends Component {
     }
   }
 
-  handleOpacityChange (opacity) {
+  handleOpacityChange(opacity) {
     const { ui } = this.props.session
     if (this.state.opacity === opacity) {
       opacity = 0
@@ -209,9 +208,9 @@ class Native extends Component {
    *
    * @memberOf Native
    */
-  handleMarginsChange (newMargins) {
+  handleMarginsChange(newMargins) {
     const { ui } = this.props.session
-    const oldMargins = pick(['marginTop', 'marginRight', 'marginBottom', 'marginLeft'], this.state)
+    const oldMargins = pick(["marginTop", "marginRight", "marginBottom", "marginLeft"], this.state)
     const margins = { ...oldMargins, ...newMargins }
     this.setState(margins)
     ui.setOverlay(margins)
@@ -224,17 +223,17 @@ class Native extends Component {
    *
    * @memberOf Native
    */
-  handleResizeModeChange (resizeMode) {
+  handleResizeModeChange(resizeMode) {
     const { ui } = this.props.session
     const { width, height } = this.state
-    const growToWindow = resizeMode !== 'scale'
+    const growToWindow = resizeMode !== "scale"
     this.setState({ resizeMode, growToWindow })
     if (width && height) {
       ui.setOverlay({ resizeMode, growToWindow, width, height })
     }
   }
 
-  removeImage (event) {
+  removeImage(event) {
     event.stopPropagation()
     event.preventDefault()
     const { ui } = this.props.session
@@ -243,13 +242,13 @@ class Native extends Component {
       width: null,
       height: null,
       scale: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
+      alignItems: "center",
+      justifyContent: "center",
     })
     ui.setOverlay({ uri: null })
   }
 
-  renderImagePreview () {
+  renderImagePreview() {
     const { uri } = this.state
     if (uri) {
       return <img src={uri} style={Styles.overlayPreview} onClick={this.removeImage} />
@@ -258,7 +257,7 @@ class Native extends Component {
     }
   }
 
-  renderLayoutType () {
+  renderLayoutType() {
     const { uri } = this.state
     if (!uri) return <div />
 
@@ -273,9 +272,9 @@ class Native extends Component {
     )
   }
 
-  renderAlignment () {
+  renderAlignment() {
     const { uri, layoutType } = this.state
-    if (!uri || layoutType !== 'image') return <div />
+    if (!uri || layoutType !== "image") return <div />
 
     return (
       <div>
@@ -289,9 +288,9 @@ class Native extends Component {
     )
   }
 
-  renderScale () {
+  renderScale() {
     const { uri, layoutType } = this.state
-    if (!uri || layoutType !== 'image') return <div />
+    if (!uri || layoutType !== "image") return <div />
 
     return (
       <div>
@@ -301,9 +300,9 @@ class Native extends Component {
     )
   }
 
-  renderResizeMode () {
+  renderResizeMode() {
     const { uri, layoutType } = this.state
-    if (!uri || layoutType !== 'screen') return <div />
+    if (!uri || layoutType !== "screen") return <div />
 
     return (
       <div>
@@ -316,7 +315,7 @@ class Native extends Component {
     )
   }
 
-  renderOpacity () {
+  renderOpacity() {
     if (!this.state.uri) return <div />
 
     return (
@@ -327,7 +326,7 @@ class Native extends Component {
     )
   }
 
-  renderMargins () {
+  renderMargins() {
     if (!this.state.uri) return <div />
 
     return (
@@ -344,23 +343,11 @@ class Native extends Component {
     )
   }
 
-  render () {
+  render() {
     return (
       <div style={Styles.container}>
-        <NativeHeader />
         <div style={Styles.content}>
-          <div style={Styles.sectionTitle}>Storybook</div>
-          <button
-            style={
-              this.props.session.ui.isStorybookShown
-                ? { ...Styles.button, ...Styles.buttonActive }
-                : Styles.button
-            }
-            onClick={this.props.session.ui.toggleStorybook}
-          >
-            Toggle
-          </button>
-          <div style={Styles.sectionTitle}>Overlay Image</div>
+          <div style={Styles.sectionTitle}>Image Overlay</div>
           <div style={Styles.backups}>
             <div
               style={Styles.dropZone}
@@ -384,4 +371,4 @@ class Native extends Component {
   }
 }
 
-export default Native
+export default NativeOverlay

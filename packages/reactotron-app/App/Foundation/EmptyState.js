@@ -34,16 +34,16 @@ const Styles = {
     textAlign: 'center',
     maxWidth: 400,
     lineHeight: 1.4
-  }
+  },
 }
 
 const EmptyState = props => {
   const { icon, title } = props
-  const Icon = require(`react-icons/lib/md/${icon}`)
+  const Icon = icon && require(`react-icons/lib/md/${icon}`)
   return (
     <div style={Styles.container}>
       <div style={Styles.well}>
-        <Icon size={100} />
+        {icon && <Icon size={100} /> }
         <div style={Styles.title}>{title}</div>
         <div style={Styles.message}>{props.children}</div>
       </div>

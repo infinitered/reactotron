@@ -1,8 +1,10 @@
-import React, { Component } from 'react'
-import AppStyles from '../Theme/AppStyles'
-import Colors from '../Theme/Colors'
-import SidebarButton from './SidebarButton'
-import { inject, observer } from 'mobx-react'
+import React, { Component } from "react"
+import AppStyles from "../Theme/AppStyles"
+import Colors from "../Theme/Colors"
+import SidebarButton from "./SidebarButton"
+import { inject, observer } from "mobx-react"
+
+const logoUrl = require("../Theme/Reactotron-128.png")
 
 const Styles = {
   container: {
@@ -11,88 +13,93 @@ const Styles = {
     backgroundColor: Colors.backgroundSubtleDark,
     boxShadow: `0px 0px 30px ${Colors.glow}`,
     borderRight: `1px solid ${Colors.chromeLine}`,
-    WebkitAppRegion: 'drag',
-    transition: 'margin 0.2s ease-out'
+    WebkitAppRegion: "drag",
+    transition: "margin 0.2s ease-out",
   },
   content: {
     ...AppStyles.Layout.vbox,
-    height: '100vh',
-    alignItems: 'center'
+    height: "100vh",
+    alignItems: "center",
   },
   tabs: {
-    paddingTop: 20
+    paddingTop: 20,
   },
   spacer: {
-    flex: 1
-  }
+    flex: 1,
+  },
 }
 
-@inject('session')
+@inject("session")
 @observer
 class Sidebar extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.handleClickTimeline = () => {
-      this.props.session.ui.switchTab('timeline')
+      this.props.session.ui.switchTab("timeline")
     }
     this.handleClickSubscriptions = () => {
-      this.props.session.ui.switchTab('subscriptions')
+      this.props.session.ui.switchTab("subscriptions")
     }
     this.handleClickHelp = () => {
-      this.props.session.ui.switchTab('help')
+      this.props.session.ui.switchTab("help")
     }
     this.handleClickSettings = () => {
-      this.props.session.ui.switchTab('settings')
+      this.props.session.ui.switchTab("settings")
     }
     this.handleClickBackups = () => {
-      this.props.session.ui.switchTab('backups')
+      this.props.session.ui.switchTab("backups")
     }
     this.handleClickNative = () => {
-      this.props.session.ui.switchTab('native')
+      this.props.session.ui.switchTab("native")
     }
   }
 
-  render () {
+  render() {
     const { session } = this.props
     const { ui } = session
 
     return (
-      <div style={{...Styles.container, ...(!ui.isSidebarVisible ? { marginLeft: -Styles.container.maxWidth } : {})}}>
+      <div
+        style={{
+          ...Styles.container,
+          ...(!ui.isSidebarVisible ? { marginLeft: -Styles.container.maxWidth } : {}),
+        }}
+      >
         <div style={Styles.content}>
           <div style={Styles.tabs}>
             <SidebarButton
-              text='Timeline'
-              icon='reorder'
+              text="Timeline"
+              icon="reorder"
               hideTopBorder
-              isActive={ui.tab === 'timeline'}
+              isActive={ui.tab === "timeline"}
               onClick={this.handleClickTimeline}
             />
             <SidebarButton
-              text='State Subscriptions'
-              icon='notifications-none'
-              isActive={ui.tab === 'subscriptions'}
+              text="State Subscriptions"
+              icon="notifications-none"
+              isActive={ui.tab === "subscriptions"}
               onClick={this.handleClickSubscriptions}
             />
             <SidebarButton
-              text='State Snapshots'
-              icon='import-export'
-              isActive={ui.tab === 'backups'}
+              text="State Snapshots"
+              icon="import-export"
+              isActive={ui.tab === "backups"}
               onClick={this.handleClickBackups}
             />
             <SidebarButton
-              text='React Native'
-              icon='phone-iphone'
-              isActive={ui.tab === 'native'}
+              text="React Native"
+              icon="phone-iphone"
+              isActive={ui.tab === "native"}
               onClick={this.handleClickNative}
             />
           </div>
           <div style={Styles.spacer} />
           <div>
             <SidebarButton
-              text='Help'
-              icon='live-help'
+              text="Help"
+              icon="live-help"
               hideTopBorder
-              isActive={ui.tab === 'help'}
+              isActive={ui.tab === "help"}
               onClick={this.handleClickHelp}
             />
           </div>

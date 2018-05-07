@@ -1,61 +1,66 @@
-import React, { Component } from 'react'
-import Colors from '../Theme/Colors'
-import AppStyles from '../Theme/AppStyles'
-import Timeline from './Timeline'
-import StateKeysAndValuesDialog from '../Dialogs/StateKeysAndValuesDialog'
-import StateDispatchDialog from '../Dialogs/StateDispatchDialog'
-import StateWatchDialog from '../Dialogs/StateWatchDialog'
-import RenameStateDialog from '../Dialogs/RenameStateDialog'
-import FilterTimelineDialog from '../Dialogs/FilterTimelineDialog'
-import SendCustomDialog from '../Dialogs/SendCustomDialog'
-import Subscriptions from './Subscriptions'
-import Backups from './Backups'
-import Native from './Native'
-import Sidebar from './Sidebar'
-import Help from './Help'
-import { inject, observer } from 'mobx-react'
+import React, { Component } from "react"
+import Colors from "../Theme/Colors"
+import AppStyles from "../Theme/AppStyles"
+import Timeline from "./Timeline"
+import StateKeysAndValuesDialog from "../Dialogs/StateKeysAndValuesDialog"
+import StateDispatchDialog from "../Dialogs/StateDispatchDialog"
+import StateWatchDialog from "../Dialogs/StateWatchDialog"
+import RenameStateDialog from "../Dialogs/RenameStateDialog"
+import FilterTimelineDialog from "../Dialogs/FilterTimelineDialog"
+import SendCustomDialog from "../Dialogs/SendCustomDialog"
+import Subscriptions from "./Subscriptions"
+import Backups from "./Backups"
+import Sidebar from "./Sidebar"
+import Help from "./Help"
+import { inject, observer } from "mobx-react"
+import NativeHeader from "../Native/NativeHeader"
+import NativeOverlay from "../Native/NativeOverlay"
+import NativeStorybook from "../Native/NativeStorybook"
 
 const Styles = {
   container: {
-    ...AppStyles.Layout.vbox
+    ...AppStyles.Layout.vbox,
   },
   content: {
     ...AppStyles.Layout.vbox,
     backgroundColor: Colors.background,
     color: Colors.foreground,
-    height: '100vh',
-    scroll: 'hidden'
+    height: "100vh",
+    scroll: "hidden",
   },
   body: {
-    ...AppStyles.Layout.hbox
+    ...AppStyles.Layout.hbox,
   },
   app: {
     ...AppStyles.Layout.vbox,
-    scroll: 'none',
-    overflow: 'hidden'
+    scroll: "none",
+    overflow: "hidden",
   },
   page: {
-    ...AppStyles.Layout.vbox
+    ...AppStyles.Layout.vbox,
+    flex: 1,
   },
   pageHidden: {
     flex: 0,
     height: 0,
-    visibility: 'hidden'
-  }
+    visibility: "hidden",
+  },
 }
 
-@inject('session')
+@inject("session")
 @observer
 export default class VisualRoot extends Component {
-  render () {
+  render() {
     const { session } = this.props
     const { ui } = session
-    const showTimeline = ui.tab === 'timeline'
-    const showSubscriptions = ui.tab === 'subscriptions'
-    const showHelp = ui.tab === 'help'
-    const showSettings = ui.tab === 'settings'
-    const showBackups = ui.tab === 'backups'
-    const showNative = ui.tab === 'native'
+    const showTimeline = ui.tab === "timeline"
+    const showSubscriptions = ui.tab === "subscriptions"
+    const showHelp = ui.tab === "help"
+    const showSettings = ui.tab === "settings"
+    const showBackups = ui.tab === "backups"
+    const showNative = ui.tab === "native"
+    const showOverlay = ui.nativeSubNav === "image"
+    const showStorybook = ui.nativeSubNav === "storybook"
 
     return (
       <div style={Styles.container}>
@@ -76,7 +81,9 @@ export default class VisualRoot extends Component {
                 <Help />
               </div>
               <div style={showNative ? Styles.page : Styles.pageHidden}>
-                <Native />
+                <NativeHeader />
+                {showOverlay && <NativeOverlay />}
+                {showStorybook && <NativeStorybook />}
               </div>
               <div style={showSettings ? Styles.page : Styles.pageHidden}>
                 <h1>Settings</h1>
