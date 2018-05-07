@@ -15,6 +15,11 @@ class UI {
   @observable tab = "timeline"
 
   /**
+   * Which native sub nav are we on.
+   */
+  @observable nativeSubNav = "image"
+
+  /**
    * Targets state keys or values from the UI & commands.
    */
   @observable keysOrValues = "keys"
@@ -195,6 +200,11 @@ class UI {
   @action
   switchTab = newTab => {
     this.tab = newTab
+  }
+
+  @action
+  setNativeSubNav = value => {
+    this.nativeSubNav = value
   }
 
   @computed
@@ -465,9 +475,24 @@ class UI {
   /**
    * Toggles storybook
    */
-  @action toggleStorybook = () => {
+  @action
+  toggleStorybook = () => {
     this.isStorybookShown = !this.isStorybookShown
 
+    this.server.send("storybook", this.isStorybookShown)
+  }
+
+  @action
+  enableStorybook = () => {
+    if (this.isStorybookShown) return
+    this.isStorybookShown = true
+    this.server.send("storybook", this.isStorybookShown)
+  }
+
+  @action
+  disableStorybook = () => {
+    if (!this.isStorybookShown) return
+    this.isStorybookShown = false
     this.server.send("storybook", this.isStorybookShown)
   }
 }
