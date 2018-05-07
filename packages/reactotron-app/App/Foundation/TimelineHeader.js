@@ -7,6 +7,7 @@ import IconFilter from 'react-icons/lib/md/filter-list'
 import IconClear from 'react-icons/lib/md/delete-sweep'
 import IconSearch from 'react-icons/lib/md/search'
 import SidebarToggleButton from './SidebarToggleButton'
+import ConnectionSelector from './ConnectionSelector'
 
 const TITLE = 'Timeline'
 
@@ -121,6 +122,9 @@ class TimelineHeader extends Component {
           </div>
           <div style={Styles.center}>
             <div style={Styles.title}>{TITLE}</div>
+            <div>
+              <ConnectionSelector />
+            </div>
           </div>
           <div style={Styles.right}>
             <IconSearch

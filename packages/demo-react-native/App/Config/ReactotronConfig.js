@@ -28,4 +28,7 @@ if (__DEV__) {
   Reactotron.clear()
 }
 
+const testUnreg = Reactotron.onCustomCommand('test', () => { console.log('I WORK!') })
+Reactotron.onCustomCommand('test2', () => { testUnreg() })
+
 console.tron = Reactotron

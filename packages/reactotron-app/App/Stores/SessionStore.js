@@ -42,6 +42,11 @@ const COMMON_MATCHING_PATHS = [
 class Session {
   // commands to exlude in the timeline
   @observable commandsHiddenInTimeline = JSON.parse(localStorage.getItem('commandsHiddenInTimeline')) || []
+  // Connections
+  @observable connections = []
+  // Selected Connection
+  @observable selectedConnection = null
+  @observable customCommands = []
 
   commandsManager = new Commands()
 
@@ -100,10 +105,17 @@ class Session {
     return true
   }
 
+  rejectCommandsFromOtherConnections = command => {
+    if (!this.selectedConnection) return false
+
+    return this.selectedConnection.id !== command.connectionId
+  }
+
   @computed
   get commands () {
     return pipe(
       dotPath('commandsManager.all'),
+      reject(this.rejectCommandsFromOtherConnections),
       reject(isSubscriptionCommandWithEmptyChanges),
       reject(this.isSubscriptionValuesSameAsLastTime),
       reject(command => contains(command.type, this.commandsHiddenInTimeline)),
@@ -117,7 +129,16 @@ class Session {
     const changeCommands = this.commandsManager['state.values.change']
     if (isNil(changeCommands)) return []
     if (changeCommands.length === 0) return []
-    const recentCommand = last(changeCommands)
+
+    let connectionsChangeCommands = null
+    if (this.connections.length < 2) {
+      connectionsChangeCommands = changeCommands
+    } else {
+      if (!this.selectedConnection) return [] // If we have > 1 connection and "All" is selected jet since what we will show won't be "all"
+      connectionsChangeCommands = reject(c => c.connectionId === this.selectedConnection.id, changeCommands)
+    }
+
+    const recentCommand = last(connectionsChangeCommands)
     return dotPath('payload.changes', recentCommand) || []
   }
 
@@ -144,11 +165,42 @@ class Session {
     return !hidden
   }
 
+  // Sets the selected connection
+  @action
+  setSelectedConnection (connection) {
+    this.selectedConnection = connection
+  }
+
   handleCommand = command => {
     if (command.type === 'clear') {
+      const newCommands = pipe(
+        dotPath('commandsManager.all'),
+        reject(c => c.connectionId === command.connectionId),
+      )(this)
+
       this.commandsManager.all.clear()
+      this.commandsManager.all.push(...newCommands)
+    } else if (command.type === 'customCommand.register') {
+      this.customCommands.push(command.payload)
+    } else if (command.type === 'customCommand.unregister') {
+      const newCustomCommands = pipe(
+        dotPath('customCommands'),
+        reject(c => c.id === command.payload.id),
+      )(this)
+      this.customCommands.clear()
+      this.customCommands.push(...newCustomCommands)
     } else {
       this.commandsManager.addCommand(command)
+    }
+  }
+
+  handleConnectionsChange = () => {
+    // TODO: See if we can be better at clearing instead of clearing everything then resetting every single time.
+    this.connections.clear()
+    this.connections.push(...this.server.connections)
+
+    if (this.selectedConnection && !this.connections.find(c => c.id === this.selectedConnection.id)) {
+      this.selectedConnection = null
     }
   }
 
@@ -156,6 +208,8 @@ class Session {
     this.server = createServer({ port })
 
     this.server.on('command', this.handleCommand)
+    this.server.on('connectionEstablished', this.handleConnectionsChange)
+    this.server.on('disconnect', this.handleConnectionsChange)
 
     this.server.start()
     this.isSubscriptionValuesSameAsLastTime = this.isSubscriptionValuesSameAsLastTime.bind(this)
