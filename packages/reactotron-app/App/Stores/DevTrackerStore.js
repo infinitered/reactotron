@@ -4,73 +4,90 @@ const TIME_NAME = 'devTrackerTimeConnected'
 const ERROR_NAME = 'devTrackerErrorsCount'
 
 class DevTracker {
-    @observable storedTime = 0
-    @observable currentErrors = 0
+    @observable connectedSeconds = 0
+    @observable totalErrors = 0
 
-    @observable sessionStarted = null
+    sessionInterval = null
+    lastError = null
 
     constructor() {
-        const currentDevTime = localStorage.getItem(TIME_NAME)
-        const currentErrors = localStorage.getItem(ERROR_NAME)
+        const storedSeconds = localStorage.getItem(TIME_NAME)
+        const storedErrors = localStorage.getItem(ERROR_NAME)
 
-        if (typeof currentDevTime === 'undefined' || currentDevTime === null) {
+        if (typeof storedSeconds === 'undefined' || storedSeconds === null) {
             localStorage.setItem(TIME_NAME, 0)
         } else {
-            this.storedTime = parseInt(currentDevTime, 10)
+            this.connectedSeconds = parseInt(storedSeconds, 10)
         }
 
-        if (typeof currentErrors === 'undefined' || currentErrors === null) {
+        if (typeof storedErrors === 'undefined' || storedErrors === null) {
             localStorage.setItem(ERROR_NAME, 0)
         } else {
-            this.currentErrors = parseInt(currentErrors, 10)
+            this.totalErrors = parseInt(storedErrors, 10)
         }
-    }
-
-    @computed
-    get connectionTime() {
-        let currentSessionTime = 0
-
-        if (this.sessionStarted) {
-            const currentTime = new Date()
-            currentSessionTime = (currentTime.getTime() - this.sessionStarted.getTime()) / 1000
-        }
-
-        return this.storedTime + Math.floor(currentSessionTime)
     }
 
     @computed
     get errorsPerSecond() {
-        const currentConnectionTime = this.connectionTime
+        if (this.connectedSeconds === 0) return 0
 
-        if (currentConnectionTime === 0) return 0
+        return this.totalErrors / this.connectedSeconds
+    }
 
-        return this.currentErrors / currentConnectionTime
+    @computed
+    get errorsPerMinute() {
+        if (this.connectedSeconds === 0) return 0
+
+        // If we have been connected < a minute then we don't want to try and do predictions (which would be what happens when we divide by < 1)
+        const connectedMinutes = this.connectedSeconds > 60 ? this.connectedSeconds / 60 : 1
+
+        return this.totalErrors / connectedMinutes
+    }
+
+    @computed
+    get errorsPerHour() {
+        if (this.connectedSeconds === 0) return 0
+
+        // If we have been connected < a hour then we don't want to try and do predictions (which would be what happens when we divide by < 1)
+        const connectedHours = this.connectedSeconds > 3600 ? this.connectedSeconds / 60 / 60 : 1
+
+        return this.totalErrors / connectedHours
     }
 
     @action
     connectionStarted = () => {
-        if (!this.sessionStarted) {
-            this.sessionStarted = new Date()
+        if (!this.sessionInterval) {
+            this.sessionInterval = setInterval(this.tick, 1000)
         }
     }
 
     @action
     connectionFinished = () => {
-        if (!this.sessionStarted) return
+        if (!this.sessionInterval) return
 
-        const currentTime = new Date()
-        const connectionLength = Math.floor((currentTime.getTime() - this.sessionStarted.getTime()) / 1000)
-        this.sessionStarted = null
-
-        this.storedTime += connectionLength
-        localStorage.setItem(TIME_NAME, this.storedTime)
+        clearInterval(this.sessionInterval)
+        this.sessionInterval = null
     }
 
     @action
     addError = () => {
-        this.currentErrors += 100
+        const currentDate = new Date()
 
-        localStorage.setItem(ERROR_NAME, this.currentErrors)
+        // If the last recorded error was less then 5 seconds ago lets not count again. This prevents getting double (or triple!) hit if an error causes another error
+        if (this.lastError && currentDate.getTime() - this.lastError.getTime() < 5000) return
+
+        this.lastError = currentDate
+        this.totalErrors += 1
+
+        localStorage.setItem(ERROR_NAME, this.totalErrors)
+    }
+
+    @action
+    tick = () => {
+        this.connectedSeconds += 1
+
+        // TODO: Is this terrible to do once a second? Maybe? Should we throttle this?
+        localStorage.setItem(TIME_NAME, this.connectedSeconds)
     }
 }
 

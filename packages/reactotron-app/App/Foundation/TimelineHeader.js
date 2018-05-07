@@ -124,9 +124,11 @@ class TimelineHeader extends Component {
             <div style={Styles.title}>{TITLE}</div>
             <div>
               {/* <ConnectionSelector /> */}
-              conTime: {devTracker.connectionTime}
-              currErr: {devTracker.currentErrors}
+              conTime: {devTracker.connectedSeconds}
+              currErr: {devTracker.totalErrors}
               EPS: {devTracker.errorsPerSecond}
+              EPM: {devTracker.errorsPerMinute}
+              EPH: {devTracker.errorsPerHour}
             </div>
           </div>
           <div style={Styles.right}>
