@@ -1,15 +1,12 @@
-import React, { Component } from "react"
-import Colors from "../Theme/Colors"
-import AppStyles from "../Theme/AppStyles"
 import { inject, observer } from "mobx-react"
+import React, { Component } from "react"
 import IconChecked from "react-icons/lib/md/radio-button-checked"
 import IconUnchecked from "react-icons/lib/md/radio-button-unchecked"
 import { WarningBar } from "../Shared/WarningBar"
+import AppStyles from "../Theme/AppStyles"
 
 const Styles = {
-  container: {
-    ...AppStyles.Layout.vbox,
-  },
+  container: { ...AppStyles.Layout.vbox },
   controls: {
     ...AppStyles.Layout.vbox,
     flex: 1,
@@ -19,27 +16,31 @@ const Styles = {
     paddingLeft: 10,
     paddingRight: 10,
   },
-  storybookLogo: {
-    width: 564 / 2,
-    height: 152 / 2,
-    paddingBottom: 20,
-  },
+  storybookLogo: { width: 564 / 2, height: 152 / 2, paddingBottom: 20 },
   checkBoxContainer: { ...AppStyles.Layout.hbox, flex: 0, paddingTop: 20 },
-  checkBoxItemOn: { ...AppStyles.Layout.hbox, alignItems: "center", flex: 0, paddingRight: 20 },
-  checkBoxItemOff: { ...AppStyles.Layout.hbox, alignItems: "center", flex: 0, cursor: "pointer" },
+  checkBoxItemOn: {
+    ...AppStyles.Layout.hbox,
+    alignItems: "center",
+    flex: 0,
+    paddingRight: 20,
+  },
+  checkBoxItemOff: {
+    ...AppStyles.Layout.hbox,
+    alignItems: "center",
+    flex: 0,
+    cursor: "pointer",
+  },
   checkBoxText: { paddingLeft: 3, fontSize: "1.25rem", cursor: "pointer" },
 }
 
 const ICON_SIZE = 32
+
 
 @inject("session")
 @observer
 class NativeStorybook extends Component {
   render() {
     const { isStorybookShown, enableStorybook, disableStorybook } = this.props.session.ui
-    const buttonStyle = isStorybookShown
-      ? { ...Styles.button, ...Styles.buttonActive }
-      : Styles.button
     const img = isStorybookShown ? "Theme/storybook-logo-color.png" : "Theme/storybook-logo.png"
 
     return (
