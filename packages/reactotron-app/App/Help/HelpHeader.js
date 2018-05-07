@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import { inject, observer } from 'mobx-react'
-import SidebarToggleButton from './SidebarToggleButton'
+import SidebarToggleButton from '../Foundation/SidebarToggleButton'
 
 const TITLE = 'Using Reactotron'
 

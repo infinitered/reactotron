@@ -1,73 +1,76 @@
-import React, { Component } from 'react'
-import Colors from '../Theme/Colors'
-import AppStyles from '../Theme/AppStyles'
-import { inject, observer } from 'mobx-react'
-import IconAdd from 'react-icons/lib/md/add'
-import IconClear from 'react-icons/lib/md/delete-forever'
-import SidebarToggleButton from './SidebarToggleButton'
+import { inject, observer } from "mobx-react"
+import React, { Component } from "react"
+import IconAdd from "react-icons/lib/md/add"
+import IconClear from "react-icons/lib/md/delete-forever"
+import SidebarToggleButton from "../Foundation/SidebarToggleButton"
+import AppStyles from "../Theme/AppStyles"
+import Colors from "../Theme/Colors"
 
-const TITLE = 'State Subscriptions'
+const TITLE = "State Subscriptions"
 
 const toolbarButton = {
-  cursor: 'pointer'
+  cursor: "pointer",
 }
 
 const Styles = {
   container: {
-    WebkitAppRegion: 'drag',
+    WebkitAppRegion: "drag",
     backgroundColor: Colors.backgroundSubtleLight,
     borderBottom: `1px solid ${Colors.chromeLine}`,
     color: Colors.foregroundDark,
-    boxShadow: `0px 0px 30px ${Colors.glow}`
+    boxShadow: `0px 0px 30px ${Colors.glow}`,
   },
   content: {
     height: 60,
     paddingLeft: 10,
     paddingRight: 10,
     ...AppStyles.Layout.hbox,
-    justifyContent: 'space-between'
+    justifyContent: "space-between",
   },
   left: {
     ...AppStyles.Layout.hbox,
     width: 100,
-    alignItems: 'center'
+    alignItems: "center",
   },
   right: {
     width: 100,
     ...AppStyles.Layout.hbox,
-    justifyContent: 'flex-end',
-    alignItems: 'center'
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
   center: {
     ...AppStyles.Layout.vbox,
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     color: Colors.foregroundLight,
-    textAlign: 'center'
+    textAlign: "center",
   },
   iconSize: 32,
   toolbarAdd: {
-    ...toolbarButton
+    ...toolbarButton,
   },
   toolbarClear: {
-    ...toolbarButton
-  }
+    ...toolbarButton,
+  },
 }
 
-@inject('session')
+@inject("session")
 @observer
 class SubscriptionsHeader extends Component {
-  render () {
+  render() {
     const { ui } = this.props.session
 
     return (
       <div style={Styles.container}>
         <div style={Styles.content}>
           <div style={Styles.left}>
-            <SidebarToggleButton onClick={ui.toggleSidebar} isSidebarVisible={ui.isSidebarVisible} />
+            <SidebarToggleButton
+              onClick={ui.toggleSidebar}
+              isSidebarVisible={ui.isSidebarVisible}
+            />
           </div>
           <div style={Styles.center}>
             <div style={Styles.title}>{TITLE}</div>

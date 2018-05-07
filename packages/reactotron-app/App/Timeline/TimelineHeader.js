@@ -1,47 +1,47 @@
-import React, { Component } from 'react'
-import Colors from '../Theme/Colors'
-import AppStyles from '../Theme/AppStyles'
-import { reaction } from 'mobx'
-import { inject, observer } from 'mobx-react'
-import IconFilter from 'react-icons/lib/md/filter-list'
-import IconClear from 'react-icons/lib/md/delete-sweep'
-import IconSearch from 'react-icons/lib/md/search'
-import SidebarToggleButton from './SidebarToggleButton'
+import { reaction } from "mobx"
+import { inject, observer } from "mobx-react"
+import React, { Component } from "react"
+import IconClear from "react-icons/lib/md/delete-sweep"
+import IconFilter from "react-icons/lib/md/filter-list"
+import IconSearch from "react-icons/lib/md/search"
+import SidebarToggleButton from "../Foundation/SidebarToggleButton"
+import AppStyles from "../Theme/AppStyles"
+import Colors from "../Theme/Colors"
 
-const TITLE = 'Timeline'
+const TITLE = "Timeline"
 
 const toolbarButton = {
-  cursor: 'pointer'
+  cursor: "pointer",
 }
 
 const Styles = {
   container: {
-    WebkitAppRegion: 'drag',
+    WebkitAppRegion: "drag",
     backgroundColor: Colors.backgroundSubtleLight,
     borderBottom: `1px solid ${Colors.chromeLine}`,
     color: Colors.foregroundDark,
-    boxShadow: `0px 0px 30px ${Colors.glow}`
+    boxShadow: `0px 0px 30px ${Colors.glow}`,
   },
   content: {
     height: 60,
     paddingLeft: 10,
     paddingRight: 10,
     ...AppStyles.Layout.hbox,
-    justifyContent: 'space-between'
+    justifyContent: "space-between",
   },
-  left: { ...AppStyles.Layout.hbox, width: 100, alignItems: 'center' },
-  right: { ...AppStyles.Layout.hbox, justifyContent: 'flex-end', alignItems: 'center', width: 100 },
-  center: { ...AppStyles.Layout.vbox, flex: 1, alignItems: 'center', justifyContent: 'center' },
-  title: { color: Colors.foregroundLight, textAlign: 'center' },
+  left: { ...AppStyles.Layout.hbox, width: 100, alignItems: "center" },
+  right: { ...AppStyles.Layout.hbox, justifyContent: "flex-end", alignItems: "center", width: 100 },
+  center: { ...AppStyles.Layout.vbox, flex: 1, alignItems: "center", justifyContent: "center" },
+  title: { color: Colors.foregroundLight, textAlign: "center" },
   iconSize: 32,
   toolbarClear: { ...toolbarButton },
   toolbarFilter: { ...toolbarButton, paddingRight: 8 },
   searchContainer: {
-    position: 'relative',
-    display: 'flex',
+    position: "relative",
+    display: "flex",
     paddingBottom: 10,
     paddingTop: 4,
-    paddingRight: 10
+    paddingRight: 10,
   },
   searchLabel: { fontSize: 12, paddingLeft: 10, paddingRight: 10 },
   searchInput: {
@@ -49,16 +49,16 @@ const Styles = {
     padding: 10,
     flex: 1,
     backgroundColor: Colors.backgroundSubtleDark,
-    border: 'none',
+    border: "none",
     color: Colors.foregroundDark,
-    fontSize: 14
+    fontSize: 14,
   },
   searchIconSize: 28,
-  searchIcon: { paddingRight: 7, cursor: 'pointer' },
-  searchIconEnabled: { color: 'white' }
+  searchIcon: { paddingRight: 7, cursor: "pointer" },
+  searchIconEnabled: { color: "white" },
 }
 
-@inject('session')
+@inject("session")
 @observer
 class TimelineHeader extends Component {
   getValue = evt => {
@@ -78,7 +78,7 @@ class TimelineHeader extends Component {
     }, 10)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     // when the isTimelineSearchVisible becomes `true`...
     this.unsubscribe = reaction(
       () => this.props.session.ui.isTimelineSearchVisible,
@@ -90,7 +90,7 @@ class TimelineHeader extends Component {
     )
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.unsubscribe && this.unsubscribe()
   }
 
@@ -101,23 +101,26 @@ class TimelineHeader extends Component {
     }
   }
 
-  render () {
+  render() {
     const { ui } = this.props.session
     const { isTimelineSearchVisible } = ui
     const searchIconStyle = {
       ...Styles.searchIcon,
-      ...(isTimelineSearchVisible ? Styles.searchIconEnabled : {})
+      ...(isTimelineSearchVisible ? Styles.searchIconEnabled : {}),
     }
     const searchContainerStyle = {
       ...Styles.searchContainer,
-      ...(!isTimelineSearchVisible ? { display: 'none' } : {})
+      ...(!isTimelineSearchVisible ? { display: "none" } : {}),
     }
 
     return (
       <div style={Styles.container}>
         <div style={Styles.content}>
           <div style={Styles.left}>
-            <SidebarToggleButton onClick={ui.toggleSidebar} isSidebarVisible={ui.isSidebarVisible} />
+            <SidebarToggleButton
+              onClick={ui.toggleSidebar}
+              isSidebarVisible={ui.isSidebarVisible}
+            />
           </div>
           <div style={Styles.center}>
             <div style={Styles.title}>{TITLE}</div>
