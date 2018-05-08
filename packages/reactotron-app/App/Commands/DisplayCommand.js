@@ -1,5 +1,6 @@
-import React, { Component } from "react"
+import { observer } from "mobx-react"
 import PropTypes from "prop-types"
+import React, { Component } from "react"
 import Command from "../Shared/Command"
 import Content from "../Shared/Content"
 
@@ -13,13 +14,10 @@ const Styles = {
   },
 }
 
+@observer
 class DisplayCommand extends Component {
   static propTypes = {
     command: PropTypes.object.isRequired,
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return this.props.command.id !== nextProps.command.id
   }
 
   render() {
@@ -33,7 +31,7 @@ class DisplayCommand extends Component {
       } else {
         imageUrl = image.uri
       }
-    } 
+    }
 
     return (
       <Command
@@ -42,12 +40,14 @@ class DisplayCommand extends Component {
         important={important}
         preview={preview}
       >
-        {value && <Content value={value} />}
-        {imageUrl && (
-          <div style={Styles.imageContainer}>
-            <img style={Styles.image} src={imageUrl} />
-          </div>
-        )}
+        <div>
+          {value && <Content value={value} />}
+          {imageUrl && (
+            <div style={Styles.imageContainer}>
+              <img style={Styles.image} src={imageUrl} />
+            </div>
+          )}
+        </div>
       </Command>
     )
   }

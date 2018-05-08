@@ -1,43 +1,43 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import Command from '../Shared/Command'
-import Colors from '../Theme/Colors'
-import { map, isNil, sortBy, toLower } from 'ramda'
-import { inject, observer } from 'mobx-react'
-import AppStyles from '../Theme/AppStyles'
+import { inject, observer } from "mobx-react"
+import PropTypes from "prop-types"
+import { isNil, map, sortBy, toLower } from "ramda"
+import React, { Component } from "react"
+import Command from "../Shared/Command"
+import AppStyles from "../Theme/AppStyles"
+import Colors from "../Theme/Colors"
 
-const COMMAND_TITLE = 'STATE KEYS'
-const NULL_MESSAGE = '¯\\_(ツ)_/¯'
-const EMPTY_MESSAGE = 'Sorry, no keys in there.'
-const ROOT_TEXT = '(root)'
-const PATH_LABEL = ''
+const COMMAND_TITLE = "STATE KEYS"
+const NULL_MESSAGE = "¯\\_(ツ)_/¯"
+const EMPTY_MESSAGE = "Sorry, no keys in there."
+const ROOT_TEXT = "(root)"
+const PATH_LABEL = ""
 
 const Styles = {
   path: {
-    padding: '0 0 10px 0',
-    color: Colors.bold
+    padding: "0 0 10px 0",
+    color: Colors.bold,
   },
   pathLabel: {
-    color: Colors.foregroundDark
+    color: Colors.foregroundDark,
   },
   stringValue: {
     color: Colors.text,
-    WebkitUserSelect: 'all',
-    wordBreak: 'break-all'
+    WebkitUserSelect: "all",
+    wordBreak: "break-all",
   },
   null: {},
   empty: {},
   keyList: {
     ...AppStyles.Layout.hbox,
-    flexWrap: 'wrap'
+    flexWrap: "wrap",
   },
   key: {
     backgroundColor: Colors.backgroundLighter,
-    padding: '4px 8px',
+    padding: "4px 8px",
     margin: 4,
     borderRadius: 4,
-    cursor: 'pointer'
-  }
+    cursor: "pointer",
+  },
 }
 
 const sortKeys = sortBy(toLower)
@@ -45,10 +45,10 @@ const sortKeys = sortBy(toLower)
 class StateKey extends Component {
   static propTypes = {
     stateKey: PropTypes.string.isRequired,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.handleClick = this.handleClick.bind(this)
   }
@@ -58,7 +58,7 @@ class StateKey extends Component {
     onClick && onClick(stateKey)
   }
 
-  render () {
+  render() {
     const { stateKey } = this.props
     return (
       <div style={Styles.key} onClick={this.handleClick}>
@@ -68,42 +68,38 @@ class StateKey extends Component {
   }
 }
 
-@inject('session')
+@inject("session")
 @observer
 class StateKeysResponseCommand extends Component {
   static propTypes = {
-    command: PropTypes.object.isRequired
+    command: PropTypes.object.isRequired,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.renderKey = this.renderKey.bind(this)
     this.handleKeyClick = this.handleKeyClick.bind(this)
   }
 
-  shouldComponentUpdate (nextProps) {
-    return this.props.command.id !== nextProps.command.id
-  }
-
-  renderKey (key) {
+  renderKey(key) {
     return <StateKey key={`key-${key}`} stateKey={key} onClick={this.handleKeyClick} />
   }
 
-  handleKeyClick (key) {
+  handleKeyClick(key) {
     const { session, command } = this.props
     const { ui } = session
-    const path = isNil(command.payload.path) ? '' : command.payload.path + '.'
+    const path = isNil(command.payload.path) ? "" : command.payload.path + "."
     ui.getStateValues(`${path}${key}`)
   }
 
-  renderKeys (keys) {
+  renderKeys(keys) {
     if (isNil(keys)) return <div style={Styles.null}>{NULL_MESSAGE}></div>
     if (keys.length === 0) return <div style={Styles.empty}>{EMPTY_MESSAGE}</div>
 
     return <div style={Styles.keyList}>{map(this.renderKey, sortKeys(keys))}</div>
   }
 
-  render () {
+  render() {
     const { command } = this.props
     const { payload } = command
     const { path, keys } = payload

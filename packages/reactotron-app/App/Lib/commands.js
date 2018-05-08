@@ -1,78 +1,44 @@
-import { observable, action, extendObservable, asFlat } from 'mobx' // eslint-disable-line
-import R from 'ramda'
-import CommandTypes from './types'
+import { action, observable } from "mobx"
 
-// how many commands we're allowed to have stored at one time (per-list)
-export const DEFAULT_MAXIMUM_LIST_SIZE = 100
-export const ALL_MAXIMUM_LIST_SIZE = 1000
+export const MAX_COMMANDS = 500
 
-/**
- * Holds the lists of commands.
- *
- *   For example: this['log'] gets the list of log commands.
- */
+// how often to flush the buffer of commands into the main list
+const FLUSH_TIME = 50
+
 class Commands {
-  // es
-  maximumListSize = 0 // eslint-disable-line
-  allMaximumListSize = 0 // eslint-disable-line
-
   /**
    * It's all the comands.  Like all of them.
    */
-  @observable all = asFlat([]) // eslint-disable-line
+  all = observable.array([], { deep: false })
+
+  // temporary holding are for inbound messages
+  buffer = []
 
   /**
    * Constructor with an optional overrideable max list size.
    */
-  constructor (
-    maximumListSize = DEFAULT_MAXIMUM_LIST_SIZE,
-    allMaximumListSize = ALL_MAXIMUM_LIST_SIZE
-  ) {
-    // create an observable list for each (named after the type)
-    R.forEach(type => {
-      extendObservable(this, {
-        [type]: asFlat([])
-      })
-      // this[type] = observable([])
-    }, CommandTypes)
-
-    // NOTE(steve):
-    //   These types of messages need to be deeply observable because
-    //   their contents will be mutated. I am bad and deserve your
-    //   shameful glare.
-    extendObservable(this, {
-      'state.backup.response': observable([])
-    })
-
-    this.maximumListSize = maximumListSize
-    this.allMaximumListSize = allMaximumListSize
+  constructor() {
+    setTimeout(() => this.flush(), FLUSH_TIME)
   }
 
   /**
-   * Here's action.  Put it in the right list please.
+   * Flush the buffer of new commands into the main list.
    */
   @action
-  addCommand (command) {
-    // which command type?
-    const { type } = command
-    // grab that list
-    const list = this[type]
-    // but if we can't, jet
-    if (R.isNil(list)) {
-      return
+  flush() {
+    if (this.buffer.length > 0) {
+      const newList = [...this.buffer.reverse(), ...this.all.slice()]
+      this.buffer = []
+      this.all.replace(newList.slice(0, MAX_COMMANDS))
     }
-    // add this to the all list
-    this.all.push(command)
-    // enforce the all cap
-    if (this.all.length > this.allMaximumListSize) {
-      this.all.shift()
-    }
-    // add this new one on the end
-    list.push(command)
-    // shift off the head of the list if we've filled up
-    if (list.length > this.maximumListSize) {
-      list.shift()
-    }
+    setTimeout(() => this.flush(), FLUSH_TIME)
+  }
+
+  /**
+   * Receives a new message from the app.
+   */
+  addCommand(command) {
+    this.buffer.push(command)
   }
 }
 
