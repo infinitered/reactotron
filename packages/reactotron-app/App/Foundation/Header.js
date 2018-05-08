@@ -5,10 +5,6 @@ import { inject, observer } from "mobx-react"
 import SubNavButton from "./SubNavButton"
 import SidebarToggleButton from "./SidebarToggleButton"
 
-const TITLE = "React Native"
-const TITLE_OVERLAY = "Overlay Image"
-const TITLE_STORYBOOK = "Storybook"
-
 const toolbarButton = {
   cursor: "pointer",
 }
