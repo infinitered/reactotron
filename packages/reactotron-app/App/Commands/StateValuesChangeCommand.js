@@ -1,31 +1,29 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import Command from '../Shared/Command'
-import Colors from '../Theme/Colors'
-import Content from '../Shared/Content'
-import { keys, concat, join } from 'ramda'
-import { mapKeys, isNilOrEmpty } from 'ramdasauce'
+import { observer } from "mobx-react"
+import PropTypes from "prop-types"
+import { concat, join, keys } from "ramda"
+import { isNilOrEmpty, mapKeys } from "ramdasauce"
+import React, { Component } from "react"
+import Command from "../Shared/Command"
+import Content from "../Shared/Content"
+import Colors from "../Theme/Colors"
 
-const COMMAND_TITLE = 'SUBSCRIPTIONS'
+const COMMAND_TITLE = "SUBSCRIPTIONS"
 
 const Styles = {
   name: {
     color: Colors.bold,
     margin: 0,
-    paddingBottom: 10
-  }
+    paddingBottom: 10,
+  },
 }
 
+@observer
 class StateValuesChangeCommand extends Component {
   static propTypes = {
-    command: PropTypes.object.isRequired
+    command: PropTypes.object.isRequired,
   }
 
-  shouldComponentUpdate (nextProps) {
-    return this.props.command.id !== nextProps.command.id
-  }
-
-  render () {
+  render() {
     const { command } = this.props
     const { payload } = command
     const phrase = []
@@ -37,14 +35,14 @@ class StateValuesChangeCommand extends Component {
       phrase.push(`${keys(changed).length} changed`)
     }
     if (hasAdded) {
-      added = mapKeys(concat('+ '), added)
+      added = mapKeys(concat("+ "), added)
       phrase.push(`${keys(added).length} added`)
     }
     if (hasRemoved) {
-      removed = mapKeys(concat('- '), removed)
+      removed = mapKeys(concat("- "), removed)
       phrase.push(`${keys(removed).length} removed`)
     }
-    const preview = join(' ', phrase)
+    const preview = join(" ", phrase)
 
     return (
       <Command {...this.props} title={COMMAND_TITLE} preview={preview}>

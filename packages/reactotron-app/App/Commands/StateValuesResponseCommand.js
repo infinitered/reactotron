@@ -1,37 +1,35 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import Command from '../Shared/Command'
-import Colors from '../Theme/Colors'
-import Content from '../Shared/Content'
+import { observer } from "mobx-react"
+import PropTypes from "prop-types"
+import React, { Component } from "react"
+import Command from "../Shared/Command"
+import Content from "../Shared/Content"
+import Colors from "../Theme/Colors"
 
-const ROOT_TEXT = '(root)'
-const COMMAND_TITLE = 'STATE'
-const PATH_LABEL = ''
+const ROOT_TEXT = "(root)"
+const COMMAND_TITLE = "STATE"
+const PATH_LABEL = ""
 
 const Styles = {
   path: {
-    padding: '0 0 10px 0',
-    color: Colors.bold
+    padding: "0 0 10px 0",
+    color: Colors.bold,
   },
   pathLabel: {
-    color: Colors.foregroundDark
+    color: Colors.foregroundDark,
   },
   stringValue: {
-    WebkitUserSelect: 'all',
-    wordBreak: 'break-all'
-  }
+    WebkitUserSelect: "all",
+    wordBreak: "break-all",
+  },
 }
 
+@observer
 class StateValuesResponseCommand extends Component {
   static propTypes = {
-    command: PropTypes.object.isRequired
+    command: PropTypes.object.isRequired,
   }
 
-  shouldComponentUpdate (nextProps) {
-    return this.props.command.id !== nextProps.command.id
-  }
-
-  render () {
+  render() {
     const { command } = this.props
     const { payload } = command
     const { path, value } = payload

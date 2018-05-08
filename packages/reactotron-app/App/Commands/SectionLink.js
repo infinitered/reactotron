@@ -1,28 +1,28 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Colors from '../Theme/Colors'
-import { merge } from 'ramda'
+import PropTypes from "prop-types"
+import { merge } from "ramda"
+import React from "react"
+import Colors from "../Theme/Colors"
 
 const Styles = {
   container: {
     backgroundColor: Colors.backgroundLighter,
-    padding: '4px 8px',
+    padding: "4px 8px",
     margin: 4,
     borderRadius: 4,
-    cursor: 'pointer',
-    alignItems: 'center',
-    justifyContent: 'center'
+    cursor: "pointer",
+    alignItems: "center",
+    justifyContent: "center",
   },
   containerActive: {
-    backgroundColor: Colors.constant
+    backgroundColor: Colors.constant,
   },
   text: {
     color: Colors.foreground,
-    textAlign: 'center'
+    textAlign: "center",
   },
   textActive: {
-    color: Colors.background
-  }
+    color: Colors.background,
+  },
 }
 
 const SectionLink = props => {
@@ -40,7 +40,7 @@ const SectionLink = props => {
 SectionLink.propTypes = {
   isActive: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 }
 
 export default SectionLink
