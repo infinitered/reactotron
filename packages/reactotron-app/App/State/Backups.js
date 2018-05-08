@@ -1,5 +1,4 @@
 import { inject, observer } from "mobx-react"
-import moment from "moment"
 import React, { Component } from "react"
 import IconRename from "react-icons/lib/md/create"
 import IconDelete from "react-icons/lib/md/delete"
@@ -62,34 +61,35 @@ class Backups extends Component {
     )
   }
 
-  renderBackup(backup, indent = 0) {
-    const { ui } = this.props.session
-    const { restoreState } = ui
-    const { state } = backup.payload
-    const restore = restoreState.bind(this, state)
-    const { messageId, date } = backup
-    const key = `backup-${messageId}`
-    const name = backup.payload.name || moment(date).format("dddd @ h:mm:ss a")
-    const deleteState = event => {
-      ui.deleteState(backup)
+  renderBackup(backup) {
+    const { stateBackupStore } = this.props.session
+    const { id, name, data } = backup
+
+    const remove = event => {
+      event.stopPropagation()
+      stateBackupStore.remove(backup)
+    }
+    const rename = event => {
+      stateBackupStore.beginRename(backup)
       event.stopPropagation()
     }
-    const renameState = event => {
-      ui.openRenameStateDialog(backup)
+    const restore = event => {
+      stateBackupStore.sendRestore(backup)
       event.stopPropagation()
     }
 
     return (
-      <div style={Styles.row} key={key} onClick={restore}>
+      <div style={Styles.row} key={`backup-${id}`} onClick={restore}>
         <div style={Styles.name}>{name}</div>
-        <IconRename size={Styles.iconSize} style={Styles.button} onClick={renameState} />
-        <IconDelete size={Styles.iconSize} style={Styles.button} onClick={deleteState} />
+        <IconRename size={Styles.iconSize} style={Styles.button} onClick={rename} />
+        <IconDelete size={Styles.iconSize} style={Styles.button} onClick={remove} />
       </div>
     )
   }
 
   render() {
-    const backups = this.props.session.backups.slice()
+    const { stateBackupStore } = this.props.session
+    const backups = stateBackupStore.backups.slice()
     const isEmpty = backups.length === 0
     return (
       <div style={Styles.container}>

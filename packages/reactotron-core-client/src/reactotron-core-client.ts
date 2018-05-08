@@ -191,7 +191,11 @@ export class Client {
 
     // set the timing info
     const date = new Date()
-    const deltaTime = date.getTime() - this.lastMessageDate.getTime()
+    let deltaTime = date.getTime() - this.lastMessageDate.getTime()
+    // glitches in the matrix
+    if (deltaTime < 0) {
+      deltaTime = 0
+    }
     this.lastMessageDate = date
 
     const fullMessage = {

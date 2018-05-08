@@ -1,35 +1,35 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { inject, observer } from 'mobx-react'
-import Command from '../Shared/Command'
+import fs from "fs"
+import { inject, observer } from "mobx-react"
+import PropTypes from "prop-types"
 import {
-  max,
-  min,
-  slice,
-  is,
-  join,
-  take,
-  replace,
-  merge,
-  map,
-  split,
-  last,
-  takeLast,
-  lt,
-  keys,
-  length,
-  pickBy,
-  when,
   always,
-  isNil
-} from 'ramda'
-import { isNilOrEmpty, dotPath } from 'ramdasauce'
-import Colors from '../Theme/Colors'
-import AppStyles from '../Theme/AppStyles'
-import Content from '../Shared/Content'
-import ReactTooltip from 'react-tooltip'
-import fs from 'fs'
-import stringifyObject from 'stringify-object'
+  is,
+  isNil,
+  join,
+  keys,
+  last,
+  length,
+  lt,
+  map,
+  max,
+  merge,
+  min,
+  pickBy,
+  replace,
+  slice,
+  split,
+  take,
+  takeLast,
+  when,
+} from "ramda"
+import { dotPath, isNilOrEmpty } from "ramdasauce"
+import React, { Component } from "react"
+import ReactTooltip from "react-tooltip"
+import stringifyObject from "stringify-object"
+import Command from "../Shared/Command"
+import Content from "../Shared/Content"
+import AppStyles from "../Theme/AppStyles"
+import Colors from "../Theme/Colors"
 
 const PREVIEW_LENGTH = 500
 const SOURCE_LINES_UP = 3
@@ -40,22 +40,22 @@ const OBJECT_PROPERTY_PREVIEW_LENGTH = 80
 
 const getName = level => {
   switch (level) {
-    case 'debug':
-      return 'DEBUG'
-    case 'warn':
-      return 'WARNING'
-    case 'error':
-      return 'ERROR'
+    case "debug":
+      return "DEBUG"
+    case "warn":
+      return "WARNING"
+    case "error":
+      return "ERROR"
     default:
-      return 'LOG'
+      return "LOG"
   }
 }
 
 const stackFrameBaseStyle = {
   ...AppStyles.Layout.hbox,
   padding: 6,
-  wordBreak: 'break-all',
-  cursor: 'pointer'
+  wordBreak: "break-all",
+  cursor: "pointer",
 }
 
 const selectionStyle = {
@@ -64,142 +64,142 @@ const selectionStyle = {
   borderLeft: `1px solid ${Colors.tag}`,
   borderRight: `1px solid ${Colors.subtleLine}`,
   borderTop: `1px solid ${Colors.subtleLine}`,
-  borderBottom: `1px solid ${Colors.subtleLine}`
+  borderBottom: `1px solid ${Colors.subtleLine}`,
 }
 
 const Styles = {
   container: {
-    paddingTop: 4
+    paddingTop: 4,
   },
   stack: {
     marginTop: 10,
-    ...AppStyles.Layout.vbox
+    ...AppStyles.Layout.vbox,
   },
   stackTable: {
-    ...AppStyles.Layout.vbox
+    ...AppStyles.Layout.vbox,
   },
   stackFrame: {
     ...stackFrameBaseStyle,
     ...AppStyles.Layout.hbox,
-    padding: 6
+    padding: 6,
   },
   stackFrameNodeModule: {
     ...stackFrameBaseStyle,
-    opacity: 0.4
+    opacity: 0.4,
   },
   selectedStackFrame: {
-    ...selectionStyle
+    ...selectionStyle,
   },
   number: {
     color: Colors.constant,
-    textAlign: 'right',
+    textAlign: "right",
     width: 50,
     paddingRight: 10,
-    paddingTop: 3
+    paddingTop: 3,
   },
   functionName: {
-    flex: 1
+    flex: 1,
   },
   fileName: {
     flex: 1,
-    wordBreak: 'break-all'
+    wordBreak: "break-all",
   },
   lineNumber: {
     color: Colors.constant,
-    wordBreak: 'break-all',
+    wordBreak: "break-all",
     width: 50,
-    textAlign: 'right'
+    textAlign: "right",
   },
   stackLabel: {
     color: Colors.foregroundDark,
-    margin: '0 7px',
-    wordBreak: 'break-all'
+    margin: "0 7px",
+    wordBreak: "break-all",
   },
   stackTitle: {
     color: Colors.constant,
     paddingBottom: 10,
-    wordBreak: 'break-all'
+    wordBreak: "break-all",
   },
   theadRow: {
     ...AppStyles.Layout.hbox,
     padding: 6,
-    color: Colors.foregroundDark
+    color: Colors.foregroundDark,
   },
   headerFrame: {
-    textAlign: 'right',
+    textAlign: "right",
     width: 60,
-    paddingRight: 5
+    paddingRight: 5,
   },
   headerFunction: {
-    textAlign: 'left',
-    flex: 1
+    textAlign: "left",
+    flex: 1,
   },
   headerFile: {
     flex: 1,
-    textAlign: 'left'
+    textAlign: "left",
   },
   headerLineNumber: {
-    textAlign: 'right',
-    width: 60
+    textAlign: "right",
+    width: 60,
   },
   errorMessage: {
-    wordBreak: 'break-all',
+    wordBreak: "break-all",
     marginBottom: 30,
     color: Colors.tag,
     paddingLeft: 10,
     paddingTop: 20,
     paddingBottom: 20,
-    WebkitUserSelect: 'text',
-    cursor: 'text',
-    ...selectionStyle
+    WebkitUserSelect: "text",
+    cursor: "text",
+    ...selectionStyle,
   },
   sourceFilename: {
     paddingTop: 5,
     paddingBottom: 5,
     marginBottom: 5,
     color: Colors.tag,
-    borderBottom: `1px solid ${Colors.line}`
+    borderBottom: `1px solid ${Colors.line}`,
   },
   sourceCode: {
     ...AppStyles.Layout.vbox,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   sourceLine: {
     ...AppStyles.Layout.hbox,
     paddingTop: 6,
     paddingBottom: 6,
-    cursor: 'pointer',
-    color: Colors.foregroundDark
+    cursor: "pointer",
+    color: Colors.foregroundDark,
   },
   sourceLineHighlight: {
     opacity: 1,
-    ...selectionStyle
+    ...selectionStyle,
   },
   sourceLineNumber: {
     width: 60,
     paddingRight: 15,
     color: Colors.constant,
-    textAlign: 'right'
+    textAlign: "right",
   },
   sourceLineCode: {
     flex: 1,
-    whiteSpace: 'pre-wrap'
-  }
+    whiteSpace: "pre-wrap",
+  },
 }
 
-@inject('session')
+@inject("session")
 @observer
 class LogCommand extends Component {
   static propTypes = {
-    command: PropTypes.object.isRequired
+    command: PropTypes.object.isRequired,
   }
 
   state = {
     lines: null,
-    lineNumber: null
+    lineNumber: null,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.loadingSource = false
     this.renderStackFrame = this.renderStackFrame.bind(this)
@@ -208,25 +208,21 @@ class LogCommand extends Component {
     this.fetchLines()
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    return this.props.command.id !== nextProps.command.id || this.state.lines !== nextState.lines
-  }
-
-  fetchLines () {
+  fetchLines() {
     // prevent-reentry
     if (this.loadingSource) return
     if (!this.state) return
     this.loadingSource = true
     // fetch the top stack frame
-    const frame = dotPath('props.command.payload.stack.0', this)
+    const frame = dotPath("props.command.payload.stack.0", this)
     // jet if we don't have it'
     if (isNilOrEmpty(frame)) return
     const { fileName, lineNumber } = frame
     if (isNilOrEmpty(fileName)) return
-    const partialFileName = join('/', takeLast(SOURCE_FILE_PATH_COUNT, split('/', fileName)))
+    const partialFileName = join("/", takeLast(SOURCE_FILE_PATH_COUNT, split("/", fileName)))
 
     // kick-off a file read async
-    fs.readFile(fileName, 'utf-8', (err, data) => {
+    fs.readFile(fileName, "utf-8", (err, data) => {
       // die quietly for we have failed
       if (err) {
         return
@@ -242,11 +238,11 @@ class LogCommand extends Component {
           const sourceLines = map(line => {
             lineCounter = lineCounter + 1
             // i am sorry my tab-based brethern.
-            const source = replace(/\t/, '  ', line)
+            const source = replace(/\t/, "  ", line)
             return {
               isSelected: lineCounter === lineNumber,
               lineNumber: lineCounter,
-              source
+              source,
             }
           }, contents)
 
@@ -268,7 +264,7 @@ class LogCommand extends Component {
     })
   }
 
-  renderSource () {
+  renderSource() {
     const { lines, fileName, partialFileName } = this.state
     if (isNilOrEmpty(lines)) return null
     const { ui } = this.props.session
@@ -298,15 +294,15 @@ class LogCommand extends Component {
     )
   }
 
-  renderStackFrame (stackFrame, number) {
+  renderStackFrame(stackFrame, number) {
     const { session } = this.props
     const { ui } = session
     const key = `stack-${number}`
     let { fileName, functionName, lineNumber } = stackFrame
-    const justTheFile = last(split('/', fileName))
-    fileName = fileName && replace('webpack://', '', fileName)
-    functionName = functionName && replace('webpack://', '', functionName)
-    const isNodeModule = fileName.indexOf('/node_modules/') >= 0
+    const justTheFile = last(split("/", fileName))
+    fileName = fileName && replace("webpack://", "", fileName)
+    functionName = functionName && replace("webpack://", "", functionName)
+    const isNodeModule = fileName.indexOf("/node_modules/") >= 0
     const onClickStackFrame = e => ui.openInEditor(fileName, lineNumber)
     const isSelected = number === 1
 
@@ -317,17 +313,17 @@ class LogCommand extends Component {
     const tooltip = fileName
     return (
       <div key={key} style={style} onClick={onClickStackFrame}>
-        <div style={Styles.functionName}>{functionName || '(anonymous function)'}</div>
+        <div style={Styles.functionName}>{functionName || "(anonymous function)"}</div>
         <div style={Styles.fileName} data-tip={tooltip}>
           {justTheFile}
-          <ReactTooltip place='bottom' class='tooltipThemeReducedWidth' />
+          <ReactTooltip place="bottom" class="tooltipThemeReducedWidth" />
         </div>
         <div style={Styles.lineNumber}>{lineNumber}</div>
       </div>
     )
   }
 
-  renderStack (stack) {
+  renderStack(stack) {
     this.fetchLines()
 
     let i = 0
@@ -349,7 +345,7 @@ class LogCommand extends Component {
     )
   }
 
-  getPreview (message) {
+  getPreview(message) {
     if (is(String, message)) {
       return take(PREVIEW_LENGTH, message)
     } else if (is(Object, message)) {
@@ -360,28 +356,28 @@ class LogCommand extends Component {
       const preview = stringifyObject(previewMessage, {
         transform: (obj, prop, originalResult) => {
           if (is(Object, obj[prop])) {
-            return '{...}'
+            return "{...}"
           } else {
             return take(OBJECT_PROPERTY_PREVIEW_LENGTH, originalResult)
           }
-        }
+        },
       })
 
-      return when(always(moreKeys), replace(/\s\}$/i, ', ...}'))(preview)
+      return when(always(moreKeys), replace(/\s\}$/i, ", ...}"))(preview)
     } else if (isNil(message) || is(Boolean, message) || is(Number, message)) {
       return String(message)
     }
     return null
   }
 
-  render () {
+  render() {
     const { command } = this.props
     const { payload } = command
     const { level } = payload
     const { message, stack } = payload
     const title = getName(level)
     const containerTypes = merge(Styles.container, {
-      color: level === 'debug' ? Colors.foreground : Colors.foreground
+      color: level === "debug" ? Colors.foreground : Colors.foreground,
     })
     const hasLines = !!this.state.lines
 

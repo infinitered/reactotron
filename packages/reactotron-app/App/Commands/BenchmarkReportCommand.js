@@ -1,22 +1,23 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import Command from '../Shared/Command'
-import Colors from '../Theme/Colors'
-import { clone, map, addIndex, tail, merge, last } from 'ramda'
-import { isNilOrEmpty } from 'ramdasauce'
-import AppStyles from '../Theme/AppStyles'
-import ReactTooltip from 'react-tooltip'
+import { observer } from "mobx-react"
+import PropTypes from "prop-types"
+import { addIndex, clone, last, map, merge, tail } from "ramda"
+import { isNilOrEmpty } from "ramdasauce"
+import React, { Component } from "react"
+import ReactTooltip from "react-tooltip"
+import Command from "../Shared/Command"
+import AppStyles from "../Theme/AppStyles"
+import Colors from "../Theme/Colors"
 
-const COMMAND_TITLE = 'BENCHMARK'
-const LAST_STEP_DEFAULT = 'Last'
-const MS_LABEL = 'ms'
+const COMMAND_TITLE = "BENCHMARK"
+const LAST_STEP_DEFAULT = "Last"
+const MS_LABEL = "ms"
 
 const mapIndexed = addIndex(map)
 
 const graphUsed = Colors.backgroundLighter
 const graphEmpty = Colors.background
 
-function percentStyle (start, length, total) {
+function percentStyle(start, length, total) {
   const p1 = Number((start / total * 100).toFixed(0))
   const p2 = Number((length / total * 100).toFixed(0)) + p1
   const p3 = 100 - p2 - p1
@@ -29,42 +30,42 @@ function percentStyle (start, length, total) {
   const stop6 = `${graphEmpty} ${p3}%`
 
   return {
-    background: `-webkit-linear-gradient(left, ${stop1}, ${stop2}, ${stop3}, ${stop4}, ${stop5}, ${stop6})`
+    background: `-webkit-linear-gradient(left, ${stop1}, ${stop2}, ${stop3}, ${stop4}, ${stop5}, ${stop6})`,
   }
 }
 
 const Styles = {
   step: {
-    position: 'relative',
-    margin: '2px 0',
+    position: "relative",
+    margin: "2px 0",
     ...AppStyles.Layout.hbox,
-    padding: '4px 4px',
-    justifyContent: 'space-between',
-    WebkitUserSelect: 'all'
+    padding: "4px 4px",
+    justifyContent: "space-between",
+    WebkitUserSelect: "all",
   },
   stepLast: {
-    paddingTop: 4
+    paddingTop: 4,
   },
   reportTitle: {
-    wordBreak: 'break-all',
+    wordBreak: "break-all",
     paddingBottom: 10,
-    color: Colors.bold
+    color: Colors.bold,
   },
   stepNumber: {
-    paddingRight: 10
+    paddingRight: 10,
   },
   stepTitle: {
     flex: 1,
-    wordBreak: 'break-all'
+    wordBreak: "break-all",
   },
   delta: {
-    textAlign: 'right',
-    width: 100
+    textAlign: "right",
+    width: 100,
   },
   elapsed: {
     width: 75,
-    textAlign: 'right'
-  }
+    textAlign: "right",
+  },
 }
 
 const makeStep = (step, idx, last, totalDuration) => {
@@ -88,20 +89,17 @@ const makeStep = (step, idx, last, totalDuration) => {
   )
 }
 
+@observer
 class BenchmarkReportCommand extends Component {
   static propTypes = {
-    command: PropTypes.object.isRequired
+    command: PropTypes.object.isRequired,
   }
 
-  shouldComponentUpdate (nextProps) {
-    return this.props.command.id !== nextProps.command.id
-  }
-
-  componentDidReact () {
+  componentDidReact() {
     ReactTooltip.rebuild()
   }
 
-  render () {
+  render() {
     const { command } = this.props
     const { payload } = command
     const { title, steps } = clone(payload)
@@ -110,11 +108,13 @@ class BenchmarkReportCommand extends Component {
 
     return (
       <Command {...this.props} title={COMMAND_TITLE} duration={duration} preview={preview}>
-        <div style={Styles.reportTitle}>{title}</div>
-        {mapIndexed(
-          (step, idx) => makeStep(step, idx, idx === steps.length - 2, duration),
-          tail(steps)
-        )}
+        <div>
+          <div style={Styles.reportTitle}>{title}</div>
+          {mapIndexed(
+            (step, idx) => makeStep(step, idx, idx === steps.length - 2, duration),
+            tail(steps)
+          )}
+        </div>
       </Command>
     )
   }
