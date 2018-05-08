@@ -1,5 +1,5 @@
 import { inject, observer } from "mobx-react"
-import moment from "moment"
+import { format } from "date-fns"
 import React, { Component } from "react"
 import IconRename from "react-icons/lib/md/create"
 import IconDelete from "react-icons/lib/md/delete"
@@ -70,7 +70,7 @@ class Backups extends Component {
     const restore = restoreState.bind(this, state)
     const { messageId, date } = backup
     const key = `backup-${messageId}`
-    const name = backup.payload.name || moment(date).format("dddd @ h:mm:ss a")
+    const name = backup.payload.name || format(date, "dddd @ h:mm:ss a")
     const deleteState = event => {
       ui.deleteState(backup)
       event.stopPropagation()
