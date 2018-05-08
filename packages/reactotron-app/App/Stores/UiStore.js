@@ -15,6 +15,11 @@ class UI {
   @observable tab = "timeline"
 
   /**
+   * Which State sub nav are we on.
+   */
+  @observable stateSubNav = "subscriptions"
+
+  /**
    * Which native sub nav are we on.
    */
   @observable nativeSubNav = "image"
@@ -200,6 +205,11 @@ class UI {
   @action
   switchTab = newTab => {
     this.tab = newTab
+  }
+
+  @action
+  setStateSubNav = value => {
+    this.stateSubNav = value
   }
 
   @action
