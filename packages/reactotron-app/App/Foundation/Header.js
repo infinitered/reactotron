@@ -33,6 +33,10 @@ const Styles = {
     alignItems: "center",
   },
   right: { ...AppStyles.Layout.hbox, justifyContent: "flex-end", alignItems: "center", width: 100 },
+  title: {
+    color: Colors.foregroundLight,
+    textAlign: 'center'
+  }
 }
 
 @inject("session")
@@ -43,6 +47,7 @@ class Header extends Component {
       session: { ui },
       children,
       tabs,
+      title,
       selectedTab,
       onSelectTab
     } = this.props
@@ -57,8 +62,8 @@ class Header extends Component {
             />
           </div>
           <div style={Styles.center}>
-            {tabs &&
-              tabs.map(tab => (
+            {tabs
+              ? tabs.map(tab => (
                 <SubNavButton
                   key={tab.name}
                   icon={tab.icon}
@@ -68,7 +73,9 @@ class Header extends Component {
                   name={tab.name}
                   onClick={onSelectTab}
                 />
-              ))}
+              ))
+              : <div style={Styles.title}>{title}</div>
+            }
           </div>
           <div style={Styles.right}>{children}</div>
         </div>

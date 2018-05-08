@@ -7,9 +7,7 @@ import StateDispatchDialog from "../Dialogs/StateDispatchDialog"
 import StateKeysAndValuesDialog from "../Dialogs/StateKeysAndValuesDialog"
 import StateWatchDialog from "../Dialogs/StateWatchDialog"
 import Help from "../Help/Help"
-import NativeHeader from "../Native/NativeHeader"
-import NativeOverlay from "../Native/NativeOverlay"
-import NativeStorybook from "../Native/NativeStorybook"
+import Native from "../Native/Native"
 import State from "../State/State"
 import SessionStore from "../Stores/SessionStore"
 import AppStyles from "../Theme/AppStyles"
@@ -44,10 +42,6 @@ export default class App extends Component {
     const showNative = ui.tab === "native"
     const showState = ui.tab === "state"
 
-    // Native Subnav
-    const showOverlay = ui.nativeSubNav === "image"
-    const showStorybook = ui.nativeSubNav === "storybook"
-
     return (
       <Provider session={session}>
         <div style={Styles.container}>
@@ -65,9 +59,7 @@ export default class App extends Component {
                   <Help />
                 </div>
                 <div style={showNative ? Styles.page : Styles.pageHidden}>
-                  <NativeHeader />
-                  {showOverlay && <NativeOverlay />}
-                  {showStorybook && <NativeStorybook />}
+                  <Native />
                 </div>
                 <div style={showSettings ? Styles.page : Styles.pageHidden}>
                   <h1>Settings</h1>
