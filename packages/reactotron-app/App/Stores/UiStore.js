@@ -16,10 +16,8 @@ class UI {
   @observable showStateDispatchDialog = false
   @observable showHelpDialog = false
   @observable showStateWatchDialog = false
-  @observable showRenameStateDialog = false
   @observable showFilterTimelineDialog = false
   @observable watchToAdd
-  @observable backupStateName
   @observable actionToDispatch
   @observable showWatchPanel = false
   @observable customMessage = ""
@@ -34,9 +32,10 @@ class UI {
   // from the command toolbar to the command
   commandProperties = {}
 
-  constructor(server, commandsManager) {
+  constructor(server, commandsManager, stateBackupStore) {
     this.server = server
     this.commandsManager = commandsManager
+    this.stateBackupStore = stateBackupStore
 
     Mousetrap.prototype.stopCallback = () => false
 
@@ -44,7 +43,7 @@ class UI {
     Mousetrap.bind(`${Keystroke.mousetrap}+k`, this.openStateFindDialog)
     Mousetrap.bind(`${Keystroke.mousetrap}+shift+f`, this.openFilterTimelineDialog)
     Mousetrap.bind(`${Keystroke.mousetrap}+d`, this.openStateDispatchDialog)
-    Mousetrap.bind(`${Keystroke.mousetrap}+s`, this.backupState)
+    Mousetrap.bind(`${Keystroke.mousetrap}+s`, () => this.stateBackupStore.sendBackup())
     Mousetrap.bind(`tab`, this.toggleKeysValues)
     Mousetrap.bind(`escape`, this.popState)
     Mousetrap.bind(`enter`, this.submitCurrentForm)
@@ -168,7 +167,7 @@ class UI {
       this.showStateFindDialog ||
       this.showStateDispatchDialog ||
       this.showFilterTimelineDialog ||
-      this.showRenameStateDialog ||
+      this.stateBackupStore.renameDialogVisible ||
       this.showSendCustomDialog
     )
   }
@@ -187,8 +186,8 @@ class UI {
   submitCurrentForm = () => {
     if (this.showStateWatchDialog) {
       this.submitStateWatch()
-    } else if (this.showRenameStateDialog) {
-      this.submitRenameState()
+    } else if (this.stateBackupStore.renameDialogVisible) {
+      this.stateBackupStore.commitRename()
     } else if (this.showSendCustomDialog) {
       this.submitCurrentMessage()
     }
@@ -206,13 +205,6 @@ class UI {
     this.server.stateValuesSubscribe(this.watchToAdd)
     this.showStateWatchDialog = false
     this.watchToAdd = null
-  }
-
-  @action
-  submitRenameState = () => {
-    this.currentBackupState.payload.name = this.backupStateName
-    this.showRenameStateDialog = false
-    this.backupStateName = null
   }
 
   @action
@@ -273,18 +265,6 @@ class UI {
   @action
   closeStateWatchDialog = () => {
     this.showStateWatchDialog = false
-  }
-
-  @action
-  openRenameStateDialog = backup => {
-    this.showRenameStateDialog = true
-    this.backupStateName = backup.payload.name
-    this.currentBackupState = backup
-  }
-
-  @action
-  closeRenameStateDialog = () => {
-    this.showRenameStateDialog = false
   }
 
   @action
@@ -383,18 +363,6 @@ class UI {
   @action
   toggleWatchPanel = () => {
     this.showWatchPanel = !this.showWatchPanel
-  }
-
-  // grab a copy of the state for backup purposes
-  @action backupState = () => this.server.send("state.backup.request", {})
-
-  // change the state on the app to this
-  @action restoreState = state => this.server.send("state.restore.request", { state })
-
-  // removes an existing state object
-  @action
-  deleteState = state => {
-    this.commandsManager.removeStateBackup(state)
   }
 
   getCommandProperty = (messageId, key) => {

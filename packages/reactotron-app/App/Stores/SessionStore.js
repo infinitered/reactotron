@@ -1,4 +1,4 @@
-import { action, computed, observable, observe, reaction } from "mobx"
+import { action, computed, observable, reaction } from "mobx"
 import {
   any,
   contains,
@@ -16,6 +16,7 @@ import { dotPath } from "ramdasauce"
 import { createServer } from "reactotron-core-server"
 import shallowDiff from "../Lib/ShallowDiff"
 import Commands from "../Lib/commands"
+import { StateBackupStore } from "./StateBackupStore"
 import UiStore from "./UiStore"
 
 const isSubscription = propEq("type", "state.values.change")
@@ -46,6 +47,11 @@ class Session {
 
   // holds the last known state of the subscription values
   subscriptions = {}
+
+  /**
+   * Manages state backup persistence.
+   */
+  stateBackupStore
 
   // checks if it was the exact same as last time
   isSubscriptionValuesSameAsLastTime(command) {
@@ -117,12 +123,6 @@ class Session {
     return dotPath("payload.changes", recentCommand) || []
   }
 
-  @observable backups = []
-  // @computed
-  // get backups() {
-  //   return this.commandsManager.all.filter(c => c.type === "state.backup.response")
-  // }
-
   // are commands of this type hidden?
   isCommandHidden(commandType) {
     return contains(commandType, this.commandsHiddenInTimeline)
@@ -151,39 +151,24 @@ class Session {
 
   constructor(port = 9090) {
     this.server = createServer({ port })
-
     this.server.on("command", this.handleCommand)
 
-    this.server.start()
-    this.isSubscriptionValuesSameAsLastTime = this.isSubscriptionValuesSameAsLastTime.bind(this)
+    this.stateBackupStore = new StateBackupStore(this.server)
+    this.ui = new UiStore(this.server, this.commandsManager, this.stateBackupStore)
 
-    // create the ui store
-    this.ui = new UiStore(this.server, this.commandsManager)
+    this.isSubscriptionValuesSameAsLastTime = this.isSubscriptionValuesSameAsLastTime.bind(this)
 
     // hide or show the watch panel depending if we have watches
     reaction(
-      () => this.watches.length > 0,
+      () => {
+        this.watches.length > 0
+      },
       show => {
         this.ui.showWatchPanel = show
       }
     )
 
-    // watch for new backups
-    // TODO(steve): this is complicated and needs to be reworked.
-    observe(this.commandsManager.all, change => {
-      if (change.type === "splice") {
-        const { added, addedCount, removedCount } = change
-        const delta = addedCount - removedCount
-        if (delta > 0) {
-          added
-            .slice(0, delta)
-            .filter(command => command.type === "state.backup.response")
-            .forEach(command => {
-              this.backups.push(command)
-            })
-        }
-      }
-    })
+    this.server.start()
   }
 }
 
