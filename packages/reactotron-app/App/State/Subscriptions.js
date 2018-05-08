@@ -8,7 +8,6 @@ import { colorForValue, textForValue } from "../Shared/MakeTable"
 import ObjectTree from "../Shared/ObjectTree"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
-import SubscriptionsHeader from "./SubscriptionsHeader"
 
 const Styles = {
   container: {
@@ -93,7 +92,6 @@ class WatchPanel extends Component {
 
     return (
       <div style={Styles.container}>
-        <SubscriptionsHeader />
         {isEmpty && this.renderEmpty()}
         {!isEmpty && <div style={Styles.watches}>{map(this.renderWatch, watches)}</div>}
       </div>

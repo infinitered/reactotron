@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Component } from "react"
 import PropTypes from "prop-types"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
@@ -30,22 +30,28 @@ const Styles = {
   },
 }
 
-const SubNavButton = props => {
-  const { icon, isActive, onClick, hideTopBorder } = props
-  const Icon = require(`react-icons/lib/md/${icon}`)
-  const containerStyles = mergeAll([
-    Styles.container,
-    isActive ? Styles.containerActive : {},
-    hideTopBorder ? Styles.containerTop : {},
-  ])
-  const hasText = props.text && props.text.length > 0
+class SubNavButton extends Component {
+  handleClick = () => {
+    this.props.onClick(this.props.name)
+  }
 
-  return (
-    <div style={containerStyles} onClick={onClick}>
-      <Icon size={Styles.iconSize} />
-      {hasText && <div style={Styles.text}>{props.text}</div>}
-    </div>
-  )
+  render() {
+    const { icon, isActive, hideTopBorder, text } = this.props
+    const Icon = require(`react-icons/lib/md/${icon}`)
+    const containerStyles = mergeAll([
+      Styles.container,
+      isActive ? Styles.containerActive : {},
+      hideTopBorder ? Styles.containerTop : {},
+    ])
+    const hasText = text && text.length > 0
+
+    return (
+      <div style={containerStyles} onClick={this.handleClick}>
+        <Icon size={Styles.iconSize} />
+        {hasText && <div style={Styles.text}>{text}</div>}
+      </div>
+    )
+  }
 }
 
 SubNavButton.propTypes = {

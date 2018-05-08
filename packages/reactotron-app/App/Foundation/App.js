@@ -10,8 +10,7 @@ import Help from "../Help/Help"
 import NativeHeader from "../Native/NativeHeader"
 import NativeOverlay from "../Native/NativeOverlay"
 import NativeStorybook from "../Native/NativeStorybook"
-import Backups from "../State/Backups"
-import Subscriptions from "../State/Subscriptions"
+import State from "../State/State"
 import SessionStore from "../Stores/SessionStore"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
@@ -40,11 +39,12 @@ export default class App extends Component {
   render() {
     const { ui } = session
     const showTimeline = ui.tab === "timeline"
-    const showSubscriptions = ui.tab === "subscriptions"
     const showHelp = ui.tab === "help"
     const showSettings = ui.tab === "settings"
-    const showBackups = ui.tab === "backups"
     const showNative = ui.tab === "native"
+    const showState = ui.tab === "state"
+
+    // Native Subnav
     const showOverlay = ui.nativeSubNav === "image"
     const showStorybook = ui.nativeSubNav === "storybook"
 
@@ -58,11 +58,8 @@ export default class App extends Component {
                 <div style={showTimeline ? Styles.page : Styles.pageHidden}>
                   <Timeline />
                 </div>
-                <div style={showSubscriptions ? Styles.page : Styles.pageHidden}>
-                  <Subscriptions />
-                </div>
-                <div style={showBackups ? Styles.page : Styles.pageHidden}>
-                  <Backups />
+                <div style={showState ? Styles.page : Styles.pageHidden}>
+                 <State />
                 </div>
                 <div style={showHelp ? Styles.page : Styles.pageHidden}>
                   <Help />
