@@ -1,5 +1,6 @@
 import { Provider, observer } from "mobx-react"
 import React, { Component } from "react"
+import { ipcRenderer } from "electron"
 import FilterTimelineDialog from "../Dialogs/FilterTimelineDialog"
 import RenameStateDialog from "../Dialogs/RenameStateDialog"
 import SendCustomDialog from "../Dialogs/SendCustomDialog"
@@ -34,6 +35,14 @@ const Styles = {
 
 @observer
 export default class App extends Component {
+  componentDidMount() {
+    ipcRenderer.on("toggle-side-menu", this.handleSideMenuToggle)
+  }
+
+  handleSideMenuToggle() {
+    session.ui.toggleSidebar()
+  }
+
   render() {
     const { ui } = session
     const showTimeline = ui.tab === "timeline"

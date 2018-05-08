@@ -3,7 +3,6 @@ import Colors from "../Theme/Colors"
 import AppStyles from "../Theme/AppStyles"
 import { inject, observer } from "mobx-react"
 import SubNavButton from "./SubNavButton"
-import SidebarToggleButton from "./SidebarToggleButton"
 
 const toolbarButton = {
   cursor: "pointer",
@@ -35,8 +34,8 @@ const Styles = {
   right: { ...AppStyles.Layout.hbox, justifyContent: "flex-end", alignItems: "center", width: 100 },
   title: {
     color: Colors.foregroundLight,
-    textAlign: 'center'
-  }
+    textAlign: "center",
+  },
 }
 
 @inject("session")
@@ -49,21 +48,15 @@ class Header extends Component {
       tabs,
       title,
       selectedTab,
-      onSelectTab
+      onSelectTab,
     } = this.props
 
     return (
       <div style={Styles.container}>
         <div style={Styles.content}>
           <div style={Styles.left}>
-            <SidebarToggleButton
-              onClick={ui.toggleSidebar}
-              isSidebarVisible={ui.isSidebarVisible}
-            />
-          </div>
-          <div style={Styles.center}>
-            {tabs
-              ? tabs.map(tab => (
+            {tabs &&
+              tabs.map(tab => (
                 <SubNavButton
                   key={tab.name}
                   icon={tab.icon}
@@ -73,10 +66,14 @@ class Header extends Component {
                   name={tab.name}
                   onClick={onSelectTab}
                 />
-              ))
-              : <div style={Styles.title}>{title}</div>
-            }
+              ))}
           </div>
+          {!tabs &&
+            title && (
+              <div style={Styles.center}>
+                <div style={Styles.title}>{title}</div>
+              </div>
+            )}
           <div style={Styles.right}>{children}</div>
         </div>
       </div>

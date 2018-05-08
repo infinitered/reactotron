@@ -93,6 +93,12 @@ app.on("ready", () => {
                     mainWindow.toggleDevTools()
                   },
                 },
+                {
+                  label: "Toggle Side Menu",
+                  click() {
+                    mainWindow.webContents.send("toggle-side-menu")
+                  }
+                }
               ]
             : [
                 {
@@ -102,6 +108,12 @@ app.on("ready", () => {
                     mainWindow.setFullScreen(!mainWindow.isFullScreen())
                   },
                 },
+                {
+                  label: "Toggle Side Menu",
+                  click() {
+                    mainWindow.webContents.send("toggle-side-menu")
+                  }
+                }
               ],
       },
       {

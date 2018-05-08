@@ -32,7 +32,7 @@ class Native extends Component {
     } = this.props
 
     return (
-      <Tabs selectedTab={ui.stateSubNav} onSwitchTab={ui.setStateSubNav}>
+      <Tabs selectedTab={ui.nativeSubNav} onSwitchTab={ui.setNativeSubNav}>
         <Tabs.Tab
           name="image"
           text="Image Overlay"
