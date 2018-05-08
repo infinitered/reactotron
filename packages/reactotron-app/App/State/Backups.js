@@ -5,7 +5,6 @@ import IconDelete from "react-icons/lib/md/delete"
 import Empty from "../Shared/EmptyState"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
-import BackupsHeader from "./BackupsHeader"
 
 const Styles = {
   container: {
@@ -94,7 +93,6 @@ class Backups extends Component {
     const isEmpty = backups.length === 0
     return (
       <div style={Styles.container}>
-        <BackupsHeader />
         {isEmpty ? (
           this.renderEmpty()
         ) : (

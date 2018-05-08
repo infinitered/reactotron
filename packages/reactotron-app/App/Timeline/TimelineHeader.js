@@ -4,7 +4,6 @@ import React, { Component } from "react"
 import IconClear from "react-icons/lib/md/delete-sweep"
 import IconFilter from "react-icons/lib/md/filter-list"
 import IconSearch from "react-icons/lib/md/search"
-import SidebarToggleButton from "../Foundation/SidebarToggleButton"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
 
@@ -116,12 +115,7 @@ class TimelineHeader extends Component {
     return (
       <div style={Styles.container}>
         <div style={Styles.content}>
-          <div style={Styles.left}>
-            <SidebarToggleButton
-              onClick={ui.toggleSidebar}
-              isSidebarVisible={ui.isSidebarVisible}
-            />
-          </div>
+          <div style={Styles.left} />
           <div style={Styles.center}>
             <div style={Styles.title}>{TITLE}</div>
           </div>

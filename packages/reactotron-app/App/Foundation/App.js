@@ -1,5 +1,6 @@
 import { Provider, observer } from "mobx-react"
 import React, { Component } from "react"
+import { ipcRenderer } from "electron"
 import FilterTimelineDialog from "../Dialogs/FilterTimelineDialog"
 import RenameStateDialog from "../Dialogs/RenameStateDialog"
 import SendCustomDialog from "../Dialogs/SendCustomDialog"
@@ -7,11 +8,8 @@ import StateDispatchDialog from "../Dialogs/StateDispatchDialog"
 import StateKeysAndValuesDialog from "../Dialogs/StateKeysAndValuesDialog"
 import StateWatchDialog from "../Dialogs/StateWatchDialog"
 import Help from "../Help/Help"
-import NativeHeader from "../Native/NativeHeader"
-import NativeOverlay from "../Native/NativeOverlay"
-import NativeStorybook from "../Native/NativeStorybook"
-import Backups from "../State/Backups"
-import Subscriptions from "../State/Subscriptions"
+import Native from "../Native/Native"
+import State from "../State/State"
 import SessionStore from "../Stores/SessionStore"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
@@ -37,16 +35,21 @@ const Styles = {
 
 @observer
 export default class App extends Component {
+  componentDidMount() {
+    ipcRenderer.on("toggle-side-menu", this.handleSideMenuToggle)
+  }
+
+  handleSideMenuToggle() {
+    session.ui.toggleSidebar()
+  }
+
   render() {
     const { ui } = session
     const showTimeline = ui.tab === "timeline"
-    const showSubscriptions = ui.tab === "subscriptions"
     const showHelp = ui.tab === "help"
     const showSettings = ui.tab === "settings"
-    const showBackups = ui.tab === "backups"
     const showNative = ui.tab === "native"
-    const showOverlay = ui.nativeSubNav === "image"
-    const showStorybook = ui.nativeSubNav === "storybook"
+    const showState = ui.tab === "state"
 
     return (
       <Provider session={session}>
@@ -58,19 +61,14 @@ export default class App extends Component {
                 <div style={showTimeline ? Styles.page : Styles.pageHidden}>
                   <Timeline />
                 </div>
-                <div style={showSubscriptions ? Styles.page : Styles.pageHidden}>
-                  <Subscriptions />
-                </div>
-                <div style={showBackups ? Styles.page : Styles.pageHidden}>
-                  <Backups />
+                <div style={showState ? Styles.page : Styles.pageHidden}>
+                 <State />
                 </div>
                 <div style={showHelp ? Styles.page : Styles.pageHidden}>
                   <Help />
                 </div>
                 <div style={showNative ? Styles.page : Styles.pageHidden}>
-                  <NativeHeader />
-                  {showOverlay && <NativeOverlay />}
-                  {showStorybook && <NativeStorybook />}
+                  <Native />
                 </div>
                 <div style={showSettings ? Styles.page : Styles.pageHidden}>
                   <h1>Settings</h1>
