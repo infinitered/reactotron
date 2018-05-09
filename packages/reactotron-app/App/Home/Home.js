@@ -5,8 +5,7 @@ import IconAddBackup from "react-icons/lib/md/file-download"
 import IconClear from "react-icons/lib/md/delete-forever"
 import Tabs from "../Foundation/Tabs"
 import AppStyles from "../Theme/AppStyles"
-import Subscriptions from "../State/Subscriptions"
-import Backups from "../State/Backups"
+import Connection from "./HomeConnection"
 
 const toolbarButton = {
   cursor: "pointer",
@@ -26,58 +25,27 @@ const Styles = {
 @inject("session")
 @observer
 class Home extends Component {
-  renderSubscriptionActions = () => {
-    const { ui } = this.props.session
-
-    return (
-      <div>
-        <IconAdd
-          size={Styles.iconSize}
-          style={Styles.toolbarAdd}
-          onClick={ui.openStateWatchDialog}
-        />
-        <IconClear
-          size={Styles.iconSize}
-          style={Styles.toolbarClear}
-          onClick={ui.clearStateWatches}
-        />
-      </div>
-    )
-  }
-
-  renderBackupsActions = () => {
-    const { ui } = this.props.session
-
-    return (
-      <div>
-        <IconAddBackup size={Styles.iconSize} style={Styles.toolbarAdd} onClick={ui.backupState} />
-      </div>
-    )
-  }
-
   render() {
     const {
       session: { ui },
     } = this.props
 
     return (
-      <Tabs selectedTab={ui.stateSubNav} onSwitchTab={ui.setStateSubNav}>
+      <Tabs selectedTab={ui.homeSubNav} onSwitchTab={ui.setHomeSubNav}>
         <Tabs.Tab
-          name="subscriptions"
-          text="Subscriptions"
+          name="connection"
+          text="Connection"
           icon="notifications-none"
-          renderActions={this.renderSubscriptionActions}
         >
-          <Subscriptions />
+          <Connection />
         </Tabs.Tab>
-        <Tabs.Tab
+        {/* <Tabs.Tab
           name="backups"
           text="Snapshots"
           icon="import-export"
-          renderActions={this.renderBackupsActions}
         >
           <Backups />
-        </Tabs.Tab>
+        </Tabs.Tab> */}
       </Tabs>
     )
   }

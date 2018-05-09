@@ -10,6 +10,7 @@ import Mousetrap from "../Lib/Mousetrap.min.js"
  */
 class UI {
   @observable tab = "timeline"
+  @observable homeSubNav = "connection"
   @observable stateSubNav = "subscriptions"
   @observable nativeSubNav = "image"
   @observable keysOrValues = "keys"
@@ -154,6 +155,11 @@ class UI {
   @action
   switchTab = newTab => {
     this.tab = newTab
+  }
+
+  @action
+  setHomeSubNav = value => {
+    this.homeSubNav = value
   }
 
   @action
