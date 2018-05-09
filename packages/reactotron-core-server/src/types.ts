@@ -17,7 +17,7 @@ export interface PartialConnection {
   /**
    * The unique id of the client.
    */
-  id: string
+  id: number
 
   /**
    * The ip address.

@@ -18,6 +18,7 @@ class UI {
   @observable showHelpDialog = false
   @observable showStateWatchDialog = false
   @observable showFilterTimelineDialog = false
+  @observable showConnectionSelectionDialog = false
   @observable watchToAdd
   @observable actionToDispatch
   @observable showWatchPanel = false
@@ -173,7 +174,8 @@ class UI {
       this.showStateDispatchDialog ||
       this.showFilterTimelineDialog ||
       this.stateBackupStore.renameDialogVisible ||
-      this.showSendCustomDialog
+      this.showSendCustomDialog ||
+      this.showConnectionSelectionDialog
     )
   }
 
@@ -315,6 +317,16 @@ class UI {
   @action
   closeSendCustomDialog = () => {
     this.showSendCustomDialog = false
+  }
+
+  @action
+  openConnectionSelectionDialog = () => {
+    this.showConnectionSelectionDialog = true
+  }
+
+  @action
+  closeConnectionSelectionDialog = () => {
+    this.showConnectionSelectionDialog = false
   }
 
   @action

@@ -46,6 +46,12 @@ const reservedFeatures = [
 ]
 const isReservedFeature = (value: string) => reservedFeatures.some(res => res === value)
 
+export interface CustomCommand {
+  id: number
+  command: string
+  handler: () => void
+}
+
 export class Client {
   // the configuration options
   options: ClientOptions = Object.assign({}, DEFAULT_OPTIONS)
@@ -79,6 +85,16 @@ export class Client {
    * The last time we sent a message.
    */
   lastMessageDate = new Date()
+
+  /**
+   * The registered custom commands
+   */
+  customCommands: CustomCommand[] = []
+
+  /**
+   * The current ID for custom commands
+   */
+  customCommandLatestId: number = 0
 
   /**
    * Starts a timer and returns a function you can call to stop it and return the elapsed time.
@@ -160,6 +176,11 @@ export class Client {
 
       // trigger our plugins onCommand
       this.plugins.forEach(p => p.onCommand && p.onCommand(command))
+
+      // trigger our registered custom commands
+      if (command.type === "custom") {
+        this.customCommands.filter(cc => cc.command === command.payload).forEach(cc => cc.handler())
+      }
     }
 
     // this is ws style from require('ws') on node js
@@ -293,6 +314,32 @@ export class Client {
 
     // chain-friendly
     return this
+  }
+
+  onCustomCommand(command: string, handler: () => void): () => void {
+    // Create this command handlers object
+    const customHandler: CustomCommand = {
+      id: this.customCommandLatestId,
+      command,
+      handler,
+    }
+
+    // Increment our id counter
+    this.customCommandLatestId += 1
+
+    // Add it to our array
+    this.customCommands.push(customHandler)
+
+    this.send("customCommand.register", { id: customHandler.id, command: customHandler.command })
+
+    return () => {
+      this.customCommands = this.customCommands.filter(cc => cc.id !== customHandler.id)
+
+      this.send("customCommand.unregister", {
+        id: customHandler.id,
+        command: customHandler.command,
+      })
+    }
   }
 }
 

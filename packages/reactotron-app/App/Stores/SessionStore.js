@@ -42,6 +42,11 @@ class Session {
   // commands to exlude in the timeline
   @observable
   commandsHiddenInTimeline = JSON.parse(localStorage.getItem("commandsHiddenInTimeline")) || []
+  // Connections
+  @observable connections = []
+  // Selected Connection
+  @observable selectedConnection = null
+  @observable customCommands = []
 
   commandsManager = new Commands()
 
@@ -105,10 +110,17 @@ class Session {
     return true
   }
 
+  rejectCommandsFromOtherConnections = command => {
+    if (!this.selectedConnection) return false
+
+    return this.selectedConnection.id !== command.connectionId
+  }
+
   @computed
   get commands() {
     return pipe(
       dotPath("commandsManager.all"),
+      reject(this.rejectCommandsFromOtherConnections),
       reject(isSubscriptionCommandWithEmptyChanges),
       reject(this.isSubscriptionValuesSameAsLastTime),
       reject(command => contains(command.type, this.commandsHiddenInTimeline)),
@@ -119,8 +131,19 @@ class Session {
   @computed
   get watches() {
     const changeCommands = this.commandsManager.all.filter(c => c.type === "state.values.change")
-    const recentCommand = last(changeCommands)
-    return dotPath("payload.changes", recentCommand) || []
+
+    let connectionsChangeCommands = null
+    if (this.connections.length < 2) {
+      connectionsChangeCommands = changeCommands
+    } else {
+      if (!this.selectedConnection) return [] // If we have > 1 connection and "All" is selected jet since what we will show won't be "all"
+      connectionsChangeCommands = reject(
+        c => c.connectionId === this.selectedConnection.id,
+        changeCommands
+      )
+    }
+
+    const recentCommand = last(connectionsChangeCommands)
   }
 
   // are commands of this type hidden?
@@ -141,17 +164,53 @@ class Session {
     return !hidden
   }
 
+  // Sets the selected connection
+  @action
+  setSelectedConnection(connection) {
+    this.selectedConnection = connection
+  }
+
   handleCommand = command => {
     if (command.type === "clear") {
+      const newCommands = pipe(
+        dotPath("commandsManager.all"),
+        reject(c => c.connectionId === command.connectionId)
+      )(this)
+
       this.commandsManager.all.clear()
+      this.commandsManager.all.push(...newCommands)
+    } else if (command.type === "customCommand.register") {
+      this.customCommands.push(command.payload)
+    } else if (command.type === "customCommand.unregister") {
+      const newCustomCommands = pipe(
+        dotPath("customCommands"),
+        reject(c => c.id === command.payload.id)
+      )(this)
+      this.customCommands.clear()
+      this.customCommands.push(...newCustomCommands)
     } else {
       this.commandsManager.addCommand(command)
     }
   }
 
+  handleConnectionsChange = () => {
+    this.connections.clear()
+    this.connections.push(...this.server.connections)
+
+    if (
+      this.selectedConnection &&
+      !this.connections.find(c => c.id === this.selectedConnection.id)
+    ) {
+      this.selectedConnection = null
+    }
+  }
+
   constructor(port = 9090) {
     this.server = createServer({ port })
+
     this.server.on("command", this.handleCommand)
+    this.server.on("connectionEstablished", this.handleConnectionsChange)
+    this.server.on("disconnect", this.handleConnectionsChange)
 
     this.stateBackupStore = new StateBackupStore(this.server)
     this.ui = new UiStore(this.server, this.commandsManager, this.stateBackupStore)

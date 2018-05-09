@@ -7,6 +7,7 @@ import SendCustomDialog from "../Dialogs/SendCustomDialog"
 import StateDispatchDialog from "../Dialogs/StateDispatchDialog"
 import StateKeysAndValuesDialog from "../Dialogs/StateKeysAndValuesDialog"
 import StateWatchDialog from "../Dialogs/StateWatchDialog"
+import ConnectionSelectionDialog from '../Dialogs/ConnectionSelectionDialog'
 import Help from "../Help/Help"
 import Native from "../Native/Native"
 import State from "../State/State"
@@ -82,6 +83,7 @@ export default class App extends Component {
           <RenameStateDialog />
           <FilterTimelineDialog />
           <SendCustomDialog />
+          <ConnectionSelectionDialog />
         </div>
       </Provider>
     )
