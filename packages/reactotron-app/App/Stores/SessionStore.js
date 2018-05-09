@@ -144,6 +144,7 @@ class Session {
     }
 
     const recentCommand = last(connectionsChangeCommands)
+    return dotPath("payload.changes", recentCommand) || []
   }
 
   // are commands of this type hidden?

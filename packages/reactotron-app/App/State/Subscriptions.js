@@ -100,10 +100,10 @@ class WatchPanel extends Component {
   render() {
     const { watches, connections, selectedConnection } = this.props.session
     const isEmpty = watches.length === 0
+    const isManyConnections = connections.length > 1 && selectedConnection === null
 
     return (
       <div style={Styles.container}>
-        {isEmpty && this.renderEmpty()}
         {isEmpty && !isManyConnections && this.renderEmpty()}
         {!isEmpty &&
           !isManyConnections && <div style={Styles.watches}>{map(this.renderWatch, watches)}</div>}

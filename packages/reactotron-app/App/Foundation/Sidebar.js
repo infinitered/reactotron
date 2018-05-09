@@ -34,6 +34,9 @@ const Styles = {
 class Sidebar extends Component {
   constructor(props) {
     super(props)
+    this.handleClickHome = () => {
+      this.props.session.ui.switchTab("home")
+    }
     this.handleClickTimeline = () => {
       this.props.session.ui.switchTab("timeline")
     }
@@ -64,6 +67,13 @@ class Sidebar extends Component {
       >
         <div style={Styles.content}>
           <div style={Styles.tabs}>
+            <SidebarButton
+              text="Home"
+              icon="home"
+              hideTopBorder
+              isActive={ui.tab === "home"}
+              onClick={this.handleClickHome}
+            />
             <SidebarButton
               text="Timeline"
               icon="reorder"
