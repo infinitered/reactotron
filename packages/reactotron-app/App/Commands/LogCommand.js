@@ -298,7 +298,12 @@ class LogCommand extends Component {
     const { session } = this.props
     const { ui } = session
     const key = `stack-${number}`
-    let { fileName = "", functionName = "", lineNumber } = stackFrame
+
+    // grab the stack frame details and fallback to something sane
+    let fileName = stackFrame.fileName || ""
+    let functionName = stackFrame.functionName || ""
+    let lineNumber = stackFrame.lineNumber || 0
+
     const justTheFile = last(split("/", fileName))
     fileName = fileName && replace("webpack://", "", fileName)
     functionName = functionName && replace("webpack://", "", functionName)
