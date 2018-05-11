@@ -298,12 +298,13 @@ class LogCommand extends Component {
     const { session } = this.props
     const { ui } = session
     const key = `stack-${number}`
-    let { fileName, functionName, lineNumber } = stackFrame
+    let { fileName = "", functionName = "", lineNumber } = stackFrame
     const justTheFile = last(split("/", fileName))
     fileName = fileName && replace("webpack://", "", fileName)
     functionName = functionName && replace("webpack://", "", functionName)
     const isNodeModule = fileName.indexOf("/node_modules/") >= 0
-    const onClickStackFrame = e => ui.openInEditor(fileName, lineNumber)
+    const onClickStackFrame =
+      fileName === "" ? () => true : e => ui.openInEditor(fileName, lineNumber)
     const isSelected = number === 1
 
     let style = isNodeModule ? Styles.stackFrameNodeModule : Styles.stackFrame
