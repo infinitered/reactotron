@@ -55,6 +55,7 @@ declare module "reactotron-react-native" {
     editor?: false | ReactotronUseReactNativeEditor
     errors?: false | ReactotronUseReactNativeErrors
     overlay?: false
+    clipboard?: false
   }
 
   export interface ReactotronCommand {

@@ -144,6 +144,8 @@ class Session {
   handleCommand = command => {
     if (command.type === "clear") {
       this.commandsManager.all.clear()
+    } else if (command.type === "clipboard.value") {
+      console.log('clipboard', command.payload.value)
     } else {
       this.commandsManager.addCommand(command)
     }

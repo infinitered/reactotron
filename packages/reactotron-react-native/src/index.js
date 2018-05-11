@@ -4,6 +4,7 @@ import overlay from './plugins/overlay'
 import asyncStorage from './plugins/async-storage'
 import networking from './plugins/networking'
 import storybook from './plugins/storybook'
+import clipboard from './plugins/clipboard'
 import { createClient } from 'reactotron-core-client'
 import getHost from 'rn-host-detect'
 
@@ -37,6 +38,7 @@ const reactotron = createClient(DEFAULTS)
  * @param {boolean} options.overlay      `false` to turn off.
  * @param {*}       options.asyncStorage Options for the async storage tracking. `false to turn off`.
  * @param {*}       options.networking   Options for network activity. `false to turn off`.
+ * @param {boolean} options.clipboard    `false` to turn off.
  */
 reactotron.useReactNative = (options = {}) => {
   if (options.errors !== false) {
@@ -61,6 +63,10 @@ reactotron.useReactNative = (options = {}) => {
 
   if (options.storybook !== false) {
     reactotron.use(storybook())
+  }
+
+  if (options.clipboard !== false) {
+    reactotron.use(clipboard())
   }
 
   return reactotron

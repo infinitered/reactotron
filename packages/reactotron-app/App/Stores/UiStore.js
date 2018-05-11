@@ -4,6 +4,7 @@ import { trim } from "ramda"
 import { isNilOrEmpty } from "ramdasauce"
 import Keystroke from "../Lib/Keystroke"
 import Mousetrap from "../Lib/Mousetrap.min.js"
+import { clipboard } from "electron"
 
 /**
  * Handles UI state.
@@ -60,6 +61,8 @@ class UI {
     Mousetrap.bind(`${Keystroke.mousetrap}+-`, this.zoomOut.bind(this))
     Mousetrap.bind(`${Keystroke.mousetrap}+=`, this.zoomIn.bind(this))
     Mousetrap.bind(`${Keystroke.mousetrap}+0`, this.resetZoom.bind(this))
+    Mousetrap.bind(`${Keystroke.mousetrap}+shift+c`, () => this.requestClipboard())
+    Mousetrap.bind(`${Keystroke.mousetrap}+shift+v`, () => this.sendClipboardString())
   }
 
   zoomOut() {
@@ -420,6 +423,17 @@ class UI {
     if (!this.isStorybookShown) return
     this.isStorybookShown = false
     this.server.send("storybook", this.isStorybookShown)
+  }
+
+  @action
+  requestClipboard = () => {
+    this.server.send("clipboard.read")
+  }
+
+  @action
+  sendClipboardString = () => {
+    const value = clipboard.readText()
+    this.server.send("clipboard.write", { value })
   }
 }
 
