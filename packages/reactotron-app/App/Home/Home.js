@@ -34,18 +34,11 @@ class Home extends Component {
       <Tabs selectedTab={ui.homeSubNav} onSwitchTab={ui.setHomeSubNav}>
         <Tabs.Tab
           name="connection"
-          text="Connection"
-          icon="notifications-none"
+          text="Connections"
+          icon="people"
         >
           <Connection />
         </Tabs.Tab>
-        {/* <Tabs.Tab
-          name="backups"
-          text="Snapshots"
-          icon="import-export"
-        >
-          <Backups />
-        </Tabs.Tab> */}
       </Tabs>
     )
   }

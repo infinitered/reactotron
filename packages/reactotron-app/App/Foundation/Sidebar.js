@@ -16,17 +16,10 @@ const Styles = {
     WebkitAppRegion: "drag",
     transition: "margin 0.2s ease-out",
   },
-  content: {
-    ...AppStyles.Layout.vbox,
-    height: "100vh",
-    alignItems: "center",
-  },
-  tabs: {
-    paddingTop: 20,
-  },
-  spacer: {
-    flex: 1,
-  },
+  content: { ...AppStyles.Layout.vbox, height: "100vh", alignItems: "center" },
+  tabs: { paddingTop: 20 },
+  spacer: { flex: 1 },
+  logo: { width: 32, height: 32, paddingBottom: 4 },
 }
 
 @inject("session")
@@ -57,6 +50,8 @@ class Sidebar extends Component {
   render() {
     const { session } = this.props
     const { ui } = session
+    const isHome = ui.tab === "home"
+    const imageFilter = { filter: `grayscale(${ isHome ? 0 : 100 }%)` }
 
     return (
       <div
@@ -69,15 +64,15 @@ class Sidebar extends Component {
           <div style={Styles.tabs}>
             <SidebarButton
               text="Home"
-              icon="home"
               hideTopBorder
-              isActive={ui.tab === "home"}
+              isActive={isHome}
               onClick={this.handleClickHome}
-            />
+            >
+              <img src={logoUrl} style={{ ...Styles.logo, ...imageFilter }} />
+            </SidebarButton>
             <SidebarButton
               text="Timeline"
               icon="reorder"
-              hideTopBorder
               isActive={ui.tab === "timeline"}
               onClick={this.handleClickTimeline}
             />

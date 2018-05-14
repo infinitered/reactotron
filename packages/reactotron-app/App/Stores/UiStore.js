@@ -9,7 +9,7 @@ import Mousetrap from "../Lib/Mousetrap.min.js"
  * Handles UI state.
  */
 class UI {
-  @observable tab = "timeline"
+  @observable tab = "home"
   @observable homeSubNav = "connection"
   @observable stateSubNav = "subscriptions"
   @observable nativeSubNav = "image"
@@ -52,9 +52,10 @@ class UI {
     Mousetrap.bind(`enter`, this.submitCurrentForm)
     Mousetrap.bind(`${Keystroke.mousetrap}+enter`, this.submitCurrentFormDelicately)
     Mousetrap.bind(`${Keystroke.mousetrap}+n`, this.openStateWatchDialog)
-    Mousetrap.bind(`${Keystroke.mousetrap}+1`, this.switchTab.bind(this, "timeline"))
-    Mousetrap.bind(`${Keystroke.mousetrap}+2`, this.switchTab.bind(this, "state"))
-    Mousetrap.bind(`${Keystroke.mousetrap}+3`, this.switchTab.bind(this, "native"))
+    Mousetrap.bind(`${Keystroke.mousetrap}+1`, this.switchTab.bind(this, "home"))
+    Mousetrap.bind(`${Keystroke.mousetrap}+2`, this.switchTab.bind(this, "timeline"))
+    Mousetrap.bind(`${Keystroke.mousetrap}+3`, this.switchTab.bind(this, "state"))
+    Mousetrap.bind(`${Keystroke.mousetrap}+4`, this.switchTab.bind(this, "native"))
     Mousetrap.bind(`${Keystroke.mousetrap}+?`, this.switchTab.bind(this, "help"))
     Mousetrap.bind(`${Keystroke.mousetrap}+f`, this.showTimelineSearch)
     Mousetrap.bind(`${Keystroke.mousetrap}+.`, this.openSendCustomDialog)
