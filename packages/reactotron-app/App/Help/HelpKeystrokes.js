@@ -136,6 +136,18 @@ const HelpKeystrokes = () => (
         </div>
         <div style={Styles.helpShortcut}>
           <div style={Styles.helpLabel}>
+            <Key text={Keystroke.modifierName} />+<Key text="⬆" />+<Key text="c" />
+          </div>
+          <div style={Styles.helpDetail}>copy clipboard from app</div>
+        </div>
+        <div style={Styles.helpShortcut}>
+          <div style={Styles.helpLabel}>
+            <Key text={Keystroke.modifierName} />+<Key text="⬆" />+<Key text="v" />
+          </div>
+          <div style={Styles.helpDetail}>send clipboard to app</div>
+        </div>
+        <div style={Styles.helpShortcut}>
+          <div style={Styles.helpLabel}>
             <Key text={Keystroke.modifierName} />+<Key text="BKSP" />
           </div>
           <div style={Styles.helpDetail}>clear the timeline</div>
