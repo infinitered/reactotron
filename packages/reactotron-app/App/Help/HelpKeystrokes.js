@@ -39,113 +39,56 @@ const Styles = {
   both: {},
 }
 
+const HelpKey = (props = {}) => {
+  const { meta, shift, keyText, description } = props
+
+  return (
+    <div style={Styles.helpShortcut}>
+      <div style={Styles.helpLabel}>
+        { meta && <Key text={Keystroke.modifierName} /> }
+        { meta && "+" }
+        {shift && <Key text="⬆" />}
+        {shift && "+" }
+        <Key text={keyText} />
+      </div>
+      <div style={Styles.helpDetail}>{description}</div>
+    </div>
+  )
+}
+
 const HelpKeystrokes = () => (
   <div style={Styles.container}>
     <div style={Styles.both}>
       <div style={Styles.group}>
         <div style={Styles.category}>Navigation</div>
-        <div style={Styles.helpShortcut}>
-          <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="1" />
-          </div>
-          <div style={Styles.helpDetail}>view timeline</div>
-        </div>
-        <div style={Styles.helpShortcut}>
-          <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="2" />
-          </div>
-          <div style={Styles.helpDetail}>view state tools</div>
-        </div>
-        <div style={Styles.helpShortcut}>
-          <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="3" />
-          </div>
-          <div style={Styles.helpDetail}>view React Native tools</div>
-        </div>
+        <HelpKey meta keyText='1' description='home tab' />
+        <HelpKey meta keyText='2' description='timeline tab' />
+        <HelpKey meta keyText='3' description='state tab' />
+        <HelpKey meta keyText='4' description='React Native tab' />
       </div>
 
       <div style={Styles.group}>
         <div style={Styles.category}>State Goodies</div>
-        <div style={Styles.helpShortcut}>
-          <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="K" />
-          </div>
-          <div style={Styles.helpDetail}>find keys or values</div>
+        <HelpKey meta keyText='k' description='find keys or values' />
+        <HelpKey meta shift keyText='f' description='filter timeline' />
+        <HelpKey meta keyText='n' description='new subscription' />
+        <HelpKey meta keyText='d' description='dispatch action' />
+        <HelpKey meta keyText='s' description='take a snapshot of current state' />
         </div>
-        <div style={Styles.helpShortcut}>
-          <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="⬆" />+<Key text="F" />
-          </div>
-          <div style={Styles.helpDetail}>filter timeline</div>
-        </div>
-        <div style={Styles.helpShortcut}>
-          <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="N" />
-          </div>
-          <div style={Styles.helpDetail}>new subscription</div>
-        </div>
-        <div style={Styles.helpShortcut}>
-          <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="D" />
-          </div>
-          <div style={Styles.helpDetail}>dispatch an action</div>
-        </div>
-        <div style={Styles.helpShortcut}>
-          <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="S" />
-          </div>
-          <div style={Styles.helpDetail}>take a snapshot of current state</div>
-        </div>
-      </div>
-
-      <div style={Styles.group}>
+        
+        <div style={Styles.group}>
         <div style={Styles.category}>Zooming</div>
-        <div style={Styles.helpShortcut}>
-          <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="+" />
-          </div>
-          <div style={Styles.helpDetail}>zoom in</div>
+        <HelpKey meta keyText='+' description='zoom in' />
+        <HelpKey meta keyText='-' description='zoom out' />
+        <HelpKey meta keyText='0' description='reset zoom' />
         </div>
-        <div style={Styles.helpShortcut}>
-          <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="-" />
-          </div>
-          <div style={Styles.helpDetail}>zoom out</div>
-        </div>
-        <div style={Styles.helpShortcut}>
-          <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="0" />
-          </div>
-          <div style={Styles.helpDetail}>reset zoom</div>
-        </div>
-      </div>
-
-      <div style={Styles.group}>
+        
+        <div style={Styles.group}>
         <div style={Styles.category}>Miscellaneous</div>
-        <div style={Styles.helpShortcut}>
-          <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="F" />
-          </div>
-          <div style={Styles.helpDetail}>search for text in timeline</div>
-        </div>
-        <div style={Styles.helpShortcut}>
-          <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="." />
-          </div>
-          <div style={Styles.helpDetail}>send a custom command</div>
-        </div>
-        <div style={Styles.helpShortcut}>
-          <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="BKSP" />
-          </div>
-          <div style={Styles.helpDetail}>clear the timeline</div>
-        </div>
-        <div style={Styles.helpShortcut}>
-          <div style={Styles.helpLabel}>
-            <Key text={Keystroke.modifierName} />+<Key text="⬆" />+<Key text="S" />
-          </div>
-          <div style={Styles.helpDetail}>toggle sidebar</div>
-        </div>
+        <HelpKey meta keyText='f' description='search for text in timeline' />
+        <HelpKey meta keyText='.' description='send a custom command' />
+        <HelpKey meta keyText='BKSP' description='clear the timeline' />
+        <HelpKey meta shift keyText='s' description='toggle sidebar' />
       </div>
     </div>
   </div>
