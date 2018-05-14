@@ -1,7 +1,7 @@
 import { inject, observer } from "mobx-react"
 import React, { Component } from "react"
 import AppStyles from "../Theme/AppStyles"
-import ConnectionSelector from "../Foundation/ConnectionSelector"
+import ConnectionSelector from "./ConnectionSelector"
 
 const Styles = {
   container: {
