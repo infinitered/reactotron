@@ -1,25 +1,47 @@
-import trackGlobalErrors from './plugins/track-global-errors'
-import openInEditor from './plugins/open-in-editor'
-import overlay from './plugins/overlay'
-import asyncStorage from './plugins/async-storage'
-import networking from './plugins/networking'
-import storybook from './plugins/storybook'
-import { createClient } from 'reactotron-core-client'
-import getHost from 'rn-host-detect'
+import trackGlobalErrors from "./plugins/track-global-errors"
+import openInEditor from "./plugins/open-in-editor"
+import overlay from "./plugins/overlay"
+import asyncStorage from "./plugins/async-storage"
+import networking from "./plugins/networking"
+import storybook from "./plugins/storybook"
+import { createClient } from "reactotron-core-client"
+import getHost from "rn-host-detect"
+import { Platform, NativeModules } from "react-native"
+import getReactNativeVersion from "./get-react-native-version"
+import getReactNativeDimensions from "./get-react-native-dimensions"
+
+const deviceInfo = NativeModules.DeviceInfo || {}
+const constants = NativeModules.PlatformConstants || {}
 
 export { trackGlobalErrors, openInEditor, overlay, asyncStorage, networking, storybook }
+
 // ---------------------
 // DEFAULT CONFIGURATION
 // ---------------------
 
 const DEFAULTS = {
   createSocket: path => new WebSocket(path), // eslint-disable-line
-  host: getHost('localhost'),
+  host: getHost("localhost"),
   port: 9090,
-  name: 'React Native App',
-  userAgent: 'reactotron-react-native',
-  reactotronVersion: 'BETA', // TODO: figure this out for realz.  why is this hard?  it must be me.
-  environment: __DEV__ ? 'development' : 'production' // naive... TODO: find the right way ya lazy bum.
+  name: "React Native App",
+  environment: process.env.NODE_ENV || (__DEV__ ? "development" : "production"),
+  client: {
+    reactotronLibraryName: "reactotron-react-native",
+    reactotronLibraryVersion: "REACTOTRON_REACT_NATIVE_VERSION",
+    platform: Platform.OS,
+    platformVersion: Platform.Version,
+    osRelease: constants.Release,
+    model: constants.Model,
+    serverHost: constants.ServerHost,
+    forceTouch: constants.forceTouchAvailable || false,
+    interfaceIdiom: constants.interfaceIdiom,
+    systemName: constants.systemName,
+    uiMode: constants.uiMode,
+    serial: constants.Serial,
+    androidId: constants.androidID,
+    reactNativeVersion: getReactNativeVersion(),
+    ...(getReactNativeDimensions())
+  },
 }
 
 // -----------

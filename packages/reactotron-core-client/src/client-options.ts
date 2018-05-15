@@ -63,17 +63,12 @@ export interface ClientOptions {
   onDisconnect?: () => void
 
   /**
-   * Deprecated.
-   */
-  userAgent?: string
-
-  /**
-   * Deprecated.
+   * The NODE_ENV environment, if any.
    */
   environment?: string
 
   /**
-   * Deprecated.
+   * A way for the client libraries to identify themselves.
    */
-  reactotronVersion?: string
+  client?: any
 }

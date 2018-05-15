@@ -11,7 +11,10 @@ var DEFAULTS = {
   port: 9090,
   name: "React JS App",
   userAgent: typeof window !== "undefined" ? window.navigator.userAgent : "",
-  reactotronVersion: "BETA", // TODO: figure this out for realz.  why is this hard?  it must be me.
+  client: {
+    name: "reactotron-react-js",
+    version: "REACTOTRON_REACT_JS_VERSION",
+  },
 }
 
 // -----------

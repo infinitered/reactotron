@@ -94,7 +94,7 @@ export class Client {
   /**
    * The current ID for custom commands
    */
-  customCommandLatestId: number = 0
+  customCommandLatestId: number = 1
 
   /**
    * Starts a timer and returns a function you can call to stop it and return the elapsed time.
@@ -118,6 +118,11 @@ export class Client {
     return this
   }
 
+  close() {
+    this.connected = false
+    this.socket && this.socket.close && this.socket.close()
+  }
+
   /**
    * Connect to the Reactotron server.
    */
@@ -127,11 +132,10 @@ export class Client {
       createSocket,
       secure,
       host,
+      environment,
       port,
       name,
-      userAgent,
-      environment,
-      reactotronVersion,
+      client = {},
     } = this.options
     const { onCommand, onConnect, onDisconnect } = this.options
 
@@ -148,7 +152,12 @@ export class Client {
       this.plugins.forEach(p => p.onConnect && p.onConnect())
       this.isReady = true
       // introduce ourselves
-      this.send("client.intro", { host, port, name, userAgent, reactotronVersion, environment })
+      this.send("client.intro", {
+        environment,
+        ...client,
+        name,
+        "reactotronCoreClientVersion": "REACTOTRON_CORE_CLIENT_VERSION",
+      })
 
       // flush the send queue
       while (this.sendQueue.length > 0) {
@@ -344,7 +353,7 @@ export class Client {
 }
 
 // convenience factory function
-export const createClient = (options?: ClientOptions) => {
+export function createClient (options?: ClientOptions) {
   const client = new Client()
   client.configure(options)
   return client

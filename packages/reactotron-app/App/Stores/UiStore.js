@@ -10,7 +10,7 @@ import Mousetrap from "../Lib/Mousetrap.min.js"
  */
 class UI {
   @observable tab = "home"
-  @observable homeSubNav = "connection"
+  @observable homeSubNav = "connections"
   @observable stateSubNav = "subscriptions"
   @observable nativeSubNav = "image"
   @observable keysOrValues = "keys"

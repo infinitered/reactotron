@@ -194,7 +194,8 @@ class Session {
     }
   }
 
-  handleConnectionsChange = () => {
+  handleConnectionsChange = connection => {
+    // console.log(connection)
     this.connections.clear()
     this.connections.push(...this.server.connections)
 

@@ -5,7 +5,7 @@ import IconAddBackup from "react-icons/lib/md/file-download"
 import IconClear from "react-icons/lib/md/delete-forever"
 import Tabs from "../Foundation/Tabs"
 import AppStyles from "../Theme/AppStyles"
-import Connection from "./HomeConnection"
+import Connections from "./Connections"
 
 const toolbarButton = {
   cursor: "pointer",
@@ -32,12 +32,8 @@ class Home extends Component {
 
     return (
       <Tabs selectedTab={ui.homeSubNav} onSwitchTab={ui.setHomeSubNav}>
-        <Tabs.Tab
-          name="connection"
-          text="Connections"
-          icon="people"
-        >
-          <Connection />
+        <Tabs.Tab name="connections" text="Connections" icon="people">
+          <Connections />
         </Tabs.Tab>
       </Tabs>
     )
