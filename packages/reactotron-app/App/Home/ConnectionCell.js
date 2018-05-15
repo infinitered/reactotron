@@ -2,7 +2,7 @@ import { observer } from "mobx-react"
 import React, { Component } from "react"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
-import IconPhoneDefault from "react-icons/lib/md/phone"
+import IconPhoneDefault from "react-icons/lib/fa/question"
 import IconPhoneApple from "react-icons/lib/fa/apple"
 import IconPhoneAndroid from "react-icons/lib/fa/android"
 
@@ -22,7 +22,7 @@ const Styles = {
   platform: {
     paddingLeft: 10,
     color: Colors.tag,
-    width: 100,
+    width: "25%",
   },
   platformDetails: {
     borderLeft: `1px solid ${Colors.subtleLine}`,
@@ -52,7 +52,7 @@ function getPlatformName(connection) {
     case "android":
       return "Android"
     default:
-      return connection.platform
+      return connection.platform || "Unknown platform"
   }
 }
 
@@ -65,11 +65,11 @@ function getPlatformDetails(connection) {
     }
 
     case "android": {
-      return `${osRelease} sdk ${platformVersion}`
+      return `${osRelease} (sdk ${platformVersion})`
     }
 
     default:
-      return platform
+      return ""
   }
 }
 
