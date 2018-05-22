@@ -20,6 +20,7 @@ class UI {
   @observable showStateWatchDialog = false
   @observable showFilterTimelineDialog = false
   @observable showConnectionSelectionDialog = false
+  @observable statusBarExpanded = false
   @observable watchToAdd
   @observable actionToDispatch
   @observable showWatchPanel = false
@@ -334,6 +335,16 @@ class UI {
   @action
   closeConnectionSelectionDialog = () => {
     this.showConnectionSelectionDialog = false
+  }
+
+  @action
+  openStatusBar = () => {
+    this.statusBarExpanded = true
+  }
+
+  @action
+  closeStatusBar = () => {
+    this.statusBarExpanded = false
   }
 
   @action

@@ -17,6 +17,7 @@ import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
 import Timeline from "../Timeline/Timeline"
 import Sidebar from "./Sidebar"
+import StatusBar from "./StatusBar"
 
 const session = new SessionStore()
 
@@ -81,6 +82,7 @@ export default class App extends Component {
                 </div>
               </div>
             </div>
+            <StatusBar />
           </div>
           <StateKeysAndValuesDialog />
           <StateDispatchDialog />
