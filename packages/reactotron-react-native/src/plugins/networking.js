@@ -74,14 +74,30 @@ export default (pluginConfig = {}) => reactotron => {
       headers: xhr._headers || null
     }
 
-    // assemble the response object
-    let body = null
-
     // what type of content is this?
     const contentType =
       (xhr.responseHeaders && xhr.responseHeaders['content-type']) ||
       (xhr.responseHeaders && xhr.responseHeaders['Content-Type']) ||
       ''
+
+      let body = `~~~ skipped ~~~`
+      if (responseBodyText && responseBodyText.length) {
+        try {
+          // all i am saying, is give JSON a chance...
+          body = JSON.parse(responseBodyText)
+        } catch (boom) {
+          body = response
+        }
+      }
+      const tronResponse = {
+        body,
+        status,
+        headers: xhr.responseHeaders || null
+      }
+
+      // send this off to Reactotron
+      reactotron.apiResponse(tronRequest, tronResponse, stopTimer())
+    }
 
     // can we use the real response?
     const useRealResponse =
@@ -90,24 +106,18 @@ export default (pluginConfig = {}) => reactotron => {
 
     // prepare the right body to send
     if (useRealResponse) {
-      try {
-        // all i am saying, is give JSON a chance...
-        body = JSON.parse(response)
-      } catch (boom) {
-        body = response
+      if (type === 'blob' && typeof FileReader !== 'undefined') {
+        // Disable reason: FileReader should be in global scope since RN 0.54
+        // eslint-disable-next-line no-undef
+        const bReader = new FileReader()
+        bReader.addEventListener('loadend', () => sendResponse(bReader.result))
+        bReader.readAsText(response)
+      } else {
+        sendResponse(response)
       }
     } else {
-      body = `~~~ skipped ~~~`
+      sendResponse('')
     }
-
-    const tronResponse = {
-      body,
-      status,
-      headers: xhr.responseHeaders || null
-    }
-
-    // send this off to Reactotron
-    reactotron.apiResponse(tronRequest, tronResponse, stopTimer())
   }
 
   // register our monkey-patch
