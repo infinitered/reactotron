@@ -80,6 +80,7 @@ export default (pluginConfig = {}) => reactotron => {
       (xhr.responseHeaders && xhr.responseHeaders['Content-Type']) ||
       ''
 
+    const sendResponse = responseBodyText => {
       let body = `~~~ skipped ~~~`
       if (responseBodyText && responseBodyText.length) {
         try {
