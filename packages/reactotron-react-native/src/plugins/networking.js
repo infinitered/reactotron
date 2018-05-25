@@ -111,7 +111,11 @@ export default (pluginConfig = {}) => reactotron => {
         // Disable reason: FileReader should be in global scope since RN 0.54
         // eslint-disable-next-line no-undef
         const bReader = new FileReader()
-        bReader.addEventListener('loadend', () => sendResponse(bReader.result))
+        const brListener = () => {
+          sendResponse(bReader.result)
+          bReader.removeEventListener('loadend', brListener)
+        }
+        bReader.addEventListener('loadend', brListener)
         bReader.readAsText(response)
       } else {
         sendResponse(response)
