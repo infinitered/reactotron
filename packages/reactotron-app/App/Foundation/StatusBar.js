@@ -33,7 +33,6 @@ const Styles = {
     textAlign: "center",
   },
   connections: {
-    // ...AppStyles.Layout.hbox,
     display: "flex",
     overflowX: "auto",
     overflowY: "hidden",
@@ -63,7 +62,7 @@ class StatusBar extends Component {
   renderCollapsed() {
     const { session } = this.props
 
-    let selectedDevice = "None connected"
+    let selectedDevice = "Waiting for connection"
 
     if (session.selectedConnection) {
       selectedDevice = `${getPlatformName(session.selectedConnection)} ${getPlatformDetails(session.selectedConnection)}`
@@ -109,6 +108,8 @@ class StatusBar extends Component {
     const {
       session: { ui },
     } = this.props
+
+    console.log(this.props.session.connections)
 
     return (
       <div style={Styles.container}>

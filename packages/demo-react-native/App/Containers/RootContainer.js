@@ -9,7 +9,7 @@ import { Actions as LogoActions } from '../Redux/LogoRedux'
 import { Actions as StartupActions } from '../Redux/StartupRedux'
 import { Actions as ErrorActions } from '../Redux/ErrorRedux'
 import makeErrorForFun from '../Lib/ErrorMaker'
-import RNViewShot from 'react-native-view-shot'
+import { captureRef } from 'react-native-view-shot'
 import { getStorybookUI, configure } from '@storybook/react-native'
 
 class RootContainer extends Component {
@@ -45,7 +45,7 @@ class RootContainer extends Component {
   }
 
   handleScreenshot () {
-    RNViewShot.takeSnapshot(this.refs.foo, { result: 'data-uri' }).then(
+    captureRef(this.refs.foo, { result: 'data-uri' }).then(
       uri =>
         console.tron.display({ name: 'Screenshot', preview: 'App screenshot', image: { uri } }),
       error => console.tron.error('Oops, snapshot failed', error)

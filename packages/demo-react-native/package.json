@@ -18,9 +18,9 @@
     "mitt": "^1.1.2",
     "ramda": "^0.24.1",
     "ramdasauce": "^2.0.0",
-    "react": "16.0.0-alpha.12",
-    "react-native": "^0.46.0",
-    "react-native-view-shot": "^1.10.1",
+    "react": "16.4.0",
+    "react-native": "^0.55.4",
+    "react-native-view-shot": "^2.3.0",
     "react-redux": "^5.0.5",
     "reactotron-apisauce": "^2.0.0-beta.4",
     "reactotron-react-native": "^2.0.0-beta.4",
@@ -46,7 +46,7 @@
     "prettier": "^1.10.2",
     "prop-types": "^15.6.0",
     "react-dom": "16.0.0-alpha.12",
-    "react-test-renderer": "16.0.0-alpha.12",
+    "react-test-renderer": "16.4.0",
     "standard": "^10.0.3"
   },
   "jest": {
