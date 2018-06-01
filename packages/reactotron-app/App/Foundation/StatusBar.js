@@ -109,8 +109,6 @@ class StatusBar extends Component {
       session: { ui },
     } = this.props
 
-    console.log(this.props.session.connections)
-
     return (
       <div style={Styles.container}>
         {ui.statusBarExpanded ? this.renderExpanded() : this.renderCollapsed()}
