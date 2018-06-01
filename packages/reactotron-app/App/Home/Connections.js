@@ -1,7 +1,6 @@
 import { inject, observer } from "mobx-react"
 import React, { Component } from "react"
 import AppStyles from "../Theme/AppStyles"
-import ConnectionSelector from "./ConnectionSelector"
 import ConnectionCell from "./ConnectionCell"
 
 const Styles = {
