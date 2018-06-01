@@ -37,8 +37,8 @@ declare module "reactotron-react-native" {
   }
 
   export interface ReactotronUseReactNativeNetworking {
-    ignoreContentTypes?: RegExpConstructor
-    ignoreUrls?: RegExpConstructor
+    ignoreContentTypes?: RegExp
+    ignoreUrls?: RegExp
   }
 
   export interface ReactotronUseReactNativeEditor {
@@ -55,6 +55,18 @@ declare module "reactotron-react-native" {
     editor?: false | ReactotronUseReactNativeEditor
     errors?: false | ReactotronUseReactNativeErrors
     overlay?: false
+  }
+
+  export interface ReactotronBenchmark {
+    /**
+     * Completes a step of the benchmark and assigns a name.
+     */
+    step: (name?: string) => void
+    /**
+     * Finishes up the last step of the benchmark, assigns a name, and sends
+     * the results up to the Reactotron app.
+     */
+    stop: (name?: string) => void
   }
 
   export interface ReactotronCommand {
@@ -174,6 +186,13 @@ declare module "reactotron-react-native" {
      * @param error The error object.
      */
     reportError?(error: any): void
+
+    /**
+     * Starts a new benchmark.
+     * 
+     * @param title The name of the benchmark.
+     */
+    benchmark(title?: string): ReactotronBenchmark
   }
 
   var instance: Reactotron

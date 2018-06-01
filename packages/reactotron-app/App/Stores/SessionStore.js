@@ -5,6 +5,7 @@ import {
   equals,
   fromPairs,
   last,
+  head,
   map,
   path,
   pipe,
@@ -12,7 +13,7 @@ import {
   reject,
   test,
 } from "ramda"
-import { dotPath } from "ramdasauce"
+import { dotPath, isNilOrEmpty } from "ramdasauce"
 import { createServer } from "reactotron-core-server"
 import shallowDiff from "../Lib/ShallowDiff"
 import Commands from "../Lib/commands"
@@ -22,6 +23,7 @@ import UiStore from "./UiStore"
 const isSubscription = propEq("type", "state.values.change")
 const isSubscriptionCommandWithEmptyChanges = command =>
   isSubscription(command) && dotPath("payload.changes.length", command) === 0
+
 
 /**
  * Functions to check a command when searching.
@@ -51,32 +53,12 @@ class Session {
   commandsManager = new Commands()
 
   // holds the last known state of the subscription values
-  subscriptions = {}
+  subscriptions
 
   /**
    * Manages state backup persistence.
    */
   stateBackupStore
-
-  // checks if it was the exact same as last time
-  isSubscriptionValuesSameAsLastTime(command) {
-    if (!isSubscription(command)) return false
-    const rawChanges = command.payload ? command.payload.changes : []
-    const newSubscriptions = fromPairs(map(change => [change.path, change.value], rawChanges))
-    const isNew = !equals(this.subscriptions, newSubscriptions)
-
-    // 🚨🚨🚨 side effect alert 🚨🚨🚨
-    if (isNew) {
-      const diff = shallowDiff(this.subscriptions, newSubscriptions)
-      command.payload.changed = map(v => v.rightValue, diff.difference || [])
-      command.payload.added = diff.onlyOnRight || []
-      command.payload.removed = diff.onlyOnLeft || []
-      this.subscriptions = newSubscriptions
-    }
-    // 🚨🚨🚨 side effect alert 🚨🚨🚨
-
-    return !isNew
-  }
 
   /**
    * Should we reject this command when we are searching?
@@ -122,7 +104,6 @@ class Session {
       dotPath("commandsManager.all"),
       reject(this.rejectCommandsFromOtherConnections),
       reject(isSubscriptionCommandWithEmptyChanges),
-      reject(this.isSubscriptionValuesSameAsLastTime),
       reject(command => contains(command.type, this.commandsHiddenInTimeline)),
       reject(this.rejectCommandWhenSearching)
     )(this)
@@ -143,8 +124,9 @@ class Session {
       )
     }
 
-    const recentCommand = last(connectionsChangeCommands)
-    return dotPath("payload.changes", recentCommand) || []
+    const recentCommand = head(connectionsChangeCommands)
+    const latest = dotPath("payload.changes", recentCommand) || []
+    return latest
   }
 
   // are commands of this type hidden?
@@ -171,6 +153,33 @@ class Session {
     this.selectedConnection = connection
   }
 
+  rewriteChangesSinceLastStateSubscription = command => {
+    // get the list of changes
+    const rawChanges = command.payload ? command.payload.changes : []
+
+    // convert it to a map
+    const newSubscriptions = fromPairs(map(change => [change.path, change.value], rawChanges))
+
+    // if they're not identical
+    const isNew = this.subscriptions && !equals(this.subscriptions, newSubscriptions)
+
+    if (isNew) {
+      // calculate the difference between the two
+      const diff = shallowDiff(this.subscriptions, newSubscriptions)
+
+      // put these back on the payload of that message
+      command.payload.changed = map(v => v.rightValue, diff.difference || [])
+      command.payload.added = diff.onlyOnRight || []
+      command.payload.removed = diff.onlyOnLeft || []
+
+      // remember the most recent
+    }
+    this.subscriptions = newSubscriptions
+
+    return isNew
+  }
+
+  @action
   handleCommand = command => {
     if (command.type === "clear") {
       const newCommands = pipe(
@@ -189,9 +198,16 @@ class Session {
       )(this)
       this.customCommands.clear()
       this.customCommands.push(...newCustomCommands)
+    } else if (command.type === "state.values.change") {
+      const isNew = this.rewriteChangesSinceLastStateSubscription(command)
+      if (!isNew) {
+        return
+      }
     } else {
       this.commandsManager.addCommand(command)
     }
+
+    this.commandsManager.addCommand(command)
   }
 
   handleConnectionsChange = connection => {
@@ -216,8 +232,6 @@ class Session {
 
     this.stateBackupStore = new StateBackupStore(this.server)
     this.ui = new UiStore(this.server, this.commandsManager, this.stateBackupStore)
-
-    this.isSubscriptionValuesSameAsLastTime = this.isSubscriptionValuesSameAsLastTime.bind(this)
 
     // hide or show the watch panel depending if we have watches
     reaction(
