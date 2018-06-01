@@ -24,7 +24,6 @@ const isSubscription = propEq("type", "state.values.change")
 const isSubscriptionCommandWithEmptyChanges = command =>
   isSubscription(command) && dotPath("payload.changes.length", command) === 0
 
-
 /**
  * Functions to check a command when searching.
  */
@@ -49,6 +48,8 @@ class Session {
   // Selected Connection
   @observable selectedConnection = null
   @observable customCommands = []
+
+  port = 9090
 
   commandsManager = new Commands()
 
@@ -206,25 +207,26 @@ class Session {
     } else {
       this.commandsManager.addCommand(command)
     }
-
-    this.commandsManager.addCommand(command)
   }
 
   handleConnectionsChange = connection => {
-    // console.log(connection)
     this.connections.clear()
     this.connections.push(...this.server.connections)
 
-    if (
-      this.selectedConnection &&
-      !this.connections.find(c => c.id === this.selectedConnection.id)
-    ) {
+    if (this.connections.length === 0) {
       this.selectedConnection = null
+    } else if (
+      !this.selectedConnection ||
+      (this.selectedConnection && !this.connections.find(c => c.id === this.selectedConnection.id))
+    ) {
+      // If we don't have a connection OR if we do but its not in the list anymore select the first available one.
+      this.selectedConnection = this.connections[0]
     }
   }
 
   constructor(port = 9090) {
     this.server = createServer({ port })
+    this.port = port
 
     this.server.on("command", this.handleCommand)
     this.server.on("connectionEstablished", this.handleConnectionsChange)
