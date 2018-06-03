@@ -4,7 +4,7 @@
 export interface ClientOptions {
   /**
    * A function which returns a websocket.
-   * 
+   *
    * This is over-engineered because we need the ability to create different
    * types of websockets for React Native, React, and NodeJS.  :|
    */
@@ -37,12 +37,12 @@ export interface ClientOptions {
 
   /**
    * Performs safety checks when serializing.  Default: true.
-   * 
+   *
    * Will do things like:
    * - remap falsy values to transport-friendly version
    * - remove any circular dependencies
    * - remap functions to something that shows their name
-   * 
+   *
    * Hooray for JavaScript!
    */
   safeRecursion?: boolean
@@ -71,4 +71,14 @@ export interface ClientOptions {
    * A way for the client libraries to identify themselves.
    */
   client?: any
+
+  /**
+   * Save the client id provided by the server
+   */
+  setClientId?: (clientId) => Promise<void>
+
+  /**
+   * Get the client id provided by the server
+   */
+  getClientId?: () => Promise<string>
 }

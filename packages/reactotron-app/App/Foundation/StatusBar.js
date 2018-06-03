@@ -84,17 +84,17 @@ class StatusBar extends Component {
   renderExpanded() {
     const { session } = this.props
 
-    let selectedSessionId = -1
+    let selectedSessionId = ""
 
     if (session.selectedConnection) {
-      selectedSessionId = session.selectedConnection.id
+      selectedSessionId = session.selectedConnection.clientId
     }
 
     return (
       <div style={{ ...Styles.content, ...Styles.contentOpen }}>
         <div style={Styles.connections}>
           {session.connections.map(item => (
-            <DeviceSelector key={item.id} selectedDeviceId={selectedSessionId} device={item} onSelect={this.handleDeviceSelected} />
+            <DeviceSelector key={item.id} selectedDeviceClientId={selectedSessionId} device={item} onSelect={this.handleDeviceSelected} />
           ))}
         </div>
         <div style={Styles.expandIcon} onClick={this.handleCloseStatusBar}>

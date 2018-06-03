@@ -18,6 +18,15 @@ const DEFAULTS: ServerOptions = {
   port: 9090,
 }
 
+function createGuid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1)
+  }
+  return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4()
+}
+
 /**
  * The Reactotron server.
  */
@@ -158,6 +167,7 @@ export default class Server {
           messageId: this.messageId,
           date: extractOrCreateDate(message.date),
           deltaTime,
+          clientId: (socket as any).clientId,
         }
 
         // for client intros
@@ -174,10 +184,38 @@ export default class Server {
             this.partialConnections,
           ) as any
 
+          let connectionClientId = message.payload.clientId
+
+          if (!connectionClientId) {
+            connectionClientId = createGuid()
+
+            socket.send(JSON.stringify({
+              type: "setClientId",
+              payload: connectionClientId,
+            }))
+          } else {
+            // Check if we already have this connection
+            const currentWssConnections = Array.from(this.wss.clients)
+            const currentClientConnections = currentWssConnections.filter(c => (c as any).clientId === connectionClientId)
+
+            for (let i = 0; i < currentClientConnections.length; i++) {
+              setTimeout(currentClientConnections[i].close(), 500) // Defer this for a small amount of time because reasons.
+
+              const severingConnection = find(propEq("clientId", connectionClientId), this.connections)
+              if (severingConnection) {
+                this.connections = reject(propEq("clientId", severingConnection.clientId), this.connections)
+              }
+            }
+          }
+
+          (socket as any).clientId = connectionClientId
+          fullCommand.clientId = connectionClientId
+
           // bestow the payload onto the connection
           const connection = merge(payload, {
             id: thisConnectionId,
             address: partConn.address,
+            clientId: fullCommand.clientId,
           })
 
           // then trigger the connection

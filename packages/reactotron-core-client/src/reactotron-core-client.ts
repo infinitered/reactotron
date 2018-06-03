@@ -46,6 +46,10 @@ const reservedFeatures = [
 ]
 const isReservedFeature = (value: string) => reservedFeatures.some(res => res === value)
 
+function emptyPromise() {
+  return Promise.resolve("")
+}
+
 export interface CustomCommand {
   id: number
   command: string
@@ -136,6 +140,7 @@ export class Client {
       port,
       name,
       client = {},
+      getClientId,
     } = this.options
     const { onCommand, onConnect, onDisconnect } = this.options
 
@@ -150,21 +155,27 @@ export class Client {
 
       // trigger our plugins onConnect
       this.plugins.forEach(p => p.onConnect && p.onConnect())
-      this.isReady = true
-      // introduce ourselves
-      this.send("client.intro", {
-        environment,
-        ...client,
-        name,
-        "reactotronCoreClientVersion": "REACTOTRON_CORE_CLIENT_VERSION",
-      })
 
-      // flush the send queue
-      while (this.sendQueue.length > 0) {
-        const h = this.sendQueue[0]
-        this.sendQueue = this.sendQueue.slice(1)
-        this.socket.send(h)
-      }
+      const getClientIdPromise = getClientId ? getClientId : emptyPromise
+
+      getClientIdPromise().then(clientId => {
+        this.isReady = true
+        // introduce ourselves
+        this.send("client.intro", {
+          environment,
+          ...client,
+          name,
+          clientId,
+          "reactotronCoreClientVersion": "REACTOTRON_CORE_CLIENT_VERSION",
+        })
+
+        // flush the send queue
+        while (this.sendQueue.length > 0) {
+          const h = this.sendQueue[0]
+          this.sendQueue = this.sendQueue.slice(1)
+          this.socket.send(h)
+        }
+      })
     }
 
     // fires when we disconnect
@@ -189,6 +200,8 @@ export class Client {
       // trigger our registered custom commands
       if (command.type === "custom") {
         this.customCommands.filter(cc => cc.command === command.payload).forEach(cc => cc.handler())
+      } else if (command.type === "setClientId") {
+        this.options.setClientId && this.options.setClientId(command.payload)
       }
     }
 

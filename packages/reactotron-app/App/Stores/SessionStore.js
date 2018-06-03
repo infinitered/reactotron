@@ -96,7 +96,7 @@ class Session {
   rejectCommandsFromOtherConnections = command => {
     if (!this.selectedConnection) return false
 
-    return this.selectedConnection.id !== command.connectionId
+    return this.selectedConnection.clientId !== command.clientId
   }
 
   @computed
@@ -185,7 +185,7 @@ class Session {
     if (command.type === "clear") {
       const newCommands = pipe(
         dotPath("commandsManager.all"),
-        reject(c => c.connectionId === command.connectionId)
+        reject(c => c.clientId === command.clientId)
       )(this)
 
       this.commandsManager.all.clear()
@@ -195,7 +195,7 @@ class Session {
     } else if (command.type === "customCommand.unregister") {
       const newCustomCommands = pipe(
         dotPath("customCommands"),
-        reject(c => c.id === command.payload.id)
+        reject(c => c.clientId === command.payload.clientId)
       )(this)
       this.customCommands.clear()
       this.customCommands.push(...newCustomCommands)
@@ -217,7 +217,7 @@ class Session {
       this.selectedConnection = null
     } else if (
       !this.selectedConnection ||
-      (this.selectedConnection && !this.connections.find(c => c.id === this.selectedConnection.id))
+      (this.selectedConnection && !this.connections.find(c => c.clientId === this.selectedConnection.clientId))
     ) {
       // If we don't have a connection OR if we do but its not in the list anymore select the first available one.
       this.selectedConnection = this.connections[0]

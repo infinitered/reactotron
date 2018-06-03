@@ -19,7 +19,7 @@ class Connections extends Component {
     const { connections, selectedConnection } = this.props.session
 
     const cells = connections.map(connection => {
-      return <ConnectionCell key={`${connection.id}`} connection={connection} />
+      return <ConnectionCell key={connection.clientId} connection={connection} />
     })
 
     return <div style={Styles.container}>{cells}</div>

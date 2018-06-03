@@ -33,7 +33,7 @@ class DeviceSelector extends Component {
   }
 
   render() {
-    const { selectedDeviceId, device } = this.props
+    const { selectedDeviceClientId, device } = this.props
 
     const WhichIcon = getIcon(device)
 
@@ -41,7 +41,7 @@ class DeviceSelector extends Component {
       <div style={Styles.container} onClick={this.handleSelect}>
         <div style={Styles.iconContainer}>
           <WhichIcon size={ICON_SIZE} />
-          {selectedDeviceId === device.id && (
+          {selectedDeviceClientId === device.clientId && (
             <div style={Styles.checkmark}>
               <Checkmark />
             </div>

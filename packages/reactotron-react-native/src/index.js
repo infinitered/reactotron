@@ -6,7 +6,7 @@ import networking from "./plugins/networking"
 import storybook from "./plugins/storybook"
 import { createClient } from "reactotron-core-client"
 import getHost from "rn-host-detect"
-import { Platform, NativeModules } from "react-native"
+import { Platform, AsyncStorage, NativeModules } from "react-native"
 import getReactNativeVersion from "./get-react-native-version"
 import getReactNativeDimensions from "./get-react-native-dimensions"
 
@@ -18,6 +18,8 @@ export { trackGlobalErrors, openInEditor, overlay, asyncStorage, networking, sto
 // ---------------------
 // DEFAULT CONFIGURATION
 // ---------------------
+
+const REACTOTRON_ASYNC_CLIENT_ID = "@REACTOTRON/clientId"
 
 const DEFAULTS = {
   createSocket: path => new WebSocket(path), // eslint-disable-line
@@ -42,6 +44,12 @@ const DEFAULTS = {
     reactNativeVersion: getReactNativeVersion(),
     ...(getReactNativeDimensions())
   },
+  getClientId: async () => {
+    return AsyncStorage.getItem(REACTOTRON_ASYNC_CLIENT_ID);
+  },
+  setClientId: (clientId) => {
+    return AsyncStorage.setItem(REACTOTRON_ASYNC_CLIENT_ID, clientId);
+  }
 }
 
 // -----------
