@@ -190,8 +190,12 @@ class Session {
 
       this.commandsManager.all.clear()
       this.commandsManager.all.push(...newCommands)
+
+      return
     } else if (command.type === "customCommand.register") {
       this.customCommands.push(command.payload)
+
+      return
     } else if (command.type === "customCommand.unregister") {
       const newCustomCommands = pipe(
         dotPath("customCommands"),
@@ -199,14 +203,16 @@ class Session {
       )(this)
       this.customCommands.clear()
       this.customCommands.push(...newCustomCommands)
+
+      return
     } else if (command.type === "state.values.change") {
       const isNew = this.rewriteChangesSinceLastStateSubscription(command)
       if (!isNew) {
         return
       }
-    } else {
-      this.commandsManager.addCommand(command)
     }
+
+    this.commandsManager.addCommand(command)
   }
 
   handleConnectionsChange = connection => {
