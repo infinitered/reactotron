@@ -1,12 +1,12 @@
-import { Dimensions } from "react-native"
+import { Dimensions } from 'react-native'
 
 /**
  * Gets the react native version, if any, as a semver string.
  */
-export default function getReactNativeDimensions() {
+export default function getReactNativeDimensions () {
   try {
-    const screen = Dimensions.get("screen")
-    const win = Dimensions.get("window")
+    const screen = Dimensions.get('screen')
+    const win = Dimensions.get('window')
 
     return {
       screenWidth: screen.width,
@@ -16,7 +16,7 @@ export default function getReactNativeDimensions() {
       windowWidth: win.width,
       windowHeight: win.height,
       windowScale: win.scale,
-      windowFontScale: win.fontScale,
+      windowFontScale: win.fontScale
     }
   } catch (e) {}
 }

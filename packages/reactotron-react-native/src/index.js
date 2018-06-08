@@ -1,16 +1,15 @@
-import trackGlobalErrors from "./plugins/track-global-errors"
-import openInEditor from "./plugins/open-in-editor"
-import overlay from "./plugins/overlay"
-import asyncStorage from "./plugins/async-storage"
-import networking from "./plugins/networking"
-import storybook from "./plugins/storybook"
-import { createClient } from "reactotron-core-client"
-import getHost from "rn-host-detect"
-import { Platform, AsyncStorage, NativeModules } from "react-native"
-import getReactNativeVersion from "./get-react-native-version"
-import getReactNativeDimensions from "./get-react-native-dimensions"
+import trackGlobalErrors from './plugins/track-global-errors'
+import openInEditor from './plugins/open-in-editor'
+import overlay from './plugins/overlay'
+import asyncStorage from './plugins/async-storage'
+import networking from './plugins/networking'
+import storybook from './plugins/storybook'
+import { createClient } from 'reactotron-core-client'
+import getHost from 'rn-host-detect'
+import { Platform, AsyncStorage, NativeModules } from 'react-native'
+import getReactNativeVersion from './get-react-native-version'
+import getReactNativeDimensions from './get-react-native-dimensions'
 
-const deviceInfo = NativeModules.DeviceInfo || {}
 const constants = NativeModules.PlatformConstants || {}
 
 export { trackGlobalErrors, openInEditor, overlay, asyncStorage, networking, storybook }
@@ -19,17 +18,17 @@ export { trackGlobalErrors, openInEditor, overlay, asyncStorage, networking, sto
 // DEFAULT CONFIGURATION
 // ---------------------
 
-const REACTOTRON_ASYNC_CLIENT_ID = "@REACTOTRON/clientId"
+const REACTOTRON_ASYNC_CLIENT_ID = '@REACTOTRON/clientId'
 
 const DEFAULTS = {
   createSocket: path => new WebSocket(path), // eslint-disable-line
-  host: getHost("localhost"),
+  host: getHost('localhost'),
   port: 9090,
-  name: "React Native App",
-  environment: process.env.NODE_ENV || (__DEV__ ? "development" : "production"),
+  name: 'React Native App',
+  environment: process.env.NODE_ENV || (__DEV__ ? 'development' : 'production'),
   client: {
-    reactotronLibraryName: "reactotron-react-native",
-    reactotronLibraryVersion: "REACTOTRON_REACT_NATIVE_VERSION",
+    reactotronLibraryName: 'reactotron-react-native',
+    reactotronLibraryVersion: 'REACTOTRON_REACT_NATIVE_VERSION',
     platform: Platform.OS,
     platformVersion: Platform.Version,
     osRelease: constants.Release,
@@ -45,10 +44,10 @@ const DEFAULTS = {
     ...(getReactNativeDimensions())
   },
   getClientId: async () => {
-    return AsyncStorage.getItem(REACTOTRON_ASYNC_CLIENT_ID);
+    return AsyncStorage.getItem(REACTOTRON_ASYNC_CLIENT_ID)
   },
   setClientId: (clientId) => {
-    return AsyncStorage.setItem(REACTOTRON_ASYNC_CLIENT_ID, clientId);
+    return AsyncStorage.setItem(REACTOTRON_ASYNC_CLIENT_ID, clientId)
   }
 }
 
