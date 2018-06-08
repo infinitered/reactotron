@@ -24,7 +24,6 @@ const isSubscription = propEq("type", "state.values.change")
 const isSubscriptionCommandWithEmptyChanges = command =>
   isSubscription(command) && dotPath("payload.changes.length", command) === 0
 
-
 /**
  * Functions to check a command when searching.
  */
@@ -44,6 +43,13 @@ class Session {
   // commands to exlude in the timeline
   @observable
   commandsHiddenInTimeline = JSON.parse(localStorage.getItem("commandsHiddenInTimeline")) || []
+  // Connections
+  @observable connections = []
+  // Selected Connection
+  @observable selectedConnection = null
+  @observable customCommands = []
+
+  port = 9090
 
   commandsManager = new Commands()
 
@@ -87,10 +93,17 @@ class Session {
     return true
   }
 
+  rejectCommandsFromOtherConnections = command => {
+    if (!this.selectedConnection) return false
+
+    return this.selectedConnection.clientId !== command.clientId
+  }
+
   @computed
   get commands() {
     return pipe(
       dotPath("commandsManager.all"),
+      reject(this.rejectCommandsFromOtherConnections),
       reject(isSubscriptionCommandWithEmptyChanges),
       reject(command => contains(command.type, this.commandsHiddenInTimeline)),
       reject(this.rejectCommandWhenSearching)
@@ -100,7 +113,19 @@ class Session {
   @computed
   get watches() {
     const changeCommands = this.commandsManager.all.filter(c => c.type === "state.values.change")
-    const recentCommand = head(changeCommands)
+
+    let connectionsChangeCommands = null
+    if (this.connections.length < 2) {
+      connectionsChangeCommands = changeCommands
+    } else {
+      if (!this.selectedConnection) return [] // If we have > 1 connection and "All" is selected jet since what we will show won't be "all"
+      connectionsChangeCommands = reject(
+        c => c.connectionId === this.selectedConnection.id,
+        changeCommands
+      )
+    }
+
+    const recentCommand = head(connectionsChangeCommands)
     const latest = dotPath("payload.changes", recentCommand) || []
     return latest
   }
@@ -121,6 +146,12 @@ class Session {
     }
     localStorage.setItem("commandsHiddenInTimeline", JSON.stringify(this.commandsHiddenInTimeline))
     return !hidden
+  }
+
+  // Sets the selected connection
+  @action
+  setSelectedConnection(connection) {
+    this.selectedConnection = connection
   }
 
   rewriteChangesSinceLastStateSubscription = command => {
@@ -152,7 +183,27 @@ class Session {
   @action
   handleCommand = command => {
     if (command.type === "clear") {
+      const newCommands = pipe(
+        dotPath("commandsManager.all"),
+        reject(c => c.clientId === command.clientId)
+      )(this)
+
       this.commandsManager.all.clear()
+      this.commandsManager.all.push(...newCommands)
+
+      return
+    } else if (command.type === "customCommand.register") {
+      this.customCommands.push(command.payload)
+
+      return
+    } else if (command.type === "customCommand.unregister") {
+      const newCustomCommands = pipe(
+        dotPath("customCommands"),
+        reject(c => c.clientId === command.payload.clientId)
+      )(this)
+      this.customCommands.clear()
+      this.customCommands.push(...newCustomCommands)
+
       return
     } else if (command.type === "state.values.change") {
       const isNew = this.rewriteChangesSinceLastStateSubscription(command)
@@ -164,9 +215,28 @@ class Session {
     this.commandsManager.addCommand(command)
   }
 
+  handleConnectionsChange = connection => {
+    this.connections.clear()
+    this.connections.push(...this.server.connections)
+
+    if (this.connections.length === 0) {
+      this.selectedConnection = null
+    } else if (
+      !this.selectedConnection ||
+      (this.selectedConnection && !this.connections.find(c => c.clientId === this.selectedConnection.clientId))
+    ) {
+      // If we don't have a connection OR if we do but its not in the list anymore select the first available one.
+      this.selectedConnection = this.connections[0]
+    }
+  }
+
   constructor(port = 9090) {
     this.server = createServer({ port })
+    this.port = port
+
     this.server.on("command", this.handleCommand)
+    this.server.on("connectionEstablished", this.handleConnectionsChange)
+    this.server.on("disconnect", this.handleConnectionsChange)
 
     this.stateBackupStore = new StateBackupStore(this.server)
     this.ui = new UiStore(this.server, this.commandsManager, this.stateBackupStore)

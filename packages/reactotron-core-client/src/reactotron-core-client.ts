@@ -46,6 +46,16 @@ const reservedFeatures = [
 ]
 const isReservedFeature = (value: string) => reservedFeatures.some(res => res === value)
 
+function emptyPromise() {
+  return Promise.resolve("")
+}
+
+export interface CustomCommand {
+  id: number
+  command: string
+  handler: () => void
+}
+
 export class Client {
   // the configuration options
   options: ClientOptions = Object.assign({}, DEFAULT_OPTIONS)
@@ -81,6 +91,16 @@ export class Client {
   lastMessageDate = new Date()
 
   /**
+   * The registered custom commands
+   */
+  customCommands: CustomCommand[] = []
+
+  /**
+   * The current ID for custom commands
+   */
+  customCommandLatestId: number = 1
+
+  /**
    * Starts a timer and returns a function you can call to stop it and return the elapsed time.
    */
   startTimer = () => start()
@@ -102,6 +122,11 @@ export class Client {
     return this
   }
 
+  close() {
+    this.connected = false
+    this.socket && this.socket.close && this.socket.close()
+  }
+
   /**
    * Connect to the Reactotron server.
    */
@@ -111,11 +136,11 @@ export class Client {
       createSocket,
       secure,
       host,
+      environment,
       port,
       name,
-      userAgent,
-      environment,
-      reactotronVersion,
+      client = {},
+      getClientId,
     } = this.options
     const { onCommand, onConnect, onDisconnect } = this.options
 
@@ -130,16 +155,27 @@ export class Client {
 
       // trigger our plugins onConnect
       this.plugins.forEach(p => p.onConnect && p.onConnect())
-      this.isReady = true
-      // introduce ourselves
-      this.send("client.intro", { host, port, name, userAgent, reactotronVersion, environment })
 
-      // flush the send queue
-      while (this.sendQueue.length > 0) {
-        const h = this.sendQueue[0]
-        this.sendQueue = this.sendQueue.slice(1)
-        this.socket.send(h)
-      }
+      const getClientIdPromise = getClientId ? getClientId : emptyPromise
+
+      getClientIdPromise().then(clientId => {
+        this.isReady = true
+        // introduce ourselves
+        this.send("client.intro", {
+          environment,
+          ...client,
+          name,
+          clientId,
+          "reactotronCoreClientVersion": "REACTOTRON_CORE_CLIENT_VERSION",
+        })
+
+        // flush the send queue
+        while (this.sendQueue.length > 0) {
+          const h = this.sendQueue[0]
+          this.sendQueue = this.sendQueue.slice(1)
+          this.socket.send(h)
+        }
+      })
     }
 
     // fires when we disconnect
@@ -160,6 +196,13 @@ export class Client {
 
       // trigger our plugins onCommand
       this.plugins.forEach(p => p.onCommand && p.onCommand(command))
+
+      // trigger our registered custom commands
+      if (command.type === "custom") {
+        this.customCommands.filter(cc => cc.command === command.payload).forEach(cc => cc.handler())
+      } else if (command.type === "setClientId") {
+        this.options.setClientId && this.options.setClientId(command.payload)
+      }
     }
 
     // this is ws style from require('ws') on node js
@@ -294,10 +337,36 @@ export class Client {
     // chain-friendly
     return this
   }
+
+  onCustomCommand(command: string, handler: () => void): () => void {
+    // Create this command handlers object
+    const customHandler: CustomCommand = {
+      id: this.customCommandLatestId,
+      command,
+      handler,
+    }
+
+    // Increment our id counter
+    this.customCommandLatestId += 1
+
+    // Add it to our array
+    this.customCommands.push(customHandler)
+
+    this.send("customCommand.register", { id: customHandler.id, command: customHandler.command })
+
+    return () => {
+      this.customCommands = this.customCommands.filter(cc => cc.id !== customHandler.id)
+
+      this.send("customCommand.unregister", {
+        id: customHandler.id,
+        command: customHandler.command,
+      })
+    }
+  }
 }
 
 // convenience factory function
-export const createClient = (options?: ClientOptions) => {
+export function createClient (options?: ClientOptions) {
   const client = new Client()
   client.configure(options)
   return client

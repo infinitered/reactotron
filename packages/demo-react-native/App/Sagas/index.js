@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest } from 'redux-saga'
+import { all, takeEvery, takeLatest } from 'redux-saga/effects'
 import * as Startup from '../Redux/StartupRedux'
 import * as Repo from '../Redux/RepoRedux'
 import * as Error from '../Redux/ErrorRedux'
@@ -19,10 +19,10 @@ const api = ApiSauce.create({
 // api.addMonitor(console.tron.apisauce)
 
 export default function * rootSaga () {
-  yield [
+  yield all([
     takeEvery(Startup.Types.Startup, startup),
     takeLatest(Repo.Types.Request, requestRepo, api),
     takeEvery(Error.Types.Saga, sagaError),
     takeEvery(Error.Types.Put, putError)
-  ]
+  ])
 }

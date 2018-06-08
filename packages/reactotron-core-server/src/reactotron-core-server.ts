@@ -18,6 +18,15 @@ const DEFAULTS: ServerOptions = {
   port: 9090,
 }
 
+function createGuid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1)
+  }
+  return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4()
+}
+
 /**
  * The Reactotron server.
  */
@@ -36,6 +45,11 @@ export default class Server {
    * A unique id which is assigned to each inbound message.
    */
   messageId = 0
+
+  /**
+   * A unique id which is assigned to each inbound connection.
+   */
+  connectionId = 0
 
   /**
    * Which redux state locations we are subscribing to.
@@ -98,9 +112,11 @@ export default class Server {
 
     // register events
     this.wss.on("connection", (socket, request) => {
+      const thisConnectionId = this.connectionId++
+
       // a wild client appears
       const partialConnection = {
-        id: (socket as any).id, // issue
+        id: thisConnectionId,
         address: request.socket.remoteAddress,
         socket,
       }
@@ -112,17 +128,17 @@ export default class Server {
       this.emitter.emit("connect", partialConnection)
 
       // when this client disconnects
-      socket.on("disconnect", () => {
+      socket.on("close", () => {
         // remove them from the list partial list
         this.partialConnections = reject(
-          propEq("id", (socket as any).id),
+          propEq("id", thisConnectionId),
           this.partialConnections,
         ) as any
 
         // remove them from the main connections list
-        const severingConnection = find(propEq("id", (socket as any).id), this.connections)
+        const severingConnection = find(propEq("id", thisConnectionId), this.connections)
         if (severingConnection) {
-          (this.connections as any).remove(severingConnection)
+          this.connections = reject(propEq("id", severingConnection.id), this.connections)
           this.emitter.emit("disconnect", severingConnection)
         }
       })
@@ -147,33 +163,64 @@ export default class Server {
           type,
           important,
           payload,
+          connectionId: thisConnectionId,
           messageId: this.messageId,
           date: extractOrCreateDate(message.date),
           deltaTime,
+          clientId: (socket as any).clientId,
         }
 
         // for client intros
         if (type === "client.intro") {
           // find them in the partial connection list
-          const partConn = find(propEq("id", (socket as any).id), this.partialConnections) as any
+          const partConn = find(propEq("id", thisConnectionId), this.partialConnections) as any
 
           // add their address in
           fullCommand.payload.address = partConn.address
 
           // remove them from the partial connections list
           this.partialConnections = reject(
-            propEq("id", (socket as any).id),
+            propEq("id", thisConnectionId),
             this.partialConnections,
           ) as any
 
+          let connectionClientId = message.payload.clientId
+
+          if (!connectionClientId) {
+            connectionClientId = createGuid()
+
+            socket.send(JSON.stringify({
+              type: "setClientId",
+              payload: connectionClientId,
+            }))
+          } else {
+            // Check if we already have this connection
+            const currentWssConnections = Array.from(this.wss.clients)
+            const currentClientConnections = currentWssConnections.filter(c => (c as any).clientId === connectionClientId)
+
+            for (let i = 0; i < currentClientConnections.length; i++) {
+              setTimeout(currentClientConnections[i].close(), 500) // Defer this for a small amount of time because reasons.
+
+              const severingConnection = find(propEq("clientId", connectionClientId), this.connections)
+              if (severingConnection) {
+                this.connections = reject(propEq("clientId", severingConnection.clientId), this.connections)
+              }
+            }
+          }
+
+          (socket as any).clientId = connectionClientId
+          fullCommand.clientId = connectionClientId
+
           // bestow the payload onto the connection
           const connection = merge(payload, {
-            id: (socket as any).id,
+            id: thisConnectionId,
             address: partConn.address,
+            clientId: fullCommand.clientId,
           })
 
           // then trigger the connection
           this.connections.push(connection)
+          this.emitter.emit("connectionEstablished", connection)
         }
 
         // refresh subscriptions

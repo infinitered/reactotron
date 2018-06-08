@@ -5,7 +5,6 @@ import Colors from '../Theme/Colors'
 const Styles = {
   container: {
     color: Colors.background,
-    textTransform: 'uppercase',
     borderRadius: 4,
     backgroundColor: Colors.foreground,
     padding: '4px 12px',

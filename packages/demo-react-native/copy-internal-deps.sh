@@ -19,19 +19,19 @@ rm -f node_modules/reactotron-core-client
 rm -f node_modules/reactotron-redux
 rm -f node_modules/reactotron-apisauce
 
-# reactotron-react-native
-cd ../reactotron-react-native
-yarn run build
-cd ../demo-react-native
-mkdir -p ./node_modules/reactotron-react-native
-cp ../reactotron-react-native/dist/index.js ./node_modules/reactotron-react-native/index.js
-
 # reactotron-core-client
 cd ../reactotron-core-client
 yarn run build
 cd ../demo-react-native
 mkdir -p ./node_modules/reactotron-react-native/node_modules/reactotron-core-client
 cp ../reactotron-core-client/dist/reactotron-core-client.js ./node_modules/reactotron-react-native/node_modules/reactotron-core-client/index.js
+
+# reactotron-react-native
+cd ../reactotron-react-native
+yarn run build
+cd ../demo-react-native
+mkdir -p ./node_modules/reactotron-react-native
+cp ../reactotron-react-native/dist/index.js ./node_modules/reactotron-react-native/index.js
 
 # reactotron-redux
 cd ../reactotron-redux
