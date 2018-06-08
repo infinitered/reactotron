@@ -1,6 +1,6 @@
 {
   "name": "demoreactnative",
-  "version": "0.0.1",
+  "version": "2.0.0-beta.4",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
