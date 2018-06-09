@@ -271,7 +271,7 @@ export default class Server {
    */
   send = (type, payload, clientId?) => {
     this.wss.clients.forEach(client => {
-      if (client.readyState === OPEN && !clientId || ((client as any).clientId === clientId)) {
+      if (client.readyState === OPEN && (!clientId || (client as any).clientId === clientId)) {
         client.send(JSON.stringify({ type, payload }))
       }
     })
