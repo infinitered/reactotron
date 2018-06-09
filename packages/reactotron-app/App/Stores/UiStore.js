@@ -367,7 +367,6 @@ class UI {
 
   @action
   sendCustomMessage = value => {
-    console.log(this.getSelectedConnection())
     const selectedConnection = this.getSelectedConnection()
 
     if (!selectedConnection) return
