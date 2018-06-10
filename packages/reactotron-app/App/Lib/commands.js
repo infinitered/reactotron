@@ -47,7 +47,6 @@ class Commands {
    * Clear commands for a clientId
    */
   clearClientsCommands(clientId) {
-    debugger
     const newCommands = pipe(
       dotPath("all"),
       reject(c => c.clientId === clientId)
