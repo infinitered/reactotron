@@ -187,13 +187,7 @@ class Session {
   @action
   handleCommand = command => {
     if (command.type === "clear") {
-      const newCommands = pipe(
-        dotPath("commandsManager.all"),
-        reject(c => c.clientId === command.clientId)
-      )(this)
-
-      this.commandsManager.all.clear()
-      this.commandsManager.all.push(...newCommands)
+      this.commandsManager.clearClientsCommands(command.clientId)
 
       return
     } else if (command.type === "customCommand.register") {
