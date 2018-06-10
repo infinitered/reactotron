@@ -28,4 +28,6 @@ if (__DEV__) {
   Reactotron.clear()
 }
 
+Reactotron.onCustomCommand('test', () => console.tron.log('This is an example'))
+
 console.tron = Reactotron

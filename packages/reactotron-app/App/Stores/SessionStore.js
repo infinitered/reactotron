@@ -154,6 +154,10 @@ class Session {
     this.selectedConnection = connection
   }
 
+  getSelectedConnection = () => {
+    return this.selectedConnection
+  }
+
   rewriteChangesSinceLastStateSubscription = command => {
     // get the list of changes
     const rawChanges = command.payload ? command.payload.changes : []
@@ -239,7 +243,7 @@ class Session {
     this.server.on("disconnect", this.handleConnectionsChange)
 
     this.stateBackupStore = new StateBackupStore(this.server)
-    this.ui = new UiStore(this.server, this.commandsManager, this.stateBackupStore)
+    this.ui = new UiStore(this.server, this.commandsManager, this.stateBackupStore, this.getSelectedConnection)
 
     // hide or show the watch panel depending if we have watches
     reaction(

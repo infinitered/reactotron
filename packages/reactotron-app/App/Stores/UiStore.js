@@ -35,10 +35,11 @@ class UI {
   // from the command toolbar to the command
   commandProperties = {}
 
-  constructor(server, commandsManager, stateBackupStore) {
+  constructor(server, commandsManager, stateBackupStore, getSelectedConnection) {
     this.server = server
     this.commandsManager = commandsManager
     this.stateBackupStore = stateBackupStore
+    this.getSelectedConnection = getSelectedConnection
 
     Mousetrap.prototype.stopCallback = () => false
 
@@ -366,7 +367,11 @@ class UI {
 
   @action
   sendCustomMessage = value => {
-    this.server.sendCustomMessage(value)
+    const selectedConnection = this.getSelectedConnection()
+
+    if (!selectedConnection) return
+
+    this.server.sendCustomMessage(value, selectedConnection.clientId)
   }
 
   @action

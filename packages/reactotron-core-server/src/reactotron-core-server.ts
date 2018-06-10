@@ -269,9 +269,9 @@ export default class Server {
   /**
    * Sends a command to the client
    */
-  send = (type, payload) => {
+  send = (type, payload, clientId?) => {
     this.wss.clients.forEach(client => {
-      if (client.readyState === OPEN) {
+      if (client.readyState === OPEN && (!clientId || (client as any).clientId === clientId)) {
         client.send(JSON.stringify({ type, payload }))
       }
     })
@@ -324,8 +324,8 @@ export default class Server {
    *
    * @param {string} value The string to send
    */
-  sendCustomMessage(value) {
-    this.send("custom", value)
+  sendCustomMessage(value, clientId?) {
+    this.send("custom", value, clientId)
   }
 }
 
