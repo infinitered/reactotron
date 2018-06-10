@@ -135,6 +135,19 @@ class Session {
     return contains(commandType, this.commandsHiddenInTimeline)
   }
 
+  // set whether a command type is to be ignored or not
+  @action
+  setCommandVisibility(commandType, visibility) {
+    const hidden = this.isCommandHidden(commandType)
+    if (hidden && visibility) {
+      this.commandsHiddenInTimeline.remove(commandType)
+    } else if (!hidden && !visibility) {
+      this.commandsHiddenInTimeline.push(commandType)
+    }
+    localStorage.setItem("commandsHiddenInTimeline", JSON.stringify(this.commandsHiddenInTimeline))
+    return !hidden
+  }
+
   // toggles whether a command type is to be ignored or not
   @action
   toggleCommandVisibility(commandType) {

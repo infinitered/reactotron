@@ -51,6 +51,10 @@ export default {
   header: {
     ...Layout.vbox,
     padding: "1em 2em 0em",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   body: {
     ...Layout.vbox,

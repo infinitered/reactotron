@@ -5,6 +5,8 @@ import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
 import Checkbox from "../Shared/Checkbox"
 
+const CHECK_ALL = "Check all"
+const UNCHECK_ALL = "Uncheck all"
 const ESCAPE_HINT = "Close"
 const ESCAPE_KEYSTROKE = "ESC"
 const DIALOG_TITLE = "Timeline Filter"
@@ -65,11 +67,24 @@ const Styles = {
     paddingBottom: 4,
     paddingRight: 10,
   },
+  checkButton: {
+    cursor: "pointer",
+    color: Colors.tag,
+  },
 }
 
 @inject("session")
 @observer
 class FilterTimelineDialog extends React.Component {
+  setAllVisibility = visibility => () => {
+    const { session } = this.props
+    const groups = GROUPS.map(opt => {
+      const options = opt.items.map(itm => {
+        session.setCommandVisibility(itm.value, visibility)
+      })
+    })
+  }
+
   render() {
     const { session } = this.props
     const { ui } = session
@@ -103,6 +118,15 @@ class FilterTimelineDialog extends React.Component {
         <div style={AppStyles.Modal.container}>
           <div style={AppStyles.Modal.header}>
             <h1 style={AppStyles.Modal.title}>{DIALOG_TITLE}</h1>
+            <div>
+              <span style={Styles.checkButton} onClick={this.setAllVisibility(true)}>
+                {CHECK_ALL}
+              </span>
+              <span> / </span>
+              <span style={Styles.checkButton} onClick={this.setAllVisibility(false)}>
+                {UNCHECK_ALL}
+              </span>
+            </div>
           </div>
           <div style={AppStyles.Modal.body}>{groups}</div>
           <div style={AppStyles.Modal.keystrokes}>
