@@ -9,8 +9,8 @@ export default function getReactNativeDimensions () {
     const win = Dimensions.get('window')
 
     return {
-      screenWidth: screen.width,
-      screenHeight: screen.height,
+      screenWidth: Math.ceil(screen.width),
+      screenHeight: Math.ceil(screen.height),
       screenScale: screen.scale,
       screenFontScale: screen.fontScale,
       windowWidth: win.width,
