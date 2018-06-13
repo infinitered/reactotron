@@ -36,7 +36,6 @@ const COMMON_MATCHING_PATHS = [
   path(["payload", "triggerType"]),
   path(["payload", "description"]),
   path(["payload", "request", "url"]),
-  path(["payload", "request", "url"]),
 ]
 
 class Session {
@@ -247,6 +246,10 @@ class Session {
 
     this.server.on("command", this.handleCommand)
     this.server.on("connectionEstablished", this.handleConnectionsChange)
+
+    // resend the storybook state to newly arriving connections
+    this.server.on("connectionEstablished", connection => this.ui.sendStorybookState(connection.clientId))
+
     this.server.on("disconnect", this.handleConnectionsChange)
 
     this.stateBackupStore = new StateBackupStore(this.server)

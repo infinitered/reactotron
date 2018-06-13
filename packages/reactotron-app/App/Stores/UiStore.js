@@ -435,19 +435,33 @@ class UI {
     this.server.send("storybook", this.isStorybookShown)
   }
 
+  /**
+   * Turn on storybook for the current client.
+   */
   @action
   enableStorybook = () => {
     if (this.isStorybookShown) return
     this.isStorybookShown = true
-    this.server.send("storybook", this.isStorybookShown)
+    this.sendStorybookState()
   }
 
+  /**
+   * Turn off storybook for the current client.
+   */
   @action
   disableStorybook = () => {
     if (!this.isStorybookShown) return
     this.isStorybookShown = false
-    this.server.send("storybook", this.isStorybookShown)
+    this.sendStorybookState()
   }
+
+  /**
+   * Sends the current storybook state to the app.
+   */
+  sendStorybookState = clientId => {
+    this.server.send("storybook", this.isStorybookShown, clientId)
+  }
+
 }
 
 export default UI
