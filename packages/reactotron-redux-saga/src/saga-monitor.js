@@ -13,6 +13,7 @@ import {
   CANCELLED
 } from './saga-constants'
 import {
+  contains,
   reject,
   values,
   pluck,
@@ -28,9 +29,11 @@ import {
 // import { reject, values, pluck, isNil, split, pathOr, last, forEach, propEq, filter, __, map, omit } from 'ramda'
 
 // creates a saga monitor
-export default (reactotron, options) => {
+export default (reactotron, options, pluginConfig = {}) => {
   // a lookup table of effects - keys are numbers, values are objects
   let effects = {}
+
+  const exceptions = pluginConfig.except || []
 
   // filtering that effect table
   const byParentId = propEq('parentEffectId', __)
@@ -157,13 +160,15 @@ export default (reactotron, options) => {
       forEach(effectId => buildChild(0, effectId), xs)
     }
 
-    reactotron.send('saga.task.complete', {
-      triggerType: triggerType || effectInfo.description,
-      description: sagaDescription,
-      duration: Math.round(duration),
-      children
-    })
-
+    // saga not blacklisted?
+    if (!contains(effectInfo.description, exceptions)) {
+      reactotron.send('saga.task.complete', {
+        triggerType: triggerType || effectInfo.description,
+        description: sagaDescription,
+        duration: Math.round(duration),
+        children
+      })
+    }
     // effects = omit(map(String, pluck('effectId', children)), effects)
   }
 
