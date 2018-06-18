@@ -1,36 +1,36 @@
 /**
  * Provides async storage information to Reactotron
  */
-import { AsyncStorage } from "react-native"
+import { AsyncStorage } from 'react-native'
 
 // defaults
 const PLUGIN_DEFAULTS = {
-  ignore: [],
+  ignore: []
 }
 
 // our plugin entry point
 export default options => reactotron => {
   // setup configuration
   const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
-  const ignore = config["ignore"] || PLUGIN_DEFAULTS.ignore
+  const ignore = config['ignore'] || PLUGIN_DEFAULTS.ignore
 
-  let swizzSetItem = undefined
-  let swizzRemoveItem = undefined
-  let swizzMergeItem = undefined
-  let swizzClear = undefined
-  let swizzMultiSet = undefined
-  let swizzMultiRemove = undefined
-  let swizzMultiMerge = undefined
+  let swizzSetItem
+  let swizzRemoveItem
+  let swizzMergeItem
+  let swizzClear
+  let swizzMultiSet
+  let swizzMultiRemove
+  let swizzMultiMerge
   let isSwizzled = false
 
   const sendToReactotron = (action, data) => {
-    reactotron.send("asyncStorage.mutation", { action, data })
+    reactotron.send('asyncStorage.mutation', { action, data })
   }
 
   const setItem = async (key, value, callback) => {
     try {
       if (ignore.indexOf(key) < 0) {
-        sendToReactotron("setItem", { key, value })
+        sendToReactotron('setItem', { key, value })
       }
     } catch (e) {}
     return swizzSetItem(key, value, callback)
@@ -39,7 +39,7 @@ export default options => reactotron => {
   const removeItem = async (key, callback) => {
     try {
       if (ignore.indexOf(key) < 0) {
-        sendToReactotron("removeItem", { key })
+        sendToReactotron('removeItem', { key })
       }
     } catch (e) {}
     return swizzRemoveItem(key, callback)
@@ -48,7 +48,7 @@ export default options => reactotron => {
   const mergeItem = async (key, value, callback) => {
     try {
       if (ignore.indexOf(key) < 0) {
-        sendToReactotron("mergeItem", { key, value })
+        sendToReactotron('mergeItem', { key, value })
       }
     } catch (e) {}
     return swizzMergeItem(key, value, callback)
@@ -56,7 +56,7 @@ export default options => reactotron => {
 
   const clear = async callback => {
     try {
-      sendToReactotron("clear")
+      sendToReactotron('clear')
     } catch (e) {}
     return swizzClear(callback)
   }
@@ -67,7 +67,7 @@ export default options => reactotron => {
         pair => pair && pair[0] && ignore.indexOf(pair[0]) < 0
       )
       if (shippablePairs.length > 0) {
-        sendToReactotron("multiSet", { pairs: shippablePairs })
+        sendToReactotron('multiSet', { pairs: shippablePairs })
       }
     } catch (e) {}
     return swizzMultiSet(pairs, callback)
@@ -77,7 +77,7 @@ export default options => reactotron => {
     try {
       const shippableKeys = (keys || []).filter(key => ignore.indexOf(key) < 0)
       if (shippableKeys.length > 0) {
-        sendToReactotron("multiRemove", { keys: shippableKeys })
+        sendToReactotron('multiRemove', { keys: shippableKeys })
       }
     } catch (e) {}
     return swizzMultiRemove(keys, callback)
@@ -89,7 +89,7 @@ export default options => reactotron => {
         pair => pair && pair[0] && ignore.indexOf(pair[0]) < 0
       )
       if (shippablePairs.length > 0) {
-        sendToReactotron("multiMerge", { pairs: shippablePairs })
+        sendToReactotron('multiMerge', { pairs: shippablePairs })
       }
     } catch (e) {}
     return swizzMultiMerge(pairs, callback)
@@ -145,7 +145,7 @@ export default options => reactotron => {
   return {
     features: {
       trackAsyncStorage,
-      untrackAsyncStorage,
-    },
+      untrackAsyncStorage
+    }
   }
 }
