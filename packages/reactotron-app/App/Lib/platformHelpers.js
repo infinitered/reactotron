@@ -28,7 +28,11 @@ export function getPlatformDetails(connection) {
     }
 
     case "android": {
-      return `${osRelease} (sdk ${platformVersion})`
+      if (osRelease) {
+        return `${osRelease || ""} (sdk ${platformVersion})`
+      } else {
+        return `sdk ${platformVersion}`
+      }
     }
 
     case "browser": {
@@ -48,7 +52,7 @@ export function getScreen(connection) {
   const { windowWidth, windowHeight, screenScale } = connection
 
   if (windowWidth && windowHeight && screenScale) {
-    return `${windowWidth} x ${windowHeight} @${screenScale}x`
+    return `${windowWidth} x ${windowHeight} @ ${screenScale}x`
   }
 }
 
