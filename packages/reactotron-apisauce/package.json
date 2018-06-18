@@ -1,6 +1,6 @@
 {
   "name": "reactotron-apisauce",
-  "version": "2.0.0-beta.8",
+  "version": "2.0.0-beta.9",
   "description": "A Reactotron plugin for Apisauce.",
   "main": "dist/index.js",
   "scripts": {
@@ -53,6 +53,6 @@
   },
   "dependencies": {
     "apisauce": "^0.14.3",
-    "reactotron-core-client": "^2.0.0-beta.8"
+    "reactotron-core-client": "^2.0.0-beta.9"
   }
 }

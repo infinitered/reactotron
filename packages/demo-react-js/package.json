@@ -1,16 +1,16 @@
 {
   "name": "demo-react-js",
-  "version": "2.0.0-beta.8",
+  "version": "2.0.0-beta.9",
   "private": true,
   "devDependencies": {
     "babel-eslint": "^8.2.1",
     "prettier": "^1.10.2",
     "react-scripts": "^0.9.5",
-    "reactotron-apisauce": "^2.0.0-beta.8",
-    "reactotron-core-client": "^2.0.0-beta.8",
-    "reactotron-react-js": "^2.0.0-beta.8",
-    "reactotron-redux": "^2.0.0-beta.8",
-    "reactotron-redux-saga": "^2.0.0-beta.8",
+    "reactotron-apisauce": "^2.0.0-beta.9",
+    "reactotron-core-client": "^2.0.0-beta.9",
+    "reactotron-react-js": "^2.0.0-beta.9",
+    "reactotron-redux": "^2.0.0-beta.9",
+    "reactotron-redux-saga": "^2.0.0-beta.9",
     "stacktrace-js": "^1.3.1",
     "standard": "^10.0.3"
   },
