@@ -1,96 +1,126 @@
 /**
  * Provides async storage information to Reactotron
  */
-import { AsyncStorage } from 'react-native'
+import { AsyncStorage } from "react-native"
 
 // defaults
 const PLUGIN_DEFAULTS = {
-  ignore: []
+  ignore: [],
 }
 
 // our plugin entry point
 export default options => reactotron => {
   // setup configuration
   const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
-  const ignore = config['ignore'] || []
+  const ignore = config["ignore"] || PLUGIN_DEFAULTS.ignore
 
-  let swizzSetItem = null
-  let swizzRemoveItem = null
-  let swizzMergeItem = null
-  let swizzClear = null
-  let swizzMultiSet = null
-  let swizzMultiRemove = null
-  let swizzMultiMerge = null
+  let swizzSetItem = undefined
+  let swizzRemoveItem = undefined
+  let swizzMergeItem = undefined
+  let swizzClear = undefined
+  let swizzMultiSet = undefined
+  let swizzMultiRemove = undefined
+  let swizzMultiMerge = undefined
   let isSwizzled = false
 
-  /**
-   * Sends the contents of AsyncStorage to Reactotron.
-   */
-  const reactotronShipStorageValues = (methodName, args) => {
-    AsyncStorage.getAllKeys((_, keys) =>
-      AsyncStorage.multiGet(keys, (_, values = []) => {
-        const valuesToSend = values.filter(item => ignore.some(ig => ig === item[0]))
-        // NOTE(steve): for now let's ship everything... until we get a UI in place
-        // to make request/response calls
-        let previewArgs = ''
-        if (args && args.length > 1) {
-          previewArgs = Array.isArray(args[0]) ? `Array: ${args[0].length}` : args[0]
-        }
-        const preview = methodName ? `${methodName}(${previewArgs})` : ''
-        reactotron.send('asyncStorage.values.change', { preview, value: valuesToSend })
-      })
-    )
+  const sendToReactotron = (action, data) => {
+    reactotron.send("asyncStorage.mutation", { action, data })
   }
 
-  /**
-   * Swizzles one of the AsyncStorage public api functions.
-   *
-   * @param {function} originalMethod - The original function to override.
-   * @param {string} methodName - The original method name we are overriding.
-   */
-  const reactotronStorageHijacker = (originalMethod, methodName) => (...args) => {
-    // Depending on the call we could have the callback in one of any of the three args, walk backwards till we find the callback
-    let oldCallback = args.length > 0 ? args[args.length - 1] : null
-
-    if (typeof oldCallback !== 'function') {
-      oldCallback = () => {}
-      args.push(oldCallback)
-    }
-
-    const newArgs = [
-      ...args.slice(0, args.length - 1),
-      (...cbArgs) => {
-        reactotronShipStorageValues(methodName, args)
-        oldCallback(...cbArgs)
+  const setItem = async (key, value, callback) => {
+    try {
+      if (ignore.indexOf(key) < 0) {
+        sendToReactotron("setItem", { key, value })
       }
-    ]
-
-    return originalMethod(...newArgs)
+    } catch (e) {}
+    return swizzSetItem(key, value, callback)
   }
 
+  const removeItem = async (key, callback) => {
+    try {
+      if (ignore.indexOf(key) < 0) {
+        sendToReactotron("removeItem", { key })
+      }
+    } catch (e) {}
+    return swizzRemoveItem(key, callback)
+  }
+
+  const mergeItem = async (key, value, callback) => {
+    try {
+      if (ignore.indexOf(key) < 0) {
+        sendToReactotron("mergeItem", { key, value })
+      }
+    } catch (e) {}
+    return swizzMergeItem(key, value, callback)
+  }
+
+  const clear = async callback => {
+    try {
+      sendToReactotron("clear")
+    } catch (e) {}
+    return swizzClear(callback)
+  }
+
+  const multiSet = async (pairs, callback) => {
+    try {
+      const shippablePairs = (pairs || []).filter(
+        pair => pair && pair[0] && ignore.indexOf(pair[0]) < 0
+      )
+      if (shippablePairs.length > 0) {
+        sendToReactotron("multiSet", { pairs: shippablePairs })
+      }
+    } catch (e) {}
+    return swizzMultiSet(pairs, callback)
+  }
+
+  const multiRemove = async (keys, callback) => {
+    try {
+      const shippableKeys = (keys || []).filter(key => ignore.indexOf(key) < 0)
+      if (shippableKeys.length > 0) {
+        sendToReactotron("multiRemove", { keys: shippableKeys })
+      }
+    } catch (e) {}
+    return swizzMultiRemove(keys, callback)
+  }
+
+  const multiMerge = async (pairs, callback) => {
+    try {
+      const shippablePairs = (pairs || []).filter(
+        pair => pair && pair[0] && ignore.indexOf(pair[0]) < 0
+      )
+      if (shippablePairs.length > 0) {
+        sendToReactotron("multiMerge", { pairs: shippablePairs })
+      }
+    } catch (e) {}
+    return swizzMultiMerge(pairs, callback)
+  }
+
+  /**
+   * Hijacks the AsyncStorage API.
+   */
   const trackAsyncStorage = () => {
     if (isSwizzled) return
 
     swizzSetItem = AsyncStorage.setItem
-    AsyncStorage.setItem = reactotronStorageHijacker(swizzSetItem, 'setItem')
+    AsyncStorage.setItem = setItem
 
     swizzRemoveItem = AsyncStorage.removeItem
-    AsyncStorage.removeItem = reactotronStorageHijacker(swizzRemoveItem, 'removeItem')
+    AsyncStorage.removeItem = removeItem
 
     swizzMergeItem = AsyncStorage.mergeItem
-    AsyncStorage.mergeItem = reactotronStorageHijacker(swizzMergeItem, 'mergeItem')
+    AsyncStorage.mergeItem = mergeItem
 
     swizzClear = AsyncStorage.clear
-    AsyncStorage.clear = reactotronStorageHijacker(swizzClear, 'clear')
+    AsyncStorage.clear = clear
 
     swizzMultiSet = AsyncStorage.multiSet
-    AsyncStorage.multiSet = reactotronStorageHijacker(swizzMultiSet, 'multiSet')
+    AsyncStorage.multiSet = multiSet
 
     swizzMultiRemove = AsyncStorage.multiRemove
-    AsyncStorage.multiRemove = reactotronStorageHijacker(swizzMultiRemove, 'multiRemove')
+    AsyncStorage.multiRemove = multiRemove
 
     swizzMultiMerge = AsyncStorage.multiMerge
-    AsyncStorage.multiMerge = reactotronStorageHijacker(swizzMultiMerge, 'multiMerge')
+    AsyncStorage.multiMerge = multiMerge
 
     isSwizzled = true
   }
@@ -109,13 +139,13 @@ export default options => reactotron => {
     isSwizzled = false
   }
 
-  reactotronShipStorageValues()
+  // reactotronShipStorageValues()
   trackAsyncStorage()
 
   return {
     features: {
       trackAsyncStorage,
-      untrackAsyncStorage
-    }
+      untrackAsyncStorage,
+    },
   }
 }

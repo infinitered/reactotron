@@ -10,6 +10,7 @@ import DisplayCommand from './DisplayCommand'
 import ImageCommand from './ImageCommand'
 import SagaTaskCompleteCommand from './SagaTaskCompleteCommand'
 import AsyncStorageValuesCommand from './AsyncStorageValuesCommand'
+import AsyncStorageMutationCommand from './AsyncStorageMutationCommand'
 
 export default command => {
   const { type } = command
@@ -39,6 +40,8 @@ export default command => {
       return SagaTaskCompleteCommand
     case 'asyncStorage.values.change':
       return AsyncStorageValuesCommand
+    case 'asyncStorage.mutation':
+      return AsyncStorageMutationCommand
     default: {
       return null
     }
