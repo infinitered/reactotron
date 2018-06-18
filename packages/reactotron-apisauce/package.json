@@ -8,7 +8,8 @@
     "format": "prettier --write {**,.}/*.js",
     "watch": "ava --watch",
     "coverage": "nyc ava",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "prepublishOnly": "yarn build"
   },
   "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-apisauce",
   "author": "Steve Kellock",
