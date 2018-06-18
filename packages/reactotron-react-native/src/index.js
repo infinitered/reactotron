@@ -41,12 +41,12 @@ const DEFAULTS = {
     serial: constants.Serial,
     androidId: constants.androidID,
     reactNativeVersion: getReactNativeVersion(),
-    ...(getReactNativeDimensions())
+    ...getReactNativeDimensions()
   },
   getClientId: async () => {
     return AsyncStorage.getItem(REACTOTRON_ASYNC_CLIENT_ID)
   },
-  setClientId: (clientId) => {
+  setClientId: clientId => {
     return AsyncStorage.setItem(REACTOTRON_ASYNC_CLIENT_ID, clientId)
   }
 }
