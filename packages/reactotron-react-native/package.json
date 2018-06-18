@@ -7,6 +7,7 @@
     "build": "rollup -c",
     "format": "prettier --write {**,.}/*.js && standard --fix",
     "lint": "standard",
+    "prepublishOnly": "yarn build",
     "build:watch": "node watch.js"
   },
   "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-react-native",

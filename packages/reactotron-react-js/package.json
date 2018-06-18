@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "format": "prettier --write {**,.}/*.js",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "prepublishOnly": "yarn build"
   },
   "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-react-js",
   "author": "Steve Kellock",

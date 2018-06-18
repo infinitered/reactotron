@@ -11,7 +11,8 @@
     "clean": "trash dist compiled",
     "format": "prettier --write {**,.}/*.ts && tslint -p . --fix",
     "lint": "tslint -p .",
-    "build:watch": "node watch.js"
+    "build:watch": "node watch.js",
+    "prepublishOnly": "yarn build"
   },
   "repository": "infinitered/reactotron",
   "author": "Steve Kellock",

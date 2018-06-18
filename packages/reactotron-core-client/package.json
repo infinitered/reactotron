@@ -16,7 +16,8 @@
     "compile": "NODE_ENV=production tsc",
     "lint": "tslint -p .",
     "rollup": "NODE_ENV=production rollup -c",
-    "test": "jest"
+    "test": "jest",
+    "prepublishOnly": "yarn build"
   },
   "author": "Steve Kellock",
   "bugs": {

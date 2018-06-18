@@ -9,7 +9,8 @@
     "format": "prettier --write {**,.}/*.js && standard --fix",
     "coverage": "nyc ava",
     "build": "rollup -c ",
-    "lint": "standard"
+    "lint": "standard",
+    "prepublishOnly": "yarn build"
   },
   "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-redux",
   "author": "Steve Kellock",
