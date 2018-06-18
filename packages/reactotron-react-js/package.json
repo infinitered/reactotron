@@ -6,7 +6,7 @@
   "scripts": {
     "format": "prettier --write {**,.}/*.js",
     "build": "rollup -c",
-    "prepublishOnly": "yarn build"
+    "prepare": "yarn build"
   },
   "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-react-js",
   "author": "Steve Kellock",

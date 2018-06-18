@@ -10,7 +10,7 @@
     "coverage": "nyc ava",
     "build": "rollup -c ",
     "lint": "standard",
-    "prepublishOnly": "yarn build"
+    "prepare": "yarn build"
   },
   "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-redux-saga",
   "author": "Steve Kellock",
