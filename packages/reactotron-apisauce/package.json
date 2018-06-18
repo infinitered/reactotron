@@ -9,7 +9,7 @@
     "watch": "ava --watch",
     "coverage": "nyc ava",
     "build": "rollup -c",
-    "prepublishOnly": "yarn build"
+    "prepare": "yarn build"
   },
   "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-apisauce",
   "author": "Steve Kellock",
