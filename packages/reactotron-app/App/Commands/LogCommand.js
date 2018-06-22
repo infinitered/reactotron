@@ -24,7 +24,6 @@ import {
 } from "ramda"
 import { dotPath, isNilOrEmpty } from "ramdasauce"
 import React, { Component } from "react"
-import ReactTooltip from "react-tooltip"
 import stringifyObject from "stringify-object"
 import Command from "../Shared/Command"
 import Content from "../Shared/Content"
@@ -316,14 +315,10 @@ class LogCommand extends Component {
     if (isSelected) {
       style = merge(style, Styles.selectedStackFrame)
     }
-    const tooltip = fileName
     return (
       <div key={key} style={style} onClick={onClickStackFrame}>
         <div style={Styles.functionName}>{functionName || "(anonymous function)"}</div>
-        <div style={Styles.fileName} data-tip={tooltip}>
-          {justTheFile}
-          <ReactTooltip place="bottom" class="tooltipThemeReducedWidth" />
-        </div>
+        <div style={Styles.fileName}>{justTheFile}</div>
         <div style={Styles.lineNumber}>{lineNumber}</div>
       </div>
     )
