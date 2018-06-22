@@ -52,9 +52,9 @@ export default {
     ...Layout.vbox,
     padding: "1em 2em 0em",
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "left",
   },
   body: {
     ...Layout.vbox,
