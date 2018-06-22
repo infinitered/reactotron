@@ -31,7 +31,7 @@ const GROUPS = [
   },
   {
     name: "Async Storage",
-    items: [{ value: "asyncStorage.values.change", text: "Changes" }],
+    items: [{ value: "asyncStorage.mutation", text: "Mutations" }],
   },
   {
     name: "State & Sagas",
