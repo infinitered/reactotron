@@ -9,7 +9,7 @@ import Mousetrap from "../Lib/Mousetrap.min.js"
  * Handles UI state.
  */
 class UI {
-  @observable tab = "home"
+  @observable tab = "timeline"
   @observable homeSubNav = "connections"
   @observable stateSubNav = "subscriptions"
   @observable nativeSubNav = "image"
