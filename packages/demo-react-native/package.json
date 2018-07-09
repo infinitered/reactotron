@@ -7,16 +7,17 @@
     "test": "jest"
   },
   "dependencies": {
-    "@storybook/react-native": "^3.4.6",
+    "@storybook/react-native": "^3.4.8",
     "apisauce": "^0.15.2",
     "react": "16.4.1",
-    "react-native": "^0.56.0",
-    "react-native-view-shot": "^2.3.0",
+    "react-native": "0.56.0",
+    "react-native-view-shot": "^2.4.0",
     "react-redux": "^5.0.7",
     "reactotron-react-native": "^2.0.0-beta.10",
     "reactotron-redux": "^2.0.0-beta.10",
     "reactotron-redux-saga": "^2.0.0-beta.10",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "redux-saga": "^0.16.0"
   },
   "devDependencies": {
     "babel-jest": "23.0.1",
