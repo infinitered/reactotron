@@ -1,87 +1,106 @@
-import React, { Component } from 'react'
-import { ScrollView, View, Text, AsyncStorage } from 'react-native'
-import { connect } from 'react-redux'
-import Styles from './Styles/RootContainerStyles'
-import Button from '../Components/Button'
-import Repo from '../Components/Repo'
-import { Actions as RepoActions } from '../Redux/RepoRedux'
-import { Actions as LogoActions } from '../Redux/LogoRedux'
-import { Actions as StartupActions } from '../Redux/StartupRedux'
-import { Actions as ErrorActions } from '../Redux/ErrorRedux'
-import makeErrorForFun from '../Lib/ErrorMaker'
-import { captureRef } from 'react-native-view-shot'
-import { getStorybookUI, configure } from '@storybook/react-native'
+import React, { Component } from "react"
+import { ScrollView, View, Text, AsyncStorage } from "react-native"
+import { connect } from "react-redux"
+import Styles from "./Styles/RootContainerStyles"
+import Button from "../Components/Button"
+import Repo from "../Components/Repo"
+import { Actions as RepoActions } from "../Redux/RepoRedux"
+import { Actions as LogoActions } from "../Redux/LogoRedux"
+import { Actions as StartupActions } from "../Redux/StartupRedux"
+import { Actions as ErrorActions } from "../Redux/ErrorRedux"
+import makeErrorForFun from "../Lib/ErrorMaker"
+import { captureRef } from "react-native-view-shot"
+import { getStorybookUI, configure } from "@storybook/react-native"
 
 class RootContainer extends Component {
-  constructor (props) {
+  state = {
+    disableBenchmarkButton: false,
+  }
+
+  constructor(props) {
     super(props)
     this.handlePress = this.handlePress.bind(this)
-    this.handlePressDebug = () => console.tron.debug('This is a debug message')
-    this.handlePressWarn = () => console.tron.warn('This is a warn message')
-    this.handlePressError = () => console.tron.error('This is a error message')
+    this.handlePressDebug = () => console.tron.debug("This is a debug message")
+    this.handlePressWarn = () => console.tron.warn("This is a warn message")
+    this.handlePressError = () => console.tron.error("This is a error message")
     this.handleScreenshot = this.handleScreenshot.bind(this)
     this.handleSendCatPicture = this.handleSendCatPicture.bind(this)
-    console.tron.display({ name: 'Startup', value: 'Arise my champion.' })
+    console.tron.display({ name: "Startup", value: "Arise my champion." })
   }
 
-  handlePress () {
-    console.tron.log('A touchable was pressed.🔥🦄')
+  handlePress() {
+    console.tron.log("A touchable was pressed.🔥🦄")
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.startup()
   }
 
-  handleSendCatPicture () {
+  handleSendCatPicture() {
     this.props.ignore()
     console.tron.image({
-      uri: 'https://placekitten.com/g/400/400',
-      preview: 'placekitten.com',
-      filename: 'cat.jpg',
+      uri: "https://placekitten.com/g/400/400",
+      preview: "placekitten.com",
+      filename: "cat.jpg",
       width: 400,
       height: 400,
-      caption: "D'awwwwwww"
+      caption: "D'awwwwwww",
     })
   }
 
-  handleScreenshot () {
-    captureRef(this.refs.foo, { result: 'data-uri' }).then(
+  handleScreenshot() {
+    captureRef(this.refs.foo, { result: "data-uri" }).then(
       uri =>
-        console.tron.display({ name: 'Screenshot', preview: 'App screenshot', image: { uri } }),
-      error => console.tron.error('Oops, snapshot failed', error)
+        console.tron.display({ name: "Screenshot", preview: "App screenshot", image: { uri } }),
+      error => console.tron.error("Oops, snapshot failed", error)
     )
   }
 
-  handleAsyncSet () {
-    AsyncStorage.setItem('singleSet', new Date().toISOString(), () =>
-      console.tron.log('After setting async storage.')
+  handleAsyncSet() {
+    AsyncStorage.setItem("singleSet", new Date().toISOString(), () =>
+      console.tron.log("After setting async storage.")
     )
   }
 
-  handleAsyncRemove () {
-    AsyncStorage.removeItem('singleSet')
+  handleAsyncRemove() {
+    AsyncStorage.removeItem("singleSet")
   }
 
-  handleAsyncClear () {
+  handleAsyncClear() {
     AsyncStorage.clear()
   }
 
-  render () {
+  handleBenchmark = async () => {
+    this.setState({ disableBenchmarkButton: true })
+    const benchy = console.tron.benchmark("welcome to slow town")
+    const delay = ms => new Promise(go => setTimeout(() => go(), ms))
+    await delay(1000)
+    benchy.step("time to do something")
+    await delay(500)
+    benchy.step("time to do another thing")
+    await delay(250)
+    benchy.step("time to do a 3rd thing")
+    await delay(169)
+    benchy.stop("finally the last thing")
+    this.setState({ disableBenchmarkButton: false })
+  }
+
+  render() {
     const { avatar, repo, name, message, size, speed } = this.props
     const { reset, faster, slower, bigger, smaller } = this.props
 
     return (
-      <ScrollView style={Styles.container} contentContainerStyle={Styles.content} ref='foo'>
+      <ScrollView style={Styles.container} contentContainerStyle={Styles.content} ref="foo">
         <View style={Styles.titleContainer}>
           <Text style={Styles.title}>Awesome Github Viewer!</Text>
           <Text style={Styles.subtitle}>Reactotron Demo</Text>
         </View>
         <View style={Styles.repoContainer}>
           <View style={Styles.buttons}>
-            <Button text='Reactotron' onPress={this.props.requestReactotron} />
-            <Button text='Redux' onPress={this.props.requestRedux} />
-            <Button text='Mobx' onPress={this.props.requestMobx} />
-            <Button text='React Native' onPress={this.props.requestReactNative} />
+            <Button text="Reactotron" onPress={this.props.requestReactotron} />
+            <Button text="Redux" onPress={this.props.requestRedux} />
+            <Button text="Mobx" onPress={this.props.requestMobx} />
+            <Button text="React Native" onPress={this.props.requestReactNative} />
           </View>
           <Repo
             avatar={avatar}
@@ -98,8 +117,13 @@ class RootContainer extends Component {
           />
 
           <View style={Styles.buttons}>
-            <Button text='Screenshot' onPress={this.handleScreenshot} />
-            <Button text='Cats!' onPress={this.handleSendCatPicture} />
+            <Button text="Screenshot" onPress={this.handleScreenshot} />
+            <Button text="Cats!" onPress={this.handleSendCatPicture} />
+            <Button
+              text="Benchmark"
+              onPress={this.handleBenchmark}
+              disable={this.state.disableBenchmarkButton}
+            />
           </View>
 
           <View style={Styles.buttons}>
@@ -107,45 +131,45 @@ class RootContainer extends Component {
           </View>
 
           <View style={Styles.buttons}>
-            <Button text='Component Error' onPress={this.props.bomb} style={{ width: 200 }} />
+            <Button text="Component Error" onPress={this.props.bomb} style={{ width: 200 }} />
           </View>
           <View style={Styles.buttons}>
             <Button
-              text='Try/Catch Exceptions'
+              text="Try/Catch Exceptions"
               onPress={this.props.silentBomb}
               style={{ width: 200 }}
             />
           </View>
           <View style={Styles.buttons}>
-            <Button text='Saga Error' onPress={this.props.bombSaga} style={{ width: 200 }} />
+            <Button text="Saga Error" onPress={this.props.bombSaga} style={{ width: 200 }} />
           </View>
           <View style={Styles.buttons}>
             <Button
-              text='Saga Error in PUT (async)'
+              text="Saga Error in PUT (async)"
               onPress={this.props.bombPut}
               style={{ width: 200 }}
             />
           </View>
           <View style={Styles.buttons}>
             <Button
-              text='Saga Error in PUT (sync)'
+              text="Saga Error in PUT (sync)"
               onPress={this.props.bombPutSync}
               style={{ width: 200 }}
             />
           </View>
           <View style={Styles.buttons}>
-            <Button text='Async Storage SET' onPress={this.handleAsyncSet} style={{ width: 200 }} />
+            <Button text="Async Storage SET" onPress={this.handleAsyncSet} style={{ width: 200 }} />
           </View>
           <View style={Styles.buttons}>
             <Button
-              text='Async Storage REMOVE'
-              onPress={this.handleAsyncRemove}
+              text="Async Storage REMOVE"
+              onPress={() => this.slowAf()}
               style={{ width: 200 }}
             />
           </View>
           <View style={Styles.buttons}>
             <Button
-              text='Async Storage CLEAR'
+              text="Async Storage CLEAR"
               onPress={this.handleAsyncClear}
               style={{ width: 200 }}
             />
@@ -159,22 +183,22 @@ class RootContainer extends Component {
 const mapStateToProps = state => {
   return {
     ...state.repo,
-    ...state.logo
+    ...state.logo,
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   startup: () => dispatch(StartupActions.startup()),
-  ignore: () => dispatch({ type: 'ignore' }),
+  ignore: () => dispatch({ type: "ignore" }),
   faster: () => dispatch(LogoActions.changeSpeed(10)),
   slower: () => dispatch(LogoActions.changeSpeed(50)),
   bigger: () => dispatch(LogoActions.changeSize(140)),
   smaller: () => dispatch(LogoActions.changeSize(40)),
   reset: () => dispatch(LogoActions.reset()),
-  requestReactotron: () => dispatch(RepoActions.request('reactotron/reactotron')),
-  requestReactNative: () => dispatch(RepoActions.request('facebook/react-native')),
-  requestMobx: () => dispatch(RepoActions.request('mobxjs/mobx')),
-  requestRedux: () => dispatch(RepoActions.request('reactjs/redux')),
+  requestReactotron: () => dispatch(RepoActions.request("reactotron/reactotron")),
+  requestReactNative: () => dispatch(RepoActions.request("facebook/react-native")),
+  requestMobx: () => dispatch(RepoActions.request("mobxjs/mobx")),
+  requestRedux: () => dispatch(RepoActions.request("reactjs/redux")),
   bombPutSync: () => dispatch(ErrorActions.throwPutError(true)),
   bombPut: () => dispatch(ErrorActions.throwPutError(false)),
   silentBomb: () => {
@@ -187,12 +211,12 @@ const mapDispatchToProps = dispatch => ({
     }
   },
   bomb: () => {
-    console.tron.log('wait for it...')
+    console.tron.log("wait for it...")
     setTimeout(() => {
-      makeErrorForFun('Boom goes the error message.')
+      makeErrorForFun("Boom goes the error message.")
     }, 500)
   },
-  bombSaga: () => dispatch(ErrorActions.throwSagaError())
+  bombSaga: () => dispatch(ErrorActions.throwSagaError()),
 })
 
 /**
@@ -200,15 +224,17 @@ const mapDispatchToProps = dispatch => ({
  * That is an exercise for the consumer though
  */
 configure(() => {
-  require('../../storybook/stories')
+  require("../../storybook/stories")
 }, module)
 
 const StorybookUIRoot = getStorybookUI({ port: 7007, onDeviceUI: true })
 
 class StorybookUIHMRRoot extends Component {
-  render () {
+  render() {
     return <StorybookUIRoot />
   }
 }
 
-export default console.tron.storybookSwitcher(StorybookUIHMRRoot)(console.tron.overlay(connect(mapStateToProps, mapDispatchToProps)(RootContainer)))
+export default console.tron.storybookSwitcher(StorybookUIHMRRoot)(
+  console.tron.overlay(connect(mapStateToProps, mapDispatchToProps)(RootContainer))
+)

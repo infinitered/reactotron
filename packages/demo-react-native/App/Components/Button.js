@@ -1,17 +1,27 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Text, TouchableOpacity } from 'react-native'
-import Styles from './Styles/ButtonStyles'
-import { merge } from 'ramda'
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { Text, TouchableOpacity } from "react-native"
+import Styles from "./Styles/ButtonStyles"
+import { merge } from "ramda"
 
 class Button extends Component {
-  render () {
-    const containerStyle = this.props.style
+  render() {
+    let containerStyle = this.props.style
       ? merge(Styles.container, this.props.style)
       : Styles.container
 
+    let onPress = this.props.disable ? null : this.props.onPress
+
+    if (this.props.disable) {
+      containerStyle = { ...containerStyle, backgroundColor: "red" }
+    }
+
     return (
-      <TouchableOpacity onPress={this.props.onPress} style={containerStyle}>
+      <TouchableOpacity
+        activeOpacity={this.props.disable ? 1 : 0.5}
+        onPress={onPress}
+        style={containerStyle}
+      >
         <Text style={Styles.text}>{this.props.text}</Text>
       </TouchableOpacity>
     )
@@ -21,7 +31,8 @@ class Button extends Component {
 Button.propTypes = {
   onPress: PropTypes.func,
   text: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
+  disable: PropTypes.bool,
 }
 
 export default Button
