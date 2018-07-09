@@ -1,12 +1,12 @@
 import { inject, observer } from "mobx-react"
 import React, { Component } from "react"
 import IconAdd from "react-icons/lib/md/add"
-import IconAddBackup from "react-icons/lib/md/file-download"
 import IconClear from "react-icons/lib/md/delete-forever"
+import IconAddBackup from "react-icons/lib/md/file-download"
 import Tabs from "../Foundation/Tabs"
 import AppStyles from "../Theme/AppStyles"
-import Subscriptions from "./Subscriptions"
 import Backups from "./Backups"
+import Subscriptions from "./Subscriptions"
 
 const toolbarButton = {
   cursor: "pointer",
@@ -45,16 +45,6 @@ class State extends Component {
     )
   }
 
-  renderBackupsActions = () => {
-    const { ui } = this.props.session
-
-    return (
-      <div>
-        <IconAddBackup size={Styles.iconSize} style={Styles.toolbarAdd} onClick={ui.backupState} />
-      </div>
-    )
-  }
-
   render() {
     const {
       session: { ui },
@@ -74,7 +64,15 @@ class State extends Component {
           name="backups"
           text="Snapshots"
           icon="import-export"
-          renderActions={this.renderBackupsActions}
+          renderActions={() => (
+            <div>
+              <IconAddBackup
+                size={Styles.iconSize}
+                style={Styles.toolbarAdd}
+                onClick={() => ui.stateBackupStore.sendBackup()}
+              />
+            </div>
+          )}
         >
           <Backups />
         </Tabs.Tab>
