@@ -10,7 +10,7 @@ import Colors from "../Theme/Colors"
 
 const COMMAND_TITLE = "BENCHMARK"
 const LAST_STEP_DEFAULT = "Last"
-const MS_LABEL = "ms"
+const TIME_LABEL = "s"
 
 const mapIndexed = addIndex(map)
 
@@ -73,7 +73,7 @@ const makeStep = (step, idx, last, totalDuration) => {
   const pct = Number(delta / totalDuration * 100.0).toFixed(0)
   const startedAt = Number(time - delta).toFixed(0)
   const endedAt = Number(time).toFixed(0)
-  const timeText = `${startedAt} - ${endedAt} ${{ MS_LABEL }} (${pct}%)`
+  const timeText = `${startedAt} - ${endedAt} ${{ TIME_LABEL }} (${pct}%)`
   const key = `step-${idx}`
   const titleText = last && isNilOrEmpty(title) ? LAST_STEP_DEFAULT : title
   const pStyle = percentStyle(step.time - step.delta, step.delta, totalDuration)
@@ -82,8 +82,8 @@ const makeStep = (step, idx, last, totalDuration) => {
     <div data-tip={timeText} key={key} style={stepStyle}>
       <div style={Styles.stepTitle}>{titleText}</div>
       <div style={Styles.delta}>
-        {delta}
-        {MS_LABEL}
+        {(delta / 1000).toFixed(3)}
+        {TIME_LABEL}
       </div>
     </div>
   )
@@ -104,7 +104,7 @@ class BenchmarkReportCommand extends Component {
     const { payload } = command
     const { title, steps } = clone(payload)
     const duration = last(steps).time
-    const preview = `${title} in ${duration}ms`
+    const preview = `${title} in ${(duration / 1000).toFixed(3)}${TIME_LABEL}`
 
     return (
       <Command {...this.props} title={COMMAND_TITLE} duration={duration} preview={preview}>
