@@ -62,6 +62,9 @@
     "globals": [
       "__DEV__",
       "fetch"
+    ],
+    "ignore": [
+      "/src/thirdparty/rn-host-detect.js"
     ]
   },
   "dependencies": {
