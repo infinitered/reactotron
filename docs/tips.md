@@ -126,21 +126,6 @@ This will `nav` mutable. Note this is what you want to do when using
 [react-navigation's default reducer](https://github.com/react-community/react-navigation/blob/master/docs/guides/Redux-Integration.md).
 
 
-## Retrying and Backoffs
-
-You have control over Socket.IO and can pass through settings to control that in your `Reactotron.configure({})` call.
-
-```js
-  Reactotron.configure({
-    socketIoProperties: {
-      reconnection: true,
-      reconnectionDelay: 2000,
-      reconnectionDelayMax: 5000,
-      reconnectionAttempts: 5
-    }
-  })
-```
-
 ## Custom Commands
 
 Need a custom Reactotron plugin but don't have time to write one?

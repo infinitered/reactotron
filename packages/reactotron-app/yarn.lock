@@ -4792,9 +4792,9 @@ react@^16.3.2:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-reactotron-core-server@^2.0.0-beta.11:
-  version "2.0.0-beta.11"
-  resolved "https://registry.yarnpkg.com/reactotron-core-server/-/reactotron-core-server-2.0.0-beta.11.tgz#050c3106f88bc49f5bb758b8de860b7a056f96e9"
+reactotron-core-server@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/reactotron-core-server/-/reactotron-core-server-2.0.0.tgz#c4f9f5b7278ba7087c85f0d931beffe265b0e4d7"
   dependencies:
     mitt "^1.1.2"
     ramda "^0.25.0"

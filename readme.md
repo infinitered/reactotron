@@ -4,11 +4,15 @@
 
 [Less Talk More Action](./docs/installing.md)
 
-# Looking for Version 1?
+# Upgrading from v1?
 
-We're in the process of rolling out v2, so that's merged into `master` now.
+Make sure your `reactotron-*` dependencies match the version of the Reactotron app.  For example `reactotron-react-native@2` will
+only work with the `2.x` version of the app.
 
 [Version 1.x](https://github.com/infinitered/reactotron/tree/v1.x) is located here if you're looking for what's currently shipping!
+
+`reactotron-react-native@2` requires `react-native >= 0.54`.  If you need, an older version, checkout the 1.x branch.
+
 
 # What is Reactotron?
 
@@ -36,6 +40,7 @@ Reactotron on the left, demo React Native app on the right.
 
 ![Desktop](./docs/images/readme/reactotron-demo-app.gif)
 
+
 # Documentation
 
 * [Installing](./docs/installing.md)
@@ -55,14 +60,14 @@ Reactotron on the left, demo React Native app on the right.
 * [Tips and Tricks](./docs/tips.md)
 * [Release Notes](https://github.com/reactotron/reactotron/releases)
 
-#### Coming Soon
 
-* API Docs
-* Creating your own plugins
-* The JSON interface between client & server
-* What's Inside This Repo?
-* Contributors Quick Start
+# Credits
 
-## Premium Support
+Reactotron is built and maintained by [@skellock](https://github.com/skellock), [@rmevans9](https://github.com/rmevans9), and 50+ glorious contributors!
+
+This project would not be possible without the financial & moral support of the lovely & talented [Infinite Red](https://infinite.red) crew.
+
+
+# Premium Support
 
 [Reactotron](https://infinite.red/reactotron), as an open source project, is free to use and always will be. [Infinite Red](https://infinite.red/) offers premium [React Native](https://infinite.red/react-native) mobile app design/development services. Email us at [hello@infinite.red](mailto:hello@infinite.red) to get in touch for more details.

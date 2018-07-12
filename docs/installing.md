@@ -1,18 +1,16 @@
-Reactotron comes in two versions.  A desktop version (available on macOS, Linux, and Windows) or a CLI (available only on macOS).
-
 # Installing the Application
-
-> :warning: If you are working with master for demo/setup - be sure to [download 2.0.0.alpha from the GitHub releases section](https://github.com/infinitered/reactotron/releases)
 
 ### Via Direct Download
 
-[Download macOS App](https://github.com/infinitered/reactotron/releases/download/v1.15.0/Reactotron.app.zip) from GitHub release and drop the Reactotron.app to the Applications folder.
+On the [Download macOS App](https://github.com/infinitered/reactotron/releases) page, you can find the latest version of:
 
-[Download 32 bit Linux App](https://github.com/infinitered/reactotron/releases/download/v1.15.0/Reactotron-linux-ia32.zip) or [64 bit Linux App](https://github.com/infinitered/reactotron/releases/download/v1.15.0/Reactotron-linux-x64.zip).
-
-[Download 32 bit Windows App](https://github.com/infinitered/reactotron/releases/download/v1.15.0/Reactotron-win32-ia32.zip) or [64 bit Windows App](https://github.com/infinitered/reactotron/releases/download/v1.15.0/Reactotron-win32-x64.zip)
+* macOS
+* Linux (32-bit & 64-bit)
+* Windows (32-bit & 64-bit)
 
 ### Via Homebrew
+
+**NOTE**: When we submit an update to brew, it can take several hours before they merge it in.  Checkout the releases page to grab the latest binary in the meantime.
 
 Reactotron is also available via [Homebrew Cask](https://caskroom.github.io/) package manager. To ensure you get the latest version, update Homebrew first:
 
@@ -31,15 +29,3 @@ To update an existing installation of reactotron via brew, type:
 ```
 brew cask reinstall reactotron
 ```
-
-# Install the CLI
-
-If you like to kick it old-school and use the terminal, Reactotron is available via [NPM](https://www.npmjs.com/).
-
-To install globally:
-
-```sh
-npm install -g reactotron-cli
-```
-
-In order to pickup updates going forward, you can type the same command again.
