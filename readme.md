@@ -9,8 +9,10 @@
 Make sure your `reactotron-*` dependencies match the version of the Reactotron app.  For example `reactotron-react-native@2` will
 only work with the `2.x` version of the app.
 
-
 [Version 1.x](https://github.com/infinitered/reactotron/tree/v1.x) is located here if you're looking for what's currently shipping!
+
+`reactotron-react-native@2` requires `react-native >= 0.54`.  If you need, an older version, checkout the 1.x branch.
+
 
 # What is Reactotron?
 
@@ -37,6 +39,7 @@ You plug it into your app as a dev dependency so it adds nothing to your product
 Reactotron on the left, demo React Native app on the right.
 
 ![Desktop](./docs/images/readme/reactotron-demo-app.gif)
+
 
 # Documentation
 
