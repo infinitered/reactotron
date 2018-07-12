@@ -52,8 +52,7 @@ import Reactotron, {
 
 Finally, we import this on startup in
 - `App.js` (Create React Native App) or
-- `index.ios.js` and `index.android.js` (react-native < 0.49) or
-- `index.js` (react-native 0.49+)
+- `index.js`
 on line 1:
 
 ```js
@@ -80,8 +79,7 @@ Let's do some classic programming.
 
 Open up
 - `App.js` (Create React Native App) or
-- `index.ios.js` and `index.android.js` (react-native < 0.49) or
-- `index.js` (react-native 0.49+)
+- `index.js`
 
 Right after the line you just added in the previous step lets put this:
 
