@@ -199,3 +199,8 @@ declare module "reactotron-react-native" {
 
   export { instance as default }
 }
+
+declare module 'reactotron-redux' {
+  import { ReactotronPlugin, Reactotron } from 'reactotron-react-native';
+  export function reactotronRedux(): (tron: Reactotron) => ReactotronPlugin;
+}
