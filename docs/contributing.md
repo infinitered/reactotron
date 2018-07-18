@@ -19,17 +19,28 @@ git clone git@github.com:infinitered/reactotron.git
 cd reactotron
 ```
 
-Install `lerna` and run the setup script to install the dependencies & run tests.
+If you don't already have `lerna`, install it:
+
+```
+npm install --global lerna
+```
+
+Run the setup script to install the dependencies & run tests.
 
 ```
 yarn install
 yarn welcome
 ```
 
+Run the app
+
+```
+cd packages/reactotron-app
+yarn start
+```
 
 ### Monorepo & Lerna
 
 This is a monorepo: multiple JS packages in 1 git repo.
 
 We use [lerna](https://github.com/lerna/lerna) to help us.
-
