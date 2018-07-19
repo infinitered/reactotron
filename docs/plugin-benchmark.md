@@ -1,6 +1,6 @@
 # Benchmarking
 
-Say you have a function you believe is slow, `slowFunction()`. You can benchmark it using Reactotron like this:
+If you have a function you believe is slow, you can benchmark it to find any bottlenecks like this:
 
 ```js
 function slowFunction() {
@@ -13,7 +13,7 @@ function slowFunction() {
   bench.step("Thing B")
 
   // Code that does thing C
-  bench.stop("Think C)
+  bench.stop("Think C")
 }
 ```
 
