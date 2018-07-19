@@ -13,7 +13,7 @@ function slowFunction() {
   bench.step("Thing B")
 
   // Code that does thing C
-  bench.stop("Think C")
+  bench.stop("Thing C")
 }
 ```
 
