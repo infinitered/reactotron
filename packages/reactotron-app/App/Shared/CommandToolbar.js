@@ -157,9 +157,7 @@ class CommandToolbar extends Component {
     try {
       const text = apiToMarkdown(this.props.command.payload)
       clipboard.writeText(text)
-    } catch (e) {
-      clipboard.writeText(body)
-    }
+    } catch (e) {}
   }
 
   // copy api request to clipboard as cURL
@@ -167,14 +165,11 @@ class CommandToolbar extends Component {
     event.stopPropagation()
     const { command } = this.props
     const { payload } = command
-    const body = dotPath('request.data', payload)
 
     try {
-      const text = apiRequestToCurl(this.props.command.payload)
+      const text = apiRequestToCurl(payload)
       clipboard.writeText(text)
-    } catch (e) {
-      clipboard.writeText(body)
-    }
+    } catch (e) {}
   }
 
   handleToggleViewSagaDetails = event => {
