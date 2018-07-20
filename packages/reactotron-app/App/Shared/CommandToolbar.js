@@ -1,57 +1,62 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { inject, observer } from 'mobx-react'
-import Button from './CommandToolbarButton'
-import AppStyles from '../Theme/AppStyles'
-import stringifyObject from 'stringify-object'
-import { clipboard } from 'electron'
-import { dotPath, isNilOrEmpty } from 'ramdasauce'
+import { clipboard } from "electron"
+import { inject, observer } from "mobx-react"
+import PropTypes from "prop-types"
+import { dotPath, isNilOrEmpty } from "ramdasauce"
+import React, { Component } from "react"
+import stringifyObject from "stringify-object"
+import AppStyles from "../Theme/AppStyles"
+import Button from "./CommandToolbarButton"
+import { apiToMarkdown } from "../Lib/api-to-markdown"
 
 const Styles = {
   container: {
     ...AppStyles.Layout.hbox,
-    marginLeft: -6
-  }
+    marginLeft: -6,
+  },
 }
 
 // the tips
-const TIP_SAGA_VIEW_DETAILS = 'Toggle saga details'
-const TIP_REPLAY_ACTION = 'Repeat this action.'
-const TIP_CUSTOMIZE_REPLAY_ACTION = 'Edit and dispatch this action.'
+const TIP_SAGA_VIEW_DETAILS = "Toggle saga details"
+const TIP_REPLAY_ACTION = "Repeat this action."
+const TIP_CUSTOMIZE_REPLAY_ACTION = "Edit and dispatch this action."
 
 const ToggleSagaViewDetailButton = props => (
-  <Button icon='list' onClick={props.onClick} tip={TIP_SAGA_VIEW_DETAILS} />
+  <Button icon="list" onClick={props.onClick} tip={TIP_SAGA_VIEW_DETAILS} />
 )
 
 const ReplayButton = props => (
-  <Button icon='repeat' onClick={props.onClick} tip={TIP_REPLAY_ACTION} />
+  <Button icon="repeat" onClick={props.onClick} tip={TIP_REPLAY_ACTION} />
 )
 
 const CustomizeReplayButton = props => (
-  <Button icon='code' onClick={props.onClick} tip={TIP_CUSTOMIZE_REPLAY_ACTION} />
+  <Button icon="code" onClick={props.onClick} tip={TIP_CUSTOMIZE_REPLAY_ACTION} />
 )
 
 const CopyApiResponseButton = props => (
-  <Button icon='call-received' onClick={props.onClick} tip='Copy JSON response to clipboard' />
+  <Button icon="call-received" onClick={props.onClick} tip="Copy JSON response to clipboard" />
 )
 
 const CopyApiRequestButton = props => (
-  <Button icon='call-made' onClick={props.onClick} tip='Copy JSON request to clipboard' />
+  <Button icon="call-made" onClick={props.onClick} tip="Copy JSON request to clipboard" />
+)
+
+const CopyApiMarkdownButton = props => (
+  <Button icon="receipt" onClick={props.onClick} tip="Copy as markdown to clipboard" />
 )
 
 const CopyLogButton = props => (
-  <Button icon='content-copy' onClick={props.onClick} tip='Copy text to clipboard' />
+  <Button icon="content-copy" onClick={props.onClick} tip="Copy text to clipboard" />
 )
 
 const CopyDisplayButton = props => (
-  <Button icon='content-copy' onClick={props.onClick} tip='Copy text to clipboard' />
+  <Button icon="content-copy" onClick={props.onClick} tip="Copy text to clipboard" />
 )
 
-@inject('session')
+@inject("session")
 @observer
 class CommandToolbar extends Component {
   static propTypes = {
-    command: PropTypes.object.isRequired
+    command: PropTypes.object.isRequired,
   }
 
   // fires when it is time to replay an action
@@ -70,8 +75,8 @@ class CommandToolbar extends Component {
     const { payload } = command
     const { action } = payload
     const newAction = stringifyObject(action, {
-      indent: '  ',
-      singleQuotes: true
+      indent: "  ",
+      singleQuotes: true,
     })
 
     ui.setActionToDispatch(newAction)
@@ -83,14 +88,14 @@ class CommandToolbar extends Component {
     event.stopPropagation()
 
     try {
-      const payload = dotPath('props.command.payload', this) || {}
+      const payload = dotPath("props.command.payload", this) || {}
       const { level, stack, message } = payload
       if (!message) return
-      if (level === 'error' && stack) {
+      if (level === "error" && stack) {
         clipboard.writeText(JSON.stringify({ message, stack }, 2, 2))
-      } else if (typeof message === 'string') {
+      } else if (typeof message === "string") {
         clipboard.writeText(message)
-      } else if (typeof message === 'object') {
+      } else if (typeof message === "object") {
         const text = JSON.stringify(message, 2, 2)
         clipboard.writeText(text)
       }
@@ -101,11 +106,11 @@ class CommandToolbar extends Component {
   handleCopyDisplayToClipboard = event => {
     event.stopPropagation()
     try {
-      const message = dotPath('props.command.payload.value', this)
+      const message = dotPath("props.command.payload.value", this)
       if (!message) return
-      if (typeof message === 'string') {
+      if (typeof message === "string") {
         clipboard.writeText(message)
-      } else if (typeof message === 'object') {
+      } else if (typeof message === "object") {
         const text = JSON.stringify(message, 2, 2)
         clipboard.writeText(text)
       }
@@ -119,7 +124,7 @@ class CommandToolbar extends Component {
     try {
       const { command } = this.props
       const { payload } = command
-      const body = dotPath('response.body', payload)
+      const body = dotPath("response.body", payload)
       const text = JSON.stringify(body, 2, 2)
 
       clipboard.writeText(text)
@@ -131,7 +136,7 @@ class CommandToolbar extends Component {
     event.stopPropagation()
     const { command } = this.props
     const { payload } = command
-    const body = dotPath('request.data', payload)
+    const body = dotPath("request.data", payload)
 
     try {
       const text = JSON.stringify(JSON.parse(body), 2, 2)
@@ -141,29 +146,40 @@ class CommandToolbar extends Component {
     }
   }
 
+  // copy api as markdown
+  handleCopyApiMarkdownToClipboard = event => {
+    event.stopPropagation()
+    try {
+      const text = apiToMarkdown(this.props.command.payload)
+      clipboard.writeText(text)
+    } catch (e) {
+    }
+  }
+
   handleToggleViewSagaDetails = event => {
     event.stopPropagation()
     const { command, session } = this.props
     const { ui } = session
     const { messageId } = command
-    const key = 'details'
+    const key = "details"
     const currentValue = ui.getCommandProperty(messageId, key)
 
     ui.setCommandProperty(messageId, key, !currentValue)
   }
 
-  render () {
+  render() {
     const { command } = this.props
     const { payload } = command
-    const requestBody = dotPath('request.data', payload)
+    const requestBody = dotPath("request.data", payload)
 
-    const showReplayAction = command.type === 'state.action.complete'
-    const showCustomizeReplayAction = command.type === 'state.action.complete'
-    const showCopyApiResponse = command.type === 'api.response'
-    const showCopyApiRequest = command.type === 'api.response' && !isNilOrEmpty(requestBody)
-    const showToggleViewSagaDetails = command.type === 'saga.task.complete'
-    const showCopyLog = command.type === 'log'
-    const showCopyDisplay = command.type === 'display'
+    const showReplayAction = command.type === "state.action.complete"
+    const showCustomizeReplayAction = command.type === "state.action.complete"
+    const showCopyApiResponse = command.type === "api.response"
+    const showCopyApiRequest = command.type === "api.response" && !isNilOrEmpty(requestBody)
+    const showCopyApiMarkdown = command.type === "api.response"
+    const showToggleViewSagaDetails = command.type === "saga.task.complete"
+    const showCopyLog = command.type === "log"
+    const showCopyDisplay = command.type === "display"
 
     return (
       <div style={Styles.container}>
@@ -176,6 +192,9 @@ class CommandToolbar extends Component {
         )}
         {showCopyApiRequest && (
           <CopyApiRequestButton onClick={this.handleCopyApiRequestToClipboard} />
+        )}
+        {showCopyApiMarkdown && (
+          <CopyApiMarkdownButton onClick={this.handleCopyApiMarkdownToClipboard} />
         )}
         {showToggleViewSagaDetails && (
           <ToggleSagaViewDetailButton onClick={this.handleToggleViewSagaDetails} />
