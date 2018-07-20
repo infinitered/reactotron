@@ -51,6 +51,7 @@ Reactotron on the left, demo React Native app on the right.
 * [Image Overlays](./docs/plugin-overlay.md)
 * [Async Storage](./docs/plugin-async-storage.md)
 * [Networking](./docs/plugin-networking.md)
+* [Benchmarking](./docs/plugin-benchmark.md)
 * Integrating with [mobx-state-tree](./docs/plugin-mst.md)
 * Integrating with [Redux](./docs/plugin-redux.md)
 * Integrating with [Redux Saga](./docs/plugin-redux-saga.md)
