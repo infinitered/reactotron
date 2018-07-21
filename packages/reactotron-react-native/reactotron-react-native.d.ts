@@ -154,6 +154,15 @@ declare module "reactotron-react-native" {
     logImportant(...value: any[]): void
 
     /**
+     * Prints a value such a string, object, or array.
+     *
+     * This is the same as console.warn, except it sends it to the Reactotron app.
+     *
+     * @param value Anything you'd like to log.
+     */
+    warn(...value: any[]): void
+
+    /**
      * Logs an error with a stack trace.
      *
      * @param error
