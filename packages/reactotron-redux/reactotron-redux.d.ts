@@ -34,9 +34,14 @@ declare module 'reactotron-redux' {
   export function reactotronRedux(pluginConfig?: PluginConfig): (tron: Reactotron) => ReactotronPlugin;
 }
 
+// Module Augmentation for plugin
 declare module 'reactotron-react-native' {
   import { StoreCreator } from 'redux';
+
   export interface Reactotron {
-    public createStore: StoreCreator;
+    /**
+     * Wraps Redux's createStore for sane configuration
+     */
+    createStore: StoreCreator;
   }
 }
