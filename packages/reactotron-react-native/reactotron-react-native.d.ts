@@ -204,6 +204,28 @@ declare module "reactotron-react-native" {
     benchmark(title?: string): ReactotronBenchmark
   }
 
+  /**
+   * Provides async storage information to Reactotron.
+   */
+  function asyncStorage(): (tron: Reactotron) => ReactotronPlugin;
+  /**
+   * Provides a global error handler to report errors.
+   */
+  function trackGlobalErrors(): (tron: Reactotron) => ReactotronPlugin;
+  function openInEditor(): (tron: Reactotron) => ReactotronPlugin;
+  /**
+   * Provides an image.
+   */
+  function overlay(): (tron: Reactotron) => ReactotronPlugin;
+  /**
+   * Provides network information to reactotron.
+   */
+  function networking(): (tron: Reactotron) => ReactotronPlugin;
+  /**
+   * A plugin which provides .storybookSwitcher() on Reactotron.
+   */
+  function storybook(): (tron: Reactotron) => ReactotronPlugin;
+
   var instance: Reactotron
 
   export { instance as default }
