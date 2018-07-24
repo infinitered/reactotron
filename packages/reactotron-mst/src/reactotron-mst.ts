@@ -296,13 +296,14 @@ export function mst(opts: MstPluginOptions = {}) {
      * data within the state that will be sent to them every time it changes.
      *
      * @param command The command received from the reactotron app.
+     * @param subscribeToSnapshot Optionally subscribe to the persisted value instead of the live value
      */
-    function subscribe(command: any) {
+    function subscribe(command: any, subscribeToSnapshot?: boolean) {
       const trackedNode = trackedNodes[command.mstNodeName || "default"]
       const paths: string[] = (command && command.payload && command.payload.paths) || []
       if (trackedNode && trackedNode.node && paths) {
         subscriptions = uniq(flatten(paths))
-        const state = getSnapshot(trackedNode.node)
+        const state = subscribeToSnapshot ? getSnapshot(trackedNode.node) : trackedNode.node
         sendSubscriptions(state)
       }
     }
