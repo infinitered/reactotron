@@ -30,24 +30,38 @@ Reactotron
 Or using a more advanced way to customize which plugins to include:
 
 ```js
-import Reactotron, {
-  trackGlobalErrors,
-  openInEditor,
-  overlay,
-  asyncStorage,
-  networking
-} from 'reactotron-react-native'
+import Reactotron from 'reactotron-react-native'
 
-  Reactotron
-    .configure({
-      name: 'React Native Demo'
-    })
-    .use(trackGlobalErrors())
-    .use(openInEditor())
-    .use(overlay())
-    .use(asyncStorage())
-    .use(networking())
-    .connect()
+Reactotron
+  .configure({
+    name: "React Native Demo"
+  })
+  .useReactNative({
+    asyncStorage: false, // there are more options to the async storage.
+    networking: { // optionally, you can turn it off with false.
+      ignoreUrls: /symbolicate/
+    },
+    editor: false, // there are more options to editor
+    errors: { veto: (stackFrame) => false }, // or turn it off with false
+    overlay: false, // just turning off overlay
+  })
+  .connect();
+```
+
+Alternatively, you can create your own plugin and provide it via:
+
+```js
+import Reactotron from 'reactotron-react-native'
+
+const middleware = (tron) => { /* plugin definition */ };
+
+Reactotron
+  .configure({
+    name: "React Native Demo"
+  })
+  .useReactNative() // add all built-in react native plugins
+  .use(middleware) // plus some custom made plugin.
+  .connect();
 ```
 
 Finally, we import this on startup in
