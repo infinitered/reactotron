@@ -1,5 +1,7 @@
 import XHRInterceptor from 'react-native/Libraries/Network/XHRInterceptor'
 
+import helpers from "../helpers/networking-helpers"
+
 /**
  * Don't include the response bodies for images by default.
  */
@@ -117,6 +119,13 @@ export default (pluginConfig = {}) => reactotron => {
         }
         bReader.addEventListener('loadend', brListener)
         bReader.readAsText(response)
+      } else if (/^application\/json(;|$)/.test(contentType)) {
+        try {
+          const str = helpers.responseToString(xhr)
+          sendResponse(str || response)
+        } catch (e) {
+          sendResponse(response)
+        }
       } else {
         sendResponse(response)
       }
