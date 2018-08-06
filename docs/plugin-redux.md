@@ -35,25 +35,31 @@ npm install --save-dev reactotron-redux
 Two files need to change to hookup Reactotron to Redux.  First, in your
 ReactotronConfig, you'll need to add `reactotron-redux` as plugin
 
-```js
-
+```diff
 // ReactotronConfig.js
-import { reactotronRedux } from 'reactotron-redux'
++ import { reactotronRedux } from 'reactotron-redux'
 
 
 // then add it to the plugin list
-Reactotron
+- Reactotron
++ const reactotron = Reactotron
   .configure({ name: 'React Native Demo' })
   .use(reactotronRedux()) //  <- here i am!
   .connect() //Don't forget about me!
+  
++ export default reactotron
 ```
 
 Then, where you create your Redux store, instead of using Redux's `createStore`,
-you can use Reactotron's `createStore` which has the same interface.
+you can use Reactotron's `createStore` (`Reactotron` here being the output of your `reactotronConfig.js` file) which has the same interface.
 
 
-```js
-const store = Reactotron.createStore(rootReducer, compose(middleware))
+```diff
+- import { createStore } from 'redux'
++ import Reactotron from './ReactotronConfig'
+
+- const store = createStore(rootReducer, compose(middleware))
++ const store = Reactotron.createStore(rootReducer, compose(middleware))
 ```
 
 # Options
