@@ -89,7 +89,11 @@ export default (pluginConfig = {}) => reactotron => {
           // all i am saying, is give JSON a chance...
           body = JSON.parse(responseBodyText)
         } catch (boom) {
-          body = response
+          if (typeof responseBodyText === "string") {
+            body = responseBodyText
+          } else {
+            body = response
+          }
         }
       }
       const tronResponse = {
