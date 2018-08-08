@@ -13,14 +13,14 @@ export default {
         if (ID1 === 31 && ID2 === 139) {
           actualMethod = "gzip"
         } else {
-          actualMethod = "string"
+          actualMethod = "utf-8"
         }
       } else {
         actualMethod = method
       }
     }
     switch (actualMethod) {
-      case "string":
+      case "utf-8":
         return utf8Decode(byteArray)
       case "gzip":
         return pako.inflate(byteArray, { to: "string" })
