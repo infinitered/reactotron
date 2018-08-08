@@ -119,15 +119,13 @@ export default (pluginConfig = {}) => reactotron => {
         }
         bReader.addEventListener('loadend', brListener)
         bReader.readAsText(response)
-      } else if (/^application\/json(;|$)/.test(contentType)) {
+      } else {
         try {
           const str = helpers.responseToString(xhr)
-          sendResponse(str || response)
+          sendResponse(str)
         } catch (e) {
           sendResponse(response)
         }
-      } else {
-        sendResponse(response)
       }
     } else {
       sendResponse('')
