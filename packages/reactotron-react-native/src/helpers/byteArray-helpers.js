@@ -8,8 +8,8 @@ export default {
     if (method === "auto") {
       if (byteArray.length > 1) {
         // cf. http://www.zlib.org/rfc-gzip.html
-        const ID1 = byteArray[0];
-        const ID2 = byteArray[1];
+        const ID1 = byteArray[0]
+        const ID2 = byteArray[1]
         if (ID1 === 31 && ID2 === 139) {
           actualMethod = "gzip"
         } else {
