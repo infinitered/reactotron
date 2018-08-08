@@ -16,7 +16,7 @@ export default {
           actualMethod = "utf-8"
         }
       } else {
-        actualMethod = method
+        actualMethod = "utf-8"
       }
     }
     switch (actualMethod) {
