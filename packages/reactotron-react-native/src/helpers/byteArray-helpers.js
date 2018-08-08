@@ -4,7 +4,7 @@ const pako = require("pako")
 
 export default {
   byteArrayToStr: (byteArray, method = "auto") => {
-    let actualMethod
+    let actualMethod = method
     if (method === "auto") {
       if (byteArray.length > 1) {
         // cf. http://www.zlib.org/rfc-gzip.html
