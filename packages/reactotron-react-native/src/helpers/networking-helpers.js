@@ -8,7 +8,7 @@ const responseToString = xhttp => {
         return xhttp.responseText
       case "arraybuffer": {
         const byteArray = new Uint8Array(xhttp.response)
-        return byteArrayToStr(byteArray)
+        return helpers.byteArrayToStr(byteArray)
       }
       default:
         throw new Error("Could not convert response to string, unhandled response type")
