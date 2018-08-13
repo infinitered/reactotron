@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "mitt": "^1.1.2",
+    "pako": "1",
     "prop-types": "^15.5.10",
     "reactotron-core-client": "^2.0.0"
   }
