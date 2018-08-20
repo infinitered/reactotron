@@ -9,7 +9,7 @@ const REACTOTRON_ASYNC_CLIENT_ID = '@REACTOTRON/clientId'
 
 /**
  * Safely get some information out the the window.navigator.
- * 
+ *
  * @param {string} name The property to get.
  */
 function getNavigatorProperty(name) {
@@ -36,11 +36,11 @@ var DEFAULTS = {
     windowWidth: (window && window.innerWidth) || undefined,
     windowHeight: (window && window.innerHeight) || undefined
   },
-  getClientId: async () => {
-    return localStorage.getItem(REACTOTRON_ASYNC_CLIENT_ID)
+  getClientId: () => {
+    return Promise.resolve(localStorage.getItem(REACTOTRON_ASYNC_CLIENT_ID))
   },
   setClientId: clientId => {
-    return localStorage.setItem(REACTOTRON_ASYNC_CLIENT_ID, clientId)
+    localStorage.setItem(REACTOTRON_ASYNC_CLIENT_ID, clientId)
   }
 }
 
