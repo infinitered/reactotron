@@ -1,4 +1,4 @@
-import { action, computed, observable, reaction } from "mobx"
+import { action, computed, observable, reaction, toJS } from "mobx"
 import {
   any,
   contains,
@@ -51,9 +51,6 @@ class Session {
   port = 9090
 
   commandsManager = new Commands()
-
-  // holds the last known state of the subscription values
-  subscriptions
 
   /**
    * Manages state backup persistence.
@@ -174,26 +171,25 @@ class Session {
     // get the list of changes
     const rawChanges = command.payload ? command.payload.changes : []
 
-    // convert it to a map
-    const newSubscriptions = fromPairs(map(change => [change.path, change.value], rawChanges))
+    // turn the new subscription values into an object
+    const newSubs = fromPairs(map(change => [change.path, change.value], rawChanges))
 
-    // if they're not identical
-    const isNew = this.subscriptions && !equals(this.subscriptions, newSubscriptions)
+    // turn the old subscription values into an object
+    const oldSubs = fromPairs(map(change => [change.path, change.value], this.watches))
 
-    if (isNew) {
+    // has the subscription data changed at all?
+    if (!equals(oldSubs, newSubs)) {
       // calculate the difference between the two
-      const diff = shallowDiff(this.subscriptions, newSubscriptions)
+      const diff = shallowDiff(oldSubs, newSubs)
 
       // put these back on the payload of that message
       command.payload.changed = map(v => v.rightValue, diff.difference || [])
       command.payload.added = diff.onlyOnRight || []
       command.payload.removed = diff.onlyOnLeft || []
-
-      // remember the most recent
+      return true
+    } else {
+      return false
     }
-    this.subscriptions = newSubscriptions
-
-    return isNew
   }
 
   @action
