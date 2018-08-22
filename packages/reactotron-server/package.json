@@ -1,0 +1,31 @@
+{
+  "name": "reactotron-server",
+  "version": "2.0.0",
+  "description": "A reactotron server",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build:server": "yarn clean && tsc --p tsconfig.server.json",
+    "start:server": "yarn build:server && node dist/server/index.js"
+  },
+  "keywords": [],
+  "author": "Steve Kellock and Richard Evans",
+  "bugs": {
+    "url": "https://github.com/infinitered/reactotron/issues"
+  },
+  "homepage": "https://github.com/infinitered/reactotron",
+  "license": "MIT",
+  "repository": "infinitered/reactotron",
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "prettier": "^1.14.2",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.1"
+  },
+  "dependencies": {
+    "apollo-server-express": "^2.0.4",
+    "express": "^4.16.3",
+    "graphql": "^0.13.2",
+    "reactotron-core-server": "^2.1.0"
+  }
+}
