@@ -31,7 +31,7 @@ function onConnectionEstablished(connection: any) {
     windowFontScale: connection.windowFontScale,
     reactotronCoreClientVersion: connection.reactotronCoreClientVersion,
     address: connection.address,
-    // id: connection.id,
+    id: connection.id,
 
   }
   connections.addConnection(newConnection)

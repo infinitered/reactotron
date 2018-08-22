@@ -26,7 +26,7 @@ export type Connection = {
   windowFontScale?: number
   reactotronCoreClientVersion?: string
   address?: string
-  // id?: number
+  id?: number
 }
 
 export class Connections {
