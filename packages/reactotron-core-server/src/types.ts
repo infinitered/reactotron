@@ -55,6 +55,11 @@ export type ServerEvent =
   | "connect"
 
   /**
+   * A client connection has been fully established.
+   */
+  | "connectionEstablished"
+
+  /**
    * A client has disconnected.
    */
   | "disconnect"
