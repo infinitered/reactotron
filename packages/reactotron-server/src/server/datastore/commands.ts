@@ -1,4 +1,6 @@
-export type Command = {}
+export interface Command {
+  type: string
+}
 
 export class Commands {
   commands: Command[] = []
@@ -8,6 +10,6 @@ export class Commands {
   }
 
   all() {
-      return this.commands
+    return this.commands
   }
 }
