@@ -32,7 +32,6 @@ function onConnectionEstablished(connection: any) {
     reactotronCoreClientVersion: connection.reactotronCoreClientVersion,
     address: connection.address,
     id: connection.id,
-
   }
   connections.addConnection(newConnection)
   messaging.publish(MessageTypes.CONNECTION_ESTABLISHED, { connectionsUpdated: connections.all() })
