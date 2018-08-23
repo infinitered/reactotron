@@ -1,6 +1,4 @@
-export interface Command {
-  type: string
-}
+import { Command } from "../schema"
 
 export class Commands {
   commands: Command[] = []
