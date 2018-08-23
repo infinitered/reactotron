@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from "type-graphql"
+import { ObjectType, Field, Int, ArgsType } from "type-graphql"
 import * as GraphQLJSON from "graphql-type-json"
 
 @ObjectType()
@@ -23,4 +23,10 @@ export class Command {
 
   @Field(() => GraphQLJSON)
   payload: object
+}
+
+@ArgsType()
+export class CommandAddedArgs {
+  @Field({ nullable: true })
+  clientId?: string
 }

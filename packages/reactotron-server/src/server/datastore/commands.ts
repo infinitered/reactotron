@@ -7,6 +7,10 @@ export class Commands {
     this.commands.push(command)
   }
 
+  byClientId(clientId) {
+    return this.commands.filter(cmd => cmd.clientId === clientId)
+  }
+
   all() {
     return this.commands
   }
