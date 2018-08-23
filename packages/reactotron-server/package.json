@@ -26,6 +26,7 @@
     "apollo-server-express": "^2.0.4",
     "express": "^4.16.3",
     "graphql": "^0.13.2",
+    "graphql-type-json": "^0.2.1",
     "reactotron-core-server": "^2.1.0",
     "reflect-metadata": "^0.1.12",
     "type-graphql": "^0.13.1"
