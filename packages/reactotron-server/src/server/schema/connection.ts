@@ -1,4 +1,4 @@
-import { ObjectType, Field } from "type-graphql"
+import { ObjectType, Field, Int } from "type-graphql"
 
 @ObjectType()
 export class Connection {
@@ -83,6 +83,6 @@ export class Connection {
   @Field({ nullable: true })
   address?: string
 
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   id?: number
 }
