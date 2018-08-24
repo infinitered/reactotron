@@ -3,17 +3,23 @@ import Server, { createServer } from "reactotron-core-server"
 import { addEventHandlers as addConnectionEventHandlers } from './connectionHandler'
 import { addEventHandlers as addCommandEventHandlers } from './commandHandler'
 
-let reactotronServer: Server
+class ReactotronServer {
+  server: Server
 
-export function createReactotronServer(port = 9090) {
-  if (!reactotronServer) {
-    reactotronServer = createServer({ port })
+  start(port = 9090) {
+    this.server = createServer({ port })
 
-    addConnectionEventHandlers(reactotronServer)
-    addCommandEventHandlers(reactotronServer)
+    addConnectionEventHandlers(this.server)
+    addCommandEventHandlers(this.server)
 
-    reactotronServer.start()
+    this.server.start()
   }
 
-  return reactotronServer
+  send(type, payload) {
+    this.server.send(type, payload)
+  }
 }
+
+const reactotron = new ReactotronServer()
+
+export { reactotron }

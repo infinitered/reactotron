@@ -2,7 +2,7 @@ import { Resolver, Query, Subscription, Root, Args, Arg } from "type-graphql"
 
 import { MessageTypes } from "../../messaging"
 import { Command } from "../../schema"
-import { commands } from "../../datastore"
+import { commandsStore } from "../../datastore"
 import { CommandAddedArgs } from "../../schema/command"
 
 @Resolver()
@@ -10,10 +10,10 @@ export class CommandsResolver {
   @Query(() => [Command])
   commands(@Arg("clientId", { nullable: true }) clientId?: string) {
     if (clientId) {
-      return commands.byClientId(clientId)
+      return commandsStore.byClientId(clientId)
     }
 
-    return commands.all()
+    return commandsStore.all()
   }
 
   @Subscription(() => Command, {
