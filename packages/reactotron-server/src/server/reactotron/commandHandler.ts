@@ -3,7 +3,8 @@ import { messaging, MessageTypes } from "../messaging"
 
 function onCommand(command) {
   commands.addCommand(command)
-  messaging.publish(MessageTypes.COMMAND_ADDED, { commandAdded: command })
+
+  messaging.publish(MessageTypes.COMMAND_ADDED, command)
 }
 
 export function addEventHandlers(reactotronServer) {

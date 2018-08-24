@@ -1,6 +1,6 @@
 import { connections } from "../datastore"
 import { messaging, MessageTypes } from "../messaging"
-import { Connection } from "../datastore/connections"
+import { Connection } from "../schema"
 
 function onConnectionEstablished(connection: any) {
   const newConnection: Connection = {
@@ -34,13 +34,12 @@ function onConnectionEstablished(connection: any) {
     id: connection.id,
   }
   connections.addConnection(newConnection)
-  messaging.publish(MessageTypes.CONNECTION_ESTABLISHED, { connectionsUpdated: connections.all() })
+  messaging.publish(MessageTypes.CONNECTION_ESTABLISHED, null)
 }
 
 function onConnectionDisconnected(connection) {
-  // TODO: Remove this junk
   connections.removeConnection(connection)
-  messaging.publish(MessageTypes.CONNECTION_DISCONNECTED, { connectionsUpdated: connections.all() })
+  messaging.publish(MessageTypes.CONNECTION_DISCONNECTED, null)
 }
 
 export function addEventHandlers(reactotronServer) {
