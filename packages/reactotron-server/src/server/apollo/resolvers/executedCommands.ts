@@ -3,14 +3,14 @@ import * as GraphQLJSON from "graphql-type-json"
 
 import { messaging, MessageTypes } from "../../messaging"
 import { ExecutedCommand } from "../../schema"
-import { executedCommands } from "../../datastore"
-import { createReactotronServer } from "../../reactotron"
+import { executedCommandsStore } from "../../datastore"
+import { reactotron } from "../../reactotron"
 
 @Resolver()
 export class ExecutedCommandsResolver {
   @Query(() => [ExecutedCommand])
   executedCommands() {
-    return executedCommands.all()
+    return executedCommandsStore.all()
   }
 
   @Mutation()
@@ -24,15 +24,10 @@ export class ExecutedCommandsResolver {
       payload,
     }
 
-    executedCommands.addCommand(newCommand)
+    executedCommandsStore.addCommand(newCommand)
     messaging.publish(MessageTypes.EXECUTED_COMMAND_ADDED, newCommand)
 
-    // Welcome to the hack zone. Where everything is permitted as long as it works.
-    // TODO: Better name? Put this into a singleton that we can import and use instead of this function? Better everything? something? ANYTHING?
-    const reactotronServer = createReactotronServer()
-
-    reactotronServer.send(type, payload)
-    // Now leaving the hack zone.
+    reactotron.send(type, payload)
 
     return true
   }

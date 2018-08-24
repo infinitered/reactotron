@@ -2,8 +2,8 @@ import { Connections } from "./connections"
 import { Commands } from "./commands"
 import { ExecutedCommands } from "./executedCommands"
 
-const connections = new Connections()
-const commands = new Commands()
-const executedCommands = new ExecutedCommands()
+const connectionsStore = new Connections()
+const commandsStore = new Commands()
+const executedCommandsStore = new ExecutedCommands()
 
-export { connections, commands, executedCommands }
+export { connectionsStore, commandsStore, executedCommandsStore }

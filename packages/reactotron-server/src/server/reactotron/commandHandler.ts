@@ -1,4 +1,4 @@
-import { commands } from "../datastore"
+import { commandsStore } from "../datastore"
 import { messaging, MessageTypes } from "../messaging"
 import { Command } from "../schema"
 
@@ -11,7 +11,7 @@ import { Command } from "../schema"
  * @param command A command sent from the client.
  */
 export function onCommand(command: Command) {
-  commands.addCommand(command)
+  commandsStore.addCommand(command)
 
   messaging.publish(MessageTypes.COMMAND_ADDED, command)
 }

@@ -39,7 +39,8 @@
     "graphql-type-json": "^0.2.1",
     "reactotron-core-server": "^2.1.0",
     "reflect-metadata": "^0.1.12",
-    "type-graphql": "^0.13.1"
+    "type-graphql": "^0.13.1",
+    "yargs-parser": "^10.1.0"
   },
   "ava": {
     "files": [

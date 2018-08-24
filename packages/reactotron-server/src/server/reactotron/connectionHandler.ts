@@ -1,4 +1,4 @@
-import { connections } from "../datastore"
+import { connectionsStore } from "../datastore"
 import { messaging, MessageTypes } from "../messaging"
 import { Connection } from "../schema"
 
@@ -33,12 +33,12 @@ function onConnectionEstablished(connection: any) {
     address: connection.address,
     id: connection.id,
   }
-  connections.addConnection(newConnection)
+  connectionsStore.addConnection(newConnection)
   messaging.publish(MessageTypes.CONNECTION_ESTABLISHED, null)
 }
 
 function onConnectionDisconnected(connection) {
-  connections.removeConnection(connection)
+  connectionsStore.removeConnection(connection)
   messaging.publish(MessageTypes.CONNECTION_DISCONNECTED, null)
 }
 
