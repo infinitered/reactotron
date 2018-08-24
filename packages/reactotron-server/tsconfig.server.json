@@ -1,19 +1,6 @@
 {
-    "compilerOptions": {
-      "moduleResolution": "node",
-      "target": "es5",
-      "module": "commonjs",
-      "lib": ["es2015", "es2016", "es2017", "esnext"],
-      "strict": false,
-      "sourceMap": true,
-      // "declaration": true,
-      "allowSyntheticDefaultImports": true,
-      "experimentalDecorators": true,
-      "emitDecoratorMetadata": true,
-      // "declarationDir": "dist",
-      "outDir": "dist/server",
-      "noUnusedLocals": true,
-      "removeComments": true
-    },
-    "include": ["src"]
-  }
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "outDir": "dist/server",
+  },
+}
