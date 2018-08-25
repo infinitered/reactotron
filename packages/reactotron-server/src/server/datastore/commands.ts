@@ -7,8 +7,22 @@ export class Commands {
     this.commands.push(command)
   }
 
-  byClientId(clientId) {
-    return this.commands.filter(cmd => cmd.clientId === clientId)
+  filterItem(item: Command, clientId?: string, filter?: [string]) {
+    return (
+      (!clientId || item.clientId === clientId) &&
+      (!filter || filter.some(fil => fil === item.type))
+    )
+  }
+
+  // Ideally this would be something we could figure out above but I couldn't get a boolean | Function return type to play well with the filter line below
+  filterItemComposable(clientId?: string, filter?: [string]) {
+    return function(item: Command) {
+      return this.filterItem(item, clientId, filter)
+    }
+  }
+
+  get(clientId?: string, filter?: [string]) {
+    return this.commands.filter(this.filterItemComposable(clientId, filter))
   }
 
   all() {

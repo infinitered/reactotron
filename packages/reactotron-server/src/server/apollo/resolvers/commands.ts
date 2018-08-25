@@ -8,19 +8,18 @@ import { CommandAddedArgs } from "../../schema/command"
 @Resolver()
 export class CommandsResolver {
   @Query(() => [Command])
-  commands(@Arg("clientId", { nullable: true }) clientId?: string) {
-    if (clientId) {
-      return commandsStore.byClientId(clientId)
-    }
-
-    return commandsStore.all()
+  commands(
+    @Arg("clientId", { nullable: true }) clientId?: string,
+    @Arg("filter", () => [String], { nullable: true }) filter?: [string],
+  ) {
+    return commandsStore.get(clientId, filter)
   }
 
   @Subscription(() => Command, {
     topics: [MessageTypes.COMMAND_ADDED],
-    filter: ({ payload, args }) => !args.clientId || args.clientId === payload.clientId,
+    filter: ({ payload, args }) => commandsStore.filterItem(payload, args.clientId, args.filter),
   })
-  commandAdded(@Root() command: Command, @Args() { clientId }: CommandAddedArgs): Command {
+  commandAdded(@Root() command: Command, @Args() { clientId, filter }: CommandAddedArgs): Command {
     return command
   }
 }

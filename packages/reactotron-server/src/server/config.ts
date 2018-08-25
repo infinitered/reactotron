@@ -5,7 +5,7 @@ export function getConfig(configPath: string) {
 
   let config = {
     webPort: 4000,
-    reactotronPort: 9091,
+    reactotronPort: 9090,
   }
 
   if (fs.existsSync(configPathTrimmed)) {

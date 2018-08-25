@@ -29,4 +29,7 @@ export class Command {
 export class CommandAddedArgs {
   @Field({ nullable: true })
   clientId?: string
+
+  @Field(() => [String], { nullable: true })
+  filter?: string[]
 }
