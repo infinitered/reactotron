@@ -1,14 +1,14 @@
 import * as fs from "fs"
 
 export function getConfig(configPath: string) {
-  const configPathTrimmed = configPath.trim()
+  const configPathTrimmed = configPath ? configPath.trim() : ''
 
   let config = {
     webPort: 4000,
     reactotronPort: 9090,
   }
 
-  if (fs.existsSync(configPathTrimmed)) {
+  if (configPath && fs.existsSync(configPathTrimmed)) {
     try {
       const configContents = fs.readFileSync(configPathTrimmed, "utf8")
       const userConfig = JSON.parse(configContents)

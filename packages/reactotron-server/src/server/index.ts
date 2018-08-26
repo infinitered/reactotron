@@ -5,18 +5,19 @@ import * as express from "express"
 import { createServer } from "http"
 
 import { getConfig } from "./config"
+import { pluginManager } from "./pluginManager"
 import { createApolloServer } from "./apollo"
 import { reactotron } from "./reactotron"
 
 const argv = argsParser(process.argv.slice(2), {
   alias: {
-    config: ['c']
-  }
+    config: ["c"],
+  },
 })
 
 const config = getConfig(argv.config)
 
-console.log(config)
+pluginManager.loadPlugins()
 
 async function bootUp() {
   reactotron.start(config.reactotronPort)
@@ -32,7 +33,11 @@ async function bootUp() {
   })
 
   httpServer.listen({ port: config.webPort }, () => {
-    console.log(`Server ready at http://localhost:${config.webPort}. Reactotron started on port ${config.reactotronPort}`)
+    console.log(
+      `Server ready at http://localhost:${config.webPort}. Reactotron started on port ${
+        config.reactotronPort
+      }`,
+    )
   })
 }
 
