@@ -26,7 +26,7 @@ class PluginManager {
     // TODO: Be more safe. Not sure if this can fail too easily
     return fs
       .readdirSync(basePath)
-      .filter(name => name.startsWith("reactotron-server-plugin")) // TODO: Should we really be this forceful?
+      .filter(name => name.startsWith("reactotron-plugin")) // TODO: Should we really be this forceful?
       .map(name => path.join(basePath, name))
   }
 
@@ -34,9 +34,9 @@ class PluginManager {
     const configContents = fs.readFileSync(path.join(pluginPath, "package.json"), "utf8")
     const packageJson = JSON.parse(configContents)
 
-    if (!packageJson.main) return
+    if (!packageJson.plugin) return
 
-    const plugin = require(path.join(pluginPath, packageJson.main))
+    const plugin = require(path.join(pluginPath, packageJson.plugin))
 
     this.registerSchema(plugin.resolvers)
     this.registerEventHandlers(plugin.eventHandlers)

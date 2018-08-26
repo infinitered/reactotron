@@ -1,6 +1,7 @@
 import Reactotron from 'reactotron-react-native'
 import { reactotronRedux as reduxPlugin } from 'reactotron-redux'
 import sagaPlugin from 'reactotron-redux-saga'
+import examplePlugin from 'reactotron-plugin-example'
 
 console.disableYellowBox = true
 
@@ -21,6 +22,7 @@ Reactotron.useReactNative({
 // add some more plugins for redux & redux-saga
 Reactotron.use(reduxPlugin())
 Reactotron.use(sagaPlugin())
+Reactotron.use(examplePlugin())
 
 // if we're running in DEV mode, then let's connect!
 if (__DEV__) {
@@ -29,5 +31,9 @@ if (__DEV__) {
 }
 
 Reactotron.onCustomCommand('test', () => console.tron.log('This is an example'))
+
+setInterval(() => {
+  Reactotron.aTestPlugin()
+}, 1000)
 
 console.tron = Reactotron

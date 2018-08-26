@@ -1,4 +1,5 @@
 import { TestSchemaResolver } from "./apollo/resolvers"
+import { testSchemaStore } from "./datastore/testSchemaStore"
 
 const resolvers = [TestSchemaResolver]
 
@@ -6,8 +7,9 @@ const eventHandlers = [
   {
     type: "command",
     handler: (command: any) => {
-      // TODO: Probably need to get a way to have a command defintion outside of reactotron-server
-      console.log("Command Received", command)
+      if (command.type === "example.test") {
+        testSchemaStore.addTestSchema(command.payload)
+      }
     },
   },
 ]

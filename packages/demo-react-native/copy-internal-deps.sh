@@ -18,6 +18,7 @@ rm -f node_modules/reactotron-redux-saga
 rm -f node_modules/reactotron-core-client
 rm -f node_modules/reactotron-redux
 rm -f node_modules/reactotron-apisauce
+rm -r node_modules/reactotron-plugin-example
 
 # reactotron-core-client
 cd ../reactotron-core-client
@@ -53,3 +54,10 @@ yarn run build
 cd ../demo-react-native
 mkdir -p ./node_modules/reactotron-redux-saga
 cp ../reactotron-redux-saga/dist/index.js ./node_modules/reactotron-redux-saga/index.js
+
+# reactotron-plugin-example
+cd ../reactotron-plugin-example
+yarn run build
+cd ../demo-react-native
+mkdir -p ./node_modules/reactotron-plugin-example/dist/client
+cp ../reactotron-plugin-example/dist/client/index.js ./node_modules/reactotron-plugin-example/index.js
