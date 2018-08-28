@@ -1,4 +1,4 @@
-import { commandsStore } from "../datastore"
+import { commandsStore, backupsStore } from "../datastore"
 import { messaging, MessageTypes } from "../messaging"
 import { Command } from "../schema"
 import { pluginManager } from "../pluginManager"
@@ -15,6 +15,12 @@ export function onCommand(command: Command) {
   commandsStore.addCommand(command)
   messaging.publish(MessageTypes.COMMAND_ADDED, command)
   pluginManager.onCommand(command)
+
+  // TODO: Burn this to the ground once we pull it out to a plugin yo.
+  if (command.type === "state.backup.response") {
+    backupsStore.addBackup(command)
+    messaging.publish(MessageTypes.BACKUP_ADDED, command)
+  }
 }
 
 /**

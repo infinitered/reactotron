@@ -48,7 +48,7 @@ class PluginManager {
     }
   }
 
-  private registerEventHandlers(handlers?: { type: "command"; handler: Function }[]) {
+  private registerEventHandlers(handlers?: { type: "command", handler: Function }[]) {
     if (handlers) {
       handlers.forEach(handler => {
         if (handler.type === "command") {

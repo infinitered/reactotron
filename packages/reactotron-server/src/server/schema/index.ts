@@ -1,5 +1,6 @@
-import { Connection } from "./connection"
+import { Backup } from "./backup"
 import { Command } from "./command"
+import { Connection } from "./connection"
 import { ExecutedCommand } from "./executedCommand"
 
-export { Connection, Command, ExecutedCommand }
+export { Backup, Command, Connection, ExecutedCommand }

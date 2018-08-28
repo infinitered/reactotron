@@ -1,7 +1,8 @@
-import { ConnectionsResolver } from "./connections"
+import { BackupsResolver } from "./backups"
 import { CommandsResolver } from "./commands"
+import { ConnectionsResolver } from "./connections"
 import { ExecutedCommandsResolver } from "./executedCommands"
 
-const resolvers = [ConnectionsResolver, CommandsResolver, ExecutedCommandsResolver]
+const resolvers = [BackupsResolver, CommandsResolver, ConnectionsResolver, ExecutedCommandsResolver]
 
 export { resolvers }
