@@ -1,0 +1,22 @@
+{
+  "name": "reactotron-plugin-legacy",
+  "version": "1.0.0",
+  "description": "",
+  "plugin": "dist/index.js",
+  "scripts": {
+    "compile": "tsc",
+    "clean": "rimraf dist build",
+    "lint": "tslint -p .",
+    "build": "yarn clean && yarn compile"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "graphql-type-json": "^0.2.1",
+    "type-graphql": "^0.13.1"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.2",
+    "typescript": "^3.0.1"
+  }
+}

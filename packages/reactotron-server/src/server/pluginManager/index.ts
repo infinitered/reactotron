@@ -1,6 +1,7 @@
 import * as path from "path"
 import * as fs from "fs"
 
+import { messaging } from "../messaging"
 import { Command } from "../schema"
 
 class PluginManager {
@@ -40,6 +41,7 @@ class PluginManager {
 
     this.registerSchema(plugin.resolvers)
     this.registerEventHandlers(plugin.eventHandlers)
+    this.setupMessaging(plugin.setMessenger)
   }
 
   private registerSchema(resolvers?: Function[]) {
@@ -56,6 +58,12 @@ class PluginManager {
           this.commandHandlers.push(handler.handler)
         }
       })
+    }
+  }
+
+  private setupMessaging(setMessenger?: Function) {
+    if (setMessenger) {
+      setMessenger(messaging)
     }
   }
 }

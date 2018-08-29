@@ -24,6 +24,10 @@
     "ts-jest": "^21.1.2",
     "typescript": "^2.5.3"
   },
+  "workspaces": [
+    "packages/reactotron-server",
+    "packages/reactotron-plugin-*"
+  ],
   "lint-staged": {
     "subTaskConcurrency": 1,
     "linters": {

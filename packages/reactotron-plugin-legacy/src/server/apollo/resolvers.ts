@@ -1,10 +1,8 @@
-// TODO: Pipedream: Offload this to a plugin. In the interest of not having to re-write all the plugins right away with this rewrite of
-// reactotron putting this in core. One day lets remove it, ok?
-import { Resolver, Query, Subscription, Root, Mutation, Arg } from "type-graphql"
+import { Resolver, Query, Mutation, Arg, Int, Subscription, Root } from "type-graphql"
 
-import { messaging, MessageTypes } from "../../messaging"
-import { Backup } from "../../schema"
-import { backupsStore } from "../../datastore"
+import { messaging, MessageTypes } from "../messaging"
+import { Backup } from "./schema"
+import { backupsStore } from "../datastore/backupStore"
 
 @Resolver()
 export class BackupsResolver {
@@ -15,7 +13,7 @@ export class BackupsResolver {
 
   @Mutation()
   setBackupName(
-    @Arg("id") id: number,
+    @Arg("id", () => Int) id: number,
     @Arg("name") name: string
   ): boolean {
     backupsStore.setBackupName(id, name);

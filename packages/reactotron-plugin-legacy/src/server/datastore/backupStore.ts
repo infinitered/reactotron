@@ -1,14 +1,12 @@
-// TODO: Pipedream: Offload this to a plugin. In the interest of not having to re-write all the plugins right away with this rewrite of
-// reactotron putting this in core. One day lets remove it, ok?
 import { format } from "date-fns"
 
-import { Backup, Command } from "../schema"
+import { Backup } from "../apollo/schema"
 
-export class Backups {
+class Backups {
   backupIdCounter: number = 0
   backups: Backup[] = []
 
-  addBackup(command: Command) {
+  addBackup(command: any) { // TODO: Get a defintion of command in here somewhere!
     this.backupIdCounter++
 
     const id = this.backupIdCounter
@@ -36,3 +34,7 @@ export class Backups {
     return this.backups
   }
 }
+
+const backupsStore = new Backups()
+
+export { backupsStore }
