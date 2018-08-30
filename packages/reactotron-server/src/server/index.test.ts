@@ -2,7 +2,7 @@ import test from "ava"
 import * as request from "request-promise-native"
 import { httpServerInstance, apolloServerInstance } from './'
 
-// Tests in here are ran in serial due to the webserver binding to port 4000 (concurrency results in EADDRINUSE)
+// Tests in here are ran in serial due to the webserver binding to port 4000 (concurrency results in EADDRINUSE error)
 
 let app, httpServer;
 
@@ -20,16 +20,17 @@ test.serial("Can create a http server to serve react app", async t => {
 
   t.true(httpServer !== null && typeof httpServer === "object")
 
-  const httpString = await request("http://localhost:4000").catch(err => {
+  const responseString = await request("http://localhost:4000").catch(err => {
     t.is(err, null, "request to http server has errored")
   })
 
-  
+  t.true(responseString.includes("the new home of reactotron"))
 }) 
 
-test.serial("Can create an apollo server to interact with react app", t => {
+test.serial("Can create an apollo server to interact with react app", async t => {
   
-  const apolloServer = apolloServerInstance(app, httpServer)
+  const apolloServer = await apolloServerInstance(app, httpServer)
 
   t.true(apolloServer !== null && typeof apolloServer === "object")
+  t.true(apolloServer.graphqlPath === '/graphql')
 }) 

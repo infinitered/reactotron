@@ -51,7 +51,7 @@ export const bootUp = async () => {
 
   const { app, httpServer } = await httpServerInstance()
   
-  // Ignore compile issue as we will be using this later
+  // Ignore compile issue of unusued var as we will be using this later
   // @ts-ignore
   const apolloServer = await apolloServerInstance(app, httpServer)
 }
