@@ -19,14 +19,17 @@ const config = getConfig(argv.config)
 
 pluginManager.loadPlugins()
 
-async function bootUp() {
-  reactotron.start(config.reactotronPort)
+export const apolloServerInstance = async (app, httpServer) => {
   const apolloServer = await createApolloServer()
-  const app = express()
-  const httpServer = createServer(app)
-
   apolloServer.applyMiddleware({ app })
   apolloServer.installSubscriptionHandlers(httpServer)
+
+  return apolloServer
+}
+
+export const httpServerInstance = () => {
+  const app = express()
+  const httpServer = createServer(app)
 
   app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "index.html"))
@@ -39,6 +42,21 @@ async function bootUp() {
       }`,
     )
   })
+
+  return { app, httpServer }
 }
 
-bootUp()
+export const bootUp = async () => {
+  reactotron.start(config.reactotronPort)
+
+  const { app, httpServer } = await httpServerInstance()
+  
+  // Ignore compile issue as we will be using this later
+  // @ts-ignore
+  const apolloServer = await apolloServerInstance(app, httpServer)
+}
+
+// Only actually boot the server if we are not running tests
+if (process.env.NODE_ENV !== 'test') {
+  bootUp();
+}

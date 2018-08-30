@@ -4,6 +4,7 @@
     "sourceMap": false,
     "inlineSourceMap": true,
     "outDir": "build",
+    "noUnusedLocals": false,
   },
   "include": ["src", "test"]
 }
