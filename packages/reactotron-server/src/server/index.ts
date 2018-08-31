@@ -35,25 +35,35 @@ export const httpServerInstance = () => {
     res.sendFile(path.join(__dirname, "..", "index.html"))
   })
 
-  httpServer.listen({ port: config.webPort }, () => {
-    console.log(
-      `Server ready at http://localhost:${config.webPort}. Reactotron started on port ${
-        config.reactotronPort
-      }`,
-    )
-  })
-
   return { app, httpServer }
 }
 
-export const bootUp = async () => {
-  reactotron.start(config.reactotronPort)
-
-  const { app, httpServer } = await httpServerInstance()
+export const startServersListening = async ({ httpServer }, apolloServer = null, reactotronServer = null) => {
   
-  // Ignore compile issue of unusued var as we will be using this later
-  // @ts-ignore
+  // If we have been given a reactotron server instance, start listening
+  if (reactotronServer) {
+    reactotronServer.start(config.reactotronPort)
+  }
+
+  // @TODO Id expect some way to actually "start" apollo server listening in here, but new to this...
+
+  // Start express server listening
+  httpServer.listen({ port: config.webPort }, () => {
+    console.log(`Server ready at http://localhost:${config.webPort}. Reactotron started on port ${config.reactotronPort}`)
+
+    if (apolloServer) {
+      console.log(`🚀 Subscriptions ready at ws://localhost:${config.webPort}${apolloServer.subscriptionsPath}`)
+      console.log(`GQL query browser ready at http://localhost:${config.webPort}/graphql`)
+    }
+  })
+}
+
+export const bootUp = async () => {
+  const appServer = await httpServerInstance()
+  const { app, httpServer } = appServer
   const apolloServer = await apolloServerInstance(app, httpServer)
+
+  return startServersListening(appServer, apolloServer, reactotron);
 }
 
 // Only actually boot the server if we are not running tests
