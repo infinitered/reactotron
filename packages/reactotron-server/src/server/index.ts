@@ -53,6 +53,7 @@ export const startServersListening = async ({ httpServer }, apolloServer = null,
 
     if (apolloServer) {
       console.log(`🚀 Subscriptions ready at ws://localhost:${config.webPort}${apolloServer.subscriptionsPath}`)
+      console.log(`GQL query browser ready at http://localhost:${config.webPort}/graphql`)
     }
   })
 }
