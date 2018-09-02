@@ -1,6 +1,7 @@
 import { Resolver, Query, Mutation, Arg, Int, Subscription, Root } from "type-graphql"
+import { messaging } from "reactotron-core-plugin"
 
-import { messaging, MessageTypes } from "../messaging"
+import * as MessageTypes from "../types"
 import { Backup } from "./schema"
 import { backupsStore } from "../datastore/backupStore"
 
@@ -13,10 +14,11 @@ export class BackupsResolver {
 
   @Mutation()
   setBackupName(
-    @Arg("id", () => Int) id: number,
-    @Arg("name") name: string
+    @Arg("id", () => Int)
+    id: number,
+    @Arg("name") name: string,
   ): boolean {
-    backupsStore.setBackupName(id, name);
+    backupsStore.setBackupName(id, name)
     messaging.publish(MessageTypes.BACKUP_RENAMED, { id, name })
 
     return true
@@ -32,7 +34,7 @@ export class BackupsResolver {
   @Subscription(() => Backup, {
     topics: [MessageTypes.BACKUP_RENAMED],
   })
-  backupRenamed(@Root() updateInfo: { id: number, name: string }): { id: number, name: string } {
+  backupRenamed(@Root() updateInfo: { id: number; name: string }): { id: number; name: string } {
     return updateInfo
   }
 }

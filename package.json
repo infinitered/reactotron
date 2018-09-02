@@ -26,6 +26,7 @@
   },
   "workspaces": [
     "packages/reactotron-server",
+    "packages/reactotron-core-plugin",
     "packages/reactotron-plugin-*"
   ],
   "lint-staged": {

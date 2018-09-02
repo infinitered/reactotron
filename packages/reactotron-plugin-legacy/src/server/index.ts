@@ -1,19 +1,19 @@
+import { Plugin, messaging } from "reactotron-core-plugin"
+
 import { BackupsResolver } from "./apollo/resolvers"
 import { backupsStore } from "./datastore/backupStore"
-import { messaging, MessageTypes, setMessenger } from "./messaging"
+import * as MessageTypes from "./types"
 
-const resolvers = [BackupsResolver]
+const plugin = new Plugin()
 
-const eventHandlers = [
-  {
-    type: "command",
-    handler: (command: any) => {
-      if (command.type === "state.backup.response") {
-        backupsStore.addBackup(command)
-        messaging.publish(MessageTypes.BACKUP_ADDED, command)
-      }
-    },
+plugin.addResolver(BackupsResolver).addEventHandler({
+  type: "command",
+  handler: (command: any) => {
+    if (command.type === "state.backup.response") {
+      backupsStore.addBackup(command)
+      messaging.publish(MessageTypes.BACKUP_ADDED, command)
+    }
   },
-]
+})
 
-export { resolvers, eventHandlers, setMessenger }
+export default plugin
