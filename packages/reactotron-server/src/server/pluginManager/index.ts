@@ -1,6 +1,8 @@
 import * as path from "path"
 import * as fs from "fs"
+import { Plugin, EventHandler } from "reactotron-core-plugin"
 
+import { messaging } from "../messaging"
 import { Command } from "../schema"
 
 class PluginManager {
@@ -36,10 +38,11 @@ class PluginManager {
 
     if (!packageJson.plugin) return
 
-    const plugin = require(path.join(pluginPath, packageJson.plugin))
+    const plugin: Plugin = require(path.join(pluginPath, packageJson.plugin)).default
 
-    this.registerSchema(plugin.resolvers)
-    this.registerEventHandlers(plugin.eventHandlers)
+    this.registerSchema(plugin.getResolvers())
+    this.registerEventHandlers(plugin.getEventHandlers())
+    this.setupMessaging(plugin.setMessenger)
   }
 
   private registerSchema(resolvers?: Function[]) {
@@ -48,7 +51,7 @@ class PluginManager {
     }
   }
 
-  private registerEventHandlers(handlers?: { type: "command"; handler: Function }[]) {
+  private registerEventHandlers(handlers?: EventHandler[]) {
     if (handlers) {
       handlers.forEach(handler => {
         if (handler.type === "command") {
@@ -56,6 +59,12 @@ class PluginManager {
           this.commandHandlers.push(handler.handler)
         }
       })
+    }
+  }
+
+  private setupMessaging(setMessenger?: Function) {
+    if (setMessenger) {
+      setMessenger(messaging)
     }
   }
 }
