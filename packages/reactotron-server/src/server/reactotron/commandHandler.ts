@@ -1,6 +1,7 @@
 import { commandsStore } from "../datastore"
 import { messaging, MessageTypes } from "../messaging"
 import { Command } from "../schema"
+import { pluginManager } from "../pluginManager"
 
 /**
  * Fires when an event arrives from a reactotron client.
@@ -12,8 +13,8 @@ import { Command } from "../schema"
  */
 export function onCommand(command: Command) {
   commandsStore.addCommand(command)
-
   messaging.publish(MessageTypes.COMMAND_ADDED, command)
+  pluginManager.onCommand(command)
 }
 
 /**

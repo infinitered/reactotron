@@ -22,7 +22,7 @@ export class Command {
   messageId: number
 
   @Field(() => GraphQLJSON)
-  payload: object
+  payload: any
 }
 
 @ArgsType()

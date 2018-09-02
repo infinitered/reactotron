@@ -46,7 +46,7 @@ test("onCommand", t => {
 
   t.notThrows(() => {
     // check that the datastore was called
-    td.verify(datastoreLib.commands.addCommand(command))
+    td.verify(datastoreLib.commandsStore.addCommand(command))
 
     // check that the pubsub happened
     td.verify(messagingLib.messaging.publish(MessageTypes.COMMAND_ADDED, command))

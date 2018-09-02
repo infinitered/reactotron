@@ -1,0 +1,21 @@
+{
+  "name": "reactotron-core-plugin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/reactotron-core-plugin.js",
+  "typings": "dist/types/reactotron-core-plugin.d.ts",
+  "scripts": {
+    "compile": "tsc",
+    "clean": "rimraf dist build",
+    "lint": "tslint -p .",
+    "build": "yarn clean && yarn compile"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.2",
+    "typescript": "^3.0.1"
+  }
+}
