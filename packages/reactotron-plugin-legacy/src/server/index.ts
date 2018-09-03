@@ -1,4 +1,4 @@
-import { Plugin, messaging } from "reactotron-core-plugin"
+import { Plugin, Messenger } from "reactotron-core-plugin"
 
 import { BackupsResolver } from "./apollo/resolvers"
 import { backupsStore } from "./datastore/backupStore"
@@ -11,7 +11,7 @@ plugin.addResolver(BackupsResolver).addEventHandler({
   handler: (command: any) => {
     if (command.type === "state.backup.response") {
       backupsStore.addBackup(command)
-      messaging.publish(MessageTypes.BACKUP_ADDED, command)
+      Messenger.publish(MessageTypes.BACKUP_ADDED, command)
     }
   },
 })

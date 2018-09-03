@@ -1,7 +1,7 @@
 import Server, { createServer } from "reactotron-core-server"
 
-import { addEventHandlers as addConnectionEventHandlers } from './connectionHandler'
-import { addEventHandlers as addCommandEventHandlers } from './commandHandler'
+import { addEventHandlers as addConnectionEventHandlers } from "./connectionHandler"
+import { addEventHandlers as addCommandEventHandlers } from "./commandHandler"
 
 class ReactotronServer {
   server: Server

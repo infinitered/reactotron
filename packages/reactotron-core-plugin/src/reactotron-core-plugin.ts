@@ -1,4 +1,4 @@
 import { Plugin, EventHandler } from "./plugin"
-import { messaging } from "./messaging"
+import { Messenger } from "./messaging"
 
-export { Plugin, EventHandler, messaging }
+export { Plugin, EventHandler, Messenger }

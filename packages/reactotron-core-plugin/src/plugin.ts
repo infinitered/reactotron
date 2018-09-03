@@ -1,4 +1,4 @@
-import { setMessenger } from "./messaging"
+import { Messenger } from "./messaging"
 
 export type EventHandler = {
   type: string
@@ -28,6 +28,6 @@ export class Plugin {
   }
 
   setMessenger(messengerClient) {
-    setMessenger(messengerClient)
+    Messenger.setMessenger(messengerClient)
   }
 }
