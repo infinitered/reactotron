@@ -22,11 +22,14 @@ export class Command {
   messageId: number
 
   @Field(() => GraphQLJSON)
-  payload: object
+  payload: any
 }
 
 @ArgsType()
 export class CommandAddedArgs {
   @Field({ nullable: true })
   clientId?: string
+
+  @Field(() => [String], { nullable: true })
+  filter?: string[]
 }

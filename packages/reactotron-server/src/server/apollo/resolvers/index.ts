@@ -1,7 +1,7 @@
-import { ConnectionsResolver } from "./connections"
 import { CommandsResolver } from "./commands"
+import { ConnectionsResolver } from "./connections"
 import { ExecutedCommandsResolver } from "./executedCommands"
 
-const resolvers = [ConnectionsResolver, CommandsResolver, ExecutedCommandsResolver]
+const resolvers = [CommandsResolver, ConnectionsResolver, ExecutedCommandsResolver]
 
 export { resolvers }
