@@ -50,8 +50,11 @@ export const httpServerInstance = () => {
   return { app, httpServer }
 }
 
-export const startServersListening = async ({ httpServer }, apolloServer = null, reactotronServer = null) => {
-  
+export const startServersListening = async (
+  { httpServer },
+  apolloServer = null,
+  reactotronServer = null,
+) => {
   // If we have been given a reactotron server instance, start listening
   if (reactotronServer) {
     reactotronServer.start(config.reactotronPort)
@@ -61,10 +64,18 @@ export const startServersListening = async ({ httpServer }, apolloServer = null,
 
   // Start express server listening
   httpServer.listen({ port: config.webPort }, () => {
-    console.log(`Server ready at http://localhost:${config.webPort}. Reactotron started on port ${config.reactotronPort}`)
+    console.log(
+      `Server ready at http://localhost:${config.webPort}. Reactotron started on port ${
+        config.reactotronPort
+      }`,
+    )
 
     if (apolloServer) {
-      console.log(`🚀 Subscriptions ready at ws://localhost:${config.webPort}${apolloServer.subscriptionsPath}`)
+      console.log(
+        `🚀 Subscriptions ready at ws://localhost:${config.webPort}${
+          apolloServer.subscriptionsPath
+        }`,
+      )
       console.log(`GQL query browser ready at http://localhost:${config.webPort}/graphql`)
     }
   })
@@ -75,10 +86,10 @@ export const bootUp = async () => {
   const { app, httpServer } = appServer
   const apolloServer = await apolloServerInstance(app, httpServer)
 
-  return startServersListening(appServer, apolloServer, reactotron);
+  return startServersListening(appServer, apolloServer, reactotron)
 }
 
 // Only actually boot the server if we are not running tests
-if (process.env.NODE_ENV !== 'test') {
-  bootUp();
+if (process.env.NODE_ENV !== "test") {
+  bootUp()
 }

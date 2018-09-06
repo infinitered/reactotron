@@ -1,7 +1,20 @@
-let messaging = null
+type PubSub = {
+    publish(triggerName: string, payload: any): boolean
+    subscribe(triggerName: string, onMessage: (...args: any[]) => void): Promise<number>
+    unsubscribe(subId: number): void
+    asyncIterator<T>(triggers: string | string[]): AsyncIterator<T>
+  }
 
-function setMessenger(messageClient) {
-    messaging = messageClient
-}
+  class Messenger {
+    static messagingClient: PubSub = null
 
-export { messaging, setMessenger }
+    static publish(triggerName: string, payload: any): boolean {
+      return this.messagingClient.publish(triggerName, payload)
+    }
+
+    static setMessenger(messagingClient: PubSub) {
+      this.messagingClient = messagingClient
+    }
+  }
+
+  export { Messenger }

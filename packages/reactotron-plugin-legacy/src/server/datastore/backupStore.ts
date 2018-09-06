@@ -6,7 +6,8 @@ class Backups {
   backupIdCounter: number = 0
   backups: Backup[] = []
 
-  addBackup(command: any) { // TODO: Get a defintion of command in here somewhere!
+  addBackup(command: any) {
+    // TODO: Get a defintion of command in here somewhere!
     this.backupIdCounter++
 
     const id = this.backupIdCounter
@@ -21,13 +22,17 @@ class Backups {
   }
 
   setBackupName(backupId: number, name: string) {
-    const backup = this.backups.filter(backup => backup.id === backupId);
+    const backup = this.backups.filter(backup => backup.id === backupId)
 
     if (backup.length < 1) {
       return
     }
 
     backup[0].name = name
+  }
+
+  removeBackup(backupId: number) {
+    this.backups = this.backups.filter(backup => backup.id !== backupId)
   }
 
   all() {

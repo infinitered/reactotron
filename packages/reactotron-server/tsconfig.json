@@ -10,7 +10,8 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noUnusedLocals": true,
-    "removeComments": true
+    "removeComments": true,
+    "skipLibCheck": true
   },
   "include": ["src"]
 }

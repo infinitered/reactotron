@@ -3,8 +3,7 @@
   "compilerOptions": {
     "sourceMap": false,
     "inlineSourceMap": true,
-    "outDir": "build/server",
-    "noUnusedLocals": false,
+    "outDir": "build/server"
   },
   "include": ["src", "test"]
 }
