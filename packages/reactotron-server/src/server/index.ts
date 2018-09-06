@@ -1,6 +1,5 @@
 import "reflect-metadata"
 import * as argsParser from "yargs-parser"
-import * as path from "path"
 import * as express from "express"
 import { createServer } from "http"
 
@@ -32,7 +31,20 @@ export const httpServerInstance = () => {
   const httpServer = createServer(app)
 
   app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "index.html"))
+    const pluginScripts = pluginManager.getUiScripts();
+
+    res.send(
+      "<html>" +
+      "<head>" +
+      "<title>reactotron</title>" +
+      pluginScripts +
+      "<script src=\"bundle.js\"></script>" +
+      "</head>" +
+      "<body>" +
+      "<div id=\"root\" />" +
+      "</body>" +
+      "</html>"
+    )
   })
 
   return { app, httpServer }

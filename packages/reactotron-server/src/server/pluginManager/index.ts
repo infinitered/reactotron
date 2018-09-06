@@ -7,6 +7,7 @@ import { Command } from "../schema"
 
 class PluginManager {
   resolvers: Function[] = []
+  uiScripts: string[] = []
 
   private commandHandlers: Function[] = []
 
@@ -21,7 +22,13 @@ class PluginManager {
 
   onCommand(command: Command) {
     // TODO: Consider making commands register for specific command types and only sending those types. Might cause a bit of a lag in processing commands with a large number of handlers
+    // TODO: Also consider not doing this at all since plugins and subscribe to command messages via the Messenger!
     this.commandHandlers.forEach(handler => handler(command))
+  }
+
+  getUiScripts() {
+    // TODO: Someday figure out how we are going to attach on scripts to the UI
+    return "";
   }
 
   private findPlugins(basePath: string) {
