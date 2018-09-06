@@ -1,5 +1,5 @@
 import { Resolver, Query, Mutation, Arg, Int, Subscription, Root } from "type-graphql"
-import { messaging } from "reactotron-core-plugin"
+import { Messenger } from "reactotron-core-plugin"
 
 import * as MessageTypes from "../types"
 import { Backup } from "./schema"
@@ -19,8 +19,18 @@ export class BackupsResolver {
     @Arg("name") name: string,
   ): boolean {
     backupsStore.setBackupName(id, name)
-    messaging.publish(MessageTypes.BACKUP_RENAMED, { id, name })
+    Messenger.publish(MessageTypes.BACKUP_RENAMED, { id, name })
 
+    return true
+  }
+
+  @Mutation()
+  removeBackup(
+    @Arg("id", () => Int)
+    id: number,
+  ): boolean {
+    backupsStore.removeBackup(id)
+    Messenger.publish(MessageTypes.BACKUP_REMOVED, { id })
     return true
   }
 

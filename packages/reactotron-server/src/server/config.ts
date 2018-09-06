@@ -1,7 +1,7 @@
 import * as fs from "fs"
 
 export function getConfig(configPath: string) {
-  const configPathTrimmed = configPath ? configPath.trim() : ''
+  const configPathTrimmed = configPath ? configPath.trim() : ""
 
   let config = {
     webPort: 4000,
