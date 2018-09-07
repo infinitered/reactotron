@@ -1,5 +1,55 @@
 import { Command } from "../schema"
 
+/**
+ * Create a matcher for testing if a command is from a client. If clientId
+ * is not provided, it'll match everything.
+ *
+ * @param clientId The client id to match.
+ */
+function createClientIdMatcher(clientId?: string) {
+  // empty client ids always match
+  if (!clientId) return () => true
+
+  // match the client id if we have a valid one
+  return (command: Command) => command.clientId === clientId
+}
+
+/**
+ * Create a match for testing if a command is of a certain type. If there are
+ * no commandTypes given, it'll match everything.
+ *
+ *  @param commandTypes The command types
+ */
+function createCommandTypeMatcher(commandTypes?: string | string[]) {
+  // don't filter if the commandTypes is empty
+  if (!commandTypes || commandTypes.length === 0) {
+    return () => true
+  }
+
+  if (typeof commandTypes === "string") {
+    return (command: Command) => command.type === commandTypes
+  } else if (Array.isArray(commandTypes)) {
+    return (command: Command) => commandTypes.includes(command.type)
+  } else {
+    // not sure how this could happen, but this isn't a filter
+    return () => true
+  }
+}
+
+/**
+ * Creates a function which will detect if a command
+ *
+ * @param clientId Only include commands matching this client id (if any)
+ * @param filter Only include commands with this type (if any)
+ */
+export function createCommandMatcher(clientId?: string, commandTypes?: [string]) {
+  // compose a list of matchers
+  const matchers = [createClientIdMatcher(clientId), createCommandTypeMatcher(commandTypes)]
+
+  // every matcher must pass
+  return (command: Command) => matchers.every(fn => fn(command))
+}
+
 export class Commands {
   commands: Command[] = []
 
@@ -7,25 +57,17 @@ export class Commands {
     this.commands.push(command)
   }
 
-  filterItem(item: Command, clientId?: string, filter?: [string]) {
-    return (
-      (!clientId || item.clientId === clientId) &&
-      (!filter || filter.some(fil => fil === item.type))
-    )
-  }
-
-  // Ideally this would be something we could figure out above but I couldn't get a boolean | Function return type to play well with the filter line below
-  filterItemComposable(clientId?: string, filter?: [string]) {
-    return function(item: Command) {
-      return this.filterItem(item, clientId, filter)
-    }
-  }
-
-  get(clientId?: string, filter?: [string]) {
-    return this.commands.filter(this.filterItemComposable(clientId, filter))
-  }
-
   all() {
     return this.commands
+  }
+
+  /**
+   * Gets a subset of commands with optional filtering.
+   *
+   * @param clientId Only include commands matching this client id (if any)
+   * @param filter Only include commands with this type (if any)
+   */
+  get(clientId?: string, filter?: [string]) {
+    return this.all().filter(createCommandMatcher(clientId, filter))
   }
 }

@@ -4,6 +4,7 @@ import { MessageTypes } from "../../messaging"
 import { Command } from "../../schema"
 import { commandsStore } from "../../datastore"
 import { CommandAddedArgs } from "../../schema/command"
+import { createCommandMatcher } from "../../datastore/commands"
 
 @Resolver()
 export class CommandsResolver {
@@ -17,7 +18,7 @@ export class CommandsResolver {
 
   @Subscription(() => Command, {
     topics: [MessageTypes.COMMAND_ADDED],
-    filter: ({ payload, args }) => commandsStore.filterItem(payload, args.clientId, args.filter),
+    filter: ({ payload, args }) => createCommandMatcher(args.clientId, args.filter)(payload),
   })
   commandAdded(@Root() command: Command, @Args() { clientId, filter }: CommandAddedArgs): Command {
     return command

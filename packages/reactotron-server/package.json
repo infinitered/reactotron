@@ -48,6 +48,7 @@
     "apollo-link": "^1.2.2",
     "apollo-link-error": "^1.1.0",
     "apollo-link-http": "^1.5.4",
+    "apollo-link-ws": "^1.0.8",
     "apollo-server-express": "^2.0.4",
     "express": "^4.16.3",
     "graphql": "^14.0.2",
@@ -58,6 +59,7 @@
     "react-dom": "^16.5.0",
     "reactotron-core-server": "^2.1.0",
     "reflect-metadata": "^0.1.12",
+    "subscriptions-transport-ws": "^0.9.14",
     "type-graphql": "^0.13.1",
     "yargs-parser": "^10.1.0"
   },
