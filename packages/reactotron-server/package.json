@@ -38,7 +38,9 @@
     "rimraf": "^2.6.2",
     "testdouble": "^3.8.1",
     "ts-node": "^7.0.1",
-    "typescript": "^3.0.1"
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "^3.0.3"
   },
   "dependencies": {
     "apollo-cache-inmemory": "^1.2.9",
@@ -63,5 +65,9 @@
     "files": [
       "build/**/*.test.js"
     ]
+  },
+  "resolutions": {
+    "graphql": "^14.0.2",
+    "@types/graphql": "^14"
   }
 }

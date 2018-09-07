@@ -35,11 +35,10 @@ test.serial("Does serve react app and apollo pubsub", async t => {
     t.is(err, null, "request to http server has errored")
   })
 
-  t.true(responseString.includes("the new home of reactotron"))
+  t.is(responseString, `<html><head><title>reactotron</title><script src="bundle.js"></script></head><body><div id="root" /></body></html>`)
 })
 
 test.serial("Does return reactotron current connection details", async t => {
-  // @ts-nocheck
   const client = new GraphQLClient("http://localhost:4000/graphql")
 
   const query = `{
