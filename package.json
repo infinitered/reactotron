@@ -57,5 +57,9 @@
       "__DEV__",
       "fetch"
     ]
+  },
+  "resolutions": {
+    "graphql": "^14.0.2",
+    "@types/graphql": "^14"
   }
 }
