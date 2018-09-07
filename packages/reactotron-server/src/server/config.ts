@@ -1,12 +1,19 @@
 import * as fs from "fs"
 
-export function getConfig(configPath: string) {
+export interface ReactotronServerConfig {
+  webPort: number
+  reactotronPort: number
+}
+
+const DEFAULTS: ReactotronServerConfig = {
+  webPort: 4000,
+  reactotronPort: 9090,
+}
+
+export function getConfig(configPath: string): ReactotronServerConfig {
   const configPathTrimmed = configPath ? configPath.trim() : ""
 
-  let config = {
-    webPort: 4000,
-    reactotronPort: 9090,
-  }
+  let config: ReactotronServerConfig = { ...DEFAULTS }
 
   if (configPath && fs.existsSync(configPathTrimmed)) {
     try {
@@ -14,10 +21,7 @@ export function getConfig(configPath: string) {
       const userConfig = JSON.parse(configContents)
 
       if (userConfig) {
-        config = {
-          ...config,
-          ...userConfig,
-        }
+        config = { ...config, ...userConfig }
       }
     } catch {
       console.error(`Failed trying to read the config file at ${configPathTrimmed}`)

@@ -1,12 +1,13 @@
-import "reflect-metadata"
-import * as argsParser from "yargs-parser"
 import * as express from "express"
 import { createServer } from "http"
-
-import { getConfig } from "./config"
-import { pluginManager } from "./pluginManager"
+import "reflect-metadata"
+import * as argsParser from "yargs-parser"
 import { createApolloServer } from "./apollo"
+import { getConfig, ReactotronServerConfig } from "./config"
+import { pluginManager } from "./pluginManager"
 import { reactotron } from "./reactotron"
+import { resolve } from "path"
+import * as Endpoints from "./endpoints"
 
 const argv = argsParser(process.argv.slice(2), {
   alias: {
@@ -16,52 +17,43 @@ const argv = argsParser(process.argv.slice(2), {
 
 const config = getConfig(argv.config)
 
-pluginManager.loadPlugins()
+/**
+ * Configures and runs everything. There's a lot going on here, but the jist is this:
+ *
+ * - start a reactotron WebSocket server (the mobile apps talk to this thing)
+ * - start an http server using Express.JS
+ * - mount a graphql server
+ * - mount a react js app to host the reactotron ui
+ *
+ * @param config The configuration we'd like to use.
+ */
+export const bootUp = async (config: ReactotronServerConfig) => {
+  // load the reactotron plugins
+  pluginManager.loadPlugins()
 
-export const apolloServerInstance = async (app, httpServer) => {
+  // fireup reactotron-core-server
+  if (reactotron) {
+    reactotron.start(config.reactotronPort)
+  }
+
+  // create an express app
+  const app = express()
+
+  // create an http server
+  const httpServer = createServer(app)
+
+  // configure static routing for things like images & css that the reactotron web app might need
+  app.use(express.static(resolve(__dirname, "..", "..") + "/dist"))
+
+  // attach some endpoints to power our web app
+  const URL_PATH_TO_PLUGINS = "/reactotron-plugins.js"
+  app.get("/", Endpoints.createReactotronAppEndpoint(URL_PATH_TO_PLUGINS))
+  app.get(URL_PATH_TO_PLUGINS, Endpoints.createInjectPluginsEndpoint(pluginManager))
+
+  // create & configure an Apollo GraphQL server
   const apolloServer = await createApolloServer()
   apolloServer.applyMiddleware({ app })
   apolloServer.installSubscriptionHandlers(httpServer)
-
-  return apolloServer
-}
-
-export const httpServerInstance = () => {
-  const app = express()
-  const httpServer = createServer(app)
-
-  app.use(express.static("public"))
-  app.get("/", (req, res) => {
-    const pluginScripts = pluginManager.getUiScripts();
-
-    res.send(
-      "<html>" +
-      "<head>" +
-      "<title>reactotron</title>" +
-      pluginScripts +
-      "<script src=\"bundle.js\"></script>" +
-      "</head>" +
-      "<body>" +
-      "<div id=\"root\" />" +
-      "</body>" +
-      "</html>"
-    )
-  })
-
-  return { app, httpServer }
-}
-
-export const startServersListening = async (
-  { httpServer },
-  apolloServer = null,
-  reactotronServer = null,
-) => {
-  // If we have been given a reactotron server instance, start listening
-  if (reactotronServer) {
-    reactotronServer.start(config.reactotronPort)
-  }
-
-  // @TODO Id expect some way to actually "start" apollo server listening in here, but new to this...
 
   // Start express server listening
   httpServer.listen({ port: config.webPort }, () => {
@@ -77,20 +69,12 @@ export const startServersListening = async (
           apolloServer.subscriptionsPath
         }`,
       )
-      console.log(`GQL query browser ready at http://localhost:${config.webPort}/graphql`)
+      console.log(`GraphQL ready at http://localhost:${config.webPort}/graphql`)
     }
   })
 }
 
-export const bootUp = async () => {
-  const appServer = await httpServerInstance()
-  const { app, httpServer } = appServer
-  const apolloServer = await apolloServerInstance(app, httpServer)
-
-  return startServersListening(appServer, apolloServer, reactotron)
-}
-
 // Only actually boot the server if we are not running tests
 if (process.env.NODE_ENV !== "test") {
-  bootUp()
+  bootUp(config)
 }

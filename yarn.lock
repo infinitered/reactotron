@@ -4424,6 +4424,12 @@ fs-extra@^7.0.0:
     jsonfile "^4.0.0"
     universalify "^0.1.0"
 
+fs-jetpack@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/fs-jetpack/-/fs-jetpack-2.1.0.tgz#0448d10cc841831046ff2bacb5c1060f2c38ab7b"
+  dependencies:
+    minimatch "^3.0.2"
+
 fs-minipass@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/fs-minipass/-/fs-minipass-1.2.5.tgz#06c277218454ec288df77ada54a03b8702aacb9d"
