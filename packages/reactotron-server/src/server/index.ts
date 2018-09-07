@@ -30,6 +30,7 @@ export const httpServerInstance = () => {
   const app = express()
   const httpServer = createServer(app)
 
+  app.use(express.static('public'))
   app.get("/", (req, res) => {
     const pluginScripts = pluginManager.getUiScripts();
 
