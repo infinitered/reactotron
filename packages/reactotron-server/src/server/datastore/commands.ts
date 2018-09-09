@@ -54,7 +54,20 @@ export class Commands {
   commands: Command[] = []
 
   addCommand(command: Command) {
-    this.commands.push(command)
+    this.commands.unshift(command)
+
+    if (this.commands.length > 300) { // Arbitrary, I know... but its a start somewhere
+      this.commands = this.commands.slice(0, 300)
+    }
+  }
+
+  /**
+   * Clears all commands from a client. This is useful for the clear command
+   *
+   * @param clientId The client id to remove commands for
+   */
+  removeConnectionCommands(clientId) {
+    this.commands = this.commands.filter(command => command.clientId !== clientId)
   }
 
   all() {
