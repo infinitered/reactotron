@@ -12,7 +12,8 @@
     "emitDecoratorMetadata": true,
     "noUnusedLocals": true,
     "removeComments": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "outDir": "dist"
   },
   "include": ["src"]
 }

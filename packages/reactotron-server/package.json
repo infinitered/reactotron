@@ -4,10 +4,10 @@
   "description": "A reactotron server",
   "main": "index.js",
   "scripts": {
-    "compile": "tsc -p tsconfig.server.json",
+    "compile": "tsc",
     "clean": "rimraf dist build",
     "lint": "tslint -p .",
-    "build:server": "yarn clean && tsc --p tsconfig.server.json",
+    "build:server": "npm-run-all clean compile",
     "start:server": "yarn build:server && node dist/server/index.js",
     "start:app": "yarn parcel watch src/app/index.html",
     "test": "npm-run-all test:compile && yarn ava",
