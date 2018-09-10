@@ -1,14 +1,12 @@
-import React from "react"
-import ReactDOM from "react-dom"
-import { SampleLoadOnly, SampleSubscribeOnly, SampleLoadAndSubscribe } from "./sample-apollo"
-import { ApolloClient } from "apollo-client"
 import { InMemoryCache } from "apollo-cache-inmemory"
-import { HttpLink } from "apollo-link-http"
-import { onError } from "apollo-link-error"
+import { ApolloClient } from "apollo-client"
 import { ApolloLink, split } from "apollo-link"
-import { ApolloProvider } from "react-apollo"
+import { onError } from "apollo-link-error"
+import { HttpLink } from "apollo-link-http"
 import { WebSocketLink } from "apollo-link-ws"
 import { getMainDefinition } from "apollo-utilities"
+import React from "react"
+import { ApolloProvider } from "react-apollo"
 
 const SERVER = "localhost:4000"
 
@@ -50,17 +48,8 @@ const client = new ApolloClient({
 
 interface Props {}
 
-class Main extends React.Component<Props> {
+export class Apollo extends React.Component<Props> {
   render() {
-    return (
-      <ApolloProvider client={client}>
-        <SampleLoadOnly />
-        <SampleSubscribeOnly />
-        <SampleLoadAndSubscribe />
-      </ApolloProvider>
-    )
+    return <ApolloProvider client={client}>{this.props.children}</ApolloProvider>
   }
 }
-
-var mountNode = document.getElementById("root")
-ReactDOM.render(<Main />, mountNode)
