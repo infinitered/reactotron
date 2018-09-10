@@ -7,11 +7,17 @@ There are 2 parts:
 1. A react-js web app which replaces the electron app
 2. A graphql server which runs the show
 
-# Contributing
+## Running in development
 
-Hello!
+At the root of the project run `yarn install` to make sure everything is up-to-date then `cd packages/reactotron-server`.
 
-### Running The Tests
+Next we need to run the `reactotron-server` with `yarn start:server`. When you make changes to the graphql system, you'll need to stop & start this process (until we get something nice hooked up).
+
+The last part is to run react js reactotron app via `parcel` (the bundler). In a seperate terminal, run `yarn start:app`. This will watch for any changes to the web app, recompile, and hot module reload the changes.
+
+You are now ready for some `http://localhost:4000` action!
+
+## Running Tests
 
 To do a one-off test:
 

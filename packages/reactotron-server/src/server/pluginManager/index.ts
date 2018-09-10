@@ -5,7 +5,7 @@ import { Plugin, EventHandler } from "reactotron-core-plugin"
 import { messaging } from "../messaging"
 import { Command } from "../schema"
 
-class PluginManager {
+export class PluginManager {
   resolvers: Function[] = []
   uiScripts: string[] = []
 
@@ -28,7 +28,7 @@ class PluginManager {
 
   getUiScripts() {
     // TODO: Someday figure out how we are going to attach on scripts to the UI
-    return "";
+    return "<script>console.log('hello from getUiScripts()');</script>";
   }
 
   private findPlugins(basePath: string) {
@@ -76,6 +76,4 @@ class PluginManager {
   }
 }
 
-const pluginManager = new PluginManager()
-
-export { pluginManager }
+export const pluginManager = new PluginManager()
