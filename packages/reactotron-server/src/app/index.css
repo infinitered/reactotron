@@ -1,0 +1,8 @@
+@tailwind preflight;
+@tailwind components;
+
+/** custom component classes */
+
+@tailwind utilities;
+
+/** utils */

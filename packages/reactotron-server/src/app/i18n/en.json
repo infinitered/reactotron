@@ -1,0 +1,11 @@
+{
+  "reactotron": {
+    "name": "reactotron"
+  },
+  "sections": {
+    "timeline": "Timeline",
+    "state": "State",
+    "react-native": "React Native",
+    "help": "Help"
+  }
+}
