@@ -1,7 +1,7 @@
 // --- imports ---
 
 import React from "react"
-import { Text } from "../core-ui/text"
+import { Text } from "reactotron-core-ui"
 
 // --- props ---
 

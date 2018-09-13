@@ -1,5 +1,5 @@
 import React from "react"
-import { translate } from "../../i18n"
+// import { translate } from "../../i18n"
 
 // --- variants ---
 
@@ -41,7 +41,8 @@ export class Text extends React.Component<TextProps, {}> {
    */
   get content() {
     if (this.props.tx) {
-      return translate(this.props.tx)
+      // return translate(this.props.tx)
+      return this.props.tx // TODO: Deal with this.
     } else if (this.props.text) {
       return this.props.text
     } else {

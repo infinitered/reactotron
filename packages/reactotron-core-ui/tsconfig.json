@@ -5,6 +5,7 @@
     "declarationDir": "dist/types",
     "target": "es5",
     "module": "commonjs",
+    "jsx": "react",
     "lib": ["es2015", "es2016", "es2017", "esnext", "dom"],
     "strict": false,
     "sourceMap": true,
@@ -13,7 +14,7 @@
     "emitDecoratorMetadata": true,
     "noUnusedLocals": true,
     "removeComments": true,
-    "outDir": "dist"
+    "outDir": "build"
   },
   "include": ["src"]
 }

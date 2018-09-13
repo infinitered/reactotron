@@ -2,8 +2,7 @@ import { Request, Response } from "express"
 import { read } from "fs-jetpack"
 import { resolve } from "path"
 
-// TODO(steve): fine for now in dev, but prod's bundle will be different
-const pathToIndexHtml = resolve(__dirname, "..", "..", "dist", "index.html")
+const pathToIndexHtml = resolve(__dirname, "..", "..", "index.html")
 
 /**
  * The html to display when the index.html bundled reactotron app isn't available.
