@@ -1,0 +1,26 @@
+{
+  "name": "reactotron-core-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/reactotron-core-ui.js",
+  "typings": "dist/types/reactotron-core-ui.d.ts",
+  "scripts": {
+    "compile": "parcel build src/reactotron-core-ui.ts",
+    "compile:ts": "tsc",
+    "clean": "rimraf dist build",
+    "lint": "tslint -p .",
+    "build": "yarn clean && yarn compile && yarn compile:ts"
+  },
+  "author": "",
+  "license": "MIT",
+  "peerdependencies": {
+    "react": "^16.5.0"
+  },
+  "devDependencies": {
+    "@types/react-dom": "^16.0.7",
+    "parcel-bundler": "^1.9.7",
+    "react": "^16.5.0",
+    "rimraf": "^2.6.2",
+    "typescript": "^3.0.1"
+  }
+}
