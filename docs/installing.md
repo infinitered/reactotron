@@ -29,3 +29,5 @@ To update an existing installation of reactotron via brew, type:
 ```
 brew cask reinstall reactotron
 ```
+
+After a successful `brew cask install`, you can find the app in your **Applications** folder. Run it like any other application. :sparkles:
