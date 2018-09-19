@@ -1,5 +1,4 @@
 import React from "react"
-// import { translate } from "../../i18n"
 
 // --- variants ---
 
@@ -27,7 +26,6 @@ export type TEXT_VARIANTS = keyof typeof VARIANTS
 // --- props ---
 
 export interface TextProps {
-  tx?: string
   text?: string
   variant?: TEXT_VARIANTS
   className?: string
@@ -40,10 +38,7 @@ export class Text extends React.Component<TextProps, {}> {
    * The content to display will found either in tx, text, or children.
    */
   get content() {
-    if (this.props.tx) {
-      // return translate(this.props.tx)
-      return this.props.tx // TODO: Deal with this.
-    } else if (this.props.text) {
+    if (this.props.text) {
       return this.props.text
     } else {
       return this.props.children

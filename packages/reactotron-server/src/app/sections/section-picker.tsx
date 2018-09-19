@@ -2,7 +2,6 @@
 
 import React from "react"
 import { SectionPickerButton } from "./section-picker-button"
-import { translate } from "../i18n"
 
 // --- props ---
 
@@ -31,22 +30,22 @@ export class SectionPicker extends React.Component<SectionPickerProps, State> {
         <SectionPickerButton
           onPress={() => this.setState({ selection: "timeline" })}
           selected={selection === "timeline"}
-          text={translate("sections.timeline")}
+          text="Timeline"
         />
         <SectionPickerButton
           onPress={() => this.setState({ selection: "state" })}
           selected={selection === "state"}
-          text={translate("sections.state")}
+          text="State"
         />
         <SectionPickerButton
           onPress={() => this.setState({ selection: "react-native" })}
           selected={selection === "react-native"}
-          text={translate("sections.react-native")}
+          text="React Native"
         />
         <SectionPickerButton
           onPress={() => this.setState({ selection: "help" })}
           selected={selection === "help"}
-          text={translate("sections.help")}
+          text="Help"
         />
       </div>
     )
