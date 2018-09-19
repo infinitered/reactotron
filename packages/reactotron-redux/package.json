@@ -22,7 +22,8 @@
   "files": [
     "dist",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "reactotron-redux.d.ts"
   ],
   "types": "./reactotron-redux.d.ts",
   "devDependencies": {
