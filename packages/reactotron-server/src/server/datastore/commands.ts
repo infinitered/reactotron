@@ -52,12 +52,17 @@ export function createCommandMatcher(clientId?: string, commandTypes?: [string])
 
 export class Commands {
   commands: Command[] = []
+  maxCommands: number
+
+  constructor(maxCommands: number = 300) {
+    this.maxCommands = maxCommands
+  }
 
   addCommand(command: Command) {
     this.commands.unshift(command)
 
-    if (this.commands.length > 300) { // Arbitrary, I know... but its a start somewhere
-      this.commands = this.commands.slice(0, 300)
+    if (this.commands.length > this.maxCommands) {
+      this.commands = this.commands.slice(0, this.maxCommands)
     }
   }
 
