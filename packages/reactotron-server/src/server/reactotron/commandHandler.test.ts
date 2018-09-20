@@ -52,3 +52,33 @@ test("onCommand", t => {
     td.verify(messagingLib.messaging.publish(MessageTypes.COMMAND_ADDED, command))
   })
 })
+
+test("onCommand clear command", t => {
+  const exampleCommand = {
+    clientId: "1",
+    date: new Date(),
+    deltaTime: 1,
+    important: false,
+    messageId: 1,
+    payload: {},
+    type: "yo",
+  }
+
+  const clearCommand = {
+    clientId: "1",
+    date: new Date(),
+    deltaTime: 1,
+    important: false,
+    messageId: 1,
+    payload: {},
+    type: "clear",
+  }
+
+  onCommand(exampleCommand)
+  onCommand(clearCommand)
+
+  t.notThrows(() => {
+    td.verify(datastoreLib.commandsStore.addCommand(exampleCommand))
+    td.verify(datastoreLib.commandsStore.removeConnectionCommands("1"))
+  })
+})

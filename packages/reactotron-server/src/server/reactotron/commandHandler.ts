@@ -12,6 +12,12 @@ import { pluginManager } from "../pluginManager"
  * @param command A command sent from the client.
  */
 export function onCommand(command: Command) {
+  // TODO: Consider a special place for these "system" level commands. Do we want them to propagate like a normal command?
+  if (command.type === "clear") {
+    commandsStore.removeConnectionCommands(command.clientId)
+    return
+  }
+
   commandsStore.addCommand(command)
   messaging.publish(MessageTypes.COMMAND_ADDED, command)
   pluginManager.onCommand(command)
