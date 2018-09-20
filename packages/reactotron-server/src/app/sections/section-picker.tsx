@@ -30,6 +30,7 @@ export class SectionPicker extends React.Component<SectionPickerProps> {
             value={val.key}
             selected={selectedValue}
             text={val.title}
+            key={val.key}
           />
         ))}
       </div>
