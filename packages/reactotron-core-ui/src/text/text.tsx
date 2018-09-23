@@ -29,7 +29,6 @@ export interface TextProps {
   text?: string
   variant?: TEXT_VARIANTS
   className?: string
-  tx?: string
 }
 
 // --- component ---
