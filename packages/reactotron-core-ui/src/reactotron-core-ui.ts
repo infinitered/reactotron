@@ -1,3 +1,4 @@
-import { Text } from './text';
+import { Text } from "./text"
+import { TimelineCommand, TimelineCommandRenderer } from "./timeline-command"
 
-export { Text }
+export { Text, TimelineCommand, TimelineCommandRenderer }

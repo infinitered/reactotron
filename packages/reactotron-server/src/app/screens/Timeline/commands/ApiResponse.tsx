@@ -1,18 +1,16 @@
 import React from "react"
+import { TimelineCommand } from "reactotron-core-ui"
 
-interface Props {
-  command: any // TODO: Better typing yo
-}
+export class ApiResponse extends TimelineCommand {
+  getType(): string {
+    return "API RESPONSE"
+  }
 
-export class ApiResponse extends React.Component<Props> {
-  render() {
-    const { command } = this.props
+  getSummary() {
+      return <span>{this.command.payload.request.url}</span>
+  }
 
-    return <div className="bg-content border flex flex-row justify-between p-6">
-      <span>{command.date}</span>
-      <span className="text-orange">API RESPONSE</span>
-      <span>{command.payload.request.url}</span>
-      <span>&#62;</span>
-    </div>
+  getBody() {
+      return <span>{JSON.stringify(this.command.payload.request)}</span>
   }
 }

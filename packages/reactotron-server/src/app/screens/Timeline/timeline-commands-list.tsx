@@ -1,6 +1,7 @@
 import React from "react"
+import { TimelineCommandRenderer } from "reactotron-core-ui"
 
-import { getCommand } from "./commands"
+import { getCommandRenderer } from "./commands"
 
 interface Props {
   subscribeToCommands: Function
@@ -13,11 +14,11 @@ export class TimelineCommandsList extends React.Component<Props> {
   }
 
   renderCommand(command) {
-    const CommandComponent = getCommand(command.type)
+    const renderer = getCommandRenderer(command)
 
-    if (!CommandComponent) return null
+    if (!renderer) return null
 
-    return <CommandComponent command={command} key={command.messageId} />
+    return <TimelineCommandRenderer command={command} renderer={renderer} key={command.messageId} />
   }
 
   render() {

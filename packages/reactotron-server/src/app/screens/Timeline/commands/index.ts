@@ -4,9 +4,13 @@ import { SagaTaskComplete } from "./SagaTaskComplete"
 // One day this could be figured out programatically!
 const commandsMap = {
   "api.response": ApiResponse,
-  "saga.task.complete": SagaTaskComplete, 
+  "saga.task.complete": SagaTaskComplete,
 }
 
-export function getCommand(type: string) {
-  return commandsMap[type]
+export function getCommandRenderer(command: any) {
+  const Renderer = commandsMap[command.type]
+
+  if (!Renderer) return null
+
+  return new Renderer(command)
 }
