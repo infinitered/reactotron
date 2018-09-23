@@ -27,7 +27,8 @@
   "workspaces": [
     "packages/reactotron-server",
     "packages/reactotron-core-plugin",
-    "packages/reactotron-plugin-*"
+    "packages/reactotron-plugin-*",
+    "packages/reactotron-core-ui"
   ],
   "lint-staged": {
     "subTaskConcurrency": 1,
