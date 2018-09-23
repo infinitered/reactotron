@@ -7,12 +7,14 @@ let colors = {
   greyDarker: "#2E2E2E",
   greyLightest: "#EEEEEE",
   white: "#FFFFFF",
+  orange: "#606060"
 }
 
 module.exports = {
   colors: colors,
   textColors: {
     default: colors.white,
+    orange: colors.orange
   },
   backgroundColors: {
     sectionPicker: colors.black,
