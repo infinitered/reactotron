@@ -5,48 +5,34 @@ import { SectionPickerButton } from "./section-picker-button"
 
 // --- props ---
 
-export interface SectionPickerProps {
-  value: string
+export interface Section {
+  key: string
+  title: string
 }
 
-// --- state ---
-
-interface State {
-  selection: "timeline" | "state" | "react-native" | "help"
+export interface SectionPickerProps {
+  selectedValue: string
+  values: Section[]
+  onValueChange: (selection: string) => void
 }
 
 // --- component ---
 
-export class SectionPicker extends React.Component<SectionPickerProps, State> {
-  state: State = {
-    selection: "timeline",
-  }
-
+export class SectionPicker extends React.Component<SectionPickerProps> {
   render() {
-    const { selection } = this.state
+    const { selectedValue, values, onValueChange } = this.props
 
     return (
       <div className="w-32 bg-sectionPicker flex flex-col pt-4">
-        <SectionPickerButton
-          onPress={() => this.setState({ selection: "timeline" })}
-          selected={selection === "timeline"}
-          text="Timeline"
-        />
-        <SectionPickerButton
-          onPress={() => this.setState({ selection: "state" })}
-          selected={selection === "state"}
-          text="State"
-        />
-        <SectionPickerButton
-          onPress={() => this.setState({ selection: "react-native" })}
-          selected={selection === "react-native"}
-          text="React Native"
-        />
-        <SectionPickerButton
-          onPress={() => this.setState({ selection: "help" })}
-          selected={selection === "help"}
-          text="Help"
-        />
+        {values.map(val => (
+          <SectionPickerButton
+            onPress={onValueChange}
+            value={val.key}
+            selected={selectedValue}
+            text={val.title}
+            key={val.key}
+          />
+        ))}
       </div>
     )
   }
