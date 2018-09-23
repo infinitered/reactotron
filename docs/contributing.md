@@ -31,14 +31,18 @@ Run the setup script to install the dependencies & run tests.
 ```
 yarn install
 yarn welcome
+./setupV3ServerLinks.sh
 ```
 
 Run the app
 
 ```
-cd packages/reactotron-app
-yarn start
+cd packages/reactotron-server
+yarn start:server
+yarn yarn start:app
 ```
+
+Visit `http://localhost:4000/`. More docs are available in the `packages/reactotron-server/readme.md` file.
 
 ### Monorepo & Lerna
 
