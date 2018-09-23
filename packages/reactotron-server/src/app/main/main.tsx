@@ -14,7 +14,7 @@ class Main extends React.Component<Props> {
         <div className="min-h-screen flex">
           <SectionPicker value="foo" />
           <div className="pl-4 bg-content flex flex-col flex-1">
-            <Text variant="title" tx="reactotron.name" />
+            <Text variant="title" text="Reactotron" />
             <SampleLoadOnly />
             <SampleSubscribeOnly />
             <SampleLoadAndSubscribe />
