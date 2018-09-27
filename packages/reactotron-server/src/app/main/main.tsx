@@ -3,8 +3,13 @@ import ReactDOM from "react-dom"
 import { Text } from "reactotron-core-ui"
 import { Apollo } from "./apollo"
 import { SampleLoadAndSubscribe, SampleLoadOnly, SampleSubscribeOnly } from "./sample-apollo"
+import { reactotronApp } from "../reactotron-app"
+import { registerSystemTimelineCommands } from "../system-config"
 import { SectionPicker } from "../sections"
 import { TimelineScreen } from "../screens/Timeline"
+
+// TODO: Find how we can go call all the registered plugins.
+registerSystemTimelineCommands(reactotronApp)
 
 // TODO: Move this to a better place. We will likely need to programatically figure this out one day.
 const screens = [
@@ -57,7 +62,11 @@ class Main extends React.Component<Props, State> {
     return (
       <Apollo>
         <div className="min-h-screen flex">
-          <SectionPicker selectedValue={selection} values={screens} onValueChange={this.handleSectionChange} />
+          <SectionPicker
+            selectedValue={selection}
+            values={screens}
+            onValueChange={this.handleSectionChange}
+          />
           <div className="pl-4 bg-content flex flex-col flex-1">
             <Text variant="title" text="Reactotron" />
             <SelectedComponent />
