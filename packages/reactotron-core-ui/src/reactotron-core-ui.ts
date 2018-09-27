@@ -1,3 +1,7 @@
-import { Text } from './text';
+import { Text } from "./text"
+import { TimelineCommand } from "./timeline-command"
 
-export { Text }
+// Interfaces
+import { TimelineCommandOptions, ReactotronApp } from './reactotron-app';
+
+export { Text, TimelineCommand, TimelineCommandOptions, ReactotronApp }

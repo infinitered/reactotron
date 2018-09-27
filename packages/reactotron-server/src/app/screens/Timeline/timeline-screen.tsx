@@ -30,15 +30,15 @@ const COMMAND_SUB = gql`
 export class TimelineScreen extends React.Component {
   render() {
     return (
-      <div>
+      <div className="flex flex-1 flex-col">
         If everything works right you should see a lot of commands here:{" "}
-        <div>
+        <div className="flex flex-1">
           <Query query={COMMAND_QUERY}>
             {({ loading, error, data, subscribeToMore }) => {
               const commands = (data && data.commands) || []
 
               return (
-                <div>
+                <div className="flex flex-1 flex-col overflow-y-auto">
                   {loading && <p>Loading...</p>}
                   {error && <p>Error :(</p>}
                   <TimelineCommandsList
