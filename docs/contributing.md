@@ -39,7 +39,7 @@ Run the app
 ```
 cd packages/reactotron-server
 yarn start:server
-yarn yarn start:app
+yarn start:app
 ```
 
 Visit `http://localhost:4000/`. More docs are available in the `packages/reactotron-server/readme.md` file.
