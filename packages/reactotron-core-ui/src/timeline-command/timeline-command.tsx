@@ -30,8 +30,15 @@ export class TimelineCommand extends React.Component<Props, State> {
     const PreviewComponent = timelineConfig.preview
     const BodyComponent = timelineConfig.component
 
+    // Ok. So this is awful. I know there is a better way of handling this
+    // with tailwind and flexbox, but I have no idea what it is.
+    // So for the minute, please embrace the hack. Sorry!
+    const style = {
+      minHeight: '10%'
+    };
+
     return (
-      <div className="bg-content border flex flex-col">
+      <div className="bg-content border flex flex-col min-h-full" style={style}>
         <div className="flex flex-row cursor-pointer p-6" onClick={this.handleToggle}>
           <div className="flex-1">
             <Timestamp date={command.date} deltaTime={command.deltaTime} />
