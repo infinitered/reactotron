@@ -1,5 +1,5 @@
 import React from "react"
-import { TimelineCommand } from "reactotron-core-ui"
+import { TimelineCommand } from "./timeline-command"
 import { reactotronApp } from "../../reactotron-app"
 
 interface Props {
