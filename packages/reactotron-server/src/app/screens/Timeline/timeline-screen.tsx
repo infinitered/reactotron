@@ -34,13 +34,13 @@ export class TimelineScreen extends React.Component {
     return (
       <div className="flex flex-1 flex-col">
         If everything works right you should see a lot of commands here:{" "}
-        <div className="flex flex-1">
+        <div className="overflow-y-auto">
           <Query query={COMMAND_QUERY}>
             {({ loading, error, data, subscribeToMore }) => {
               const commands = (data && data.commands) || []
 
               return (
-                <div className="flex flex-1 flex-col overflow-y-auto">
+                <div className="flex flex-1 flex-col">
                   {loading && <p>Loading...</p>}
                   {error && <p>Error :(</p>}
                   <TimelineCommandsList
