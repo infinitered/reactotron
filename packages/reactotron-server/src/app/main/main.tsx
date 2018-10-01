@@ -1,6 +1,5 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { Text } from "reactotron-core-ui"
 import { Apollo } from "./apollo"
 import { SampleLoadAndSubscribe, SampleLoadOnly, SampleSubscribeOnly } from "./sample-apollo"
 import { reactotronApp } from "../reactotron-app"
