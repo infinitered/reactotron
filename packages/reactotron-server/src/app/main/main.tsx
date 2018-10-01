@@ -61,15 +61,17 @@ class Main extends React.Component<Props, State> {
 
     return (
       <Apollo>
-        <div className="min-h-screen flex">
+        <div className="bg-content">
           <SectionPicker
             selectedValue={selection}
             values={screens}
             onValueChange={this.handleSectionChange}
           />
-          <div className="pl-4 bg-content flex flex-col flex-1">
-            <Text variant="title" text="Reactotron" />
-            <SelectedComponent />
+          {/* hack container cuz i couldn't figure out why ml-32 isn't a thing in tailwind */}
+          <div style={{ marginLeft: "8rem" }}>
+            <div className="mx-4 flex flex-col flex-no-grow">
+              <SelectedComponent />
+            </div>
           </div>
         </div>
       </Apollo>
