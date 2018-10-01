@@ -10,6 +10,7 @@ const COMMAND_QUERY = gql`
       messageId
       type
       date
+      deltaTime
       clientId
       payload
     }
@@ -21,6 +22,7 @@ const COMMAND_SUB = gql`
       messageId
       type
       date
+      deltaTime
       clientId
       payload
     }

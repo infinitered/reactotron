@@ -1,10 +1,10 @@
 import React from "react"
-import { TimelineCommandOptions } from "reactotron-core-ui"
+import { TimelineCommandOptions, Command } from "reactotron-core-ui"
 
 import { Timestamp } from "./timestamp"
 
 interface Props {
-  command: any // TODO: ...
+  command: Command
   timelineConfig: TimelineCommandOptions
 }
 
