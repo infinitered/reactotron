@@ -34,7 +34,7 @@ export class TimelineCommand extends React.Component<Props, State> {
     // with tailwind and flexbox, but I have no idea what it is.
     // So for the minute, please embrace the hack. Sorry!
     const style = {
-      minHeight: "10%"
+      // minHeight: "10%"
     };
 
     return (
