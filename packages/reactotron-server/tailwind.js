@@ -41,6 +41,9 @@ module.exports = {
   backgroundColors: {
     sectionPicker: colors.black,
     content: colors.greyDarkest,
+    expandButton: colors.greyDarker,
+    expandButtonHover: colors.greyDarkest,
+    expandButtonSelect: colors.primary,
   },
   borderColors: {
     default: colors.greyDarker,
