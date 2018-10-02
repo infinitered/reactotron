@@ -6,19 +6,13 @@ interface Props {
 }
 
 interface State {
-  expanded: null | string
+  expanded: "none" | "response" | "responseHeaders" | "requestHeaders"
 }
 
-export class ApiResponseTimeline extends React.Component <Props, State> {
-  constructor(props) {
-    super(props)
+export class ApiResponseTimeline extends React.Component<Props, State> {
+  state: State = { expanded: "none" }
 
-    this.state = {
-      expanded: null,
-    }
-  }
-
-  _renderContentsBlock() {
+  private renderContentsBlock() {
     let contents
 
     switch (this.state.expanded) {
@@ -37,12 +31,14 @@ export class ApiResponseTimeline extends React.Component <Props, State> {
     }
 
     if (!contents) {
-      return null;
+      return null
     }
 
-    return <div className="mx-2 my-2">
-      <span>{contents}</span>
-    </div>;
+    return (
+      <div className="mx-2 my-2">
+        <span>{contents}</span>
+      </div>
+    )
   }
 
   render() {
@@ -55,7 +51,9 @@ export class ApiResponseTimeline extends React.Component <Props, State> {
           <span className="w-1/2">Status Code</span>
           <span className="w-1/2 text-highlight">{this.props.command.payload.response.status}</span>
           <span className="w-1/2">Method</span>
-          <span className="w-1/2 text-subtle uppercase">{this.props.command.payload.request.method}</span>
+          <span className="w-1/2 text-subtle uppercase">
+            {this.props.command.payload.request.method}
+          </span>
           <span className="w-1/2">Duration (ms)</span>
           <span className="w-1/2 text-highlight">{this.props.command.payload.duration}</span>
         </div>
@@ -79,7 +77,7 @@ export class ApiResponseTimeline extends React.Component <Props, State> {
             Request Headers
           </button>
         </div>
-        {this._renderContentsBlock()}
+        {this.renderContentsBlock()}
       </div>
     )
   }
