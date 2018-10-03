@@ -3,6 +3,7 @@ import { Query } from "react-apollo"
 import gql from "graphql-tag"
 
 import { TimelineCommandsList } from "./timeline-commands-list"
+import { Text } from "reactotron-core-ui"
 
 const COMMAND_QUERY = gql`
   {
@@ -33,7 +34,7 @@ export class TimelineScreen extends React.Component {
   render() {
     return (
       <div className="flex flex-1 flex-col">
-        If everything works right you should see a lot of commands here:{" "}
+        <Text variant="title" text="Timeline" />
         <div className="overflow-y-auto">
           <Query query={COMMAND_QUERY}>
             {({ loading, error, data, subscribeToMore }) => {

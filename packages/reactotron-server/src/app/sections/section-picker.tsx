@@ -23,7 +23,7 @@ export class SectionPicker extends React.Component<SectionPickerProps> {
     const { selectedValue, values, onValueChange } = this.props
 
     return (
-      <div className="w-32 bg-sectionPicker flex flex-col pt-4">
+      <div className="w-32 bg-sectionPicker pt-4 pin-b pin-t pin-l fixed">
         {values.map(val => (
           <SectionPickerButton
             onPress={onValueChange}

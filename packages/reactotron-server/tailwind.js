@@ -1,29 +1,53 @@
 let defaultConfig = require("tailwindcss/defaultConfig")()
 
+/**
+ * This is the base palette for the colours. Try not to use these from your components
+ * directly.  Use the roles that we define below within `textColors`, `backgroundColors`,
+ * and `borderColors`.
+ */
 let colors = {
   transparent: "transparent",
   black: "#141414",
   greyDarkest: "#1E1E1E",
   greyDarker: "#2E2E2E",
+  greyLight: "#AAAAAA",
+  greyLighter: "#CCCCCC",
   greyLightest: "#EEEEEE",
   white: "#FFFFFF",
-  orange: "#606060"
+  primary: "#FFAA1E",
 }
 
 module.exports = {
+  /**
+   * Contradicting the advice above... we make these accessible incase you need them.
+   */
   colors: colors,
   textColors: {
+    /**
+     * The default text color. You don't have to add this class, it will be the default. I
+     * just added it here for completeness.
+     */
     default: colors.white,
-    orange: colors.orange
+    /**
+     * Used for secondary information: it's not important as the reason for displaying the data
+     * but it's more important than not showing it at all.
+     */
+    subtle: colors.greyLight,
+    /**
+     * Used when you want to call something out. Use sparingly so we can keep this effective.
+     */
+    highlight: colors.primary,
   },
   backgroundColors: {
     sectionPicker: colors.black,
     content: colors.greyDarkest,
+    expandButton: colors.greyDarker,
+    expandButtonHover: colors.greyDarkest,
+    expandButtonSelect: colors.primary,
   },
   borderColors: {
     default: colors.greyDarker,
   },
-
   screens: {
     sm: "576px",
     md: "768px",
