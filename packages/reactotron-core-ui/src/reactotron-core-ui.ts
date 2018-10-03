@@ -1,6 +1,10 @@
+// Components
 import { Text } from "./text"
 
 // Interfaces
 import { Command, TimelineCommandOptions, ReactotronApp } from './reactotron-app';
 
-export { Text, Command, TimelineCommandOptions, ReactotronApp }
+// Utils
+import { makeTable } from './utils';
+
+export { Text, Command, TimelineCommandOptions, ReactotronApp, makeTable }

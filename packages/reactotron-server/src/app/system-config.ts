@@ -22,10 +22,10 @@ export function registerSystemTimelineCommands(app: ReactotronApp) {
     toolbar: () => null,
     preview: SagaTaskPreview,
   })
-  
+
   app.addTimelineCommand({
     command: "client.intro",
-    type: "CLIENT",
+    type: "CONNECTION",
     component: ClientIntroTimeline,
     toolbar: () => null,
     preview: ClientIntroPreview,
