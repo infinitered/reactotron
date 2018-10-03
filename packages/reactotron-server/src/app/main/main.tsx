@@ -1,10 +1,11 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { Apollo } from "./apollo"
-import { SampleLoadAndSubscribe, SampleLoadOnly, SampleSubscribeOnly } from "./sample-apollo"
+import { SampleLoadOnly, SampleSubscribeOnly } from "./sample-apollo"
 import { reactotronApp } from "../reactotron-app"
 import { registerSystemTimelineCommands } from "../system-config"
 import { SectionPicker } from "../sections"
+import { StateScreen } from "../screens/State"
 import { TimelineScreen } from "../screens/Timeline"
 
 // TODO: Find how we can go call all the registered plugins.
@@ -20,7 +21,7 @@ const screens = [
   {
     key: "state",
     title: "State",
-    component: SampleLoadAndSubscribe,
+    component: StateScreen,
   },
   {
     key: "react-native",
