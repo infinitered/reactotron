@@ -1,5 +1,6 @@
 import React from "react"
 import { Command } from "reactotron-core-ui"
+import { JsonTree } from "reactotron-core-ui"
 
 interface Props {
   command: Command
@@ -17,13 +18,13 @@ export class ApiResponseTimeline extends React.Component<Props, State> {
 
     switch (this.state.expanded) {
       case "response":
-        contents = JSON.stringify(this.props.command.payload.response.body)
+        contents = <JsonTree data={this.props.command.payload.response.body} />
         break
       case "responseHeaders":
-        contents = JSON.stringify(this.props.command.payload.response.headers)
+        contents = <JsonTree data={this.props.command.payload.response.headers} />
         break
       case "requestHeaders":
-        contents = JSON.stringify(this.props.command.payload.request.headers)
+        contents = <JsonTree data={this.props.command.payload.request.headers} />
         break
       default:
         contents = null
