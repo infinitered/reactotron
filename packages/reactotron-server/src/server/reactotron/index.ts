@@ -1,9 +1,10 @@
 import Server, { createServer } from "reactotron-core-server"
+import { ReactotronServer } from "reactotron-core-plugin"
 
 import { addEventHandlers as addConnectionEventHandlers } from "./connectionHandler"
 import { addEventHandlers as addCommandEventHandlers } from "./commandHandler"
 
-class ReactotronServer {
+class RServer implements ReactotronServer {
   server: Server
 
   start(port = 9090) {
@@ -18,8 +19,12 @@ class ReactotronServer {
   send(type, payload) {
     this.server.send(type, payload)
   }
+
+  stateValuesSubscribe(path) {
+    this.server.stateValuesSubscribe(path)
+  }
 }
 
-const reactotron = new ReactotronServer()
+const reactotron = new RServer()
 
 export { reactotron }

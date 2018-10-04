@@ -13,11 +13,7 @@ export class BackupsResolver {
   }
 
   @Mutation()
-  setBackupName(
-    @Arg("id", () => Int)
-    id: number,
-    @Arg("name") name: string,
-  ): boolean {
+  setBackupName(@Arg("id", () => Int) id: number, @Arg("name") name: string): boolean {
     backupsStore.setBackupName(id, name)
     Messenger.publish(MessageTypes.BACKUP_RENAMED, { id, name })
 
@@ -25,10 +21,7 @@ export class BackupsResolver {
   }
 
   @Mutation()
-  removeBackup(
-    @Arg("id", () => Int)
-    id: number,
-  ): boolean {
+  removeBackup(@Arg("id", () => Int) id: number): boolean {
     backupsStore.removeBackup(id)
     Messenger.publish(MessageTypes.BACKUP_REMOVED, { id })
     return true

@@ -1,4 +1,7 @@
 import { Plugin, EventHandler } from "./plugin"
 import { Messenger } from "./messaging"
+import { CoreServer } from "./core-server"
 
-export { Plugin, EventHandler, Messenger }
+import { ReactotronServer } from "./reactotron-server"
+
+export { Plugin, EventHandler, CoreServer, Messenger, ReactotronServer }

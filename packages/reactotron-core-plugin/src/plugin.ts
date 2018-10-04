@@ -1,4 +1,5 @@
 import { Messenger } from "./messaging"
+import { CoreServer } from "./core-server"
 
 export type EventHandler = {
   type: string
@@ -29,5 +30,9 @@ export class Plugin {
 
   setMessenger(messengerClient) {
     Messenger.setMessenger(messengerClient)
+  }
+
+  setServer(reactotronServer) {
+    CoreServer.setServer(reactotronServer)
   }
 }
