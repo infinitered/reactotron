@@ -136,6 +136,7 @@ class TimelineHeader extends Component {
             <IconReverseOrder
               size={Styles.reverseOrderSize}
               style={Styles.reverseOrderIcon}
+              onClick={ui.toggleTimelineOrder}
             />
             <IconClear size={Styles.iconSize} style={Styles.toolbarClear} onClick={ui.reset} />
           </div>
