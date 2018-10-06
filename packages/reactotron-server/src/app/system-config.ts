@@ -33,7 +33,7 @@ export function registerSystemTimelineCommands(app: ReactotronApp) {
 
   app.addTimelineCommand({
     command: "state.action.complete",
-    type: "STATE",
+    type: "ACTION",
     component: StateActionCompleteTimeline,
     toolbar: () => null,
     preview: StateActionCompletePreview,
