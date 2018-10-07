@@ -3,6 +3,7 @@ import * as fs from "fs"
 import { Plugin, EventHandler } from "reactotron-core-plugin"
 
 import { messaging } from "../messaging"
+import { reactotron } from "../reactotron"
 import { Command } from "../schema"
 
 export class PluginManager {
@@ -50,6 +51,7 @@ export class PluginManager {
     this.registerSchema(plugin.getResolvers())
     this.registerEventHandlers(plugin.getEventHandlers())
     this.setupMessaging(plugin.setMessenger)
+    this.setupReactotronServer(plugin.setServer)
   }
 
   private registerSchema(resolvers?: Function[]) {
@@ -72,6 +74,12 @@ export class PluginManager {
   private setupMessaging(setMessenger?: Function) {
     if (setMessenger) {
       setMessenger(messaging)
+    }
+  }
+
+  private setupReactotronServer(setServer?: Function) {
+    if (setServer) {
+      setServer(reactotron)
     }
   }
 }

@@ -863,9 +863,9 @@
     "@types/node" "*"
 
 "@types/graphql@0.12.6", "@types/graphql@^0.13.4", "@types/graphql@^14":
-  version "14.0.0"
-  resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-14.0.0.tgz#ecbe4d794c854a285411bea3dce83ab193397ad0"
-  integrity sha512-fQ61KKDKyEztu4AdZOKGBHz6h4UpDiuMJOhA8A+GsNF+mwBnTtBwVwoU/oDyRDrigB10v5gvZApNqEXyBKmYVg==
+  version "14.0.1"
+  resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-14.0.1.tgz#ff44c20fefdf0cf8c390f64b0dfbbc3c10dbaa87"
+  integrity sha512-JnkzkyIHAjK7+zJLEQieQg5iDwEqoX200BBFa0rfMU7jI9BQWBnM9BZh16gQecCyBjK0S149wZPb0SoTh2o34g==
 
 "@types/jest@^21.1.2":
   version "21.1.10"
@@ -10342,6 +10342,14 @@ shallow-copy@~0.0.1:
   resolved "https://registry.yarnpkg.com/shallow-copy/-/shallow-copy-0.0.1.tgz#415f42702d73d810330292cc5ee86eae1a11a170"
   integrity sha1-QV9CcC1z2BAzApLMXuhurhoRoXA=
 
+shallow-equal-explain@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/shallow-equal-explain/-/shallow-equal-explain-0.0.4.tgz#613b332fd1378759e9d7e8f9aa015a4d5b402994"
+  integrity sha512-pU2ymSrtCBpqsvKidUosP+WxNkuygQPND1W7amREAcz6QDSbnY5RU9pEEXSb5GulbC6wERfc8oyZwDMINdFriQ==
+  dependencies:
+    ramda "^0.25.0"
+    unionize "^1.0.0"
+
 shebang-command@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/shebang-command/-/shebang-command-1.2.0.tgz#44aac65b695b03398968c39f363fee5deafdf1ea"
@@ -11434,6 +11442,11 @@ union-value@^1.0.0:
     get-value "^2.0.6"
     is-extendable "^0.1.1"
     set-value "^0.4.3"
+
+unionize@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/unionize/-/unionize-1.0.1.tgz#cbf12c9b30c9194d0b1b0b55d1d8a88726594502"
+  integrity sha1-y/EsmzDJGU0LGwtV0diohyZZRQI=
 
 uniq@^1.0.1:
   version "1.0.1"

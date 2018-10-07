@@ -11,3 +11,15 @@ export class Backup {
   @Field(() => GraphQLJSON)
   state: object
 }
+
+@ObjectType()
+export class StateSubscriptionValue {
+  @Field() clientId: string
+  @Field(() => GraphQLJSON, { nullable: true }) value?: object
+}
+
+@ObjectType()
+export class StateSubscription {
+  @Field() path: string
+  @Field(() => StateSubscriptionValue) clientData: StateSubscriptionValue[]
+}
