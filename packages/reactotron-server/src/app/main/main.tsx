@@ -5,7 +5,7 @@ import { SampleLoadOnly, SampleSubscribeOnly } from "./sample-apollo"
 import { reactotronApp } from "../reactotron-app"
 import { registerSystemTimelineCommands } from "../system-config"
 import { SectionPicker } from "../sections"
-import { StateScreen } from "../screens/State"
+import { StateSubscriptionsScreen } from "../screens/StateSubscriptions"
 import { TimelineScreen } from "../screens/Timeline"
 
 // TODO: Find how we can go call all the registered plugins.
@@ -21,7 +21,7 @@ const screens = [
   {
     key: "state",
     title: "State",
-    component: StateScreen,
+    component: StateSubscriptionsScreen,
   },
   {
     key: "react-native",
