@@ -11,7 +11,7 @@ class StateSubscriptions {
   addSubscription(path) {
     if (this.subscriptions.some(sub => sub.path === path)) return
 
-    const newStateSubscription = { path, value: undefined }
+    const newStateSubscription = { path, clientData: [] }
 
     CoreServer.stateValuesSubscribe(path)
     this.subscriptions.push(newStateSubscription)
@@ -41,9 +41,19 @@ class StateSubscriptions {
       let subscription = this.subscriptions.find(sub => sub.path === path)
 
       if (!subscription) return
-      if (shallowEqualExplain(subscription.value, value).tag === 'PropertiesSame') return
 
-      subscription.value = value
+      const existingValue = subscription.clientData.find(val => val.clientId === command.clientId)
+
+      if (existingValue) {
+        if (shallowEqualExplain(existingValue.value, value).tag === "PropertiesSame") return
+
+        existingValue.value = value
+      } else {
+        subscription.clientData.push({
+          clientId: command.clientId,
+          value: value,
+        })
+      }
 
       Messenger.publish(MessageTypes.STATE_SUBSCRIPTION_UPDATED, this.subscriptions)
     }

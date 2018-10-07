@@ -13,7 +13,13 @@ export class Backup {
 }
 
 @ObjectType()
+export class StateSubscriptionValue {
+  @Field() clientId: string
+  @Field(() => GraphQLJSON, { nullable: true }) value?: object
+}
+
+@ObjectType()
 export class StateSubscription {
   @Field() path: string
-  @Field(() => GraphQLJSON, { nullable: true }) value?: object
+  @Field(() => StateSubscriptionValue) clientData: StateSubscriptionValue[]
 }
