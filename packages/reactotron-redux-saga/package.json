@@ -52,6 +52,6 @@
     "ramdasauce": "^2.0.0",
     "reactotron-core-client": "^2.1.0",
     "redux": "^3.7.1",
-    "redux-saga": "^0.15.3"
+    "redux-saga": "^0.16.1"
   }
 }
