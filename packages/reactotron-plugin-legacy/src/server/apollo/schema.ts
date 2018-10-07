@@ -15,4 +15,5 @@ export class Backup {
 @ObjectType()
 export class StateSubscription {
   @Field() path: string
+  @Field(() => GraphQLJSON, { nullable: true }) value?: object
 }

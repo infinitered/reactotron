@@ -20,8 +20,16 @@ class RServer implements ReactotronServer {
     this.server.send(type, payload)
   }
 
-  stateValuesSubscribe(path) {
+  stateValuesSubscribe(path: string) {
     this.server.stateValuesSubscribe(path)
+  }
+
+  stateValuesUnsubscribe(path: string) {
+    this.server.stateValuesUnsubscribe(path)
+  }
+
+  stateValuesClearSubscriptions() {
+    this.server.stateValuesClearSubscriptions()
   }
 }
 

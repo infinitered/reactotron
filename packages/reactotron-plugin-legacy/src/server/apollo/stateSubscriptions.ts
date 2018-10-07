@@ -18,25 +18,24 @@ export class StateSubscriptionsResolver {
     return true
   }
 
-  // TODO: Implement the needed methods and uncomment
-  // @Mutation()
-  // removeStateSubscription(@Arg("path") path: string): boolean {
-  //   StateSubscriptionsStore.removeSubscription(path)
+  @Mutation()
+  removeStateSubscription(@Arg("path") path: string): boolean {
+    StateSubscriptionsStore.removeSubscription(path)
 
-  //   return true
-  // }
+    return true
+  }
 
-  // @Mutation()
-  // clearStateSubscriptions(): boolean {
-  //   StateSubscriptionsStore.clearSubscriptions()
+  @Mutation()
+  clearStateSubscriptions(): boolean {
+    StateSubscriptionsStore.clearSubscriptions()
 
-  //   return true
-  // }
+    return true
+  }
 
   @Subscription(() => StateSubscription, {
-    topics: [MessageTypes.STATE_SUBSCRIPTION_ADDED],
+    topics: [MessageTypes.STATE_SUBSCRIPTION_UPDATED],
   })
-  stateSubscriptionAdded(@Root() path: StateSubscription): StateSubscription {
-    return path
+  stateSubscriptionUpdated(@Root() subscriptions: StateSubscription[]): StateSubscription[] {
+    return subscriptions
   }
 }

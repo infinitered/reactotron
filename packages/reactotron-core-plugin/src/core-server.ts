@@ -7,8 +7,16 @@ class CoreServer {
     return this.reactotronServer.send(type, payload)
   }
 
-  static stateValuesSubscribe(path): void {
+  static stateValuesSubscribe(path: string): void {
     this.reactotronServer.stateValuesSubscribe(path)
+  }
+
+  static stateValuesUnsubscribe(path: string): void {
+    this.reactotronServer.stateValuesUnsubscribe(path)
+  }
+
+  static stateValuesClearSubscriptions(): void {
+    this.reactotronServer.stateValuesClearSubscriptions()
   }
 
   static setServer(reactotronServer: ReactotronServer) {
