@@ -1,4 +1,4 @@
-import XHRInterceptor from "react-native/Libraries/Network/XHRInterceptor"
+import XHRInterceptor from 'react-native/Libraries/Network/XHRInterceptor'
 
 /**
  * Don't include the response bodies for images by default.
@@ -25,7 +25,7 @@ export default (pluginConfig = {}) => reactotron => {
    * @param {*} data - The data sent to the server.
    * @param {*} instance - The XMLHTTPRequest instance.
    */
-  function onSend(data, xhr) {
+  function onSend (data, xhr) {
     if (options.ignoreUrls && options.ignoreUrls.test(xhr._url)) {
       xhr._skipReactotron = true
       return
@@ -41,7 +41,7 @@ export default (pluginConfig = {}) => reactotron => {
     requestCache[reactotronCounter] = {
       data: data,
       xhr,
-      stopTimer: reactotron.startTimer(),
+      stopTimer: reactotron.startTimer()
     }
   }
 
@@ -55,7 +55,7 @@ export default (pluginConfig = {}) => reactotron => {
    * @param {*} type - Not sure.
    * @param {*} xhr - The XMLHttpRequest instance.
    */
-  function onResponse(status, timeout, response, url, type, xhr) {
+  function onResponse (status, timeout, response, url, type, xhr) {
     if (xhr._skipReactotron) {
       return
     }
@@ -71,14 +71,14 @@ export default (pluginConfig = {}) => reactotron => {
       url: url || cachedRequest.xhr._url,
       method: xhr._method || null,
       data,
-      headers: xhr._headers || null,
+      headers: xhr._headers || null
     }
 
     // what type of content is this?
     const contentType =
-      (xhr.responseHeaders && xhr.responseHeaders["content-type"]) ||
-      (xhr.responseHeaders && xhr.responseHeaders["Content-Type"]) ||
-      ""
+      (xhr.responseHeaders && xhr.responseHeaders['content-type']) ||
+      (xhr.responseHeaders && xhr.responseHeaders['Content-Type']) ||
+      ''
 
     const sendResponse = responseBodyText => {
       let body = `~~~ skipped ~~~`
@@ -93,7 +93,7 @@ export default (pluginConfig = {}) => reactotron => {
       const tronResponse = {
         body,
         status,
-        headers: xhr.responseHeaders || null,
+        headers: xhr.responseHeaders || null
       }
 
       // send this off to Reactotron
@@ -102,26 +102,26 @@ export default (pluginConfig = {}) => reactotron => {
 
     // can we use the real response?
     const useRealResponse =
-      (typeof response === "string" || typeof response === "object") &&
-      !ignoreContentTypes.test(contentType || "")
+      (typeof response === 'string' || typeof response === 'object') &&
+      !ignoreContentTypes.test(contentType || '')
 
     // prepare the right body to send
     if (useRealResponse) {
-      if (type === "blob" && typeof FileReader !== "undefined") {
+      if (type === 'blob' && typeof FileReader !== 'undefined') {
         // Disable reason: FileReader should be in global scope since RN 0.54
         // eslint-disable-next-line no-undef
         const bReader = new FileReader()
         const brListener = () => {
           sendResponse(bReader.result)
-          bReader.removeEventListener("loadend", brListener)
+          bReader.removeEventListener('loadend', brListener)
         }
-        bReader.addEventListener("loadend", brListener)
+        bReader.addEventListener('loadend', brListener)
         bReader.readAsText(response)
       } else {
         sendResponse(response)
       }
     } else {
-      sendResponse("")
+      sendResponse('')
     }
   }
 
