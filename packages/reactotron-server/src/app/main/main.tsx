@@ -8,6 +8,12 @@ import { SectionPicker } from "../sections"
 import { StateSubscriptionsScreen } from "../screens/StateSubscriptions"
 import { TimelineScreen } from "../screens/Timeline"
 
+//Icons
+import { MdPeople } from 'react-icons/md'
+import { MdImportExport } from "react-icons/md"
+import { MdStayCurrentPortrait } from "react-icons/md"
+import { MdQuestionAnswer } from "react-icons/md"
+
 // TODO: Find how we can go call all the registered plugins.
 registerSystemTimelineCommands(reactotronApp)
 
@@ -17,21 +23,25 @@ const screens = [
     key: "timeline",
     title: "Timeline",
     component: TimelineScreen,
+    icon: <MdPeople />,
   },
   {
     key: "state",
     title: "State",
     component: StateSubscriptionsScreen,
+    icon: <MdImportExport />,
   },
   {
     key: "react-native",
     title: "React Native",
     component: SampleLoadOnly,
+    icon: <MdStayCurrentPortrait />,
   },
   {
     key: "help",
     title: "Help",
     component: SampleSubscribeOnly,
+    icon: <MdQuestionAnswer />,
   },
 ]
 
