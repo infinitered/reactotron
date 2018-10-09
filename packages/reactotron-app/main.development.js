@@ -16,7 +16,7 @@ app.on("ready", () => {
     width: 650,
     height: 800,
     useContentHeight: true,
-    titleBarStyle: "hidden",
+    titleBarStyle: "hiddenInset",
   })
 
   // toggle the menu on top/bottom
@@ -97,8 +97,8 @@ app.on("ready", () => {
                   label: "Toggle Side Menu",
                   click() {
                     mainWindow.webContents.send("toggle-side-menu")
-                  }
-                }
+                  },
+                },
               ]
             : [
                 {
@@ -112,8 +112,8 @@ app.on("ready", () => {
                   label: "Toggle Side Menu",
                   click() {
                     mainWindow.webContents.send("toggle-side-menu")
-                  }
-                }
+                  },
+                },
               ],
       },
       {
