@@ -82,7 +82,7 @@ export default (pluginConfig = {}) => reactotron => {
 
     const sendResponse = responseBodyText => {
       let body = `~~~ skipped ~~~`
-      if (responseBodyText) {  
+      if (responseBodyText) {
         try {
           // all i am saying, is give JSON a chance...
           body = JSON.parse(responseBodyText)
