@@ -86,7 +86,8 @@ class Timeline extends Component {
       previousCommand.date &&
       command.date &&
       command.date.getTime() - previousCommand.date.getTime()
-    const deltaTime = isLast ? 0 : diff
+    // glitches in the matrix
+    const deltaTime = isLast || diff < 0 ? 0 : diff
 
     return <CommandComponent deltaTime={deltaTime} key={command.messageId} command={command} />
   }
