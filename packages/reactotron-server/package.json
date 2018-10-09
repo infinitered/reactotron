@@ -60,6 +60,7 @@
     "react": "^16.5.0",
     "react-apollo": "^2.1.11",
     "react-dom": "^16.5.0",
+    "react-icons": "^3.1.0",
     "react-json-tree": "^0.11.0",
     "reactotron-core-server": "^2.1.0",
     "reflect-metadata": "^0.1.12",

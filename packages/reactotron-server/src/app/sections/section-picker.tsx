@@ -2,12 +2,13 @@
 
 import React from "react"
 import { SectionPickerButton } from "./section-picker-button"
-
+import { IconType } from "react-icons"
 // --- props ---
 
 export interface Section {
   key: string
   title: string
+  icon: IconType
 }
 
 export interface SectionPickerProps {
@@ -31,6 +32,7 @@ export class SectionPicker extends React.Component<SectionPickerProps> {
             selected={selectedValue}
             text={val.title}
             key={val.key}
+            icon={val.icon}
           />
         ))}
       </div>
