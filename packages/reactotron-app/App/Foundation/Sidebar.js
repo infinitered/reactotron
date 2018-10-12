@@ -51,7 +51,7 @@ class Sidebar extends Component {
     const { session } = this.props
     const { ui } = session
     const isHome = ui.tab === "home"
-    const imageFilter = { filter: `grayscale(${ isHome ? 0 : 100 }%)` }
+    const imageFilter = { filter: `grayscale(${ isHome ? 0 : 100 }%) brightness(${ isHome ? 100 : 70 }%)` }
 
     return (
       <div
