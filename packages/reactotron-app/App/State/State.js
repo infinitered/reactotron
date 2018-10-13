@@ -1,7 +1,7 @@
 import { inject, observer } from "mobx-react"
 import React, { Component } from "react"
 import IconAdd from "react-icons/lib/md/add"
-import IconClear from "react-icons/lib/md/delete-forever"
+import IconClear from "react-icons/lib/md/delete-sweep"
 import IconAddBackup from "react-icons/lib/md/file-download"
 import Tabs from "../Foundation/Tabs"
 import AppStyles from "../Theme/AppStyles"
@@ -18,7 +18,10 @@ const Styles = {
     margin: 0,
     flex: 1,
   },
-  toolbarAdd: { ...toolbarButton },
+  toolbarAdd: {
+    ...toolbarButton,
+    marginRight: 7,
+  },
   toolbarClear: { ...toolbarButton },
   iconSize: 32,
 }

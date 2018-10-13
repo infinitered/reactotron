@@ -8,6 +8,7 @@ import { colorForValue, textForValue } from "../Shared/MakeTable"
 import ObjectTree from "../Shared/ObjectTree"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
+import Button from "../Shared/CommandToolbarButton"
 
 const Styles = {
   container: {
@@ -15,6 +16,7 @@ const Styles = {
     margin: 0,
     flex: 1,
   },
+  iconSize: 28,
   watches: {
     margin: 0,
     padding: 0,
@@ -32,17 +34,23 @@ const Styles = {
     wordBreak: "break-all",
   },
   watchPath: {
-    cursor: "pointer",
+    cursor: "text",
+    WebkitUserSelect: "text",
     color: Colors.tag,
   },
   watchValue: {
     flex: 0.7,
     wordBreak: "break-all",
   },
+  watchUnsubscribe: {
+    cursor: "pointer",
+  },
   message: {
     lineHeight: 1.8,
   },
 }
+
+const TIP_UNSUBSCRIBE = "Unsubscribe"
 
 @inject("session")
 @observer
@@ -66,11 +74,16 @@ class WatchPanel extends Component {
     return (
       <div style={Styles.watch} key={key}>
         <div style={Styles.watchLeft}>
-          <div style={Styles.watchPath} onClick={unsubscribe.bind(this, watch.path)}>
-            {watch.path}
-          </div>
+          <div style={Styles.watchPath}>{watch.path}</div>
         </div>
         <div style={watchValueStyles}>{value}</div>
+        <div style={Styles.watchUnsubscribe}>
+          <Button
+            icon="delete"
+            onClick={unsubscribe.bind(this, watch.path)}
+            tip={TIP_UNSUBSCRIBE}
+          />
+        </div>
       </div>
     )
   }
