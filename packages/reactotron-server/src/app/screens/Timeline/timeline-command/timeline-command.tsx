@@ -17,6 +17,12 @@ export class TimelineCommand extends React.Component<Props, State> {
     expanded: false,
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    // This is a quick hack to stop rerendering every command just because a new one came in.
+    // There is no way for a commands data to change so the only change we expect is if the state changed.
+    return this.state.expanded !== nextState.expanded
+  }
+
   handleToggle = () => {
     this.setState(prevState => ({
       expanded: !prevState.expanded,
@@ -55,7 +61,7 @@ export class TimelineCommand extends React.Component<Props, State> {
         </div>
         {expanded &&
           BodyComponent && (
-            <div className="pb-4">
+            <div className="p-4">
               <BodyComponent command={command} />
             </div>
           )}

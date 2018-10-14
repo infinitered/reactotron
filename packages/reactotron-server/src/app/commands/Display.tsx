@@ -1,6 +1,8 @@
 import React from "react"
 import { Command } from "reactotron-core-ui"
-import { JsonTree } from "reactotron-core-ui"
+import { VariableRenderer, Text } from "reactotron-core-ui"
+
+// TODO: Change over the name to use the Text component too!
 
 export function DisplayTimeline({ command }: { command: Command }) {
   return (
@@ -9,12 +11,12 @@ export function DisplayTimeline({ command }: { command: Command }) {
         <span className="text-highlight">{command.payload.name}</span>
       </div>
       <div>
-        <JsonTree data={command.payload.value} />
+        <VariableRenderer value={command.payload.value} />
       </div>
     </div>
   )
 }
 
 export function DisplayPreview({ command }: { command: Command }) {
-  return <span>{command.payload.name}</span>
+  return <Text text={command.payload.name} />
 }

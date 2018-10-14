@@ -1,3 +1,2 @@
-import { makeTable } from './make-table'
-
-export { makeTable }
+export * from './make-table';
+export * from './is-shallow';
