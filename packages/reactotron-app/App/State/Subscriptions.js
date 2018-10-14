@@ -41,6 +41,7 @@ const Styles = {
   watchValue: {
     flex: 0.7,
     wordBreak: "break-all",
+    WebkitUserSelect: "text",
   },
   button: {
     cursor: "pointer",
