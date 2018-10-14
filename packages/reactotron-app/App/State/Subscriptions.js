@@ -8,7 +8,7 @@ import { colorForValue, textForValue } from "../Shared/MakeTable"
 import ObjectTree from "../Shared/ObjectTree"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
-import Button from "../Shared/CommandToolbarButton"
+import IconDelete from "react-icons/lib/md/delete"
 
 const Styles = {
   container: {
@@ -16,7 +16,7 @@ const Styles = {
     margin: 0,
     flex: 1,
   },
-  iconSize: 28,
+  iconSize: 24,
   watches: {
     margin: 0,
     padding: 0,
@@ -42,15 +42,14 @@ const Styles = {
     flex: 0.7,
     wordBreak: "break-all",
   },
-  watchUnsubscribe: {
+  button: {
     cursor: "pointer",
+    paddingLeft: 10,
   },
   message: {
     lineHeight: 1.8,
   },
 }
-
-const TIP_UNSUBSCRIBE = "Unsubscribe"
 
 @inject("session")
 @observer
@@ -77,13 +76,11 @@ class WatchPanel extends Component {
           <div style={Styles.watchPath}>{watch.path}</div>
         </div>
         <div style={watchValueStyles}>{value}</div>
-        <div style={Styles.watchUnsubscribe}>
-          <Button
-            icon="delete"
-            onClick={unsubscribe.bind(this, watch.path)}
-            tip={TIP_UNSUBSCRIBE}
-          />
-        </div>
+        <IconDelete
+          size={Styles.iconSize}
+          style={Styles.button}
+          onClick={unsubscribe.bind(this, watch.path)}
+        />
       </div>
     )
   }
