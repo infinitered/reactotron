@@ -16,7 +16,7 @@ yarn package
 
 # sign the mac version
 # requires my certificate on the active login keychain
-codesign -s "Developer ID Application: Steve Kellock (J9982RF89V)" -vvv --deep --force release/darwin-x64/Reactotron-darwin-x64/Reactotron.app
+codesign -s "$REACTOTRON_CODESIGN_IDENTITY" -vvv --deep --force release/darwin-x64/Reactotron-darwin-x64/Reactotron.app
 
 # switch to the release temp dir
 cd release
