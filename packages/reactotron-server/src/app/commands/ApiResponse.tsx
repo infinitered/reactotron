@@ -84,6 +84,24 @@ export class ApiResponseTimeline extends React.Component<Props, State> {
   }
 }
 
+export class ApiResponseToolbar extends React.Component<Props> {
+  handleCopyResponseToClipboard = () => {
+
+  }
+
+  handleCopyRequestToClipboard = () => {
+
+  }
+
+  render() {
+    return (
+      <span>
+        A thing...
+      </span>
+    )
+  }
+}
+
 export function ApiResponsePreview({ command }: { command: Command }) {
   return <span>{command.payload.request.url}</span>
 }

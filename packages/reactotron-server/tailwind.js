@@ -40,6 +40,7 @@ module.exports = {
   },
   backgroundColors: {
     sectionPicker: colors.black,
+    contentHeader: colors.greyDarker,
     content: colors.greyDarkest,
     expandButton: colors.greyDarker,
     expandButtonHover: colors.greyDarkest,
