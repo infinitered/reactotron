@@ -34,6 +34,7 @@ export class TimelineCommand extends React.Component<Props, State> {
     const { expanded } = this.state
 
     const PreviewComponent = timelineConfig.preview
+    const ToolbarComponent = timelineConfig.toolbar
     const BodyComponent = timelineConfig.component
 
     // Ok. So this is awful. I know there is a better way of handling this
@@ -56,7 +57,7 @@ export class TimelineCommand extends React.Component<Props, State> {
               {PreviewComponent && <PreviewComponent command={command} />}
             </div>
           )}
-          {expanded && <div className="flex-grow" />}
+          {expanded && <div className="flex-grow">{ToolbarComponent && <ToolbarComponent command={command} />}</div>}
           <div className="px-2">&#62;</div>
         </div>
         {expanded &&

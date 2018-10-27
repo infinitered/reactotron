@@ -1,5 +1,5 @@
 import { ReactotronApp } from "reactotron-core-ui"
-import { ApiResponseTimeline, ApiResponsePreview } from "./commands/ApiResponse"
+import { ApiResponseTimeline, ApiResponseToolbar, ApiResponsePreview } from "./commands/ApiResponse"
 import { AsyncStorageMutationTimeline, AsyncStorageMutationPreview } from "./commands/AsyncStorageMutation"
 import { AsyncStorageValuesTimeline, AsyncStorageValuesPreview } from "./commands/AsyncStorageValues"
 import { BenchmarkReportTimeline, BenchmarkReportPreview } from "./commands/BenchmarkReport"
@@ -18,7 +18,7 @@ export function registerSystemTimelineCommands(app: ReactotronApp) {
     command: "api.response",
     type: "API RESPONSE",
     component: ApiResponseTimeline,
-    toolbar: () => null,
+    toolbar: ApiResponseToolbar,
     preview: ApiResponsePreview,
   })
 
