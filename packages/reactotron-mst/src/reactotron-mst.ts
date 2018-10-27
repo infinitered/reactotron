@@ -91,6 +91,12 @@ export interface MstPluginOptions {
    * Fine-grain control over what gets sent to the Reactotron app.
    */
   filter?: MstPluginFilter
+  /**
+   * When requesting keys, values, or subscribing, configures whether
+   * we talk to the live state object (great for `volatile` state) or the
+   * snapshot.  Defaults to `live`.
+   */
+  queryMode?: "live" | "snapshot"
 }
 
 // --- The Reactotron Plugin ---------------------------------
@@ -296,14 +302,14 @@ export function mst(opts: MstPluginOptions = {}) {
      * data within the state that will be sent to them every time it changes.
      *
      * @param command The command received from the reactotron app.
-     * @param subscribeToSnapshot Optionally subscribe to the persisted value instead of the live value
      */
-    function subscribe(command: any, subscribeToSnapshot?: boolean) {
+    function subscribe(command: any) {
       const trackedNode = trackedNodes[command.mstNodeName || "default"]
       const paths: string[] = (command && command.payload && command.payload.paths) || []
       if (trackedNode && trackedNode.node && paths) {
         subscriptions = uniq(flatten(paths))
-        const state = subscribeToSnapshot ? getSnapshot(trackedNode.node) : trackedNode.node
+        const state =
+          opts.queryMode === "snapshot" ? getSnapshot(trackedNode.node) : trackedNode.node
         sendSubscriptions(state)
       }
     }
