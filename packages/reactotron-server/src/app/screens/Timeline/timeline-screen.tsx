@@ -1,5 +1,5 @@
 import React from "react"
-import { Query } from "react-apollo"
+import { Query, Mutation } from "react-apollo"
 import gql from "graphql-tag"
 import { MdSearch, MdFilterList, MdDeleteSweep } from "react-icons/md"
 import { Text, TabHeader, Button } from "reactotron-core-ui"
@@ -31,17 +31,46 @@ const COMMAND_SUB = gql`
   }
 `
 
+const CLEAR_COMMAND_SUB = gql`
+  subscription {
+    commandsCleared {
+      clientId
+    }
+  }
+`
+
+const CLEAR_COMMANDS_QUERY = gql`
+  mutation clearClientCommands($clientId: String!) {
+    clearCommands(clientId: $clientId)
+  }
+`
+
+// TODO: Handle the selected client id (NEED TO SET ALL THAT UP)
+// TODO: Handle Filtering
+
 export class TimelineScreen extends React.Component {
-  handleSearchOpen = () => {
+  handleSearchOpen = () => {}
 
-  }
+  handleFilterOpen = () => {}
 
-  handleFilterOpen = () => {
+  setupSubscriptions(subscribeToMore) {
+    subscribeToMore({
+      document: COMMAND_SUB,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev
+        const newItem = subscriptionData.data.commandAdded
+        return { ...prev, commands: [newItem, ...prev.commands] }
+      },
+    })
 
-  }
+    subscribeToMore({
+      document: CLEAR_COMMAND_SUB,
+      updateQuery: (prev, { subscriptionData: { data: { commandsCleared: { clientId } } } }) => {
+        if (false) return prev // TODO: check the client id against the currently selected one
 
-  handleClearCommands = () => {
-
+        return { ...prev, commands: [] };
+      },
+    })
   }
 
   render() {
@@ -55,9 +84,19 @@ export class TimelineScreen extends React.Component {
           <Button onPress={this.handleFilterOpen}>
             <MdFilterList size="1.5em" />
           </Button>
-          <Button onPress={this.handleClearCommands}>
-            <MdDeleteSweep size="1.5em" />
-          </Button>
+          <Mutation mutation={CLEAR_COMMANDS_QUERY}>
+            {clearClientCommands => (
+              <Button
+                onPress={() =>
+                  clearClientCommands({
+                    variables: { clientId: "0a40f041-96bb-39c2-bcd6-54c0411183a8" },
+                  })
+                }
+              >
+                <MdDeleteSweep size="1.5em" />
+              </Button>
+            )}
+          </Mutation>
         </TabHeader>
         <div className="overflow-y-auto">
           <Query query={COMMAND_QUERY}>
@@ -70,16 +109,7 @@ export class TimelineScreen extends React.Component {
                   {error && <p>Error :(</p>}
                   <TimelineCommandsList
                     commands={commands}
-                    subscribeToCommands={() =>
-                      subscribeToMore({
-                        document: COMMAND_SUB,
-                        updateQuery: (prev, { subscriptionData }) => {
-                          if (!subscriptionData.data) return prev
-                          const newItem = subscriptionData.data.commandAdded
-                          return { ...prev, commands: [newItem, ...prev.commands] }
-                        },
-                      })
-                    }
+                    subscribeToCommands={() => this.setupSubscriptions(subscribeToMore)}
                   />
                 </div>
               )
