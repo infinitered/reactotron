@@ -44,7 +44,7 @@ ReactotronConfig, you'll need to add `reactotron-redux` as plugin
 - Reactotron
 + const reactotron = Reactotron
   .configure({ name: 'React Native Demo' })
-  .use(reactotronRedux()) //  <- here i am!
++ .use(reactotronRedux()) //  <- here i am!
   .connect() //Don't forget about me!
   
 + export default reactotron
