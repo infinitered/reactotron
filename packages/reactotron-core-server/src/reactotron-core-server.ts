@@ -1,5 +1,7 @@
 import { merge, find, propEq, without, contains, forEach, pluck, reject } from "ramda"
 import { Server as WebSocketServer, OPEN } from "ws"
+import { existsSync, readFileSync } from "fs"
+import { createServer as createHttpsServer } from "https"
 import * as mitt from "mitt"
 import validate from "./validation"
 import { repair } from "./repair-serialization"
@@ -106,9 +108,18 @@ export default class Server {
    */
   start = () => {
     const { port } = this.options
-
+    const certPath = process.cwd() + "/cert.pfx"
     // start listening
-    this.wss = new WebSocketServer({ port })
+    if (existsSync(certPath)) {
+      const opts = {
+        pfx: readFileSync(certPath),
+      }
+      const server = createHttpsServer(opts)
+      this.wss = new WebSocketServer({ server })
+      server.listen(port)
+    } else {
+      this.wss = new WebSocketServer({ port })
+    }
 
     // register events
     this.wss.on("connection", (socket, request) => {
@@ -199,7 +210,7 @@ export default class Server {
             const currentClientConnections = currentWssConnections.filter(c => (c as any).clientId === connectionClientId)
 
             for (let i = 0; i < currentClientConnections.length; i++) {
-              setTimeout(currentClientConnections[i].close(), 500) // Defer this for a small amount of time because reasons.
+              setTimeout(() => currentClientConnections[i].close(), 500) // Defer this for a small amount of time because reasons.
 
               const severingConnection = find(propEq("clientId", connectionClientId), this.connections)
               if (severingConnection) {
