@@ -22,7 +22,8 @@
   "files": [
     "dist",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "reactotron-redux-saga.d.ts"
   ],
   "types": "./reactotron-redux-saga.d.ts",
   "devDependencies": {
