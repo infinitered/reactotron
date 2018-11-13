@@ -134,15 +134,15 @@ class TimelineHeader extends Component {
               style={Styles.toolbarFilter}
               onClick={ui.openFilterTimelineDialog}
             />
-            <IconDownload
-              size={Styles.iconSize}
-              style={Styles.toolbarFilter}
-              onClick={ui.openExportTimelineDialog}
-            />
             <IconReverseOrder
               size={Styles.reverseOrderSize}
               style={Styles.reverseOrderIcon}
               onClick={ui.toggleTimelineOrder}
+            />
+            <IconDownload
+              size={Styles.iconSize}
+              style={Styles.toolbarFilter}
+              onClick={ui.openExportTimelineDialog}
             />
             <IconClear size={Styles.iconSize} style={Styles.toolbarClear} onClick={ui.reset} />
           </div>
