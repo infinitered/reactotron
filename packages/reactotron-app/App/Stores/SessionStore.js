@@ -249,7 +249,7 @@ class Session {
     this.server.on("disconnect", this.handleConnectionsChange)
 
     this.stateBackupStore = new StateBackupStore(this.server)
-    this.ui = new UiStore(this.server, this.commandsManager, this.stateBackupStore, this.getSelectedConnection)
+    this.ui = new UiStore(this, this.server, this.commandsManager, this.stateBackupStore, this.getSelectedConnection)
 
     // hide or show the watch panel depending if we have watches
     reaction(

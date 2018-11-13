@@ -2,6 +2,7 @@ import { Provider, observer } from "mobx-react"
 import React, { Component } from "react"
 import { ipcRenderer } from "electron"
 import FilterTimelineDialog from "../Dialogs/FilterTimelineDialog"
+import ExportTimelineDialog from "../Dialogs/ExportTimelineDialog"
 import RenameStateDialog from "../Dialogs/RenameStateDialog"
 import SendCustomDialog from "../Dialogs/SendCustomDialog"
 import StateDispatchDialog from "../Dialogs/StateDispatchDialog"
@@ -88,6 +89,7 @@ export default class App extends Component {
           <StateWatchDialog />
           <RenameStateDialog />
           <FilterTimelineDialog />
+          <ExportTimelineDialog />
           <SendCustomDialog />
         </div>
       </Provider>

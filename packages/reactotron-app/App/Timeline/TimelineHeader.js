@@ -3,6 +3,7 @@ import { inject, observer } from "mobx-react"
 import React, { Component } from "react"
 import IconClear from "react-icons/lib/md/delete-sweep"
 import IconFilter from "react-icons/lib/md/filter-list"
+import IconDownload from "react-icons/lib/md/file-download"
 import IconSearch from "react-icons/lib/md/search"
 import IconReverseOrder from "react-icons/lib/md/swap-vert"
 import AppStyles from "../Theme/AppStyles"
@@ -132,6 +133,11 @@ class TimelineHeader extends Component {
               size={Styles.iconSize}
               style={Styles.toolbarFilter}
               onClick={ui.openFilterTimelineDialog}
+            />
+            <IconDownload
+              size={Styles.iconSize}
+              style={Styles.toolbarFilter}
+              onClick={ui.openExportTimelineDialog}
             />
             <IconReverseOrder
               size={Styles.reverseOrderSize}
