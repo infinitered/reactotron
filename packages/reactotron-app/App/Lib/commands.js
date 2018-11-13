@@ -64,7 +64,6 @@ class Commands {
       return isSubscription(command) && dotPath("payload.changes.length", command) === 0
     }
 
-    console.log('aa before', this.all);
     const result = pipe(
       () => this.all,
       reject(this.rejectCommandsFromOtherConnections),
@@ -72,7 +71,6 @@ class Commands {
       reject(command => contains(command.type, this.session.commandsHiddenInTimeline)),
       reject(this.session.rejectCommandWhenSearching)
     )(this);
-    console.log('aa', result);
     return result;
   }
 
