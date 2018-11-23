@@ -5,9 +5,8 @@
 version: 2
 jobs:
   build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:7.10
+    macos:
+      xcode: "10.1.0"
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
