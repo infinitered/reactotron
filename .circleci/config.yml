@@ -27,7 +27,7 @@ jobs:
 
       - run: yarn install
 
-      - run: yarn bootstrap
+      - run: yarn bootstrap --hoist
 
       - save_cache:
           paths:
