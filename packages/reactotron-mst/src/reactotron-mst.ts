@@ -351,14 +351,14 @@ export function mst(opts: MstPluginOptions = {}) {
      */
     function sendSubscriptions(state: any) {
       // this is unreadable
-      const changes = pipe(
+      const changes = (pipe as any)(
         map(when(isNil, always(""))) as any,
         filter(endsWith(".*")),
         map((key: string) => {
           const keyMinusWildcard = slice(0, -2, key)
           const value = dotPath(keyMinusWildcard, state)
           if (is(Object, value) && !isNilOrEmpty(value)) {
-            return pipe(keys, map(key => `${keyMinusWildcard}.${key}`))(value)
+            return pipe(keys, map(key => `${keyMinusWildcard}.${key}`))(value || {})
           }
           return []
         }) as any,

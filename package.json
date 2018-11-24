@@ -12,6 +12,17 @@
     "welcome": "yarn run clean && yarn run bootstrap && yarn run build && yarn run copy-internal-deps && yarn run lint -s",
     "format": "lerna run format"
   },
+  "workspaces": [
+    "packages/reactotron-apisauce",
+    "packages/reactotron-app",
+    "packages/reactotron-core-client",
+    "packages/reactotron-core-server",
+    "packages/reactotron-mst",
+    "packages/reactotron-react-js",
+    "packages/reactotron-react-native",
+    "packages/reactotron-redux",
+    "packages/reactotron-redux-saga"
+  ],
   "devDependencies": {
     "@types/jest": "^21.1.2",
     "babel-eslint": "^8.0.1",
@@ -23,6 +34,9 @@
     "standard": "^10.0.3",
     "ts-jest": "^21.1.2",
     "typescript": "^2.5.3"
+  },
+  "resolutions": {
+    "@types/node": "8.10.38"
   },
   "lint-staged": {
     "subTaskConcurrency": 1,

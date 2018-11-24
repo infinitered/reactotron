@@ -55,8 +55,11 @@
     ],
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "transform": {
-      ".(ts|tsx)": "./node_modules/ts-jest/preprocessor.js"
+      ".(ts|tsx)": "../../node_modules/ts-jest/preprocessor.js"
     }
+  },
+  "resolutions": {
+    "@types/node": "8.10.38"
   },
   "license": "MIT",
   "repository": "infinitered/reactotron"

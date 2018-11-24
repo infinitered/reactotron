@@ -26,13 +26,14 @@ jobs:
           - v1-dependencies-
 
       - run: yarn install
-
-      - run: yarn bootstrap --hoist
+      - run: yarn bootstrap
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run: yarn build
 
       # run tests!
       - run: yarn test

@@ -24,7 +24,6 @@ test("plugins are invoke and return an object", () => {
   expect(() => client.use(() => "")).toThrow()
   expect(() => client.use(() => undefined)).toThrow()
   client.use(() => ({}))
-  client.use(() => () => true)
 })
 
 test("plugins can literally do nothing", () => {
