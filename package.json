@@ -33,6 +33,7 @@
     "jest": "^21.2.1",
     "npm-run-all": "^4.1.1",
     "prettier": "^1.7.4",
+    "ramda": "^0.26.1",
     "rollup": "^0.58.2",
     "rollup-plugin-commonjs": "^8.2.1",
     "rollup-plugin-filesize": "^1.5.0",
@@ -50,5 +51,16 @@
   },
   "homepage": "https://github.com/infinitered/reactotron",
   "license": "MIT",
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "transform": {
+      ".(ts|tsx)": "./node_modules/ts-jest/preprocessor.js"
+    }
+  },
   "repository": "infinitered/reactotron-core-client"
 }
