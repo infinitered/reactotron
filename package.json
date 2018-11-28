@@ -1,0 +1,19 @@
+{
+  "name": "reactotron-core-client",
+  "version": "2.1.0",
+  "description": "Grants Reactotron clients the ability to talk to a Reactotron server.",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "main": "dist/reactotron-core-client.js",
+  "typings": "dist/types/reactotron-core-client.d.ts",
+  "author": "Infinite Red",
+  "bugs": {
+    "url": "https://github.com/infinitered/reactotron-core-client/issues"
+  },
+  "homepage": "https://github.com/infinitered/reactotron",
+  "license": "MIT",
+  "repository": "infinitered/reactotron-core-client"
+}
