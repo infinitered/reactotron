@@ -22,7 +22,7 @@ test("gives us milliseconds", async () => {
 test("gives us milliseconds", done => {
   const elapsed = start()
   setTimeout(() => {
-    expect(elapsed() >= TICK).toBe(true)
+    expect(elapsed()).toBeGreaterThanOrEqual(TICK)
     done()
   }, TICK)
 })
