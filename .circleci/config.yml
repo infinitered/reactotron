@@ -64,5 +64,5 @@ workflows:
     jobs:
       - setup
       - tests:
-        requires:
-          - setup
+          requires:
+            - setup
