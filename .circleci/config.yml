@@ -66,9 +66,3 @@ workflows:
       - tests:
         requires:
           - setup
-      # - publish:
-      #   requires:
-      #     - tests
-      #   filters:
-      #     branches:
-      #       only: master
