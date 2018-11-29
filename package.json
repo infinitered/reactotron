@@ -17,6 +17,8 @@
     "lint": "tslint -p .",
     "rollup": "NODE_ENV=production rollup -c",
     "test": "jest",
+    "ci:test": "yarn test",
+    "ci:publish": "yarn semantic-release",
     "semantic-release": "semantic-release"
   },
   "author": "Infinite Red",

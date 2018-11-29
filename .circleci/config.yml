@@ -41,7 +41,22 @@ jobs:
             - v1-dependencies-
       - run:
           name: Run tests
-          command: yarn test
+          command: yarn ci:test
+
+  publish:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - restore_cache:
+        name: Restore node modules
+        keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      -run:
+        name: Publish to NPM
+        command: yarn ci:publish
 
 workflows:
   version: 2
@@ -49,5 +64,11 @@ workflows:
     jobs:
       - setup
       - tests:
-          requires:
-            - setup
+        requires:
+          - setup
+      # - publish:
+      #   requires:
+      #     - tests
+      #   filters:
+      #     branches:
+      #       only: master
