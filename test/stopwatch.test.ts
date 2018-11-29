@@ -12,17 +12,17 @@ test("start returns the right interface", () => {
 })
 
 // using >= because on node there's event loop overhead and new Date() instantiation
-test("gives us milliseconds", async () => {
-  const elapsed = start()
-  expect(elapsed() <= 0.1).toBe(true) // just a sanity test to make sure i'm not the problem
-  await delay(TICK)
-})
+// test("gives us milliseconds", async () => {
+//   const elapsed = start()
+//   expect(elapsed() <= 0.1).toBe(true) // just a sanity test to make sure i'm not the problem
+//   await delay(TICK)
+// })
 
-// here's a callback version
-test("gives us milliseconds", done => {
-  const elapsed = start()
-  setTimeout(() => {
-    expect(elapsed()).toBeGreaterThanOrEqual(TICK)
-    done()
-  }, TICK)
-})
+// // here's a callback version
+// test("gives us milliseconds", done => {
+//   const elapsed = start()
+//   setTimeout(() => {
+//     expect(elapsed()).toBeGreaterThanOrEqual(TICK)
+//     done()
+//   }, TICK)
+// })
