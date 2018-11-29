@@ -4,7 +4,7 @@
 #
 
 defaults: &defaults
-  dockers:
+  docker:
     - image: circleci/node:10.11
   working_directory: ~/repo
 
@@ -15,39 +15,39 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-        name: Restore node modules
-        keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          name: Restore node modules
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
       - run:
-        name: Install dependencies
-        command: yarn install
+          name: Install dependencies
+          command: yarn install
       - save_cache:
-        name: Save node modules
-        paths:
-          - node_modules
-        key: v1-dependencies-{{ checksum "package.json" }}
+          name: Save node modules
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
 
   tests:
     <<: *defaults
     steps:
       - checkout
       - restore_cache:
-        name: Restore node modules
-        keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          name: Restore node modules
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
       - run:
-        name: Run tests
-        command: yarn test
+          name: Run tests
+          command: yarn test
 
-  workflows:
-    version: 2
-    test_and_release:
-      jobs:
-        - setup
-        - tests:
+workflows:
+  version: 2
+  test_and_release:
+    jobs:
+      - setup
+      - tests:
           requires:
             - setup
