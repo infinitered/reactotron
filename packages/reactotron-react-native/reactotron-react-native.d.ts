@@ -202,6 +202,10 @@ declare module "reactotron-react-native" {
      * @param title The name of the benchmark.
      */
     benchmark(title?: string): ReactotronBenchmark
+              
+              
+              
+    overlay(App: React.ReactNode):void          
   }
 
   var instance: Reactotron
