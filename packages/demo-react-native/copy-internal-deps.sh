@@ -34,11 +34,11 @@ mkdir -p ./node_modules/reactotron-react-native
 cp ../reactotron-react-native/dist/index.js ./node_modules/reactotron-react-native/index.js
 
 # reactotron-redux
-cd ../reactotron-redux
+cd ../../../reactotron-redux
 yarn run build
-cd ../demo-react-native
+cd ../reactotron/packages/demo-react-native
 mkdir -p ./node_modules/reactotron-redux
-cp ../reactotron-redux/dist/index.js ./node_modules/reactotron-redux/index.js
+cp ../../../reactotron-redux/dist/index.js ./node_modules/reactotron-redux/index.js
 
 # reactotron-apisauce
 cd ../reactotron-apisauce
