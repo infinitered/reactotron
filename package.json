@@ -1,0 +1,67 @@
+{
+  "name": "reactotron-redux",
+  "version": "2.1.0",
+  "description": "A Reactotron plugin for Redux.",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "reactotron-redux.d.ts"
+  ],
+  "main": "dist/index.js",
+  "types": "./reactotron-redux.d.ts",
+  "scripts": {
+    "test": "ava",
+    "watch": "ava --watch",
+    "format": "prettier --write {**,.}/*.js && standard --fix",
+    "coverage": "nyc ava",
+    "build": "rollup -c ",
+    "lint": "standard",
+    "ci:test": "yarn test",
+    "ci:publish": "yarn semantic-release",
+    "semantic-release": "semantic-release"
+  },
+  "author": "Infinite Red",
+  "bugs": {
+    "url": "https://github.com/reactotron/reactotron/issues"
+  },
+  "devDependencies": {
+    "@semantic-release/git": "^7.0.5",
+    "ava": "^0.20.0",
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^8.2.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "babel-preset-stage-1": "^6.24.1",
+    "mockery": "^2.1.0",
+    "nyc": "^11.0.3",
+    "prettier": "^1.10.2",
+    "rollup": "^0.43.0",
+    "rollup-plugin-babel": "^2.6.1",
+    "standard": "^10.0.3"
+  },
+  "homepage": "https://github.com/reactotron/reactotron",
+  "license": "MIT",
+  "ava": {
+    "require": [
+      "babel-core/register"
+    ],
+    "babel": {
+      "babelrc": false,
+      "presets": [
+        "es2015",
+        "stage-1"
+      ]
+    }
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-redux",
+  "dependencies": {
+    "ramda": "^0.24.1",
+    "ramdasauce": "^2.0.0",
+    "reactotron-core-client": "^2.1.4",
+    "redux": "^3.7.1"
+  }
+}
