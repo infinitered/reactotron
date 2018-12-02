@@ -27,11 +27,11 @@ mkdir -p ./node_modules/reactotron-react-native/node_modules/reactotron-core-cli
 cp ../../../reactotron-core-client/dist/reactotron-core-client.js ./node_modules/reactotron-react-native/node_modules/reactotron-core-client/index.js
 
 # reactotron-react-native
-cd ../reactotron-react-native
+cd ../../../reactotron-react-native
 yarn run build
-cd ../demo-react-native
+cd ../reactotron/packages/demo-react-native
 mkdir -p ./node_modules/reactotron-react-native
-cp ../reactotron-react-native/dist/index.js ./node_modules/reactotron-react-native/index.js
+cd ../../../reactotron-react-native/dist/index.js ./node_modules/reactotron-react-native/index.js
 
 # reactotron-redux
 cd ../../../reactotron-redux
