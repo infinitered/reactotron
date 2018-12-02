@@ -23,7 +23,7 @@
   },
   "author": "Infinite Red",
   "bugs": {
-    "url": "https://github.com/reactotron/reactotron/issues"
+    "url": "https://github.com/infinitered/reactotron/issues"
   },
   "devDependencies": {
     "@semantic-release/git": "^7.0.5",
@@ -41,7 +41,7 @@
     "semantic-release": "^15.12.2",
     "standard": "^10.0.3"
   },
-  "homepage": "https://github.com/reactotron/reactotron",
+  "homepage": "https://github.com/infinitered/reactotron-redux",
   "license": "MIT",
   "ava": {
     "require": [
@@ -58,7 +58,7 @@
   "standard": {
     "parser": "babel-eslint"
   },
-  "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-redux",
+  "repository": "https://github.com/infinitered/reactotron-redux",
   "dependencies": {
     "ramda": "^0.24.1",
     "ramdasauce": "^2.0.0",
