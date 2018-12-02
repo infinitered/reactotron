@@ -38,6 +38,7 @@
     "prettier": "^1.10.2",
     "rollup": "^0.43.0",
     "rollup-plugin-babel": "^2.6.1",
+    "semantic-release": "^15.12.2",
     "standard": "^10.0.3"
   },
   "homepage": "https://github.com/reactotron/reactotron",
