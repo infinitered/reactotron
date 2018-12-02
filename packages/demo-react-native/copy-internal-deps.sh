@@ -41,11 +41,11 @@ mkdir -p ./node_modules/reactotron-redux
 cp ../../../reactotron-redux/dist/index.js ./node_modules/reactotron-redux/index.js
 
 # reactotron-apisauce
-cd ../reactotron-apisauce
+cd ../../../reactotron-apisauce
 yarn run build
-cd ../demo-react-native
+cd ../reactotron/packages/demo-react-native
 mkdir -p ./node_modules/reactotron-apisauce
-cp ../reactotron-apisauce/dist/index.js ./node_modules/reactotron-apisauce/index.js
+cp ../../../reactotron-apisauce/dist/index.js ./node_modules/reactotron-apisauce/index.js
 
 # reactotron-redux-saga
 cd ../../../reactotron-redux-saga
