@@ -55,6 +55,9 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       - run:
+          name: Build the app # I think this should be its own step so we build PRs but putting it here for now
+          command: yarn build
+      - run:
           name: Publish to NPM
           command: yarn ci:publish
 
