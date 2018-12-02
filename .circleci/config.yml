@@ -43,6 +43,25 @@ jobs:
           name: Run tests
           command: yarn ci:test
 
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore node modules
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: Run Build
+          command: yarn build
+      - save_cache:
+          name: Save node modules
+          paths:
+            - dist
+          key: v1-build-{{ .Branch }}-{{ .Revision }}
+
   publish:
     <<: *defaults
     steps:
@@ -54,9 +73,10 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-      - run:
-          name: Build the app # I think this should be its own step so we build PRs but putting it here for now
-          command: yarn build
+      - restore_cache:
+          name: Restore build
+          keys:
+            - v1-build-{{ .Branch }}-{{ .Revision }}
       - run:
           name: Publish to NPM
           command: yarn ci:publish
@@ -69,9 +89,12 @@ workflows:
       - tests:
           requires:
             - setup
-      - publish:
+      - build:
           requires:
             - tests
+      - publish:
+          requires:
+            - build
           filters:
             branches:
               only: master
