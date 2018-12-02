@@ -11,7 +11,9 @@ export default (reactotron, rootReducer, preloadedState, enhancer) => {
   const reducer = reactotron.createReplacementReducer(rootReducer)
 
   // wrap the enhancer with our beginning and ending one
-  const wrappedEnhancer = compose(enhancer, reactotron.createActionTracker())
+  const wrappedEnhancer = enhancer 
+    ? compose(enhancer, reactotron.createActionTracker())
+    : reactotron.createActionTracker()
 
   // call the redux create store
   const store = createStore(reducer, preloadedState, wrappedEnhancer)
