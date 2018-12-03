@@ -73,7 +73,7 @@
       "git add"
     ]
   },
-  "repository": "https://github.com/inifinitered/reactotron-mst",
+  "repository": "https://github.com/infinitered/reactotron-mst",
   "dependencies": {
     "ramda": "^0.25.0"
   },
