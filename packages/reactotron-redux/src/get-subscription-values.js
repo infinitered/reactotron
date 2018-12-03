@@ -24,7 +24,7 @@ export default (subscriptions, state) => {
     R.sortBy(R.identity),
     R.map(key => ({
       path: key,
-      value: RS.isNilOrEmpty(key) ? cleanedState : RS.dotPath(key, cleanedState)
+      value: (RS.isNilOrEmpty(key) || R.equals('*')) ? cleanedState : RS.dotPath(key, cleanedState)
     }))
   )(subscriptions)
 }
