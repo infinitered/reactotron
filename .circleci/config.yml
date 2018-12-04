@@ -21,7 +21,7 @@ wine: &wine
 version: 2
 jobs:
   setup:
-    <<: *linux
+    <<: *wine
     steps:
       - checkout
       - restore_cache:
@@ -40,7 +40,7 @@ jobs:
           key: v2-dependencies-{{ checksum "package.json" }}
 
   build:
-    <<: *linux
+    <<: *wine
     steps:
       - checkout
       - restore_cache:
@@ -62,9 +62,12 @@ jobs:
     <<: *wine
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: yarn install
+      - restore_cache:
+          name: Restore node modules
+          keys:
+            - v2-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v2-dependencies-
       - restore_cache:
           name: Restore build
           keys:
