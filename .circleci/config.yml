@@ -13,6 +13,11 @@ linux: &linux
     - image: circleci/node:10.11
   working_directory: ~/repo
 
+wine: &wine
+  docker:
+    - image: electronuserland/builder:wine
+  working_directory: ~/repo
+
 version: 2
 jobs:
   setup:
@@ -54,7 +59,7 @@ jobs:
           key: v2-build-{{ .Branch }}-{{ .Revision }}
 
   package:
-    <<: *linux
+    <<: *wine
     steps:
       - checkout
       - restore_cache:
@@ -67,9 +72,6 @@ jobs:
           name: Restore build
           keys:
             - v2-build-{{ .Branch }}-{{ .Revision }}
-      - run:
-          name: Install Wine
-          command: sudo apt install wine32 -y
       - run:
           name: Run Package
           command: yarn package
