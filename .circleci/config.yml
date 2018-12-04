@@ -68,6 +68,9 @@ jobs:
           keys:
             - v2-build-{{ .Branch }}-{{ .Revision }}
       - run:
+          name: Install Wine
+          command: sudo apt install wine64 -y
+      - run:
           name: Run Package
           command: yarn package
 
