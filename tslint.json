@@ -1,0 +1,14 @@
+{
+  "extends": "tslint-config-prettier",
+  "rules": {
+    "ordered-imports": [false],
+    "quotemark": [true, "double", "jsx-double", "avoid-escape"],
+    "semicolon": [true, "never"],
+    "member-access": [false],
+    "member-ordering": [false],
+    "trailing-comma": [true, { "singleline": "never", "multiline": "always" }],
+    "no-empty": false,
+    "max-classes-per-file": [false],
+    "no-empty-interface": [false]
+  }
+}

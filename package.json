@@ -1,0 +1,74 @@
+{
+  "name": "reactotron-core-server",
+  "version": "2.1.0",
+  "description": "Grants Reactotron servers the ability to talk to a Reactotron client.",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "main": "dist/reactotron-core-server.js",
+  "typings": "dist/types/reactotron-core-server.d.ts",
+  "scripts": {
+    "compile": "tsc",
+    "test": "jest",
+    "build": "npm-run-all clean compile rollup",
+    "rollup": "rollup -c",
+    "clean": "trash dist compiled",
+    "format": "prettier --write {**,.}/*.ts && tslint -p . --fix",
+    "lint": "tslint -p .",
+    "build:watch": "node watch.js",
+    "ci:test": "yarn test",
+    "ci:publish": "yarn semantic-release",
+    "semantic-release": "semantic-release"
+  },
+  "author": "Infinite Red",
+  "bugs": {
+    "url": "https://github.com/infinitered/reactotron-core-server/issues"
+  },
+  "devDependencies": {
+    "@semantic-release/git": "^7.0.5",
+    "@types/jest": "^21.1.2",
+    "@types/node": "^8.0.34",
+    "@types/ramda": "^0.24.17",
+    "@types/ws": "^3.2.0",
+    "execa": "^0.8.0",
+    "get-port": "^3.2.0",
+    "jest": "^21.2.1",
+    "node-watch": "^0.5.4",
+    "npm-run-all": "^4.1.1",
+    "prettier": "^1.7.4",
+    "rollup": "^0.50.0",
+    "rollup-plugin-commonjs": "^8.2.1",
+    "rollup-plugin-filesize": "^1.4.2",
+    "rollup-plugin-ramda": "^1.0.5",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-uglify": "^2.0.1",
+    "semantic-release": "^15.12.2",
+    "trash-cli": "^1.4.0",
+    "ts-jest": "^21.1.2",
+    "tslib": "^1.8.0",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.6.0",
+    "typescript": "^2.5.3"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/infinitered/reactotron-core-server",
+  "repository": "https://github.com/infinitered/reactotron-core-server",
+  "dependencies": {
+    "mitt": "^1.1.2",
+    "ramda": "^0.25.0",
+    "ws": "^3.2.0"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "../../node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  }
+}
