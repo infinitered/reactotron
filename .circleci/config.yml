@@ -8,10 +8,15 @@ defaults: &defaults
     xcode: "10.1.0"
   working_directory: ~/repo
 
+defaults: &linux
+  docker:
+    - image: circleci/node:10.11
+  working_directory: ~/repo
+
 version: 2
 jobs:
   setup:
-    <<: *defaults
+    <<: *linux
     steps:
       - checkout
       - restore_cache:
@@ -30,7 +35,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
   build:
-    <<: *defaults
+    <<: *linux
     steps:
       - checkout
       - restore_cache:
@@ -47,6 +52,24 @@ jobs:
           paths:
             - dist
           key: v1-build-{{ .Branch }}-{{ .Revision }}
+
+  package:
+    <<: *linux
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore node modules
+            keys:
+              - v1-dependencies-{{ checksum "package.json" }}
+              # fallback to using the latest cache if no exact match is found
+              - v1-dependencies-
+      - restore_cache:
+          name: Restore build
+          keys:
+            - v1-build-{{ .Branch }}-{{ .Revision }}
+      - run:
+          name: Run Package
+          command: yarn package
 
 workflows:
   version: 2
