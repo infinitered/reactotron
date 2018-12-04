@@ -53,7 +53,7 @@ workflows:
   test_and_release:
     jobs:
       - setup
-      -build:
+      - build:
         requires:
           - setup
 
