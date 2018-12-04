@@ -8,7 +8,7 @@ defaults: &defaults
     xcode: "10.1.0"
   working_directory: ~/repo
 
-defaults: &linux
+linux: &linux
   docker:
     - image: circleci/node:10.11
   working_directory: ~/repo
