@@ -8,15 +8,10 @@ defaults: &defaults
     xcode: "10.1.0"
   working_directory: ~/repo
 
-linux: &linux
-  docker:
-    - image: circleci/node:10.11
-  working_directory: ~/repo
-
 version: 2
 jobs:
   setup:
-    <<: *linux
+    <<: *defaults
     steps:
       - checkout
       - restore_cache:
@@ -35,7 +30,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
   build:
-    <<: *linux
+    <<: *defaults
     steps:
       - checkout
       - restore_cache:
@@ -54,7 +49,7 @@ jobs:
           key: v1-build-{{ .Branch }}-{{ .Revision }}
 
   package:
-    <<: *linux
+    <<: *defaults
     steps:
       - checkout
       - restore_cache:
@@ -79,5 +74,6 @@ workflows:
       - build:
           requires:
             - setup
-
-
+      - package:
+          requires:
+            - build
