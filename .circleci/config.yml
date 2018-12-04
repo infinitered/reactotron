@@ -29,6 +29,25 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore node modules
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: Run Build
+          command: yarn build
+      - save_cache:
+          name: Save build
+          paths:
+            - dist
+          key: v1-build-{{ .Branch }}-{{ .Revision }}
+
 workflows:
   version: 2
   test_and_release:
