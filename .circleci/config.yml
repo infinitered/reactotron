@@ -69,7 +69,7 @@ jobs:
             - v2-build-{{ .Branch }}-{{ .Revision }}
       - run:
           name: Install Wine
-          command: sudo apt install wine64 -y
+          command: sudo apt install wine32 -y
       - run:
           name: Run Package
           command: yarn package
