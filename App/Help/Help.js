@@ -44,7 +44,7 @@ const Styles = {
 
 const Help = () => (
   <div style={Styles.container}>
-    <Header title=`Using Reactotron ${pjson.version}` />
+    <Header title={`Using Reactotron ${pjson.version}`} />
     <div style={Styles.content}>
       <div style={Styles.logoPanel}>
         <img src={logoUrl} style={Styles.logo} />
