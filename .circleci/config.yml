@@ -79,5 +79,8 @@ workflows:
       - build:
           requires:
             - setup
+      - package:
+          requires:
+            - build
 
 
