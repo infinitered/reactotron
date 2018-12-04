@@ -54,7 +54,7 @@ workflows:
     jobs:
       - setup
       - build:
-        requires:
-          - setup
+          requires:
+            - setup
 
 
