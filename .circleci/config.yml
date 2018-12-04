@@ -22,9 +22,9 @@ jobs:
       - restore_cache:
           name: Restore node modules
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - v2-dependencies-
       - run:
           name: Install dependencies
           command: yarn install
@@ -32,7 +32,7 @@ jobs:
           name: Save node modules
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: v2-dependencies-{{ checksum "package.json" }}
 
   build:
     <<: *linux
@@ -41,9 +41,9 @@ jobs:
       - restore_cache:
           name: Restore node modules
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - v2-dependencies-
       - run:
           name: Run Build
           command: yarn build
@@ -51,7 +51,7 @@ jobs:
           name: Save build
           paths:
             - dist
-          key: v1-build-{{ .Branch }}-{{ .Revision }}
+          key: v2-build-{{ .Branch }}-{{ .Revision }}
 
   package:
     <<: *linux
@@ -60,13 +60,13 @@ jobs:
       - restore_cache:
           name: Restore node modules
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - v2-dependencies-
       - restore_cache:
           name: Restore build
           keys:
-            - v1-build-{{ .Branch }}-{{ .Revision }}
+            - v2-build-{{ .Branch }}-{{ .Revision }}
       - run:
           name: Run Package
           command: yarn package
