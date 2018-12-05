@@ -1,10 +1,10 @@
 import { start } from "../src/stopwatch"
 
 // aim for 30 fps -- even though fps has nothing to do with anything at all
-const TICK = 1.0 / 30.0
+// const TICK = 1.0 / 30.0
 
 // a promise based delay that's not accurate at all
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+// const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 test("start returns the right interface", () => {
   const elapsed = start()

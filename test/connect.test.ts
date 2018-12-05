@@ -1,5 +1,4 @@
 import { createClient } from "../src/reactotron-core-client"
-import { createServer } from "http"
 import * as WebSocket from "ws"
 import * as getPort from "get-port"
 import { createClosingServer } from "./create-closing-server"

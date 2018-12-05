@@ -1,6 +1,6 @@
 import commonjs from 'rollup-plugin-commonjs'
 import filesize from 'rollup-plugin-filesize'
-import uglify from 'rollup-plugin-uglify'
+import { uglify } from 'rollup-plugin-uglify'
 import sourcemaps from 'rollup-plugin-sourcemaps'
 import replace from "rollup-plugin-replace"
 
