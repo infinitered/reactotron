@@ -73,6 +73,9 @@ jobs:
           keys:
             - v2-build-{{ .Branch }}-{{ .Revision }}
       - run:
+          name: Install dependencies
+          command: yarn install
+      - run:
           name: Run Package
           command: yarn package
 
