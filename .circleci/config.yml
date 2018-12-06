@@ -62,19 +62,19 @@ jobs:
           name: Zip Mac
           command: cd ./release/darwin-x64/Reactotron-darwin-x64 && zip -r Reactotron-darwin-x64.zip ./Reactotron.app
       - store_artifacts:
-          path: Reactotron-linux-ia32.zip
+          path: ./release/linux-ia32/Reactotron-linux-ia32/Reactotron-linux-ia32.zip
           destination: linux-ia32.zip
       - store_artifacts:
-          path: Reactotron-linux-x64.zip
+          path: ./release/linux-x64/Reactotron-linux-x64/Reactotron-linux-x64.zip
           destination: linux-x64.zip
       - store_artifacts:
-          path: Reactotron-win32-ia32.zip
+          path: ./release/win32-ia32/Reactotron-win32-ia32/Reactotron-win32-ia32.zip
           destination: win32-ia32.zip
       - store_artifacts:
-          path: Reactotron-win32-x64.zip
+          path: ./release/win32-x64/Reactotron-win32-x64/Reactotron-win32-x64.zip
           destination: win32-x64.zip
       - store_artifacts:
-          path: Reactotron-darwin-x64.zip
+          path: ./release/darwin-x64/Reactotron-darwin-x64/Reactotron-darwin-x64.zip
           destination: darwin-x64.zip
 
 workflows:
