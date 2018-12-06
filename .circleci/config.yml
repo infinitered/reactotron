@@ -45,8 +45,38 @@ jobs:
           name: Install Cert
           command: bundle exec fastlane setup
       - run:
-          name: Zip
+          name: Sign Mac App
+          command: codesign -s $REACTOTRON_CODESIGN_IDENTITY -vvv --deep --force ./release/darwin-x64/Reactotron-darwin-x64/Reactotron.app
+      - run:
+          name: Zip Linux 32bit
           command: zip Reactotron-linux-ia32.zip ./release/linux-ia32/Reactotron-linux-ia32
+      - run:
+          name: Zip Linux 64bit
+          command: zip Reactotron-linux-x64.zip ./release/linux-x64/Reactotron-linux-x64
+      - run:
+          name: Zip Windows 32bit
+          command: zip Reactotron-win32-ia32.zip ./release/win32-ia32/Reactotron-win32-ia32
+      - run:
+          name: Zip Linux 64bit
+          command: zip Reactotron-win32-x64.zip ./release/win32-x64/Reactotron-win32-x64
+      - run:
+          name: Zip Mac
+          command: zip Reactotron-darwin-x64.zip ./release/darwin-x64/Reactotron-darwin-x64/Reactotron.app
+      - store_artifacts:
+          path: Reactotron-linux-ia32.zip
+          destination: linux-ia32.zip
+      - store_artifacts:
+          path: Reactotron-linux-x64.zip
+          destination: linux-x64.zip
+      - store_artifacts:
+          path: Reactotron-win32-ia32.zip
+          destination: win32-ia32.zip
+      - store_artifacts:
+          path: Reactotron-win32-x64.zip
+          destination: win32-x64.zip
+      - store_artifacts:
+          path: Reactotron-darwin-x64.zip
+          destination: darwin-x64.zip
 
 workflows:
   version: 2
