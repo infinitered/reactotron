@@ -19,7 +19,6 @@ jobs:
           command: echo $MATCH_KEYCHAIN_NAME && ls
       - run:
           name: Decode Certificates
-          context: ReactotronCerts
           command: echo $ReactotronCerts && base64 -D -o Certificates.p12 <<< $ReactotronCerts
       - run:
           name: Install Gems
@@ -101,6 +100,7 @@ workflows:
   version: 2
   test_and_release:
     jobs:
-      - package
+      - package:
+          context: ReactotronCerts
 
 
