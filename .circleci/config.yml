@@ -16,7 +16,20 @@ jobs:
       - checkout
       - run:
           name: Debugging
-          command: echo $MATCH_KEYCHAIN_NAME
+          command: echo $MATCH_KEYCHAIN_NAME && ls
+      - run:
+          name: Decode Certificates
+          context: ReactotronCerts
+          command: base64 -D -o Certificates.p12 <<< $ReactotronCerts
+      - run:
+          name: Install Gems
+          command: bundle install
+      - run:
+          name: Install Cert
+          command: bundle exec fastlane setup
+      - run:
+          name: More Debugging
+          command: security find-identity -v -p codesigning
       - restore_cache:
           name: Restore node modules
           keys:
