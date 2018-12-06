@@ -48,6 +48,9 @@ jobs:
           name: Install Cert
           command: bundle exec fastlane setup
       - run:
+          name: More Debugging
+          command: security find-identity -v -p codesigning
+      - run:
           name: Sign Mac App
           command: echo $REACTOTRON_CODESIGN_IDENTITY && codesign -s $REACTOTRON_CODESIGN_IDENTITY -vvv --keychain "$MATCH_KEYCHAIN_NAME" --deep --force ./release/darwin-x64/Reactotron-darwin-x64/Reactotron.app
       - run:
