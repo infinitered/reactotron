@@ -35,6 +35,13 @@ jobs:
           name: Build Apps
           command: yarn package
       - run:
+          name: Decode Certificates
+          context: ReactotronCerts
+          command: base64 -D -o Certificates.p12 <<< $ReactotronCerts
+      - run:
+          name: Install Cert
+          command: bundle exec fastlane setup
+      - run:
           name: Zip
           command: zip Reactotron-linux-ia32.zip ./release/linux-ia32/Reactotron-linux-ia32
 
