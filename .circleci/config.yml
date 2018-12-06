@@ -92,12 +92,6 @@ workflows:
   version: 2
   test_and_release:
     jobs:
-      - setup
-      - build:
-          requires:
-            - setup
-      - package:
-          requires:
-            - build
+      - package
 
 
