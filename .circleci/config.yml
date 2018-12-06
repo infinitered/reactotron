@@ -8,28 +8,18 @@ defaults: &defaults
     xcode: "10.1.0"
   working_directory: ~/repo
 
-linux: &linux
-  docker:
-    - image: circleci/node:10.11
-  working_directory: ~/repo
-
-wine: &wine
-  docker:
-    - image: electronuserland/builder:wine
-  working_directory: ~/repo
-
 version: 2
 jobs:
-  setup:
-    <<: *wine
+  package:
+    <<: *defaults
     steps:
       - checkout
       - restore_cache:
           name: Restore node modules
           keys:
-            - v2-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
-            - v2-dependencies-
+            - v1-dependencies-
       - run:
           name: Install dependencies
           command: yarn install
@@ -37,80 +27,21 @@ jobs:
           name: Save node modules
           paths:
             - node_modules
-          key: v2-dependencies-{{ checksum "package.json" }}
-
-  build:
-    <<: *wine
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore node modules
-          keys:
-            - v2-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v2-dependencies-
+          key: v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Install dependencies
-          command: yarn install
-      - run:
-          name: Run Build
-          command: yarn build
-      - save_cache:
-          name: Save build
-          paths:
-            - dist
-          key: v2-build-{{ .Branch }}-{{ .Revision }}
-
-  package:
-    <<: *wine
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore node modules
-          keys:
-            - v2-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v2-dependencies-
-      - restore_cache:
-          name: Restore build
-          keys:
-            - v2-build-{{ .Branch }}-{{ .Revision }}
-      - run:
-          name: Install dependencies
-          command: yarn install
-      - run:
-          name: Run Package
-          command: yarn package
-      - run:
-          name: Install zip
-          command: apt update && apt install zip
-      - run:
-          name: Zip Linux
-          command: zip Reactotron-linux-ia32.zip ./release/linux-ia32/Reactotron-linux-ia32
-
-  packagemac:
-    <<: *defaults
-    steps:
-      - checkout
-      - run:
-          name: Install dependencies
-          command: yarn install
-      - run:
-          name: Install Brew
+          name: Install Wine
           command: brew install wine
       - run:
-          name: Run Package
+          name: Build Apps
           command: yarn package
       - run:
-          name: Zip Linux
+          name: Zip
           command: zip Reactotron-linux-ia32.zip ./release/linux-ia32/Reactotron-linux-ia32
-      - store_artifacts:
-          path: ./Reactotron-linux-ia32.zip
 
 workflows:
   version: 2
   test_and_release:
     jobs:
-      - packagemac
+      - package
 
 
