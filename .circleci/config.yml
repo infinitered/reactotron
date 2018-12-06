@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Decode Certificates
           context: ReactotronCerts
-          command: base64 -D -o Certificates.p12 <<< $ReactotronCerts
+          command: echo $ReactotronCerts && base64 -D -o Certificates.p12 <<< $ReactotronCerts
       - run:
           name: Install Gems
           command: bundle install
