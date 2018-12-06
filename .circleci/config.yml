@@ -39,6 +39,9 @@ jobs:
           context: ReactotronCerts
           command: base64 -D -o Certificates.p12 <<< $ReactotronCerts
       - run:
+          name: Install Gems
+          command: bundle install
+      - run:
           name: Install Cert
           command: bundle exec fastlane setup
       - run:
