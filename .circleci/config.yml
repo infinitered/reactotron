@@ -45,7 +45,7 @@ jobs:
           command: bundle exec fastlane setup
       - run:
           name: Sign Mac App
-          command: codesign -s $REACTOTRON_CODESIGN_IDENTITY -vvv --keychain "$MATCH_KEYCHAIN_NAME" --deep --force ./release/darwin-x64/Reactotron-darwin-x64/Reactotron.app
+          command: codesign -s "$REACTOTRON_CODESIGN_IDENTITY" -vvv --deep --force ./release/darwin-x64/Reactotron-darwin-x64/Reactotron.app
       - run:
           name: Zip Linux 32bit
           command: zip Reactotron-linux-ia32.zip ./release/linux-ia32/Reactotron-linux-ia32
