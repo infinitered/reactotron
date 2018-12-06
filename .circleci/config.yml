@@ -14,21 +14,6 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run:
-          name: Debugging
-          command: echo $MATCH_KEYCHAIN_NAME && ls
-      - run:
-          name: Decode Certificates
-          command: echo $ReactotronCerts && base64 -D -o Certificates.p12 <<< $ReactotronCerts
-      - run:
-          name: Install Gems
-          command: bundle install
-      - run:
-          name: Install Cert
-          command: ls && bundle exec fastlane setup
-      - run:
-          name: More Debugging
-          command: security find-identity -v -p codesigning
       - restore_cache:
           name: Restore node modules
           keys:
@@ -51,7 +36,6 @@ jobs:
           command: yarn package
       - run:
           name: Decode Certificates
-          context: ReactotronCerts
           command: base64 -D -o Certificates.p12 <<< $ReactotronCerts
       - run:
           name: Install Gems
@@ -60,11 +44,8 @@ jobs:
           name: Install Cert
           command: bundle exec fastlane setup
       - run:
-          name: More Debugging
-          command: security find-identity -v -p codesigning
-      - run:
           name: Sign Mac App
-          command: echo $REACTOTRON_CODESIGN_IDENTITY && codesign -s $REACTOTRON_CODESIGN_IDENTITY -vvv --keychain "$MATCH_KEYCHAIN_NAME" --deep --force ./release/darwin-x64/Reactotron-darwin-x64/Reactotron.app
+          command: codesign -s $REACTOTRON_CODESIGN_IDENTITY -vvv --keychain "$MATCH_KEYCHAIN_NAME" --deep --force ./release/darwin-x64/Reactotron-darwin-x64/Reactotron.app
       - run:
           name: Zip Linux 32bit
           command: zip Reactotron-linux-ia32.zip ./release/linux-ia32/Reactotron-linux-ia32
