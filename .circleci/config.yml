@@ -48,19 +48,19 @@ jobs:
           command: codesign -s "$REACTOTRON_CODESIGN_IDENTITY" -vvv --deep --force ./release/darwin-x64/Reactotron-darwin-x64/Reactotron.app
       - run:
           name: Zip Linux 32bit
-          command: zip Reactotron-linux-ia32.zip ./release/linux-ia32/Reactotron-linux-ia32
+          command: cd ./release/linux-ia32/Reactotron-linux-ia32 && zip -r Reactotron-linux-ia32.zip ./
       - run:
           name: Zip Linux 64bit
-          command: zip Reactotron-linux-x64.zip ./release/linux-x64/Reactotron-linux-x64
+          command: cd ./release/linux-x64/Reactotron-linux-x64 && zip -r Reactotron-linux-x64.zip ./
       - run:
           name: Zip Windows 32bit
-          command: zip Reactotron-win32-ia32.zip ./release/win32-ia32/Reactotron-win32-ia32
+          command: cd ./release/win32-ia32/Reactotron-win32-ia32 && zip -r Reactotron-win32-ia32.zip ./
       - run:
           name: Zip Linux 64bit
-          command: zip Reactotron-win32-x64.zip ./release/win32-x64/Reactotron-win32-x64
+          command: cd ./release/win32-x64/Reactotron-win32-x64 && zip -r Reactotron-win32-x64.zip ./
       - run:
           name: Zip Mac
-          command: zip Reactotron-darwin-x64.zip ./release/darwin-x64/Reactotron-darwin-x64/Reactotron.app
+          command: cd ./release/darwin-x64/Reactotron-darwin-x64 && zip -r Reactotron-darwin-x64.zip ./Reactotron.app
       - store_artifacts:
           path: Reactotron-linux-ia32.zip
           destination: linux-ia32.zip
