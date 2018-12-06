@@ -83,7 +83,7 @@ jobs:
           command: yarn package
       - run:
           name: Install zip
-          command: apt install zip
+          command: apt update && apt install zip
       - run:
           name: Zip Linux
           command: zip Reactotron-linux-ia32.zip ./release/linux-ia32/Reactotron-linux-ia32
