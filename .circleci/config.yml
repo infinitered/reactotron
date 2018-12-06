@@ -14,6 +14,9 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - run:
+          name: Debugging
+          command: echo $MATCH_KEYCHAIN_NAME
       - restore_cache:
           name: Restore node modules
           keys:
