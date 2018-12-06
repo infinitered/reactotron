@@ -104,6 +104,8 @@ jobs:
       - run:
           name: Zip Linux
           command: zip Reactotron-linux-ia32.zip ./release/linux-ia32/Reactotron-linux-ia32
+      - store_artifacts:
+          path: ./Reactotron-linux-ia32.zip
 
 workflows:
   version: 2
