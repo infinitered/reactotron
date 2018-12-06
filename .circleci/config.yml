@@ -90,7 +90,7 @@ jobs:
 
   packagemac:
     <<: *defaults
-        steps:
+    steps:
       - checkout
       - run:
           name: Install dependencies
