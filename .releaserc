@@ -37,12 +37,6 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "cd ./release/win32-ia32/Reactotron-win32-ia32 && zip -r Reactotron-win32-ia32.zip ./"
-      }
-    ],
-    [
-      "@semantic-release/exec",
-      {
         "prepareCmd": "cd ./release/win32-x64/Reactotron-win32-x64 && zip -r Reactotron-win32-x64.zip ./"
       }
     ],
@@ -57,7 +51,6 @@
         "assets": [
           { "path": "./release/darwin-x64/Reactotron-darwin-x64/Reactotron.app.zip" },
           { "path": "./release/win32-x64/Reactotron-win32-x64/Reactotron-win32-x64.zip" },
-          { "path": "./release/win32-ia32/Reactotron-win32-ia32/Reactotron-win32-ia32.zip" },
           { "path": "./release/linux-x64/Reactotron-linux-x64/Reactotron-linux-x64.zip" },
           { "path": "./release/linux-ia32/Reactotron-linux-ia32/Reactotron-linux-ia32.zip" }
         ]

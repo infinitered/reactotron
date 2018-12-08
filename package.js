@@ -76,7 +76,7 @@ function doEverything() {
     .then(() => pack("darwin", "x64"))
     .then(() => pack("linux", "ia32"))
     .then(() => pack("linux", "x64"))
-    .then(() => pack("win32", "ia32"))
+    // .then(() => pack("win32", "ia32"))
     .then(() => pack("win32", "x64"))
     .catch(err => {
       console.error(err)
