@@ -15,8 +15,8 @@ const config = {
 
   module: {
     ...baseConfig.module,
-    loaders: [
-      ...baseConfig.module.loaders,
+    rules: [
+      ...baseConfig.module.rules,
 
       {
         test: /\.global\.css$/,

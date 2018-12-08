@@ -1,5 +1,5 @@
 import webpack from "webpack"
-import ExtractTextPlugin from "extract-text-webpack-plugin"
+import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import baseConfig from "./webpack.config.base"
 
 const config = {
@@ -18,8 +18,8 @@ const config = {
   module: {
     ...baseConfig.module,
 
-    loaders: [
-      ...baseConfig.module.loaders,
+    rules: [
+      ...baseConfig.module.rules,
 
       {
         test: /\.global\.css$/,
@@ -28,10 +28,10 @@ const config = {
 
       {
         test: /^((?!\.global).)*\.css$/,
-        loader: ExtractTextPlugin.extract(
-          "style-loader",
+        use: [
+          MiniCssExtractPlugin.loader,
           "css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]"
-        ),
+        ]
       },
     ],
   },
@@ -45,14 +45,24 @@ const config = {
         NODE_ENV: JSON.stringify("production"),
       },
     }),
-    // new webpack.optimize.UglifyJsPlugin({
-    //   compressor: {
-    //     screw_ie8: true,
-    //     warnings: false,
-    //   },
-    // }),
-    new ExtractTextPlugin("style.css", { allChunks: true }),
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+    }),
   ],
+
+  optimization: {
+    minimize: true,
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true
+        }
+      }
+    }
+  },
 
   target: "electron-renderer",
 }

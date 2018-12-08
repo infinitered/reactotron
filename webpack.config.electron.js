@@ -14,11 +14,6 @@ export default {
   },
 
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false,
-      },
-    }),
     new webpack.BannerPlugin({
       banner: 'require("source-map-support").install()',
       raw: true,
@@ -30,6 +25,10 @@ export default {
       },
     }),
   ],
+
+  optimization: {
+    minimize: true,
+  },
 
   target: "electron-main",
 

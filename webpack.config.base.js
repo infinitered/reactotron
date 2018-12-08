@@ -2,7 +2,7 @@ import path from "path"
 
 export default {
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.tsx?$/,
         loader: "ts-loader",
