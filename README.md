@@ -1,4 +1,4 @@
-# reactotron-redux
+# reactotron-apisauce
 
 Converts responses sent via [apisauce](https://github.com/skellock/apisauce) into
 Reactotron.
