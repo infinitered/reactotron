@@ -60,7 +60,7 @@ jobs:
           command: cd ./release/win32-x64/Reactotron-win32-x64 && zip -r Reactotron-win32-x64.zip ./
       - run:
           name: Zip Mac
-          command: cd ./release/darwin-x64/Reactotron-darwin-x64 && zip -r Reactotron-darwin-x64.zip ./Reactotron.app
+          command: cd ./release/darwin-x64/Reactotron-darwin-x64 && zip -r -y Reactotron-darwin-x64.zip ./Reactotron.app
       - store_artifacts:
           path: ./release/linux-ia32/Reactotron-linux-ia32/Reactotron-linux-ia32.zip
           destination: linux-ia32.zip
