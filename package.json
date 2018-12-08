@@ -18,9 +18,12 @@
     "package-all": "npm run package -- --all",
     "postinstall-old": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
     "start": "concurrently --kill-others \"npm run hot-server\" \"npm run start-hot\"",
-    "lint": "tslint -p ."
+    "lint": "tslint -p .",
+    "ci:test": "yarn test",
+    "ci:publish": "yarn semantic-release",
+    "semantic-release": "semantic-release"
   },
-  "repository": "https://github.com/reactotron/reactotron/tree/master/packages/reactotron-app",
+  "repository": "https://github.com/infinitered/reactotron",
   "author": {
     "name": "Steve Kellock",
     "email": "steve@kellock.ca",
@@ -28,14 +31,15 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/reactotron/reactotron/issues"
+    "url": "https://github.com/infinitered/reactotron/issues"
   },
   "keywords": [
     "react",
     "react native"
   ],
-  "homepage": "https://github.com/reactotron/reactotron#readme",
+  "homepage": "https://github.com/infinitered/reactotron#readme",
   "devDependencies": {
+    "@semantic-release/git": "^7.0.5",
     "@types/node": "^8.10.11",
     "@types/ws": "^4.0.1",
     "asar": "^0.14.3",
@@ -67,6 +71,7 @@
     "prettier": "^1.15.3",
     "style-loader": "^0.23.1",
     "sumchecker": "^2.0.2",
+    "semantic-release": "^15.12.2",
     "ts-loader": "^5.3.1",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.17.0",

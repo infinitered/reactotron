@@ -61,27 +61,59 @@ jobs:
       - run:
           name: Zip Mac
           command: cd ./release/darwin-x64/Reactotron-darwin-x64 && zip -r -y Reactotron-darwin-x64.zip ./Reactotron.app
-      - store_artifacts:
-          path: ./release/linux-ia32/Reactotron-linux-ia32/Reactotron-linux-ia32.zip
-          destination: linux-ia32.zip
-      - store_artifacts:
-          path: ./release/linux-x64/Reactotron-linux-x64/Reactotron-linux-x64.zip
-          destination: linux-x64.zip
-      - store_artifacts:
-          path: ./release/win32-ia32/Reactotron-win32-ia32/Reactotron-win32-ia32.zip
-          destination: win32-ia32.zip
-      - store_artifacts:
-          path: ./release/win32-x64/Reactotron-win32-x64/Reactotron-win32-x64.zip
-          destination: win32-x64.zip
-      - store_artifacts:
-          path: ./release/darwin-x64/Reactotron-darwin-x64/Reactotron-darwin-x64.zip
-          destination: darwin-x64.zip
+
+  releaseVersion:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore node modules
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - save_cache:
+          name: Save node modules
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Run Semantic Verify Conditions
+          command: yarn semantic-release
+      - run:
+          name: Install Wine
+          command: brew install wine
+      - run:
+          name: Decode Certificates
+          command: base64 -D -o Certificates.p12 <<< $ReactotronCerts
+      - run:
+          name: Install Gems
+          command: bundle install
+      - run:
+          name: Install Cert
+          command: bundle exec fastlane setup
+      - run:
+          name: Run Release
+          command: yarn ci:publish
 
 workflows:
   version: 2
-  test_and_release:
+  test_package:
+    filters:
+      branches:
+        ignore: new-build-setup
     jobs:
       - package:
+          context: ReactotronCerts
+  test_release:
+    filters:
+      branches:
+        only: new-build-setup
+    jobs:
+      - releaseVersion:
           context: ReactotronCerts
 
 
