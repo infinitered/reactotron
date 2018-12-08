@@ -60,7 +60,7 @@
     "cross-env": "^5.0.5",
     "css-loader": "^2.0.0",
     "del": "^3.0.0",
-    "electron": "3.0.10",
+    "electron": "3.0.3",
     "electron-packager": "^13.0.0",
     "electron-rebuild": "^1.8.2",
     "express": "^4.16.4",
