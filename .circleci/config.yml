@@ -81,9 +81,6 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Run Semantic Verify Conditions
-          command: yarn semantic-release
-      - run:
           name: Install Wine
           command: brew install wine
       - run:
