@@ -104,9 +104,9 @@ workflows:
           context: ReactotronCerts
           filters:
             branches:
-                only: new-build-setup
+                ignore: master
       - releaseVersion:
           context: ReactotronCerts
           filters:
             branches:
-                ignore: new-build-setup
+                only: master
