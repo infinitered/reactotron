@@ -101,19 +101,15 @@ jobs:
 
 workflows:
   version: 2
-  test_package:
-    filters:
-      branches:
-        ignore: new-build-setup
+  test_and_release:
     jobs:
       - package:
           context: ReactotronCerts
-  test_release:
-    filters:
-      branches:
-        only: new-build-setup
-    jobs:
+          filters:
+            branches:
+            ignore: new-build-setup
       - releaseVersion:
           context: ReactotronCerts
-
-
+          filters:
+            branches:
+                only: new-build-setup
