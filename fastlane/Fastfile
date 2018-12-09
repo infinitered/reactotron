@@ -1,0 +1,12 @@
+fastlane_version "2.44.1"
+
+lane :setup do
+  setup_circle_ci
+  import_certificate(
+    keychain_name: ENV["MATCH_KEYCHAIN_NAME"],
+    keychain_password: ENV["MATCH_KEYCHAIN_PASSWORD"],
+    certificate_path: 'Certificates.p12',
+    certificate_password: ENV["CERTIFICATE_PASSWORD"] || "default",
+    log_output: true
+  )
+end

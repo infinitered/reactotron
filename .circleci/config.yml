@@ -2,40 +2,111 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
+
+defaults: &defaults
+  macos:
+    xcode: "10.1.0"
+  working_directory: ~/repo
+
 version: 2
 jobs:
-  build:
-    macos:
-      xcode: "10.1.0"
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
-
+  package:
+    <<: *defaults
     steps:
       - checkout
-
-      # Download and cache dependencies
       - restore_cache:
+          name: Restore node modules
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: yarn install
-      - run: yarn bootstrap
-
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: Install dependencies
+          command: yarn install
       - save_cache:
+          name: Save node modules
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Install Wine
+          command: brew install wine
+      - run:
+          name: Build Apps
+          command: yarn package
+      - run:
+          name: Decode Certificates
+          command: base64 -D -o Certificates.p12 <<< $ReactotronCerts
+      - run:
+          name: Install Gems
+          command: bundle install
+      - run:
+          name: Install Cert
+          command: bundle exec fastlane setup
+      - run:
+          name: Sign Mac App
+          command: codesign -s "$REACTOTRON_CODESIGN_IDENTITY" -vvv --deep --force ./release/darwin-x64/Reactotron-darwin-x64/Reactotron.app
+      - run:
+          name: Zip Linux 32bit
+          command: cd ./release/linux-ia32/Reactotron-linux-ia32 && zip -r Reactotron-linux-ia32.zip ./
+      - run:
+          name: Zip Linux 64bit
+          command: cd ./release/linux-x64/Reactotron-linux-x64 && zip -r Reactotron-linux-x64.zip ./
+      - run:
+          name: Zip Windows 32bit
+          command: cd ./release/win32-ia32/Reactotron-win32-ia32 && zip -r Reactotron-win32-ia32.zip ./
+      - run:
+          name: Zip Linux 64bit
+          command: cd ./release/win32-x64/Reactotron-win32-x64 && zip -r Reactotron-win32-x64.zip ./
+      - run:
+          name: Zip Mac
+          command: cd ./release/darwin-x64/Reactotron-darwin-x64 && zip -r -y Reactotron-darwin-x64.zip ./Reactotron.app
 
-      - run: yarn build
+  releaseVersion:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore node modules
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - save_cache:
+          name: Save node modules
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Install Wine
+          command: brew install wine
+      - run:
+          name: Decode Certificates
+          command: base64 -D -o Certificates.p12 <<< $ReactotronCerts
+      - run:
+          name: Install Gems
+          command: bundle install
+      - run:
+          name: Install Cert
+          command: bundle exec fastlane setup
+      - run:
+          name: Run Release
+          command: yarn ci:publish
 
-      # run tests!
-      - run: yarn test
-
-
+workflows:
+  version: 2
+  test_and_release:
+    jobs:
+      - package:
+          context: ReactotronCerts
+          filters:
+            branches:
+                ignore: master
+      - releaseVersion:
+          context: ReactotronCerts
+          filters:
+            branches:
+                only: master

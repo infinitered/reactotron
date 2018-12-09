@@ -1,70 +1,110 @@
 {
-  "name": "reactotron-monorepo",
   "private": true,
-  "version": "0.0.2",
+  "name": "reactotron-app",
+  "productName": "Reactotron",
+  "version": "2.1.2",
+  "description": "Reactotron desktop mode engage!",
+  "main": "main.js",
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "clean": "lerna clean --yes",
-    "build": "lerna run build --scope 'reactotron-core-*' --scope 'reactotron-mst' --scope 'reactotron-redux*' --scope 'reactotron-apisauce' --scope 'reactotron-react-native' --scope 'reactotron-react-js'",
-    "copy-internal-deps": "cd packages/demo-react-native && ./copy-internal-deps.sh && cd ../..",
-    "test": "lerna run test --scope 'reactotron-core-*' --scope 'reactotron-redux*' --scope 'reactotron-apisauce'",
-    "lint": "lerna run lint",
-    "welcome": "yarn run clean && yarn run bootstrap && yarn run build && yarn run copy-internal-deps && yarn run lint -s",
-    "format": "lerna run format"
+    "test-nope": "cross-env NODE_ENV=test mocha --compilers js:babel-register --recursive --require ./test/setup.js test/**/*.spec.js",
+    "hot-server": "node -r babel-register server.js",
+    "build-main": "cross-env NODE_ENV=production node -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.electron.js --progress --profile --colors",
+    "build-renderer": "cross-env NODE_ENV=production node -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.production.js --progress --profile --colors",
+    "build": "npm run build-main && npm run build-renderer",
+    "format": "prettier --write {**,.}/*.{js,ts,tsx} && tslint -p . --fix",
+    "start-prod": "cross-env NODE_ENV=production electron ./",
+    "start-hot": "cross-env HOT=1 NODE_ENV=development electron -r babel-register ./main.development",
+    "package": "cross-env NODE_ENV=production node -r babel-register package.js",
+    "package-all": "npm run package -- --all",
+    "postinstall-old": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
+    "start": "concurrently --kill-others \"npm run hot-server\" \"npm run start-hot\"",
+    "lint": "tslint -p .",
+    "ci:test": "yarn test",
+    "ci:publish": "yarn semantic-release",
+    "semantic-release": "semantic-release"
   },
-  "workspaces": [
-    "packages/reactotron-apisauce",
-    "packages/reactotron-app",
-    "packages/reactotron-core-client",
-    "packages/reactotron-core-server",
-    "packages/reactotron-mst",
-    "packages/reactotron-react-js",
-    "packages/reactotron-react-native",
-    "packages/reactotron-redux",
-    "packages/reactotron-redux-saga"
+  "repository": "https://github.com/infinitered/reactotron",
+  "author": {
+    "name": "Steve Kellock",
+    "email": "steve@kellock.ca",
+    "url": "https://github.com/reactotron"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/infinitered/reactotron/issues"
+  },
+  "keywords": [
+    "react",
+    "react native"
   ],
+  "homepage": "https://github.com/infinitered/reactotron#readme",
   "devDependencies": {
-    "@types/jest": "^21.1.2",
-    "babel-eslint": "^8.0.1",
-    "husky": "^0.14.3",
-    "jest": "^21.2.1",
-    "lerna": "2.11.0",
-    "lint-staged": "^4.2.3",
-    "prettier": "^1.7.4",
-    "standard": "^10.0.3",
-    "ts-jest": "^21.1.2",
-    "typescript": "^2.5.3"
+    "@semantic-release/exec": "^3.3.0",
+    "@semantic-release/git": "^7.0.5",
+    "@types/node": "^8.10.11",
+    "@types/ws": "^4.0.1",
+    "asar": "^0.14.3",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.1",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-webpack-loaders": "^0.9.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "concurrently": "^4.1.0",
+    "cross-env": "^5.0.5",
+    "css-loader": "^2.0.0",
+    "del": "^3.0.0",
+    "electron": "3.0.3",
+    "electron-packager": "^13.0.0",
+    "electron-rebuild": "^1.8.2",
+    "express": "^4.16.4",
+    "file-loader": "^2.0.0",
+    "json-loader": "^0.5.7",
+    "mini-css-extract-plugin": "^0.5.0",
+    "minimist": "^1.2.0",
+    "node-libs-browser": "^2.1.0",
+    "prettier": "^1.15.3",
+    "semantic-release": "^15.12.2",
+    "style-loader": "^0.23.1",
+    "sumchecker": "^2.0.2",
+    "ts-loader": "^5.3.1",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.17.0",
+    "typescript": "^3.2.2",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-middleware": "^3.4.0",
+    "webpack-hot-middleware": "^2.24.3"
   },
-  "resolutions": {
-    "@types/node": "8.10.38"
-  },
-  "lint-staged": {
-    "subTaskConcurrency": 1,
-    "linters": {
-      "*.{ts,tsx}": [
-        "prettier --write",
-        "tslint --fix",
-        "git add"
-      ],
-      "*.{js,jsx}": [
-        "prettier --write",
-        "standard --fix",
-        "git add"
-      ]
-    }
-  },
-  "standard": {
-    "parser": "babel-eslint",
-    "ignore": [
-      "**/release/",
-      "**/dist/",
-      "**/build/",
-      "**/node_modules/",
-      "packages/reactotron-app/main.js"
-    ],
-    "globals": [
-      "__DEV__",
-      "fetch"
-    ]
+  "dependencies": {
+    "color": "^2.0.0",
+    "css-modules-require-hook": "^4.2.2",
+    "date-fns": "^1.29.0",
+    "electron-debug": "^1.4.0",
+    "font-awesome": "^4.7.0",
+    "mobx": "^4.2.1",
+    "mobx-react": "^5.1.2",
+    "postcss": "^6.0.13",
+    "prop-types": "^15.6.1",
+    "ramda": "^0.25.0",
+    "ramdasauce": "^2.1.0",
+    "react": "^16.3.2",
+    "react-base16-styling": "^0.5.3",
+    "react-dom": "^16.3.2",
+    "react-icons": "^2.2.7",
+    "react-json-tree": "^0.11.0",
+    "react-modal": "^3.4.4",
+    "react-tap-event-plugin": "^3.0.2",
+    "react-tooltip": "^3.5.1",
+    "reactotron-core-server": "^2.0.0",
+    "source-map-support": "^0.5.5",
+    "stringify-object": "^3.2.2"
   }
 }
