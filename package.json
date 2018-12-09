@@ -103,7 +103,7 @@
     "react-modal": "^3.4.4",
     "react-tap-event-plugin": "^3.0.2",
     "react-tooltip": "^3.5.1",
-    "reactotron-core-server": "^2.0.0",
+    "reactotron-core-server": "^2.1.3",
     "source-map-support": "^0.5.5",
     "stringify-object": "^3.2.2"
   }

@@ -2795,10 +2795,10 @@ electron-rebuild@^1.8.2:
     spawn-rx "^2.0.10"
     yargs "^7.0.2"
 
-electron@3.0.10:
-  version "3.0.10"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-3.0.10.tgz#7d412856e8cf0d3041a612a32dd09e2af2d50f50"
-  integrity sha512-I39IeQP3NOlbjKzTDK8uK2JdiHDfhV5SruCS2Gttkn2MaKCY+yIzQ6Wr4DyBXLeTEkL1sbZxbqQVhCavAliv5w==
+electron@3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-3.0.3.tgz#2857ed8d37c1b46e0a75a72684800252255f3243"
+  integrity sha512-5ypkMO368UbWd1e0ZwKaflYLXSHSw2wAvC5/yApv03pX/KV3uD/2/qF7rW841H9I3QPmS03YZ6UZmlQV/fNczw==
   dependencies:
     "@types/node" "^8.0.24"
     electron-download "^4.1.0"
@@ -6491,9 +6491,10 @@ react@^16.3.2:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-reactotron-core-server@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/reactotron-core-server/-/reactotron-core-server-2.1.0.tgz#67f5225b9c2f193a815d1fa25b1212a71b24a8b9"
+reactotron-core-server@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/reactotron-core-server/-/reactotron-core-server-2.1.3.tgz#c1f44c0393fcffb4724713dee7825d94d4fd9fea"
+  integrity sha512-9i2rHKP8vYkLvk6Xqv+UHZ2EWenPzfi9toNlyHGE2xIM1O2/3R2s7QvSQOarMg6W793AZvtsAUFl9Mm7hjCODw==
   dependencies:
     mitt "^1.1.2"
     ramda "^0.25.0"
