@@ -70,7 +70,9 @@ Finally, we import this on startup in
 on line 1:
 
 ```js
-import './ReactotronConfig'
+if(__DEV__) {
+  import('.ReactotronConfig').then(() => console.log('Reactotron Configured'))
+}
 ```
 
 At this point, Reactotron is hooked up.
