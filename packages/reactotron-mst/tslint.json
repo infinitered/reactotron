@@ -1,6 +1,0 @@
-{
-  "extends": ["tslint-config-prettier"],
-  "rules": {
-    "quotemark": [true, "double", "jsx-double", "avoid-escape"]
-  }
-}

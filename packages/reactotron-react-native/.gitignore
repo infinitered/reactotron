@@ -1,8 +1,0 @@
-node_modules
-npm-debug.log
-coverage
-.nyc_output
-dist
-tsconfig.json
-jsconfig.json
-typings
