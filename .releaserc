@@ -9,13 +9,13 @@
     [
       "@semantic-release/exec",
       {
-        "publishCmd": "echo ${nextRelease.notes} >> ./resources/release-notes.md"
+        "prepareCmd": "echo \"${nextRelease.notes}\" >> ./resources/release-notes.md"
       }
     ],
     [
       "@semantic-release/exec",
       {
-        "publishCmd": "yarn package-all -p onTagOrDraft"
+        "prepareCmd": "yarn package-all -p onTagOrDraft"
       }
     ],
     [
