@@ -78,6 +78,10 @@ Tron.use(mst({ filter }))
 
 The default value for `filter` if you don't provide it is `() => true`, which means everything gets passed to Reactotron.
 
+### queryMode
+
+The `queryMode` property provides a way to switch between subscribing to live state or snapshots. The only time you'll want to subscribe to snapshots instead of live state is when verifying transitory state (via `postProcessSnapshot`) is not persisted.
+
 # Troubleshooting
 
 The `trackMstNode()` function will only be available after you setup the `reactotron-mst` plugin. Make sure you do the previous setup step first or you'll see an error that says, `trackMstNode is not a function`.
