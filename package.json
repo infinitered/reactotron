@@ -13,7 +13,7 @@
     "dev": "cross-env START_HOT=1 node -r @babel/register ./internals/scripts/CheckPortInUse.js && cross-env START_HOT=1 yarn start-renderer-dev",
     "format": "prettier --write {**,.}/*.{js,ts,tsx} && tslint -p . --fix",
     "package": "yarn build && electron-builder build --publish never",
-    "package-all": "yarn build && electron-builder build -mwl --publish never",
+    "package-all": "yarn build && electron-builder build -mwl",
     "lint": "tslint -p .",
     "start": "cross-env NODE_ENV=production electron ./app/main.prod.js",
     "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register ./app/main.dev.js",
@@ -27,10 +27,10 @@
     "productName": "Reactotron",
     "appId": "com.reactotron.app",
     "files": [
-      "app/dist/",
-      "app/app.html",
-      "app/main.prod.js",
-      "app/main.prod.js.map",
+      "src/dist/",
+      "src/app.html",
+      "src/main.prod.js",
+      "src/main.prod.js.map",
       "package.json"
     ],
     "dmg": {
