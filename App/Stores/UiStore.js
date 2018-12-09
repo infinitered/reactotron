@@ -4,6 +4,7 @@ import { trim } from "ramda"
 import { isNilOrEmpty } from "ramdasauce"
 import Keystroke from "../Lib/Keystroke"
 import Mousetrap from "../Lib/Mousetrap.min.js"
+import fs from "fs";
 
 /**
  * Handles UI state.
@@ -19,6 +20,7 @@ class UI {
   @observable showHelpDialog = false
   @observable showStateWatchDialog = false
   @observable showFilterTimelineDialog = false
+  @observable showTimelineExportDialog = false
   @observable statusBarExpanded = false
   @observable watchToAdd
   @observable actionToDispatch
@@ -30,13 +32,17 @@ class UI {
   @observable isSidebarVisible = true
   @observable isStorybookShown = false
   @observable searchPhrase = ""
+  @observable exportFilePath = ""
+  @observable writingFileError = ""
+  @observable writingFileSuccess = false
   zoomLevel = 0
 
   // additional properties that some commands may want... a way to communicate
   // from the command toolbar to the command
   commandProperties = {}
 
-  constructor(server, commandsManager, stateBackupStore, getSelectedConnection) {
+  constructor(session, server, commandsManager, stateBackupStore, getSelectedConnection) {
+    this.session = session
     this.server = server
     this.commandsManager = commandsManager
     this.stateBackupStore = stateBackupStore
@@ -47,6 +53,7 @@ class UI {
     Mousetrap.bind(`${Keystroke.mousetrap}+backspace`, this.reset)
     Mousetrap.bind(`${Keystroke.mousetrap}+k`, this.openStateFindDialog)
     Mousetrap.bind(`${Keystroke.mousetrap}+shift+f`, this.openFilterTimelineDialog)
+    Mousetrap.bind(`${Keystroke.mousetrap}+shift+e`, this.openExportTimelineDialog)
     Mousetrap.bind(`${Keystroke.mousetrap}+d`, this.openStateDispatchDialog)
     Mousetrap.bind(`${Keystroke.mousetrap}+s`, () => this.stateBackupStore.sendBackup())
     Mousetrap.bind(`tab`, this.toggleKeysValues)
@@ -188,6 +195,7 @@ class UI {
       this.showStateFindDialog ||
       this.showStateDispatchDialog ||
       this.showFilterTimelineDialog ||
+      this.showTimelineExportDialog ||
       this.stateBackupStore.renameDialogVisible ||
       this.showSendCustomDialog
     )
@@ -218,6 +226,9 @@ class UI {
   submitCurrentFormDelicately = () => {
     if (this.showStateDispatchDialog) {
       this.submitStateDispatch()
+    }
+    if (this.showTimelineExportDialog)  {
+      this.exportCommands();
     }
   }
 
@@ -321,6 +332,24 @@ class UI {
   @action
   closeFilterTimelineDialog = () => {
     this.showFilterTimelineDialog = false
+  }
+
+  @action
+  openExportTimelineDialog = () => {
+    this.showTimelineExportDialog = true
+  }
+
+  @action
+  closeExportTimelineDialog = () => {
+    this.showTimelineExportDialog = false
+    this.exportFilePath = ""
+    this.writingFileError = ""
+    this.writingFileSuccess = false
+  }
+
+  @action
+  setExportFilePath = (path) => {
+    this.exportFilePath = path;
   }
 
   @action
@@ -469,6 +498,31 @@ class UI {
     this.server.send("storybook", this.isStorybookShown, clientId)
   }
 
+  exportCommands = () => {
+
+    if  (!this.exportFilePath) {
+      this.writingFileError = "Please choose a path."
+      return
+    }
+    const formatCommand = (command) => ({
+        clientId: command.clientId,
+        payload: {
+          name: command.payload.name,
+          action: command.payload.action
+        },
+        type: command.type
+    })
+    const commands = JSON.stringify(this.session.commands.map(formatCommand))
+    fs.writeFile(this.exportFilePath + "/reactotron_timeline.txt", commands, (err) => {
+      if (err) {
+        console.log(err)
+        this.writingFileError = err.message
+      } else {
+        this.writingFileSuccess = true;
+        this.writingFileError = ""
+      }
+    })
+  }
 }
 
 export default UI
