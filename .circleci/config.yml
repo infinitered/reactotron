@@ -51,8 +51,8 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Install Wine
-          command: brew install wine
+          name: Install Wine & RPM
+          command: brew install wine && brew install rpm
       - run:
           name: Decode Certificates
           command: base64 -D -o Certificates.p12 <<< $ReactotronCerts
