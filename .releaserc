@@ -8,6 +8,12 @@
     [
       "@semantic-release/exec",
       {
+        "prepareCmd": "yarn build"
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
         "prepareCmd": "yarn package"
       }
     ],
