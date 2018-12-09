@@ -36,7 +36,6 @@ const config = {
   plugins: [
     ...baseConfig.plugins,
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       __DEV__: true,
       "process.env": {
@@ -44,6 +43,10 @@ const config = {
       },
     }),
   ],
+
+  optimization: {
+    noEmitOnErrors: true,
+  },
 
   target: "electron-renderer",
 }
