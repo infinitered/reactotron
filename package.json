@@ -1,7 +1,7 @@
 {
   "name": "reactotron-app",
   "productName": "Reactotron",
-  "version": "2.1.2",
+  "version": "2.3.1",
   "description": "Reactotron desktop mode engage!",
   "main": "./app/main.prod.js",
   "scripts": {
