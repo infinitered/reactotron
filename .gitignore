@@ -24,19 +24,32 @@ coverage
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
+.eslintcache
 
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
-npm-debug.log
-npm-debug.log*
 yarn-error.log
 
 # OSX
 .DS_Store
 
+# flow-typed
+flow-typed/npm/*
+!flow-typed/npm/module_vx.x.x.js
+
 # App packaged
-dist
 release
+app/main.prod.js
+app/main.prod.js.map
+app/renderer.prod.js
+app/renderer.prod.js.map
+app/style.css
+app/style.css.map
+dist
+dll
 main.js
 main.js.map
+
+.idea
+npm-debug.log.*

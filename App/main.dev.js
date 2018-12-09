@@ -31,7 +31,7 @@ app.on("ready", () => {
     menuItem.checked = nextValue
   }
 
-  mainWindow.loadURL(`file://${__dirname}/App/app.html`)
+  mainWindow.loadURL(`file://${__dirname}/app.html`)
 
   mainWindow.webContents.on("did-finish-load", () => {
     mainWindow.show()
@@ -106,6 +106,13 @@ app.on("ready", () => {
                   accelerator: "Ctrl+Command+F",
                   click() {
                     mainWindow.setFullScreen(!mainWindow.isFullScreen())
+                  },
+                },
+                {
+                  label: "Toggle Developer Tools",
+                  accelerator: "Alt+Command+I",
+                  click() {
+                    mainWindow.toggleDevTools()
                   },
                 },
                 {
@@ -186,6 +193,13 @@ app.on("ready", () => {
                   label: "Always On Top",
                   click() {
                     toggleAlwaysOnTop(this)
+                  },
+                },
+                {
+                  label: "Toggle &Developer Tools",
+                  accelerator: "Alt+Ctrl+I",
+                  click() {
+                    mainWindow.toggleDevTools()
                   },
                 },
                 {
