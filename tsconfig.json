@@ -13,5 +13,5 @@
     "allowJs": true,
     "jsx": "react"
   },
-  "include": ["App"]
+  "include": ["src"]
 }
