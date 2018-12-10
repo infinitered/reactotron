@@ -13,7 +13,7 @@
     "dev": "cross-env START_HOT=1 node -r @babel/register ./internals/scripts/CheckPortInUse.js && cross-env START_HOT=1 yarn start-renderer-dev",
     "format": "prettier --write {**,.}/*.{js,ts,tsx} && tslint -p . --fix",
     "package": "yarn build && electron-builder build --publish never",
-    "package-all": "yarn build && electron-builder build -mwl",
+    "package-all": "yarn build && electron-builder build -mwl --publish never",
     "lint": "tslint -p .",
     "start": "cross-env NODE_ENV=production electron ./src/main.prod.js",
     "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register ./src/main.dev.js",

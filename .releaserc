@@ -14,7 +14,31 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "yarn package-all -p onTagOrDraft"
+        "prepareCmd": "yarn package-all"
+      }
+    ],
+    ["@semantic-release/github", {
+      "assets": [
+        "release/Reactotron-*-mac.zip",
+        "release/Reactotron-*.dmg",
+        "release/Reactotron-*.dmg.blockmap",
+        "release/Reactotron-app-*-x86_64.AppImage",
+        "release/Reactotron-app-*.msi",
+        "release/Reactotron-app-*.x86_64.rpm",
+        "release/Reactotron-app-setup-*.exe",
+        "release/Reactotron-app-setup-*.exe.blockmap",
+        "release/Reactotron-app_*_amd64.deb",
+        "release/Reactotron-app_*_amd64.snap",
+        "release/latest-linux.yml",
+        "release/latest-mac.yml",
+        "release/latest.yml",
+      ]
+    }],
+    [
+      "@semantic-release/git",
+      {
+        "assets": "package.json",
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ]
   ]
