@@ -1,4 +1,4 @@
-import { merge, find, propEq, without, contains, forEach, pluck, reject } from "ramda"
+import { merge, find, propEq, without, contains, forEach, pluck, reject, equals } from "ramda"
 import { Server as WebSocketServer, OPEN } from "ws"
 import * as mitt from "mitt"
 import validate from "./validation"
@@ -292,9 +292,16 @@ export default class Server {
     if (contains(path, this.subscriptions)) {
       return
     }
+    
+    // monitor the complete state when * (star selector) is entered
+    if (equals(path, '*')) {
+      this.subscriptions.push('')
+    } else {
+       this.subscriptions.push(path)
+    }
+      
 
     // subscribe
-    this.subscriptions.push(path)
     this.stateValuesSendSubscriptions()
   }
 
