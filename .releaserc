@@ -8,67 +8,13 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "yarn build"
+        "prepareCmd": "echo \"${nextRelease.notes}\" >> ./resources/release-notes.md"
       }
     ],
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "yarn package"
-      }
-    ],
-    [
-      "@semantic-release/exec",
-      {
-        "prepareCmd": "codesign -s \"$REACTOTRON_CODESIGN_IDENTITY\" -vvv --deep --force ./release/darwin-x64/Reactotron-darwin-x64/Reactotron.app"
-      }
-    ],
-    [
-      "@semantic-release/exec",
-      {
-        "prepareCmd": "cd ./release/linux-ia32/Reactotron-linux-ia32 && zip -r Reactotron-linux-ia32.zip ./"
-      }
-    ],
-    [
-      "@semantic-release/exec",
-      {
-        "prepareCmd": "cd ./release/linux-x64/Reactotron-linux-x64 && zip -r Reactotron-linux-x64.zip ./"
-      }
-    ],
-    [
-      "@semantic-release/exec",
-      {
-        "prepareCmd": "cd ./release/win32-ia32/Reactotron-win32-ia32 && zip -r Reactotron-win32-ia32.zip ./"
-      }
-    ],
-    [
-      "@semantic-release/exec",
-      {
-        "prepareCmd": "cd ./release/win32-x64/Reactotron-win32-x64 && zip -r Reactotron-win32-x64.zip ./"
-      }
-    ],
-    [
-      "@semantic-release/exec",
-      {
-        "prepareCmd": "cd ./release/darwin-x64/Reactotron-darwin-x64 && zip -r -y Reactotron.app.zip ./Reactotron.app"
-      }
-    ],
-    ["@semantic-release/github",
-      {
-        "assets": [
-          { "path": "./release/darwin-x64/Reactotron-darwin-x64/Reactotron.app.zip" },
-          { "path": "./release/linux-x64/Reactotron-linux-x64/Reactotron-linux-x64.zip" },
-          { "path": "./release/linux-ia32/Reactotron-linux-ia32/Reactotron-linux-ia32.zip" },
-          { "path": "./release/win32-x64/Reactotron-win32-x64/Reactotron-win32-x64.zip" },
-          { "path": "./release/win32-ia32/Reactotron-win32-ia32/Reactotron-win32-ia32.zip" }
-        ]
-      }
-    ],
-    [
-      "@semantic-release/git",
-      {
-        "assets": "package.json",
-        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        "prepareCmd": "yarn package-all -p onTagOrDraft"
       }
     ]
   ]
