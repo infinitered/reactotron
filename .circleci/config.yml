@@ -57,7 +57,7 @@ jobs:
           name: Run Build
           command: yarn build
       - save_cache:
-          name: Save node modules
+          name: Save build
           paths:
             - dist
           key: v1-build-{{ .Branch }}-{{ .Revision }}
