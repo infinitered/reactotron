@@ -125,11 +125,41 @@ class TimelineHeader extends Component {
             <div style={Styles.title}>{TITLE}</div>
           </div>
           <div style={Styles.right}>
-            <Button icon="search" onClick={ui.toggleTimelineSearch} tip="Search" size={Styles.searchIconSize} style={searchIconStyle}/>
-            <Button icon="filter-list" onClick={ui.openFilterTimelineDialog} tip="Filter" size={Styles.iconSize} style={Styles.toolbarFilter}/>
-            <Button icon="swap-vert" onClick={ui.toggleTimelineOrder} tip="Reverse Order" size={Styles.reverseOrderSize} style={Styles.reverseOrderIcon}/>
-            <Button icon="file-download" onClick={ui.openExportTimelineDialog} tip="Download" size={Styles.iconSize} style={Styles.toolbarFilter}/>
-            <Button icon="delete-sweep" onClick={ui.reset} tip="Clear" size={Styles.iconSize} style={Styles.toolbarClear}/>
+            <Button 
+              icon="search"
+              onClick={ui.toggleTimelineSearch}
+              tip="Search"
+              size={Styles.searchIconSize}
+              style={searchIconStyle}
+            />
+            <Button 
+              icon="filter-list"
+              onClick={ui.openFilterTimelineDialog}
+              tip="Filter"
+              size={Styles.iconSize}
+              style={Styles.toolbarFilter}
+            />
+            <Button 
+              icon="swap-vert"
+              onClick={ui.toggleTimelineOrder}
+              tip="Reverse Order"
+              size={Styles.reverseOrderSize}
+              style={Styles.reverseOrderIcon}
+            />
+            <Button 
+              icon="file-download"
+              onClick={ui.openExportTimelineDialog}
+              tip="Download"
+              size={Styles.iconSize}
+              style={Styles.toolbarFilter}
+            />
+            <Button 
+              icon="delete-sweep"
+              onClick={ui.reset}
+              tip="Clear"
+              size={Styles.iconSize}
+              style={Styles.toolbarClear}
+            />
           </div>
         </div>
         <div style={searchContainerStyle}>
