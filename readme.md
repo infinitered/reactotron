@@ -1,4 +1,4 @@
-# ![](./docs/images/readme/Reactotron-128.png)
+# ![Reactotron Logo](./docs/images/readme/Reactotron-128.png)
 
 [![Slack Community](https://infiniteredcommunity.herokuapp.com/badge.svg)](https://infiniteredcommunity.herokuapp.com/)
 
@@ -7,6 +7,8 @@
 # What is Reactotron?
 
 Reactotron is a macOS, Windows, and Linux app for inspecting your [React JS](https://facebook.github.io/react/) and [React Native](https://facebook.github.io/react-native/) apps.
+
+*Watch [Darin Wilson's](https://github.com/darinwilson) talk at [Chain React](https://infinite.red/ChainReactConf): [Chain React 2018: Debugging and Beyond with Reactotron](https://www.youtube.com/watch?v=UiPo9A9k7xc)!*
  
 Use it to:
 
