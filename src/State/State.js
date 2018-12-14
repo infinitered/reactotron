@@ -7,6 +7,7 @@ import Tabs from "../Foundation/Tabs"
 import AppStyles from "../Theme/AppStyles"
 import Backups from "./Backups"
 import Subscriptions from "./Subscriptions"
+import Tooltip from "../Shared/Tooltip"
 
 const toolbarButton = {
   cursor: "pointer",
@@ -34,16 +35,20 @@ class State extends Component {
 
     return (
       <div>
-        <IconAdd
-          size={Styles.iconSize}
-          style={Styles.toolbarAdd}
-          onClick={ui.openStateWatchDialog}
-        />
+        <Tooltip className="tooltipTheme" place="bottom" tip="Add">
+          <IconAdd
+            size={Styles.iconSize}
+            style={Styles.toolbarAdd}
+            onClick={ui.openStateWatchDialog}
+          />
+        </Tooltip>
+        <Tooltip className="tooltipTheme" place="bottom" tip="Clear">
         <IconClear
           size={Styles.iconSize}
           style={Styles.toolbarClear}
           onClick={ui.clearStateWatches}
         />
+        </Tooltip>
       </div>
     )
   }

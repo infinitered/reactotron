@@ -8,6 +8,7 @@ import IconSearch from "react-icons/lib/md/search"
 import IconReverseOrder from "react-icons/lib/md/swap-vert"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
+import Tooltip from '../Shared/Tooltip'
 
 const TITLE = "Timeline"
 
@@ -124,27 +125,37 @@ class TimelineHeader extends Component {
             <div style={Styles.title}>{TITLE}</div>
           </div>
           <div style={Styles.right}>
-            <IconSearch
-              size={Styles.searchIconSize}
-              style={searchIconStyle}
-              onClick={ui.toggleTimelineSearch}
-            />
-            <IconFilter
-              size={Styles.iconSize}
-              style={Styles.toolbarFilter}
-              onClick={ui.openFilterTimelineDialog}
-            />
-            <IconReverseOrder
-              size={Styles.reverseOrderSize}
-              style={Styles.reverseOrderIcon}
-              onClick={ui.toggleTimelineOrder}
-            />
-            <IconDownload
-              size={Styles.iconSize}
-              style={Styles.toolbarFilter}
-              onClick={ui.openExportTimelineDialog}
-            />
-            <IconClear size={Styles.iconSize} style={Styles.toolbarClear} onClick={ui.reset} />
+            <Tooltip className="tooltipTheme" place="bottom" tip="Search">
+              <IconSearch
+                size={Styles.searchIconSize}
+                style={searchIconStyle}
+                onClick={ui.toggleTimelineSearch}
+              />
+            </Tooltip>
+            <Tooltip className="tooltipTheme" place="bottom" tip="Filter">
+              <IconFilter
+                size={Styles.iconSize}
+                style={Styles.toolbarFilter}
+                onClick={ui.openFilterTimelineDialog}
+              />
+            </Tooltip>
+            <Tooltip className="tooltipTheme" place="bottom" tip="Reverse Order">
+              <IconReverseOrder
+                size={Styles.reverseOrderSize}
+                style={Styles.reverseOrderIcon}
+                onClick={ui.toggleTimelineOrder}
+              />
+            </Tooltip>
+            <Tooltip className="tooltipTheme" place="bottom" tip="Download">
+              <IconDownload
+                size={Styles.iconSize}
+                style={Styles.toolbarFilter}
+                onClick={ui.openExportTimelineDialog}
+              />
+            </Tooltip>
+            <Tooltip className="tooltipTheme" place="bottom" tip="Add">
+              <IconClear size={Styles.iconSize} style={Styles.toolbarClear} onClick={ui.reset} />
+            </Tooltip>
           </div>
         </div>
         <div style={searchContainerStyle}>
