@@ -78,7 +78,7 @@ class State extends Component {
             <div>
               <Button
                 icon="file-download" 
-                onClick={stateBackupStore.sendBackup()} 
+                onClick={stateBackupStore.sendBackup} 
                 tip="Add Backup" 
                 size={Styles.iconSize}
                 style={Styles.toolbarAdd}
