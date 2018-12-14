@@ -130,7 +130,7 @@ class FilterTimelineDialog extends React.Component {
           </div>
           <div style={AppStyles.Modal.body}>{groups}</div>
           <div style={AppStyles.Modal.keystrokes}>
-            <div style={AppStyles.Modal.hotkey}>
+            <div style={AppStyles.Modal.hotkey} onClick={ui.closeFilterTimelineDialog}>
               <span style={AppStyles.Modal.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
             </div>
           </div>

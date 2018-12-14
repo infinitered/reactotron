@@ -68,7 +68,7 @@ class StateDispatchDialog extends Component {
             />
           </div>
           <div style={AppStyles.Modal.keystrokes}>
-            <div style={AppStyles.Modal.hotkey}>
+            <div style={AppStyles.Modal.hotkey} onClick={ui.closeStateDispatchDialog}>
               <span style={AppStyles.Modal.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
             </div>
             <div style={AppStyles.Modal.hotkey}>
