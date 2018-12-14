@@ -14,12 +14,12 @@ const Styles = {
 }
 
 const CommandToolbarButton = props => {
-  const { tip, icon, onClick } = props
+  const { tip, icon, onClick, size, style } = props
   const Icon = require(`react-icons/lib/md/${icon}`)
 
   return (
     <div data-tip={tip} onClick={onClick} style={Styles.container}>
-      <Icon size={Styles.iconSize} style={Styles.icon} />
+      <Icon size={size || Styles.iconSize} style={style || Styles.icon} />
       <ReactTooltip place='bottom' className='tooltipTheme' />
     </div>
   )
@@ -28,7 +28,9 @@ const CommandToolbarButton = props => {
 CommandToolbarButton.propTypes = {
   tip: PropTypes.string,
   icon: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  size: PropTypes.number,
+  style: PropTypes.object,
 }
 
 export default CommandToolbarButton

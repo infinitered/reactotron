@@ -7,7 +7,7 @@ import Tabs from "../Foundation/Tabs"
 import AppStyles from "../Theme/AppStyles"
 import Backups from "./Backups"
 import Subscriptions from "./Subscriptions"
-import Tooltip from "../Shared/Tooltip"
+import Button from "../Shared/CommandToolbarButton"
 
 const toolbarButton = {
   cursor: "pointer",
@@ -18,6 +18,9 @@ const Styles = {
     ...AppStyles.Layout.vbox,
     margin: 0,
     flex: 1,
+  },
+  toolbarContainer: {
+    display: 'flex',
   },
   toolbarAdd: {
     ...toolbarButton,
@@ -34,21 +37,9 @@ class State extends Component {
     const { ui } = this.props.session
 
     return (
-      <div>
-        <Tooltip className="tooltipTheme" place="bottom" tip="Add">
-          <IconAdd
-            size={Styles.iconSize}
-            style={Styles.toolbarAdd}
-            onClick={ui.openStateWatchDialog}
-          />
-        </Tooltip>
-        <Tooltip className="tooltipTheme" place="bottom" tip="Clear">
-        <IconClear
-          size={Styles.iconSize}
-          style={Styles.toolbarClear}
-          onClick={ui.clearStateWatches}
-        />
-        </Tooltip>
+      <div style={Styles.toolbarContainer}>
+        <Button icon="add" onClick={ui.openStateWatchDialog} tip="Add" size={Styles.iconSize} style={Styles.toolbarAdd}/>
+        <Button icon="delete-sweep" onClick={ui.clearStateWatches} tip="Clear" size={Styles.iconSize} style={Styles.toolbarClear}/>
       </div>
     )
   }

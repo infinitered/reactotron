@@ -8,7 +8,7 @@ import IconSearch from "react-icons/lib/md/search"
 import IconReverseOrder from "react-icons/lib/md/swap-vert"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
-import Tooltip from '../Shared/Tooltip'
+import Button from '../Shared/CommandToolbarButton'
 
 const TITLE = "Timeline"
 
@@ -125,37 +125,11 @@ class TimelineHeader extends Component {
             <div style={Styles.title}>{TITLE}</div>
           </div>
           <div style={Styles.right}>
-            <Tooltip className="tooltipTheme" place="bottom" tip="Search">
-              <IconSearch
-                size={Styles.searchIconSize}
-                style={searchIconStyle}
-                onClick={ui.toggleTimelineSearch}
-              />
-            </Tooltip>
-            <Tooltip className="tooltipTheme" place="bottom" tip="Filter">
-              <IconFilter
-                size={Styles.iconSize}
-                style={Styles.toolbarFilter}
-                onClick={ui.openFilterTimelineDialog}
-              />
-            </Tooltip>
-            <Tooltip className="tooltipTheme" place="bottom" tip="Reverse Order">
-              <IconReverseOrder
-                size={Styles.reverseOrderSize}
-                style={Styles.reverseOrderIcon}
-                onClick={ui.toggleTimelineOrder}
-              />
-            </Tooltip>
-            <Tooltip className="tooltipTheme" place="bottom" tip="Download">
-              <IconDownload
-                size={Styles.iconSize}
-                style={Styles.toolbarFilter}
-                onClick={ui.openExportTimelineDialog}
-              />
-            </Tooltip>
-            <Tooltip className="tooltipTheme" place="bottom" tip="Add">
-              <IconClear size={Styles.iconSize} style={Styles.toolbarClear} onClick={ui.reset} />
-            </Tooltip>
+            <Button icon="search" onClick={ui.toggleTimelineSearch} tip="Search" size={Styles.searchIconSize} style={searchIconStyle}/>
+            <Button icon="filter-list" onClick={ui.openFilterTimelineDialog} tip="Filter" size={Styles.iconSize} style={Styles.toolbarFilter}/>
+            <Button icon="swap-vert" onClick={ui.toggleTimelineOrder} tip="Reverse Order" size={Styles.reverseOrderSize} style={Styles.reverseOrderIcon}/>
+            <Button icon="file-download" onClick={ui.openExportTimelineDialog} tip="Download" size={Styles.iconSize} style={Styles.toolbarFilter}/>
+            <Button icon="delete-sweep" onClick={ui.reset} tip="Clear" size={Styles.iconSize} style={Styles.toolbarClear}/>
           </div>
         </div>
         <div style={searchContainerStyle}>
