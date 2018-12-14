@@ -19,22 +19,9 @@ git clone git@github.com:infinitered/reactotron.git
 cd reactotron
 ```
 
-Run the setup script to install the dependencies & run tests.
+Install the dependencies & run the app.
 
 ```
 yarn install
-yarn welcome
+yarn dev
 ```
-
-Run the app
-
-```
-cd packages/reactotron-app
-yarn start
-```
-
-### Monorepo & Lerna
-
-This is a monorepo: multiple JS packages in 1 git repo.
-
-We use [lerna](https://github.com/lerna/lerna) to help us.
