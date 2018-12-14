@@ -109,10 +109,10 @@ class ExportTimelineDialog extends React.Component {
               : null
           }
           <div style={Styles.keyStrokes}>
-            <div style={AppStyles.Modal.hotkey}>
+            <div style={AppStyles.Modal.hotkey} onClick={ui.closeExportTimelineDialog}>
               <span style={AppStyles.Modal.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
             </div>
-            <div style={AppStyles.Modal.hotkey}  onClick={() => session.exportCommands(this.path) }>
+            <div style={AppStyles.Modal.hotkey}  onClick={() => ui.exportCommands(this.path) }>
               <span style={AppStyles.Modal.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
             </div>
           </div>
