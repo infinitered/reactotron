@@ -39,16 +39,21 @@ class StateKeysAndValuesDialog extends Component {
   }
 
   handleKeyPress = e => {
-    const { ui } = this.props.session
-    const { path } = this.state
     if (e.key === "Enter") {
-      this.setState({ path: null })
-      ui.getStateKeysOrValues(path)
-      ui.closeStateFindDialog()
+      this.submit()
     }
   }
 
   onAfterOpenModal = () => this.field.focus()
+
+  submit = () => {
+    const { ui } = this.props.session
+    const { path } = this.state
+
+    this.setState({ path: null })
+    ui.getStateKeysOrValues(path)
+    ui.closeStateFindDialog()
+  }
 
   render() {
     const { ui } = this.props.session
@@ -91,7 +96,7 @@ class StateKeysAndValuesDialog extends Component {
             <div style={AppStyles.Modal.hotkey}>
               <span style={AppStyles.Modal.keystroke}>{TAB_KEYSTROKE}</span> {TAB_HINT}
             </div>
-            <div style={AppStyles.Modal.hotkey}>
+            <div style={AppStyles.Modal.hotkey} onClick={this.submit}>
               <span style={AppStyles.Modal.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
             </div>
           </div>

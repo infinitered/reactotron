@@ -31,7 +31,7 @@ class StateWatchDialog extends Component {
   onAfterOpenModal = () => this.field.focus()
 
   render() {
-    const { showStateWatchDialog, closeStateWatchDialog } = this.props.session.ui
+    const { showStateWatchDialog, closeStateWatchDialog, submitCurrentForm } = this.props.session.ui
 
     return (
       <Modal
@@ -63,7 +63,7 @@ class StateWatchDialog extends Component {
             <div style={AppStyles.Modal.hotkey} onClick={closeStateWatchDialog}>
               <span style={AppStyles.Modal.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
             </div>
-            <div style={AppStyles.Modal.hotkey}>
+            <div style={AppStyles.Modal.hotkey} onClick={submitCurrentForm}>
               <span style={AppStyles.Modal.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
             </div>
           </div>
