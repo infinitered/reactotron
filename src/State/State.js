@@ -7,6 +7,7 @@ import Tabs from "../Foundation/Tabs"
 import AppStyles from "../Theme/AppStyles"
 import Backups from "./Backups"
 import Subscriptions from "./Subscriptions"
+import Button from "../Shared/CommandToolbarButton"
 
 const toolbarButton = {
   cursor: "pointer",
@@ -17,6 +18,9 @@ const Styles = {
     ...AppStyles.Layout.vbox,
     margin: 0,
     flex: 1,
+  },
+  toolbarContainer: {
+    display: 'flex',
   },
   toolbarAdd: {
     ...toolbarButton,
@@ -33,16 +37,18 @@ class State extends Component {
     const { ui } = this.props.session
 
     return (
-      <div>
-        <IconAdd
-          size={Styles.iconSize}
-          style={Styles.toolbarAdd}
+      <div style={Styles.toolbarContainer}>
+        <Button
+          icon="add"
           onClick={ui.openStateWatchDialog}
+          tip="Add" size={Styles.iconSize}
+          style={Styles.toolbarAdd}
         />
-        <IconClear
-          size={Styles.iconSize}
-          style={Styles.toolbarClear}
+        <Button
+          icon="delete-sweep"
           onClick={ui.clearStateWatches}
+          tip="Clear" size={Styles.iconSize}
+          style={Styles.toolbarClear}
         />
       </div>
     )
@@ -52,9 +58,10 @@ class State extends Component {
     const {
       session: { ui },
     } = this.props
+    const {stateSubNav,setStateSubNav,stateBackupStore} = ui;
 
     return (
-      <Tabs selectedTab={ui.stateSubNav} onSwitchTab={ui.setStateSubNav}>
+      <Tabs selectedTab={stateSubNav} onSwitchTab={setStateSubNav}>
         <Tabs.Tab
           name="subscriptions"
           text="Subscriptions"
@@ -69,10 +76,12 @@ class State extends Component {
           icon="import-export"
           renderActions={() => (
             <div>
-              <IconAddBackup
+              <Button
+                icon="file-download" 
+                onClick={stateBackupStore.sendBackup} 
+                tip="Add Backup" 
                 size={Styles.iconSize}
                 style={Styles.toolbarAdd}
-                onClick={() => ui.stateBackupStore.sendBackup()}
               />
             </div>
           )}
