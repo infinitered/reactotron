@@ -5,7 +5,8 @@
   "files": [
     "dist",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "reactotron-react-js.d.ts"
   ],
   "main": "dist/index.js",
   "scripts": {
