@@ -48,7 +48,8 @@ const DEFAULTS = {
   },
   setClientId: clientId => {
     return AsyncStorage.setItem(REACTOTRON_ASYNC_CLIENT_ID, clientId)
-  }
+  },
+  proxyHack: true,
 }
 
 // -----------
