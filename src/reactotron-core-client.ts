@@ -249,7 +249,7 @@ export class Client {
       deltaTime,
     }
 
-    const serializedMessage = serialize(fullMessage)
+    const serializedMessage = serialize(fullMessage, this.options.proxyHack)
 
     if (this.isReady) {
       // send this command

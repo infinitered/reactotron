@@ -81,4 +81,6 @@ export interface ClientOptions {
    * Get the client id provided by the server
    */
   getClientId?: () => Promise<string>
+
+  proxyHack?: boolean
 }

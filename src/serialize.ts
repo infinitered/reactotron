@@ -34,7 +34,7 @@ function getFunctionName(fn: any): string {
  *
  *  @param {any} source - The victim.
  */
-function serialize(source) {
+function serialize(source, proxyHack = false) {
   const stack = []
   const keys = []
 
@@ -63,6 +63,10 @@ function serialize(source) {
       // head shakers
       if (value === -0) return ZERO // eslint-disable-line
       if (value === "") return EMPTY_STRING
+
+      if (proxyHack && typeof value === "object" && value.nativeEvent) {
+        return value.nativeEvent
+      }
 
       // known types that have easy resolving
       switch (typeof value) {
