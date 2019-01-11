@@ -164,7 +164,7 @@ Well, at this point, we have a complicated version of `console.log`.
 
 Where Reactotron starts to shine is when you start plugging into [Redux](./plugin-redux.md), tracking global errors, and watching network requests.
 
-Check out our [Demo](../packages/demo-react-native) for more goodies.
+Check out our [Demo](../examples/demo-react-native) for more goodies.
 
 ![Demo Native App](./images/quick-start-react-native/react-demo-native.jpg)
 
