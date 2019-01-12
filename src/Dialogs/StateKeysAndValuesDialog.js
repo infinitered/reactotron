@@ -39,25 +39,31 @@ class StateKeysAndValuesDialog extends Component {
   }
 
   handleKeyPress = e => {
-    const { ui } = this.props.session
-    const { path } = this.state
     if (e.key === "Enter") {
-      this.setState({ path: null })
-      ui.getStateKeysOrValues(path)
-      ui.closeStateFindDialog()
+      this.submit()
     }
   }
 
   onAfterOpenModal = () => this.field.focus()
 
+  submit = () => {
+    const { ui } = this.props.session
+    const { path } = this.state
+
+    this.setState({ path: null })
+    ui.getStateKeysOrValues(path)
+    ui.closeStateFindDialog()
+  }
+
   render() {
     const { ui } = this.props.session
+    const { showStateFindDialog, closeStateFindDialog, toggleKeysValues } = ui
     const isKeys = ui.keysOrValues === "keys"
 
     return (
       <Modal
-        isOpen={ui.showStateFindDialog}
-        onRequestClose={ui.closeStateFindDialog}
+        isOpen={showStateFindDialog}
+        onRequestClose={closeStateFindDialog}
         onAfterOpen={this.onAfterOpenModal}
         style={{
           content: AppStyles.Modal.content,
@@ -85,13 +91,13 @@ class StateKeysAndValuesDialog extends Component {
             />
           </div>
           <div style={AppStyles.Modal.keystrokes}>
-            <div style={AppStyles.Modal.hotkey}>
+            <div style={AppStyles.Modal.hotkey} onClick={closeStateFindDialog}>
               <span style={AppStyles.Modal.keystroke}>{ESCAPE_KEYSTROKE}</span> {ESCAPE_HINT}
             </div>
-            <div style={AppStyles.Modal.hotkey}>
+            <div style={AppStyles.Modal.hotkey} onClick={toggleKeysValues}>
               <span style={AppStyles.Modal.keystroke}>{TAB_KEYSTROKE}</span> {TAB_HINT}
             </div>
-            <div style={AppStyles.Modal.hotkey}>
+            <div style={AppStyles.Modal.hotkey} onClick={this.submit}>
               <span style={AppStyles.Modal.keystroke}>{ENTER_KEYSTROKE}</span> {ENTER_HINT}
             </div>
           </div>
