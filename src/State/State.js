@@ -77,9 +77,9 @@ class State extends Component {
           renderActions={() => (
             <div>
               <Button
-                icon="file-download" 
-                onClick={stateBackupStore.sendBackup} 
-                tip="Add Backup" 
+                icon="file-download"
+                onClick={() => stateBackupStore.sendBackup()}
+                tip="Add Backup"
                 size={Styles.iconSize}
                 style={Styles.toolbarAdd}
               />
