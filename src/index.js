@@ -67,6 +67,7 @@ const reactotron = createClient(DEFAULTS)
  * @param {boolean} options.overlay      `false` to turn off.
  * @param {*}       options.asyncStorage Options for the async storage tracking. `false to turn off`.
  * @param {*}       options.networking   Options for network activity. `false to turn off`.
+ * @param {*}       options.storybook   Options for storybook. `false to turn off`. 
  */
 reactotron.useReactNative = (options = {}) => {
   if (options.errors !== false) {
