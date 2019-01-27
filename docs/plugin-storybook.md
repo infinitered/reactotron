@@ -20,7 +20,9 @@ Next, add it as a plugin to Reactotron.
 ```js
 Reactotron
   .configure()
-  .use(storybook()) // <--- here we go!
+  .useReactNative({
+    storybook: true
+  })
   .connect()
 ```
 
