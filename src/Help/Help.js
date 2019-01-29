@@ -7,7 +7,7 @@ import HelpFeedback from './HelpFeedback'
 
 const FEEDBACK = "Let's Connect!"
 const KEYSTROKES = 'Keystrokes'
-// const pjson = require('../../package.json');
+const pjson = require('../../package.json');
 
 const logoUrl = require('../Theme/Reactotron-128.png')
 
@@ -44,7 +44,7 @@ const Styles = {
 
 const Help = () => (
   <div style={Styles.container}>
-    <Header title={`Using Reactotron`} />
+    <Header title={`Using Reactotron ${pjson.version}`} />
     <div style={Styles.content}>
       <div style={Styles.logoPanel}>
         <img src={logoUrl} style={Styles.logo} />
