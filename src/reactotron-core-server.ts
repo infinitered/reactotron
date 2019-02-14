@@ -105,6 +105,11 @@ export default class Server {
   started: boolean = false
 
   /**
+   * Keep alive interval to be running while the server is up.
+   */
+  keepAlive: NodeJS.Timer
+
+  /**
    * Set the configuration options.
    */
   configure(options: ServerOptions = DEFAULTS) {
@@ -143,6 +148,17 @@ export default class Server {
       server.listen(port)
     }
 
+    if (this.keepAlive) {
+      clearInterval(this.keepAlive)
+    }
+
+    // In the future we should bake this in more and use it to clean up dropped connections
+    this.keepAlive = setInterval(() => {
+      this.wss.clients.forEach((ws) => {
+        ws.ping(() => {});
+      });
+    }, 30000)
+
     // register events
     this.wss.on("connection", (socket, request) => {
       const thisConnectionId = this.connectionId++
@@ -160,8 +176,11 @@ export default class Server {
       // trigger onConnect
       this.emitter.emit("connect", partialConnection)
 
+      socket.on("error", error => console.log("ERR", error));
+
       // when this client disconnects
       socket.on("close", () => {
+        console.log('Client disconnected');
         // remove them from the list partial list
         this.partialConnections = reject(
           propEq("id", thisConnectionId),
@@ -232,7 +251,7 @@ export default class Server {
             const currentClientConnections = currentWssConnections.filter(c => (c as any).clientId === connectionClientId)
 
             for (let i = 0; i < currentClientConnections.length; i++) {
-              setTimeout(currentClientConnections[i].close(), 500) // Defer this for a small amount of time because reasons.
+              setTimeout(currentClientConnections[i].close, 500) // Defer this for a small amount of time because reasons.
 
               const severingConnection = find(propEq("clientId", connectionClientId), this.connections)
               if (severingConnection) {
@@ -290,6 +309,11 @@ export default class Server {
       s => s && (s as any).connected && (s as any).disconnect(),
       pluck("socket", this.connections),
     )
+
+    if (this.keepAlive) {
+      clearInterval(this.keepAlive)
+    }
+
     this.wss.close()
 
     // trigger the stop message
