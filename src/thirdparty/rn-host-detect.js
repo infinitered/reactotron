@@ -43,7 +43,7 @@ export default (hostname) => {
   hostname = getByRemoteConfig(hostname)
   var originalWarn = console.warn
   console.warn = function() {
-    if (arguments[0] && arguments[0].indexOf('Requiring module \'NativeModules\' by name') > -1) return
+    if (arguments[0] && typeof arguments[0] === 'string' && arguments[0].indexOf('Requiring module \'NativeModules\' by name') > -1) return
     return originalWarn.apply(console, arguments)
   }
 
