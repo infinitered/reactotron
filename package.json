@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@semantic-release/git": "^7.0.5",
-    "@types/jest": "^23.3.10",
+    "@types/jest": "^24.0.0",
     "@types/node": "^10.12.12",
     "@types/ws": "^6.0.1",
     "execa": "^1.0.0",
