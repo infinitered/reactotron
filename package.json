@@ -36,7 +36,7 @@
     "npm-run-all": "^4.1.1",
     "prettier": "^1.7.4",
     "ramda": "^0.26.1",
-    "rollup": "^0.67.4",
+    "rollup": "^0.68.0",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-filesize": "^6.0.0",
     "rollup-plugin-replace": "^2.0.0",
