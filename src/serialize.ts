@@ -78,6 +78,13 @@ function serialize(source, proxyHack = false) {
           return getFunctionName(value)
       }
 
+      // Tough things to crack
+      // If we have an iterator but are not an array (because arrays are easily seralizeable already)...
+      if (value[Symbol.iterator] && !Array.isArray(value)) {
+        // Convert to an array!
+        return [...value]
+      }
+
       if (stack.length > 0) {
         // check for prior existance
         const thisPos = stack.indexOf(this)
