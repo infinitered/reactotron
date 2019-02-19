@@ -41,7 +41,7 @@ const ICON_SIZE = 32
 class NativeStorybook extends Component {
   render() {
     const { isStorybookShown, enableStorybook, disableStorybook } = this.props.session.ui
-    const img = isStorybookShown ? "Theme/storybook-logo-color.png" : "Theme/storybook-logo.png"
+    const img = isStorybookShown ? require("../Theme/storybook-logo-color.png") : require("../Theme/storybook-logo.png")
 
     return (
       <div style={Styles.container}>
