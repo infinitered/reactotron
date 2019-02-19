@@ -33,7 +33,7 @@ class DeviceSelector extends Component {
   }
 
   render() {
-    const { selectedDeviceClientId, device } = this.props
+    const { selectedDeviceClientId, device, showName } = this.props
 
     const WhichIcon = getIcon(device)
 
@@ -48,7 +48,7 @@ class DeviceSelector extends Component {
           )}
         </div>
         <div style={Styles.infoContainer}>
-          <div>{getPlatformName(device)}</div>
+          <div>{getPlatformName(device)}{showName ? ` - ${device.name}` : ''}</div>
           <div>{getPlatformDetails(device)}</div>
         </div>
       </div>
