@@ -74,6 +74,6 @@
   "dependencies": {
     "mitt": "^1.1.2",
     "prop-types": "^15.5.10",
-    "reactotron-core-client": "^2.2.1"
+    "reactotron-core-client": "^2.2.2"
   }
 }
