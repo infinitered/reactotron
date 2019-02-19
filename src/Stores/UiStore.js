@@ -41,12 +41,15 @@ class UI {
   // from the command toolbar to the command
   commandProperties = {}
 
-  constructor(session, server, commandsManager, stateBackupStore, getSelectedConnection) {
+  constructor(session, server, commandsManager, stateBackupStore, getSelectedConnection, addSubscription, removeSubscription, clearSubscriptions) {
     this.session = session
     this.server = server
     this.commandsManager = commandsManager
     this.stateBackupStore = stateBackupStore
     this.getSelectedConnection = getSelectedConnection
+    this.addSubscription = addSubscription
+    this.removeSubscription = removeSubscription
+    this.clearSubscriptions = clearSubscriptions
 
     Mousetrap.prototype.stopCallback = () => false
 
@@ -234,7 +237,7 @@ class UI {
 
   @action
   submitStateWatch = () => {
-    this.server.stateValuesSubscribe(this.watchToAdd)
+    this.addSubscription(this.watchToAdd)
     this.showStateWatchDialog = false
     this.watchToAdd = null
   }
@@ -248,12 +251,12 @@ class UI {
 
   @action
   removeStateWatch = path => {
-    this.server.stateValuesUnsubscribe(path)
+    this.removeSubscription(path)
   }
 
   @action
   clearStateWatches = () => {
-    this.server.stateValuesClearSubscriptions()
+    this.clearSubscriptions()
   }
 
   @action
