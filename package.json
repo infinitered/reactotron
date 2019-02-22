@@ -145,6 +145,7 @@
     "electron-devtools-installer": "^2.2.4",
     "electron-log": "^2.2.17",
     "electron-updater": "^4.0.5",
+    "electron-window-state": "^5.0.3",
     "font-awesome": "^4.7.0",
     "mobx": "^4.2.1",
     "mobx-react": "^5.1.2",
