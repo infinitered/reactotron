@@ -1,4 +1,4 @@
-import { combineReducers, applyMiddleware, compose } from 'redux'
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { reducer as repoReducer } from './RepoRedux'
 import { reducer as logoReducer } from './LogoRedux'
 import { reducer as errorReducer } from './ErrorRedux'
@@ -34,7 +34,7 @@ export default () => {
     sagaMonitor: Reactotron.createSagaMonitor()
   })
   const middleware = applyMiddleware(logger, sagaMiddleware)
-  const store = Reactotron.createStore(rootReducer, compose(middleware))
+  const store = createStore(rootReducer, compose(Reactotron.createEnhancer(), middleware))
   sagaMiddleware.run(rootSaga)
   return store
 }
