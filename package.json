@@ -1,6 +1,6 @@
 {
   "name": "reactotron-redux",
-  "version": "2.1.3",
+  "version": "3.0.0-beta.1",
   "description": "A Reactotron plugin for Redux.",
   "files": [
     "dist",
