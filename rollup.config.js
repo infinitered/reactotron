@@ -1,15 +1,15 @@
+import resolve from 'rollup-plugin-node-resolve'
 import babel from 'rollup-plugin-babel'
 
 export default {
-  entry: 'src/index.js',
-  format: 'cjs',
+  input: 'src/index.ts',
+  output: {
+    file: 'dist/index.js',
+    format: 'cjs'
+  },
   plugins: [
-    babel({
-      babelrc: false,
-      runtimeHelpers: true,
-      presets: ['es2015-rollup', 'stage-1']
-    })
+    resolve({ extensions: ['.ts'] }),
+    babel({ extensions: ['.ts'], runtimeHelpers: true })
   ],
-  dest: 'dist/index.js',
-  external: ['ramda', 'redux', 'ramdasauce']
+  external: ['redux']
 }
