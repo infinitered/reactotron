@@ -73,7 +73,9 @@ workflows:
       - build_and_test:
           filters:
             branches:
-                ignore: master
+                ignore:
+                  - master
+                  - beta
       - releaseVersion:
           context: ReactotronCerts
           filters:
