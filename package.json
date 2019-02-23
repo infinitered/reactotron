@@ -26,7 +26,7 @@
     "url": "https://github.com/infinitered/reactotron/issues"
   },
   "devDependencies": {
-    "@semantic-release/git": "^7.0.5",
+    "@semantic-release/git": "^7.0.8",
     "ava": "^0.20.0",
     "babel-core": "^6.25.0",
     "babel-eslint": "^8.2.1",
@@ -38,7 +38,7 @@
     "prettier": "^1.10.2",
     "rollup": "^0.43.0",
     "rollup-plugin-babel": "^2.6.1",
-    "semantic-release": "^15.12.2",
+    "semantic-release": "^16.0.0-beta.18",
     "standard": "^10.0.3"
   },
   "homepage": "https://github.com/infinitered/reactotron-redux",
