@@ -1,4 +1,3 @@
-import RS from 'ramdasauce'
 import { delay } from 'redux-saga'
 import { call, put } from 'redux-saga/effects'
 import * as Repo from '../Redux/Repo.redux'
@@ -13,7 +12,7 @@ export function * request (api, action) {
   yield call(delay, 200)
   // are we good?
   if (ok) {
-    const entry = RS.dotPath('0', data)
+    const entry = data['0']
     const { commit, author, html_url: url } = entry
     const { message, tree } = commit
     const { login, avatar_url } = author

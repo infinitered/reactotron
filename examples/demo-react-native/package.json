@@ -8,11 +8,11 @@
   },
   "dependencies": {
     "@storybook/react-native": "^3.4.8",
-    "apisauce": "^0.15.2",
+    "apisauce": "^1.0.2",
     "react": "16.4.1",
     "react-native": "0.56.0",
     "react-native-view-shot": "^2.4.0",
-    "react-redux": "^5.0.7",
+    "react-redux": "^6.0.1",
     "reactotron-react-native": "^2.1.7",
     "reactotron-redux": "^3.0.0-beta.1",
     "reactotron-redux-saga": "^4.0.1",

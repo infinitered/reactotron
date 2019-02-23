@@ -1,4 +1,3 @@
-import RS from 'ramdasauce'
 import { race, call, put, delay } from 'redux-saga/effects'
 import * as Repo from '../Redux/RepoRedux'
 
@@ -22,7 +21,7 @@ export function * request (api, action) {
 
     // are we good?
     if (ok) {
-      const entry = RS.dotPath('0', data)
+      const entry = data['0']
       const { commit, author, html_url: url } = entry
       const { message, tree } = commit
       const { login, avatar_url: avatar } = author
