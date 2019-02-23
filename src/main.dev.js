@@ -7,6 +7,7 @@
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  */
 
+import windowStateKeeper from "electron-window-state"
 import { app, BrowserWindow } from "electron"
 import { autoUpdater } from "electron-updater"
 import log from "electron-log"
@@ -51,34 +52,45 @@ app.on("ready", /* async */ () => {
 //     await installExtensions()
 //   }
 
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 650,
-    height: 800,
-    useContentHeight: true,
-    titleBarStyle: "hiddenInset",
-  })
+    // Load the previous state with fallback to defaults
+    let mainWindowState = windowStateKeeper({
+      file: 'reactotron-window-state.json',
+      defaultWidth: 650,
+      defaultHeight: 800,
+    })
 
-  mainWindow.loadURL(`file://${__dirname}/app.html`)
+    mainWindow = new BrowserWindow({
+      show: false,
+      x: mainWindowState.x,
+      y: mainWindowState.y,
+      width: mainWindowState.width,
+      height: mainWindowState.height,
+      titleBarStyle: "hiddenInset",
+    })
 
-  mainWindow.webContents.on("did-finish-load", () => {
-    if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined')
-    }
-    if (process.env.START_MINIMIZED) {
-      mainWindow.minimize()
-    } else {
-      mainWindow.show()
-      mainWindow.focus()
-    }
-  })
+    mainWindowState.manage(mainWindow)
 
-  mainWindow.on("closed", () => {
-    mainWindow = null
-  })
+    mainWindow.loadURL(`file://${__dirname}/app.html`)
 
-  const menuBuilder = new MenuBuilder(mainWindow)
-  menuBuilder.buildMenu()
+    mainWindow.webContents.on("did-finish-load", () => {
+      if (!mainWindow) {
+        throw new Error('"mainWindow" is not defined')
+      }
+      if (process.env.START_MINIMIZED) {
+        mainWindow.minimize()
+      } else {
+        mainWindow.show()
+        mainWindow.focus()
+      }
+    })
 
-  new AppUpdater()
-})
+    mainWindow.on("closed", () => {
+      mainWindow = null
+    })
+
+    const menuBuilder = new MenuBuilder(mainWindow)
+    menuBuilder.buildMenu()
+
+    new AppUpdater()
+  }
+)
