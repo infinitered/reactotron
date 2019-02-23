@@ -1,29 +1,20 @@
-import commonjs from 'rollup-plugin-commonjs'
-import filesize from 'rollup-plugin-filesize'
-import { uglify } from 'rollup-plugin-uglify'
-import sourcemaps from 'rollup-plugin-sourcemaps'
+import resolve from 'rollup-plugin-node-resolve'
+import babel from 'rollup-plugin-babel'
 import replace from "rollup-plugin-replace"
 
 const coreClientVersion = require('./package.json').version
 
 export default {
-  input: 'compiled/reactotron-core-client.js',
+  input: 'src/reactotron-core-client.ts',
+  output: {
+    file: 'dist/index.js',
+    format: 'cjs'
+  },
   plugins: [
-    commonjs({
-      include: 'node_modules/**',
-      ignoreGlobals: false,
-    }),
+    resolve({ extensions: ['.ts'] }),
     replace({
       REACTOTRON_CORE_CLIENT_VERSION: coreClientVersion,
     }),
-    sourcemaps(),
-    uglify(),
-    filesize(),
+    babel({ extensions: ['.ts'], runtimeHelpers: true })
   ],
-  output: {
-    file: 'dist/reactotron-core-client.js',
-    format: 'cjs',
-    exports: 'named',
-    sourcemap: true,
-  }
 }

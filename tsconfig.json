@@ -1,20 +1,21 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": false,
+    "allowJs": false,
     "declaration": true,
     "declarationDir": "dist/types",
+    "emitDeclarationOnly": true,
     "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "lib": ["es2015", "dom"],
     "module": "es2015",
     "moduleResolution": "node",
     "noImplicitAny": false,
+    "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    "outDir": "compiled",
     "sourceMap": true,
-    "target": "es5",
-    "typeRoots": ["node_modules/@types"],
+    "target": "es5"
   },
+  "exclude": ["node_modules"],
   "include": ["src"]
 }

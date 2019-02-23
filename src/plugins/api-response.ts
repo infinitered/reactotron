@@ -1,8 +1,9 @@
+import { Reactotron } from "../reactotron-core-client";
 
 /**
  * Sends API request/response information.
  */
-export default () => reactotron => {
+export default () => (reactotron: Reactotron) => {
   return {
     features: {
       apiResponse: (request, response, duration) => {

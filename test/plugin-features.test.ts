@@ -1,5 +1,4 @@
 import { createClient } from "../src/reactotron-core-client"
-import { forEach, identity, map } from "ramda"
 import * as WebSocket from "ws"
 
 const createSocket = path => new WebSocket(path)
@@ -14,7 +13,7 @@ test("some names are not allowed", () => {
   const client = createClient({ createSocket })
   const createPlugin = features => reactotron => ({ features })
 
-  const badPlugins = map(name => createPlugin({ [name]: identity }), [
+  const badPlugins = [
     "options",
     "connected",
     "socket",
@@ -24,11 +23,11 @@ test("some names are not allowed", () => {
     "send",
     "use",
     "startTimer",
-  ])
+  ].map(name => createPlugin({ [name]: x => x }))
 
-  forEach(plugin => {
+  badPlugins.forEach(plugin => {
     expect(() => client.use(plugin)).toThrow()
-  }, badPlugins)
+  })
 })
 
 test("features can be added and called", () => {

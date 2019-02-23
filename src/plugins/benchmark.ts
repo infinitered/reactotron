@@ -1,7 +1,9 @@
+import { Reactotron } from "../reactotron-core-client";
+
 /**
  * Runs small high-unscientific benchmarks for you.
  */
-export default () => reactotron => {
+export default () => (reactotron: Reactotron) => {
   const { startTimer } = reactotron
 
   const benchmark = title => {

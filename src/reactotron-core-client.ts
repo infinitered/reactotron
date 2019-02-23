@@ -56,7 +56,7 @@ export interface CustomCommand {
   handler: () => void
 }
 
-export class Client {
+export class Reactotron {
   // the configuration options
   options: ClientOptions = Object.assign({}, DEFAULT_OPTIONS)
 
@@ -108,7 +108,7 @@ export class Client {
   /**
    * Set the configuration options.
    */
-  configure(options: ClientOptions = {}): Client {
+  configure(options: ClientOptions = {}): Reactotron {
     // options get merged & validated before getting set
     const newOptions = Object.assign({}, this.options, options)
     validate(newOptions)
@@ -130,7 +130,7 @@ export class Client {
   /**
    * Connect to the Reactotron server.
    */
-  connect(): Client {
+  connect(): Reactotron {
     this.connected = true
     const {
       createSocket,
@@ -284,7 +284,7 @@ export class Client {
   /**
    * Adds a plugin to the system
    */
-  use(pluginCreator?: (client: Client) => any): Client {
+  use(pluginCreator?: (client: Reactotron) => any): Reactotron {
     // we're supposed to be given a function
     if (typeof pluginCreator !== "function") {
       throw new Error("plugins must be a function")
@@ -367,7 +367,7 @@ export class Client {
 
 // convenience factory function
 export function createClient (options?: ClientOptions) {
-  const client = new Client()
+  const client = new Reactotron()
   client.configure(options)
   return client
 }

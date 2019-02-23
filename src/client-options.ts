@@ -1,3 +1,5 @@
+import { Reactotron } from "./reactotron-core-client";
+
 /**
  * Configuration options for the Reactotron Client.
  */
@@ -33,7 +35,7 @@ export interface ClientOptions {
   /**
    * A list of plugins.
    */
-  plugins?: any[]
+  plugins?: ((reactotron: Reactotron) => any)[]
 
   /**
    * Performs safety checks when serializing.  Default: true.

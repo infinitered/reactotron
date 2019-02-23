@@ -1,7 +1,9 @@
+import { Reactotron } from "../reactotron-core-client";
+
 /**
  * Provides an image.
  */
-export default () => reactotron => {
+export default () => (reactotron: Reactotron) => {
   return {
     features: {
       // expanded just to show the specs

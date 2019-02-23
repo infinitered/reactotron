@@ -1,7 +1,9 @@
+import { Reactotron } from "../reactotron-core-client";
+
 /**
  * Provides 4 features for logging.  log & debug are the same.
  */
-export default () => reactotron => {
+export default () => (reactotron: Reactotron) => {
   return {
     features: {
       log: (...args) => {

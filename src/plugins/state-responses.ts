@@ -1,7 +1,9 @@
+import { Reactotron } from "../reactotron-core-client";
+
 /**
  * Provides helper functions for send state responses.
  */
-export default () => reactotron => {
+export default () => (reactotron: Reactotron) => {
   return {
     features: {
       stateActionComplete: (name, action, important = false) =>
