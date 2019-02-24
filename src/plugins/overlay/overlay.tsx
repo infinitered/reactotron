@@ -1,17 +1,35 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Dimensions, View, Image } from 'react-native'
+import React, { Component } from "react"
+import { Dimensions, View, Image, ImageResizeMode, FlexAlignType, ViewStyle } from "react-native"
 
-const Styles = {
+const Styles: { container: ViewStyle } = {
   container: {
-    position: 'absolute',
+    position: "absolute",
     left: 0,
     top: 0,
     right: 0,
     bottom: 0,
     zIndex: 1000,
-    opacity: 0.25
-  }
+    opacity: 0.25,
+  },
+}
+
+interface Props {
+  emitter: any
+}
+
+interface State {
+  opacity: number
+  uri: string
+  justifyContent: "flex-start" | "flex-end" | "center" | "space-between" | "space-around" | "space-evenly"
+  alignItems: FlexAlignType
+  width?: number
+  height?: number
+  growToWindow?: boolean
+  resizeMode?: ImageResizeMode
+  marginLeft?: number
+  marginRight?: number
+  marginTop?: number
+  marginBottom?: number
 }
 
 /** An overlay for showing an image to help with layout.
@@ -19,48 +37,33 @@ const Styles = {
  * @class FullScreenOverlay
  * @extends {Component}
  */
-class FullScreenOverlay extends Component {
-  /**
-   * Creates an instance of FullScreenOverlay.
-   *
-   * @param {any} props
-   * @param {Object} props.emitter An event emitter.
-   *
-   * @memberOf FullScreenOverlay
-   */
-  constructor (props) {
+class FullScreenOverlay extends Component<Props, State> {
+  constructor(props: Props) {
     super(props)
 
     this.state = {
       opacity: Styles.container.opacity,
       uri: null,
-      justifyContent: 'center',
-      alignItems: 'center'
+      justifyContent: "center",
+      alignItems: "center",
     }
 
     // when the server sends stuff
-    props.emitter.on('overlay', payload => {
+    props.emitter.on("overlay", (payload: State) => {
       this.setState({ ...this.state, ...payload })
     })
   }
 
-  /**
-   * Makes the styles used by the root container.
-   *
-   * @returns {Object} The styles.
-   *
-   * @memberOf FullScreenOverlay
-   */
-  createContainerStyle () {
+  createContainerStyle() {
     const { opacity, justifyContent, alignItems } = this.state
-    const { width, height } = Dimensions.get('window')
+    const { width, height } = Dimensions.get("window")
     const containerStyle = {
       ...Styles.container,
       opacity,
       width,
       height,
       justifyContent,
-      alignItems
+      alignItems,
     }
 
     return containerStyle
@@ -69,7 +72,7 @@ class FullScreenOverlay extends Component {
   /**
    * Draw.
    */
-  render () {
+  render() {
     const {
       uri,
       width,
@@ -79,11 +82,11 @@ class FullScreenOverlay extends Component {
       marginLeft = 0,
       marginRight = 0,
       marginTop = 0,
-      marginBottom = 0
+      marginBottom = 0,
     } = this.state
     const imageStyle = { width, height, marginTop, marginRight, marginBottom, marginLeft }
     if (growToWindow) {
-      const windowSize = Dimensions.get('window')
+      const windowSize = Dimensions.get("window")
       imageStyle.width = windowSize.width
       imageStyle.height = windowSize.height
     }
@@ -94,18 +97,11 @@ class FullScreenOverlay extends Component {
     )
 
     return (
-      <View style={this.createContainerStyle()} pointerEvents='none'>
+      <View style={this.createContainerStyle()} pointerEvents="none">
         {image}
       </View>
     )
   }
-}
-
-FullScreenOverlay.propTypes = {
-  /**
-   * An emitter which can be subscribed to to listen for events.
-   */
-  emitter: PropTypes.object.isRequired
 }
 
 export default FullScreenOverlay

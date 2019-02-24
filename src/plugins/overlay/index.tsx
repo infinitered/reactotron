@@ -1,13 +1,11 @@
-import React from 'react'
-import { View } from 'react-native'
-import FullScreenOverlay from './full-screen-overlay'
-import mitt from 'mitt'
+import React from "react"
+import { View } from "react-native"
+import Mitt from "mitt"
 
-/**
- * Provides an image.
- */
-export default () => reactotron => {
-  const emitter = mitt()
+import FullScreenOverlay from "./overlay"
+
+export default () => () => {
+  const emitter = new Mitt()
 
   return {
     /**
@@ -16,18 +14,18 @@ export default () => reactotron => {
      * @param {object} command The Reactotron command object.
      */
     onCommand: command => {
-      if (command.type !== 'overlay') return
+      if (command.type !== "overlay") return
       // relay this payload on to the emitter
-      emitter.emit('overlay', command.payload)
+      emitter.emit("overlay", command.payload)
     },
 
     features: {
-      overlay: WrappedComponent => props => (
+      overlay: (WrappedComponent: any) => props => (
         <View style={{ flex: 1 }}>
           <WrappedComponent {...props} />
           <FullScreenOverlay emitter={emitter} />
         </View>
-      )
-    }
+      ),
+    },
   }
 }

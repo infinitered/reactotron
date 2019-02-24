@@ -1,35 +1,29 @@
-import babel from 'rollup-plugin-babel'
-import replace from 'rollup-plugin-replace'
-import filesize from 'rollup-plugin-filesize'
-import uglify from 'rollup-plugin-uglify'
-
-const reactotronReactNativeVersion = require('./package.json').version
+import resolve from "rollup-plugin-node-resolve"
+import babel from "rollup-plugin-babel"
+import filesize from "rollup-plugin-filesize"
+import minify from "rollup-plugin-babel-minify"
 
 export default {
-  entry: 'src/index.js',
-  format: 'cjs',
+  input: "src/reactotron-react-native.ts",
+  output: {
+    file: "dist/index.js",
+    format: "cjs",
+  },
   plugins: [
-    babel({
-      babelrc: false,
-      runtimeHelpers: true,
-      presets: ['es2015-rollup', 'stage-1'],
-      plugins: ['babel-plugin-transform-react-jsx']
-    }),
-    replace({
-      REACTOTRON_REACT_NATIVE_VERSION: reactotronReactNativeVersion
-    }),
-    uglify(),
-    filesize()
+    resolve({ extensions: [".ts", ".tsx"] }),
+    babel({ extensions: [".ts", ".tsx"], runtimeHelpers: true }),
+    process.env.NODE_ENV === "production"
+      ? minify({
+          comments: false,
+        })
+      : null,
+    filesize(),
   ],
-  dest: 'dist/index.js',
-  exports: 'named',
   external: [
-    'ramda',
-    'react-native',
-    'reactotron-core-client',
-    'mitt',
-    'react',
-    'react-native/Libraries/Network/XHRInterceptor',
-    'prop-types'
-  ]
+    "reactotron-core-client",
+    "react",
+    "react-native",
+    "react-native/Libraries/Network/XHRInterceptor",
+    "rn-host-detect",
+  ],
 }

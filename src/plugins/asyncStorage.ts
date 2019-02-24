@@ -1,15 +1,15 @@
-/**
- * Provides async storage information to Reactotron
- */
-import { AsyncStorage } from 'react-native'
+import { AsyncStorage } from "react-native"
+import { Reactotron } from "reactotron-core-client"
 
-// defaults
-const PLUGIN_DEFAULTS = {
-  ignore: []
+export interface AsyncStorageOptions {
+  ignore?: string[]
 }
 
-// our plugin entry point
-export default options => reactotron => {
+const PLUGIN_DEFAULTS: AsyncStorageOptions = {
+  ignore: [],
+}
+
+export default (options: AsyncStorageOptions) => (reactotron: Reactotron) => {
   // setup configuration
   const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
   const ignore = config['ignore'] || PLUGIN_DEFAULTS.ignore
@@ -23,7 +23,7 @@ export default options => reactotron => {
   let swizzMultiMerge
   let isSwizzled = false
 
-  const sendToReactotron = (action, data) => {
+  const sendToReactotron = (action: string, data?: any) => {
     reactotron.send('asyncStorage.mutation', { action, data })
   }
 

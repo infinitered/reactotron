@@ -1,43 +1,46 @@
 /**
  * Provides a global error handler to report errors..
  */
-import { NativeModules } from 'react-native'
+import { NativeModules } from "react-native"
+import { Reactotron } from "reactotron-core-client"
 
 // a few functions to help source map errors -- these seem to be not available immediately
 // so we're lazy loading.
 let parseErrorStack
 let symbolicateStackTrace
 
+export interface TrackGlobalErrorsOptions {
+  veto?: (frame: any) => boolean
+}
+
 // defaults
-const PLUGIN_DEFAULTS = {
-  veto: null // frame -> boolean
+const PLUGIN_DEFAULTS: TrackGlobalErrorsOptions = {
+  veto: null,
 }
 
 // const reactNativeFrameFinder = frame => contains('/node_modules/react-native/', frame.fileName)
 
 // our plugin entry point
-export default options => reactotron => {
+export default (options: TrackGlobalErrorsOptions) => (reactotron: Reactotron) => {
   // setup configuration
   const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
 
   let swizzled = null
   let isSwizzled = false
 
-  function reactotronExceptionHijacker (message, prettyStack, currentExceptionID) {
+  function reactotronExceptionHijacker(message, prettyStack, currentExceptionID) {
     // do Facebook's stuff first
     swizzled(message, prettyStack, currentExceptionID)
 
     // then convert & transport it
     try {
       // rewrite the stack frames to be in the format we're expecting
-      let stack = prettyStack.map(
-        frame => ({
-          functionName: frame.methodName === '<unknown>' ? null : frame.methodName,
-          lineNumber: frame.lineNumber,
-          columnNumber: frame.column,
-          fileName: frame.file
-        })
-      )
+      let stack = prettyStack.map(frame => ({
+        functionName: frame.methodName === "<unknown>" ? null : frame.methodName,
+        lineNumber: frame.lineNumber,
+        columnNumber: frame.column,
+        fileName: frame.file,
+      }))
 
       // does the dev want us to keep each frame?
       if (config.veto) {
@@ -45,14 +48,14 @@ export default options => reactotron => {
       }
 
       // throw it over to us
-      reactotron.error(message, stack)
+      (reactotron as any).error(message, stack) // TODO: Fix this.
     } catch (e) {
       // TODO: no one must ever know our dark secrets
     }
   }
 
   // here's how to swizzle
-  function trackGlobalErrors () {
+  function trackGlobalErrors() {
     if (isSwizzled) return
     if (!NativeModules.ExceptionsManager) return
     swizzled = NativeModules.ExceptionsManager.updateExceptionMessage
@@ -61,7 +64,7 @@ export default options => reactotron => {
   }
 
   // restore the original
-  function untrackGlobalErrors () {
+  function untrackGlobalErrors() {
     if (!swizzled) return
     if (!NativeModules.ExceptionsManager) return
     NativeModules.ExceptionsManager.updateExceptionMessage = swizzled
@@ -72,13 +75,13 @@ export default options => reactotron => {
   trackGlobalErrors()
 
   // manually fire an error
-  function reportError (error) {
+  function reportError(error) {
     try {
       parseErrorStack =
-        parseErrorStack || require('react-native/Libraries/Core/Devtools/parseErrorStack')
+        parseErrorStack || require("react-native/Libraries/Core/Devtools/parseErrorStack")
       symbolicateStackTrace =
         symbolicateStackTrace ||
-        require('react-native/Libraries/Core/Devtools/symbolicateStackTrace')
+        require("react-native/Libraries/Core/Devtools/symbolicateStackTrace")
       if (parseErrorStack && symbolicateStackTrace) {
         const parsedStacktrace = parseErrorStack(error)
 
@@ -86,7 +89,7 @@ export default options => reactotron => {
           let stack = goodStack.map(stackFrame => ({
             fileName: stackFrame.file,
             functionName: stackFrame.methodName,
-            lineNumber: stackFrame.lineNumber
+            lineNumber: stackFrame.lineNumber,
           }))
 
           // does the dev want us to keep each frame?
@@ -94,7 +97,7 @@ export default options => reactotron => {
             stack = stack.filter(frame => config.veto(frame))
           }
 
-          reactotron.error(error.message, stack)
+          (reactotron as any).error(error.message, stack) // TODO: Fix this.
         })
       }
     } catch (e) {
@@ -108,7 +111,7 @@ export default options => reactotron => {
     features: {
       reportError,
       trackGlobalErrors,
-      untrackGlobalErrors
-    }
+      untrackGlobalErrors,
+    },
   }
 }

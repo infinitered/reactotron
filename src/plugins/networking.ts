@@ -1,13 +1,19 @@
 import XHRInterceptor from 'react-native/Libraries/Network/XHRInterceptor'
+import { Reactotron } from 'reactotron-core-client';
 
 /**
  * Don't include the response bodies for images by default.
  */
 const DEFAULT_CONTENT_TYPES_RX = /^(image)\/.*$/i
 
-const DEFAULTS = {}
+export interface NetworkingOptions {
+    ignoreContentTypes?: RegExp
+    ignoreUrls?: RegExp
+}
 
-export default (pluginConfig = {}) => reactotron => {
+const DEFAULTS: NetworkingOptions = {}
+
+export default (pluginConfig: NetworkingOptions = {}) => (reactotron: Reactotron) => {
   const options = Object.assign({}, DEFAULTS, pluginConfig)
 
   // a RegExp to suppess adding the body cuz it costs a lot to serialize
@@ -97,7 +103,7 @@ export default (pluginConfig = {}) => reactotron => {
       }
 
       // send this off to Reactotron
-      reactotron.apiResponse(tronRequest, tronResponse, stopTimer())
+      ;(reactotron as any).apiResponse(tronRequest, tronResponse, stopTimer()) // TODO: Fix
     }
 
     // can we use the real response?
