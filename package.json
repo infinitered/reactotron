@@ -1,6 +1,6 @@
 {
   "name": "reactotron-core-client",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Grants Reactotron clients the ability to talk to a Reactotron server.",
   "files": [
     "dist",
