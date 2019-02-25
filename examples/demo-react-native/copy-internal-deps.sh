@@ -35,14 +35,14 @@ cp ../../../reactotron-react-native/dist/index.js ./node_modules/reactotron-reac
 
 # reactotron-redux
 cd ../../../reactotron-redux
-yarn run build
+yarn run build:dev
 cd ../reactotron/examples/demo-react-native
 mkdir -p ./node_modules/reactotron-redux
 cp ../../../reactotron-redux/dist/index.js ./node_modules/reactotron-redux/index.js
 
 # reactotron-apisauce
 cd ../../../reactotron-apisauce
-yarn run build
+yarn run build:dev
 cd ../reactotron/examples/demo-react-native
 mkdir -p ./node_modules/reactotron-apisauce
 cp ../../../reactotron-apisauce/dist/index.js ./node_modules/reactotron-apisauce/index.js
