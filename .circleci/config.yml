@@ -97,4 +97,8 @@ workflows:
             - build
           filters:
             branches:
-              only: master
+              only:
+                - master
+                - next
+                - beta
+                - alpha

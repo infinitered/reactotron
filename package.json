@@ -2,73 +2,122 @@
   "name": "reactotron-core-server",
   "version": "2.1.0",
   "description": "Grants Reactotron servers the ability to talk to a Reactotron client.",
+  "author": "Infinite Red",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/infinitered/reactotron-core-server/issues"
+  },
+  "homepage": "https://github.com/infinitered/reactotron-core-server",
+  "repository": "https://github.com/infinitered/reactotron-core-server",
   "files": [
     "dist",
     "LICENSE",
     "README.md"
   ],
-  "main": "dist/reactotron-core-server.js",
+  "main": "dist/index.js",
   "typings": "dist/types/reactotron-core-server.d.ts",
   "scripts": {
-    "compile": "tsc",
     "test": "jest",
-    "build": "npm-run-all clean compile rollup",
-    "rollup": "rollup -c",
-    "clean": "trash dist compiled",
-    "format": "prettier --write {**,.}/*.ts && tslint -p . --fix",
-    "lint": "tslint -p .",
-    "build:watch": "node watch.js",
+    "test:watch": "jest --watch --notify",
+    "format": "prettier --write {**,.}/*.ts",
+    "build": "npm-run-all clean tsc compile",
+    "clean": "trash dist",
+    "lint": "eslint src test --ext .ts,.tsx",
+    "compile": "NODE_ENV=production rollup -c",
+    "tsc": "tsc",
     "ci:test": "yarn test",
     "ci:publish": "yarn semantic-release",
     "semantic-release": "semantic-release"
   },
-  "author": "Infinite Red",
-  "bugs": {
-    "url": "https://github.com/infinitered/reactotron-core-server/issues"
+  "dependencies": {
+    "mitt": "^1.1.3",
+    "ramda": "^0.26.1",
+    "ws": "^6.1.4"
   },
   "devDependencies": {
-    "@semantic-release/git": "^7.0.5",
-    "@types/jest": "^21.1.2",
-    "@types/node": "^8.0.34",
-    "@types/ramda": "^0.24.17",
-    "@types/ws": "^3.2.0",
-    "execa": "^0.8.0",
-    "get-port": "^3.2.0",
-    "jest": "^21.2.1",
-    "node-watch": "^0.5.4",
-    "npm-run-all": "^4.1.1",
-    "prettier": "^1.7.4",
-    "rollup": "^0.50.0",
-    "rollup-plugin-commonjs": "^8.2.1",
-    "rollup-plugin-filesize": "^1.4.2",
-    "rollup-plugin-ramda": "^1.0.5",
-    "rollup-plugin-sourcemaps": "^0.4.2",
-    "rollup-plugin-uglify": "^2.0.1",
-    "semantic-release": "^15.12.2",
+    "@babel/core": "^7.3.3",
+    "@babel/plugin-proposal-class-properties": "^7.3.3",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-typescript": "^7.3.3",
+    "@semantic-release/git": "^7.1.0-beta.3",
+    "@types/jest": "^24.0.6",
+    "@types/node": "^11.9.5",
+    "@types/ramda": "^0.25.50",
+    "@types/ws": "^6.0.1",
+    "@typescript-eslint/eslint-plugin": "^1.3.0",
+    "@typescript-eslint/parser": "^1.3.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.1.0",
+    "eslint": "^5.14.1",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "get-port": "^4.1.0",
+    "jest": "^24.1.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.16.4",
+    "rollup": "^1.2.3",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-babel-minify": "^7.0.0",
+    "rollup-plugin-filesize": "^6.0.1",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-resolve": "^0.0.1-predev.1",
+    "semantic-release": "^16.0.0-beta.18",
     "trash-cli": "^1.4.0",
-    "ts-jest": "^21.1.2",
-    "tslib": "^1.8.0",
-    "tslint": "^5.9.1",
-    "tslint-config-prettier": "^1.6.0",
-    "typescript": "^2.5.3"
+    "ts-jest": "^24.0.0",
+    "typescript": "^3.3.3333"
   },
-  "license": "MIT",
-  "homepage": "https://github.com/infinitered/reactotron-core-server",
-  "repository": "https://github.com/infinitered/reactotron-core-server",
-  "dependencies": {
-    "mitt": "^1.1.2",
-    "ramda": "^0.25.0",
-    "ws": "^3.2.0"
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "standard",
+      "prettier"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "project": "./tsconfig.json"
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "globals": {
+      "__DEV__": false,
+      "jasmine": false,
+      "beforeAll": false,
+      "afterAll": false,
+      "beforeEach": false,
+      "afterEach": false,
+      "test": false,
+      "expect": false,
+      "describe": false,
+      "jest": false,
+      "it": false
+    },
+    "rules": {
+      "no-unused-vars": 0,
+      "no-undef": 0,
+      "space-before-function-paren": 0,
+      "@typescript-eslint/indent": 0,
+      "@typescript-eslint/explicit-member-accessibility": 0,
+      "@typescript-eslint/explicit-function-return-type": 0,
+      "@typescript-eslint/no-explicit-any": 0,
+      "@typescript-eslint/no-object-literal-type-assertion": 0,
+      "@typescript-eslint/no-empty-interface": 0,
+      "@typescript-eslint/no-var-requires": 0,
+      "@typescript-eslint/member-delimiter-style": 0
+    }
   },
   "jest": {
-    "transform": {
-      ".(ts|tsx)": "./node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/*.test.[tj]s"
     ]
   }
 }

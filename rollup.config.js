@@ -1,27 +1,24 @@
-import commonjs from 'rollup-plugin-commonjs'
-import filesize from 'rollup-plugin-filesize'
-import uglify from 'rollup-plugin-uglify'
-import sourcemaps from 'rollup-plugin-sourcemaps'
-import ramda from 'rollup-plugin-ramda'
+import resolve from "rollup-plugin-node-resolve"
+import babel from "rollup-plugin-babel"
+import filesize from "rollup-plugin-filesize"
+import minify from "rollup-plugin-babel-minify"
 
 export default {
-  input: 'compiled/reactotron-core-server.js',
-  sourcemap: true,
+  input: "src/reactotron-core-server.ts",
+  output: {
+    file: "dist/index.js",
+    format: "cjs",
+  },
   plugins: [
-    commonjs({
-      include: 'node_modules/**',
-      ignoreGlobals: false,
-    }),
-    ramda(),
-    sourcemaps(),
-    uglify(),
+    resolve({ extensions: [".ts", ".tsx"] }),
+    babel({ extensions: [".ts", ".tsx"], runtimeHelpers: true }),
+    process.env.NODE_ENV === "production"
+      ? minify({
+          comments: false,
+        })
+      : null,
     filesize(),
   ],
-  output: {
-    file: 'dist/reactotron-core-server.js',
-    format: 'cjs',
-    exports: 'named',
-  },
   external: [
     'ramda/src/merge',
     'ramda/src/find',
@@ -38,5 +35,7 @@ export default {
     'mitt',
     'ramdasauce',
     'ws',
+    'fs',
+    'https',
   ],
 }

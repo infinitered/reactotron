@@ -1,7 +1,7 @@
 import { merge, find, propEq, without, contains, forEach, pluck, reject, equals } from "ramda"
 import { createServer as createHttpsServer, ServerOptions as HttpsServerOptions } from "https"
 import { Server as WebSocketServer, OPEN } from "ws"
-import * as mitt from "mitt"
+import * as Mitt from "mitt"
 import validate from "./validation"
 import { repair } from "./repair-serialization"
 import {
@@ -62,7 +62,7 @@ export default class Server {
   /**
    * An event emitter which fires events from connected clients.
    */
-  emitter = new mitt()
+  emitter = new Mitt()
 
   /**
    * Additional server configuration.
@@ -277,7 +277,7 @@ export default class Server {
 
         // refresh subscriptions
         if (type === "state.values.change") {
-          this.subscriptions = pluck("path", payload.changes || [])
+          this.subscriptions = pluck("path", (payload.changes || []) as { path: string }[])
         }
 
         // assign a name to the backups since the client doesn't pass one.  without it, we have to
