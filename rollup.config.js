@@ -12,9 +12,11 @@ export default {
   plugins: [
     resolve({ extensions: [".ts"] }),
     babel({ extensions: [".ts"], runtimeHelpers: true }),
-    minify({
-      comments: false,
-    }),
+    process.env.NODE_ENV === "production"
+      ? minify({
+          comments: false,
+        })
+      : null,
     filesize(),
   ],
   external: ["redux"],
