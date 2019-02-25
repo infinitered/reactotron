@@ -2,6 +2,13 @@
   "name": "reactotron-core-client",
   "version": "2.4.0",
   "description": "Grants Reactotron clients the ability to talk to a Reactotron server.",
+  "author": "Infinite Red",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/infinitered/reactotron-core-client/issues"
+  },
+  "homepage": "https://github.com/infinitered/reactotron-core-client",
+  "repository": "https://github.com/infinitered/reactotron-core-client",
   "files": [
     "dist",
     "LICENSE",
@@ -16,17 +23,13 @@
     "build": "npm-run-all clean tsc compile",
     "build:dev": "npm-run-all clean tsc compile:dev",
     "clean": "trash dist",
-    "lint": "eslint index.js src test --ext .ts,.tsx",
+    "lint": "eslint src test --ext .ts,.tsx",
     "compile": "NODE_ENV=production rollup -c",
     "compile:dev": "NODE_ENV=development rollup -c",
     "tsc": "tsc",
     "ci:test": "yarn test",
     "ci:publish": "yarn semantic-release",
     "semantic-release": "semantic-release"
-  },
-  "author": "Infinite Red",
-  "bugs": {
-    "url": "https://github.com/infinitered/reactotron-core-client/issues"
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",
@@ -65,8 +68,6 @@
     "typescript": "^3.3.3",
     "ws": "^6.1.4"
   },
-  "homepage": "https://github.com/infinitered/reactotron",
-  "license": "MIT",
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
     "extends": [
@@ -116,6 +117,5 @@
     "testMatch": [
       "**/*.test.[tj]s"
     ]
-  },
-  "repository": "infinitered/reactotron-core-client"
+  }
 }
