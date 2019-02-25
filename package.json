@@ -2,6 +2,13 @@
   "name": "reactotron-redux",
   "version": "3.0.0-beta.1",
   "description": "A Reactotron plugin for Redux.",
+  "author": "Infinite Red",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/infinitered/reactotron-redux/issues"
+  },
+  "homepage": "https://github.com/infinitered/reactotron-redux",
+  "repository": "https://github.com/infinitered/reactotron-redux",
   "files": [
     "dist",
     "LICENSE",
@@ -16,16 +23,16 @@
     "format": "prettier --write {**,.}/*.ts",
     "build": "npm-run-all clean tsc compile",
     "clean": "trash dist",
-    "lint": "eslint index.js src test --ext .ts,.tsx",
+    "lint": "eslint src --ext .ts,.tsx",
     "compile": "NODE_ENV=production rollup -c",
     "tsc": "tsc",
     "ci:test": "yarn test",
     "ci:publish": "yarn semantic-release",
     "semantic-release": "semantic-release"
   },
-  "author": "Infinite Red",
-  "bugs": {
-    "url": "https://github.com/infinitered/reactotron/issues"
+  "peerDependencies": {
+    "reactotron-core-client": "^2.2.1",
+    "redux": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -60,8 +67,6 @@
     "ts-jest": "^23.10.5",
     "typescript": "^3.3.3"
   },
-  "homepage": "https://github.com/infinitered/reactotron-redux",
-  "license": "MIT",
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
     "extends": [
@@ -111,10 +116,5 @@
     "testMatch": [
       "**/*.test.[tj]s"
     ]
-  },
-  "repository": "https://github.com/infinitered/reactotron-redux",
-  "peerDependencies": {
-    "reactotron-core-client": "^2.2.1",
-    "redux": "^4.0.1"
   }
 }
