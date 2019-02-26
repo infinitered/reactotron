@@ -1,19 +1,22 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node",
-    "target": "es5",
-    "module": "es2015",
-    "lib": ["es2015", "es2016", "es2017", "dom"],
-    "strict": true,
-    "sourceMap": true,
+    "allowJs": false,
     "declaration": true,
+    "declarationDir": "dist/types",
+    "emitDeclarationOnly": true,
+    "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "declarationDir": "dist",
-    "outDir": "build/es",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
     "noUnusedLocals": true,
-    "removeComments": true
+    "sourceMap": true,
+    "target": "es5",
+    "skipLibCheck": true // Temp?
   },
+  "exclude": ["node_modules"],
   "include": ["src"]
 }

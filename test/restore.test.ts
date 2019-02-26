@@ -1,4 +1,3 @@
-import test from "ava"
 import { getSnapshot } from "mobx-state-tree"
 import { TestUserModel, createMstPlugin } from "./fixtures"
 
@@ -8,15 +7,17 @@ const INBOUND = {
   payload: { state: STATE },
 }
 
-test("responds with current state", t => {
-  const { track, plugin } = createMstPlugin()
-  const user = TestUserModel.create()
-  track(user)
-  plugin.onCommand(INBOUND)
-  t.deepEqual(STATE, getSnapshot(user))
-})
+describe("restore", () => {
+  it("responds with current state", () => {
+    const { track, plugin } = createMstPlugin()
+    const user = TestUserModel.create()
+    track(user)
+    plugin.onCommand(INBOUND)
+    expect(getSnapshot(user)).toEqual(STATE)
+  })
 
-test("won't die if we're not tracking nodes", t => {
-  const { plugin } = createMstPlugin()
-  t.notThrows(() => plugin.onCommand(INBOUND))
+  it("won't die if we're not tracking nodes", () => {
+    const { plugin } = createMstPlugin()
+    expect(() => plugin.onCommand(INBOUND)).not.toThrow()
+  })
 })

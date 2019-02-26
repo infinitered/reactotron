@@ -1,13 +1,14 @@
-import test from "ava"
 import * as td from "testdouble"
 import { TestUserModel, createMstPlugin } from "./fixtures"
 
-test("skips filtered messages", t => {
-  const { reactotron, track } = createMstPlugin({ filter: () => false })
-  const user = TestUserModel.create()
-  track(user)
-  user.setAge(123)
+describe("filter", () => {
+  it("skips filtered messages", () => {
+    const { reactotron, track } = createMstPlugin({ filter: () => false })
+    const user = TestUserModel.create()
+    track(user)
+    user.setAge(123)
 
-  const send = td.explain(reactotron.send)
-  t.is(0, send.callCount)
+    const send = td.explain(reactotron.send)
+    expect(send.callCount).toEqual(0)
+  })
 })

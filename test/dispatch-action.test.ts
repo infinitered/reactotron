@@ -1,4 +1,3 @@
-import test from "ava"
 import { TestUserModel, createMstPlugin } from "./fixtures"
 
 function createAction(action: any) {
@@ -8,28 +7,30 @@ function createAction(action: any) {
   }
 }
 
-test("responds with current state", t => {
-  const { track, plugin } = createMstPlugin()
-  const user = TestUserModel.create()
-  const action = createAction({ name: "setAge", path: "", args: [900] })
-  track(user)
-  plugin.onCommand(action)
+describe("dispatch-action", () => {
+  it("responds with current state", () => {
+    const { track, plugin } = createMstPlugin()
+    const user = TestUserModel.create()
+    const action = createAction({ name: "setAge", path: "", args: [900] })
+    track(user)
+    plugin.onCommand(action)
 
-  t.is(900, user.age)
-})
+    expect(user.age).toEqual(900)
+  })
 
-test("won't die if we're not tracking nodes", t => {
-  const { plugin } = createMstPlugin()
-  const action = createAction({ name: "setAge", path: "", args: [] })
+  it("won't die if we're not tracking nodes", () => {
+    const { plugin } = createMstPlugin()
+    const action = createAction({ name: "setAge", path: "", args: [] })
 
-  t.notThrows(() => plugin.onCommand(action))
-})
+    expect(() => plugin.onCommand(action)).not.toThrow()
+  })
 
-test("won't die if we target a wrong path", t => {
-  const { track, plugin } = createMstPlugin()
-  const user = TestUserModel.create()
-  const action = createAction({ name: "setLoL", path: "", args: [] })
-  track(user)
+  it("won't die if we target a wrong path", () => {
+    const { track, plugin } = createMstPlugin()
+    const user = TestUserModel.create()
+    const action = createAction({ name: "setLoL", path: "", args: [] })
+    track(user)
 
-  t.notThrows(() => plugin.onCommand(action))
+    expect(() => plugin.onCommand(action)).not.toThrow()
+  })
 })

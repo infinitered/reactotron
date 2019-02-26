@@ -1,4 +1,3 @@
-import test from "ava"
 import * as td from "testdouble"
 import { TestUserModel, createMstPlugin } from "./fixtures"
 
@@ -6,35 +5,37 @@ function createAction(path: string) {
   return { type: "state.keys.request", payload: { path } }
 }
 
-test("won't die if we're not tracking nodes", t => {
-  const { reactotron, plugin } = createMstPlugin()
-  plugin.onCommand(createAction(""))
+describe("request-keys", () => {
+  it("won't die if we're not tracking nodes", () => {
+    const { reactotron, plugin } = createMstPlugin()
+    plugin.onCommand(createAction(""))
 
-  t.is(0, td.explain(reactotron.stateKeysResponse).callCount)
-})
+    expect(td.explain(reactotron.stateKeysResponse).callCount).toEqual(0)
+  })
 
-test("valid keys", t => {
-  const { reactotron, track, plugin } = createMstPlugin()
-  const user = TestUserModel.create()
-  track(user)
-  plugin.onCommand(createAction(""))
+  it("valid keys", () => {
+    const { reactotron, track, plugin } = createMstPlugin()
+    const user = TestUserModel.create()
+    track(user)
+    plugin.onCommand(createAction(""))
 
-  const stateKeysResponse = td.explain(reactotron.stateKeysResponse)
-  t.is(1, stateKeysResponse.callCount)
-  const [atPath, keyList] = stateKeysResponse.calls[0].args
-  t.is(null, atPath)
-  t.deepEqual(["name", "age"], keyList)
-})
+    const stateKeysResponse = td.explain(reactotron.stateKeysResponse)
+    expect(stateKeysResponse.callCount).toEqual(1)
+    const [atPath, keyList] = stateKeysResponse.calls[0].args
+    expect(atPath).toEqual(null)
+    expect(keyList).toEqual(["name", "age"])
+  })
 
-test("invalid key path", t => {
-  const { reactotron, track, plugin } = createMstPlugin()
-  const user = TestUserModel.create()
-  track(user)
-  plugin.onCommand(createAction("does.not.exist"))
+  it("invalid key path", () => {
+    const { reactotron, track, plugin } = createMstPlugin()
+    const user = TestUserModel.create()
+    track(user)
+    plugin.onCommand(createAction("does.not.exist"))
 
-  const stateKeysResponse = td.explain(reactotron.stateKeysResponse)
-  t.is(1, stateKeysResponse.callCount)
-  const [atPath, keyList] = stateKeysResponse.calls[0].args
-  t.is("does.not.exist", atPath)
-  t.deepEqual([], keyList)
+    const stateKeysResponse = td.explain(reactotron.stateKeysResponse)
+    expect(stateKeysResponse.callCount).toEqual(1)
+    const [atPath, keyList] = stateKeysResponse.calls[0].args
+    expect(atPath).toEqual("does.not.exist")
+    expect(keyList).toEqual([])
+  })
 })

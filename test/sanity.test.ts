@@ -1,32 +1,33 @@
-import test from "ava"
 import { types } from "mobx-state-tree"
 import * as td from "testdouble"
 import { TestUserModel, createMstPlugin } from "./fixtures"
 
 const UserModel = types.model().props({ name: "", age: 100 })
 
-test("a node is required", t => {
-  const { track } = createMstPlugin()
-  t.deepEqual({ kind: "required" }, track(null as any))
-  t.deepEqual({ kind: "required" }, track(undefined as any))
-})
+describe("sanity", () => {
+  it("a node is required", () => {
+    const { track } = createMstPlugin()
+    expect(track(null as any)).toEqual({ kind: "required" })
+    expect(track(undefined as any)).toEqual({ kind: "required" })
+  })
 
-test("only tracks mst nodes", t => {
-  const { track } = createMstPlugin()
-  t.deepEqual({ kind: "invalid-node" }, track({}))
-})
+  it("only tracks mst nodes", () => {
+    const { track } = createMstPlugin()
+    expect(track({})).toEqual({ kind: "invalid-node" })
+  })
 
-test("checks for dupes", t => {
-  const { track } = createMstPlugin()
-  t.deepEqual({ kind: "ok" }, track(UserModel.create()))
-  t.deepEqual({ kind: "already-tracking" }, track(UserModel.create()))
-})
+  it("checks for dupes", () => {
+    const { track } = createMstPlugin()
+    expect(track(UserModel.create())).toEqual({ kind: "ok" })
+    expect(track(UserModel.create())).toEqual({ kind: "already-tracking" })
+  })
 
-test("no reactotron calls when tracking", t => {
-  const { reactotron, track } = createMstPlugin()
-  const user = TestUserModel.create()
-  track(user)
-  t.is(0, td.explain(reactotron.send).callCount)
-  t.is(0, td.explain(reactotron.stateValuesChange).callCount)
-  t.is(0, td.explain(reactotron.startTimer).callCount)
+  it("no reactotron calls when tracking", () => {
+    const { reactotron, track } = createMstPlugin()
+    const user = TestUserModel.create()
+    track(user)
+    expect(td.explain(reactotron.send).callCount).toEqual(0)
+    expect(td.explain(reactotron.stateValuesChange).callCount).toEqual(0)
+    expect(td.explain(reactotron.startTimer).callCount).toEqual(0)
+  })
 })
