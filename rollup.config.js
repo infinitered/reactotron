@@ -1,28 +1,31 @@
+import resolve from "rollup-plugin-node-resolve"
 import babel from "rollup-plugin-babel"
-import filesize from "rollup-plugin-filesize"
 import replace from "rollup-plugin-replace"
+import filesize from "rollup-plugin-filesize"
+import minify from "rollup-plugin-babel-minify"
 
-const pkg = require("./package.json")
-const external = Object.keys(pkg.dependencies)
-
-const reactotronReactJsVersion = pkg.version
-
+const reactotronReactJsVersion = require("./package.json").version
 
 export default {
-  input: "src/index.js",
-  plugins: [
-    babel({
-      presets: ["es2015-rollup", "stage-1"],
-    }),
-    replace({
-      REACTOTRON_REACT_JS_VERSION: reactotronReactJsVersion,
-    }),
-    filesize(),
-  ],
-  external,
+  input: "src/index.ts",
   output: {
     file: "dist/index.js",
     format: "cjs",
-    exports: "named",
+    exports: "named"
   },
+  plugins: [
+    resolve({ extensions: [".ts"] }),
+    replace({
+      REACTOTRON_REACT_JS_VERSION: reactotronReactJsVersion,
+    }),
+    babel({ extensions: [".ts"], runtimeHelpers: true }),
+    process.env.NODE_ENV === "production"
+      ? minify({
+          comments: false,
+        })
+      : null,
+    filesize(),
+  ],
+  external: ["stacktrace-js", "reactotron-core-client"],
 }
+

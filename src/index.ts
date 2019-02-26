@@ -1,5 +1,7 @@
 import { createClient } from "reactotron-core-client"
-export trackGlobalErrors from "./plugins/track-global-errors"
+import trackGlobalErrors from "./plugins/track-global-errors"
+
+export { trackGlobalErrors }
 
 // ---------------------
 // DEFAULT CONFIGURATION
@@ -48,4 +50,4 @@ var DEFAULTS = {
 // HERE WE GO!
 // -----------
 // Create the default reactotron.
-export default createClient(DEFAULTS)
+export default createClient(DEFAULTS as any) // TODO: One day fix typescript
