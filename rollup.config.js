@@ -1,18 +1,28 @@
+import resolve from "rollup-plugin-node-resolve"
 import babel from "rollup-plugin-babel"
+import replace from "rollup-plugin-replace"
 import filesize from "rollup-plugin-filesize"
+import minify from "rollup-plugin-babel-minify"
+
+const coreClientVersion = require("./package.json").version
 
 export default {
-  input: "src/index.js",
+  input: "src/index.ts",
+  output: {
+    file: "dist/index.js",
+    format: "cjs",
+  },
   plugins: [
-    babel({
-      babelrc: false,
-      runtimeHelpers: true,
-      presets: ["es2015-rollup", "stage-1"],
+    resolve({ extensions: [".ts"] }),
+    replace({
+      REACTOTRON_CORE_CLIENT_VERSION: coreClientVersion,
     }),
+    babel({ extensions: [".ts"], runtimeHelpers: true }),
+    process.env.NODE_ENV === "production"
+      ? minify({
+          comments: false,
+        })
+      : null,
     filesize(),
   ],
-  output: {
-    format: "cjs",
-    file: "dist/index.js",
-  },
 }

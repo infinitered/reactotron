@@ -1,3 +1,7 @@
+export interface ApisuacePluginOptions {
+  ignoreContentTypes?: any
+}
+
 /**
  * Don't include the response bodies for images by default.
  */
@@ -6,12 +10,12 @@ const DEFAULT_CONTENT_TYPES_RX = /^(image)\/.*$/i
 /**
  * Sets up the apisauce reactotron plugin
  */
-export default (options = {}) => reactotron => {
+export default (options: ApisuacePluginOptions = {}) => reactotron => {
   // a RegExp to suppess adding the body cuz it costs a lot to serialize
   const ignoreContentTypes = options.ignoreContentTypes || DEFAULT_CONTENT_TYPES_RX
 
   // apisauce uses axios, so let's deconstruct that format
-  const convertResponse = (source = {}) => {
+  const convertResponse = (source: any = {}) => {
     const config = source.config || {}
 
     // the request
