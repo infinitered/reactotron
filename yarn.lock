@@ -7733,10 +7733,10 @@ react@^16.3.2:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-reactotron-core-server@^3.0.0-beta.1:
-  version "3.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/reactotron-core-server/-/reactotron-core-server-3.0.0-beta.1.tgz#e8855f8d3fdaa5a76739bc637ca75cc4e4248554"
-  integrity sha512-n7DXthipIREeH0H5Z2WJcU0zyLePBgRvWxXYT59YPf0IyrDDdFtlbGjXbq0wQD8YfhxMxYJAHK8F0FPcJ8F3uQ==
+reactotron-core-server@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/reactotron-core-server/-/reactotron-core-server-3.0.0.tgz#b31f98e8e6cccea239088e62225c1b06a3f43689"
+  integrity sha512-TMJT9hkHn0yUhn9rlcy+TqTOQYgcMRSFO88KRqdPsqWDREhyy8dD3aJ6L/Vg0GXXCdY540RvgUG6/uET9m5ZvA==
   dependencies:
     mitt "^1.1.3"
     ramda "^0.26.1"
