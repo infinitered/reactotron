@@ -7,14 +7,18 @@ export default function createEnhancer(
   handleStoreCreation: () => void
 ) {
   return () => createStore => (reducer, ...args) => {
-    const store = createStore(reactotronReducer(reducer, pluginConfig.restoreActionType), ...args)
+    const originalStore = createStore(
+      reactotronReducer(reducer, pluginConfig.restoreActionType),
+      ...args
+    )
+    const store = {
+      ...originalStore,
+      dispatch: createCustomDispatch(reactotron, originalStore, pluginConfig),
+    }
     reactotron.reduxStore = store
 
     handleStoreCreation()
 
-    return {
-      ...store,
-      dispatch: createCustomDispatch(reactotron, store, pluginConfig),
-    }
+    return store
   }
 }
