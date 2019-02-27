@@ -34,7 +34,7 @@ export default () => {
     sagaMonitor: Reactotron.createSagaMonitor()
   })
   const middleware = applyMiddleware(logger, sagaMiddleware)
-  const store = createStore(rootReducer, compose(Reactotron.createEnhancer(), middleware))
+  const store = createStore(rootReducer, compose(middleware, Reactotron.createEnhancer()))
   sagaMiddleware.run(rootSaga)
   return store
 }
