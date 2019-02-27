@@ -11,6 +11,15 @@ export default function createSubscriptionHandler(
   }
 
   function getChanges() {
+    // If we don't have reactotron, dont have a store or getState isn't a function then get out. Now.
+    if (
+      !reactotron ||
+      !reactotron.reduxStore ||
+      typeof reactotron.reduxStore.getState !== "function"
+    ) {
+      return []
+    }
+
     const state = reactotron.reduxStore.getState()
 
     const changes = []
