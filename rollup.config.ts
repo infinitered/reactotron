@@ -37,5 +37,5 @@ export default {
       : null,
     filesize(),
   ],
-  external: ["redux"],
+  external: ["ramda", "mobx-state-tree", "mobx"],
 }
