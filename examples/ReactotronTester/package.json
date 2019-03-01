@@ -1,0 +1,35 @@
+{
+  "name": "ReactotronTester",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "mobx": "^5.9.0",
+    "mobx-react": "^5.4.3",
+    "mobx-state-tree": "^3.10.2",
+    "react": "16.8.1",
+    "react-native": "^0.59.0-rc.2",
+    "react-redux": "^6.0.1",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.5",
+    "@types/react-native": "^0.57.38",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "24.1.0",
+    "jest": "24.1.0",
+    "metro-react-native-babel-preset": "0.52.0",
+    "react-test-renderer": "16.8.1",
+    "reactotron-react-native": "^2.2.0",
+    "reactotron-redux": "^3.0.0-beta.2",
+    "reactotron-mst": "^3.0.0-beta.2",
+    "rn-host-detect": "^1.1.5"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
