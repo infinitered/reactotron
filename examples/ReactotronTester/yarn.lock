@@ -3954,7 +3954,7 @@ minizlib@^1.1.1:
   dependencies:
     minipass "^2.2.1"
 
-mitt@^1.1.2:
+mitt@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/mitt/-/mitt-1.1.3.tgz#528c506238a05dce11cd914a741ea2cc332da9b8"
   integrity sha512-mUDCnVNsAi+eD6qA0HkRkwYczbLHJ49z17BGe2PYRhZL4wpZUFZGJHU7/5tmvohoma+Hdn0Vh/oJTiPEmgSruA==
@@ -4607,7 +4607,7 @@ prompts@^2.0.1:
     kleur "^3.0.2"
     sisteransi "^1.0.0"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -4810,26 +4810,26 @@ react@16.8.1:
     prop-types "^15.6.2"
     scheduler "^0.13.1"
 
-reactotron-core-client@^2.3.0:
+reactotron-core-client@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.4.0.tgz#0351bcc7a93b7da2dc5c0c0c46b0ee83caae935e"
   integrity sha512-Bh5MG724PO7fH3Ic7wN+Ph6I/fC4yrswneymXzmtM8NIUV8R1UOiQ4FUpzOMZdfWPPEYF3TN4aDg41NPtcNiNg==
 
-reactotron-mst@^3.0.0-beta.2:
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/reactotron-mst/-/reactotron-mst-3.0.0-beta.2.tgz#28d3772db19266fbd400a5a5dc74563a4b7f7d32"
-  integrity sha512-40T83eMZjGEEmEje5euuwVL/O2EQNkq7jMLi6c3jzbTiecSAzmWkPvDAeS+bnk2BUzJjbuId8GqxfbTpbrDA2Q==
+reactotron-mst@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/reactotron-mst/-/reactotron-mst-3.0.0.tgz#5afe30950f7a6f7239ca49ea75ba9c78c5fadda8"
+  integrity sha512-Ei/VFiUPvBtz8NbEYcRouEcLh8pZ3XvGRHvJZt9r8i6xGCkVmxRgOqORkVnFpWWVoiGJUbGbWUVPj9RtR1m5vA==
   dependencies:
     ramda "^0.25.0"
 
-reactotron-react-native@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-2.2.0.tgz#7a5d8b014dfffb478885d0a152b529f89e7d30e0"
-  integrity sha512-pFpWt6GsBLCO/Ycov6P4lVT7krvH9QrRvS2IHNqf7+oCLzaOXtzsesT5tvHQ8YkdScBD9ngeZYA/JzE/YKkvcQ==
+reactotron-react-native@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-3.1.0.tgz#a0663289dd1f79c54deb6410e40f73f3f47d7430"
+  integrity sha512-ukPUBytvEzRBc5FzirqR+A+5BTSFXP+YcXGgSwUgnCI3nMe2bMMVPdrQ5pxs8KwURDqDuGZ1Jr0S33IVLU64BQ==
   dependencies:
-    mitt "^1.1.2"
-    prop-types "^15.5.10"
-    reactotron-core-client "^2.3.0"
+    mitt "^1.1.3"
+    reactotron-core-client "^2.4.0"
+    rn-host-detect "^1.1.5"
 
 reactotron-redux@^3.0.0-beta.2:
   version "3.0.0-beta.2"
