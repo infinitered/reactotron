@@ -16,7 +16,7 @@
     "reactotron-react-native.d.ts"
   ],
   "main": "dist/index.js",
-  "types": "dist/types/reactotron-react-native.d.ts",
+  "types": "./reactotron-react-native.d.ts",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --notify",
