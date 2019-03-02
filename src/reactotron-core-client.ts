@@ -27,7 +27,7 @@ const DEFAULT_OPTIONS: ClientOptions = {
   secure: false,
   plugins: corePlugins,
   safeRecursion: true,
-  onCommand: command => null,
+  onCommand: () => null,
   onConnect: () => null,
   onDisconnect: () => null,
 }
@@ -56,7 +56,22 @@ export interface CustomCommand {
   handler: () => void
 }
 
-export class Reactotron {
+export interface Reactotron {
+  startTimer: () => () => number
+  configure: (options?: ClientOptions) => Reactotron
+  close: () => void
+  connect: () => Reactotron
+  send: (type: any, payload?: any, important?: boolean) => void
+  display: (config?: any) => void
+  reportError: (this: any, error: any) => void
+  use: (pluginCreator?: (client: Reactotron) => any) => Reactotron
+  onCustomCommand: (command: string, handler: () => void) => () => void
+
+  /* Provided by plugins */
+  clear?: () => void
+}
+
+export class ReactotronImpl implements Reactotron {
   // the configuration options
   options: ClientOptions = Object.assign({}, DEFAULT_OPTIONS)
 
@@ -156,7 +171,7 @@ export class Reactotron {
       // trigger our plugins onConnect
       this.plugins.forEach(p => p.onConnect && p.onConnect())
 
-      const getClientIdPromise = getClientId ? getClientId : emptyPromise
+      const getClientIdPromise = getClientId || emptyPromise
 
       getClientIdPromise().then(clientId => {
         this.isReady = true
@@ -367,7 +382,7 @@ export class Reactotron {
 
 // convenience factory function
 export function createClient (options?: ClientOptions) {
-  const client = new Reactotron()
+  const client = new ReactotronImpl()
   client.configure(options)
   return client
 }
