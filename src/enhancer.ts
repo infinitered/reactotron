@@ -1,5 +1,6 @@
 import reactotronReducer from "./reducer"
 import createCustomDispatch from "./customDispatch"
+import { PluginConfig } from "./pluginConfig"
 
 export default function createEnhancer(
   reactotron: any,

@@ -1,7 +1,10 @@
+import { StoreEnhancer } from 'redux';
+
 import createCommandHander from "./commandHandler"
 import createSendAction from "./sendAction"
 import createEnhancer from "./enhancer"
 import { DEFAULT_REPLACER_TYPE } from "./reducer"
+import { PluginConfig } from "./pluginConfig"
 
 function reactotronRedux(pluginConfig: PluginConfig = {}) {
   const mergedPluginConfig: PluginConfig = {
@@ -32,3 +35,23 @@ function reactotronRedux(pluginConfig: PluginConfig = {}) {
 }
 
 export { reactotronRedux }
+
+declare module "reactotron-react-native" {
+  // eslint-disable-next-line import/export
+  export interface Reactotron {
+    /**
+     * Enhancer creator
+     */
+    createEnhancer: () => StoreEnhancer
+  }
+}
+
+declare module "reactotron-react-js" {
+  // eslint-disable-next-line import/export
+  export interface Reactotron {
+    /**
+     * Enhancer creator
+     */
+    createEnhancer: () => StoreEnhancer
+  }
+}

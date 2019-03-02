@@ -1,5 +1,6 @@
 import createCommandHandler from "./commandHandler"
 import { DEFAULT_REPLACER_TYPE } from "./reducer"
+import { PluginConfig } from "./pluginConfig"
 
 // TODO: Write more tests around onBackup and onRestore.
 

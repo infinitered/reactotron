@@ -977,11 +977,6 @@ ansi-escapes@^3.0.0, ansi-escapes@^3.1.0, ansi-escapes@^3.2.0:
   resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-3.2.0.tgz#8780b98ff9dbf5638152d1f1fe5c1d7b4442976b"
   integrity sha512-cBhpre4ma+U0T1oM5fXg7Dy1Jw7zzwv7lt/GoCpr+hDQJoYnKVPLL4dCvSEFMmQurOQvSrwT7SL/DAlhBI97RQ==
 
-ansi-escapes@^3.1.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-3.2.0.tgz#8780b98ff9dbf5638152d1f1fe5c1d7b4442976b"
-  integrity sha512-cBhpre4ma+U0T1oM5fXg7Dy1Jw7zzwv7lt/GoCpr+hDQJoYnKVPLL4dCvSEFMmQurOQvSrwT7SL/DAlhBI97RQ==
-
 ansi-regex@^2.0.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-2.1.1.tgz#c3b33ab5ee360d86e0e628f0468ae7ef27d654df"
@@ -6684,10 +6679,10 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7, rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-reactotron-core-client@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.2.1.tgz#2b7417df7831419ce9bc44b025f86012fda7e582"
-  integrity sha512-VINa2vuSMOCqRCaRRdTdk10vrj7xRhRUN1hpbvtANMlZmByQOf+kqRVqR6uad2jPE3nn/47V7F23MAkS8lDNug==
+reactotron-core-client@^2.5.0-beta.1:
+  version "2.5.0-beta.1"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.5.0-beta.1.tgz#da0ff5c56cc5a2bd59fae01f25c3f42ace0a146d"
+  integrity sha512-oh3bSQetfaX/clCRqdC/qBKpD7JVhOXlQJhAne4mHRhF5fvMsWaPQePdvOvKAfCMHWv54e0ld7FLU/+gHHw3cg==
 
 read-all-stream@^3.0.0:
   version "3.1.0"
