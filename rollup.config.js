@@ -1,15 +1,23 @@
-import babel from 'rollup-plugin-babel'
+import resolve from "rollup-plugin-node-resolve"
+import babel from "rollup-plugin-babel"
+import filesize from "rollup-plugin-filesize"
+import minify from "rollup-plugin-babel-minify"
 
 export default {
-  entry: 'src/index.js',
-  format: 'cjs',
+  input: "src/index.ts",
+  output: {
+    file: "dist/index.js",
+    format: "cjs",
+  },
   plugins: [
-    babel({
-      babelrc: false,
-      runtimeHelpers: true,
-      presets: ['es2015-rollup', 'stage-1']
-    })
+    resolve({ extensions: [".ts"] }),
+    babel({ extensions: [".ts"], runtimeHelpers: true }),
+    process.env.NODE_ENV === "production"
+      ? minify({
+          comments: false,
+        })
+      : null,
+    filesize(),
   ],
-  dest: 'dist/index.js',
-  external: ['ramda', 'redux', 'ramdasauce']
+  external: ["redux"],
 }
