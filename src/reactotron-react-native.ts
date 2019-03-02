@@ -47,7 +47,7 @@ const DEFAULTS = {
   proxyHack: true,
 }
 
-interface UseReactNativeOptions {
+export interface UseReactNativeOptions {
   errors?: TrackGlobalErrorsOptions | boolean
   editor?: OpenInEditorOptions | boolean
   overlay?: boolean
