@@ -8,4 +8,7 @@ declare module "reactotron-react-native" {
     overlay?: (App: React.ReactNode) => void
     storybookSwitcher?: (App: React.ReactNode) => void
   }
+
+  var impl: Reactotron
+  export { impl as default }
 }
