@@ -56,10 +56,10 @@ interface UseReactNativeOptions {
   storybook?: boolean
 }
 
-console.log(DEFAULTS)
-
 const reactotron: Reactotron & {
   useReactNative?: (options: UseReactNativeOptions) => Reactotron
+  overlay?: (App: React.ReactNode) => void
+  storybookSwitcher?: (App: React.ReactNode) => void
 } = createClient(DEFAULTS)
 
 function getPluginOptions<T>(options?: T | boolean): T {
