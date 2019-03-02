@@ -8625,10 +8625,10 @@ react@^15.6.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-reactotron-core-client@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.3.0.tgz#9957f57fe38596cb4203b9849b09e7e581757cda"
-  integrity sha512-y02RWt7rxGQd5OUassvGlzHIo5ZsJHwwOpgHv1dnh7D6chG8zG1YOGZU4WTVSz+J8PiX8v/68UHK6SbpLdlP+Q==
+reactotron-core-client@^2.5.0-beta.1:
+  version "2.5.0-beta.1"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.5.0-beta.1.tgz#da0ff5c56cc5a2bd59fae01f25c3f42ace0a146d"
+  integrity sha512-oh3bSQetfaX/clCRqdC/qBKpD7JVhOXlQJhAne4mHRhF5fvMsWaPQePdvOvKAfCMHWv54e0ld7FLU/+gHHw3cg==
 
 read-all-stream@^3.0.0:
   version "3.1.0"
