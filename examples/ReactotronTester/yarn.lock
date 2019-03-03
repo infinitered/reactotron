@@ -688,6 +688,50 @@
     xcode "^2.0.0"
     xmldoc "^0.4.0"
 
+"@redux-saga/core@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@redux-saga/core/-/core-1.0.2.tgz#4336a5bb4253e5ca69681c25a863fbbc03ea6d88"
+  integrity sha512-AsJYcpuYfM1cmxJvfhXs9HAFSZVEG17TMsLPlXH7+Hq5a5ZP4GqcbtijEmS2AC7NR5lLJHy8csxpqz22PeW5dw==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    "@redux-saga/deferred" "^1.0.1"
+    "@redux-saga/delay-p" "^1.0.1"
+    "@redux-saga/is" "^1.0.2"
+    "@redux-saga/symbols" "^1.0.1"
+    "@redux-saga/types" "^1.0.2"
+    redux ">=0.10 <5"
+    typescript-tuple "^2.1.0"
+
+"@redux-saga/deferred@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@redux-saga/deferred/-/deferred-1.0.1.tgz#c895445e486bded90acf0b873b4e978fbfe458c2"
+  integrity sha512-+gW5xQ93QXOOmRLAmX8x2Hx1HpbTG6CM6+HcdTSbJovh4uMWaGyeDECnqXSt8QqA/ja3s2nqYXLqXFKepIQ1hw==
+
+"@redux-saga/delay-p@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@redux-saga/delay-p/-/delay-p-1.0.1.tgz#d69fc6103c7509ae80faa144ea17bbc69e51e029"
+  integrity sha512-0SnNDyDLUyB4NThtptAwiprNOnbCNhoed/Rp5JwS7SB+a/AdWynVgg/E6BmjsggLFNr07KW0bzn05tsPRBuU7Q==
+  dependencies:
+    "@redux-saga/symbols" "^1.0.1"
+
+"@redux-saga/is@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@redux-saga/is/-/is-1.0.2.tgz#7f4be014c97061898d7efb11d6c9de31e943ed38"
+  integrity sha512-WnaUOwYvPK2waWjzebT4uhL8zY76XNkzzpJ2EQJe8bN1tByvAjvT7MuJZTSshOhdHL5PsRO0MsH224XIXBJidQ==
+  dependencies:
+    "@redux-saga/symbols" "^1.0.1"
+    "@redux-saga/types" "^1.0.2"
+
+"@redux-saga/symbols@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@redux-saga/symbols/-/symbols-1.0.1.tgz#46512ae1275f88df061c42168d0f600ddb170c1e"
+  integrity sha512-akKkzcVnb1RzJaZV2LQFbi51abvdICMuAKwwLoCjjxLbLAGIw9EJxk5ucNnWSSCEsoEQMeol5tkAcK+Xzuv1Bg==
+
+"@redux-saga/types@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@redux-saga/types/-/types-1.0.2.tgz#1d94f02800b094753f9271c206a26c2a06ca14ee"
+  integrity sha512-8/qcMh15507AnXJ3lBeuhsdFwnWQqnp68EpUuHlYPixJ5vjVmls7/Jq48cnUlrZI8Jd9U1jkhfCl0gaT5KMgVw==
+
 "@types/prop-types@*":
   version "15.5.9"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.9.tgz#f2d14df87b0739041bc53a7d75e3d77d726a3ec0"
@@ -4810,31 +4854,36 @@ react@16.8.1:
     prop-types "^15.6.2"
     scheduler "^0.13.1"
 
-reactotron-core-client@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.4.0.tgz#0351bcc7a93b7da2dc5c0c0c46b0ee83caae935e"
-  integrity sha512-Bh5MG724PO7fH3Ic7wN+Ph6I/fC4yrswneymXzmtM8NIUV8R1UOiQ4FUpzOMZdfWPPEYF3TN4aDg41NPtcNiNg==
+reactotron-core-client@^2.5.0-beta.2:
+  version "2.5.0-beta.2"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.5.0-beta.2.tgz#afd5379ed8c8771947a05aeaa1e75f15b2e19b57"
+  integrity sha512-OAqMnEfM7CMU64+hhqFCgP3N4wIDI4F04xZexqVawjwCS94uRYztovE14GsXDWzlIx4mLL5B/1S080oV0mACiA==
 
-reactotron-mst@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/reactotron-mst/-/reactotron-mst-3.0.0.tgz#5afe30950f7a6f7239ca49ea75ba9c78c5fadda8"
-  integrity sha512-Ei/VFiUPvBtz8NbEYcRouEcLh8pZ3XvGRHvJZt9r8i6xGCkVmxRgOqORkVnFpWWVoiGJUbGbWUVPj9RtR1m5vA==
+reactotron-mst@^3.1.0-beta.2:
+  version "3.1.0-beta.2"
+  resolved "https://registry.yarnpkg.com/reactotron-mst/-/reactotron-mst-3.1.0-beta.2.tgz#be3366473b5c24811b1b56481a1a6bed0a161903"
+  integrity sha512-E1RfGqsWgHm1rUwxHoEo3S31I6z8VMonkB/S0o/lqqNLw8tASiHBkuwD8HBdHkK9t5n3GCJFNZCcsXxLMJxV2g==
   dependencies:
     ramda "^0.25.0"
 
-reactotron-react-native@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-3.1.0.tgz#a0663289dd1f79c54deb6410e40f73f3f47d7430"
-  integrity sha512-ukPUBytvEzRBc5FzirqR+A+5BTSFXP+YcXGgSwUgnCI3nMe2bMMVPdrQ5pxs8KwURDqDuGZ1Jr0S33IVLU64BQ==
+reactotron-react-native@^3.2.0-beta.5:
+  version "3.2.0-beta.5"
+  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-3.2.0-beta.5.tgz#4740313d33f31f685761dd7dc27228706904b705"
+  integrity sha512-MoLJoq0Wq7o2pHO229OWs2En90scQ/tq4vhQHBV+SG6UJw+PYwjIQRTHkMD/KiAoMkpN7PJb8c/5MxFtlx+TwA==
   dependencies:
     mitt "^1.1.3"
-    reactotron-core-client "^2.4.0"
+    reactotron-core-client "^2.5.0-beta.2"
     rn-host-detect "^1.1.5"
 
-reactotron-redux@^3.0.0-beta.2:
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/reactotron-redux/-/reactotron-redux-3.0.0-beta.2.tgz#70191cb3717d9b650e581c24b0fa9d6b122bdedb"
-  integrity sha512-3fylDPfuxStauMYGZ1DgFm+S3JuBLVIDwTd4KvYiyfScExIQJP48woax6Z9HaJvsN3Wejiw4iB/xvgqQLLt08Q==
+reactotron-redux-saga@^4.2.0-beta.4:
+  version "4.2.0-beta.4"
+  resolved "https://registry.yarnpkg.com/reactotron-redux-saga/-/reactotron-redux-saga-4.2.0-beta.4.tgz#a0e2031abd2e15387497aa2c4bd579c085ff24c1"
+  integrity sha512-4AKCcXKmsTdvELLZThw2j3ydNr1ms90p/OIALXFASBIas9JGM+fJ+EzAgpP5WzP7W7DvpXZ+/4/D4wQFTOeLCA==
+
+reactotron-redux@^3.1.0-beta.3:
+  version "3.1.0-beta.3"
+  resolved "https://registry.yarnpkg.com/reactotron-redux/-/reactotron-redux-3.1.0-beta.3.tgz#47ae6990f9df9735f825ba863f05a3e03047cf10"
+  integrity sha512-49KFb1AKb9fJH/DKAZ67yNlWQUK6i0hozHCUGu5XOZzKCJs/TmHSRhhTFQ9QviujIKOxGYDegej8gMs2UUMsgQ==
 
 read-pkg-up@^2.0.0:
   version "2.0.0"
@@ -4890,12 +4939,19 @@ realpath-native@^1.0.0, realpath-native@^1.0.2:
   dependencies:
     util.promisify "^1.0.0"
 
+redux-saga@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-1.0.2.tgz#0599703f975438f1b2f9d2b9a965ec58f0fdfcd7"
+  integrity sha512-dHV256by3eF2AnBPx1l3HqazQFkErZ82HDXgh4jSRpT72OrX31wyg8DA1q8+0HvENRfJAyhT/4qT5yH/vVqFfw==
+  dependencies:
+    "@redux-saga/core" "^1.0.2"
+
 redux-thunk@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
   integrity sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
 
-redux@^4.0.1:
+"redux@>=0.10 <5", redux@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.1.tgz#436cae6cc40fbe4727689d7c8fae44808f1bfef5"
   integrity sha512-R7bAtSkk7nY6O/OYMVR9RiBI+XghjF9rlbl5806HJbQph0LJVHZrU5oaO4q70eUKiqMRqm4y07KLTlMZ2BlVmg==
@@ -5707,6 +5763,30 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typescript-compare@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/typescript-compare/-/typescript-compare-0.0.2.tgz#7ee40a400a406c2ea0a7e551efd3309021d5f425"
+  integrity sha512-8ja4j7pMHkfLJQO2/8tut7ub+J3Lw2S3061eJLFQcvs3tsmJKp8KG5NtpLn7KcY2w08edF74BSVN7qJS0U6oHA==
+  dependencies:
+    typescript-logic "^0.0.0"
+
+typescript-logic@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/typescript-logic/-/typescript-logic-0.0.0.tgz#66ebd82a2548f2b444a43667bec120b496890196"
+  integrity sha512-zXFars5LUkI3zP492ls0VskH3TtdeHCqu0i7/duGt60i5IGPIpAHE/DWo5FqJ6EjQ15YKXrt+AETjv60Dat34Q==
+
+typescript-tuple@^2.1.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/typescript-tuple/-/typescript-tuple-2.1.1.tgz#b8dd1f2aa0c13c0bd2f491aa4d416c6b22bcb6db"
+  integrity sha512-7jOyW+a6vGSfzpkgimnldfkvT5FEY7hURzdS8gXHBXCOZ7NZRqoXNvsEmkNNhPLbdXUbZexjFXQOz1CSn+7stg==
+  dependencies:
+    typescript-compare "^0.0.2"
+
+typescript@^3.3.3333:
+  version "3.3.3333"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.3.3333.tgz#171b2c5af66c59e9431199117a3bcadc66fdcfd6"
+  integrity sha512-JjSKsAfuHBE/fB2oZ8NxtRTk5iGcg6hkYXMnZ3Wc+b2RSqejEqTaem11mHASMnFilHrax3sLK0GDzcJrekZYLw==
 
 ua-parser-js@^0.7.18:
   version "0.7.19"

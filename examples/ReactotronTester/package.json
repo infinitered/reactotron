@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "compile": "tsc",
     "test": "jest"
   },
   "dependencies": {
@@ -14,6 +15,7 @@
     "react-native": "^0.59.0-rc.2",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
+    "redux-saga": "^1.0.2",
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
@@ -24,10 +26,12 @@
     "jest": "24.1.0",
     "metro-react-native-babel-preset": "0.52.0",
     "react-test-renderer": "16.8.1",
-    "reactotron-react-native": "^3.1.0",
-    "reactotron-redux": "^3.0.0-beta.2",
-    "reactotron-mst": "^3.0.0",
-    "rn-host-detect": "^1.1.5"
+    "reactotron-mst": "^3.1.0-beta.2",
+    "reactotron-react-native": "^3.2.0-beta.5",
+    "reactotron-redux": "^3.1.0-beta.3",
+    "reactotron-redux-saga": "^4.2.0-beta.4",
+    "rn-host-detect": "^1.1.5",
+    "typescript": "^3.3.3333"
   },
   "jest": {
     "preset": "react-native"

@@ -1,5 +1,6 @@
 import Reactotron from "reactotron-react-native"
 import { reactotronRedux as reduxPlugin } from "reactotron-redux"
+import sagaPlugin from "reactotron-redux-saga"
 import { mst } from "reactotron-mst"
 
 Reactotron.configure({
@@ -13,6 +14,7 @@ Reactotron.useReactNative({
 })
 
 Reactotron.use(reduxPlugin())
+Reactotron.use(sagaPlugin({}))
 Reactotron.use(mst())
 
 Reactotron.connect()

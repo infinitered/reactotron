@@ -7,7 +7,7 @@ const Root = types.model({
 
 export default () => {
   const rootStore = Root.create({ name: "" })
-  ;(Reactotron as any).trackMstNode(rootStore)
+  Reactotron.trackMstNode(rootStore)
 
   return rootStore
 }

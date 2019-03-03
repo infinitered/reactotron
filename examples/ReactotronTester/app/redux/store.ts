@@ -19,11 +19,13 @@ const rootReducer = combineReducers({ dummy: dummyReducer })
 const middleware = applyMiddleware(ReduxThunk)
 
 export default () => {
+  Reactotron.createSagaMonitor()
+
   const store = createStore(
     rootReducer,
     compose(
       middleware,
-      (Reactotron as any).createEnhancer(),
+      Reactotron.createEnhancer(),
     ),
   )
   // const store = (Reactotron as any).createStore(rootReducer, compose(middleware))
