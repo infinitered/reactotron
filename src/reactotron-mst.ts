@@ -14,6 +14,7 @@ import {
   onSnapshot,
   IMiddlewareEvent,
 } from "mobx-state-tree"
+import { Reactotron } from "reactotron-core-client"
 
 import {
   always,
@@ -112,7 +113,7 @@ export function mst(opts: MstPluginOptions = {}) {
    *
    * @param reactotron The reactotron instance we're attaching to.
    */
-  function plugin(reactotron: any) {
+  function plugin(reactotron: Reactotron) {
     // --- Plugin-scoped variables ---------------------------------
 
     // the stores we're tracking
@@ -365,7 +366,10 @@ export function mst(opts: MstPluginOptions = {}) {
           const keyMinusWildcard = slice(0, -2, key)
           const value = dotPath(keyMinusWildcard, state)
           if (is(Object, value) && !isNilOrEmpty(value)) {
-            return pipe(keys, map(key => `${keyMinusWildcard}.${key}`))(value || {})
+            return pipe(
+              keys,
+              map(key => `${keyMinusWildcard}.${key}`)
+            )(value || {})
           }
           return []
         }) as any,
@@ -377,7 +381,7 @@ export function mst(opts: MstPluginOptions = {}) {
         map((key: string) => ({
           path: key,
           value: isNilOrEmpty(key) ? state : dotPath(key, state),
-        })),
+        }))
       )(subscriptions)
 
       reactotron.stateValuesChange(changes)
@@ -417,4 +421,11 @@ export function mst(opts: MstPluginOptions = {}) {
   }
 
   return plugin
+}
+
+declare module "reactotron-core-client" {
+  // eslint-disable-next-line import/export
+  export interface Reactotron {
+    trackMstNode: (node: IStateTreeNode, nodeName: string) => { kind: string; message?: string }
+  }
 }

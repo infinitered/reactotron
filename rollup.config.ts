@@ -37,5 +37,5 @@ export default {
       : null,
     filesize(),
   ],
-  external: ["ramda", "mobx-state-tree", "mobx"],
+  external: ["ramda", "mobx-state-tree", "mobx", "reactotron-core-client"],
 }
