@@ -68,7 +68,44 @@ export interface Reactotron {
   onCustomCommand: (command: string, handler: () => void) => () => void
 
   /* Provided by plugins */
+  // API Response Plugin
+  apiResponse?: (request: any, response: any, duration: any) => void
+
+  // Benchmark Plugin
+  benchmark?: (
+    title: string
+  ) => {
+    step: (stepName: string) => void
+    stop: (stopTitle: string) => void
+    last: (stopTitle: string) => void
+  }
+
+  // Clear Plugin
   clear?: () => void
+
+  // Image Plugin
+  image?: (options: {
+    uri: any
+    preview: any
+    filename: any
+    width: any
+    height: any
+    caption: any
+  }) => void
+
+  // Logger Plugin
+  log?: (...args: any[]) => void
+  logImportant?: (...args: any[]) => void
+  debug?: (message: any, important?: boolean) => void
+  warn?: (message: any) => void
+  error?: (message: any, stack: any) => void
+
+  // State Plugin
+  stateActionComplete?: (name: any, action: any, important?: boolean) => void
+  stateValuesResponse?: (path: any, value: any, valid?: boolean) => void
+  stateKeysResponse?: (path: any, keys: any, valid?: boolean) => void
+  stateValuesChange?: (changes: any) => void
+  stateBackupResponse?: (state: any) => void
 }
 
 export class ReactotronImpl implements Reactotron {
@@ -181,7 +218,7 @@ export class ReactotronImpl implements Reactotron {
           ...client,
           name,
           clientId,
-          "reactotronCoreClientVersion": "REACTOTRON_CORE_CLIENT_VERSION",
+          reactotronCoreClientVersion: "REACTOTRON_CORE_CLIENT_VERSION",
         })
 
         // flush the send queue
@@ -381,7 +418,7 @@ export class ReactotronImpl implements Reactotron {
 }
 
 // convenience factory function
-export function createClient (options?: ClientOptions) {
+export function createClient(options?: ClientOptions) {
   const client = new ReactotronImpl()
   client.configure(options)
   return client
