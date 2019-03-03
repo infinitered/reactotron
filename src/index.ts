@@ -43,6 +43,6 @@ declare module "reactotron-core-client" {
     /**
      * Enhancer creator
      */
-    createEnhancer: () => StoreEnhancer
+    createEnhancer?: () => StoreEnhancer
   }
 }
