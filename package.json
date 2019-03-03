@@ -16,7 +16,7 @@
     "reactotron-redux.d.ts"
   ],
   "main": "dist/index.js",
-  "types": "./reactotron-redux.d.ts",
+  "types": "./dist/types/index.d.ts",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --notify",

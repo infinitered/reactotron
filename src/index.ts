@@ -1,4 +1,5 @@
-import { StoreEnhancer } from 'redux';
+import { StoreEnhancer } from "redux"
+import { Reactotron } from "reactotron-core-client"
 
 import createCommandHander from "./commandHandler"
 import createSendAction from "./sendAction"
@@ -23,7 +24,7 @@ function reactotronRedux(pluginConfig: PluginConfig = {}) {
     })
   }
 
-  return (reactotron: any) => {
+  return (reactotron: Reactotron) => {
     return {
       onCommand: createCommandHander(reactotron, mergedPluginConfig, onReduxStoreCreation),
       features: {
@@ -36,17 +37,7 @@ function reactotronRedux(pluginConfig: PluginConfig = {}) {
 
 export { reactotronRedux }
 
-declare module "reactotron-react-native" {
-  // eslint-disable-next-line import/export
-  export interface Reactotron {
-    /**
-     * Enhancer creator
-     */
-    createEnhancer: () => StoreEnhancer
-  }
-}
-
-declare module "reactotron-react-js" {
+declare module "reactotron-core-client" {
   // eslint-disable-next-line import/export
   export interface Reactotron {
     /**
