@@ -1,8 +1,10 @@
 import createSendAction from "./sendAction"
+import { defaultReactotronMock } from './testHelpers'
 
 describe("sendAction", () => {
   it("should send a basic action to reactotron", () => {
     const mockReactotron = {
+      ...defaultReactotronMock,
       send: jest.fn(),
     }
     const sendAction = createSendAction(mockReactotron)
@@ -18,6 +20,7 @@ describe("sendAction", () => {
 
   it("should send a important action to reactotron", () => {
     const mockReactotron = {
+      ...defaultReactotronMock,
       send: jest.fn(),
     }
     const sendAction = createSendAction(mockReactotron)

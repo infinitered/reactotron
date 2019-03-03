@@ -1,9 +1,11 @@
+import { Reactotron } from "reactotron-core-client";
+
 import stateCleaner from "./helpers/stateCleaner"
 import pathObject from "./helpers/pathObject"
 import createSubscriptionsHandler from "./subscriptionsHandler"
 import { PluginConfig } from "./pluginConfig"
 
-export default function createCommandHandler(reactotron: any, pluginConfig: PluginConfig, onReduxStoreCreation: (func: () => void) => void) {
+export default function createCommandHandler(reactotron: Reactotron, pluginConfig: PluginConfig, onReduxStoreCreation: (func: () => void) => void) {
   const subscriptionsHandler = createSubscriptionsHandler(reactotron, onReduxStoreCreation)
 
   return ({ type, payload }: { type: string; payload?: any }) => {

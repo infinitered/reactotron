@@ -19,5 +19,5 @@ export default {
       : null,
     filesize(),
   ],
-  external: ["redux"],
+  external: ["redux", "reactotron-core-client"],
 }

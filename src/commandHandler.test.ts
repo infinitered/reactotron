@@ -1,6 +1,7 @@
 import createCommandHandler from "./commandHandler"
 import { DEFAULT_REPLACER_TYPE } from "./reducer"
 import { PluginConfig } from "./pluginConfig"
+import { defaultReactotronMock } from './testHelpers'
 
 // TODO: Write more tests around onBackup and onRestore.
 
@@ -13,6 +14,7 @@ const defaultPluginConfig: PluginConfig = {
 describe("commandHandler", () => {
   it("should create a function when called", () => {
     const reactotronMock = {
+      ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: true } }),
         subscribe: jest.fn()
@@ -27,6 +29,7 @@ describe("commandHandler", () => {
 
   it("should handle a 'state.keys.request' command type for no path", () => {
     const reactotronMock = {
+      ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: true } }),
         subscribe: jest.fn()
@@ -43,6 +46,7 @@ describe("commandHandler", () => {
 
   it("should handle a 'state.keys.request' command type for a single level", () => {
     const reactotronMock = {
+      ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: true } }),
         subscribe: jest.fn()
@@ -59,6 +63,7 @@ describe("commandHandler", () => {
 
   it("should handle a 'state.keys.request' command type for two levels", () => {
     const reactotronMock = {
+      ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: { nested: true } } }),
         subscribe: jest.fn()
@@ -75,6 +80,7 @@ describe("commandHandler", () => {
 
   it("should handle a 'state.keys.request' command type for a path that isn't an object", () => {
     const reactotronMock = {
+      ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: { nested: true } } }),
         subscribe: jest.fn()
@@ -91,6 +97,7 @@ describe("commandHandler", () => {
 
   it("should handle a 'state.keys.request' command type for a path that is invalid", () => {
     const reactotronMock = {
+      ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: { nested: true } } }),
         subscribe: jest.fn()
@@ -107,6 +114,7 @@ describe("commandHandler", () => {
 
   it("should handle a 'state.values.request' command type for a single level", () => {
     const reactotronMock = {
+      ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: true } }),
         subscribe: jest.fn()
@@ -123,6 +131,7 @@ describe("commandHandler", () => {
 
   it("should handle a 'state.values.request' command type for two levels", () => {
     const reactotronMock = {
+      ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: { nested: true } } }),
         subscribe: jest.fn()
@@ -139,6 +148,7 @@ describe("commandHandler", () => {
 
   it("should handle a 'state.values.request' command type for a path that isn't an object", () => {
     const reactotronMock = {
+      ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: { nested: true } } }),
         subscribe: jest.fn()
@@ -155,6 +165,7 @@ describe("commandHandler", () => {
 
   it("should handle a 'state.values.request' command type for a path that is invalid", () => {
     const reactotronMock = {
+      ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: { nested: true } } }),
         subscribe: jest.fn()
@@ -173,6 +184,7 @@ describe("commandHandler", () => {
 
   it("should handle a 'state.action.dispatch' command type", () => {
     const reactotronMock = {
+      ...defaultReactotronMock,
       reduxStore: {
         dispatch: jest.fn(),
         subscribe: jest.fn()
@@ -187,6 +199,7 @@ describe("commandHandler", () => {
 
   it("should handle a 'state.backup.request' command type", () => {
     const reactotronMock = {
+      ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ myState: true }),
         subscribe: jest.fn()
@@ -206,6 +219,7 @@ describe("commandHandler", () => {
 
   it("should handle a 'state.restore.request' command type", () => {
     const reactotronMock = {
+      ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn(),
         dispatch: jest.fn(),

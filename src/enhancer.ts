@@ -1,9 +1,11 @@
+import { Reactotron } from "reactotron-core-client";
+
 import reactotronReducer from "./reducer"
 import createCustomDispatch from "./customDispatch"
 import { PluginConfig } from "./pluginConfig"
 
 export default function createEnhancer(
-  reactotron: any,
+  reactotron: Reactotron,
   pluginConfig: PluginConfig,
   handleStoreCreation: () => void
 ) {

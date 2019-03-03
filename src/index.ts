@@ -40,6 +40,8 @@ export { reactotronRedux }
 declare module "reactotron-core-client" {
   // eslint-disable-next-line import/export
   export interface Reactotron {
+    reduxStore?: any
+
     /**
      * Enhancer creator
      */
