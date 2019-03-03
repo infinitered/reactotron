@@ -6542,10 +6542,10 @@ rc@^1.2.7, rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-reactotron-core-client@^2.5.0-beta.2:
-  version "2.5.0-beta.2"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.5.0-beta.2.tgz#afd5379ed8c8771947a05aeaa1e75f15b2e19b57"
-  integrity sha512-OAqMnEfM7CMU64+hhqFCgP3N4wIDI4F04xZexqVawjwCS94uRYztovE14GsXDWzlIx4mLL5B/1S080oV0mACiA==
+reactotron-core-client@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.5.0.tgz#f32c60d10122a6f0d7b82e823f065c5ca40da301"
+  integrity sha512-7XgB0wJfBwQDdb358GXwGU/qvX6/t/G2+EGDK1sseMffY5LZBR5/S2zyF+p3u7OJ/LoCGjRjXhgVuXfac6C9fg==
 
 read-all-stream@^3.0.0:
   version "3.1.0"
