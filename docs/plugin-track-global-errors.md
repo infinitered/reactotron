@@ -81,4 +81,4 @@ It hijacks the browser's `window.onerror` event, immediately calling the previou
 
 On React Native, it hooks `NativeModules.ExceptionsManager.updateExceptionMessage`.  This is a message that occurs after the source map lookup for React Native.  It always calls the original function so it won't break anything internally.  Your Red Box will still show.
 
-Because we're hooking a Facebook internal function, this is a bit fragile.  I'll stay on top of any React Native upgrades that might cause problems should the API change.
+Because we're hooking a Facebook internal function, this is a bit fragile.  We'll stay on top of any React Native upgrades that might cause problems should the API change.
