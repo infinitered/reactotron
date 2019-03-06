@@ -94,4 +94,13 @@ reactotron.useReactNative = (options: UseReactNativeOptions = {}) => {
   return reactotron
 }
 
+export {
+  trackGlobalErrors,
+  openInEditor,
+  overlay,
+  asyncStorage,
+  networking,
+  storybook,
+}
+
 export default reactotron
