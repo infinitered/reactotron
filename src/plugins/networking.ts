@@ -122,7 +122,7 @@ export default (pluginConfig: NetworkingOptions = {}) => (reactotron: Reactotron
 
     // prepare the right body to send
     if (useRealResponse) {
-      if (type === 'blob' && typeof FileReader !== 'undefined') {
+      if (type === 'blob' && typeof FileReader !== 'undefined' && response) {
         // Disable reason: FileReader should be in global scope since RN 0.54
         // eslint-disable-next-line no-undef
         const bReader = new FileReader()

@@ -25,5 +25,6 @@ export default {
     "react-native",
     "react-native/Libraries/Network/XHRInterceptor",
     "rn-host-detect",
+    "query-string"
   ],
 }
