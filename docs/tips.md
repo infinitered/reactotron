@@ -132,7 +132,7 @@ Need a custom Reactotron plugin but don't have time to write one?
 
 In the Reactotron App, you can press `command+.` (mac) or  `ctrl+.` (windows/linux) to send a custom command.
 
-These commands can be using for things like:
+These commands can be useful for things like:
 
 * clearing async storage
 * triggering an api call
