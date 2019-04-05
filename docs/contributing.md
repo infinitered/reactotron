@@ -2,7 +2,7 @@
 
 ### Dev Tools
 
-Make sure you've got the latest `yarn` (1.7.0) and the latest `node` (8.6.0).  There are some
+Make sure you've got at least `yarn` (1.7.0) and `node` (8.6.0).  There are some
 issues with older combos of these.  =)
 
 Also if you encounter a problem with `electron 1.8.6` passing checksums, there was a bug in
