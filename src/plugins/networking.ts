@@ -68,7 +68,7 @@ export default (pluginConfig: NetworkingOptions = {}) => (reactotron: Reactotron
     }
 
     let params = null;
-    const queryParamIdx = url.indexOf('?')
+    const queryParamIdx = url ? url.indexOf('?') : -1
 
     if (queryParamIdx > -1) {
       params = queryString.parse(url.substr(queryParamIdx))
