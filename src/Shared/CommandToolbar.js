@@ -7,6 +7,7 @@ import stringifyObject from "stringify-object"
 import AppStyles from "../Theme/AppStyles"
 import Button from "./CommandToolbarButton"
 import { apiToMarkdown } from "../Lib/api-to-markdown"
+import { apiRequestToCurl } from "../Lib/api-to-curl"
 
 const Styles = {
   container: {
@@ -42,6 +43,10 @@ const CopyApiRequestButton = props => (
 
 const CopyApiMarkdownButton = props => (
   <Button icon="receipt" onClick={props.onClick} tip="Copy as markdown to clipboard" />
+)
+
+const CopyApiRequestAsCurlButton = props => (
+  <Button icon='content-copy' onClick={props.onClick} tip='Copy JSON request as cURL' />
 )
 
 const CopyLogButton = props => (
@@ -152,8 +157,19 @@ class CommandToolbar extends Component {
     try {
       const text = apiToMarkdown(this.props.command.payload)
       clipboard.writeText(text)
-    } catch (e) {
-    }
+    } catch (e) {}
+  }
+
+  // copy api request to clipboard as cURL
+  handleCopyApiRequestToClipboardAsCurl = event => {
+    event.stopPropagation()
+    const { command } = this.props
+    const { payload } = command
+
+    try {
+      const text = apiRequestToCurl(payload)
+      clipboard.writeText(text)
+    } catch (e) {}
   }
 
   handleToggleViewSagaDetails = event => {
@@ -177,6 +193,7 @@ class CommandToolbar extends Component {
     const showCopyApiResponse = command.type === "api.response"
     const showCopyApiRequest = command.type === "api.response" && !isNilOrEmpty(requestBody)
     const showCopyApiMarkdown = command.type === "api.response"
+    const showCopyApiRequestAsCurl = command.type === "api.response"
     const showToggleViewSagaDetails = command.type === "saga.task.complete"
     const showCopyLog = command.type === "log"
     const showCopyDisplay = command.type === "display"
@@ -195,6 +212,9 @@ class CommandToolbar extends Component {
         )}
         {showCopyApiMarkdown && (
           <CopyApiMarkdownButton onClick={this.handleCopyApiMarkdownToClipboard} />
+        )}
+        {showCopyApiRequestAsCurl && (
+          <CopyApiRequestAsCurlButton onClick={this.handleCopyApiRequestToClipboardAsCurl} />
         )}
         {showToggleViewSagaDetails && (
           <ToggleSagaViewDetailButton onClick={this.handleToggleViewSagaDetails} />
