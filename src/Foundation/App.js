@@ -1,6 +1,7 @@
 import { Provider, observer } from "mobx-react"
 import React, { Component } from "react"
 import { ipcRenderer } from "electron"
+import config from "../Lib/config"
 import FilterTimelineDialog from "../Dialogs/FilterTimelineDialog"
 import ExportTimelineDialog from "../Dialogs/ExportTimelineDialog"
 import RenameStateDialog from "../Dialogs/RenameStateDialog"
@@ -19,7 +20,7 @@ import Timeline from "../Timeline/Timeline"
 import Sidebar from "./Sidebar"
 import StatusBar from "./StatusBar"
 
-const session = new SessionStore()
+const session = new SessionStore(config.get("server.port", 9090))
 
 const Styles = {
   container: { ...AppStyles.Layout.vbox },

@@ -1,4 +1,7 @@
 import { app, Menu, shell, BrowserWindow } from "electron"
+import Store from "electron-store"
+
+const configStore = new Store()
 
 export default class MenuBuilder {
   constructor(mainWindow) {
@@ -55,6 +58,13 @@ export default class MenuBuilder {
           selector: "hideOtherApplications:",
         },
         { label: "Show All", selector: "unhideAllApplications:" },
+        { type: "separator" },
+        {
+          label: "Preferences",
+          click: () => {
+            configStore.openInEditor()
+          },
+        },
         { type: "separator" },
         {
           label: "Quit",
