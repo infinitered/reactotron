@@ -55,11 +55,11 @@ you can use Reactotron's `createStore` (`Reactotron` here being the output of yo
 
 
 ```diff
-- import { createStore } from 'redux'
+import { createStore } from 'redux'
 + import Reactotron from './ReactotronConfig'
 
 - const store = createStore(rootReducer, compose(middleware))
-+ const store = Reactotron.createStore(rootReducer, compose(middleware))
++ const store = createStore(rootReducer, compose(middleware, Reactotron.createEnhancer()))
 ```
 
 # Options

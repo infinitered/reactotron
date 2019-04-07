@@ -229,10 +229,33 @@ class Session {
       this.selectedConnection = null
     } else if (
       !this.selectedConnection ||
-      (this.selectedConnection && !this.connections.find(c => c.clientId === this.selectedConnection.clientId))
+      (this.selectedConnection &&
+        !this.connections.find(c => c.clientId === this.selectedConnection.clientId))
     ) {
       // If we don't have a connection OR if we do but its not in the list anymore select the first available one.
       this.selectedConnection = this.connections[0]
+    }
+  }
+
+  addSubscription = path => {
+    this.server.stateValuesSubscribe(path)
+    localStorage.setItem("storedSubscriptions", JSON.stringify(this.server.subscriptions))
+  }
+
+  removeSubscription = path => {
+    this.server.stateValuesUnsubscribe(path)
+    localStorage.setItem("storedSubscriptions", JSON.stringify(this.server.subscriptions))
+  }
+
+  clearSubscriptions = () => {
+    this.server.stateValuesClearSubscriptions()
+    localStorage.setItem("storedSubscriptions", JSON.stringify(this.server.subscriptions))
+  }
+
+  sendInitialSubscriptions() {
+    const storedSubscriptions = JSON.parse(localStorage.getItem("storedSubscriptions")) || []
+    if (storedSubscriptions.length > 0) {
+      storedSubscriptions.forEach(path => this.server.stateValuesSubscribe(path))
     }
   }
 
@@ -244,12 +267,23 @@ class Session {
     this.server.on("connectionEstablished", this.handleConnectionsChange)
 
     // resend the storybook state to newly arriving connections
-    this.server.on("connectionEstablished", connection => this.ui.sendStorybookState(connection.clientId))
+    this.server.on("connectionEstablished", connection =>
+      this.ui.sendStorybookState(connection.clientId)
+    )
 
     this.server.on("disconnect", this.handleConnectionsChange)
 
     this.stateBackupStore = new StateBackupStore(this.server)
-    this.ui = new UiStore(this, this.server, this.commandsManager, this.stateBackupStore, this.getSelectedConnection)
+    this.ui = new UiStore(
+      this,
+      this.server,
+      this.commandsManager,
+      this.stateBackupStore,
+      this.getSelectedConnection,
+      this.addSubscription,
+      this.removeSubscription,
+      this.clearSubscriptions
+    )
 
     // hide or show the watch panel depending if we have watches
     reaction(
@@ -262,6 +296,8 @@ class Session {
     )
 
     this.server.start()
+
+    this.sendInitialSubscriptions()
   }
 }
 

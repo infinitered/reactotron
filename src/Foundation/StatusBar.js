@@ -59,13 +59,26 @@ class StatusBar extends Component {
     this.props.session.setSelectedConnection(device)
   }
 
+  areAnyDifferent() {
+    const { connections } = this.props.session
+
+    // Dump out early if we can
+    if (!connections || connections.length === 0) return false
+
+    const firstName = connections[0].name
+
+    return connections.some(c => c.name !== firstName)
+  }
+
   renderCollapsed() {
     const { session } = this.props
 
     let selectedDevice = "Waiting for connection"
 
     if (session.selectedConnection) {
-      selectedDevice = `${getPlatformName(session.selectedConnection)} ${getPlatformDetails(session.selectedConnection)}`
+      selectedDevice = `${getPlatformName(session.selectedConnection)} ${getPlatformDetails(
+        session.selectedConnection
+      )}`
     }
 
     return (
@@ -94,7 +107,13 @@ class StatusBar extends Component {
       <div style={{ ...Styles.content, ...Styles.contentOpen }}>
         <div style={Styles.connections}>
           {session.connections.map(item => (
-            <DeviceSelector key={item.id} selectedDeviceClientId={selectedSessionId} device={item} onSelect={this.handleDeviceSelected} />
+            <DeviceSelector
+              key={item.id}
+              selectedDeviceClientId={selectedSessionId}
+              device={item}
+              showName={this.areAnyDifferent()}
+              onSelect={this.handleDeviceSelected}
+            />
           ))}
         </div>
         <div style={Styles.expandIcon} onClick={this.handleCloseStatusBar}>

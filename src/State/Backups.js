@@ -1,10 +1,8 @@
 import { inject, observer } from "mobx-react"
 import React, { Component } from "react"
-import IconRename from "react-icons/lib/md/create"
-import IconDelete from "react-icons/lib/md/delete"
 import Empty from "../Shared/EmptyState"
 import AppStyles from "../Theme/AppStyles"
-import Colors from "../Theme/Colors"
+import BackupItem from "./BackupItem"
 
 const Styles = {
   container: {
@@ -17,28 +15,6 @@ const Styles = {
     padding: 0,
     overflowY: "auto",
     overflowX: "hidden",
-  },
-  row: {
-    ...AppStyles.Layout.hbox,
-    padding: "15px 20px",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderBottom: `1px solid ${Colors.line}`,
-    cursor: "pointer",
-  },
-  name: {
-    color: Colors.tag,
-    textAlign: "left",
-    flex: 1,
-  },
-  iconSize: 24,
-  upload: {
-    paddingRight: 10,
-    cursor: "pointer",
-  },
-  button: {
-    cursor: "pointer",
-    paddingLeft: 10,
   },
 }
 
@@ -61,29 +37,32 @@ class Backups extends Component {
     )
   }
 
-  renderBackup(backup) {
+  handleRemove = backup => {
     const { stateBackupStore } = this.props.session
-    const { id, name, data } = backup
+    stateBackupStore.remove(backup)
+  }
 
-    const remove = event => {
-      event.stopPropagation()
-      stateBackupStore.remove(backup)
-    }
-    const rename = event => {
-      stateBackupStore.beginRename(backup)
-      event.stopPropagation()
-    }
-    const restore = event => {
-      stateBackupStore.sendRestore(backup)
-      event.stopPropagation()
-    }
+  handleRename = backup => {
+    const { stateBackupStore } = this.props.session
+    stateBackupStore.beginRename(backup)
+  }
+
+  handleRestore = backup => {
+    const { stateBackupStore } = this.props.session
+    stateBackupStore.sendRestore(backup)
+  }
+
+  renderBackup(backup) {
+    const { id, name } = backup
 
     return (
-      <div style={Styles.row} key={`backup-${id}`} onClick={restore}>
-        <div style={Styles.name}>{name}</div>
-        <IconRename size={Styles.iconSize} style={Styles.button} onClick={rename} />
-        <IconDelete size={Styles.iconSize} style={Styles.button} onClick={remove} />
-      </div>
+      <BackupItem
+        key={`backup-${id}-${name}`}
+        backup={backup}
+        onRemove={this.handleRemove}
+        onRename={this.handleRename}
+        onRestore={this.handleRestore}
+      />
     )
   }
 

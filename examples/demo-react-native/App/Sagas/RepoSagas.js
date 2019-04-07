@@ -1,15 +1,13 @@
-import RS from 'ramdasauce'
-import { delay } from 'redux-saga'
-import { race, call, put } from 'redux-saga/effects'
+import { race, call, put, delay } from 'redux-saga/effects'
 import * as Repo from '../Redux/RepoRedux'
 
 function * sampleNestedGenerator () {
-  yield call(delay, 49)
-  yield call(delay, 51)
+  yield delay(49)
+  yield delay(51)
 }
 
 function * muchSlowerGenerator () {
-  yield call(delay, 1000)
+  yield delay(1000)
 }
 
 export function * request (api, action) {
@@ -23,7 +21,7 @@ export function * request (api, action) {
 
     // are we good?
     if (ok) {
-      const entry = RS.dotPath('0', data)
+      const entry = data['0']
       const { commit, author, html_url: url } = entry
       const { message, tree } = commit
       const { login, avatar_url: avatar } = author

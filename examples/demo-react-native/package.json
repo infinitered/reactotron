@@ -8,16 +8,16 @@
   },
   "dependencies": {
     "@storybook/react-native": "^3.4.8",
-    "apisauce": "^0.15.2",
+    "apisauce": "^1.0.2",
     "react": "16.4.1",
     "react-native": "0.56.0",
     "react-native-view-shot": "^2.4.0",
-    "react-redux": "^5.0.7",
-    "reactotron-react-native": "^2.1.0",
-    "reactotron-redux": "^2.1.0",
-    "reactotron-redux-saga": "^2.1.0",
+    "react-redux": "^6.0.1",
+    "reactotron-react-native": "^3.0.0-beta.2",
+    "reactotron-redux": "^3.0.0-beta.1",
+    "reactotron-redux-saga": "^4.1.0",
     "redux-logger": "^3.0.6",
-    "redux-saga": "^0.16.0"
+    "redux-saga": "^1.0.1"
   },
   "devDependencies": {
     "babel-jest": "23.0.1",
