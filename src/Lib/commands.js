@@ -1,8 +1,9 @@
 import { action, observable, computed } from "mobx"
 import { pipe, reject, contains, propEq } from "ramda"
 import { dotPath } from "ramdasauce"
+import config from "./config"
 
-export const MAX_COMMANDS = 500
+export const MAX_COMMANDS = config.get("commandHistory", 500)
 
 // how often to flush the buffer of commands into the main list
 const FLUSH_TIME = 50
