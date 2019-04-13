@@ -39,9 +39,6 @@ class Sidebar extends Component {
     this.handleClickHelp = () => {
       this.props.session.ui.switchTab("help")
     }
-    this.handleClickSettings = () => {
-      this.props.session.ui.switchTab("settings")
-    }
     this.handleClickNative = () => {
       this.props.session.ui.switchTab("native")
     }
@@ -51,7 +48,9 @@ class Sidebar extends Component {
     const { session } = this.props
     const { ui } = session
     const isHome = ui.tab === "home"
-    const imageFilter = { filter: `grayscale(${ isHome ? 0 : 100 }%) brightness(${ isHome ? 100 : 70 }%)` }
+    const imageFilter = {
+      filter: `grayscale(${isHome ? 0 : 100}%) brightness(${isHome ? 100 : 70}%)`,
+    }
 
     return (
       <div
