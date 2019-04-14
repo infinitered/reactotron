@@ -1,6 +1,6 @@
 {
   "name": "reactotron-react-native",
-  "version": "3.2.2-beta.3",
+  "version": "3.2.2",
   "description": "A development tool to explore, inspect, and diagnose your React Native apps.",
   "author": "Infinite Red",
   "license": "MIT",
