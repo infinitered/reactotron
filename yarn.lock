@@ -955,7 +955,7 @@
   version "8.0.34"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.34.tgz#55f801fa2ddb2a40dd6dfc15ecfe1dde9c129fe9"
 
-"@types/node@11.13.4":
+"@types/node@11.13.4", "@types/node@^11.13.4":
   version "11.13.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.4.tgz#f83ec3c3e05b174b7241fadeb6688267fe5b22ca"
   integrity sha512-+rabAZZ3Yn7tF/XPGHupKIL5EcAbrLxnTr/hgQICxbeuAfWtT0UZSfULE+ndusckBItcv4o6ZeOJplQikVcLvQ==
@@ -1045,10 +1045,15 @@ acorn@^5.5.3:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.3.tgz#67aa231bf8812974b85235a96771eb6bd07ea279"
   integrity sha512-T/zvzYRfbVojPWahDsE5evJdHb3oJoQfFbsrKM7w5Zcs++Tr257tia3BmMP8XYVjp1S9RZXQMh7gao96BlqZOw==
 
-acorn@^6.0.1, acorn@^6.0.7, acorn@^6.1.0:
+acorn@^6.0.1, acorn@^6.0.7:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.1.0.tgz#b0a3be31752c97a0f7013c5f4903b71a05db6818"
   integrity sha512-MW/FjM+IvU9CgBzjO3UIPCE2pyEwUsoFl+VGdczOPEdxfGFjuKny/gN54mOuX7Qxmb9Rg9MCn2oKiSUeW+pjrw==
+
+acorn@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.1.1.tgz#7d25ae05bb8ad1f9b699108e1094ecd7884adc1f"
+  integrity sha512-jPTiwtOxaHNaAPg/dmrJ/beuzLRnXtB0kQPQ8JpotKJgTB6rX6c8mlf315941pyjBSaPg8NHXS9fhP4u17DpGA==
 
 agent-base@4, agent-base@^4.1.0, agent-base@~4.2.0:
   version "4.2.1"
@@ -7252,14 +7257,14 @@ rollup-pluginutils@^2.3.0:
     estree-walker "^0.6.0"
     micromatch "^3.1.10"
 
-rollup@1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.2.3.tgz#450bbbd9d3c2c9a17d23c9165cab7a659f91095a"
-  integrity sha512-hTWFogj/Z077imG9XRM1i43ffarWNToDgsqkU62eJRX4rJE213/c8+gUIf4xacfzytl0sjJZfCzzPQfZN7oIQg==
+rollup@1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.10.0.tgz#91d594aa4386c51ca0883ad4ef2050b469d3e8aa"
+  integrity sha512-U9t/JaKtO0+X0pSmLVKMrAZEixrbVzITf193TiEhfoVKCnd7pDimIFo94IxUCgbn6+v5VmduHkubx2VV1s0Ftw==
   dependencies:
     "@types/estree" "0.0.39"
-    "@types/node" "*"
-    acorn "^6.1.0"
+    "@types/node" "^11.13.4"
+    acorn "^6.1.1"
 
 rsvp@^3.3.3:
   version "3.6.2"
