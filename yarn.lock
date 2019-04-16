@@ -1154,7 +1154,7 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.10.tgz#4fa76e6598b7de3f0cb6ec3abacc4f59e5b3a2ce"
   integrity sha512-8xZEYckCbUVgK8Eg7lf5Iy4COKJ5uXlnIOnePN0WUwSQggy9tolM+tDJf7wMOnT/JT/W9xDYIaYggt3mRV2O5w==
 
-"@types/node@11.13.4":
+"@types/node@11.13.4", "@types/node@^11.13.4":
   version "11.13.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.4.tgz#f83ec3c3e05b174b7241fadeb6688267fe5b22ca"
   integrity sha512-+rabAZZ3Yn7tF/XPGHupKIL5EcAbrLxnTr/hgQICxbeuAfWtT0UZSfULE+ndusckBItcv4o6ZeOJplQikVcLvQ==
@@ -1250,10 +1250,15 @@ acorn@^6.0.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.0.7.tgz#490180ce18337270232d9488a44be83d9afb7fd3"
   integrity sha512-HNJNgE60C9eOTgn974Tlp3dpLZdUr+SoxxDwPaY9J/kDNOLQTkaDgwBUXAF4SSsrAwD9RpdxuHK/EbuF+W9Ahw==
 
-acorn@^6.0.7, acorn@^6.1.0:
+acorn@^6.0.7:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.1.0.tgz#b0a3be31752c97a0f7013c5f4903b71a05db6818"
   integrity sha512-MW/FjM+IvU9CgBzjO3UIPCE2pyEwUsoFl+VGdczOPEdxfGFjuKny/gN54mOuX7Qxmb9Rg9MCn2oKiSUeW+pjrw==
+
+acorn@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.1.1.tgz#7d25ae05bb8ad1f9b699108e1094ecd7884adc1f"
+  integrity sha512-jPTiwtOxaHNaAPg/dmrJ/beuzLRnXtB0kQPQ8JpotKJgTB6rX6c8mlf315941pyjBSaPg8NHXS9fhP4u17DpGA==
 
 agent-base@4, agent-base@^4.1.0, agent-base@~4.2.0:
   version "4.2.1"
@@ -7657,14 +7662,14 @@ rollup-pluginutils@^2.3.0:
     estree-walker "^0.6.0"
     micromatch "^3.1.10"
 
-rollup@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.2.1.tgz#996a8c63920ab056b39507d93195222e59d2807f"
-  integrity sha512-rFf7m2MHwjSYjSCFdA7ckGluMcQRcC3dKn6uAWYrk/6wnUrdQhJJruumkk5IV/3KMdmuc9qORmTu1VPBa2Ii8w==
+rollup@1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.10.0.tgz#91d594aa4386c51ca0883ad4ef2050b469d3e8aa"
+  integrity sha512-U9t/JaKtO0+X0pSmLVKMrAZEixrbVzITf193TiEhfoVKCnd7pDimIFo94IxUCgbn6+v5VmduHkubx2VV1s0Ftw==
   dependencies:
     "@types/estree" "0.0.39"
-    "@types/node" "*"
-    acorn "^6.1.0"
+    "@types/node" "^11.13.4"
+    acorn "^6.1.1"
 
 rsvp@^4.8.4:
   version "4.8.4"
