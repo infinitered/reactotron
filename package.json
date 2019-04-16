@@ -60,7 +60,7 @@
     "rollup-plugin-babel-minify": "7.0.0",
     "rollup-plugin-filesize": "6.0.1",
     "rollup-plugin-node-resolve": "4.2.3",
-    "rollup-plugin-replace": "2.1.0",
+    "rollup-plugin-replace": "2.2.0",
     "rollup-plugin-resolve": "0.0.1-predev.1",
     "semantic-release": "16.0.0-beta.18",
     "trash-cli": "1.4.0",
