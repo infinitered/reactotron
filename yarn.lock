@@ -9364,10 +9364,10 @@ rndm@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/rndm/-/rndm-1.2.0.tgz#f33fe9cfb52bbfd520aa18323bc65db110a1b76c"
 
-rollup-plugin-babel-minify@7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-babel-minify/-/rollup-plugin-babel-minify-7.0.0.tgz#658462d7aec0e83971816eff36338aad81ac15f3"
-  integrity sha512-ExLkt1yo1iNXVADxF/pq27/gk7mbGXhMUJybvUHDAw0Qw6F+Th7oWiuOsPcz+ylbmvmRu4l0/V3w1rdJuIT80Q==
+rollup-plugin-babel-minify@8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-babel-minify/-/rollup-plugin-babel-minify-8.0.0.tgz#15a3f2047597f619f1ed8451ebb680e8d5d62633"
+  integrity sha512-w9bGqvFAFX4IzCqVNtE97tfZdfi2zT1O9uDUDjWa4bLzkQl+vg39abR+z7cXlDP4T7vfvUmHWRlUtZHr/cRjDQ==
   dependencies:
     "@babel/core" "^7.0.0"
     "@babel/plugin-syntax-dynamic-import" "^7.2.0"
