@@ -307,8 +307,12 @@ export function mst(opts: MstPluginOptions = {}) {
     function subscribe(command: any) {
       const trackedNode = trackedNodes[command.mstNodeName || "default"]
       const paths: string[] = (command && command.payload && command.payload.paths) || []
-      if (trackedNode && trackedNode.node && paths) {
+
+      if (paths) {
         subscriptions = uniq(flatten(paths))
+      }
+
+      if (trackedNode && trackedNode.node) {
         const state =
           opts.queryMode === "snapshot" ? getSnapshot(trackedNode.node) : trackedNode.node
         sendSubscriptions(state)
