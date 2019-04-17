@@ -37,9 +37,9 @@
     "stacktrace-js": "^1.3.1"
   },
   "devDependencies": {
-    "@babel/core": "7.3.3",
-    "@babel/plugin-proposal-class-properties": "7.3.3",
-    "@babel/preset-env": "7.3.1",
+    "@babel/core": "7.4.3",
+    "@babel/plugin-proposal-class-properties": "7.4.0",
+    "@babel/preset-env": "7.4.3",
     "@babel/preset-typescript": "7.3.3",
     "@semantic-release/git": "7.1.0-beta.3",
     "@types/react": "16.8.4",
