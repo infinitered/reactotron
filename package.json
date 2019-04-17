@@ -116,7 +116,7 @@
     "webpack-dev-middleware": "3.6.2",
     "webpack-dev-server": "3.1.10",
     "webpack-hot-middleware": "2.24.3",
-    "webpack-merge": "4.1.4"
+    "webpack-merge": "4.2.1"
   },
   "build": {
     "productName": "Reactotron",
