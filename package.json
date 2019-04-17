@@ -97,7 +97,7 @@
     "express": "4.16.4",
     "file-loader": "2.0.0",
     "json-loader": "0.5.7",
-    "mini-css-extract-plugin": "0.5.0",
+    "mini-css-extract-plugin": "0.6.0",
     "minimist": "1.2.0",
     "node-libs-browser": "2.1.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
