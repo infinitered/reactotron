@@ -74,7 +74,7 @@
     "@semantic-release/git": "7.1.0-beta.3",
     "@types/node": "8.10.11",
     "@types/ws": "4.0.2",
-    "asar": "0.14.3",
+    "asar": "0.14.6",
     "babel-core": "6.26.3",
     "babel-eslint": "8.2.3",
     "babel-loader": "7.1.4",
