@@ -76,7 +76,7 @@
     "@types/ws": "4.0.2",
     "asar": "0.14.6",
     "babel-core": "6.26.3",
-    "babel-eslint": "8.2.3",
+    "babel-eslint": "8.2.6",
     "babel-loader": "7.1.4",
     "babel-plugin-add-module-exports": "0.2.1",
     "babel-plugin-transform-decorators-legacy": "1.3.4",
