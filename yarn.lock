@@ -5122,7 +5122,7 @@ is-path-inside@^1.0.0:
   dependencies:
     path-is-inside "^1.0.1"
 
-is-plain-obj@^1.1.0:
+is-plain-obj@^1.0.0, is-plain-obj@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-1.1.0.tgz#71a50c8429dfca773c92a390a4a03b39fcd51d3e"
   integrity sha1-caUMhCnfync8kqOQpKA7OfzVHT4=
@@ -6005,12 +6005,13 @@ min-document@^2.19.0:
   dependencies:
     dom-walk "^0.1.0"
 
-mini-css-extract-plugin@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/mini-css-extract-plugin/-/mini-css-extract-plugin-0.5.0.tgz#ac0059b02b9692515a637115b0cc9fed3a35c7b0"
-  integrity sha512-IuaLjruM0vMKhUUT51fQdQzBYTX49dLj8w68ALEAe2A4iYNpIC4eMac67mt3NzycvjOlf07/kYxJDc0RTl1Wqw==
+mini-css-extract-plugin@0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/mini-css-extract-plugin/-/mini-css-extract-plugin-0.6.0.tgz#a3f13372d6fcde912f3ee4cd039665704801e3b9"
+  integrity sha512-79q5P7YGI6rdnVyIAV4NXpBQJFWdkzJxCim3Kog4078fM0piAaFlwocqbejdWtLW1cEzCexPrh6EdyFsPgVdAw==
   dependencies:
     loader-utils "^1.1.0"
+    normalize-url "^2.0.1"
     schema-utils "^1.0.0"
     webpack-sources "^1.1.0"
 
@@ -6436,6 +6437,15 @@ normalize-path@^2.1.1:
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-2.1.1.tgz#1ab28b556e198363a8c1a6f7e6fa20137fe6aed9"
   dependencies:
     remove-trailing-separator "^1.0.1"
+
+normalize-url@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-2.0.1.tgz#835a9da1551fa26f70e92329069a23aa6574d7e6"
+  integrity sha512-D6MUW4K/VzoJ4rJ01JFKxDrtY1v9wrgzCX5f2qj/lzH1m/lW6MhUZFKerVsnyjOhOsYzI9Kqqak+10l4LvLpMw==
+  dependencies:
+    prepend-http "^2.0.0"
+    query-string "^5.0.1"
+    sort-keys "^2.0.0"
 
 normalize-url@^3.0.0:
   version "3.3.0"
@@ -7622,6 +7632,11 @@ prepend-http@^1.0.1:
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
   integrity sha1-1PRWKwzjaW5BrFLQ4ALlemNdxtw=
 
+prepend-http@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-2.0.0.tgz#e92434bfa5ea8c19f41cdfd401d741a3c819d897"
+  integrity sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=
+
 prettier@1.15.3:
   version "1.15.3"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.15.3.tgz#1feaac5bdd181237b54dbe65d874e02a1472786a"
@@ -7792,6 +7807,15 @@ qs@6.5.2, qs@~6.5.2:
 qs@~6.5.1:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.1.tgz#349cdf6eef89ec45c12d7d5eb3fc0c870343a6d8"
+
+query-string@^5.0.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-5.1.1.tgz#a78c012b71c17e05f2e3fa2319dd330682efb3cb"
+  integrity sha512-gjWOsm2SoGlgLEdAGt7a6slVOk9mGiXmPFMqrEhLQ68rhQuBnpfs3+EmlvqKyxnCo9/PPlF+9MtY02S1aFg+Jw==
+  dependencies:
+    decode-uri-component "^0.2.0"
+    object-assign "^4.1.0"
+    strict-uri-encode "^1.0.0"
 
 query-string@^6.1.0:
   version "6.2.0"
@@ -8799,6 +8823,13 @@ socks@~2.2.0:
     ip "^1.1.5"
     smart-buffer "^4.0.1"
 
+sort-keys@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/sort-keys/-/sort-keys-2.0.0.tgz#658535584861ec97d730d6cf41822e1f56684128"
+  integrity sha1-ZYU1WEhh7JfXMNbPQYIuH1ZoQSg=
+  dependencies:
+    is-plain-obj "^1.0.0"
+
 sorted-object@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/sorted-object/-/sorted-object-2.0.1.tgz#7d631f4bd3a798a24af1dffcfbfe83337a5df5fc"
@@ -9075,6 +9106,11 @@ stream-shift@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/stream-shift/-/stream-shift-1.0.0.tgz#d5c752825e5367e786f78e18e445ea223a155952"
   integrity sha1-1cdSgl5TZ+eG944Y5EXqIjoVWVI=
+
+strict-uri-encode@^1.0.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz#279b225df1d582b1f54e65addd4352e18faa0713"
+  integrity sha1-J5siXfHVgrH1TmWt3UNS4Y+qBxM=
 
 strict-uri-encode@^2.0.0:
   version "2.0.0"
