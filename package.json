@@ -53,7 +53,7 @@
     "mobx-react": "^5.1.2",
     "postcss": "^6.0.13",
     "prop-types": "^15.6.1",
-    "ramda": "^0.25.0",
+    "ramda": "^0.26.0",
     "ramdasauce": "^2.1.0",
     "react": "^16.3.2",
     "react-base16-styling": "^0.5.3",
