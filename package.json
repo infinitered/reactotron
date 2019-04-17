@@ -107,7 +107,7 @@
     "sumchecker": "2.0.2",
     "ts-loader": "5.3.1",
     "tslint": "5.16.0",
-    "tslint-config-prettier": "1.17.0",
+    "tslint-config-prettier": "1.18.0",
     "typescript": "3.4.3",
     "url-loader": "1.1.2",
     "webpack": "4.30.0",
