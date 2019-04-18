@@ -95,7 +95,7 @@
     "electron": "3.1.8",
     "electron-builder": "20.39.0",
     "express": "4.16.4",
-    "file-loader": "2.0.0",
+    "file-loader": "3.0.1",
     "json-loader": "0.5.7",
     "mini-css-extract-plugin": "0.6.0",
     "minimist": "1.2.0",
