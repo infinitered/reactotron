@@ -1162,10 +1162,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.4.tgz#f83ec3c3e05b174b7241fadeb6688267fe5b22ca"
   integrity sha512-+rabAZZ3Yn7tF/XPGHupKIL5EcAbrLxnTr/hgQICxbeuAfWtT0UZSfULE+ndusckBItcv4o6ZeOJplQikVcLvQ==
 
-"@types/ramda@0.26.6":
-  version "0.26.6"
-  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.26.6.tgz#1aaf5060da8ebb99529420b6eb997c50f74c218e"
-  integrity sha512-AmTHEkGo/EEufYY7MRqlgI0HLsLiAnc02pKOTVzE2D9IHf6yH2Xz71ompfEnduuaFGplYrtIOFOUOLs0AbMj9Q==
+"@types/ramda@0.26.7":
+  version "0.26.7"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.26.7.tgz#d9dab6d503154e45cdc17e2b358702937b64a35c"
+  integrity sha512-s0jOrsiuBkaL3g8TAuReGuPjfAaI3a5wnNXn6FbBRO0pO8/68tC/13OuSe9w3wyTmCG0ziJgzsATsqJJz69Dcg==
 
 "@types/resolve@0.0.8":
   version "0.0.8"
