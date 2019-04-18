@@ -59,7 +59,7 @@
     "react-base16-styling": "^0.6.0",
     "react-dom": "^16.3.2",
     "react-hot-loader": "^4.3.12",
-    "react-icons": "^2.2.7",
+    "react-icons": "^3.0.0",
     "react-json-tree": "^0.11.0",
     "react-modal": "^3.4.4",
     "react-tap-event-plugin": "^3.0.2",
