@@ -52,6 +52,11 @@ class Backups extends Component {
     stateBackupStore.sendRestore(backup)
   }
 
+  handleExport = backup => {
+    const { stateBackupStore } = this.props.session
+    stateBackupStore.exportBackup(backup)
+  }
+
   renderBackup(backup) {
     const { id, name } = backup
 
@@ -62,6 +67,7 @@ class Backups extends Component {
         onRemove={this.handleRemove}
         onRename={this.handleRename}
         onRestore={this.handleRestore}
+        onExport={this.handleExport}
       />
     )
   }

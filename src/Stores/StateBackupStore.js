@@ -1,5 +1,6 @@
 import { format } from "date-fns"
 import { action, observable } from "mobx"
+import { clipboard } from "electron"
 
 /**
  * The data powering a backup.
@@ -46,6 +47,24 @@ export class StateBackupStore {
     server.on("command", command => {
       command.type === "state.backup.response" && this.createBackupFromCommand(command)
     })
+  }
+
+  /**
+   * Exports all backups.
+   *
+   */
+  @action
+  exportAllBackups() {
+    clipboard.writeText(JSON.stringify(this.backups))
+  }
+
+  /**
+   * Exports individual backup.
+   *
+   */
+  @action
+  exportBackup(currentBackup) {
+    clipboard.writeText(JSON.stringify(currentBackup))
   }
 
   /**
