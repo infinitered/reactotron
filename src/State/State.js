@@ -75,7 +75,14 @@ class State extends Component {
           text="Snapshots"
           icon="import-export"
           renderActions={() => (
-            <div>
+            <div style={Styles.toolbarContainer}>
+              <Button
+                icon="call-received"
+                onClick={() => stateBackupStore.exportAllBackups()}
+                tip="Copy All Backups to Clipboard"
+                size={Styles.iconSize}
+                style={Styles.toolbarAdd}
+              />
               <Button
                 icon="file-download"
                 onClick={() => stateBackupStore.sendBackup()}

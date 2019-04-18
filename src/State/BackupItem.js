@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import IconRename from "react-icons/lib/md/create"
 import IconDelete from "react-icons/lib/md/delete"
 import IconUpload from "react-icons/lib/md/file-upload"
+import IconCopy from "react-icons/lib/md/call-received"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
 import Content from "../Shared/Content"
@@ -67,6 +68,11 @@ export default class BackupItem extends Component {
     this.props.onRestore(this.props.backup)
   }
 
+  handleExport = event => {
+    event.stopPropagation()
+    this.props.onExport(this.props.backup)
+  }
+
   render() {
     const {
       backup: { name, state },
@@ -77,6 +83,7 @@ export default class BackupItem extends Component {
       <div style={Styles.container}>
         <div style={Styles.row} onClick={this.handleToggle}>
           <div style={Styles.name}>{name}</div>
+          <IconCopy size={Styles.iconSize} style={Styles.button} onClick={this.handleExport} />
           <IconUpload size={Styles.iconSize} style={Styles.button} onClick={this.handleRestore} />
           <IconRename size={Styles.iconSize} style={Styles.button} onClick={this.handleRename} />
           <IconDelete size={Styles.iconSize} style={Styles.button} onClick={this.handleRemove} />
