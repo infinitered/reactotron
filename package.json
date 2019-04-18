@@ -51,7 +51,7 @@
     "font-awesome": "^4.7.0",
     "mobx": "^4.2.1",
     "mobx-react": "^5.1.2",
-    "postcss": "^6.0.13",
+    "postcss": "^7.0.0",
     "prop-types": "^15.6.1",
     "ramda": "^0.26.0",
     "ramdasauce": "^2.1.0",
