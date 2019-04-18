@@ -39,7 +39,7 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
-    "color": "^2.0.0",
+    "color": "^3.0.0",
     "css-modules-require-hook": "^4.2.2",
     "date-fns": "^1.29.0",
     "electron-debug": "^2.0.0",
