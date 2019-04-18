@@ -105,7 +105,7 @@
     "semantic-release": "16.0.0-beta.18",
     "style-loader": "0.23.1",
     "sumchecker": "2.0.2",
-    "ts-loader": "5.3.1",
+    "ts-loader": "5.3.3",
     "tslint": "5.16.0",
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.4.3",
