@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import Checkmark from "react-icons/lib/md/check-circle"
+import { MdCheckCircle as Checkmark } from "react-icons/md"
 import { getIcon, getPlatformName, getPlatformDetails } from "../Lib/platformHelpers"
 
 const Styles = {

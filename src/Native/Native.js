@@ -1,8 +1,12 @@
 import { inject, observer } from "mobx-react"
 import React, { Component } from "react"
-import IconAdd from "react-icons/lib/md/add"
-import IconAddBackup from "react-icons/lib/md/file-download"
-import IconClear from "react-icons/lib/md/delete-forever"
+import {
+  MdAdd as IconAdd,
+  MdFileDownload as IconAddBackup,
+  MdDeleteForever as IconClear,
+  MdCamera,
+  MdBook
+} from "react-icons/md"
 import Tabs from "../Foundation/Tabs"
 import AppStyles from "../Theme/AppStyles"
 import Overlay from "./NativeOverlay"
@@ -36,14 +40,14 @@ class Native extends Component {
         <Tabs.Tab
           name="image"
           text="Image Overlay"
-          icon="camera"
+          icon={MdCamera}
         >
           <Overlay />
         </Tabs.Tab>
         <Tabs.Tab
           name="storybook"
           text="Storybook"
-          icon="book"
+          icon={MdBook}
         >
           <Storybook />
         </Tabs.Tab>

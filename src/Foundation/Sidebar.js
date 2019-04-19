@@ -3,6 +3,12 @@ import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
 import SidebarButton from "./SidebarButton"
 import { inject, observer } from "mobx-react"
+import {
+  MdReorder,
+  MdAssignment,
+  MdPhoneIphone,
+  MdLiveHelp,
+} from "react-icons/md"
 
 const logoUrl = require("../Theme/Reactotron-128.png")
 
@@ -71,19 +77,19 @@ class Sidebar extends Component {
             </SidebarButton>
             <SidebarButton
               text="Timeline"
-              icon="reorder"
+              icon={MdReorder}
               isActive={ui.tab === "timeline"}
               onClick={this.handleClickTimeline}
             />
             <SidebarButton
               text="State"
-              icon="assignment"
+              icon={MdAssignment}
               isActive={ui.tab === "state"}
               onClick={this.handleClickState}
             />
             <SidebarButton
               text="React Native"
-              icon="phone-iphone"
+              icon={MdPhoneIphone}
               isActive={ui.tab === "native"}
               onClick={this.handleClickNative}
             />
@@ -92,7 +98,7 @@ class Sidebar extends Component {
           <div>
             <SidebarButton
               text="Help"
-              icon="live-help"
+              icon={MdLiveHelp}
               hideTopBorder
               isActive={ui.tab === "help"}
               onClick={this.handleClickHelp}

@@ -1,8 +1,10 @@
 import React, { Component } from "react"
-import IconRename from "react-icons/lib/md/create"
-import IconDelete from "react-icons/lib/md/delete"
-import IconUpload from "react-icons/lib/md/file-upload"
-import IconCopy from "react-icons/lib/md/call-received"
+import {
+  MDCreate as IconRename,
+  MDDelete as IconDelete,
+  MDFileUpload as IconUpload,
+  MDCallReceived as IconCopy,
+} from "react-icons/md"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
 import Content from "../Shared/Content"

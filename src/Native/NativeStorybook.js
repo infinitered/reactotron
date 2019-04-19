@@ -1,7 +1,9 @@
 import { inject, observer } from "mobx-react"
 import React, { Component } from "react"
-import IconChecked from "react-icons/lib/md/radio-button-checked"
-import IconUnchecked from "react-icons/lib/md/radio-button-unchecked"
+import {
+  MdRadioButtonChecked as IconChecked,
+  MdRadioButtonUnchecked as IconUnchecked
+} from "react-icons/md"
 import { WarningBar } from "../Shared/WarningBar"
 import AppStyles from "../Theme/AppStyles"
 
