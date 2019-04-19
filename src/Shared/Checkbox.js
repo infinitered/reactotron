@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import IconUnchecked from 'react-icons/lib/md/check-box-outline-blank'
-import IconChecked from 'react-icons/lib/md/check-box'
+import {
+  MdCheckBoxOutlineBlank as IconUnchecked,
+  MdCheckBox as IconChecked,
+} from 'react-icons/md'
 import Colors from '../Theme/Colors'
 
 const Styles = {

@@ -2,6 +2,14 @@ import React, { Component } from 'react'
 import Colors from '../Theme/Colors'
 import AppStyles from '../Theme/AppStyles'
 import { shell } from 'electron'
+import {
+  GoMarkGithub as RepoIcon,
+  GoComment as FeedbackIcon,
+  GoSquirrel as ReleaseIcon,
+} from "react-icons/go"
+import {
+  FaTwitter as TwitterIcon
+} from "react-icons/fa"
 
 const Styles = {
   container: {
@@ -34,11 +42,6 @@ const Styles = {
     flex: 1
   }
 }
-
-const RepoIcon = require('react-icons/lib/go/mark-github')
-const FeedbackIcon = require('react-icons/lib/go/comment')
-const ReleaseIcon = require('react-icons/lib/go/squirrel')
-const TwitterIcon = require('react-icons/lib/fa/twitter')
 
 class HelpFeedback extends Component {
   constructor (props) {

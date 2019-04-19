@@ -5,7 +5,6 @@ import { dotPath, isNilOrEmpty } from "ramdasauce"
 import React, { Component } from "react"
 import stringifyObject from "stringify-object"
 import AppStyles from "../Theme/AppStyles"
-import Button from "./CommandToolbarButton"
 import { apiToMarkdown } from "../Lib/api-to-markdown"
 import { apiRequestToCurl } from "../Lib/api-to-curl"
 

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { MdStop } from 'react-icons/md'
 import Colors from '../Theme/Colors'
 import { merge } from 'ramda'
 
-const Icon = require(`react-icons/lib/md/stop`)
 const Styles = {
   container: {
     color: Colors.subtleLine,
@@ -27,7 +27,7 @@ const NativeOverlayAlignmentButton = props => {
 
   return (
     <div style={containerStyles} onClick={handleClick}>
-      <Icon size={Styles.iconSize} />
+      <MdStop size={Styles.iconSize} />
     </div>
   )
 }

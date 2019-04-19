@@ -8,7 +8,7 @@ import { colorForValue, textForValue } from "../Shared/MakeTable"
 import ObjectTree from "../Shared/ObjectTree"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
-import IconDelete from "react-icons/lib/md/delete"
+import { MdDelete as IconDelete, MdNotificationsNone } from "react-icons/md"
 
 const Styles = {
   container: {
@@ -88,7 +88,7 @@ class WatchPanel extends Component {
 
   renderTooManyConnection() {
     return (
-      <Empty icon="notifications-none" title="Too many connections">
+      <Empty icon={MdNotificationsNone} title="Too many connections">
         <p style={Styles.message}>
           When you have more then 1 connection you must select which connection to see the values
           of.
@@ -99,7 +99,7 @@ class WatchPanel extends Component {
 
   renderEmpty() {
     return (
-      <Empty icon="notifications-none" title="No Subscriptions">
+      <Empty icon={MdNotificationsNone} title="No Subscriptions">
         <p style={Styles.message}>
           You can subscribe to state changes in your redux or mobx-state-tree store by pressing{" "}
           <Key text={Keystroke.modifierName} /> + <Key text="N" />.

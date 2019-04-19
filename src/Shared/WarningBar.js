@@ -1,6 +1,6 @@
 import React from "react"
 import Colors from "../Theme/Colors"
-import IconWarning from "react-icons/lib/md/warning"
+import { MdWarning as IconWarning } from "react-icons/md"
 
 const Styles = {
   container: {
