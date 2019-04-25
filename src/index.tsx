@@ -1,4 +1,4 @@
-import * as React from "react"
+import React from "react"
 import { render } from "react-dom"
 import * as App from "./Foundation/App"
 import "./app.global.css"
@@ -7,7 +7,15 @@ injectTapEventPlugin()
 
 const ShutUpTypeScript: any = App
 
-render(<ShutUpTypeScript />, document.getElementById("root"))
+class Test extends React.Compoent {
+    render() {
+        <div>
+            Hello.
+        </div>
+    }
+}
+
+render(<Test />, document.getElementById("root"))
 
 document.addEventListener("dragover", event => event.preventDefault())
 document.addEventListener("drop", event => event.preventDefault())

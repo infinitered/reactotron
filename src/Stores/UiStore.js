@@ -3,7 +3,7 @@ import { action, computed, observable } from "mobx"
 import { trim } from "ramda"
 import { isNilOrEmpty } from "ramdasauce"
 import Keystroke from "../Lib/Keystroke"
-import Mousetrap from "../Lib/Mousetrap.min.js"
+import Mousetrap from "mousetrap"
 import fs from "fs";
 
 /**
