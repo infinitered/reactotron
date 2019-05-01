@@ -5,6 +5,7 @@ import getCommandComponent from "../Commands"
 import Empty from "../Shared/EmptyState"
 import AppStyles from "../Theme/AppStyles"
 import TimelineHeader from "./TimelineHeader"
+import { MdReorder } from "react-icons/md";
 
 const mapIndexed = addIndex(map)
 
@@ -61,7 +62,7 @@ class Timeline extends Component {
 
   renderEmpty() {
     return (
-      <Empty icon="reorder" title="No Activity">
+      <Empty icon={MdReorder} title="No Activity">
         <p>Once your app connects and starts sending events, they will appear here.</p>
       </Empty>
     )
@@ -97,7 +98,7 @@ class Timeline extends Component {
     const { commands, ui } = session
     const isEmpty = commands.length === 0
     const reverseIf = ui.isTimelineOrderReversed ? reverse : identity
-    
+
     return (
       <div style={Styles.container}>
         <TimelineHeader onFilter={this.onFilter} />

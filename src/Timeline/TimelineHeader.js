@@ -1,14 +1,21 @@
 import { reaction } from "mobx"
 import { inject, observer } from "mobx-react"
 import React, { Component } from "react"
-import IconClear from "react-icons/lib/md/delete-sweep"
-import IconFilter from "react-icons/lib/md/filter-list"
-import IconDownload from "react-icons/lib/md/file-download"
-import IconSearch from "react-icons/lib/md/search"
-import IconReverseOrder from "react-icons/lib/md/swap-vert"
+import {
+  MdDeleteSweep as IconClear,
+  MdFilterList as IconFilter,
+  MdFileDownload as IconDownload,
+  MdSearch as IconSearch,
+  MdSwapVert as IconReverseOrder,
+  MdSearch,
+  MdFilterList,
+  MdSwapVert,
+  MdFileDownload,
+  MdDeleteSweep,
+} from "react-icons/md"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
-import Button from '../Shared/CommandToolbarButton'
+import Button from "../Shared/CommandToolbarButton"
 
 const TITLE = "Timeline"
 
@@ -125,36 +132,36 @@ class TimelineHeader extends Component {
             <div style={Styles.title}>{TITLE}</div>
           </div>
           <div style={Styles.right}>
-            <Button 
-              icon="search"
+            <Button
+              icon={MdSearch}
               onClick={ui.toggleTimelineSearch}
               tip="Search"
               size={Styles.searchIconSize}
               style={searchIconStyle}
             />
-            <Button 
-              icon="filter-list"
+            <Button
+              icon={MdFilterList}
               onClick={ui.openFilterTimelineDialog}
               tip="Filter"
               size={Styles.iconSize}
               style={Styles.toolbarFilter}
             />
-            <Button 
-              icon="swap-vert"
+            <Button
+              icon={MdSwapVert}
               onClick={ui.toggleTimelineOrder}
               tip="Reverse Order"
               size={Styles.reverseOrderSize}
               style={Styles.reverseOrderIcon}
             />
-            <Button 
-              icon="file-download"
+            <Button
+              icon={MdFileDownload}
               onClick={ui.openExportTimelineDialog}
               tip="Download"
               size={Styles.iconSize}
               style={Styles.toolbarFilter}
             />
-            <Button 
-              icon="delete-sweep"
+            <Button
+              icon={MdDeleteSweep}
               onClick={ui.reset}
               tip="Clear"
               size={Styles.iconSize}

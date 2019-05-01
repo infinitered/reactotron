@@ -36,8 +36,7 @@ class SubNavButton extends Component {
   }
 
   render() {
-    const { icon, isActive, hideTopBorder, text } = this.props
-    const Icon = require(`react-icons/lib/md/${icon}`)
+    const { icon: Icon, isActive, hideTopBorder, text } = this.props
     const containerStyles = mergeAll([
       Styles.container,
       isActive ? Styles.containerActive : {},
@@ -55,7 +54,7 @@ class SubNavButton extends Component {
 }
 
 SubNavButton.propTypes = {
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.any.isRequired,
   text: PropTypes.string,
   isActive: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,

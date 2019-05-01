@@ -1,5 +1,14 @@
 import { inject, observer } from "mobx-react"
 import React, { Component } from "react"
+import {
+  MdAdd as IconAdd,
+  MdFileDownload as IconAddBackup,
+  MdDeleteForever as IconClear,
+  MdCamera,
+  MdBook,
+  MdCached,
+  MdDeveloperMode,
+} from "react-icons/md"
 import Tabs from "../Foundation/Tabs"
 import AppStyles from "../Theme/AppStyles"
 import Overlay from "./NativeOverlay"
@@ -17,7 +26,7 @@ const Styles = {
     flex: 1,
   },
   toolbarContainer: {
-    display: 'flex',
+    display: "flex",
   },
   toolbarAdd: { ...toolbarButton },
   toolbarClear: { ...toolbarButton },
@@ -28,19 +37,21 @@ const Styles = {
 @observer
 class Native extends Component {
   renderActions = () => {
-    const { session: { ui } } = this.props
+    const {
+      session: { ui },
+    } = this.props
 
     return (
       <div style={Styles.toolbarContainer}>
         <Button
-          icon="cached"
+          icon={MdCached}
           onClick={ui.reloadNative}
           tip="Reload"
           size={Styles.iconSize}
           style={Styles.toolbarAdd}
         />
         <Button
-          icon="developer-mode"
+          icon={MdDeveloperMode}
           onClick={ui.openDevMenuNative}
           tip="Open Dev Menu"
           size={Styles.iconSize}
@@ -60,7 +71,7 @@ class Native extends Component {
         <Tabs.Tab
           name="image"
           text="Image Overlay"
-          icon="camera"
+          icon={MdCamera}
           renderActions={this.renderActions}
         >
           <Overlay />
@@ -68,7 +79,7 @@ class Native extends Component {
         <Tabs.Tab
           name="storybook"
           text="Storybook"
-          icon="book"
+          icon={MdBook}
           renderActions={this.renderActions}
         >
           <Storybook />

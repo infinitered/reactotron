@@ -1,8 +1,14 @@
 import { inject, observer } from "mobx-react"
 import React, { Component } from "react"
-import IconAdd from "react-icons/lib/md/add"
-import IconClear from "react-icons/lib/md/delete-sweep"
-import IconAddBackup from "react-icons/lib/md/file-download"
+import {
+  MdAdd as IconAdd,
+  MdDeleteSweep as IconClear,
+  MdFileDownload as IconAddBackup,
+  MdNotificationsNone,
+  MdImportExport,
+  MdCallReceived,
+  MdFileDownload
+} from 'react-icons/md'
 import Tabs from "../Foundation/Tabs"
 import AppStyles from "../Theme/AppStyles"
 import Backups from "./Backups"
@@ -39,15 +45,17 @@ class State extends Component {
     return (
       <div style={Styles.toolbarContainer}>
         <Button
-          icon="add"
+          icon={IconAdd}
           onClick={ui.openStateWatchDialog}
-          tip="Add" size={Styles.iconSize}
+          tip="Add"
+          size={Styles.iconSize}
           style={Styles.toolbarAdd}
         />
         <Button
-          icon="delete-sweep"
+          icon={IconClear}
           onClick={ui.clearStateWatches}
-          tip="Clear" size={Styles.iconSize}
+          tip="Clear"
+          size={Styles.iconSize}
           style={Styles.toolbarClear}
         />
       </div>
@@ -65,7 +73,7 @@ class State extends Component {
         <Tabs.Tab
           name="subscriptions"
           text="Subscriptions"
-          icon="notifications-none"
+          icon={MdNotificationsNone}
           renderActions={this.renderSubscriptionActions}
         >
           <Subscriptions />
@@ -73,18 +81,18 @@ class State extends Component {
         <Tabs.Tab
           name="backups"
           text="Snapshots"
-          icon="import-export"
+          icon={MdImportExport}
           renderActions={() => (
             <div style={Styles.toolbarContainer}>
               <Button
-                icon="call-received"
+                icon={MdCallReceived}
                 onClick={() => stateBackupStore.exportAllBackups()}
                 tip="Copy All Backups to Clipboard"
                 size={Styles.iconSize}
                 style={Styles.toolbarAdd}
               />
               <Button
-                icon="file-download"
+                icon={MdFileDownload}
                 onClick={() => stateBackupStore.sendBackup()}
                 tip="Add Backup"
                 size={Styles.iconSize}

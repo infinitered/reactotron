@@ -1,10 +1,9 @@
 import React, { Component } from "react"
-import ExpandIcon from "react-icons/lib/md/swap-vert"
+import { MdSwapVert as ExpandIcon } from "react-icons/md"
 import { inject, observer } from "mobx-react"
 import Colors from "../Theme/Colors"
 import AppStyles from "../Theme/AppStyles"
 import { getPlatformName, getPlatformDetails } from "../Lib/platformHelpers"
-import SubNavButton from "./SubNavButton"
 import DeviceSelector from "./DeviceSelector"
 
 const Styles = {

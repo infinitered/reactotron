@@ -14,8 +14,7 @@ const Styles = {
 }
 
 const CommandToolbarButton = props => {
-  const { tip, icon, onClick, size, style } = props
-  const Icon = require(`react-icons/lib/md/${icon}`)
+  const { tip, icon: Icon, onClick, size, style } = props
 
   return (
     <div data-tip={tip} onClick={onClick} style={Styles.container}>
@@ -27,7 +26,7 @@ const CommandToolbarButton = props => {
 
 CommandToolbarButton.propTypes = {
   tip: PropTypes.string,
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.any.isRequired,
   onClick: PropTypes.func.isRequired,
   size: PropTypes.number,
   style: PropTypes.object,
