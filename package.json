@@ -99,7 +99,7 @@
     "@semantic-release/git": "7.1.0-beta.3",
     "@types/node": "8.10.46",
     "@types/ws": "6.0.1",
-    "asar": "1.0.0",
+    "asar": "2.0.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.5.0",
