@@ -7,6 +7,7 @@ import stringifyObject from "stringify-object"
 import AppStyles from "../Theme/AppStyles"
 import { apiToMarkdown } from "../Lib/api-to-markdown"
 import { apiRequestToCurl } from "../Lib/api-to-curl"
+import Button from "./CommandToolbarButton"
 
 const Styles = {
   container: {
