@@ -72,7 +72,7 @@
   "devDependencies": {
     "@semantic-release/exec": "3.4.0-beta.2",
     "@semantic-release/git": "7.1.0-beta.3",
-    "@types/node": "8.10.45",
+    "@types/node": "8.10.46",
     "@types/ws": "6.0.1",
     "asar": "1.0.0",
     "babel-core": "6.26.3",
