@@ -1,6 +1,6 @@
 import * as React from "react"
 import { render } from "react-dom"
-import * as App from "./Foundation/App"
+import App from "./Foundation/App"
 import "./app.global.css"
 import * as injectTapEventPlugin from "react-tap-event-plugin"
 injectTapEventPlugin()
