@@ -464,6 +464,9 @@ class UI {
    */
   @action setOverlay = props => this.server.send("overlay", props)
 
+  @action reloadNative = () => this.server.send("devtools.reload")
+  @action openDevMenuNative = () => this.server.send("devtools.open")
+
   /**
    * Toggles storybook
    */
