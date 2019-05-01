@@ -1,9 +1,9 @@
 import React, { Component } from "react"
 import {
-  MDCreate as IconRename,
-  MDDelete as IconDelete,
-  MDFileUpload as IconUpload,
-  MDCallReceived as IconCopy,
+  MdCreate as IconRename,
+  MdDelete as IconDelete,
+  MdFileUpload as IconUpload,
+  MdCallReceived as IconCopy,
 } from "react-icons/md"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
