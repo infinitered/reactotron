@@ -54,7 +54,7 @@ class SubNavButton extends Component {
 }
 
 SubNavButton.propTypes = {
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.any.isRequired,
   text: PropTypes.string,
   isActive: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,

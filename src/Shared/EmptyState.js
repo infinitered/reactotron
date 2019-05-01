@@ -52,7 +52,7 @@ const EmptyState = props => {
 }
 
 EmptyState.propTypes = {
-  icon: PropTypes.node.isRequired,
+  icon: PropTypes.any.isRequired,
   title: PropTypes.string.isRequired,
   children: PropTypes.node,
 }

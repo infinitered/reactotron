@@ -26,7 +26,7 @@ const CommandToolbarButton = props => {
 
 CommandToolbarButton.propTypes = {
   tip: PropTypes.string,
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.any.isRequired,
   onClick: PropTypes.func.isRequired,
   size: PropTypes.number,
   style: PropTypes.object,

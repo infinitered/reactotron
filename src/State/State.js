@@ -45,15 +45,17 @@ class State extends Component {
     return (
       <div style={Styles.toolbarContainer}>
         <Button
-          icon="add"
+          icon={IconAdd}
           onClick={ui.openStateWatchDialog}
-          tip="Add" size={Styles.iconSize}
+          tip="Add"
+          size={Styles.iconSize}
           style={Styles.toolbarAdd}
         />
         <Button
-          icon="delete-sweep"
+          icon={IconClear}
           onClick={ui.clearStateWatches}
-          tip="Clear" size={Styles.iconSize}
+          tip="Clear"
+          size={Styles.iconSize}
           style={Styles.toolbarClear}
         />
       </div>

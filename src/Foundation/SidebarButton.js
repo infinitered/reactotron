@@ -48,7 +48,7 @@ const SidebarButton = props => {
 }
 
 SidebarButton.propTypes = {
-  icon: PropTypes.string,
+  icon: PropTypes.any,
   text: PropTypes.string,
   isActive: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
