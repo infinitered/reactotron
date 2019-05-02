@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "color": "^3.0.0",
-    "core-js": "2",
+    "core-js": "3",
     "css-modules-require-hook": "^4.2.2",
     "date-fns": "^1.29.0",
     "electron-debug": "^2.0.0",
