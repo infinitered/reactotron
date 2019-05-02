@@ -4,6 +4,15 @@ import PropTypes from "prop-types"
 import { dotPath, isNilOrEmpty } from "ramdasauce"
 import React, { Component } from "react"
 import stringifyObject from "stringify-object"
+import {
+  MdList,
+  MdRepeat,
+  MdCode,
+  MdCallReceived,
+  MdCallMade,
+  MdReceipt,
+  MdContentCopy,
+} from "react-icons/md"
 import AppStyles from "../Theme/AppStyles"
 import { apiToMarkdown } from "../Lib/api-to-markdown"
 import { apiRequestToCurl } from "../Lib/api-to-curl"
@@ -22,39 +31,39 @@ const TIP_REPLAY_ACTION = "Repeat this action."
 const TIP_CUSTOMIZE_REPLAY_ACTION = "Edit and dispatch this action."
 
 const ToggleSagaViewDetailButton = props => (
-  <Button icon="list" onClick={props.onClick} tip={TIP_SAGA_VIEW_DETAILS} />
+  <Button icon={MdList} onClick={props.onClick} tip={TIP_SAGA_VIEW_DETAILS} />
 )
 
 const ReplayButton = props => (
-  <Button icon="repeat" onClick={props.onClick} tip={TIP_REPLAY_ACTION} />
+  <Button icon={MdRepeat} onClick={props.onClick} tip={TIP_REPLAY_ACTION} />
 )
 
 const CustomizeReplayButton = props => (
-  <Button icon="code" onClick={props.onClick} tip={TIP_CUSTOMIZE_REPLAY_ACTION} />
+  <Button icon={MdCode} onClick={props.onClick} tip={TIP_CUSTOMIZE_REPLAY_ACTION} />
 )
 
 const CopyApiResponseButton = props => (
-  <Button icon="call-received" onClick={props.onClick} tip="Copy JSON response to clipboard" />
+  <Button icon={MdCallReceived} onClick={props.onClick} tip="Copy JSON response to clipboard" />
 )
 
 const CopyApiRequestButton = props => (
-  <Button icon="call-made" onClick={props.onClick} tip="Copy JSON request to clipboard" />
+  <Button icon={MdCallMade} onClick={props.onClick} tip="Copy JSON request to clipboard" />
 )
 
 const CopyApiMarkdownButton = props => (
-  <Button icon="receipt" onClick={props.onClick} tip="Copy as markdown to clipboard" />
+  <Button icon={MdReceipt} onClick={props.onClick} tip="Copy as markdown to clipboard" />
 )
 
 const CopyApiRequestAsCurlButton = props => (
-  <Button icon='content-copy' onClick={props.onClick} tip='Copy JSON request as cURL' />
+  <Button icon={MdContentCopy} onClick={props.onClick} tip="Copy JSON request as cURL" />
 )
 
 const CopyLogButton = props => (
-  <Button icon="content-copy" onClick={props.onClick} tip="Copy text to clipboard" />
+  <Button icon={MdContentCopy} onClick={props.onClick} tip="Copy text to clipboard" />
 )
 
 const CopyDisplayButton = props => (
-  <Button icon="content-copy" onClick={props.onClick} tip="Copy text to clipboard" />
+  <Button icon={MdContentCopy} onClick={props.onClick} tip="Copy text to clipboard" />
 )
 
 @inject("session")
