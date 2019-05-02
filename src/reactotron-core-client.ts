@@ -54,6 +54,17 @@ export interface CustomCommand {
   id: number
   command: string
   handler: () => void
+  title?: string
+  description?: string
+}
+
+export interface CustomCommandConfig {
+  command: string
+  handler: () => void
+
+  // Optional Parameters
+  title?: string
+  description?: string
 }
 
 export interface Reactotron {
@@ -279,11 +290,6 @@ export class ReactotronImpl implements Reactotron {
    * Sends a command to the server
    */
   send = (type, payload = {}, important = false) => {
-    // jet if we don't have a socket
-    if (!this.socket) {
-      return
-    }
-
     // set the timing info
     const date = new Date()
     let deltaTime = date.getTime() - this.lastMessageDate.getTime()
@@ -390,12 +396,47 @@ export class ReactotronImpl implements Reactotron {
     return this
   }
 
-  onCustomCommand(command: string, handler: () => void): () => void {
+  onCustomCommand(config: CustomCommandConfig | string, optHandler?: () => void): () => void {
+    let command: string
+    let handler: () => void
+    let title: string
+    let description: string
+
+    if (typeof config === "string") {
+      command = config
+      handler = optHandler
+    } else {
+      command = config.command
+      handler = config.handler
+
+      title = config.title
+      description = config.description
+    }
+
+    // Validations
+    // Make sure there is a command
+    if (!command) {
+      throw new Error("A command is required")
+    }
+
+    // Make sure there is a handler
+    if (!handler) {
+      throw new Error(`A handler is required for command "${command}"`)
+    }
+
+    // Make sure the command doesn't already exist
+    const existingCommands = this.customCommands.filter(cc => cc.command === command)
+    if (existingCommands.length > 0) {
+      throw new Error(`A custom command with the command "${command}" already exists`)
+    }
+
     // Create this command handlers object
     const customHandler: CustomCommand = {
       id: this.customCommandLatestId,
       command,
       handler,
+      title,
+      description,
     }
 
     // Increment our id counter
@@ -404,7 +445,12 @@ export class ReactotronImpl implements Reactotron {
     // Add it to our array
     this.customCommands.push(customHandler)
 
-    this.send("customCommand.register", { id: customHandler.id, command: customHandler.command })
+    this.send("customCommand.register", {
+      id: customHandler.id,
+      command: customHandler.command,
+      title: customHandler.title,
+      description: customHandler.description,
+    })
 
     return () => {
       this.customCommands = this.customCommands.filter(cc => cc.id !== customHandler.id)
