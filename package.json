@@ -39,6 +39,8 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
+    "@types/react": "^16.8.15",
+    "@types/react-dom": "^16.8.4",
     "color": "^3.0.0",
     "core-js": "2",
     "css-modules-require-hook": "^4.2.2",

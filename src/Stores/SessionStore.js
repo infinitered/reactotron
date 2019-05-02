@@ -199,13 +199,16 @@ class Session {
 
       return
     } else if (command.type === "customCommand.register") {
-      this.customCommands.push(command.payload)
+      this.customCommands.push({
+        clientId: command.clientId,
+        ...command.payload
+      })
 
       return
     } else if (command.type === "customCommand.unregister") {
       const newCustomCommands = pipe(
         dotPath("customCommands"),
-        reject(c => c.clientId === command.payload.clientId)
+        reject(c => c.clientId === command.clientId && c.id === command.payload.id)
       )(this)
       this.customCommands.clear()
       this.customCommands.push(...newCustomCommands)
