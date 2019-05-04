@@ -76,7 +76,7 @@ export interface Reactotron {
   display: (config?: any) => void
   reportError: (this: any, error: any) => void
   use: (pluginCreator?: (client: Reactotron) => any) => Reactotron
-  onCustomCommand: (command: string, handler: () => void) => () => void
+  onCustomCommand: (config: CustomCommandConfig | string, optHandler?: () => void) => () => void
 
   /* Provided by plugins */
   // API Response Plugin
