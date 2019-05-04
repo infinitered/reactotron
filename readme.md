@@ -9,7 +9,7 @@
 Reactotron is a macOS, Windows, and Linux app for inspecting your [React JS](https://facebook.github.io/react/) and [React Native](https://facebook.github.io/react-native/) apps.
 
 *Watch [Darin Wilson's](https://github.com/darinwilson) talk at [Chain React](https://infinite.red/ChainReactConf): [Chain React 2018: Debugging and Beyond with Reactotron](https://www.youtube.com/watch?v=UiPo9A9k7xc)!*
- 
+
 Use it to:
 
 * view your application state
@@ -36,6 +36,7 @@ You plug it into your app as a dev dependency so it adds nothing to your product
 * [Installing](./docs/installing.md)
 * Quick start for [React JS](./docs/quick-start-react-js.md)
 * Quick start for [React Native](./docs/quick-start-react-native.md)
+* [Custom Commands](./docs/custom-commands.md)
 * [Tracking errors globally](./docs/plugin-track-global-errors.md)
 * [Open in editor](./docs/plugin-open-in-editor.md)
 * [Image Overlays](./docs/plugin-overlay.md)
