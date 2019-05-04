@@ -19,6 +19,7 @@ import Colors from "../Theme/Colors"
 import Timeline from "../Timeline/Timeline"
 import Sidebar from "./Sidebar"
 import StatusBar from "./StatusBar"
+import CustomCommandsList from "../CustomCommands/CustomCommandsList";
 
 const session = new SessionStore(config.get("server.port", 9090))
 
@@ -55,6 +56,7 @@ export default class App extends Component {
     const showSettings = ui.tab === "settings"
     const showNative = ui.tab === "native"
     const showState = ui.tab === "state"
+    const showCustomCommands = ui.tab === "customCommands"
 
     return (
       <Provider session={session}>
@@ -77,6 +79,9 @@ export default class App extends Component {
                 </div>
                 <div style={showNative ? Styles.page : Styles.pageHidden}>
                   <Native />
+                </div>
+                <div style={showCustomCommands ? Styles.page : Styles.pageHidden}>
+                  <CustomCommandsList />
                 </div>
                 <div style={showSettings ? Styles.page : Styles.pageHidden}>
                   <h1>Settings</h1>

@@ -124,31 +124,3 @@ the state like this:
 
 This will `nav` mutable. Note this is what you want to do when using
 [react-navigation's default reducer](https://github.com/react-community/react-navigation/blob/master/docs/guides/Redux-Integration.md).
-
-
-## Custom Commands
-
-Need a custom Reactotron plugin but don't have time to write one?
-
-In the Reactotron App, you can press `command+.` (mac) or  `ctrl+.` (windows/linux) to send a custom command.
-
-These commands can be useful for things like:
-
-* clearing async storage
-* triggering an api call
-* calling functions on hard-to-reach places
-* sending info back to reactotron app
-
-Writing your own Reactotron middleware makes this happen.  Check out this example:
-
-```js
-import Reactotron from 'reactotron-react-native'
-
-Reactotron.use(tron => ({
-  onCommand({ type, payload }) {
-    if (type === 'custom') {
-      tron.display({ name: 'ECHO', preview: payload })
-    }
-  },
-}))
-```

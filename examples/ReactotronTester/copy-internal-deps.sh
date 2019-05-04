@@ -23,8 +23,8 @@ rm -f node_modules/reactotron-apisauce
 cd ../../../reactotron-core-client
 yarn run build:dev
 cd ../reactotron/examples/ReactotronTester
-mkdir -p ./node_modules/reactotron-react-native/node_modules/reactotron-core-client
-cp ../../../reactotron-core-client/dist/index.js ./node_modules/reactotron-react-native/node_modules/reactotron-core-client/index.js
+mkdir -p ./node_modules/reactotron-core-client
+cp ../../../reactotron-core-client/dist/index.js ./node_modules/reactotron-core-client/index.js
 
 # reactotron-react-native
 cd ../../../reactotron-react-native
