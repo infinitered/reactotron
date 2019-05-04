@@ -1,6 +1,6 @@
 {
   "name": "reactotron-core-client",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "Grants Reactotron clients the ability to talk to a Reactotron server.",
   "author": "Infinite Red",
   "license": "MIT",
