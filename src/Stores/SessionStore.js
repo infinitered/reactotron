@@ -201,7 +201,7 @@ class Session {
     } else if (command.type === "customCommand.register") {
       this.customCommands.push({
         clientId: command.clientId,
-        ...command.payload
+        ...command.payload,
       })
 
       return
@@ -224,7 +224,18 @@ class Session {
     this.commandsManager.addCommand(command)
   }
 
-  handleConnectionsChange = connection => {
+  handleConnectionEstablished = () => {
+    this.customCommands.clear()
+    this.customCommands.push(...this.customCommands.filter(c => c.clientId !== connection.clientId))
+
+    this.handleConnectionsChange()
+  }
+
+  handleConnectionDisconnected = connection => {
+    this.handleConnectionsChange()
+  }
+
+  handleConnectionsChange = () => {
     this.connections.clear()
     this.connections.push(...this.server.connections)
 
@@ -267,14 +278,14 @@ class Session {
     this.port = port
 
     this.server.on("command", this.handleCommand)
-    this.server.on("connectionEstablished", this.handleConnectionsChange)
+    this.server.on("connectionEstablished", this.handleConnectionEstablished)
 
     // resend the storybook state to newly arriving connections
     this.server.on("connectionEstablished", connection =>
       this.ui.sendStorybookState(connection.clientId)
     )
 
-    this.server.on("disconnect", this.handleConnectionsChange)
+    this.server.on("disconnect", this.handleConnectionDisconnected)
 
     this.stateBackupStore = new StateBackupStore(this.server)
     this.ui = new UiStore(
