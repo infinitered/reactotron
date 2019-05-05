@@ -31,7 +31,7 @@ const Styles = {
 }
 
 const SidebarButton = props => {
-  const { icon: Icon, isActive, onClick, hideTopBorder, children } = props
+  const { icon: Icon, iconSize, isActive, onClick, hideTopBorder, children } = props
   const containerStyles = mergeAll([
     Styles.container,
     isActive ? Styles.containerActive : {},
@@ -40,7 +40,7 @@ const SidebarButton = props => {
 
   return (
     <div style={containerStyles} onClick={onClick}>
-      { Icon && <Icon size={Styles.iconSize} /> }
+      { Icon && <Icon size={iconSize || Styles.iconSize} /> }
       { children }
       <div style={Styles.text}>{props.text}</div>
     </div>
@@ -49,6 +49,7 @@ const SidebarButton = props => {
 
 SidebarButton.propTypes = {
   icon: PropTypes.any,
+  iconSize: PropTypes.number,
   text: PropTypes.string,
   isActive: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,

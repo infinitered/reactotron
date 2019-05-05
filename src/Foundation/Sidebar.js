@@ -95,6 +95,7 @@ class Sidebar extends Component {
             <SidebarButton
               text="Custom Commands"
               icon={FaMagic}
+              iconSize={25}
               isActive={ui.tab === "customCommands"}
               onClick={this.handleClickCustomCommands}
             />
