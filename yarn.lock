@@ -8703,10 +8703,10 @@ react@16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
-reactotron-core-client@^2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.6.0.tgz#25e8e4b74d7353d42c25db16c8d7aa02e2d4bdcb"
-  integrity sha512-zTEKwSEJGmIEU2+71citmNB64jm9QZwc8RauNL09G8CBqoo9r95IlpB8geOixYyLz6z5Z5Y2SaDydFozziQwcg==
+reactotron-core-client@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.6.1.tgz#9e9bcbc3ff921fdfa080167ccb6f7e8579a966d8"
+  integrity sha512-WPIwqguoLdKgnPRzj1VO6gL3JTbSnYbXCFfyuiOAJV+APgANvjS3ixcZPkiVXTdfiGNhVpwnelTXGfhwqEiKBw==
 
 read-cmd-shim@^1.0.1, read-cmd-shim@~1.0.1:
   version "1.0.1"
@@ -9214,10 +9214,10 @@ rollup-pluginutils@^2.3.0:
     estree-walker "^0.6.0"
     micromatch "^3.1.10"
 
-rollup@1.11.2:
-  version "1.11.2"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.11.2.tgz#bc5169a85592a45ef3bc4c0ee94e1f931a7fa4b5"
-  integrity sha512-H5sS7GZ/Rn0t119Et8mw0QXtg5HTOI/1FL57EKHk5oduRmGaraOf3KcEt6j+dXJ9tXxWQkG+/FBjPS4dzxo6EA==
+rollup@1.11.3:
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.11.3.tgz#6f436db2a2d6b63f808bf60ad01a177643dedb81"
+  integrity sha512-81MR7alHcFKxgWzGfG7jSdv+JQxSOIOD/Fa3iNUmpzbd7p+V19e1l9uffqT8/7YAHgGOzmoPGN3Fx3L2ptOf5g==
   dependencies:
     "@types/estree" "0.0.39"
     "@types/node" "^11.13.9"
