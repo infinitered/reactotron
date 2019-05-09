@@ -50,21 +50,23 @@ function emptyPromise() {
   return Promise.resolve("")
 }
 
-export interface CustomCommand {
-  id: number
-  command: string
-  handler: () => void
-  title?: string
-  description?: string
+export enum ArgType {
+  String = "string",
 }
 
-export interface CustomCommandConfig {
-  command: string
-  handler: () => void
+export interface CustomCommandArg {
+  name: string
+  type: ArgType
+}
 
-  // Optional Parameters
+export interface CustomCommand {
+  id?: number
+  command: string
+  handler: (args?: any) => void
+
   title?: string
   description?: string
+  args?: CustomCommandArg[]
 }
 
 export interface Reactotron {
@@ -76,7 +78,7 @@ export interface Reactotron {
   display: (config?: any) => void
   reportError: (this: any, error: any) => void
   use: (pluginCreator?: (client: Reactotron) => any) => Reactotron
-  onCustomCommand: (config: CustomCommandConfig | string, optHandler?: () => void) => () => void
+  onCustomCommand: (config: CustomCommand | string, optHandler?: () => void) => () => void
 
   /* Provided by plugins */
   // API Response Plugin
@@ -262,7 +264,17 @@ export class ReactotronImpl implements Reactotron {
 
       // trigger our registered custom commands
       if (command.type === "custom") {
-        this.customCommands.filter(cc => cc.command === command.payload).forEach(cc => cc.handler())
+        this.customCommands
+          .filter(cc => {
+            if (typeof command.payload === "string") {
+              return cc.command === command.payload
+            }
+
+            return cc.command === command.payload.command
+          })
+          .forEach(cc =>
+            cc.handler(typeof command.payload === "object" ? command.payload.args : undefined)
+          )
       } else if (command.type === "setClientId") {
         this.options.setClientId && this.options.setClientId(command.payload)
       }
@@ -396,11 +408,12 @@ export class ReactotronImpl implements Reactotron {
     return this
   }
 
-  onCustomCommand(config: CustomCommandConfig | string, optHandler?: () => void): () => void {
+  onCustomCommand(config: CustomCommand | string, optHandler?: () => void): () => void {
     let command: string
     let handler: () => void
     let title: string
     let description: string
+    let args: CustomCommandArg[]
 
     if (typeof config === "string") {
       command = config
@@ -411,6 +424,7 @@ export class ReactotronImpl implements Reactotron {
 
       title = config.title
       description = config.description
+      args = config.args
     }
 
     // Validations
@@ -430,6 +444,11 @@ export class ReactotronImpl implements Reactotron {
       throw new Error(`A custom command with the command "${command}" already exists`)
     }
 
+    // TODO: Validate args
+    // Make sure it has name
+    // No duplicated names
+    // Valid Type
+
     // Create this command handlers object
     const customHandler: CustomCommand = {
       id: this.customCommandLatestId,
@@ -437,6 +456,7 @@ export class ReactotronImpl implements Reactotron {
       handler,
       title,
       description,
+      args,
     }
 
     // Increment our id counter
@@ -450,6 +470,7 @@ export class ReactotronImpl implements Reactotron {
       command: customHandler.command,
       title: customHandler.title,
       description: customHandler.description,
+      args: customHandler.args,
     })
 
     return () => {
