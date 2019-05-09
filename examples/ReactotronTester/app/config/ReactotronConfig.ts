@@ -3,6 +3,7 @@ import Reactotron from "reactotron-react-native"
 import { reactotronRedux as reduxPlugin } from "reactotron-redux"
 import sagaPlugin from "reactotron-redux-saga"
 import { mst } from "reactotron-mst"
+import { ArgType } from "reactotron-core-client";
 
 Reactotron.configure({
   name: "Demo App",
@@ -32,7 +33,7 @@ Reactotron.onCustomCommand({
   args: [
     {
       name: "message",
-      type: "string",
+      type: ArgType.String,
     },
   ],
 })

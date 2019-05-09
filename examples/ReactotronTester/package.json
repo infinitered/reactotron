@@ -27,7 +27,7 @@
     "metro-react-native-babel-preset": "0.52.0",
     "react-test-renderer": "16.8.1",
     "reactotron-mst": "^3.1.1",
-    "reactotron-react-native": "^3.4.1",
+    "reactotron-react-native": "^3.5.0",
     "reactotron-redux": "^3.1.0",
     "reactotron-redux-saga": "^4.2.2",
     "rn-host-detect": "^1.1.5",
