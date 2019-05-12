@@ -1,11 +1,5 @@
-import { Alert } from "react-native"
+import { Alert, AsyncStorage } from "react-native"
 import Reactotron from "reactotron-react-native"
-// import asyncClientIdHandlers, {
-//   useAsyncStorage,
-// } from "reactotron-react-native/dist/useAsyncStorageClientId"
-import asyncClientIdHandlers, {
-  useAsyncStorage,
-} from "reactotron-react-native/dist/useLegacyAsyncStorageClientId"
 import { reactotronRedux as reduxPlugin } from "reactotron-redux"
 import sagaPlugin from "reactotron-redux-saga"
 import { mst } from "reactotron-mst"
@@ -13,11 +7,15 @@ import { ArgType } from "reactotron-core-client"
 
 Reactotron.configure({
   name: "Demo App",
-  ...asyncClientIdHandlers,
 })
 
-Reactotron.useReactNative({})
-Reactotron.use(useAsyncStorage({ ignore: ["ignore-me"] }))
+Reactotron.setAsyncStorageHandler(AsyncStorage)
+
+Reactotron.useReactNative({
+  asyncStorage: {
+    ignore: ["ignore-me"]
+  }
+})
 
 Reactotron.use(reduxPlugin())
 Reactotron.use(sagaPlugin({}))
