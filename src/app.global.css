@@ -1,9 +1,20 @@
-html, body {
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,
+body {
   padding: 0;
   margin: 0;
   border: 0;
   cursor: default;
-  font-family: 'Fira Code', 'SF Mono', 'Consolas', 'Segoe UI', 'Roboto', '-apple-system', 'Helvetica Neue', sans-serif;
+  font-family: "Fira Code", "SF Mono", "Consolas", "Segoe UI", "Roboto", "-apple-system",
+    "Helvetica Neue", sans-serif;
   font-size: 0.94em;
   -webkit-user-select: none;
 }
@@ -27,33 +38,49 @@ th {
 }
 
 /* leet hacks */
-a.closeButton--jss-0-1 { display: none; }
+a.closeButton--jss-0-1 {
+  display: none;
+}
 
 *:focus {
-    outline: none;
+  outline: none;
 }
 
 @-webkit-keyframes fade-up {
-  0%   { -webkit-transform: translateY(5%); opacity: 0; }
-  100% { -webkit-transform: translateY(0%); opacity: 1; }
+  0% {
+    -webkit-transform: translateY(5%);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0%);
+    opacity: 1;
+  }
 }
 
 @-webkit-keyframes slide-up {
-  0%   { -webkit-transform: translateY(100%); }
-  100%   { -webkit-transform: translateY(0px); }
+  0% {
+    -webkit-transform: translateY(100%);
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+  }
 }
 
 @-webkit-keyframes slide-down {
-  0%   { -webkit-transform: translateY(0px); }
-  100% { -webkit-transform: translateY(100%); }
+  0% {
+    -webkit-transform: translateY(0px);
+  }
+  100% {
+    -webkit-transform: translateY(100%);
+  }
 }
 
 .tooltipTheme {
-  background-color: 'white',
+  background-color: "white";
 }
 .tooltipThemeReducedWidth {
   word-break: normal;
-  background-color: 'white';
+  background-color: "white";
   width: 300px;
 }
 
@@ -61,8 +88,7 @@ a.closeButton--jss-0-1 { display: none; }
   opacity: 0.2;
 }
 
-
 /* can't hover with inline styles so doing it here.. */
 .button.custom-commands-list-button:hover {
-  background-color: #E73435 !important;
+  background-color: #e73435 !important;
 }

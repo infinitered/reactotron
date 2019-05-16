@@ -15,12 +15,15 @@ const Styles = {
   buttonsContainer: {
     paddingTop: "20px",
     paddingLeft: "40px",
+    paddingRight: "40px",
     overflowY: "scroll",
     overflowX: "hidden",
     display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: "column",
   },
+
+
+
 }
 
 interface Props {
@@ -61,6 +64,8 @@ export default class CustomCommandsList extends React.Component<Props, State> {
   executeCommand = (command, args) => {
     this.props.session.ui.sendCustomMessageWithArgs(command, args)
   }
+
+  
 
   render() {
     const { customCommands } = this.props.session

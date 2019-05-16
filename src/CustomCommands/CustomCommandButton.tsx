@@ -3,10 +3,10 @@ import Colors from "../Theme/Colors"
 
 const Styles = {
   buttonContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: "calc(50% - 8px)",
+    display: "block",
+    width: "100%",
     padding: "4px",
+    marginBottom: "24px",
   },
   commandTitle: {
     fontSize: "24px",
@@ -14,6 +14,7 @@ const Styles = {
   },
   commandDescription: {
     marginTop: "12px",
+    marginBottom: "24px",
     color: "#929292",
   },
   button: {
@@ -35,11 +36,24 @@ const Styles = {
     textAlign: "center",
   },
   argsContainer: {
-    marginTop: 10,
+    marginTop: "12px",
+    marginBottom: "8px",
   },
   argContainer: {
-    display: "flex",
-    flexDirection: "column",
+    display: "block",
+  },
+  argName: {
+    display: "block",
+    marginBottom: "8px",
+  },
+  argInput: {
+    marginBottom: "16px",
+    padding: "10px 12px",
+    outline: "none",
+    borderRadius: "4px",
+    width: "100%",
+    border: "none",
+    fontSize: "16px",
   },
 }
 
@@ -65,26 +79,31 @@ export default class CustomCommandButton extends React.Component<Props> {
     const { item } = this.props
 
     return (
-      <div key={item.command} style={Styles.buttonContainer}>
+      <div className="buttonContainer" key={item.command} style={Styles.buttonContainer as any}>
         <div style={Styles.commandTitle}>{item.title || item.command}</div>
         <div style={Styles.commandDescription}>
           {item.description ? item.description : "No Description Provided"}
         </div>
 
-        {!!item.args && item.args.length > 0 && (
-          <div style={Styles.argsContainer as any}>
-            {item.args.map(arg => (
-              <div style={Styles.argContainer as any} key={arg.name}>
-                {arg.name}
+        <div className="argsContainer" style={Styles.argsContainer as any}>
+          {!!item.args &&
+            item.args.length > 0 &&
+            item.args.map(arg => (
+              <div className="argContainer" style={Styles.argContainer as any} key={arg.name}>
+                <div className="argName" style={Styles.argName as any}>
+                  {arg.name}
+                </div>
                 <input
                   type="text"
+                  className="argInput"
+                  placeholder={arg.name}
+                  style={Styles.argInput as any}
                   value={this.state[arg.name] || ""}
                   onChange={this.handleInputChange(arg.name)}
                 />
               </div>
             ))}
-          </div>
-        )}
+        </div>
 
         <div
           className="button custom-commands-list-button"
