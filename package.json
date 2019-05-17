@@ -39,7 +39,7 @@
   "dependencies": {
     "mitt": "1.1.3",
     "query-string": "6.5.0",
-    "reactotron-core-client": "2.7.0",
+    "reactotron-core-client": "2.7.1",
     "rn-host-detect": "1.1.5"
   },
   "devDependencies": {
