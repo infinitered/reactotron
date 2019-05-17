@@ -444,10 +444,23 @@ export class ReactotronImpl implements Reactotron {
       throw new Error(`A custom command with the command "${command}" already exists`)
     }
 
-    // TODO: Validate args
-    // Make sure it has name
-    // No duplicated names
-    // Valid Type
+    if (args) {
+      const argNames = []
+
+      args.forEach(arg => {
+        if (!arg.name) {
+          throw new Error(`A arg on the command "${command}" is missing a name`)
+        }
+
+        if (argNames.indexOf(arg.name) > -1) {
+          throw new Error(
+            `A arg with the name "${arg.name}" already exists in the command "${command}"`
+          )
+        }
+
+        argNames.push(arg.name)
+      })
+    }
 
     // Create this command handlers object
     const customHandler: CustomCommand = {
