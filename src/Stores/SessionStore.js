@@ -219,6 +219,9 @@ class Session {
       if (!isNew) {
         return
       }
+    } else if (command.type === "repl.response") {
+      this.ui.replResponse(command.payload)
+      return
     }
 
     this.commandsManager.addCommand(command)

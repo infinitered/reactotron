@@ -19,7 +19,8 @@ import Colors from "../Theme/Colors"
 import Timeline from "../Timeline/Timeline"
 import Sidebar from "./Sidebar"
 import StatusBar from "./StatusBar"
-import CustomCommandsList from "../CustomCommands/CustomCommandsList";
+import CustomCommandsList from "../CustomCommands/CustomCommandsList"
+import ReactotronTerminal from "./ReactotronTerminal";
 
 const session = new SessionStore(config.get("server.port", 9090))
 
@@ -62,32 +63,45 @@ export default class App extends Component {
       <Provider session={session}>
         <div style={Styles.container}>
           <div style={Styles.content}>
-            <div style={Styles.body}>
-              <Sidebar />
-              <div style={Styles.app}>
-                <div style={showHome ? Styles.page : Styles.pageHidden}>
-                  <Home />
-                </div>
-                <div style={showTimeline ? Styles.page : Styles.pageHidden}>
-                  <Timeline />
-                </div>
-                <div style={showState ? Styles.page : Styles.pageHidden}>
-                  <State />
-                </div>
-                <div style={showHelp ? Styles.page : Styles.pageHidden}>
-                  <Help />
-                </div>
-                <div style={showNative ? Styles.page : Styles.pageHidden}>
-                  <Native />
-                </div>
-                <div style={showCustomCommands ? Styles.page : Styles.pageHidden}>
-                  <CustomCommandsList />
-                </div>
-                <div style={showSettings ? Styles.page : Styles.pageHidden}>
-                  <h1>Settings</h1>
+            {!ui.inTerminal && (
+              <div style={Styles.body}>
+                <Sidebar />
+                <div style={Styles.app}>
+                  <div style={showHome ? Styles.page : Styles.pageHidden}>
+                    <Home />
+                  </div>
+                  <div style={showTimeline ? Styles.page : Styles.pageHidden}>
+                    <Timeline />
+                  </div>
+                  <div style={showState ? Styles.page : Styles.pageHidden}>
+                    <State />
+                  </div>
+                  <div style={showHelp ? Styles.page : Styles.pageHidden}>
+                    <Help />
+                  </div>
+                  <div style={showNative ? Styles.page : Styles.pageHidden}>
+                    <Native />
+                  </div>
+                  <div style={showCustomCommands ? Styles.page : Styles.pageHidden}>
+                    <CustomCommandsList />
+                  </div>
+                  <div style={showSettings ? Styles.page : Styles.pageHidden}>
+                    <h1>Settings</h1>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
+            {ui.inTerminal && (
+              <div style={Styles.body}>
+                <div style={Styles.app}>
+                  <div style={Styles.page}>
+                    <div style={{ paddingTop: 30 }}>
+                      <ReactotronTerminal />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
             <StatusBar />
           </div>
           <StateKeysAndValuesDialog />

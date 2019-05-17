@@ -3,7 +3,7 @@ import Reactotron from "reactotron-react-native"
 import { reactotronRedux as reduxPlugin } from "reactotron-redux"
 import sagaPlugin from "reactotron-redux-saga"
 import { mst } from "reactotron-mst"
-import { ArgType } from "reactotron-core-client";
+import { ArgType } from "reactotron-core-client"
 
 Reactotron.configure({
   name: "Demo App",
@@ -47,3 +47,12 @@ const selfRemoving = Reactotron.onCustomCommand({
 
 Reactotron.connect()
 Reactotron.clear()
+
+const aThing = {
+  aFunc: () => {
+    return 10
+  },
+  aVal: "Test",
+}
+
+Reactotron.repl(aThing)
