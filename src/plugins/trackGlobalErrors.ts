@@ -2,7 +2,7 @@
  * Provides a global error handler to report errors..
  */
 import { NativeModules } from "react-native"
-import { Reactotron } from "reactotron-core-client"
+import { Reactotron, ReactotronCore } from "reactotron-core-client"
 
 // a few functions to help source map errors -- these seem to be not available immediately
 // so we're lazy loading.
@@ -21,7 +21,7 @@ const PLUGIN_DEFAULTS: TrackGlobalErrorsOptions = {
 // const reactNativeFrameFinder = frame => contains('/node_modules/react-native/', frame.fileName)
 
 // our plugin entry point
-export default (options: TrackGlobalErrorsOptions) => (reactotron: Reactotron) => {
+export default <ReactotronSubtype = ReactotronCore>(options: TrackGlobalErrorsOptions) => (reactotron: Reactotron<ReactotronSubtype> & ReactotronSubtype) => {
   // setup configuration
   const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
 

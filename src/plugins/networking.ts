@@ -1,6 +1,6 @@
 import XHRInterceptor from 'react-native/Libraries/Network/XHRInterceptor'
 import queryString from 'query-string'
-import { Reactotron } from 'reactotron-core-client'
+import { Reactotron, ReactotronCore } from 'reactotron-core-client'
 
 /**
  * Don't include the response bodies for images by default.
@@ -14,7 +14,7 @@ export interface NetworkingOptions {
 
 const DEFAULTS: NetworkingOptions = {}
 
-export default (pluginConfig: NetworkingOptions = {}) => (reactotron: Reactotron) => {
+export default <ReactotronSubtype = ReactotronCore>(pluginConfig: NetworkingOptions = {}) => (reactotron: Reactotron<ReactotronSubtype> & ReactotronSubtype) => {
   const options = Object.assign({}, DEFAULTS, pluginConfig)
 
   // a RegExp to suppess adding the body cuz it costs a lot to serialize
