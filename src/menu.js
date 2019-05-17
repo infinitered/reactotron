@@ -135,8 +135,8 @@ export default class MenuBuilder {
         },
         {
           label: "Toggle Side Menu",
-          click() {
-            mainWindow.webContents.send("toggle-side-menu")
+          click: () => {
+            this.mainWindow.webContents.send("toggle-side-menu")
           },
         },
       ],
@@ -147,8 +147,8 @@ export default class MenuBuilder {
         {
           type: "checkbox",
           label: "Always On Top",
-          click() {
-            mainWindow.toggleAlwaysOnTop()
+          click: () => {
+            this.mainWindow.toggleAlwaysOnTop()
           },
         },
         {
@@ -166,7 +166,7 @@ export default class MenuBuilder {
       submenu: [
         {
           label: "Visit on Github",
-          click() {
+          click: () => {
             shell.openExternal("https://github.com/infinitered/reactotron")
           },
         },
@@ -192,7 +192,7 @@ export default class MenuBuilder {
                 {
                   type: "checkbox",
                   label: "Always On Top",
-                  click() {
+                  click: () => {
                     mainWindow.toggleAlwaysOnTop(this)
                   },
                 },
@@ -222,8 +222,8 @@ export default class MenuBuilder {
                 {
                   type: "checkbox",
                   label: "Always On Top",
-                  click() {
-                    mainWindow.toggleAlwaysOnTop(this)
+                  click: () => {
+                    this.mainWindow.toggleAlwaysOnTop(this)
                   },
                 },
                 {
@@ -240,7 +240,7 @@ export default class MenuBuilder {
         submenu: [
           {
             label: "Visit on Github",
-            click() {
+            click: () => {
               shell.openExternal("https://github.com/infinitered/reactotron")
             },
           },
