@@ -123,7 +123,7 @@
     "minimist": "1.2.0",
     "node-libs-browser": "2.2.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
-    "prettier": "1.17.0",
+    "prettier": "1.17.1",
     "semantic-release": "16.0.0-beta.18",
     "style-loader": "0.23.1",
     "sumchecker": "3.0.0",
