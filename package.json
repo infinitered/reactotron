@@ -137,7 +137,7 @@
     "webpack-cli": "3.3.2",
     "webpack-dev-middleware": "3.6.2",
     "webpack-dev-server": "3.3.1",
-    "webpack-hot-middleware": "2.24.4",
+    "webpack-hot-middleware": "2.25.0",
     "webpack-merge": "4.2.1"
   },
   "build": {
