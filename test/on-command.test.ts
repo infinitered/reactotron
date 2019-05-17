@@ -10,7 +10,7 @@ const mock = {
 }
 
 test("the default onCommand does nothing", () => {
-  const client = createClient({ createSocket })
+  const client = createClient({ createSocket }) as any
   expect(client.options.onCommand({})).toBeFalsy()
 })
 

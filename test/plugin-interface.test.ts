@@ -4,7 +4,7 @@ import * as WebSocket from "ws"
 const createSocket = path => new WebSocket(path)
 
 test("client accepts plugins", () => {
-  const client = createClient({ createSocket })
+  const client = createClient({ createSocket }) as any
   expect(client.plugins).toBeTruthy()
   expect(client.plugins.length).toBe(corePlugins.length)
 })
@@ -27,14 +27,14 @@ test("plugins are invoke and return an object", () => {
 })
 
 test("plugins can literally do nothing", () => {
-  const client = createClient({ createSocket })
+  const client = createClient({ createSocket }) as any
   const empty = reactotron => ({})
   client.use(empty)
   expect(client.plugins.length).toBe(corePlugins.length + 1)
 })
 
 test("initialized with the config object", async done => {
-  const client = createClient({ createSocket })
+  const client = createClient({ createSocket }) as any
   client.use(reactotron => {
     expect(typeof reactotron).toBe("object")
     expect(reactotron).toBe(client)
@@ -57,6 +57,6 @@ test("can be added in createClient", () => {
 })
 
 test("plugins in createClient must be an array", () => {
-  const client = createClient({ createSocket, plugins: 5 as any })
+  const client = createClient({ createSocket, plugins: 5 as any }) as any
   expect(client.plugins.length).toBe(0)
 })

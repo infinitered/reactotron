@@ -4,14 +4,14 @@ import * as WebSocket from "ws"
 const createSocket = path => new WebSocket(path)
 
 test("has defaults", () => {
-  const client = createClient({ createSocket })
+  const client = createClient({ createSocket }) as any
   expect(client.options.host).toBe("localhost")
   expect(client.options.port).toBe(9090)
   expect(client.options.name).toBe("reactotron-core-client")
 })
 
 test("options can be overridden", () => {
-  const client = createClient({ createSocket, host: "hey", port: 1 })
+  const client = createClient({ createSocket, host: "hey", port: 1 }) as any
   expect(client.options.host).toBe("hey")
   expect(client.options.port).toBe(1)
 })
