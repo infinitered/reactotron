@@ -6903,10 +6903,10 @@ react-is@^16.8.4:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
   integrity sha512-aUk3bHfZ2bRSVFFbbeVS4i+lNPZr3/WM5jT2J5omUVV1zzcs1nAaf3l51ctA5FFvCRbhrH0bdAsRRQddFJZPtA==
 
-reactotron-core-client@^2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.7.0.tgz#f2cf769a059ddb7d39bc573eee930036c89db564"
-  integrity sha512-K44DOvB9OfIHfK7I/oE4dtAUuhu3mP2qu8qSCKDihCLeyQqyoJ70xoKNBzBY2gW4EN8Lz6sNbsKngidsmBHsdw==
+reactotron-core-client@2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.7.1.tgz#b4a78931b400a1935d3e9b45acf0d8fce5294218"
+  integrity sha512-GQeaVQMTxgeyvPEGK5mg0kkKUUQRwYQ02nDkFOl1qxSXvCBTDsLbPwmOzUqHjp0iqASnvAbzgqQooyJ0z60UYQ==
 
 read-cmd-shim@^1.0.1, read-cmd-shim@~1.0.1:
   version "1.0.1"
@@ -7926,7 +7926,7 @@ stacktrace-gps@^3.0.1:
     source-map "0.5.6"
     stackframe "^1.0.4"
 
-stacktrace-js@^2.0.0:
+stacktrace-js@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/stacktrace-js/-/stacktrace-js-2.0.0.tgz#776ca646a95bc6c6b2b90776536a7fc72c6ddb58"
   integrity sha1-d2ymRqlbxsayuQd2U2p/xyxt21g=
