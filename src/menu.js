@@ -8,6 +8,11 @@ export default class MenuBuilder {
     this.mainWindow = mainWindow
   }
 
+  toggleAlwaysOnTop() {
+    const nextValue = !this.mainWindow.isAlwaysOnTop()
+    this.mainWindow.setAlwaysOnTop(nextValue)
+  }
+
   buildMenu() {
     if (process.env.NODE_ENV === "development" || process.env.DEBUG_PROD === "true") {
       this.setupDevelopmentEnvironment()
@@ -148,7 +153,7 @@ export default class MenuBuilder {
           type: "checkbox",
           label: "Always On Top",
           click: () => {
-            this.mainWindow.toggleAlwaysOnTop()
+            this.toggleAlwaysOnTop()
           },
         },
         {
@@ -193,7 +198,7 @@ export default class MenuBuilder {
                   type: "checkbox",
                   label: "Always On Top",
                   click: () => {
-                    mainWindow.toggleAlwaysOnTop(this)
+                    this.toggleAlwaysOnTop()
                   },
                 },
                 {
@@ -223,7 +228,7 @@ export default class MenuBuilder {
                   type: "checkbox",
                   label: "Always On Top",
                   click: () => {
-                    this.mainWindow.toggleAlwaysOnTop(this)
+                    this.toggleAlwaysOnTop()
                   },
                 },
                 {
