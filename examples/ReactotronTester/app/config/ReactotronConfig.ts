@@ -1,7 +1,9 @@
+import { Alert } from "react-native"
 import Reactotron from "reactotron-react-native"
 import { reactotronRedux as reduxPlugin } from "reactotron-redux"
 import sagaPlugin from "reactotron-redux-saga"
 import { mst } from "reactotron-mst"
+import { ArgType } from "reactotron-core-client";
 
 Reactotron.configure({
   name: "Demo App",
@@ -21,11 +23,19 @@ Reactotron.onCustomCommand("test", () => console.log("This is an example"))
 
 Reactotron.onCustomCommand({
   command: "test2",
-  handler: () => console.log("This is an example 2"),
+  handler: params => {
+    Alert.alert("A message from Reactotron", params.message)
+  },
 
   // Optional settings
-  title: "A thing",
-  description: "The desc",
+  title: "Show a message",
+  description: "Alert in the app for absolutely no reason at all.",
+  args: [
+    {
+      name: "message",
+      type: ArgType.String,
+    },
+  ],
 })
 
 const selfRemoving = Reactotron.onCustomCommand({

@@ -418,6 +418,15 @@ class UI {
   }
 
   @action
+  sendCustomMessageWithArgs = (command, args) => {
+    const selectedConnection = this.getSelectedConnection()
+
+    if (!selectedConnection) return
+
+    this.server.sendCustomMessage({ command, args }, selectedConnection.clientId)
+  }
+
+  @action
   setCustomMessage = value => {
     this.customMessage = value
   }

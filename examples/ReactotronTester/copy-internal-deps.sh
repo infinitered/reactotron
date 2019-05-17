@@ -24,14 +24,16 @@ cd ../../../reactotron-core-client
 yarn run build:dev
 cd ../reactotron/examples/ReactotronTester
 mkdir -p ./node_modules/reactotron-core-client
-cp ../../../reactotron-core-client/dist/index.js ./node_modules/reactotron-core-client/index.js
+cp -r ../../../reactotron-core-client/dist ./node_modules/reactotron-core-client/dist
+cp ../../../reactotron-core-client/package.json ./node_modules/reactotron-core-client/package.json
 
 # reactotron-react-native
 cd ../../../reactotron-react-native
 yarn run build:dev
 cd ../reactotron/examples/ReactotronTester
 mkdir -p ./node_modules/reactotron-react-native
-cp ../../../reactotron-react-native/dist/index.js ./node_modules/reactotron-react-native/index.js
+cp -r ../../../reactotron-react-native/dist ./node_modules/reactotron-react-native/dist
+cp ../../../reactotron-react-native/package.json ./node_modules/reactotron-react-native/package.json
 
 # reactotron-redux
 cd ../../../reactotron-redux

@@ -4693,6 +4693,15 @@ qs@~6.5.2:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
+query-string@^6.4.2:
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.5.0.tgz#2e1a70125af01f6f04573692d02c09302a1d8bfc"
+  integrity sha512-TYC4hDjZSvVxLMEucDMySkuAS9UIzSbAiYGyA9GWCjLKB8fQpviFbjd20fD7uejCDxZS+ftSdBKE6DS+xucJFg==
+  dependencies:
+    decode-uri-component "^0.2.0"
+    split-on-first "^1.0.0"
+    strict-uri-encode "^2.0.0"
+
 ramda@^0.25.0:
   version "0.25.0"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
@@ -4854,36 +4863,37 @@ react@16.8.1:
     prop-types "^15.6.2"
     scheduler "^0.13.1"
 
-reactotron-core-client@^2.5.0-beta.2:
-  version "2.5.0-beta.2"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.5.0-beta.2.tgz#afd5379ed8c8771947a05aeaa1e75f15b2e19b57"
-  integrity sha512-OAqMnEfM7CMU64+hhqFCgP3N4wIDI4F04xZexqVawjwCS94uRYztovE14GsXDWzlIx4mLL5B/1S080oV0mACiA==
+reactotron-core-client@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.7.0.tgz#f2cf769a059ddb7d39bc573eee930036c89db564"
+  integrity sha512-K44DOvB9OfIHfK7I/oE4dtAUuhu3mP2qu8qSCKDihCLeyQqyoJ70xoKNBzBY2gW4EN8Lz6sNbsKngidsmBHsdw==
 
-reactotron-mst@^3.1.0-beta.2:
-  version "3.1.0-beta.2"
-  resolved "https://registry.yarnpkg.com/reactotron-mst/-/reactotron-mst-3.1.0-beta.2.tgz#be3366473b5c24811b1b56481a1a6bed0a161903"
-  integrity sha512-E1RfGqsWgHm1rUwxHoEo3S31I6z8VMonkB/S0o/lqqNLw8tASiHBkuwD8HBdHkK9t5n3GCJFNZCcsXxLMJxV2g==
+reactotron-mst@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/reactotron-mst/-/reactotron-mst-3.1.1.tgz#b9e926731f9e88cd4e7d83a859a66d0427a51900"
+  integrity sha512-V//82Pdk104ddkgQaL0b2I7wlG/eC4UloT9iLEbmYBylMTtAYAxaEK/BP+O2wJsypmvQSaCLilEmXC6Suy7E1A==
   dependencies:
     ramda "^0.25.0"
 
-reactotron-react-native@^3.2.0-beta.5:
-  version "3.2.0-beta.5"
-  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-3.2.0-beta.5.tgz#4740313d33f31f685761dd7dc27228706904b705"
-  integrity sha512-MoLJoq0Wq7o2pHO229OWs2En90scQ/tq4vhQHBV+SG6UJw+PYwjIQRTHkMD/KiAoMkpN7PJb8c/5MxFtlx+TwA==
+reactotron-react-native@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-3.5.0.tgz#bd1fc22740e8d557b0114502accb756b85daf489"
+  integrity sha512-eOkCAyotWUJfRhPKR00yzDDvyPJX4BpFwgiUWqn0+2cCEqYQe5wx2BF0yqqFuRgdsI5iiX8UloRHe48TNJm2vA==
   dependencies:
     mitt "^1.1.3"
-    reactotron-core-client "^2.5.0-beta.2"
+    query-string "^6.4.2"
+    reactotron-core-client "^2.7.0"
     rn-host-detect "^1.1.5"
 
-reactotron-redux-saga@^4.2.0-beta.4:
-  version "4.2.0-beta.4"
-  resolved "https://registry.yarnpkg.com/reactotron-redux-saga/-/reactotron-redux-saga-4.2.0-beta.4.tgz#a0e2031abd2e15387497aa2c4bd579c085ff24c1"
-  integrity sha512-4AKCcXKmsTdvELLZThw2j3ydNr1ms90p/OIALXFASBIas9JGM+fJ+EzAgpP5WzP7W7DvpXZ+/4/D4wQFTOeLCA==
+reactotron-redux-saga@^4.2.2:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/reactotron-redux-saga/-/reactotron-redux-saga-4.2.2.tgz#09072b4f43520db9646550937c7195d9b44bf81e"
+  integrity sha512-5BHi7Fj+8WOB3bMfr9lshQD9ml1aZnwk74GJpcOATxxMeHevp26ethaLsP0pPv+B6Ojqw7QLMEBX09B3u+z1Bg==
 
-reactotron-redux@^3.1.0-beta.3:
-  version "3.1.0-beta.3"
-  resolved "https://registry.yarnpkg.com/reactotron-redux/-/reactotron-redux-3.1.0-beta.3.tgz#47ae6990f9df9735f825ba863f05a3e03047cf10"
-  integrity sha512-49KFb1AKb9fJH/DKAZ67yNlWQUK6i0hozHCUGu5XOZzKCJs/TmHSRhhTFQ9QviujIKOxGYDegej8gMs2UUMsgQ==
+reactotron-redux@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/reactotron-redux/-/reactotron-redux-3.1.0.tgz#05676499891a3629ce90121fc22ddd4fd96eeafa"
+  integrity sha512-tnUppsNUsm3u7yLaI+VizkZVz3ac9Wyp1GRIat8YSiGdy8VJyym20QK9Ur0yk5Z5454m6JRn7QB8SFffjJKsZQ==
 
 read-pkg-up@^2.0.0:
   version "2.0.0"
@@ -5449,6 +5459,11 @@ spdx-license-ids@^3.0.0:
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.3.tgz#81c0ce8f21474756148bbb5f3bfc0f36bf15d76e"
   integrity sha512-uBIcIl3Ih6Phe3XHK1NqboJLdGfwr1UN3k6wSD1dZpmPsIkb8AGNbZYJ1fOBk834+Gxy8rpfDxrS6XLEMZMY2g==
 
+split-on-first@^1.0.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/split-on-first/-/split-on-first-1.1.0.tgz#f610afeee3b12bce1d0c30425e76398b78249a5f"
+  integrity sha512-43ZssAJaMusuKWL8sKUBQXHWOpq8d6CfN/u1p4gUzfJkM05C8rxTmYrkIPTXapZpORA6LkkzcUulJ8FqA7Uudw==
+
 split-string@^3.0.1, split-string@^3.0.2:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/split-string/-/split-string-3.1.0.tgz#7cb09dda3a86585705c64b39a6466038682e8fe2"
@@ -5518,6 +5533,11 @@ stream-buffers@~2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/stream-buffers/-/stream-buffers-2.2.0.tgz#91d5f5130d1cef96dcfa7f726945188741d09ee4"
   integrity sha1-kdX1Ew0c75bc+n9yaUUYh0HQnuQ=
+
+strict-uri-encode@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-2.0.0.tgz#b9c7330c7042862f6b142dc274bbcc5866ce3546"
+  integrity sha1-ucczDHBChi9rFC3CdLvMWGbONUY=
 
 string-length@^2.0.0:
   version "2.0.0"

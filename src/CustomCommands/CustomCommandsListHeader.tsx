@@ -81,7 +81,7 @@ class CustomCommandListHeader extends React.Component<Props, State> {
         if (this.state.isSearchOpen) {
           this.setFocusToSearch()
         }
-      }
+      },
     )
   }
 

@@ -1,8 +1,9 @@
 import * as React from "react"
 import { inject, observer } from "mobx-react"
 import CustomCommandsListHeader from "./CustomCommandsListHeader"
-import Colors from "../Theme/Colors"
 import AppStyles from "../Theme/AppStyles"
+
+import CustomCommandButton from "./CustomCommandButton"
 
 const Styles = {
   container: {
@@ -14,44 +15,15 @@ const Styles = {
   buttonsContainer: {
     paddingTop: "20px",
     paddingLeft: "40px",
+    paddingRight: "40px",
     overflowY: "scroll",
     overflowX: "hidden",
     display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: "column",
   },
-  buttonContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: "calc(50% - 8px)",
-    padding: "4px",
-  },
-  commandTitle: {
-    fontSize: "24px",
-    color: "white",
-  },
-  commandDescription: {
-    marginTop: "12px",
-    color: "#929292",
-  },
-  button: {
-    backgroundColor: Colors.backgroundLighter,
-    borderRadius: "4px",
-    minHeight: "50px",
-    alignItems: "center",
-    justifyContent: "center",
-    display: "flex",
-    width: "200px",
-    marginTop: "18px",
-    marginBottom: "24px",
-    cursor: "pointer",
-    color: "white",
-    transition: "background-color 0.25s ease-in-out",
-  },
-  text: {
-    color: Colors.foreground,
-    textAlign: "center",
-  },
+
+
+
 }
 
 interface Props {
@@ -89,28 +61,11 @@ export default class CustomCommandsList extends React.Component<Props, State> {
     )
   }
 
-  executeCommand(command) {
-    this.props.session.ui.sendCustomMessage(command)
+  executeCommand = (command, args) => {
+    this.props.session.ui.sendCustomMessageWithArgs(command, args)
   }
 
-  renderButton(item) {
-    return (
-      <div
-        key={item.command}
-        style={Styles.buttonContainer}
-        onClick={() => this.executeCommand(item.command)}
-      >
-        <div style={Styles.commandTitle}>{item.title || item.command}</div>
-        <div style={Styles.commandDescription}>
-          {item.description ? item.description : "No Description Provided"}
-        </div>
-
-        <div className="button custom-commands-list-button" style={Styles.button}>
-          Send Command
-        </div>
-      </div>
-    )
-  }
+  
 
   render() {
     const { customCommands } = this.props.session
@@ -120,7 +75,9 @@ export default class CustomCommandsList extends React.Component<Props, State> {
       <div style={Styles.container as any}>
         <CustomCommandsListHeader search={search} onSearchChange={this.handleSearchChange} />
         <div style={Styles.buttonsContainer as any}>
-          {customCommands.filter(this.filterSearch).map(cc => this.renderButton(cc))}
+          {customCommands.filter(this.filterSearch).map((cc, idx) => (
+            <CustomCommandButton item={cc} onClick={this.executeCommand} key={idx} />
+          ))}
         </div>
       </div>
     )
