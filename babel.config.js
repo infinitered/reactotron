@@ -24,7 +24,7 @@ module.exports = api => {
         require('@babel/preset-env'),
         {
           targets: { electron: require('electron/package.json').version },
-          useBuiltIns: 'usage'
+          // useBuiltIns: 'usage'
         }
       ],
       require('@babel/preset-flow'),
