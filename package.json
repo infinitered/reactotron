@@ -49,7 +49,7 @@
     "electron-devtools-installer": "2.2.4",
     "electron-log": "3.0.0",
     "electron-store": "3.1.0",
-    "electron-updater": "4.0.5",
+    "electron-updater": "4.0.6",
     "electron-window-state": "5.0.3",
     "font-awesome": "4.7.0",
     "mobx": "5.0.0",
