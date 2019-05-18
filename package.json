@@ -36,6 +36,9 @@
     "reactotron-core-client": "2.7.1",
     "stacktrace-js": "2.0.0"
   },
+  "resolutions": {
+    "@semantic-release/github": "5.3.3"
+  },
   "devDependencies": {
     "@babel/core": "7.4.4",
     "@babel/plugin-proposal-class-properties": "7.4.4",
