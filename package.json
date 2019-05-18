@@ -55,7 +55,7 @@
     "mobx": "5.0.0",
     "mobx-react": "5.1.2",
     "mousetrap": "1.6.3",
-    "postcss": "7.0.0",
+    "postcss": "7.0.16",
     "prop-types": "15.6.1",
     "ramda": "0.26.0",
     "ramdasauce": "2.1.0",
