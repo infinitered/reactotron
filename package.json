@@ -47,7 +47,7 @@
     "date-fns": "1.29.0",
     "electron-debug": "3.0.0",
     "electron-devtools-installer": "2.2.4",
-    "electron-log": "3.0.0",
+    "electron-log": "3.0.5",
     "electron-store": "3.1.0",
     "electron-updater": "4.0.5",
     "electron-window-state": "5.0.3",
