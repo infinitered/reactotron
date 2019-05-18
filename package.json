@@ -53,7 +53,7 @@
     "electron-window-state": "5.0.3",
     "font-awesome": "4.7.0",
     "mobx": "5.0.0",
-    "mobx-react": "5.1.2",
+    "mobx-react": "5.4.4",
     "mousetrap": "1.6.3",
     "postcss": "7.0.0",
     "prop-types": "15.6.1",
