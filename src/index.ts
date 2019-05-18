@@ -7,7 +7,7 @@ export { trackGlobalErrors }
 // DEFAULT CONFIGURATION
 // ---------------------
 
-const REACTOTRON_ASYNC_CLIENT_ID = '@REACTOTRON/clientId'
+const REACTOTRON_ASYNC_CLIENT_ID = "@REACTOTRON/clientId"
 
 /**
  * Safely get some information out the the window.navigator.
@@ -28,7 +28,7 @@ var DEFAULTS = {
   name: "React JS App",
   client: {
     reactotronLibraryName: "reactotron-react-js",
-    reactotronLibraryVersion: 'REACTOTRON_REACT_JS_VERSION',
+    reactotronLibraryVersion: "REACTOTRON_REACT_JS_VERSION",
     platform: "browser",
     platformVersion: getNavigatorProperty("platform"),
     userAgent: getNavigatorProperty("userAgent"),
@@ -36,18 +36,19 @@ var DEFAULTS = {
     screenHeight: (screen && screen.height) || undefined,
     screenScale: (window && window.devicePixelRatio) || 1,
     windowWidth: (window && window.innerWidth) || undefined,
-    windowHeight: (window && window.innerHeight) || undefined
+    windowHeight: (window && window.innerHeight) || undefined,
   },
   getClientId: () => {
     return Promise.resolve(localStorage.getItem(REACTOTRON_ASYNC_CLIENT_ID))
   },
-  setClientId: clientId => {
+  setClientId: (clientId: any) => {
     localStorage.setItem(REACTOTRON_ASYNC_CLIENT_ID, clientId)
-  }
+    return Promise.resolve()
+  },
 }
 
 // -----------
 // HERE WE GO!
 // -----------
 // Create the default reactotron.
-export default createClient(DEFAULTS as any) // TODO: One day fix typescript
+export default createClient(DEFAULTS)
