@@ -57,7 +57,7 @@
     "mousetrap": "1.6.3",
     "postcss": "7.0.0",
     "prop-types": "15.6.1",
-    "ramda": "0.26.0",
+    "ramda": "0.26.1",
     "ramdasauce": "2.1.0",
     "react": "16.8.6",
     "react-base16-styling": "0.6.0",
