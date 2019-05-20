@@ -21,9 +21,6 @@ const Styles = {
     display: "flex",
     flexDirection: "column",
   },
-
-
-
 }
 
 interface Props {
@@ -64,8 +61,6 @@ export default class CustomCommandsList extends React.Component<Props, State> {
   executeCommand = (command, args) => {
     this.props.session.ui.sendCustomMessageWithArgs(command, args)
   }
-
-  
 
   render() {
     const { customCommands } = this.props.session

@@ -96,6 +96,11 @@ class Session {
   }
 
   @computed
+  get customCommandList() {
+    return this.customCommands.map(c => c.command)
+  }
+
+  @computed
   get commands() {
     return pipe(
       dotPath("commandsManager.all"),

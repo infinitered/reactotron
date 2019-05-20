@@ -4,6 +4,7 @@ import Modal from "react-modal"
 import { inject, observer } from "mobx-react"
 import AppStyles from "../Theme/AppStyles"
 import Colors from "../Theme/Colors"
+import Autocomplete from "../Shared/AutocompleteInput"
 import { shell } from "electron"
 
 const ESCAPE_KEYSTROKE = "Esc"
@@ -48,8 +49,8 @@ class SendCustomDialog extends Component {
   onAfterOpenModal = () => this.field.focus()
 
   render() {
-    const { ui } = this.props.session
-
+    const { ui, customCommandList } = this.props.session
+    console.log({ customCommandList })
     return (
       <Modal
         isOpen={ui.showSendCustomDialog}
@@ -67,13 +68,12 @@ class SendCustomDialog extends Component {
           </div>
           <div style={AppStyles.Modal.body}>
             <label style={AppStyles.Modal.fieldLabel}>{FIELD_LABEL}</label>
-            <input
+            <Autocomplete
               placeholder={INPUT_PLACEHOLDER}
               style={AppStyles.Modal.textField}
-              type="text"
               ref={node => (this.field = node)}
               value={ui.customMessage}
-              onKeyPress={this.handleKeyPress}
+              // onKeyPress={this.handleKeyPress}
               onChange={this.handleChange}
             />
             <small style={Styles.moreInfo}>
