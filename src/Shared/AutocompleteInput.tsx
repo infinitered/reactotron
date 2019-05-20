@@ -2,6 +2,7 @@ import * as React from "react"
 
 interface Props {
   suggestions: Array<string>
+  forwardedRef: any
   onChange: (e: any) => void
 }
 
@@ -94,7 +95,7 @@ class Autocomplete extends React.Component<Props, State> {
       onClick,
       onKeyDown,
       state: { activeSuggestion, filteredSuggestions, showSuggestions, userInput },
-      props,
+      props: { forwardedRef, ...rest },
     } = this
 
     let suggestionsListComponent
@@ -130,7 +131,14 @@ class Autocomplete extends React.Component<Props, State> {
 
     return (
       <>
-        <input type="text" {...props} onChange={onChange} onKeyDown={onKeyDown} value={userInput} />
+        <input
+          type="text"
+          {...rest}
+          ref={forwardedRef}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          value={userInput}
+        />
         {suggestionsListComponent}
       </>
     )

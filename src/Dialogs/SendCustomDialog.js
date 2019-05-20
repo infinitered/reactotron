@@ -71,7 +71,7 @@ class SendCustomDialog extends Component {
             <Autocomplete
               placeholder={INPUT_PLACEHOLDER}
               style={AppStyles.Modal.textField}
-              ref={node => (this.field = node)}
+              forwardedRef={node => (this.field = node)}
               value={ui.customMessage}
               // onKeyPress={this.handleKeyPress}
               onChange={this.handleChange}
