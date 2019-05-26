@@ -33,7 +33,16 @@ export default class ReactotronTerminal extends React.Component<Props, State> {
   state = {
     emulatorState: EmulatorState.createEmpty(),
     inputStr: "",
-    promptSymbol: "$",
+    promptSymbol: ">",
+  }
+
+  emulator: ReactotronEmulator
+
+  constructor(props) {
+    super(props)
+
+    this.emulator = new ReactotronEmulator(this.commandHandler)
+    this.emulator.setCurrentPrompt(this.state.promptSymbol)
   }
 
   componentDidMount() {
@@ -59,9 +68,13 @@ export default class ReactotronTerminal extends React.Component<Props, State> {
 
     if (commandStrToExecute.substr(0, 3) === "cd ") {
       ui.server.send("repl.cd", commandStrToExecute.substr(3))
+
+      const newPrompt = `${commandStrToExecute.substr(3)}>`
+
       this.setState({
-        promptSymbol: commandStrToExecute.substr(3),
+        promptSymbol: newPrompt,
       })
+      this.emulator.setCurrentPrompt(newPrompt)
       return state
     }
 
@@ -71,7 +84,6 @@ export default class ReactotronTerminal extends React.Component<Props, State> {
   }
 
   responseHandler = response => {
-    console.log(response)
     switch (response.type) {
       case "repl.ls.response":
       case "repl.cd.response":
@@ -95,7 +107,7 @@ export default class ReactotronTerminal extends React.Component<Props, State> {
   render() {
     return (
       <ReactTerminalStateless
-        altEmulator={new ReactotronEmulator(this.commandHandler)}
+        altEmulator={this.emulator}
         theme={{ ...ReactThemes.default, background: "rgb(30, 30, 30)", height: "100vh" }}
         emulatorState={this.state.emulatorState}
         inputStr={this.state.inputStr}
