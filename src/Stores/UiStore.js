@@ -86,7 +86,7 @@ class UI {
     Mousetrap.bind(`${Keystroke.mousetrap}+-`, this.zoomOut.bind(this))
     Mousetrap.bind(`${Keystroke.mousetrap}+=`, this.zoomIn.bind(this))
     Mousetrap.bind(`${Keystroke.mousetrap}+0`, this.resetZoom.bind(this))
-    Mousetrap.bind(`${Keystroke.mousetrap}+a+s+d+f`, this.openTerminal.bind(this, true))
+    Mousetrap.bind(`${Keystroke.mousetrap}+a ${Keystroke.mousetrap}+a ${Keystroke.mousetrap}+a ${Keystroke.mousetrap}+a`, this.openTerminal.bind(this, true))
   }
 
   @action

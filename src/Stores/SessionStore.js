@@ -219,8 +219,8 @@ class Session {
       if (!isNew) {
         return
       }
-    } else if (command.type === "repl.response") {
-      this.ui.replResponse(command.payload)
+    } else if (command.type.substr(0, 5) === "repl.") {
+      this.ui.replResponse(command)
       return
     }
 

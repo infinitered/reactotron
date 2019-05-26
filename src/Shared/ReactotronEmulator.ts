@@ -1,23 +1,15 @@
 import { Emulator } from "javascript-terminal"
 
 export default class ReactotronEmulator extends Emulator {
-  uiStore: any
+  commandHandler: any
 
-  constructor(uiStore) {
+  constructor(commandHandler) {
     super()
 
-    this.uiStore = uiStore
+    this.commandHandler = commandHandler
   }
 
   _updateStateByExecution(state, commandStrToExecute) {
-    // TODO: Other things.
-
-    if (commandStrToExecute === "exit") {
-      this.uiStore.openTerminal(false)
-    }
-
-    this.uiStore.server.send("repl", commandStrToExecute)
-
-    return state
+    return this.commandHandler(state, commandStrToExecute)
   }
 }

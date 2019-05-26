@@ -53,6 +53,15 @@ const aThing = {
     return 10
   },
   aVal: "Test",
+  aObj: {
+    nested: true,
+    num: 12312314,
+  },
+  aArr: [1, "two", { three: true }],
 }
 
-Reactotron.repl(aThing)
+Reactotron.repl("thing", aThing)
+
+const anotherTHing = [1, 2, { how: { awesome: { iz: { allThis: true } } } }]
+
+Reactotron.repl("anotherThing", anotherTHing)

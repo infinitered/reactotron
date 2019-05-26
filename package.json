@@ -33,7 +33,7 @@
     "start": "cross-env NODE_ENV=production electron ./src/main.prod.js",
     "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register ./src/main.dev.js",
     "start-renderer-dev": "cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.renderer.dev.babel.js",
-    "postinstall": "electron-builder install-app-deps package.json && yarn build-dll",
+    "postinstall": "electron-builder install-app-deps package.json && patch-package && yarn build-dll",
     "ci:test": "yarn test",
     "ci:publish": "yarn semantic-release",
     "semantic-release": "semantic-release"
