@@ -2,10 +2,9 @@ import * as React from "react"
 import { inject, observer } from "mobx-react"
 import { ReactTerminalStateless, ReactThemes, ReactOutputRenderers } from "react-terminal-component"
 import { EmulatorState, OutputFactory } from "javascript-terminal"
-import ReactotronEmulator from "../Shared/ReactotronEmulator"
-import Session from "../Stores/SessionStore"
-import ObjectTree from "../Shared/ObjectTree"
-import { textForValue } from "../Shared/MakeTable"
+import ReactotronEmulator from "../../Shared/ReactotronEmulator"
+import Session from "../../Stores/SessionStore"
+import customerRenderers, { renderTypes } from "./renderers"
 
 interface Props {
   session: Session
@@ -15,16 +14,6 @@ interface State {
   emulatorState: any
   inputStr: string
   promptSymbol: string
-}
-
-const OBJECT_TYPE = "jsobject"
-
-const ObjectOutput = ({ content }) => {
-  if (typeof content === "object") {
-    return <ObjectTree object={{ value: content }} />
-  }
-
-  return textForValue(content)
 }
 
 @inject("session")
@@ -84,24 +73,33 @@ export default class ReactotronTerminal extends React.Component<Props, State> {
   }
 
   responseHandler = response => {
+    let outputRecord = null
+
     switch (response.type) {
       case "repl.ls.response":
+        outputRecord = new OutputFactory.OutputRecord({
+          type: renderTypes.LS_TYPE,
+          content: response.payload,
+        })
+        break
       case "repl.cd.response":
       case "repl.execute.response":
-        const newEmulator = this.state.emulatorState.setOutputs(
-          this.state.emulatorState.getOutputs().push(
-            new OutputFactory.OutputRecord({
-              type: OBJECT_TYPE,
-              content: response.payload,
-            })
-          )
-        )
-
-        this.setState({
-          emulatorState: newEmulator,
+        outputRecord = new OutputFactory.OutputRecord({
+          type: renderTypes.OBJECT_TYPE,
+          content: response.payload,
         })
         break
     }
+
+    if (!outputRecord) return
+
+    const newEmulator = this.state.emulatorState.setOutputs(
+      this.state.emulatorState.getOutputs().push(outputRecord)
+    )
+
+    this.setState({
+      emulatorState: newEmulator,
+    })
   }
 
   render() {
@@ -116,7 +114,7 @@ export default class ReactotronTerminal extends React.Component<Props, State> {
         onStateChange={emulatorState => this.setState({ emulatorState, inputStr: "" })}
         outputRenderers={{
           ...ReactOutputRenderers,
-          [OBJECT_TYPE]: ObjectOutput,
+          ...customerRenderers,
         }}
       />
     )
