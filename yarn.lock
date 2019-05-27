@@ -1028,7 +1028,7 @@
     micromatch "^3.1.4"
     p-reduce "^1.0.0"
 
-"@semantic-release/github@5.3.3", "@semantic-release/github@^5.3.0-beta.6":
+"@semantic-release/github@^5.3.0-beta.6":
   version "5.3.3"
   resolved "https://registry.yarnpkg.com/@semantic-release/github/-/github-5.3.3.tgz#be74ae018f38e8462897b7c5ee6d140945f38d9c"
   integrity sha512-FrTjedpxR6an/sWize8OVw2CnvygSzXgx+a3Fd7R6IACcnP5IWDbr3Myifr3b6HjyBturxykz5FphGopxadhgQ==
@@ -7378,10 +7378,10 @@ rollup-pluginutils@^2.7.0:
     estree-walker "^0.6.0"
     micromatch "^3.1.10"
 
-rollup@1.12.2:
-  version "1.12.2"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.12.2.tgz#a7c34a4bef71feb43e3ae69f0b26ae683e75db44"
-  integrity sha512-ePehZfVMIE4eO0/LV6VaMY8kp0D9sbziUabpBeJbHAHa2WJPxuS0lYLmiLamb02e098RIRyq1F2yjM4O08dQVA==
+rollup@1.12.4:
+  version "1.12.4"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.12.4.tgz#f2cb825300cea6601f12a4c3d2f3918807b27403"
+  integrity sha512-sHg0F05oTMJzM592MWU8irsPx8LIFMKSCnEkcp6vp/gnj+oJ9GJEBW9hl8jUqy2L6Q2uUxFzPgvoExLbfuSODA==
   dependencies:
     "@types/estree" "0.0.39"
     "@types/node" "^12.0.2"
