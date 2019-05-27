@@ -187,7 +187,22 @@ export default class MenuBuilder {
     const templateDefault = [
       {
         label: "&File",
-        submenu: [],
+        submenu: [
+          {
+            label: "Preferences",
+            click: () => {
+              configStore.openInEditor()
+            },
+          },
+          { type: "separator" },
+          {
+            label: "Quit",
+            accelerator: "Command+Q",
+            click: () => {
+              app.quit()
+            },
+          },
+        ],
       },
       {
         label: "&View",
