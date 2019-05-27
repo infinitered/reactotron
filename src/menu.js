@@ -8,6 +8,11 @@ export default class MenuBuilder {
     this.mainWindow = mainWindow
   }
 
+  toggleAlwaysOnTop() {
+    const nextValue = !this.mainWindow.isAlwaysOnTop()
+    this.mainWindow.setAlwaysOnTop(nextValue)
+  }
+
   buildMenu() {
     if (process.env.NODE_ENV === "development" || process.env.DEBUG_PROD === "true") {
       this.setupDevelopmentEnvironment()
@@ -135,8 +140,8 @@ export default class MenuBuilder {
         },
         {
           label: "Toggle Side Menu",
-          click() {
-            mainWindow.webContents.send("toggle-side-menu")
+          click: () => {
+            this.mainWindow.webContents.send("toggle-side-menu")
           },
         },
       ],
@@ -147,8 +152,8 @@ export default class MenuBuilder {
         {
           type: "checkbox",
           label: "Always On Top",
-          click() {
-            mainWindow.toggleAlwaysOnTop()
+          click: () => {
+            this.toggleAlwaysOnTop()
           },
         },
         {
@@ -166,7 +171,7 @@ export default class MenuBuilder {
       submenu: [
         {
           label: "Visit on Github",
-          click() {
+          click: () => {
             shell.openExternal("https://github.com/infinitered/reactotron")
           },
         },
@@ -182,7 +187,22 @@ export default class MenuBuilder {
     const templateDefault = [
       {
         label: "&File",
-        submenu: [],
+        submenu: [
+          {
+            label: "Preferences",
+            click: () => {
+              configStore.openInEditor()
+            },
+          },
+          { type: "separator" },
+          {
+            label: "Quit",
+            accelerator: "Command+Q",
+            click: () => {
+              app.quit()
+            },
+          },
+        ],
       },
       {
         label: "&View",
@@ -192,8 +212,8 @@ export default class MenuBuilder {
                 {
                   type: "checkbox",
                   label: "Always On Top",
-                  click() {
-                    mainWindow.toggleAlwaysOnTop(this)
+                  click: () => {
+                    this.toggleAlwaysOnTop()
                   },
                 },
                 {
@@ -222,8 +242,8 @@ export default class MenuBuilder {
                 {
                   type: "checkbox",
                   label: "Always On Top",
-                  click() {
-                    mainWindow.toggleAlwaysOnTop(this)
+                  click: () => {
+                    this.toggleAlwaysOnTop()
                   },
                 },
                 {
@@ -240,7 +260,7 @@ export default class MenuBuilder {
         submenu: [
           {
             label: "Visit on Github",
-            click() {
+            click: () => {
               shell.openExternal("https://github.com/infinitered/reactotron")
             },
           },
