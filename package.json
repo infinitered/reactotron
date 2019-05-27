@@ -31,15 +31,17 @@
     "ci:publish": "yarn semantic-release",
     "semantic-release": "semantic-release"
   },
+  "dependencies": {
+    "@types/jest": "24.0.13",
+    "@types/node": "11.13.11",
+    "@types/ws": "6.0.1"
+  },
   "devDependencies": {
     "@babel/core": "7.4.5",
     "@babel/plugin-proposal-class-properties": "7.4.4",
     "@babel/preset-env": "7.4.5",
     "@babel/preset-typescript": "7.3.3",
     "@semantic-release/git": "7.1.0-beta.3",
-    "@types/jest": "24.0.13",
-    "@types/node": "11.13.11",
-    "@types/ws": "6.0.1",
     "@typescript-eslint/eslint-plugin": "1.9.0",
     "@typescript-eslint/parser": "1.9.0",
     "babel-eslint": "10.0.1",
