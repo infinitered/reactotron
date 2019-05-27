@@ -33,7 +33,8 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
-    "reactotron-core-client": "2.7.3",
+    "@types/react": "16.8.18",
+    "reactotron-core-client": "2.7.4",
     "stacktrace-js": "2.0.0"
   },
   "devDependencies": {
@@ -42,7 +43,6 @@
     "@babel/preset-env": "7.4.5",
     "@babel/preset-typescript": "7.3.3",
     "@semantic-release/git": "7.1.0-beta.3",
-    "@types/react": "16.8.18",
     "@typescript-eslint/eslint-plugin": "1.9.0",
     "@typescript-eslint/parser": "1.9.0",
     "babel-eslint": "10.0.1",
