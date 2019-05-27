@@ -4,7 +4,17 @@ import { ReactTerminalStateless, ReactThemes, ReactOutputRenderers } from "react
 import { EmulatorState, OutputFactory } from "javascript-terminal"
 import ReactotronEmulator from "../../Shared/ReactotronEmulator"
 import Session from "../../Stores/SessionStore"
+import Colors from "../../Theme/Colors"
 import customerRenderers, { renderTypes } from "./renderers"
+
+const Styles = {
+  header: {
+    WebkitAppRegion: "drag",
+    height: "30px",
+    width: "100%",
+    backgroundColor: Colors.backgroundSubtleLight,
+  },
+}
 
 interface Props {
   session: Session
@@ -48,12 +58,21 @@ export default class ReactotronTerminal extends React.Component<Props, State> {
       return state
     }
 
+    if (!this.props.session.selectedConnection) {
+      return state.setOutputs(
+        state.getOutputs().push(
+          new OutputFactory.OutputRecord({
+            type: renderTypes.OBJECT_TYPE,
+            content: "There is no connected device!",
+          })
+        )
+      )
+    }
+
     if (commandStrToExecute === "ls") {
       ui.server.send("repl.ls")
       return state
     }
-
-    console.log(commandStrToExecute.substr(0, 3) === "cd ")
 
     if (commandStrToExecute.substr(0, 3) === "cd ") {
       ui.server.send("repl.cd", commandStrToExecute.substr(3))
@@ -104,19 +123,22 @@ export default class ReactotronTerminal extends React.Component<Props, State> {
 
   render() {
     return (
-      <ReactTerminalStateless
-        altEmulator={this.emulator}
-        theme={{ ...ReactThemes.default, background: "rgb(30, 30, 30)", height: "100vh" }}
-        emulatorState={this.state.emulatorState}
-        inputStr={this.state.inputStr}
-        promptSymbol={this.state.promptSymbol}
-        onInputChange={inputStr => this.setState({ inputStr })}
-        onStateChange={emulatorState => this.setState({ emulatorState, inputStr: "" })}
-        outputRenderers={{
-          ...ReactOutputRenderers,
-          ...customerRenderers,
-        }}
-      />
+      <div>
+        <div style={Styles.header} />
+        <ReactTerminalStateless
+          altEmulator={this.emulator}
+          theme={{ ...ReactThemes.default, background: "rgb(30, 30, 30)", height: "100vh" }}
+          emulatorState={this.state.emulatorState}
+          inputStr={this.state.inputStr}
+          promptSymbol={this.state.promptSymbol}
+          onInputChange={inputStr => this.setState({ inputStr })}
+          onStateChange={emulatorState => this.setState({ emulatorState, inputStr: "" })}
+          outputRenderers={{
+            ...ReactOutputRenderers,
+            ...customerRenderers,
+          }}
+        />
+      </div>
     )
   }
 }

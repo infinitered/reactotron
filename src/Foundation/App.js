@@ -20,7 +20,7 @@ import Timeline from "../Timeline/Timeline"
 import Sidebar from "./Sidebar"
 import StatusBar from "./StatusBar"
 import CustomCommandsList from "../CustomCommands/CustomCommandsList"
-import ReactotronTerminal from "./ReactotronTerminal";
+import ReactotronTerminal from "./ReactotronTerminal"
 
 const session = new SessionStore(config.get("server.port", 9090))
 
@@ -95,9 +95,7 @@ export default class App extends Component {
               <div style={Styles.body}>
                 <div style={Styles.app}>
                   <div style={Styles.page}>
-                    <div style={{ paddingTop: 30 }}>
-                      <ReactotronTerminal />
-                    </div>
+                    <ReactotronTerminal />
                   </div>
                 </div>
               </div>
