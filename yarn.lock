@@ -8697,10 +8697,10 @@ react@16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
-reactotron-core-client@2.7.2:
-  version "2.7.2"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.7.2.tgz#12fbf1c0324a76173c372d517b76c0e9f39f5afe"
-  integrity sha512-O6gLFWYYDXm0PW1QsaigOqLfE2ILQqj2qG7/efd3rCpybcu+sIWbXWfNs4t41N2Wosb45lzCDqZiu7sDoPkFjg==
+reactotron-core-client@2.7.3:
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.7.3.tgz#0a88bcdce16cd620b8743b547ac7448f79b9a221"
+  integrity sha512-cK9AbC/0WtfEg6Dm4EhSW++46WfHTT1EvnZ/UuLY2RnnNZnRF6ZgbnT6gBMw2W/H3Htyo5c6bQR8T5YEVq4KxA==
 
 read-cmd-shim@^1.0.1, read-cmd-shim@~1.0.1:
   version "1.0.1"
