@@ -6,6 +6,7 @@ import benchmark from "./plugins/benchmark"
 import stateResponses from "./plugins/state-responses"
 import apiResponse from "./plugins/api-response"
 import clear from "./plugins/clear"
+import repl from "./plugins/repl"
 import serialize from "./serialize"
 import { start } from "./stopwatch"
 import { ClientOptions } from "./client-options"
@@ -17,6 +18,7 @@ export const corePlugins = [
   stateResponses(),
   apiResponse(),
   clear(),
+  repl(),
 ]
 
 const DEFAULT_OPTIONS: ClientOptions = {
@@ -116,6 +118,9 @@ export interface ReactotronCore {
   stateKeysResponse?: (path: any, keys: any, valid?: boolean) => void
   stateValuesChange?: (changes: any) => void
   stateBackupResponse?: (state: any) => void
+
+  // REPL Plugin
+  repl?: (name: string, value: object | Function | string | number) => void
 }
 
 export interface Reactotron<ReactotronSubtype = ReactotronCore> extends ReactotronCore {
