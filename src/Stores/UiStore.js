@@ -4,7 +4,7 @@ import { trim } from "ramda"
 import { isNilOrEmpty } from "ramdasauce"
 import Keystroke from "../Lib/Keystroke"
 import Mousetrap from "mousetrap"
-import fs from "fs";
+import fs from "fs"
 
 /**
  * Handles UI state.
@@ -28,20 +28,31 @@ class UI {
   @observable customMessage = ""
   @observable showSendCustomDialog = false
   @observable isTimelineSearchVisible = false
-  @observable isTimelineOrderReversed = JSON.parse(localStorage.getItem("isTimelineOrderReversed")) || false
+  @observable isTimelineOrderReversed =
+    JSON.parse(localStorage.getItem("isTimelineOrderReversed")) || false
   @observable isSidebarVisible = true
   @observable isStorybookShown = false
   @observable searchPhrase = ""
   @observable exportFilePath = ""
   @observable writingFileError = ""
   @observable writingFileSuccess = false
+  @observable inTerminal = false
   zoomLevel = 0
 
   // additional properties that some commands may want... a way to communicate
   // from the command toolbar to the command
   commandProperties = {}
 
-  constructor(session, server, commandsManager, stateBackupStore, getSelectedConnection, addSubscription, removeSubscription, clearSubscriptions) {
+  constructor(
+    session,
+    server,
+    commandsManager,
+    stateBackupStore,
+    getSelectedConnection,
+    addSubscription,
+    removeSubscription,
+    clearSubscriptions
+  ) {
     this.session = session
     this.server = server
     this.commandsManager = commandsManager
@@ -75,6 +86,12 @@ class UI {
     Mousetrap.bind(`${Keystroke.mousetrap}+-`, this.zoomOut.bind(this))
     Mousetrap.bind(`${Keystroke.mousetrap}+=`, this.zoomIn.bind(this))
     Mousetrap.bind(`${Keystroke.mousetrap}+0`, this.resetZoom.bind(this))
+    Mousetrap.bind(`${Keystroke.mousetrap}+a ${Keystroke.mousetrap}+a ${Keystroke.mousetrap}+a ${Keystroke.mousetrap}+a`, this.openTerminal.bind(this, true))
+  }
+
+  @action
+  openTerminal(open) {
+    this.inTerminal = open
   }
 
   zoomOut() {
@@ -230,8 +247,8 @@ class UI {
     if (this.showStateDispatchDialog) {
       this.submitStateDispatch()
     }
-    if (this.showTimelineExportDialog)  {
-      this.exportCommands();
+    if (this.showTimelineExportDialog) {
+      this.exportCommands()
     }
   }
 
@@ -351,8 +368,8 @@ class UI {
   }
 
   @action
-  setExportFilePath = (path) => {
-    this.exportFilePath = path;
+  setExportFilePath = path => {
+    this.exportFilePath = path
   }
 
   @action
@@ -514,30 +531,37 @@ class UI {
   }
 
   exportCommands = () => {
-
-    if  (!this.exportFilePath) {
+    if (!this.exportFilePath) {
       this.writingFileError = "Please choose a path."
       return
     }
-    const formatCommand = (command) => ({
-        clientId: command.clientId,
-        payload: {
-          name: command.payload.name,
-          action: command.payload.action
-        },
-        type: command.type
+    const formatCommand = command => ({
+      clientId: command.clientId,
+      payload: {
+        name: command.payload.name,
+        action: command.payload.action,
+      },
+      type: command.type,
     })
     const commands = JSON.stringify(this.session.commands.map(formatCommand))
-    fs.writeFile(this.exportFilePath + "/reactotron_timeline.txt", commands, (err) => {
+    fs.writeFile(this.exportFilePath + "/reactotron_timeline.txt", commands, err => {
       if (err) {
         console.log(err)
         this.writingFileError = err.message
       } else {
-        this.writingFileSuccess = true;
+        this.writingFileSuccess = true
         this.writingFileError = ""
       }
     })
   }
+
+  replResponse(response) {
+    if (this.replResponseHandler) {
+      this.replResponseHandler(response)
+    }
+  }
+
+  replResponseHandler = null
 }
 
 export default UI

@@ -1,0 +1,22 @@
+diff --git a/node_modules/react-terminal-component/lib/react-terminal-component.js b/node_modules/react-terminal-component/lib/react-terminal-component.js
+index f568bf0..8257f81 100644
+--- a/node_modules/react-terminal-component/lib/react-terminal-component.js
++++ b/node_modules/react-terminal-component/lib/react-terminal-component.js
+@@ -41142,7 +41142,7 @@ function (_Component) {
+       }
+     });
+ 
+-    _this.emulator = new javascript_terminal__WEBPACK_IMPORTED_MODULE_3__["Emulator"]();
++    _this.emulator = _ref.altEmulator || new javascript_terminal__WEBPACK_IMPORTED_MODULE_3__["Emulator"]();
+     _this.historyKeyboardPlugin = new javascript_terminal__WEBPACK_IMPORTED_MODULE_3__["HistoryKeyboardPlugin"](_emulatorState);
+     _this.plugins = [_this.historyKeyboardPlugin];
+     _this.inputRef = null;
+@@ -41559,7 +41559,7 @@ __webpack_require__.r(__webpack_exports__);
+ var HeaderOutput = function HeaderOutput(_ref) {
+   var content = _ref.content,
+       promptSymbol = _ref.promptSymbol;
+-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(output_OutputContainer__WEBPACK_IMPORTED_MODULE_3__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(PromptSymbol__WEBPACK_IMPORTED_MODULE_2__["default"], null, promptSymbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(output_TextCommandWrapper__WEBPACK_IMPORTED_MODULE_4__["default"], null, content.command));
++  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(output_OutputContainer__WEBPACK_IMPORTED_MODULE_3__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(PromptSymbol__WEBPACK_IMPORTED_MODULE_2__["default"], null, content.prompt), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(output_TextCommandWrapper__WEBPACK_IMPORTED_MODULE_4__["default"], null, content.command));
+ };
+ 
+ HeaderOutput.propTypes = {
