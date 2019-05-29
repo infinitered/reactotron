@@ -1637,6 +1637,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.11.tgz#65766752cbbe198ff353ea861a23b6484cf33df4"
   integrity sha512-blLeR+KIy26km1OU8yTLUlSyVCOvT6+wPq/77tIA+uSHHa4yYQosn+bbaJqPtWId0wjVClUtD7aXzDbZeKWqig==
 
+"@types/node@11.13.12":
+  version "11.13.12"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.12.tgz#4caaf874d5eaf26e5723d30c95f6d40cac2c49bb"
+  integrity sha512-HMD9cEGP+k2Y1Lk8LL6Cux9UlxkWst1wJdoMHnvH3XlVecHdjffW829/YzWd/ptFkIWtcbqQDrTkz5PY6pN+0w==
+
 "@types/node@^12.0.2":
   version "12.0.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.2.tgz#3452a24edf9fea138b48fad4a0a028a683da1e40"
@@ -8747,13 +8752,13 @@ react@16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
-reactotron-core-client@2.7.4:
-  version "2.7.4"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.7.4.tgz#646885b7e04dcef0de37479e6995146cc389c588"
-  integrity sha512-/qo+Oiihvtqj44pzL7t9DAYgSqBCUoWxkqIFd/Poxpoh9u+fJ8OfhhyjnTlMgB2KjZosArqApR9fdpQRYmNF7g==
+reactotron-core-client@2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.8.0.tgz#7d5809e81302d3202ab4327dcbc2b0d7c3a60b53"
+  integrity sha512-+WRsjVqQZpXC2gaTYqTzHFcjAMGGYQiGsl16krDFHVUqlbWK7x8j7qyo9SDy90lIJxYQO6t91ccG9CzOH9vfzw==
   dependencies:
     "@types/jest" "24.0.13"
-    "@types/node" "11.13.11"
+    "@types/node" "11.13.12"
     "@types/ws" "6.0.1"
 
 read-cmd-shim@^1.0.1, read-cmd-shim@~1.0.1:
