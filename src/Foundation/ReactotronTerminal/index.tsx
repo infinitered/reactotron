@@ -26,6 +26,17 @@ interface State {
   promptSymbol: string
 }
 
+function addOutput(state, type, content) {
+  return state.setOutputs(
+    state.getOutputs().push(
+      new OutputFactory.OutputRecord({
+        type,
+        content,
+      })
+    )
+  )
+}
+
 @inject("session")
 @observer
 export default class ReactotronTerminal extends React.Component<Props, State> {
@@ -46,6 +57,14 @@ export default class ReactotronTerminal extends React.Component<Props, State> {
 
   componentDidMount() {
     this.props.session.ui.replResponseHandler = this.responseHandler
+
+    this.setState({
+      emulatorState: addOutput(
+        this.state.emulatorState,
+        renderTypes.OBJECT_TYPE,
+        "All REPLs are available on `this`"
+      ),
+    })
   }
 
   commandHandler = (state, commandStrToExecute) => {
@@ -59,14 +78,7 @@ export default class ReactotronTerminal extends React.Component<Props, State> {
     }
 
     if (!this.props.session.selectedConnection) {
-      return state.setOutputs(
-        state.getOutputs().push(
-          new OutputFactory.OutputRecord({
-            type: renderTypes.OBJECT_TYPE,
-            content: "There is no connected device!",
-          })
-        )
-      )
+      return addOutput(state, renderTypes.OBJECT_TYPE, "There is no connected device!")
     }
 
     if (commandStrToExecute === "ls") {
@@ -92,29 +104,17 @@ export default class ReactotronTerminal extends React.Component<Props, State> {
   }
 
   responseHandler = response => {
-    let outputRecord = null
+    let newEmulator = this.state.emulatorState
 
     switch (response.type) {
       case "repl.ls.response":
-        outputRecord = new OutputFactory.OutputRecord({
-          type: renderTypes.LS_TYPE,
-          content: response.payload,
-        })
+        newEmulator = addOutput(newEmulator, renderTypes.LS_TYPE, response.payload)
         break
       case "repl.cd.response":
       case "repl.execute.response":
-        outputRecord = new OutputFactory.OutputRecord({
-          type: renderTypes.OBJECT_TYPE,
-          content: response.payload,
-        })
+        newEmulator = addOutput(newEmulator, renderTypes.OBJECT_TYPE, response.payload)
         break
     }
-
-    if (!outputRecord) return
-
-    const newEmulator = this.state.emulatorState.setOutputs(
-      this.state.emulatorState.getOutputs().push(outputRecord)
-    )
 
     this.setState({
       emulatorState: newEmulator,

@@ -62,6 +62,8 @@ const aThing = {
 
 Reactotron.repl("thing", aThing)
 
+Reactotron.repl("aString", "Hello")
+
 const anotherTHing = [1, 2, { how: { awesome: { iz: { allThis: true } } } }]
 
 Reactotron.repl("anotherThing", anotherTHing)
