@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@types/jest": "24.0.13",
-    "@types/node": "11.13.11",
+    "@types/node": "11.13.13",
     "@types/react-native": "0.57.60",
     "mitt": "1.1.3",
     "query-string": "6.5.0",
