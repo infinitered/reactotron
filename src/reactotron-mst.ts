@@ -430,6 +430,6 @@ export function mst(opts: MstPluginOptions = {}) {
 declare module "reactotron-core-client" {
   // eslint-disable-next-line import/export
   export interface Reactotron {
-    trackMstNode: (node: IStateTreeNode, nodeName?: string) => { kind: string; message?: string }
+    trackMstNode?: (node: IStateTreeNode, nodeName?: string) => { kind: string; message?: string }
   }
 }
