@@ -1,13 +1,19 @@
+import { Dimensions } from "react-native"
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
 import ReduxThunk from "redux-thunk"
 import Reactotron from "reactotron-react-native"
 
 function dummyReducer(state = { counter: 0 }, action) {
-  switch(action.type) {
+  switch (action.type) {
     case "RandomThunkAction":
       return {
         ...state,
         counter: state.counter + 1,
+        height: Dimensions.get("screen").height,
+      }
+    default:
+      return {
+        ...state,
       }
   }
 
@@ -25,8 +31,8 @@ export default () => {
     rootReducer,
     compose(
       middleware,
-      Reactotron.createEnhancer(),
-    ),
+      Reactotron.createEnhancer()
+    )
   )
   // const store = (Reactotron as any).createStore(rootReducer, compose(middleware))
 
