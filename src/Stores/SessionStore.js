@@ -116,7 +116,7 @@ class Session {
     } else {
       if (!this.selectedConnection) return [] // If we have > 1 connection and "All" is selected jet since what we will show won't be "all"
       connectionsChangeCommands = reject(
-        c => c.connectionId === this.selectedConnection.id,
+        c => c.connectionId !== this.selectedConnection.id,
         changeCommands
       )
     }
