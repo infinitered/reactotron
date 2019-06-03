@@ -9,9 +9,8 @@ import { PluginConfig } from "./pluginConfig"
 
 function reactotronRedux(pluginConfig: PluginConfig = {}) {
   const mergedPluginConfig: PluginConfig = {
+    ...pluginConfig,
     restoreActionType: pluginConfig.restoreActionType || DEFAULT_REPLACER_TYPE,
-    onBackup: pluginConfig.onBackup || null,
-    onRestore: pluginConfig.onRestore || null,
   }
 
   const storeCreationHandlers = []
