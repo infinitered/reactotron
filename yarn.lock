@@ -8906,13 +8906,11 @@ react@16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
-reactotron-core-client@2.8.1:
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.8.1.tgz#018f18c1168ef6b5efe535550485fea7422f1c88"
-  integrity sha512-zCm9jnUFDKeaj10qUoZJd6wRqm/molZSFXFn6SgUBWtt62HTMTz/SouzJ99ztfljQYYaB1SaeT8tp8LQ7gUhpg==
+reactotron-core-client@2.8.2:
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.8.2.tgz#a2c437bac29682b6ca748532843c598815c4a563"
+  integrity sha512-01ChI3crJGGc91NP1MsGPad6KdyHsAnR15N2pMvD3o+0VlzqW89niEot46hK/Bq7KGrB/8gIKqx85LuwAnBf2Q==
   dependencies:
-    "@types/jest" "24.0.13"
-    "@types/node" "11.13.13"
     "@types/ws" "6.0.1"
 
 read-cmd-shim@^1.0.1, read-cmd-shim@~1.0.1:
