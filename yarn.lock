@@ -1211,26 +1211,9 @@
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
 
-"@types/jest-diff@*":
-  version "20.0.1"
-  resolved "https://registry.yarnpkg.com/@types/jest-diff/-/jest-diff-20.0.1.tgz#35cc15b9c4f30a18ef21852e255fdb02f6d59b89"
-  integrity sha512-yALhelO3i0hqZwhjtcr6dYyaLoCHbAMshwtj6cGxTvHZAKXHsYGdff6E8EPw3xLKY0ELUTQ69Q1rQiJENnccMA==
-
-"@types/jest@24.0.13":
-  version "24.0.13"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-24.0.13.tgz#10f50b64cb05fb02411fbba49e9042a3a11da3f9"
-  integrity sha512-3m6RPnO35r7Dg+uMLj1+xfZaOgIHHHut61djNjzwExXN4/Pm9has9C6I1KMYSfz7mahDhWUOVg4HW/nZdv5Pww==
-  dependencies:
-    "@types/jest-diff" "*"
-
 "@types/node@*":
   version "10.0.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.0.3.tgz#1f89840c7aac2406cc43a2ecad98fc02a8e130e4"
-
-"@types/node@11.13.13":
-  version "11.13.13"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.13.tgz#a3d2a8a908ce322f24f0f8c88160b44c7dd5c452"
-  integrity sha512-GFWH7e4Q/OGLAO545bupVju+nE1YtLSwYAdLfSzAXnTPqoqKoXCOEtB7Cluvg9B/h2nGLhyzCDyCInYvrOE2nw==
 
 "@types/node@^12.0.3":
   version "12.0.4"
@@ -7138,13 +7121,11 @@ react-is@^16.8.4:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
   integrity sha512-aUk3bHfZ2bRSVFFbbeVS4i+lNPZr3/WM5jT2J5omUVV1zzcs1nAaf3l51ctA5FFvCRbhrH0bdAsRRQddFJZPtA==
 
-reactotron-core-client@2.8.1:
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.8.1.tgz#018f18c1168ef6b5efe535550485fea7422f1c88"
-  integrity sha512-zCm9jnUFDKeaj10qUoZJd6wRqm/molZSFXFn6SgUBWtt62HTMTz/SouzJ99ztfljQYYaB1SaeT8tp8LQ7gUhpg==
+reactotron-core-client@2.8.2:
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.8.2.tgz#a2c437bac29682b6ca748532843c598815c4a563"
+  integrity sha512-01ChI3crJGGc91NP1MsGPad6KdyHsAnR15N2pMvD3o+0VlzqW89niEot46hK/Bq7KGrB/8gIKqx85LuwAnBf2Q==
   dependencies:
-    "@types/jest" "24.0.13"
-    "@types/node" "11.13.13"
     "@types/ws" "6.0.1"
 
 read-cmd-shim@^1.0.1, read-cmd-shim@~1.0.1:
