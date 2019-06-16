@@ -1644,11 +1644,6 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.5.tgz#011eece9d3f839a806b63973e228f85967b79ed3"
   integrity sha512-vVjM0SVzgaOUpflq4GYBvCpozes8OgIIS5gVXVka+OfK3hvnkC1i93U8WiY2OtNE4XUWyyy/86Kf6e0IHTQw1Q==
 
-"@types/node@11.13.12":
-  version "11.13.12"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.12.tgz#4caaf874d5eaf26e5723d30c95f6d40cac2c49bb"
-  integrity sha512-HMD9cEGP+k2Y1Lk8LL6Cux9UlxkWst1wJdoMHnvH3XlVecHdjffW829/YzWd/ptFkIWtcbqQDrTkz5PY6pN+0w==
-
 "@types/node@11.13.13":
   version "11.13.13"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.13.tgz#a3d2a8a908ce322f24f0f8c88160b44c7dd5c452"
@@ -8911,13 +8906,11 @@ react@16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
-reactotron-core-client@2.8.0:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.8.0.tgz#7d5809e81302d3202ab4327dcbc2b0d7c3a60b53"
-  integrity sha512-+WRsjVqQZpXC2gaTYqTzHFcjAMGGYQiGsl16krDFHVUqlbWK7x8j7qyo9SDy90lIJxYQO6t91ccG9CzOH9vfzw==
+reactotron-core-client@2.8.2:
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.8.2.tgz#a2c437bac29682b6ca748532843c598815c4a563"
+  integrity sha512-01ChI3crJGGc91NP1MsGPad6KdyHsAnR15N2pMvD3o+0VlzqW89niEot46hK/Bq7KGrB/8gIKqx85LuwAnBf2Q==
   dependencies:
-    "@types/jest" "24.0.13"
-    "@types/node" "11.13.12"
     "@types/ws" "6.0.1"
 
 read-cmd-shim@^1.0.1, read-cmd-shim@~1.0.1:
@@ -9477,10 +9470,10 @@ rollup-pluginutils@^2.8.0:
   dependencies:
     estree-walker "^0.6.1"
 
-rollup@1.13.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.13.0.tgz#8313fc6d9762e28301b4b89cc0a56233659a67b6"
-  integrity sha512-pW4G4cQmtEmbg4/CoFYc2AYeKiGpMAVak7kFpch1UJnYkXMn/34L8cD0kxkmjJNpJ/NagOHVdCwdkbtCEuDEww==
+rollup@1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.13.1.tgz#86a474c29df0f303ed31e4c8be5d81c1038beae8"
+  integrity sha512-TWBmVU5WS4wOy5Ij2qxrJYRUn/keECvStcXDpJSwgr95JZ6VFf1PDewiAk4VPf5vxr7drRJlxh9kYpxHveYOOg==
   dependencies:
     "@types/estree" "0.0.39"
     "@types/node" "^12.0.3"
