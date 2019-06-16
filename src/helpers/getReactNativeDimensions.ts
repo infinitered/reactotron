@@ -1,14 +1,14 @@
 import { Dimensions } from "react-native"
 
 interface AppDimensions {
-  screenWidth: number
-  screenHeight: number
-  screenScale: number
-  screenFontScale: number
-  windowWidth: number
-  windowHeight: number
-  windowScale: number
-  windowFontScale: number
+  screenWidth?: number
+  screenHeight?: number
+  screenScale?: number
+  screenFontScale?: number
+  windowWidth?: number
+  windowHeight?: number
+  windowScale?: number
+  windowFontScale?: number
 }
 
 export function getReactNativeDimensionsWithDimensions(
@@ -16,15 +16,30 @@ export function getReactNativeDimensionsWithDimensions(
   win: any
 ): AppDimensions | null {
   try {
+    let screenInfo = {}
+    let windowInfo = {}
+
+    if (screen) {
+      screenInfo = {
+        screenWidth: Math.ceil(screen.width),
+        screenHeight: Math.ceil(screen.height),
+        screenScale: screen.scale,
+        screenFontScale: screen.fontScale,
+      }
+    }
+
+    if (win) {
+      windowInfo = {
+        windowWidth: Math.ceil(win.width),
+        windowHeight: Math.ceil(win.height),
+        windowScale: win.scale,
+        windowFontScale: win.fontScale,
+      }
+    }
+
     return {
-      screenWidth: Math.ceil(screen.width),
-      screenHeight: Math.ceil(screen.height),
-      screenScale: screen.scale,
-      screenFontScale: screen.fontScale,
-      windowWidth: Math.ceil(win.width),
-      windowHeight: Math.ceil(win.height),
-      windowScale: win.scale,
-      windowFontScale: win.fontScale,
+      ...screenInfo,
+      ...windowInfo,
     }
   } catch (e) {}
 
@@ -32,8 +47,16 @@ export function getReactNativeDimensionsWithDimensions(
 }
 
 export default function getReactNativeDimensions(): AppDimensions | null {
-  const screen = Dimensions.get("screen")
-  const win = Dimensions.get("window")
+  let screen = null
+  let win = null
+
+  try {
+    screen = Dimensions.get("screen")
+  } catch {}
+
+  try {
+    win = Dimensions.get("window")
+  } catch {}
 
   return getReactNativeDimensionsWithDimensions(screen, win)
 }
