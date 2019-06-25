@@ -536,6 +536,7 @@ class UI {
       return
     }
     const formatCommand = command => ({
+      time: command.date,
       clientId: command.clientId,
       payload: {
         name: command.payload.name,
@@ -543,6 +544,7 @@ class UI {
       },
       type: command.type,
     })
+
     const commands = JSON.stringify(this.session.commands.map(formatCommand))
     fs.writeFile(this.exportFilePath + "/reactotron_timeline.txt", commands, err => {
       if (err) {
