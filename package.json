@@ -32,7 +32,7 @@
   "dependencies": {
     "mitt": "1.1.3",
     "ramda": "0.26.1",
-    "ws": "7.0.0"
+    "ws": "7.1.0"
   },
   "devDependencies": {
     "@babel/core": "7.4.5",
