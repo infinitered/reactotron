@@ -1236,10 +1236,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.4.tgz#46832183115c904410c275e34cf9403992999c32"
   integrity sha512-j8YL2C0fXq7IONwl/Ud5Kt0PeXw22zGERt+HSSnwbKOJVsAGkEz3sFCYwaF9IOuoG1HOtE0vKCj6sXF7Q0+Vaw==
 
-"@types/ramda@0.26.9":
-  version "0.26.9"
-  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.26.9.tgz#f0bbba59c04de9d29aaa1d1c0daedefc7244bb68"
-  integrity sha512-yozsk6sXE29kP/mzLCgZ6RFSwx2pD41ZgW1m4rk3meKyj4mw77ISxnu5Knc1tLaKQd2ocdd7Y0daCG678olPfw==
+"@types/ramda@0.26.15":
+  version "0.26.15"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.26.15.tgz#217d9d2133f55040bd5db0e67dbbf6ec8509446f"
+  integrity sha512-kmIO8GVOLv0A8UxFr5lJaqp4g8jbXNhH0grBaPL6NgkOqSirRKpV9+5DTmIDXTyq2G18YMdxDhnScEZtY4brtQ==
 
 "@types/resolve@0.0.8":
   version "0.0.8"
