@@ -1096,10 +1096,10 @@
     micromatch "^3.1.4"
     p-reduce "^1.0.0"
 
-"@semantic-release/github@^5.3.0-beta.6":
-  version "5.3.3"
-  resolved "https://registry.yarnpkg.com/@semantic-release/github/-/github-5.3.3.tgz#be74ae018f38e8462897b7c5ee6d140945f38d9c"
-  integrity sha512-FrTjedpxR6an/sWize8OVw2CnvygSzXgx+a3Fd7R6IACcnP5IWDbr3Myifr3b6HjyBturxykz5FphGopxadhgQ==
+"@semantic-release/github@^5.4.0-beta.1":
+  version "5.4.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@semantic-release/github/-/github-5.4.0-beta.1.tgz#7626394dbc63c5002164c65ab877c1e19bfc6204"
+  integrity sha512-XxV/pU94Qekpck2wBsA9ld5wDPlDYpW87SzJElk51k1yFVA99r/QeSW1PqkYIIa120UCdbOEvVBbfFfAeFpFKA==
   dependencies:
     "@octokit/rest" "^16.13.1"
     "@semantic-release/error" "^2.2.0"
@@ -1107,7 +1107,7 @@
     bottleneck "^2.0.1"
     debug "^4.0.0"
     dir-glob "^2.0.0"
-    fs-extra "^8.0.0"
+    fs-extra "^7.0.0"
     globby "^9.0.0"
     http-proxy-agent "^2.1.0"
     https-proxy-agent "^2.2.1"
@@ -3737,15 +3737,6 @@ fs-extra@^7.0.0:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-7.0.1.tgz#4f189c44aa123b895f722804f55ea23eadc348e9"
   integrity sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==
-  dependencies:
-    graceful-fs "^4.1.2"
-    jsonfile "^4.0.0"
-    universalify "^0.1.0"
-
-fs-extra@^8.0.0:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-8.0.1.tgz#90294081f978b1f182f347a440a209154344285b"
-  integrity sha512-W+XLrggcDzlle47X/XnS7FXrXu9sDo+Ze9zpndeBxdgv88FHLm1HtmkhEwavruS6koanBjp098rUpHs65EmG7A==
   dependencies:
     graceful-fs "^4.1.2"
     jsonfile "^4.0.0"
@@ -7773,14 +7764,14 @@ sax@^1.2.4:
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
 
-semantic-release@16.0.0-beta.18:
-  version "16.0.0-beta.18"
-  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-16.0.0-beta.18.tgz#8df1562c55d5d1e6804d0e9bc4935703f2f20516"
-  integrity sha512-d27vHo5f5o2hyHNVMFkou4qllXRjuOxUKree5A2xz/Lr3io8ySqc0BDnr4sZxvfhUd85AC8/I0uw49UMQSPtAw==
+semantic-release@16.0.0-beta.22:
+  version "16.0.0-beta.22"
+  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-16.0.0-beta.22.tgz#d0b0b28da7c055a4f8665779b2b468b34d74b363"
+  integrity sha512-E4RAIlXdPcqJPRms3UkzpdlBhN3Fa5RPoO13sFlMijlNqwAelmowtcc6Ik4IgJUJHQ+7G6ESKxfZ6y9qSs1nNw==
   dependencies:
     "@semantic-release/commit-analyzer" "^7.0.0-beta.1"
     "@semantic-release/error" "^2.2.0"
-    "@semantic-release/github" "^5.3.0-beta.6"
+    "@semantic-release/github" "^5.4.0-beta.1"
     "@semantic-release/npm" "^5.2.0-beta.5"
     "@semantic-release/release-notes-generator" "^7.1.2"
     aggregate-error "^2.0.0"
