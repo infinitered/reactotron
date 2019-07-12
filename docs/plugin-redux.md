@@ -50,9 +50,20 @@ ReactotronConfig, you'll need to add `reactotron-redux` as plugin
 + export default reactotron
 ```
 
-Then, where you create your Redux store, instead of using Redux's `createStore`,
-you can use Reactotron's `createStore` (`Reactotron` here being the output of your `reactotronConfig.js` file) which has the same interface.
+Then, add enhancer from `Reactotron.createEnhancer()` to `createStore` as last parameter
 
+```diff
+import { createStore } from 'redux'
++ import Reactotron from './ReactotronConfig'
+
+- const store = createStore(rootReducer)
++ const store = createStore(rootReducer, Reactotron.createEnhancer())
++ // or const store = createStore(rootReducer, preloadedState, Reactotron.createEnhancer())
+```
+
+Note: passing enhancer as last argument requires redux@>=3.1.0
+
+## If you have middleware
 
 ```diff
 import { createStore } from 'redux'
