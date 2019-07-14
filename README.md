@@ -1,11 +1,16 @@
 # reactotron-apisauce
 
-Converts responses sent via [apisauce](https://github.com/skellock/apisauce) into
+Converts responses sent via [apisauce](https://github.com/infinitered/apisauce) into
 Reactotron.
 
 # Installing
 
-`npm i --save-dev reactotron-apisauce`
+```bash
+npm i --save-dev reactotron-apisauce
+# or
+yarn add -D reactotron-apisauce
+```
+
 
 
 # Configuring
@@ -37,5 +42,5 @@ api.addMonitor(response => {
     Reactotron.apisauce(response)
 })
 
-// see https://github.com/skellock/apisauce for more details.
+// see https://github.com/infinitered/apisauce for more details.
 ```
