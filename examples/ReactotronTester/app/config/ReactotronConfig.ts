@@ -1,4 +1,5 @@
-import { Alert } from "react-native"
+import { Alert/*, AsyncStorage */ } from "react-native"
+import AsyncStorage from "@react-native-community/async-storage"
 import Reactotron from "reactotron-react-native"
 import { reactotronRedux as reduxPlugin } from "reactotron-redux"
 import sagaPlugin from "reactotron-redux-saga"
@@ -8,6 +9,8 @@ import { ArgType } from "reactotron-core-client"
 Reactotron.configure({
   name: "Demo App",
 })
+
+Reactotron.setAsyncStorageHandler(AsyncStorage)
 
 Reactotron.useReactNative({
   asyncStorage: {
