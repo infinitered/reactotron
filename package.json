@@ -53,7 +53,7 @@
     "electron-window-state": "5.0.3",
     "font-awesome": "4.7.0",
     "javascript-terminal": "^1.0.2",
-    "mobx": "5.9.4",
+    "mobx": "5.13.0",
     "mobx-react": "5.4.4",
     "mousetrap": "1.6.3",
     "postcss": "7.0.16",
