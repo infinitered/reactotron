@@ -54,7 +54,7 @@
     "font-awesome": "4.7.0",
     "javascript-terminal": "^1.0.2",
     "mobx": "5.9.4",
-    "mobx-react": "5.4.4",
+    "mobx-react": "6.1.3",
     "mousetrap": "1.6.3",
     "postcss": "7.0.16",
     "prop-types": "15.7.2",
