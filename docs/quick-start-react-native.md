@@ -77,6 +77,11 @@ if(__DEV__) {
 
 At this point, Reactotron is hooked up.
 
+**Note**: If using an Android device or emulator run the following command to make sure it can connect to Reactotron:
+```
+adb reverse tcp:9090 tcp:9090
+```
+
 Refresh your app (or start it up `react-native start`) and have a look at Reactotron now.  Do you see the `CONNECTION` line?  Click that to expand.
 
 ![We Have Contact](./images/quick-start-react-native/first-connect.jpg)
