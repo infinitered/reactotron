@@ -31,12 +31,9 @@ const Styles = {
     marginTop: 20,
   },
   row: {
-    ...AppStyles.Layout.hbox,
-    padding: "15px 20px",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderBottom: `1px solid ${Colors.line}`,
-    cursor: "pointer",
+    display: "flex",
+    flexDirection: "row",
+    marginTop: 10,
   },
   name: {
     color: Colors.tag,
@@ -110,6 +107,7 @@ class NativeOverlay extends Component {
     this.handleOpacityChange = this.handleOpacityChange.bind(this)
     this.handleMarginsChange = this.handleMarginsChange.bind(this)
     this.removeImage = this.removeImage.bind(this)
+    this.applyOverlay = this.applyOverlay.bind(this)
   }
 
   /**
@@ -136,9 +134,6 @@ class NativeOverlay extends Component {
    * @memberOf Native
    */
   import(path) {
-    const { ui } = this.props.session
-    const { opacity, scale, justifyContent, alignItems, resizeMode, growToWindow } = this.state
-
     // need to load from a buffer because electron has a problem reading
     // from '@2x.png' named files.  :|
     fs.readFile(path, (err, data) => {
@@ -147,17 +142,42 @@ class NativeOverlay extends Component {
         const uri = image.toDataURL()
         const { width, height } = image.getSize()
         this.setState({ uri, width, height })
-        ui.setOverlay({
-          uri,
-          width: width * scale,
-          height: height * scale,
-          justifyContent,
-          alignItems,
-          opacity,
-          growToWindow,
-          resizeMode,
-        })
+        this.applyOverlay()
       }
+    })
+  }
+
+  applyOverlay() {
+    const { ui } = this.props.session
+    const {
+      opacity,
+      scale,
+      justifyContent,
+      alignItems,
+      resizeMode,
+      growToWindow,
+      uri,
+      width,
+      height,
+      marginTop,
+      marginRight,
+      marginBottom,
+      marginLeft,
+    } = this.state
+
+    ui.setOverlay({
+      uri,
+      width: width * scale,
+      height: height * scale,
+      justifyContent,
+      alignItems,
+      opacity,
+      growToWindow,
+      resizeMode,
+      marginTop,
+      marginRight,
+      marginBottom,
+      marginLeft,
     })
   }
 
@@ -255,6 +275,19 @@ class NativeOverlay extends Component {
     } else {
       return <p>Drop Image Here</p>
     }
+  }
+
+  renderReapply() {
+    const { uri } = this.state
+    if (!uri) return <div />
+
+    return (
+      <div style={Styles.row}>
+        <button style={Styles.button} onClick={this.applyOverlay}>
+          Reapply Overlay
+        </button>
+      </div>
+    )
   }
 
   renderLayoutType() {
@@ -358,6 +391,7 @@ class NativeOverlay extends Component {
             >
               {this.renderImagePreview()}
             </div>
+            {this.renderReapply()}
           </div>
           {this.renderLayoutType()}
           {this.renderScale()}
