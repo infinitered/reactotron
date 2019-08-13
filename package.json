@@ -133,7 +133,7 @@
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.5.1",
     "url-loader": "1.1.2",
-    "webpack": "4.32.2",
+    "webpack": "4.39.2",
     "webpack-bundle-analyzer": "3.3.2",
     "webpack-cli": "3.3.2",
     "webpack-dev-middleware": "3.7.0",
