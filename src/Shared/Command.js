@@ -3,8 +3,8 @@ import PropTypes from "prop-types"
 import React, { Component } from "react"
 import {
   MdLabel as DisplayIcon,
-  MdExpandMore as IconOpen,
-  MdChevronRight as IconClosed
+  MdExpandLess as IconOpen,
+  MdExpandMore as IconClosed
 } from "react-icons/md"
 import Timestamp from "../Shared/Timestamp"
 import AppStyles from "../Theme/AppStyles"
