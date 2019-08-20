@@ -63,7 +63,7 @@ export interface ReactotronReactNative {
     options: UseReactNativeOptions
   ) => Reactotron<ReactotronReactNative> & ReactotronReactNative
   overlay: (App: React.ReactNode) => void
-  storybookSwitcher: (App: React.ReactNode) => void
+  storybookSwitcher: (App: React.ReactNode) => (Root: React.ReactNode) => React.ReactNode
 }
 
 const reactotron: Reactotron<ReactotronReactNative> & ReactotronReactNative = createClient(DEFAULTS)
