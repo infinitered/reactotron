@@ -9,7 +9,7 @@ export default function createEnhancer(
   pluginConfig: PluginConfig,
   handleStoreCreation: () => void
 ) {
-  return () => createStore => (reducer, ...args) => {
+  return (skipSettingStore = false) => createStore => (reducer, ...args) => {
     const originalStore = createStore(
       reactotronReducer(reducer, pluginConfig.restoreActionType),
       ...args
@@ -18,9 +18,11 @@ export default function createEnhancer(
       ...originalStore,
       dispatch: createCustomDispatch(reactotron, originalStore, pluginConfig),
     }
-    reactotron.reduxStore = store
 
-    handleStoreCreation()
+    if (!skipSettingStore) {
+      reactotron.reduxStore = store
+      handleStoreCreation()
+    }
 
     return store
   }

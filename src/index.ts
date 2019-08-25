@@ -28,6 +28,10 @@ function reactotronRedux(pluginConfig: PluginConfig = {}) {
       onCommand: createCommandHander(reactotron, mergedPluginConfig, onReduxStoreCreation),
       features: {
         createEnhancer: createEnhancer(reactotron, mergedPluginConfig, handleStoreCreation),
+        setReduxStore: store => {
+          reactotron.reduxStore = store
+          handleStoreCreation()
+        },
         reportReduxAction: createSendAction(reactotron),
       },
     }
@@ -44,6 +48,11 @@ declare module "reactotron-core-client" {
     /**
      * Enhancer creator
      */
-    createEnhancer?: () => StoreEnhancer
+    createEnhancer?: (skipSettingStore?: boolean) => StoreEnhancer
+
+    /**
+     * Store setter
+     */
+    setReduxStore?: (store: any) => void
   }
 }
