@@ -3,27 +3,39 @@
   "version": "2.1.0",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "@storybook/react-native": "^3.4.8",
-    "apisauce": "^1.0.2",
-    "react": "16.4.1",
-    "react-native": "0.56.0",
-    "react-native-view-shot": "^2.4.0",
-    "react-redux": "^6.0.1",
-    "reactotron-react-native": "^3.6.4",
+    "@emotion/core": "^10.0.16",
+    "@storybook/addon-actions": "^5.1.11",
+    "@storybook/addon-links": "^5.1.11",
+    "@storybook/react-native": "^5.1.11",
+    "apisauce": "^1.0.5",
+    "emotion-theming": "^10.0.14",
+    "ramda": "^0.26.1",
+    "react": "16.9.0",
+    "react-native": "0.61.3",
+    "react-native-view-shot": "^3.0.2",
+    "react-redux": "^7.1.1",
+    "reactotron-react-native": "^3.6.5",
     "reactotron-redux": "^3.1.1",
     "reactotron-redux-saga": "^4.2.2",
     "redux-logger": "^3.0.6",
-    "redux-saga": "^1.0.1"
+    "redux-saga": "^1.0.5"
   },
   "devDependencies": {
-    "babel-jest": "23.0.1",
-    "babel-preset-react-native": "5.0.1",
-    "jest": "23.2.0",
-    "react-test-renderer": "16.4.1"
+    "@babel/core": "^7.6.4",
+    "@babel/runtime": "^7.6.3",
+    "@react-native-community/eslint-config": "^0.0.5",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.6.0",
+    "jest": "^24.9.0",
+    "metro-react-native-babel-preset": "^0.57.0",
+    "react-test-renderer": "16.9.0"
   },
   "jest": {
     "preset": "react-native"
