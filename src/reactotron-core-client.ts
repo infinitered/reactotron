@@ -128,11 +128,11 @@ export interface Reactotron<ReactotronSubtype = ReactotronCore> extends Reactotr
   * Set the configuration options.
   */
   configure: (options?: ClientOptions) => Reactotron<ReactotronSubtype> & ReactotronSubtype
-  
+
   use: (
     pluginCreator?: (client: Reactotron<ReactotronSubtype> & ReactotronSubtype) => any,
   ) => Reactotron<ReactotronSubtype> & ReactotronSubtype
-  
+
   connect: () => Reactotron<ReactotronSubtype> & ReactotronSubtype;
 }
 
@@ -338,7 +338,12 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore> implements React
 
     if (this.isReady) {
       // send this command
-      this.socket.send(serializedMessage)
+      try {
+        this.socket.send(serializedMessage)
+      } catch {
+        this.isReady = false
+        console.log('An error occured communicating with reactotron. Please reload your app')
+      }
     } else {
       // queue it up until we can connect
       this.sendQueue.push(serializedMessage)
