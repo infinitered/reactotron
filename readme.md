@@ -28,6 +28,8 @@ Use it to:
 
 You plug it into your app as a dev dependency so it adds nothing to your product builds.
 
+[Live Demo from Chain React 2018](https://www.youtube.com/watch?v=UiPo9A9k7xc)
+
 ### Desktop
 
 Reactotron on the left, demo React Native app on the right.
