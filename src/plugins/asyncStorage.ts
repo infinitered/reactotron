@@ -1,5 +1,5 @@
-import { AsyncStorage } from "react-native"
-import { Reactotron, ReactotronCore } from "reactotron-core-client"
+import { Reactotron } from "reactotron-core-client"
+import { ReactotronReactNative } from "../reactotron-react-native";
 
 export interface AsyncStorageOptions {
   ignore?: string[]
@@ -9,10 +9,10 @@ const PLUGIN_DEFAULTS: AsyncStorageOptions = {
   ignore: [],
 }
 
-export default <ReactotronSubtype = ReactotronCore>(options: AsyncStorageOptions) => (reactotron: Reactotron<ReactotronSubtype> & ReactotronSubtype) => {
+export default <ReactotronSubtype = ReactotronReactNative>(options: AsyncStorageOptions) => (reactotron: Reactotron<ReactotronSubtype> & ReactotronReactNative) => {
   // setup configuration
   const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
-  const ignore = config['ignore'] || PLUGIN_DEFAULTS.ignore
+  const ignore = config["ignore"] || PLUGIN_DEFAULTS.ignore
 
   let swizzSetItem
   let swizzRemoveItem
@@ -24,13 +24,13 @@ export default <ReactotronSubtype = ReactotronCore>(options: AsyncStorageOptions
   let isSwizzled = false
 
   const sendToReactotron = (action: string, data?: any) => {
-    reactotron.send('asyncStorage.mutation', { action, data })
+    reactotron.send("asyncStorage.mutation", { action, data })
   }
 
   const setItem = async (key, value, callback) => {
     try {
       if (ignore.indexOf(key) < 0) {
-        sendToReactotron('setItem', { key, value })
+        sendToReactotron("setItem", { key, value })
       }
     } catch (e) {}
     return swizzSetItem(key, value, callback)
@@ -39,7 +39,7 @@ export default <ReactotronSubtype = ReactotronCore>(options: AsyncStorageOptions
   const removeItem = async (key, callback) => {
     try {
       if (ignore.indexOf(key) < 0) {
-        sendToReactotron('removeItem', { key })
+        sendToReactotron("removeItem", { key })
       }
     } catch (e) {}
     return swizzRemoveItem(key, callback)
@@ -48,7 +48,7 @@ export default <ReactotronSubtype = ReactotronCore>(options: AsyncStorageOptions
   const mergeItem = async (key, value, callback) => {
     try {
       if (ignore.indexOf(key) < 0) {
-        sendToReactotron('mergeItem', { key, value })
+        sendToReactotron("mergeItem", { key, value })
       }
     } catch (e) {}
     return swizzMergeItem(key, value, callback)
@@ -56,7 +56,7 @@ export default <ReactotronSubtype = ReactotronCore>(options: AsyncStorageOptions
 
   const clear = async callback => {
     try {
-      sendToReactotron('clear')
+      sendToReactotron("clear")
     } catch (e) {}
     return swizzClear(callback)
   }
@@ -67,7 +67,7 @@ export default <ReactotronSubtype = ReactotronCore>(options: AsyncStorageOptions
         pair => pair && pair[0] && ignore.indexOf(pair[0]) < 0
       )
       if (shippablePairs.length > 0) {
-        sendToReactotron('multiSet', { pairs: shippablePairs })
+        sendToReactotron("multiSet", { pairs: shippablePairs })
       }
     } catch (e) {}
     return swizzMultiSet(pairs, callback)
@@ -77,7 +77,7 @@ export default <ReactotronSubtype = ReactotronCore>(options: AsyncStorageOptions
     try {
       const shippableKeys = (keys || []).filter(key => ignore.indexOf(key) < 0)
       if (shippableKeys.length > 0) {
-        sendToReactotron('multiRemove', { keys: shippableKeys })
+        sendToReactotron("multiRemove", { keys: shippableKeys })
       }
     } catch (e) {}
     return swizzMultiRemove(keys, callback)
@@ -89,7 +89,7 @@ export default <ReactotronSubtype = ReactotronCore>(options: AsyncStorageOptions
         pair => pair && pair[0] && ignore.indexOf(pair[0]) < 0
       )
       if (shippablePairs.length > 0) {
-        sendToReactotron('multiMerge', { pairs: shippablePairs })
+        sendToReactotron("multiMerge", { pairs: shippablePairs })
       }
     } catch (e) {}
     return swizzMultiMerge(pairs, callback)
@@ -101,26 +101,26 @@ export default <ReactotronSubtype = ReactotronCore>(options: AsyncStorageOptions
   const trackAsyncStorage = () => {
     if (isSwizzled) return
 
-    swizzSetItem = AsyncStorage.setItem
-    AsyncStorage.setItem = setItem
+    swizzSetItem = reactotron.asyncStorageHandler.setItem
+    reactotron.asyncStorageHandler.setItem = setItem
 
-    swizzRemoveItem = AsyncStorage.removeItem
-    AsyncStorage.removeItem = removeItem
+    swizzRemoveItem = reactotron.asyncStorageHandler.removeItem
+    reactotron.asyncStorageHandler.removeItem = removeItem
 
-    swizzMergeItem = AsyncStorage.mergeItem
-    AsyncStorage.mergeItem = mergeItem
+    swizzMergeItem = reactotron.asyncStorageHandler.mergeItem
+    reactotron.asyncStorageHandler.mergeItem = mergeItem
 
-    swizzClear = AsyncStorage.clear
-    AsyncStorage.clear = clear
+    swizzClear = reactotron.asyncStorageHandler.clear
+    reactotron.asyncStorageHandler.clear = clear
 
-    swizzMultiSet = AsyncStorage.multiSet
-    AsyncStorage.multiSet = multiSet
+    swizzMultiSet = reactotron.asyncStorageHandler.multiSet
+    reactotron.asyncStorageHandler.multiSet = multiSet
 
-    swizzMultiRemove = AsyncStorage.multiRemove
-    AsyncStorage.multiRemove = multiRemove
+    swizzMultiRemove = reactotron.asyncStorageHandler.multiRemove
+    reactotron.asyncStorageHandler.multiRemove = multiRemove
 
-    swizzMultiMerge = AsyncStorage.multiMerge
-    AsyncStorage.multiMerge = multiMerge
+    swizzMultiMerge = reactotron.asyncStorageHandler.multiMerge
+    reactotron.asyncStorageHandler.multiMerge = multiMerge
 
     isSwizzled = true
   }
@@ -128,24 +128,26 @@ export default <ReactotronSubtype = ReactotronCore>(options: AsyncStorageOptions
   const untrackAsyncStorage = () => {
     if (!isSwizzled) return
 
-    AsyncStorage.setItem = swizzSetItem
-    AsyncStorage.removeItem = swizzRemoveItem
-    AsyncStorage.mergeItem = swizzMergeItem
-    AsyncStorage.clear = swizzClear
-    AsyncStorage.multiSet = swizzMultiSet
-    AsyncStorage.multiRemove = swizzMultiRemove
-    AsyncStorage.multiMerge = swizzMultiMerge
+    reactotron.asyncStorageHandler.setItem = swizzSetItem
+    reactotron.asyncStorageHandler.removeItem = swizzRemoveItem
+    reactotron.asyncStorageHandler.mergeItem = swizzMergeItem
+    reactotron.asyncStorageHandler.clear = swizzClear
+    reactotron.asyncStorageHandler.multiSet = swizzMultiSet
+    reactotron.asyncStorageHandler.multiRemove = swizzMultiRemove
+    reactotron.asyncStorageHandler.multiMerge = swizzMultiMerge
 
     isSwizzled = false
   }
 
   // reactotronShipStorageValues()
-  trackAsyncStorage()
+  if (reactotron.asyncStorageHandler) {
+    trackAsyncStorage()
+  }
 
   return {
     features: {
       trackAsyncStorage,
-      untrackAsyncStorage
-    }
+      untrackAsyncStorage,
+    },
   }
 }

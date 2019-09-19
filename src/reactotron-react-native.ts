@@ -1,4 +1,4 @@
-import { Platform, AsyncStorage, NativeModules } from "react-native"
+import { Platform, NativeModules } from "react-native"
 import { createClient, Reactotron } from "reactotron-core-client"
 import getHost from "rn-host-detect"
 
@@ -15,6 +15,8 @@ import devTools from "./plugins/devTools"
 const constants = NativeModules.PlatformConstants || {}
 
 const REACTOTRON_ASYNC_CLIENT_ID = "@REACTOTRON/clientId"
+
+let tempClientId = null
 
 const DEFAULTS = {
   createSocket: (path: string) => new WebSocket(path), // eslint-disable-line
@@ -39,11 +41,20 @@ const DEFAULTS = {
     reactNativeVersion: getReactNativeVersion(),
     ...getReactNativeDimensions(),
   },
-  getClientId: async () => {
-    return AsyncStorage.getItem(REACTOTRON_ASYNC_CLIENT_ID)
+  getClientId: () => {
+    if (reactotron.asyncStorageHandler) {
+      return reactotron.asyncStorageHandler.getItem(REACTOTRON_ASYNC_CLIENT_ID)
+    }
+
+    return new Promise(resolve => resolve(tempClientId))
   },
   setClientId: (clientId: string) => {
-    return AsyncStorage.setItem(REACTOTRON_ASYNC_CLIENT_ID, clientId)
+    if (reactotron.asyncStorageHandler) {
+      return reactotron.asyncStorageHandler.setItem(REACTOTRON_ASYNC_CLIENT_ID, clientId)
+    }
+
+    tempClientId = clientId
+    return Promise.resolve()
   },
   proxyHack: true,
 }
@@ -60,10 +71,12 @@ export interface UseReactNativeOptions {
 
 export interface ReactotronReactNative {
   useReactNative: (
-    options: UseReactNativeOptions
+    options?: UseReactNativeOptions
   ) => Reactotron<ReactotronReactNative> & ReactotronReactNative
   overlay: (App: React.ReactNode) => void
   storybookSwitcher: (App: React.ReactNode) => (Root: React.ReactNode) => React.ReactNode
+  asyncStorageHandler?: any
+  setAsyncStorageHandler?: (asyncStorage: any) => Reactotron<ReactotronReactNative> & ReactotronReactNative
 }
 
 const reactotron: Reactotron<ReactotronReactNative> & ReactotronReactNative = createClient(DEFAULTS)
@@ -104,6 +117,12 @@ reactotron.useReactNative = (options: UseReactNativeOptions = {}) => {
   return reactotron
 }
 
-export { trackGlobalErrors, openInEditor, overlay, asyncStorage, networking, storybook, devTools }
+reactotron.setAsyncStorageHandler = asyncStorage => {
+  reactotron.asyncStorageHandler = asyncStorage
+
+  return reactotron
+}
+
+export { asyncStorage, trackGlobalErrors, openInEditor, overlay, networking, storybook, devTools }
 
 export default reactotron
