@@ -1,3 +1,4 @@
+import { AsyncStorage } from 'react-native'
 import Reactotron from 'reactotron-react-native'
 import { reactotronRedux as reduxPlugin } from 'reactotron-redux'
 import sagaPlugin from 'reactotron-redux-saga'
@@ -5,6 +6,7 @@ import sagaPlugin from 'reactotron-redux-saga'
 console.disableYellowBox = true
 
 // First, set some configuration settings on how to connect to the app
+Reactotron.setAsyncStorageHandler(AsyncStorage)
 Reactotron.configure({
   name: 'Demo App'
   // host: '10.0.1.1',
