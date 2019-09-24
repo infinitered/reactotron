@@ -125,18 +125,19 @@ export interface ReactotronCore {
 
 export interface Reactotron<ReactotronSubtype = ReactotronCore> extends ReactotronCore {
   /**
-  * Set the configuration options.
-  */
+   * Set the configuration options.
+   */
   configure: (options?: ClientOptions) => Reactotron<ReactotronSubtype> & ReactotronSubtype
 
   use: (
-    pluginCreator?: (client: Reactotron<ReactotronSubtype> & ReactotronSubtype) => any,
+    pluginCreator?: (client: Reactotron<ReactotronSubtype> & ReactotronSubtype) => any
   ) => Reactotron<ReactotronSubtype> & ReactotronSubtype
 
-  connect: () => Reactotron<ReactotronSubtype> & ReactotronSubtype;
+  connect: () => Reactotron<ReactotronSubtype> & ReactotronSubtype
 }
 
-export class ReactotronImpl<ReactotronSubtype = ReactotronCore> implements Reactotron<ReactotronSubtype> {
+export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
+  implements Reactotron<ReactotronSubtype> {
   // the configuration options
   options: ClientOptions = Object.assign({}, DEFAULT_OPTIONS)
 
@@ -199,7 +200,7 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore> implements React
       this.options.plugins.forEach(p => this.use(p))
     }
 
-    return this as any as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
+    return (this as any) as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
   }
 
   close() {
@@ -310,7 +311,7 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore> implements React
     // assign the socket to the instance
     this.socket = socket
 
-    return this as any as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
+    return (this as any) as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
   }
 
   /**
@@ -342,7 +343,7 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore> implements React
         this.socket.send(serializedMessage)
       } catch {
         this.isReady = false
-        console.log('An error occured communicating with reactotron. Please reload your app')
+        console.log("An error occured communicating with reactotron. Please reload your app")
       }
     } else {
       // queue it up until we can connect
@@ -374,7 +375,9 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore> implements React
   /**
    * Adds a plugin to the system
    */
-  use(pluginCreator?: (client: Reactotron<ReactotronSubtype> & ReactotronSubtype) => any): Reactotron<ReactotronSubtype> & ReactotronSubtype {
+  use(
+    pluginCreator?: (client: Reactotron<ReactotronSubtype> & ReactotronSubtype) => any
+  ): Reactotron<ReactotronSubtype> & ReactotronSubtype {
     // we're supposed to be given a function
     if (typeof pluginCreator !== "function") {
       throw new Error("plugins must be a function")
@@ -425,7 +428,7 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore> implements React
     plugin.onPlugin && typeof plugin.onPlugin === "function" && plugin.onPlugin.bind(this)(this)
 
     // chain-friendly
-    return this as any as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
+    return (this as any) as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
   }
 
   onCustomCommand(config: CustomCommand | string, optHandler?: () => void): () => void {
@@ -461,7 +464,19 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore> implements React
     // Make sure the command doesn't already exist
     const existingCommands = this.customCommands.filter(cc => cc.command === command)
     if (existingCommands.length > 0) {
-      throw new Error(`A custom command with the command "${command}" already exists`)
+      console.warn(
+        `A custom command with the command "${command}" already exists. If you are on Android this is probably fine.`
+      )
+
+      existingCommands.forEach(command => {
+        console.log(command)
+        this.customCommands = this.customCommands.filter(cc => cc.id !== command.id)
+
+        this.send("customCommand.unregister", {
+          id: command.id,
+          command: command.command,
+        })
+      })
     }
 
     if (args) {
@@ -518,8 +533,10 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore> implements React
 }
 
 // convenience factory function
-export function createClient<ReactotronSubtype = ReactotronCore>(options?: ClientOptions): Reactotron<ReactotronSubtype> & ReactotronSubtype {
+export function createClient<ReactotronSubtype = ReactotronCore>(
+  options?: ClientOptions
+): Reactotron<ReactotronSubtype> & ReactotronSubtype {
   const client = new ReactotronImpl<ReactotronSubtype>()
   client.configure(options)
-  return client as any as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
+  return (client as any) as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
 }
