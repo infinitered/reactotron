@@ -45,7 +45,7 @@ export default () => (reactotron: Reactotron) => {
           reactotron.send(
             "repl.execute.response",
             function() {
-              return eval(payload)
+              return eval(payload) // eslint-disable-line no-eval
             }.call(myRepls)
           )
           break

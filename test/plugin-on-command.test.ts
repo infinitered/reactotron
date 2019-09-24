@@ -10,7 +10,7 @@ test("plugins support command", async done => {
   const server = new WebSocket.Server({ port })
 
   // the plugin to capture the command
-  const plugin = reactotron => ({
+  const plugin = () => ({
     onCommand: command => {
       expect(command.type).toBe(mock.type)
       expect(command.payload).toEqual(mock.payload)

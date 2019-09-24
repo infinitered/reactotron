@@ -5,13 +5,13 @@ const createSocket = path => new WebSocket(path)
 
 test("features must be an object if they appear", () => {
   const client = createClient({ createSocket })
-  const badPlugin = () => client.use(reactotron => ({ features: 1 }))
+  const badPlugin = () => client.use(() => ({ features: 1 }))
   expect(badPlugin).toThrow()
 })
 
 test("some names are not allowed", () => {
   const client = createClient({ createSocket })
-  const createPlugin = features => reactotron => ({ features })
+  const createPlugin = features => () => ({ features })
 
   const badPlugins = [
     "options",
@@ -32,7 +32,7 @@ test("some names are not allowed", () => {
 
 test("features can be added and called", () => {
   const client: any = createClient({ createSocket })
-  const plugin = () => reactotron => {
+  const plugin = () => () => {
     const features = {
       magic: () => 42,
     }
@@ -45,7 +45,7 @@ test("features can be added and called", () => {
 
 test("you can overwrite other feature names", () => {
   const client: any = createClient({ createSocket })
-  const createPlugin = number => reactotron => ({ features: { hello: () => number } })
+  const createPlugin = number => () => ({ features: { hello: () => number } })
   client.use(createPlugin(69))
   expect(client.hello()).toBe(69)
   client.use(createPlugin(9001))

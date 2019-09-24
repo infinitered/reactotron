@@ -179,7 +179,7 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
   /**
    * The current ID for custom commands
    */
-  customCommandLatestId: number = 1
+  customCommandLatestId = 1
 
   /**
    * Starts a timer and returns a function you can call to stop it and return the elapsed time.

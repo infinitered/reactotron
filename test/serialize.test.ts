@@ -44,7 +44,10 @@ test("medium sized funk", () => {
   mockPayload.number = 69
   mockPayload.object = o
   mockPayload.list = [o, mockPayload.string, "literally a string", mockPayload.number, o]
-  mockPayload.fn = function hello() {}
+  function hello() {
+    // Intentionally empty
+  }
+  mockPayload.fn = hello
   mockPayload.anonymous = () => {}
 
   const actual = JSON.parse(serialize(mockPayload))

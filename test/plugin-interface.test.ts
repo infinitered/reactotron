@@ -28,7 +28,7 @@ test("plugins are invoke and return an object", () => {
 
 test("plugins can literally do nothing", () => {
   const client = createClient({ createSocket }) as any
-  const empty = reactotron => ({})
+  const empty = () => ({})
   client.use(empty)
   expect(client.plugins.length).toBe(corePlugins.length + 1)
 })
@@ -46,7 +46,7 @@ test("initialized with the config object", async done => {
 })
 
 test("can be added in createClient", () => {
-  const createPlugin = (name, value) => reactotron => ({ features: { [name]: () => value } })
+  const createPlugin = (name, value) => () => ({ features: { [name]: () => value } })
   const client: any = createClient({
     createSocket,
     plugins: [createPlugin("sayHello", "hello"), createPlugin("sayGoodbye", "goodbye")],

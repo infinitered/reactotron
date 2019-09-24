@@ -1,6 +1,6 @@
 /// <reference types="node" />
 
-declare var global: any
+declare const global: any
 
 const hasHirezNodeTimer =
   false &&
@@ -10,6 +10,7 @@ const hasHirezNodeTimer =
   typeof process.hrtime === "function"
 
 // the default timer
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const defaultPerformanceNow = (started?: number) => Date.now()
 
 // try to find the browser-based performance timer

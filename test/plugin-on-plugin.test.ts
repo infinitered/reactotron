@@ -8,7 +8,7 @@ test("plugins support onPlugin", done => {
   const client = createClient({ createSocket })
 
   // make a plugin to capture onPlugin
-  const plugin = reactotron => ({
+  const plugin = () => ({
     onPlugin: instance => {
       expect(instance).toBe(client)
       done()

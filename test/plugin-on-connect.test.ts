@@ -9,7 +9,7 @@ test("plugins support onConnect", async done => {
   const server = new WebSocket.Server({ port })
 
   // this plugin supports onConnect
-  const plugin = send => ({
+  const plugin = () => ({
     onConnect: () => {
       done()
       server.close()
