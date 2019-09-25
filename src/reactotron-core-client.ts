@@ -464,10 +464,6 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
     // Make sure the command doesn't already exist
     const existingCommands = this.customCommands.filter(cc => cc.command === command)
     if (existingCommands.length > 0) {
-      console.warn(
-        `A custom command with the command "${command}" already exists. If you are on Android this is probably fine.`
-      )
-
       existingCommands.forEach(command => {
         console.log(command)
         this.customCommands = this.customCommands.filter(cc => cc.id !== command.id)
