@@ -102,7 +102,7 @@ export default class Server {
   /**
    * Have we started the server?
    */
-  started: boolean = false
+  started = false
 
   /**
    * Keep alive interval to be running while the server is up.
