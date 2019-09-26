@@ -41,6 +41,7 @@ const DEFAULTS = {
     reactNativeVersion: getReactNativeVersion(),
     ...getReactNativeDimensions(),
   },
+  /* eslint-disable @typescript-eslint/no-use-before-define */
   getClientId: () => {
     if (reactotron.asyncStorageHandler) {
       return reactotron.asyncStorageHandler.getItem(REACTOTRON_ASYNC_CLIENT_ID)
@@ -56,6 +57,7 @@ const DEFAULTS = {
     tempClientId = clientId
     return Promise.resolve()
   },
+  /* eslint-enable @typescript-eslint/no-use-before-define */
   proxyHack: true,
 }
 

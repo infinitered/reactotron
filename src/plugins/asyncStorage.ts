@@ -12,7 +12,7 @@ const PLUGIN_DEFAULTS: AsyncStorageOptions = {
 export default <ReactotronSubtype = ReactotronReactNative>(options: AsyncStorageOptions) => (reactotron: Reactotron<ReactotronSubtype> & ReactotronReactNative) => {
   // setup configuration
   const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
-  const ignore = config["ignore"] || PLUGIN_DEFAULTS.ignore
+  const ignore = config.ignore || PLUGIN_DEFAULTS.ignore
 
   let swizzSetItem
   let swizzRemoveItem
