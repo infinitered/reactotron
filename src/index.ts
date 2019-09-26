@@ -21,7 +21,7 @@ function getNavigatorProperty(name) {
   return window.navigator[name]
 }
 
-var DEFAULTS = {
+const DEFAULTS = {
   createSocket: path => new WebSocket(path), // eslint-disable-line
   host: "localhost",
   port: 9090,
