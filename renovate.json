@@ -1,5 +1,9 @@
 {
-  "extends": [
-    "config:base"
+  "extends": ["config:base"],
+  "packageRules": [
+    {
+      "depTypeList": ["devDependencies"],
+      "commitMessageExtra": "to {{#if isMajor}}v{{{newMajor}}}{{else}}{{#if isSingleVersion}}v{{{toVersion}}}{{else}}{{{newValue}}}{{/if}}{{/if}}\n[skip ci]"
+    }
   ]
 }
