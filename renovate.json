@@ -4,7 +4,8 @@
     {
       "depTypeList": ["devDependencies"],
       "commitBody": "[skip ci]",
-      "automerge": true
+      "automerge": true,
+      "semanticCommits": true
     }
   ]
 }
