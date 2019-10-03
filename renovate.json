@@ -3,7 +3,8 @@
   "packageRules": [
     {
       "depTypeList": ["devDependencies"],
-      "commitBody": "[skip ci]"
+      "commitBody": "[skip ci]",
+      "automerge": true
     }
   ]
 }
