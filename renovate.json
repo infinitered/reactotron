@@ -2,10 +2,7 @@
   "extends": ["config:base"],
   "packageRules": [
     {
-      "depTypeList": ["devDependencies"],
-      "commitBody": "[skip ci]",
-      "automerge": true,
-      "semanticCommits": true
+      "depTypeList": ["devDependencies"]
     }
   ]
 }
