@@ -98,10 +98,3 @@ workflows:
       - publish:
           requires:
             - build
-          filters:
-            branches:
-              only:
-                - master
-                - next
-                - beta
-                - alpha
