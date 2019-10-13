@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": false,
+    "jsx": "react",
     "declaration": true,
     "declarationDir": "dist/types",
     "emitDeclarationOnly": true,
