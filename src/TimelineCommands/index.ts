@@ -1,4 +1,4 @@
-// import ClientIntroCommand from "./ClientIntroCommand"
+import ClientIntroCommand from "./ClientIntroCommand"
 
 enum CommandTypes {
   ClientIntro = "client.intro",
@@ -6,8 +6,8 @@ enum CommandTypes {
 
 function timelineCommandResolver(type: CommandTypes) {
   switch (type) {
-    // case CommandTypes.ClientIntro:
-    //   return ClientIntroCommand
+    case CommandTypes.ClientIntro:
+      return ClientIntroCommand
     default:
       return null
   }

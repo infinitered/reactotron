@@ -1,6 +1,6 @@
 {
   "name": "reactotron-core-ui",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Core UI components for Reactotron",
   "author": "Infinite Red",
   "license": "MIT",
@@ -19,7 +19,10 @@
     "lint": "eslint src --ext .ts,.tsx",
     "tsc": "tsc",
     "compile": "NODE_ENV=production rollup -c",
-    "compile:dev": "NODE_ENV=development rollup -c"
+    "compile:dev": "NODE_ENV=development rollup -c",
+    "ci:lint": "yarn lint",
+    "ci:test": "yarn test",
+    "ci:publish": "yarn semantic-release"
   },
   "peerDependencies": {
     "date-fns": "^2.4.1",
@@ -35,6 +38,7 @@
     "@babel/core": "^7.6.4",
     "@babel/preset-react": "^7.6.3",
     "@babel/preset-typescript": "^7.6.0",
+    "@semantic-release/git": "7.1.0-beta.6",
     "@storybook/addon-actions": "^5.2.3",
     "@storybook/addon-links": "^5.2.3",
     "@storybook/addon-knobs": "^5.2.3",
@@ -57,6 +61,7 @@
     "rollup-plugin-babel-minify": "^9.1.0",
     "rollup-plugin-filesize": "^6.2.0",
     "rollup-plugin-node-resolve": "^5.2.0",
+    "semantic-release": "16.0.0-beta.24",
     "trash-cli": "^3.0.0",
     "typescript": "^3.6.4"
   },

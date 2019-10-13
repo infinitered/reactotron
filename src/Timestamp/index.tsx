@@ -21,13 +21,15 @@ const DeltaContainer = styled.span`
 `
 
 interface Props {
-  date: number | Date
+  date: number | Date | string
   deltaTime?: number
 }
 
 export default function Timestamp({ date, deltaTime }: Props) {
-  const dateLeft = format(date, "h:mm:")
-  const dateRight = format(date, "ss.SSS")
+  const fixedDate = typeof date === "string" ? new Date(date) : date
+
+  const dateLeft = format(fixedDate, "h:mm:")
+  const dateRight = format(fixedDate, "ss.SSS")
   const delta = deltaTime ? `+${deltaTime} ms` : ""
 
   return (
