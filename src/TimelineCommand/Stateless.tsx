@@ -11,7 +11,8 @@ const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
   border-bottom: ${props => `1px solid ${props.theme.line}`};
-  background-color: ${props => (props.isOpen ? props.theme.backgroundSubtleLight : "transparent")};
+  background-color: ${props =>
+    props.isOpen ? props.theme.backgroundSubtleLight : props.theme.background};
 `
 
 const TopBarContainer = styled.div`
