@@ -24,7 +24,7 @@
     "ci:test": "yarn test",
     "ci:publish": "yarn semantic-release"
   },
-  "peerDependencies": {
+  "dependencies": {
     "date-fns": "^2.4.1",
     "react": "^16.10.2",
     "react-icons": "^3.7.0",
@@ -45,7 +45,6 @@
     "@typescript-eslint/eslint-plugin": "^2.3.3",
     "@typescript-eslint/parser": "^2.3.3",
     "babel-loader": "^8.0.6",
-    "date-fns": "^2.4.1",
     "eslint": "^6.5.1",
     "eslint-config-prettier": "6.4.0",
     "eslint-config-standard": "14.1.0",
@@ -54,16 +53,12 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "npm-run-all": "^4.1.5",
-    "react": "^16.10.2",
-    "react-icons": "^3.7.0",
-    "react-json-tree": "^0.11.2",
     "rollup": "^1.23.1",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-babel-minify": "^9.1.0",
     "rollup-plugin-filesize": "^6.2.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "semantic-release": "16.0.0-beta.24",
-    "styled-components": "^4.4.0",
     "trash-cli": "^3.0.0",
     "typescript": "^3.6.4"
   },
