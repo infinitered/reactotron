@@ -24,6 +24,9 @@
     "ci:test": "yarn test",
     "ci:publish": "yarn semantic-release"
   },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "date-fns": "^2.4.1",
     "react": "^16.10.2",
