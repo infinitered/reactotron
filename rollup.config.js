@@ -19,5 +19,12 @@ export default {
       : null,
     filesize(),
   ],
-  external: ["react", "styled-components", "react-icons/md", "date-fns", "react-json-tree"],
+  external: [
+    "react",
+    "styled-components",
+    "react-icons/md",
+    "date-fns",
+    "react-json-tree",
+    "react-tooltip",
+  ],
 }
