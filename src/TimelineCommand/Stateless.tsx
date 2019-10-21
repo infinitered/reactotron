@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { MdExpandLess as IconOpen, MdExpandMore as IconClosed } from "react-icons/md"
 
+import ActionButton from "../ActionButton"
 import Timestamp from "../Timestamp"
 
 interface ContainerProps {
@@ -41,6 +42,11 @@ const PreviewContainer = styled.div`
   word-break: break-all;
 `
 
+const ToolbarContainer = styled.div`
+  display: flex;
+  color: ${props => props.theme.foreground};
+`
+
 const Spacer = styled.div`
   flex: 1;
 `
@@ -63,13 +69,27 @@ interface Props {
   preview: string
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
-  renderToolbar?: () => any
+  toolbar?: {
+    icon: any // TODO: ¯\_(ツ)_/¯
+    tip: string
+    onClick: () => void
+  }[]
+}
+
+function stopPropagation(
+  handler: () => void
+): (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void {
+  return e => {
+    e.stopPropagation()
+
+    handler()
+  }
 }
 
 const TimelineCommand: FunctionComponent<Props> = ({
   isOpen,
   setIsOpen,
-  renderToolbar,
+  toolbar,
   date,
   deltaTime,
   title,
@@ -86,7 +106,18 @@ const TimelineCommand: FunctionComponent<Props> = ({
         </TimestampContainer>
         <TitleContainer>{title}</TitleContainer>
         {!isOpen && <PreviewContainer>{preview}</PreviewContainer>}
-        {isOpen && renderToolbar && renderToolbar()}
+        {isOpen && toolbar && (
+          <ToolbarContainer>
+            {toolbar.map((action, idx) => (
+              <ActionButton
+                key={idx}
+                icon={action.icon}
+                tip={action.tip}
+                onClick={stopPropagation(action.onClick)}
+              />
+            ))}
+          </ToolbarContainer>
+        )}
         {isOpen && <Spacer />}
         <ExpandIconContainer>
           <ExpandIcon size={20} />

@@ -48,6 +48,7 @@ export const ApiResponseCommand = () => (
       deltaTime: 1171,
       clientId: "59ea1948-2c5c-fe2b-4b38-fc920d9d195e",
     }}
+    copyToClipboard={() => {}}
   />
 )
 

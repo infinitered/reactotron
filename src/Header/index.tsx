@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 // TODO: ¯\_(ツ)_/¯
 // import SideBarButton from "../SideBarButton"
-import HeaderActionButton from "../HeaderActionButton"
+import ActionButton from "../ActionButton"
 
 const Container = styled.div`
   background-color: ${props => props.theme.backgroundSubtleLight};
@@ -87,7 +87,7 @@ const Header: FunctionComponent<Props> = ({
         </MiddleContainer>
         <RightContainer>
           {actions &&
-            actions.map(a => <HeaderActionButton tip={a.tip} icon={a.icon} onClick={a.onClick} />)}
+            actions.map(a => <ActionButton tip={a.tip} icon={a.icon} onClick={a.onClick} />)}
         </RightContainer>
       </ContentContainer>
       {children}

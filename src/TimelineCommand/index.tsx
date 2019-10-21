@@ -7,7 +7,11 @@ interface Props {
   deltaTime?: number
   title: string
   preview: string
-  renderToolbar?: () => any
+  toolbar?: {
+    icon: any // TODO: ¯\_(ツ)_/¯
+    tip: string
+    onClick: () => void
+  }[]
 }
 
 const TimelineCommand: FunctionComponent<Props> = props => {

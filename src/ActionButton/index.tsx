@@ -10,10 +10,10 @@ const Container = styled.div`
 interface Props {
   tip: string
   icon: any
-  onClick: () => void
+  onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
-function HeaderActionButton({ icon: Icon, tip, onClick }: Props) {
+function ActionButton({ icon: Icon, tip, onClick }: Props) {
   return (
     <Container data-tip={tip} onClick={onClick}>
       <Icon size={24} />
@@ -22,4 +22,4 @@ function HeaderActionButton({ icon: Icon, tip, onClick }: Props) {
   )
 }
 
-export default HeaderActionButton
+export default ActionButton

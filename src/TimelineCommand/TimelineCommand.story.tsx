@@ -1,5 +1,6 @@
 import React from "react"
 import { boolean } from "@storybook/addon-knobs"
+import { MdReorder } from "react-icons/md"
 
 import TimelineCommand from "./Stateless"
 
@@ -38,7 +39,7 @@ export const Toolbar = () => (
     preview="Test Preview"
     isOpen
     setIsOpen={() => {}}
-    renderToolbar={() => <div style={{ color: "white" }}>Toolbar!</div>}
+    toolbar={[{ icon: MdReorder, tip: "Test", onClick: () => {} }]}
   >
     <div style={{ color: "white" }}>You should see me!</div>
   </TimelineCommand>
