@@ -1,6 +1,9 @@
+import { FunctionComponent } from "react"
+
 import ApiResponseCommand from "./ApiResponseCommand"
 import ClientIntroCommand from "./ClientIntroCommand"
 import StateActionCompleteCommand from "./StateActionCompleteCommand"
+import { TimelineCommandProps } from "./BaseCommand"
 
 enum CommandTypes {
   ApiResponse = "api.response",
@@ -8,7 +11,7 @@ enum CommandTypes {
   StateActionComplete = "state.action.complete",
 }
 
-function timelineCommandResolver(type: CommandTypes) {
+function timelineCommandResolver(type: CommandTypes): FunctionComponent<TimelineCommandProps<any>> {
   switch (type) {
     case CommandTypes.ApiResponse:
       return ApiResponseCommand

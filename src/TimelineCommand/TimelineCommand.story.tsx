@@ -2,7 +2,7 @@ import React from "react"
 import { boolean } from "@storybook/addon-knobs"
 import { MdReorder } from "react-icons/md"
 
-import TimelineCommand from "./Stateless"
+import TimelineCommand from "./index"
 
 export default {
   title: "Timeline Command",

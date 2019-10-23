@@ -24,7 +24,8 @@
     "compile:dev": "NODE_ENV=development rollup -c",
     "ci:lint": "yarn lint",
     "ci:test": "yarn test",
-    "ci:publish": "yarn semantic-release"
+    "ci:publish": "yarn semantic-release",
+    "chromatic": "chromatic"
   },
   "files": [
     "dist"
@@ -67,6 +68,7 @@
     "rollup-plugin-filesize": "^6.2.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "semantic-release": "16.0.0-beta.24",
+    "storybook-chromatic": "^3.0.3",
     "trash-cli": "^3.0.0",
     "typescript": "^3.6.4"
   },

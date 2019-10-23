@@ -1,12 +1,13 @@
-import React, { useState } from "react"
+import React, { useState, FunctionComponent } from "react"
 import styled from "styled-components"
 import { MdCallReceived, MdCallMade, MdReceipt, MdContentCopy } from "react-icons/md"
 
-import TimelineCommand from "../TimelineCommand"
-import TimelineCommandTabButton from "../TimelineCommandTabButton"
-import ContentView from "../ContentView"
-import { apiToMarkdown } from "../utils/api-to-markdown"
-import { apiRequestToCurl } from "../utils/api-to-curl"
+import TimelineCommand from "../../TimelineCommand"
+import TimelineCommandTabButton from "../../TimelineCommandTabButton"
+import ContentView from "../../ContentView"
+import { apiToMarkdown } from "../../utils/api-to-markdown"
+import { apiRequestToCurl } from "../../utils/api-to-curl"
+import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 
 // TODO: Consider if this is a component that should be built into the TimelineCommand...
 const NameContainer = styled.div`
@@ -20,35 +21,7 @@ const TabsContainer = styled.div`
   padding-bottom: 10px;
 `
 
-interface Props {
-  command: {
-    clientId: string // TODO: Move most of this to a base CommandType
-    connectionId: number
-    date: Date
-    deltaTime: number
-    important: boolean
-    messageId: number
-    payload: {
-      duration: number
-      request: {
-        data: any // ¯\_(ツ)_/¯
-        headers: { [key: string]: string }
-        method: string
-        params: any // ¯\_(ツ)_/¯
-        url: string
-      }
-      response: {
-        body: string
-        headers: { [key: string]: string }
-        status: number
-      }
-    }
-    type: string
-  }
-  copyToClipboard: (text: string) => void
-}
-
-enum Tabs {
+export enum Tab {
   None = "none",
   RequestHeaders = "requestHeaders",
   RequestBody = "requestBody",
@@ -57,15 +30,35 @@ enum Tabs {
   ResponseBody = "responseBody",
 }
 
-function createTabBuilder(onTab: Tabs, setOnTab: (tab: Tabs) => void) {
-  const tabBuilder = (currentTab: Tabs, text: string) => {
+interface ApiResponsePayload {
+  duration: number
+  request: {
+    data: any // ¯\_(ツ)_/¯
+    headers: { [key: string]: string }
+    method: string
+    params: any // ¯\_(ツ)_/¯
+    url: string
+  }
+  response: {
+    body: string
+    headers: { [key: string]: string }
+    status: number
+  }
+}
+
+interface Props extends TimelineCommandProps<ApiResponsePayload> {
+  initialTab?: Tab
+}
+
+function createTabBuilder(onTab: Tab, setOnTab: (tab: Tab) => void) {
+  const tabBuilder = (currentTab: Tab, text: string) => {
     return (
       <TimelineCommandTabButton
         isActive={onTab === currentTab}
         text={text}
         onClick={() => {
           if (onTab === currentTab) {
-            setOnTab(Tabs.None)
+            setOnTab(Tab.None)
           } else {
             setOnTab(currentTab)
           }
@@ -127,8 +120,14 @@ function buildToolbar(commandPayload, copyToClipboard: (text: string) => void) {
   return toolbarItems
 }
 
-export default function ApiResponseCommand({ command, copyToClipboard }: Props) {
-  const [onTab, setOnTab] = useState<Tabs>(null)
+const ApiResponseCommand: FunctionComponent<Props> = ({
+  command,
+  copyToClipboard,
+  isOpen,
+  setIsOpen,
+  initialTab,
+}) => {
+  const [onTab, setOnTab] = useState<Tab>(initialTab || null)
 
   const { payload, date, deltaTime } = command
   const { duration, request, response } = payload
@@ -153,21 +152,27 @@ export default function ApiResponseCommand({ command, copyToClipboard }: Props) 
       title="API RESPONSE"
       preview={preview}
       toolbar={toolbar}
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
     >
       <NameContainer>{payload.request.url}</NameContainer>
       <ContentView value={summary} />
       <TabsContainer>
-        {tabBuilder(Tabs.ResponseBody, "Response")}
-        {tabBuilder(Tabs.ResponseHeaders, "Response Headers")}
-        {!!request.data && tabBuilder(Tabs.RequestBody, "Request")}
-        {!!request.params && tabBuilder(Tabs.RequestParams, "Request Params")}
-        {tabBuilder(Tabs.RequestHeaders, "Request Headers")}
+        {tabBuilder(Tab.ResponseBody, "Response")}
+        {tabBuilder(Tab.ResponseHeaders, "Response Headers")}
+        {!!request.data && tabBuilder(Tab.RequestBody, "Request")}
+        {!!request.params && tabBuilder(Tab.RequestParams, "Request Params")}
+        {tabBuilder(Tab.RequestHeaders, "Request Headers")}
       </TabsContainer>
-      {onTab === Tabs.ResponseBody && <ContentView value={response.body} />}
-      {onTab === Tabs.ResponseHeaders && <ContentView value={response.headers} />}
-      {onTab === Tabs.RequestBody && <ContentView value={request.data} treeLevel={1} />}
-      {onTab === Tabs.RequestParams && <ContentView value={request.params} />}
-      {onTab === Tabs.RequestHeaders && <ContentView value={request.headers} />}
+      {onTab === Tab.ResponseBody && <ContentView value={response.body} />}
+      {onTab === Tab.ResponseHeaders && <ContentView value={response.headers} />}
+      {onTab === Tab.RequestBody && <ContentView value={request.data} treeLevel={1} />}
+      {onTab === Tab.RequestParams && <ContentView value={request.params} />}
+      {onTab === Tab.RequestHeaders && <ContentView value={request.headers} />}
     </TimelineCommand>
   )
 }
+
+export default buildTimelineCommand(ApiResponseCommand)
+
+export { ApiResponseCommand }

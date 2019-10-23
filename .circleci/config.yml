@@ -42,6 +42,16 @@ jobs:
       - run:
           name: Run lint
           command: yarn ci:lint
+      - run:
+          name: Visual Tests
+          command: |
+              if [ "${CIRCLE_BRANCH}" != "master" ] && [ "${CIRCLE_BRANCH}" != "beta" ];
+              then
+                yarn chromatic
+              else
+                # We know any changes that make it to master *must* have been approved
+                yarn chromatic --auto-accept-changes
+              fi
       # - run:
       #     name: Run tests
       #     command: yarn ci:test
