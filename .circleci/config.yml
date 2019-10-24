@@ -47,7 +47,7 @@ jobs:
           command: |
               if [ "${CIRCLE_BRANCH}" != "master" ] && [ "${CIRCLE_BRANCH}" != "beta" ];
               then
-                yarn chromatic
+                yarn chromatic --exit-zero-on-changes
               else
                 # We know any changes that make it to master *must* have been approved
                 yarn chromatic --auto-accept-changes

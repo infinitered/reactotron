@@ -4,6 +4,7 @@ import ApiResponseCommand from "./ApiResponseCommand"
 import AsyncStorageMutationCommand from "./AsyncStorageMutationCommand"
 import BenchmarkReportCommand from "./BenchmarkReportCommand"
 import ClientIntroCommand from "./ClientIntroCommand"
+import DisplayCommand from "./DisplayCommand"
 import StateActionCompleteCommand from "./StateActionCompleteCommand"
 import { TimelineCommandProps } from "./BaseCommand"
 
@@ -12,6 +13,7 @@ enum CommandTypes {
   AsyncStorageMutation = "asyncStorage.mutation",
   Benchmark = "benchmark.report",
   ClientIntro = "client.intro",
+  Display = "display",
   StateActionComplete = "state.action.complete",
 }
 
@@ -25,6 +27,8 @@ function timelineCommandResolver(type: CommandTypes): FunctionComponent<Timeline
       return BenchmarkReportCommand
     case CommandTypes.ClientIntro:
       return ClientIntroCommand
+    case CommandTypes.Display:
+      return DisplayCommand
     case CommandTypes.StateActionComplete:
       return StateActionCompleteCommand
     default:

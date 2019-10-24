@@ -1,6 +1,10 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
-import { MdExpandLess as IconOpen, MdExpandMore as IconClosed } from "react-icons/md"
+import {
+  MdLabel as TagIcon,
+  MdExpandLess as IconOpen,
+  MdExpandMore as IconClosed,
+} from "react-icons/md"
 
 import ActionButton from "../ActionButton"
 import Timestamp from "../Timestamp"
@@ -26,12 +30,27 @@ const TopBarContainer = styled.div`
 
 const TimestampContainer = styled.div`
   padding-right: 10px;
+  padding-top: 4px;
+`
+
+const TagContainer = styled.div`
+  margin-right: 4px;
 `
 
 const TitleContainer = styled.div`
+  display: flex;
   text-align: left;
   width: 168px;
-  color: ${props => props.theme.tag};
+`
+interface TitleTextProps {
+  isImportant: boolean
+}
+const TitleText = styled.div<TitleTextProps>`
+  display: flex;
+  color: ${props => (props.isImportant ? props.theme.tagComplement : props.theme.tag)};
+  background-color: ${props => (props.isImportant ? props.theme.tag : "transparent")};
+  border-radius: 4px;
+  padding: 4px 8px;
 `
 
 const PreviewContainer = styled.div`
@@ -40,6 +59,7 @@ const PreviewContainer = styled.div`
   text-align: left;
   overflow: hidden;
   word-break: break-all;
+  padding-top: 4px;
 `
 
 const ToolbarContainer = styled.div`
@@ -74,6 +94,8 @@ interface Props {
     tip: string
     onClick: () => void
   }[]
+  isImportant?: boolean
+  isTagged?: boolean
 }
 
 function stopPropagation(
@@ -94,6 +116,8 @@ const TimelineCommand: FunctionComponent<Props> = ({
   deltaTime,
   title,
   preview,
+  isImportant,
+  isTagged,
   children,
 }) => {
   const ExpandIcon = isOpen ? IconOpen : IconClosed
@@ -104,7 +128,16 @@ const TimelineCommand: FunctionComponent<Props> = ({
         <TimestampContainer>
           <Timestamp date={date} deltaTime={deltaTime} />
         </TimestampContainer>
-        <TitleContainer>{title}</TitleContainer>
+        <TitleContainer>
+          <TitleText isImportant={isImportant}>
+            {isTagged && (
+              <TagContainer>
+                <TagIcon size={16} />
+              </TagContainer>
+            )}
+            {title}
+          </TitleText>
+        </TitleContainer>
         {!isOpen && <PreviewContainer>{preview}</PreviewContainer>}
         {isOpen && toolbar && (
           <ToolbarContainer>

@@ -45,6 +45,46 @@ export const Toolbar = () => (
   </TimelineCommand>
 )
 
+export const Important = () => (
+  <TimelineCommand
+    date={new Date("2019-01-01T10:32:43.435")}
+    title="My Command!"
+    preview="Test Preview"
+    isImportant
+    isOpen={false}
+    setIsOpen={() => {}}
+  >
+    You should not see me.
+  </TimelineCommand>
+)
+
+export const Tagged = () => (
+  <TimelineCommand
+    date={new Date("2019-01-01T10:32:43.435")}
+    title="My Command!"
+    preview="Test Preview"
+    isTagged
+    isOpen={false}
+    setIsOpen={() => {}}
+  >
+    You should not see me.
+  </TimelineCommand>
+)
+
+export const TaggedImportant = () => (
+  <TimelineCommand
+    date={new Date("2019-01-01T10:32:43.435")}
+    title="My Command!"
+    preview="Test Preview"
+    isTagged
+    isImportant
+    isOpen={false}
+    setIsOpen={() => {}}
+  >
+    You should not see me.
+  </TimelineCommand>
+)
+
 export const Interactive = () => {
   const isOpen = boolean("isOpen", false)
 
