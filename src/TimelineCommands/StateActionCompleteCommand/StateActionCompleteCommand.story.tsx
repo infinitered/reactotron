@@ -17,20 +17,14 @@ const stateActionCompletedCommand = {
   date: new Date("2019-01-01T10:12:23.435"),
 }
 
-export const StateActionCompleteCommandClosed = () => (
+export const Closed = () => (
   <StateActionCompleteCommand
     command={stateActionCompletedCommand}
     isOpen={false}
     setIsOpen={() => {}}
-    copyToClipboard={() => {}}
   />
 )
 
-export const StateActionCompleteCommandOpen = () => (
-  <StateActionCompleteCommand
-    command={stateActionCompletedCommand}
-    isOpen
-    setIsOpen={() => {}}
-    copyToClipboard={() => {}}
-  />
+export const Open = () => (
+  <StateActionCompleteCommand command={stateActionCompletedCommand} isOpen setIsOpen={() => {}} />
 )

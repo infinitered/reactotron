@@ -67,7 +67,6 @@ export const Closed = () => (
     command={sagaTaskCompleteCommand}
     isOpen={false}
     setIsOpen={() => {}}
-    copyToClipboard={() => {}}
     isDetailsOpen={false}
     setIsDetailsOpen={() => {}}
   />
@@ -78,7 +77,6 @@ export const Open = () => (
     command={sagaTaskCompleteCommand}
     isOpen
     setIsOpen={() => {}}
-    copyToClipboard={() => {}}
     isDetailsOpen={false}
     setIsDetailsOpen={() => {}}
   />
@@ -89,7 +87,6 @@ export const DetailsOpen = () => (
     command={sagaTaskCompleteCommand}
     isOpen
     setIsOpen={() => {}}
-    copyToClipboard={() => {}}
     isDetailsOpen
     setIsDetailsOpen={() => {}}
   />

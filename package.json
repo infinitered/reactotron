@@ -37,6 +37,7 @@
     "react-icons": "^3.7.0",
     "react-json-tree": "^0.11.2",
     "react-tooltip": "^3.11.1",
+    "stringify-object": "^3.3.0",
     "styled-components": "^4.4.0"
   },
   "devDependencies": {

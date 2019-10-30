@@ -71,6 +71,8 @@ function createTabBuilder(onTab: Tab, setOnTab: (tab: Tab) => void) {
 }
 
 function buildToolbar(commandPayload, copyToClipboard: (text: string) => void) {
+  if (!copyToClipboard) return []
+
   const toolbarItems = []
 
   toolbarItems.push({

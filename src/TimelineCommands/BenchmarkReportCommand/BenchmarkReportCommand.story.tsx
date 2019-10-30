@@ -25,20 +25,18 @@ const benchmarkReportCommand = {
   date: new Date("2019-01-01T10:12:23.435"),
 }
 
-export const BenchmarkReportCommandClosed = () => (
+export const Closed = () => (
   <BenchmarkReportCommand
     command={benchmarkReportCommand}
     isOpen={false}
     setIsOpen={() => {}}
-    copyToClipboard={() => {}}
   />
 )
 
-export const BenchmarkReportCommandOpen = () => (
+export const Open = () => (
   <BenchmarkReportCommand
     command={benchmarkReportCommand}
     isOpen
     setIsOpen={() => {}}
-    copyToClipboard={() => {}}
   />
 )

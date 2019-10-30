@@ -35,6 +35,10 @@ export const Open = () => (
   />
 )
 
+export const NoCopyMethod = () => (
+  <DisplayCommand command={displayCommandBasic} isOpen setIsOpen={() => {}} />
+)
+
 export const NoName = () => (
   <DisplayCommand
     command={{
@@ -80,7 +84,8 @@ export const Important = () => (
   <DisplayCommand
     command={{
       ...displayCommandBasic,
-      payload: { ...displayCommandBasic.payload, important: true },
+      payload: { ...displayCommandBasic.payload },
+      important: true,
     }}
     isOpen
     setIsOpen={() => {}}

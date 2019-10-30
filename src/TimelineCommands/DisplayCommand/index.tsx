@@ -18,12 +18,13 @@ interface DisplayPayload {
   value?: any
   image?: any
   preview?: string
-  important?: boolean
 }
 
 interface Props extends TimelineCommandProps<DisplayPayload> {}
 
 function buildToolbar(commandPayload, copyToClipboard: (text: string) => void) {
+  if (!copyToClipboard) return []
+
   return [
     {
       icon: MdContentCopy,
@@ -49,7 +50,7 @@ const DisplayCommand: FunctionComponent<Props> = ({
   setIsOpen,
   copyToClipboard,
 }) => {
-  const { payload, date, deltaTime } = command
+  const { payload, date, deltaTime, important } = command
 
   let imageUrl
   if (payload.image) {
@@ -69,7 +70,7 @@ const DisplayCommand: FunctionComponent<Props> = ({
       title={payload.name || "DISPLAY"}
       preview={payload.name}
       toolbar={toolbar}
-      isImportant={payload.important}
+      isImportant={important}
       isTagged
       isOpen={isOpen}
       setIsOpen={setIsOpen}

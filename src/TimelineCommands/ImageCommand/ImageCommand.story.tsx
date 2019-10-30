@@ -26,14 +26,7 @@ const imageCommand = {
 }
 
 export const Closed = () => (
-  <ImageCommand
-    command={imageCommand}
-    isOpen={false}
-    setIsOpen={() => {}}
-    copyToClipboard={() => {}}
-  />
+  <ImageCommand command={imageCommand} isOpen={false} setIsOpen={() => {}} />
 )
 
-export const Open = () => (
-  <ImageCommand command={imageCommand} isOpen setIsOpen={() => {}} copyToClipboard={() => {}} />
-)
+export const Open = () => <ImageCommand command={imageCommand} isOpen setIsOpen={() => {}} />

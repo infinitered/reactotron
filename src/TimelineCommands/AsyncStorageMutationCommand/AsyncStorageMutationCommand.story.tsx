@@ -17,20 +17,18 @@ const asyncStorageMutationCommand = {
   date: new Date("2019-01-01T10:12:23.435"),
 }
 
-export const AsyncStorageMutationCommandClosed = () => (
+export const Closed = () => (
   <AsyncStorageMutationCommand
     command={asyncStorageMutationCommand}
     isOpen={false}
     setIsOpen={() => {}}
-    copyToClipboard={() => {}}
   />
 )
 
-export const AsyncStorageMutationCommandOpen = () => (
+export const Open = () => (
   <AsyncStorageMutationCommand
     command={asyncStorageMutationCommand}
     isOpen
     setIsOpen={() => {}}
-    copyToClipboard={() => {}}
   />
 )

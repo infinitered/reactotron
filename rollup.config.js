@@ -26,5 +26,6 @@ export default {
     "date-fns",
     "react-json-tree",
     "react-tooltip",
+    "stringify-object",
   ],
 }

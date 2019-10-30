@@ -6,9 +6,10 @@ import BenchmarkReportCommand from "./BenchmarkReportCommand"
 import ClientIntroCommand from "./ClientIntroCommand"
 import DisplayCommand from "./DisplayCommand"
 import ImageCommand from "./ImageCommand"
+import LogCommand from "./LogCommand"
 import SagaTaskCompleteCommand from "./SagaTaskCompleteCommand"
 import StateActionCompleteCommand from "./StateActionCompleteCommand"
-import { TimelineCommandProps } from "./BaseCommand"
+import { TimelineCommandPropsEx } from "./BaseCommand"
 
 enum CommandTypes {
   ApiResponse = "api.response",
@@ -17,11 +18,12 @@ enum CommandTypes {
   ClientIntro = "client.intro",
   Display = "display",
   Image = "image",
+  Log = "log",
   SagaTaskComplete = "saga.task.complete",
   StateActionComplete = "state.action.complete",
 }
 
-function timelineCommandResolver(type: CommandTypes): FunctionComponent<TimelineCommandProps<any>> {
+function timelineCommandResolver(type: CommandTypes): FunctionComponent<TimelineCommandPropsEx<any>> {
   switch (type) {
     case CommandTypes.ApiResponse:
       return ApiResponseCommand
@@ -35,6 +37,8 @@ function timelineCommandResolver(type: CommandTypes): FunctionComponent<Timeline
       return DisplayCommand
     case CommandTypes.Image:
       return ImageCommand
+    case CommandTypes.Log:
+      return LogCommand
     case CommandTypes.SagaTaskComplete:
       return SagaTaskCompleteCommand
     case CommandTypes.StateActionComplete:

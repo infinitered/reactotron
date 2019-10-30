@@ -45,7 +45,7 @@ const apiResponseCommand = {
   clientId: "59ea1948-2c5c-fe2b-4b38-fc920d9d195e",
 }
 
-export const ApiResponseCommandClosed = () => (
+export const Closed = () => (
   <ApiResponseCommand
     command={apiResponseCommand}
     copyToClipboard={() => {}}
@@ -53,7 +53,8 @@ export const ApiResponseCommandClosed = () => (
     setIsOpen={() => {}}
   />
 )
-export const ApiResponseCommandOpenNoTab = () => (
+
+export const OpenNoTab = () => (
   <ApiResponseCommand
     command={apiResponseCommand}
     copyToClipboard={() => {}}
@@ -61,7 +62,12 @@ export const ApiResponseCommandOpenNoTab = () => (
     setIsOpen={() => {}}
   />
 )
-export const ApiResponseCommandOpenResponseBody = () => (
+
+export const OpenNoCopyMethod = () => (
+  <ApiResponseCommand command={apiResponseCommand} isOpen setIsOpen={() => {}} />
+)
+
+export const OpenResponseBody = () => (
   <ApiResponseCommand
     command={apiResponseCommand}
     copyToClipboard={() => {}}
@@ -70,7 +76,8 @@ export const ApiResponseCommandOpenResponseBody = () => (
     initialTab={Tab.ResponseBody}
   />
 )
-export const ApiResponseCommandOpenResponseHeaders = () => (
+
+export const OpenResponseHeaders = () => (
   <ApiResponseCommand
     command={apiResponseCommand}
     copyToClipboard={() => {}}
@@ -79,7 +86,8 @@ export const ApiResponseCommandOpenResponseHeaders = () => (
     initialTab={Tab.ResponseHeaders}
   />
 )
-export const ApiResponseCommandOpenRequestHeaders = () => (
+
+export const OpenRequestHeaders = () => (
   <ApiResponseCommand
     command={apiResponseCommand}
     copyToClipboard={() => {}}

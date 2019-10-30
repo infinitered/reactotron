@@ -17,20 +17,18 @@ const clientIntroCommand = {
   date: new Date("2019-01-01T10:12:23.435"),
 }
 
-export const ClientIntroCommandClosed = () => (
+export const Closed = () => (
   <ClientIntroCommand
     command={clientIntroCommand}
     isOpen={false}
     setIsOpen={() => {}}
-    copyToClipboard={() => {}}
   />
 )
 
-export const ClientIntroCommandOpen = () => (
+export const Open = () => (
   <ClientIntroCommand
     command={clientIntroCommand}
     isOpen
     setIsOpen={() => {}}
-    copyToClipboard={() => {}}
   />
 )
