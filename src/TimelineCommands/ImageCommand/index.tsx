@@ -20,7 +20,7 @@ const Filename = styled.div`
   color: ${props => props.theme.highlight};
 `
 
-interface ClientIntroPayload {
+interface ImagePayload {
   uri: string
   preview: string
   caption?: string
@@ -29,7 +29,7 @@ interface ClientIntroPayload {
   filename?: string
 }
 
-interface Props extends TimelineCommandProps<ClientIntroPayload> {}
+interface Props extends TimelineCommandProps<ImagePayload> {}
 
 const ImageCommand: FunctionComponent<Props> = ({ command, isOpen, setIsOpen }) => {
   const { payload, date, deltaTime } = command

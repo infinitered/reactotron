@@ -9,6 +9,9 @@ import ImageCommand from "./ImageCommand"
 import LogCommand from "./LogCommand"
 import SagaTaskCompleteCommand from "./SagaTaskCompleteCommand"
 import StateActionCompleteCommand from "./StateActionCompleteCommand"
+import StateKeysResponseCommand from "./StateKeysResponseCommand"
+import StateValuesChangeCommand from "./StateValuesChangeCommand"
+import StateValuesResponseCommand from "./StateValuesResponseCommand"
 import { TimelineCommandPropsEx } from "./BaseCommand"
 
 enum CommandTypes {
@@ -21,9 +24,14 @@ enum CommandTypes {
   Log = "log",
   SagaTaskComplete = "saga.task.complete",
   StateActionComplete = "state.action.complete",
+  StateKeysResponse = "state.keys.response",
+  StateValuesChange = "state.values.change",
+  StateValuesResponse = "state.values.response",
 }
 
-function timelineCommandResolver(type: CommandTypes): FunctionComponent<TimelineCommandPropsEx<any>> {
+function timelineCommandResolver(
+  type: CommandTypes
+): FunctionComponent<TimelineCommandPropsEx<any>> {
   switch (type) {
     case CommandTypes.ApiResponse:
       return ApiResponseCommand
@@ -43,6 +51,12 @@ function timelineCommandResolver(type: CommandTypes): FunctionComponent<Timeline
       return SagaTaskCompleteCommand
     case CommandTypes.StateActionComplete:
       return StateActionCompleteCommand
+    case CommandTypes.StateKeysResponse:
+      return StateKeysResponseCommand
+    case CommandTypes.StateValuesChange:
+      return StateValuesChangeCommand
+    case CommandTypes.StateValuesResponse:
+      return StateValuesResponseCommand
     default:
       return null
   }
