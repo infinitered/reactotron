@@ -8278,10 +8278,10 @@ sax@^1.2.4:
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
 
-semantic-release@16.0.0-beta.28:
-  version "16.0.0-beta.28"
-  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-16.0.0-beta.28.tgz#e8e00893dc1da0370b83e661d631494015297756"
-  integrity sha512-SfFHqGXdH+YZtagMT1kw/8eOxjyfFBZOYAJUpdy+arvqMlhvWOxrhLsC+Dyt9+k9qmfJfNA43lZ0havUYnaUVQ==
+semantic-release@16.0.0-beta.29:
+  version "16.0.0-beta.29"
+  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-16.0.0-beta.29.tgz#4aba7c4b12c6070c5bf3f27a6191f520d704a032"
+  integrity sha512-xjLU9cSUSsMcaGQcEeArqaoFRXsL508LpBgiyMUS6fooggHUDi51bs/DKjDqYyk5621nJUqFczPss9oZwUypKA==
   dependencies:
     "@semantic-release/commit-analyzer" "7.0.0-beta.4"
     "@semantic-release/error" "^2.2.0"
@@ -8302,7 +8302,7 @@ semantic-release@16.0.0-beta.28:
     lodash "^4.17.15"
     marked "^0.7.0"
     marked-terminal "^3.2.0"
-    micromatch "^3.1.10"
+    micromatch "^4.0.2"
     p-each-series "^2.1.0"
     p-reduce "^2.0.0"
     read-pkg-up "^7.0.0"
