@@ -271,7 +271,7 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
 
     // fires when we receive a command, just forward it off
     const onMessage = (data: any) => {
-      const command = JSON.parse(data)
+      const command = typeof data === "string" ? JSON.parse(data) : data
       // trigger our own command handler
       onCommand && onCommand(command)
 
