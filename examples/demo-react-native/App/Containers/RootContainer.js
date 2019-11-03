@@ -92,7 +92,7 @@ class RootContainer extends Component {
     return (
       <ScrollView style={Styles.container} contentContainerStyle={Styles.content} ref="foo">
         <View style={Styles.titleContainer}>
-          <Text style={Styles.title}>Awesome Github Viewer!</Text>
+          <Text style={Styles.title}>Awesome GitHub Viewer!</Text>
           <Text style={Styles.subtitle}>Reactotron Demo</Text>
         </View>
         <View style={Styles.repoContainer}>
