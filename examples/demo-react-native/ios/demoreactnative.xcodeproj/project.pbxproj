@@ -18,6 +18,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* demoreactnativeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* demoreactnativeTests.m */; };
 		37C53F1A92188FE7623ACEAB /* libPods-demoreactnative-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5296BB78C5F3C0CEB91D68F7 /* libPods-demoreactnative-tvOS.a */; };
 		5AAE816C0D5DE598519EDBA3 /* libPods-demoreactnative-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 70648CB00D590CB93E8AB793 /* libPods-demoreactnative-tvOSTests.a */; };
+		71B243F6236E763E003D4C9D /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B243F5236E763E003D4C9D /* Dummy.swift */; };
 		AAF4A7594235F9E823EEE65C /* libPods-demoreactnative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BC597BEFA145AD4C8F3F8C /* libPods-demoreactnative.a */; };
 		C31F7094F6591D079193FD98 /* libPods-demoreactnativeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F865D6A466539FA4674A6FFD /* libPods-demoreactnativeTests.a */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,8 @@
 		3315FBDF8973B701F86BC1E4 /* Pods-demoreactnative-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-demoreactnative-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-demoreactnative-tvOSTests/Pods-demoreactnative-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5296BB78C5F3C0CEB91D68F7 /* libPods-demoreactnative-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-demoreactnative-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70648CB00D590CB93E8AB793 /* libPods-demoreactnative-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-demoreactnative-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		71B243F4236E763E003D4C9D /* demoreactnative-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "demoreactnative-Bridging-Header.h"; sourceTree = "<group>"; };
+		71B243F5236E763E003D4C9D /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
 		9625439B0BE8172F0B7DA557 /* Pods-demoreactnative-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-demoreactnative-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-demoreactnative-tvOSTests/Pods-demoreactnative-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		A9BC597BEFA145AD4C8F3F8C /* libPods-demoreactnative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-demoreactnative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C81F2BF8A2DB4EC5E84043AC /* Pods-demoreactnative-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-demoreactnative-tvOS.release.xcconfig"; path = "Target Support Files/Pods-demoreactnative-tvOS/Pods-demoreactnative-tvOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -132,6 +135,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				71B243F5236E763E003D4C9D /* Dummy.swift */,
+				71B243F4236E763E003D4C9D /* demoreactnative-Bridging-Header.h */,
 			);
 			name = demoreactnative;
 			sourceTree = "<group>";
@@ -161,7 +166,6 @@
 				E0B102CFFE1C37A19FE476FA /* Pods-demoreactnativeTests.debug.xcconfig */,
 				E7F0FF241306CD25C63DBFBA /* Pods-demoreactnativeTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -292,6 +296,9 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						LastSwiftMigration = 1120;
+					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -308,6 +315,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -529,6 +537,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				71B243F6236E763E003D4C9D /* Dummy.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -582,6 +591,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E0B102CFFE1C37A19FE476FA /* Pods-demoreactnativeTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -590,6 +600,10 @@
 				INFOPLIST_FILE = demoreactnativeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -605,11 +619,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E7F0FF241306CD25C63DBFBA /* Pods-demoreactnativeTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = demoreactnativeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -626,10 +645,15 @@
 			baseConfigurationReference = 2EEA3A05A3E431EFA83ED954 /* Pods-demoreactnative.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				INFOPLIST_FILE = demoreactnative/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -637,6 +661,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = demoreactnative;
+				SWIFT_OBJC_BRIDGING_HEADER = "demoreactnative-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -646,9 +673,14 @@
 			baseConfigurationReference = EF22A6738D031B3D36DDB07B /* Pods-demoreactnative.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = demoreactnative/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -656,6 +688,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = demoreactnative;
+				SWIFT_OBJC_BRIDGING_HEADER = "demoreactnative-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -675,6 +709,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "demoreactnative-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -703,6 +741,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "demoreactnative-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -730,6 +772,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "demoreactnative-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -757,6 +803,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "demoreactnative-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
