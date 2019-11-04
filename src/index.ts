@@ -13,6 +13,7 @@ import TreeView from "./TreeView"
 
 // Utils
 import repairSerialization from "./utils/repair-serialization"
+import filterCommands from "./utils/filterCommands"
 
 export {
   theme,
@@ -25,4 +26,5 @@ export {
   Timestamp,
   TreeView,
   repairSerialization,
+  filterCommands,
 }

@@ -42,6 +42,7 @@ interface SourceLineContainerProps {
 const SourceLineContainer = styled.div<SourceLineContainerProps>`
   display: flex;
   padding: 6px 0;
+  cursor: pointer;
   color: ${props => (props.isSelected ? props.theme.tag : props.theme.foregroundDark)};
   background-color: ${props => (props.isSelected ? props.theme.backgroundDarker : "transparent")};
   border-left: ${props => (props.isSelected ? `1px solid ${props.theme.tag}` : undefined)};
@@ -100,6 +101,7 @@ const StackFrameContainer = styled.div<StackFrameContainerProps>`
   word-break: break-all;
   /* cursor: pointer; */
   opacity: ${props => (props.isNodeModule ? 0.4 : 1)};
+  cursor: pointer;
 
   color: ${props => (props.isSelected ? props.theme.tag : props.theme.foreground)};
   background-color: ${props => (props.isSelected ? props.theme.backgroundDarker : "transparent")};
@@ -253,6 +255,7 @@ function useFileSource(stack, readFile) {
           setSourceCode({
             lines,
             lineNumber,
+            fileName,
             partialFilename,
           })
         } catch {}
@@ -265,8 +268,7 @@ function useFileSource(stack, readFile) {
   return sourceCode
 }
 
-function renderStackFrame(stackFrame, idx) {
-  // TODO: Handle open in editor!!!!!!!!!!!!! (How?)
+function renderStackFrame(stackFrame, idx, openInEditor) {
   let fileName = stackFrame.fileName || ""
   let functionName = stackFrame.functionName || ""
   const lineNumber = stackFrame.lineNumber || 0
@@ -281,7 +283,14 @@ function renderStackFrame(stackFrame, idx) {
   const isSelected = idx === 0
 
   return (
-    <StackFrameContainer key={`stack-${idx}`} isNodeModule={isNodeModule} isSelected={isSelected}>
+    <StackFrameContainer
+      key={`stack-${idx}`}
+      isNodeModule={isNodeModule}
+      isSelected={isSelected}
+      onClick={() => {
+        openInEditor(fileName, lineNumber)
+      }}
+    >
       <StackFrameFunction>{functionName || "(anonymous function)"}</StackFrameFunction>
       <StackFrameFile>{justTheFile}</StackFrameFile>
       <StackFrameLineNumber>{lineNumber}</StackFrameLineNumber>
@@ -295,13 +304,23 @@ const LogCommand: FunctionComponent<Props> = ({
   setIsOpen,
   copyToClipboard,
   readFile,
+  sendCommand,
 }) => {
   const { payload, date, deltaTime, important } = command
 
+  const openInEditor = (file, lineNumber) => {
+    if (file === "") return
+
+    sendCommand({
+      type: "editor.open",
+      payload: {
+        file,
+        lineNumber,
+      },
+    })
+  }
+
   const source = useFileSource(payload, readFile)
-
-  console.log(source)
-
   const toolbar = buildToolbar(payload, copyToClipboard)
 
   return (
@@ -324,7 +343,12 @@ const LogCommand: FunctionComponent<Props> = ({
               <SourceFilename>{source.partialFilename}</SourceFilename>
               {source.lines.map(line => {
                 return (
-                  <SourceLineContainer isSelected={line.isSelected}>
+                  <SourceLineContainer
+                    isSelected={line.isSelected}
+                    onClick={() => {
+                      openInEditor(source.fileName, source.lineNumber)
+                    }}
+                  >
                     <SourceLineNumber>{line.lineNumber}</SourceLineNumber>
                     <SourceLineCode>{line.source}</SourceLineCode>
                   </SourceLineContainer>
@@ -340,17 +364,13 @@ const LogCommand: FunctionComponent<Props> = ({
                 <StackTableHeaderFunction>File</StackTableHeaderFunction>
                 <StackTableHeaderLineNumber>Line</StackTableHeaderLineNumber>
               </StackTableHeadRow>
-              {payload.stack.map(renderStackFrame)}
+              {payload.stack.map((stackFrame, idx) =>
+                renderStackFrame(stackFrame, idx, openInEditor)
+              )}
             </StackTable>
           </StackContainer>
         </>
       )}
-      {/* {payload.value && <ContentView value={payload.value} />}
-      {imageUrl && (
-        <ImageContainer>
-          <Image src={imageUrl} />
-        </ImageContainer>
-      )} */}
     </TimelineCommand>
   )
 }
