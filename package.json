@@ -129,7 +129,7 @@
     "style-loader": "1.0.0",
     "sumchecker": "3.0.0",
     "ts-loader": "6.0.4",
-    "tslint": "5.18.0",
+    "tslint": "5.20.1",
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.5.3",
     "url-loader": "2.1.0",
