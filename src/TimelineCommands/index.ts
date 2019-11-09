@@ -1,5 +1,7 @@
 import { FunctionComponent } from "react"
 
+import { CommandType } from "../types"
+
 import ApiResponseCommand from "./ApiResponseCommand"
 import AsyncStorageMutationCommand from "./AsyncStorageMutationCommand"
 import BenchmarkReportCommand from "./BenchmarkReportCommand"
@@ -14,48 +16,33 @@ import StateValuesChangeCommand from "./StateValuesChangeCommand"
 import StateValuesResponseCommand from "./StateValuesResponseCommand"
 import { TimelineCommandPropsEx } from "./BaseCommand"
 
-enum CommandTypes {
-  ApiResponse = "api.response",
-  AsyncStorageMutation = "asyncStorage.mutation",
-  Benchmark = "benchmark.report",
-  ClientIntro = "client.intro",
-  Display = "display",
-  Image = "image",
-  Log = "log",
-  SagaTaskComplete = "saga.task.complete",
-  StateActionComplete = "state.action.complete",
-  StateKeysResponse = "state.keys.response",
-  StateValuesChange = "state.values.change",
-  StateValuesResponse = "state.values.response",
-}
-
 function timelineCommandResolver(
-  type: CommandTypes
+  type: CommandType
 ): FunctionComponent<TimelineCommandPropsEx<any>> {
   switch (type) {
-    case CommandTypes.ApiResponse:
+    case CommandType.ApiResponse:
       return ApiResponseCommand
-    case CommandTypes.AsyncStorageMutation:
+    case CommandType.AsyncStorageMutation:
       return AsyncStorageMutationCommand
-    case CommandTypes.Benchmark:
+    case CommandType.Benchmark:
       return BenchmarkReportCommand
-    case CommandTypes.ClientIntro:
+    case CommandType.ClientIntro:
       return ClientIntroCommand
-    case CommandTypes.Display:
+    case CommandType.Display:
       return DisplayCommand
-    case CommandTypes.Image:
+    case CommandType.Image:
       return ImageCommand
-    case CommandTypes.Log:
+    case CommandType.Log:
       return LogCommand
-    case CommandTypes.SagaTaskComplete:
+    case CommandType.SagaTaskComplete:
       return SagaTaskCompleteCommand
-    case CommandTypes.StateActionComplete:
+    case CommandType.StateActionComplete:
       return StateActionCompleteCommand
-    case CommandTypes.StateKeysResponse:
+    case CommandType.StateKeysResponse:
       return StateKeysResponseCommand
-    case CommandTypes.StateValuesChange:
+    case CommandType.StateValuesChange:
       return StateValuesChangeCommand
-    case CommandTypes.StateValuesResponse:
+    case CommandType.StateValuesResponse:
       return StateValuesResponseCommand
     default:
       return null

@@ -1,3 +1,5 @@
+import { CommandType } from "../../types"
+
 function path(...searchPath) {
   return obj => {
     let scaledObj = obj
@@ -23,8 +25,11 @@ const COMMON_MATCHING_PATHS = [
   path("payload", "request", "url"),
 ]
 
-function filterCommands(commands: any[], search: string) {
+export function filterSearch(commands: any[], search: string) {
   const trimmedSearch = (search || "").trim()
+
+  if (trimmedSearch === "") return commands
+
   const searchRegex = new RegExp(trimmedSearch.replace(/\s/, "."), "i")
 
   const matching = (value: string) => value && typeof value === "string" && searchRegex.test(value)
@@ -34,14 +39,25 @@ function filterCommands(commands: any[], search: string) {
       COMMON_MATCHING_PATHS.filter(c => {
         if (matching(c(command))) return true
         if (
-          command.type === "log" &&
+          command.type === CommandType.Log &&
           (matching("debug") || matching("warning") || matching("error"))
         )
           return true
-        if (command.type === "client.intro" && matching("connection")) return true
+        if (command.type === CommandType.ClientIntro && matching("connection")) return true
         return false
       }).length > 0
   )
+}
+
+export function filterHidden(commands: any[], hiddenCommands: CommandType[]) {
+  if (hiddenCommands.length === 0) return commands
+
+  return commands.filter(command => hiddenCommands.indexOf(command.type) === -1)
+}
+
+function filterCommands(commands: any[], search: string, hiddenCommands: CommandType[]) {
+  const searchFilteredCommands = filterSearch(commands, search)
+  return filterHidden(searchFilteredCommands, hiddenCommands)
 }
 
 export default filterCommands

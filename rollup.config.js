@@ -27,5 +27,6 @@ export default {
     "react-json-tree",
     "react-tooltip",
     "stringify-object",
+    "react-modal",
   ],
 }

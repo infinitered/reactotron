@@ -1,4 +1,5 @@
-import filterCommands from "./index"
+import filterCommands, { filterSearch, filterHidden } from "./index"
+import { CommandType } from "../../types"
 
 const TEST_COMMANDS = [
   { type: "SEARCHTYPE" },
@@ -86,11 +87,37 @@ const TESTS = [
 ]
 
 describe("utils/filterCommands", () => {
-  TESTS.forEach(test => {
-    it(`should search in '${test.name}'`, () => {
-      const result = filterCommands(TEST_COMMANDS, test.search)
+  describe("filterSearch", () => {
+    TESTS.forEach(test => {
+      it(`should search in '${test.name}'`, () => {
+        const result = filterSearch(TEST_COMMANDS, test.search)
 
-      expect(result).toEqual(test.result)
+        expect(result).toEqual(test.result)
+      })
+    })
+  })
+
+  describe("filterHidden", () => {
+    it("should filter out only command types that are in the list", () => {
+      const result = filterHidden(TEST_COMMANDS, [CommandType.ClientIntro])
+
+      expect(result).toEqual(TEST_COMMANDS.filter(tc => tc.type !== CommandType.ClientIntro))
+    })
+  })
+
+  describe("filterCommands", () => {
+    TESTS.forEach(test => {
+      it(`should search in '${test.name}'`, () => {
+        const result = filterCommands(TEST_COMMANDS, test.search, [])
+
+        expect(result).toEqual(test.result)
+      })
+    })
+
+    it("should filter out only command types that are in the list", () => {
+      const result = filterCommands(TEST_COMMANDS, "", [CommandType.ClientIntro])
+
+      expect(result).toEqual(TEST_COMMANDS.filter(tc => tc.type !== CommandType.ClientIntro))
     })
   })
 })
