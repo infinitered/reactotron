@@ -6054,10 +6054,10 @@ qs@~6.5.2:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
-query-string@6.8.1:
-  version "6.8.1"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.8.1.tgz#62c54a7ef37d01b538c8fd56f95740c81d438a26"
-  integrity sha512-g6y0Lbq10a5pPQpjlFuojfMfV1Pd2Jw9h75ypiYPPia3Gcq2rgkKiIwbkS6JxH7c5f5u/B/sB+d13PU+g1eu4Q==
+query-string@6.8.3:
+  version "6.8.3"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.8.3.tgz#fd9fb7ffb068b79062b43383685611ee47777d4b"
+  integrity sha512-llcxWccnyaWlODe7A9hRjkvdCKamEKTh+wH8ITdTc3OhchaqUZteiSCX/2ablWHVrkVIe04dntnaZJ7BdyW0lQ==
   dependencies:
     decode-uri-component "^0.2.0"
     split-on-first "^1.0.0"
@@ -6292,19 +6292,19 @@ react@^16.8.3:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
 
-reactotron-core-client@2.8.4:
-  version "2.8.4"
-  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.8.4.tgz#22ebbb379fa695a558d19747d23bb9af684b0cf2"
-  integrity sha512-PIbnuOB4K/tnxACSjrwZn2kAGB9QEbdXwe/a2RgeNBzbTuDeCWSlkZni2cvsDlzsHMrr2H+rHsjBRb8ZUDGL8Q==
+reactotron-core-client@2.8.8:
+  version "2.8.8"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.8.8.tgz#fa1f93629e9a3d1b2beca765701b8ef3a8c3d3c0"
+  integrity sha512-FCXudNw5zCcV6waXCubGGxypVS2EKZMRwJ89rd6GCsgFENbJhGizcPyjmv6aBatHFIQcLhUD7XShZJEqWs7E4A==
 
-reactotron-react-native@^3.6.5:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-3.7.1.tgz#2f3d5e541d14cfd26096679f90ebbd6da595a2fc"
-  integrity sha512-YO3t4GSCp/fEle80nomcQdWnGdzI2jIAmFsVIoagxyMtRHl811rJM6Wtf/pi4PsP/6T+y2iDGhxK9jwvKsQHow==
+reactotron-react-native@^4.1.0-beta.4:
+  version "4.1.0-beta.4"
+  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-4.1.0-beta.4.tgz#4c9fe24961953350c1e3ff2ef18c35f7778c1126"
+  integrity sha512-46DHYAJ2N2YYcjo6s9jl1ACNKHc9LI6UdIBW9nHaWARQ3KuVN63yNlxTY99KZLQpixuZfScRAjrW6tbCyYr8yA==
   dependencies:
     mitt "1.1.3"
-    query-string "6.8.1"
-    reactotron-core-client "2.8.4"
+    query-string "6.8.3"
+    reactotron-core-client "2.8.8"
     rn-host-detect "1.1.5"
 
 reactotron-redux-saga@^4.2.2:
