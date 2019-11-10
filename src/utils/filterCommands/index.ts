@@ -28,7 +28,7 @@ const COMMON_MATCHING_PATHS = [
 export function filterSearch(commands: any[], search: string) {
   const trimmedSearch = (search || "").trim()
 
-  if (trimmedSearch === "") return commands
+  if (trimmedSearch === "") return [...commands]
 
   const searchRegex = new RegExp(trimmedSearch.replace(/\s/, "."), "i")
 
