@@ -2,7 +2,7 @@ import React, { FunctionComponent, useContext } from "react"
 import ReactModal from "react-modal"
 import styled, { ThemeContext } from "styled-components"
 
-ReactModal.setAppElement(document.body);
+ReactModal.setAppElement(document.body)
 
 const Title = styled.h1`
   margin: 0;
@@ -18,10 +18,10 @@ const KeystrokesContainer = styled.div`
   padding-top: 20px;
   font-size: 13px;
 `
-const KeystrokeContainer = styled.div`
+export const KeystrokeContainer = styled.div`
   padding: 0 10px;
 `
-const Keystroke = styled.span`
+export const Keystroke = styled.span`
   padding: 4px 8px;
   border-radius: 4px;
   background-color: ${props => props.theme.backgroundHighlight};
@@ -32,9 +32,16 @@ interface Props {
   isOpen: boolean
   onClose: () => void
   title: string
+  additionalKeystrokes?: React.ReactNode
 }
 
-const Modal: FunctionComponent<Props> = ({ isOpen, onClose, title, children }) => {
+const Modal: FunctionComponent<Props> = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+  additionalKeystrokes,
+}) => {
   const themeContext = useContext(ThemeContext)
 
   return (
@@ -70,8 +77,9 @@ const Modal: FunctionComponent<Props> = ({ isOpen, onClose, title, children }) =
       <div>{children}</div>
       <KeystrokesContainer>
         <KeystrokeContainer>
-          <Keystroke>ESC</Keystroke> Escape
+          <Keystroke>ESC</Keystroke> Close
         </KeystrokeContainer>
+        {additionalKeystrokes}
       </KeystrokesContainer>
     </ReactModal>
   )

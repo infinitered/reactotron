@@ -1,9 +1,8 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 
-// TODO: ¯\_(ツ)_/¯
-// import SideBarButton from "../SideBarButton"
 import ActionButton from "../ActionButton"
+import HeaderTabButton from "../HeaderTabButton"
 
 const Container = styled.div`
   background-color: ${props => props.theme.backgroundSubtleLight};
@@ -12,7 +11,6 @@ const Container = styled.div`
   box-shadow: 0 0 30px ${props => props.theme.glow};
 `
 
-// TODO: Make app region configurable
 interface ContentContainerProps {
   isDraggable: boolean
 }
@@ -56,8 +54,9 @@ const Title = styled.div`
 interface Props {
   tabs?: {
     text: string
-    path: string
     icon: any
+    onClick: () => void
+    isActive: boolean
   }[]
   title?: string
   actions?: {
@@ -79,8 +78,15 @@ const Header: FunctionComponent<Props> = ({
     <Container>
       <ContentContainer isDraggable={isDraggable}>
         <LeftContainer>
-          {/* {tabs &&
-            tabs.map(t => <SideBarButton text={t.text} path={t.path} icon={t.icon} hideTopBar />)} */}
+          {tabs &&
+            tabs.map(t => (
+              <HeaderTabButton
+                text={t.text}
+                icon={t.icon}
+                onClick={t.onClick}
+                isActive={t.isActive}
+              />
+            ))}
         </LeftContainer>
         <MiddleContainer>
           <Title>{title}</Title>

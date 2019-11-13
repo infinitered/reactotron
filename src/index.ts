@@ -5,6 +5,7 @@ import theme from "./theme"
 import ContentView from "./ContentView"
 import Header from "./Header"
 import Modal from "./Modal"
+import SubscriptionAddModal from "./SubscriptionAddModal"
 import ActionButton from "./ActionButton"
 import TimelineCommand from "./TimelineCommand"
 import timelineCommandResolver from "./TimelineCommands"
@@ -25,6 +26,7 @@ export {
   ContentView,
   Header,
   Modal,
+  SubscriptionAddModal,
   ActionButton,
   TimelineCommand,
   timelineCommandResolver,

@@ -31,12 +31,14 @@
     "dist"
   ],
   "dependencies": {
+    "color-interpolate": "^1.0.5",
     "date-fns": "^2.6.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-icons": "^3.7.0",
     "react-json-tree": "^0.11.2",
     "react-modal": "^3.11.1",
+    "react-motion": "^0.5.2",
     "react-tooltip": "^3.11.1",
     "stringify-object": "^3.3.0",
     "styled-components": "^4.4.0"
@@ -53,6 +55,7 @@
     "@storybook/react": "^5.2.5",
     "@types/jest": "^24.0.21",
     "@types/react-modal": "^3.10.0",
+    "@types/react-motion": "^0.0.29",
     "@types/react-tooltip": "^3.9.3",
     "@types/styled-components": "^4.1.19",
     "@typescript-eslint/eslint-plugin": "^2.5.0",
