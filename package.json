@@ -43,7 +43,7 @@
     "@semantic-release/git": "7.1.0-beta.8",
     "@types/jest": "24.0.23",
     "@types/node": "12.12.7",
-    "@types/ramda": "0.26.33",
+    "@types/ramda": "0.26.34",
     "@types/ws": "6.0.3",
     "@typescript-eslint/eslint-plugin": "2.7.0",
     "@typescript-eslint/parser": "2.7.0",
