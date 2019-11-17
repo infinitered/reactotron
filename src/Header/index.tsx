@@ -79,12 +79,13 @@ const Header: FunctionComponent<Props> = ({
       <ContentContainer isDraggable={isDraggable}>
         <LeftContainer>
           {tabs &&
-            tabs.map(t => (
+            tabs.map((t, idx) => (
               <HeaderTabButton
                 text={t.text}
                 icon={t.icon}
                 onClick={t.onClick}
                 isActive={t.isActive}
+                key={idx}
               />
             ))}
         </LeftContainer>
