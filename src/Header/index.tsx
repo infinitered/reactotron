@@ -94,7 +94,9 @@ const Header: FunctionComponent<Props> = ({
         </MiddleContainer>
         <RightContainer>
           {actions &&
-            actions.map(a => <ActionButton tip={a.tip} icon={a.icon} onClick={a.onClick} />)}
+            actions.map((a, idx) => (
+              <ActionButton tip={a.tip} icon={a.icon} onClick={a.onClick} key={idx} />
+            ))}
         </RightContainer>
       </ContentContainer>
       {children}
