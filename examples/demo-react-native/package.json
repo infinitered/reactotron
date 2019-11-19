@@ -19,7 +19,7 @@
     "ramda": "^0.26.1",
     "react": "16.9.0",
     "react-native": "0.61.3",
-    "react-native-reactotron": "^1.0.0-beta.5",
+    "react-native-reactotron": "^1.0.0-beta.6",
     "react-native-view-shot": "^3.0.2",
     "react-redux": "^7.1.1",
     "reactotron-react-native": "^4.1.0-beta.4",

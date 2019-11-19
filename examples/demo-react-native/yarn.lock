@@ -6158,10 +6158,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-reactotron@^1.0.0-beta.5:
-  version "1.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/react-native-reactotron/-/react-native-reactotron-1.0.0-beta.5.tgz#0c24efc378a4d2d41be09da6c0e9c283ffe77774"
-  integrity sha512-V7R1+vxkLEfV7Ppa9zvLkXmxLArrSY0pcMhkS2JZoT0v9QDRDU0eOaqxoVqoVt6vThNmgyQGGcd+fWwCZ+cscg==
+react-native-reactotron@^1.0.0-beta.6:
+  version "1.0.0-beta.6"
+  resolved "https://registry.yarnpkg.com/react-native-reactotron/-/react-native-reactotron-1.0.0-beta.6.tgz#403fff377dae8660acf9ce542c76baa149ef8546"
+  integrity sha512-Tu2BVYKhtchVpV0w3uhI//wbjcDyYp+hPfigRE8xdMWl3XvVfmJ/d1ZBHN9zrGtFy0jhIrAFvzU6BvIbsn1dTg==
 
 react-native-swipe-gestures@^1.0.3:
   version "1.0.4"
