@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useRef, useLayoutEffect, useState, useCallback } from "react"
+import React, { FunctionComponent, useRef, useState, useCallback } from "react"
 import styled from "styled-components"
 
 import Modal, { KeystrokeContainer, Keystroke } from "../Modal"
@@ -40,6 +40,8 @@ const SubscriptionAddModal: FunctionComponent<Props> = ({ isOpen, onClose, onAdd
   const [path, setPath] = useState("")
   const inputRef = useRef<HTMLInputElement>(null)
 
+  const handleAfterOpen = () => inputRef.current && inputRef.current.focus()
+
   const handleClose = useCallback(() => {
     setPath("")
     onClose()
@@ -56,17 +58,12 @@ const SubscriptionAddModal: FunctionComponent<Props> = ({ isOpen, onClose, onAdd
     }
   }, [path])
 
-  useLayoutEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus()
-    }
-  }, [isOpen, inputRef.current])
-
   return (
     <Modal
       title="Add Subscription"
       isOpen={isOpen}
       onClose={handleClose}
+      onAfterOpen={handleAfterOpen}
       additionalKeystrokes={
         <KeystrokeContainer>
           <Keystroke>ENTER</Keystroke> Subscribe

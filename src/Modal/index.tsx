@@ -31,6 +31,7 @@ export const Keystroke = styled.span`
 interface Props {
   isOpen: boolean
   onClose: () => void
+  onAfterOpen?: () => void
   title: string
   additionalKeystrokes?: React.ReactNode
 }
@@ -38,6 +39,7 @@ interface Props {
 const Modal: FunctionComponent<Props> = ({
   isOpen,
   onClose,
+  onAfterOpen,
   title,
   children,
   additionalKeystrokes,
@@ -47,6 +49,7 @@ const Modal: FunctionComponent<Props> = ({
   return (
     <ReactModal
       isOpen={isOpen}
+      onAfterOpen={onAfterOpen}
       onRequestClose={onClose}
       style={{
         overlay: {
