@@ -1223,7 +1223,7 @@
     once "^1.4.0"
     universal-user-agent "^4.0.0"
 
-"@semantic-release/commit-analyzer@7.0.0-beta.6":
+"@semantic-release/commit-analyzer@^7.0.0-beta":
   version "7.0.0-beta.6"
   resolved "https://registry.yarnpkg.com/@semantic-release/commit-analyzer/-/commit-analyzer-7.0.0-beta.6.tgz#f7d481aa52f0d13024d519c952c82fcf225d311b"
   integrity sha512-0KKdhrhRWDsiy7WcHSyh8wOKiaVafEfV1I4lxwX1VGb+koHzUu1LxCDEIazRqoAZjnfGvEkBQr6dl8/gnXwOuQ==
@@ -8383,12 +8383,12 @@ sax@^1.2.4:
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
 
-semantic-release@16.0.0-beta.35:
-  version "16.0.0-beta.35"
-  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-16.0.0-beta.35.tgz#7899232e7040d2fb12a3cb3c4784c727a561d442"
-  integrity sha512-IF86vUsjsVS2lM8VqxPfQcTFRSW7qkYXWX2fBS5O6SRVfdQDL1foVSqF4+/v1oHpTppGb7ufEdCqgoNygLwdpQ==
+semantic-release@16.0.0-beta.36:
+  version "16.0.0-beta.36"
+  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-16.0.0-beta.36.tgz#a30f90d3e24b60268399af5867e1a52081e6c8d6"
+  integrity sha512-IVbZeoSo/Sm+UTXD7YrxdbQIfxHJ0wEw61Kof8Sjxf2YoTIKXwnE9s8F3gRlgJ1s8SEfw36G7oa1Hy0+o0nfng==
   dependencies:
-    "@semantic-release/commit-analyzer" "7.0.0-beta.6"
+    "@semantic-release/commit-analyzer" "^7.0.0-beta"
     "@semantic-release/error" "^2.2.0"
     "@semantic-release/github" "^5.6.0-beta"
     "@semantic-release/npm" "^6.0.0-beta"
