@@ -8,7 +8,7 @@ const Container = styled.div`
   background-color: ${props => props.theme.backgroundSubtleLight};
   border-bottom: 1px solid ${props => props.theme.chromeLine};
   color: ${props => props.theme.foregroundDark};
-  box-shadow: 0 0 30px ${props => props.theme.glow};
+  box-shadow: 0 30px 30px -25px ${props => props.theme.glow};
 `
 
 interface ContentContainerProps {
