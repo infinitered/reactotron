@@ -42,7 +42,7 @@
     "@babel/preset-typescript": "7.7.4",
     "@semantic-release/git": "7.1.0-beta.9",
     "@types/jest": "24.0.23",
-    "@types/node": "12.12.12",
+    "@types/node": "12.12.13",
     "@types/ramda": "0.26.36",
     "@types/ws": "6.0.3",
     "@typescript-eslint/eslint-plugin": "2.9.0",
