@@ -14,6 +14,8 @@ export interface TimelineCommandPropsEx<T> {
   copyToClipboard?: (text: string) => void
   readFile?: (path: string) => void
   sendCommand?: (command: any) => void
+  openDispatchDialog?: (action: string) => void
+  dispatchAction?: (action: any) => void
 }
 
 export interface TimelineCommandProps<T> extends TimelineCommandPropsEx<T> {

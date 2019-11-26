@@ -3,6 +3,7 @@ import theme from "./theme"
 
 // Components
 import ContentView from "./ContentView"
+import DispatchActionModal from "./DispatchActionModal"
 import Header from "./Header"
 import Modal from "./Modal"
 import SubscriptionAddModal from "./SubscriptionAddModal"
@@ -24,6 +25,7 @@ import { CommandType } from "./types"
 export {
   theme,
   ContentView,
+  DispatchActionModal,
   Header,
   Modal,
   SubscriptionAddModal,
