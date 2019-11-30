@@ -266,7 +266,7 @@ PODS:
     - React-cxxreact (= 0.61.3)
     - React-jsi (= 0.61.3)
     - ReactCommon/jscallinvoker (= 0.61.3)
-  - ReactotronFlipper (1.0.0-beta.5):
+  - ReactotronFlipper (1.0.0-beta.6):
     - FlipperKit
     - React
   - Yoga (1.14.0)
@@ -414,10 +414,10 @@ SPEC CHECKSUMS:
   React-RCTText: b8f895b94aa0e7778fef28d13f3d71eed4a10c3d
   React-RCTVibration: 262588c97551b0b1c675468cda857466ba5af18f
   ReactCommon: c2c63d9290b422ca6ad5b3663073a015dd892ae9
-  ReactotronFlipper: e05334b881a91484e129d3079aa754d6b770cc6e
+  ReactotronFlipper: 3f1085350b85bbbf221acb2517ea7382993ee4af
   Yoga: 02036f6383c0008edb7ef0773a0e6beb6ce82bd1
   YogaKit: 5d1dc899cecd5946e5a758a0c3997704a4b48d01
 
 PODFILE CHECKSUM: 80181f38ba69d022cceb8a4cc565a87d676f266c
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.8.4
