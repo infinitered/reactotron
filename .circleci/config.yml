@@ -5,7 +5,7 @@
 
 defaults: &defaults
   macos:
-    xcode: "11.2.1"
+    xcode: "11.1.0"
   working_directory: ~/repo
 
 version: 2
