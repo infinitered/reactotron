@@ -45,7 +45,7 @@
     "@semantic-release/git": "7.1.0-beta.9",
     "@typescript-eslint/eslint-plugin": "2.10.0",
     "@typescript-eslint/parser": "2.10.0",
-    "@types/react": "16.9.13",
+    "@types/react": "16.9.14",
     "babel-eslint": "10.0.3",
     "babel-jest": "24.9.0",
     "eslint": "6.7.2",
