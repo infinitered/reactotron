@@ -36,7 +36,7 @@ function buildCommand({
 
 export const ClosedAdded = () => (
   <StateValuesChangeCommand
-    command={buildCommand({ added: { null: { dummyReducer: { counter: 0 } } } })}
+    command={buildCommand({ added: { dummyReducer: { counter: 0 } } })}
     isOpen={false}
     setIsOpen={() => {}}
   />
@@ -44,7 +44,7 @@ export const ClosedAdded = () => (
 
 export const ClosedChanged = () => (
   <StateValuesChangeCommand
-    command={buildCommand({ changed: { null: { dummyReducer: { counter: 0 } } } })}
+    command={buildCommand({ changed: { dummyReducer: { counter: 0 } } })}
     isOpen={false}
     setIsOpen={() => {}}
   />
@@ -52,7 +52,7 @@ export const ClosedChanged = () => (
 
 export const ClosedRemoved = () => (
   <StateValuesChangeCommand
-    command={buildCommand({ removed: { null: { dummyReducer: { counter: 0 } } } })}
+    command={buildCommand({ removed: { dummyReducer: { counter: 0 } } })}
     isOpen={false}
     setIsOpen={() => {}}
   />
@@ -61,9 +61,9 @@ export const ClosedRemoved = () => (
 export const ClosedAll = () => (
   <StateValuesChangeCommand
     command={buildCommand({
-      added: { null: { dummyReducer: { counter: 0 } } },
-      changed: { null: { dummyReducer: { counter: 0 } } },
-      removed: { null: { dummyReducer: { counter: 0 } } },
+      added: { dummyReducer: { counter: 0 } },
+      changed: { dummyReducer: { counter: 0 } },
+      removed: { dummyReducer: { counter: 0 } },
     })}
     isOpen={false}
     setIsOpen={() => {}}
@@ -72,7 +72,7 @@ export const ClosedAll = () => (
 
 export const OpenAdded = () => (
   <StateValuesChangeCommand
-    command={buildCommand({ added: { null: { dummyReducer: { counter: 0 } } } })}
+    command={buildCommand({ added: { dummyReducer: { counter: 0 } } })}
     isOpen
     setIsOpen={() => {}}
   />
@@ -80,7 +80,7 @@ export const OpenAdded = () => (
 
 export const OpenChanged = () => (
   <StateValuesChangeCommand
-    command={buildCommand({ changed: { null: { dummyReducer: { counter: 0 } } } })}
+    command={buildCommand({ changed: { dummyReducer: { counter: 0 } } })}
     isOpen
     setIsOpen={() => {}}
   />
@@ -88,7 +88,7 @@ export const OpenChanged = () => (
 
 export const OpenRemoved = () => (
   <StateValuesChangeCommand
-    command={buildCommand({ removed: { null: { dummyReducer: { counter: 0 } } } })}
+    command={buildCommand({ removed: { dummyReducer: { counter: 0 } } })}
     isOpen
     setIsOpen={() => {}}
   />
@@ -97,9 +97,9 @@ export const OpenRemoved = () => (
 export const OpenAll = () => (
   <StateValuesChangeCommand
     command={buildCommand({
-      added: { null: { dummyReducer: { counter: 0 } } },
-      changed: { null: { dummyReducer: { counter: 0 } } },
-      removed: { null: { dummyReducer: { counter: 0 } } },
+      added: { dummyReducer: { counter: 0 } },
+      changed: { dummyReducer: { counter: 0 } },
+      removed: { dummyReducer: { counter: 0 } },
     })}
     isOpen
     setIsOpen={() => {}}
