@@ -8408,10 +8408,10 @@ sax@^1.2.4:
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
 
-semantic-release@16.0.0-beta.42:
-  version "16.0.0-beta.42"
-  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-16.0.0-beta.42.tgz#83e86833d56f80b4035bf4862ba82c98768fd536"
-  integrity sha512-OAQhOWSxGZxw2PJdhXQwtG/XqNzVtV6la35NAwFIbqyh75YA7WUHmLqKhlwxuxEGjOkm7LjPESwNbwAnvSZcqw==
+semantic-release@16.0.0-beta.43:
+  version "16.0.0-beta.43"
+  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-16.0.0-beta.43.tgz#dee22a4408b6003099230c928106c3cb6284d974"
+  integrity sha512-ihYj9hFuYO/NzbMrZ8ekztyVNEyhZPc55CKLhhHZ/R4v5S4MevvKdg2ihw3abIOIwe5bYOw4GoBCZVv+q3MGVQ==
   dependencies:
     "@semantic-release/commit-analyzer" "^7.0.0-beta"
     "@semantic-release/error" "^2.2.0"
