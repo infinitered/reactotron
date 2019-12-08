@@ -40,7 +40,7 @@
   "devDependencies": {
     "@babel/core": "7.7.5",
     "@babel/plugin-proposal-class-properties": "7.7.4",
-    "@babel/preset-env": "7.7.5",
+    "@babel/preset-env": "7.7.6",
     "@babel/preset-typescript": "7.7.4",
     "@semantic-release/git": "7.1.0-beta.10",
     "@typescript-eslint/eslint-plugin": "2.10.0",
