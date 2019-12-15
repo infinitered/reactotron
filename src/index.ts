@@ -6,6 +6,7 @@ import ContentView from "./ContentView"
 import DispatchActionModal from "./DispatchActionModal"
 import Header from "./Header"
 import Modal from "./Modal"
+import ReactotronProvider from "./ReactotronProvider"
 import SubscriptionAddModal from "./SubscriptionAddModal"
 import ActionButton from "./ActionButton"
 import TimelineCommand from "./TimelineCommand"
@@ -28,6 +29,7 @@ export {
   DispatchActionModal,
   Header,
   Modal,
+  ReactotronProvider,
   SubscriptionAddModal,
   ActionButton,
   TimelineCommand,
