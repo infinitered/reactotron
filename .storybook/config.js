@@ -2,7 +2,7 @@ import React from "react"
 import { configure, addDecorator } from "@storybook/react"
 import { withKnobs } from "@storybook/addon-knobs"
 
-import ReactotronProvider from "../src/ReactotronProvider"
+import ReactotronProvider from "../src/components/ReactotronProvider"
 
 import theme from "../src/theme"
 

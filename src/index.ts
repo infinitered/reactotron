@@ -2,19 +2,23 @@
 import theme from "./theme"
 
 // Components
-import ContentView from "./ContentView"
-import DispatchActionModal from "./DispatchActionModal"
-import Header from "./Header"
-import Modal from "./Modal"
-import ReactotronProvider from "./ReactotronProvider"
-import SubscriptionAddModal from "./SubscriptionAddModal"
-import ActionButton from "./ActionButton"
-import TimelineCommand from "./TimelineCommand"
-import timelineCommandResolver from "./TimelineCommands"
-import TimelineCommandTabButton from "./TimelineCommandTabButton"
-import TimelineFilterModal from "./TimelineFilterModal"
-import Timestamp from "./Timestamp"
-import TreeView from "./TreeView"
+import ContentView from "./components/ContentView"
+import Header from "./components/Header"
+import Modal from "./components/Modal"
+import ReactotronProvider from "./components/ReactotronProvider"
+import ActionButton from "./components/ActionButton"
+import TimelineCommand from "./components/TimelineCommand"
+import TimelineCommandTabButton from "./components/TimelineCommandTabButton"
+import Timestamp from "./components/Timestamp"
+import TreeView from "./components/TreeView"
+
+// Modals
+import DispatchActionModal from "./modals/DispatchActionModal"
+import SubscriptionAddModal from "./modals/SubscriptionAddModal"
+import TimelineFilterModal from "./modals/TimelineFilterModal"
+
+// Timeline Commands
+import timelineCommandResolver from "./timelineCommands"
 
 // Utils
 import repairSerialization from "./utils/repair-serialization"
