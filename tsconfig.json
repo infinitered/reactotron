@@ -16,7 +16,8 @@
     "noUnusedLocals": true,
     "sourceMap": true,
     "target": "es5",
-    "lib": ["es2015", "dom"]
+    "lib": ["es2015", "dom"],
+    "types": ["jest"],
   },
   "exclude": ["node_modules"],
   "include": ["src"]

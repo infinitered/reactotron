@@ -1,7 +1,8 @@
 import React from "react"
 import { boolean } from "@storybook/addon-knobs"
+import { MdReorder } from "react-icons/md"
 
-import TimelineCommand from "./Stateless"
+import TimelineCommand from "./index"
 
 export default {
   title: "Timeline Command",
@@ -38,9 +39,49 @@ export const Toolbar = () => (
     preview="Test Preview"
     isOpen
     setIsOpen={() => {}}
-    renderToolbar={() => <div style={{ color: "white" }}>Toolbar!</div>}
+    toolbar={[{ icon: MdReorder, tip: "Test", onClick: () => {} }]}
   >
     <div style={{ color: "white" }}>You should see me!</div>
+  </TimelineCommand>
+)
+
+export const Important = () => (
+  <TimelineCommand
+    date={new Date("2019-01-01T10:32:43.435")}
+    title="My Command!"
+    preview="Test Preview"
+    isImportant
+    isOpen={false}
+    setIsOpen={() => {}}
+  >
+    You should not see me.
+  </TimelineCommand>
+)
+
+export const Tagged = () => (
+  <TimelineCommand
+    date={new Date("2019-01-01T10:32:43.435")}
+    title="My Command!"
+    preview="Test Preview"
+    isTagged
+    isOpen={false}
+    setIsOpen={() => {}}
+  >
+    You should not see me.
+  </TimelineCommand>
+)
+
+export const TaggedImportant = () => (
+  <TimelineCommand
+    date={new Date("2019-01-01T10:32:43.435")}
+    title="My Command!"
+    preview="Test Preview"
+    isTagged
+    isImportant
+    isOpen={false}
+    setIsOpen={() => {}}
+  >
+    You should not see me.
   </TimelineCommand>
 )
 

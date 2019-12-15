@@ -19,5 +19,17 @@ export default {
       : null,
     filesize(),
   ],
-  external: ["react", "styled-components", "react-icons/md", "date-fns"],
+  external: [
+    "color-interpolate",
+    "date-fns",
+    "react",
+    "react-dom",
+    "react-icons/md",
+    "react-json-tree",
+    "react-modal",
+    "react-motion",
+    "react-tooltip",
+    "stringify-object",
+    "styled-components",
+  ],
 }

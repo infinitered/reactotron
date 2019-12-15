@@ -1,6 +1,6 @@
 {
   "name": "reactotron-core-ui",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Core UI components for Reactotron",
   "author": "Infinite Red",
   "license": "MIT",
@@ -10,39 +10,57 @@
   "homepage": "https://github.com/infinitered/reactotron-core-ui",
   "repository": "https://github.com/infinitered/reactotron-core-ui",
   "main": "dist/index.js",
+  "typings": "dist/types/index.d.ts",
   "scripts": {
     "start": "start-storybook -p 6006",
-    "build": "npm-run-all clean compile",
-    "build:dev": "npm-run-all clean compile:dev",
+    "build": "npm-run-all clean tsc compile",
+    "build:dev": "npm-run-all clean tsc compile:dev",
     "build-storybook": "build-storybook",
     "clean": "trash dist",
     "lint": "eslint src --ext .ts,.tsx",
+    "test": "jest",
     "tsc": "tsc",
     "compile": "NODE_ENV=production rollup -c",
-    "compile:dev": "NODE_ENV=development rollup -c"
+    "compile:dev": "NODE_ENV=development rollup -c",
+    "ci:lint": "yarn lint",
+    "ci:test": "yarn test",
+    "ci:publish": "yarn semantic-release",
+    "chromatic": "chromatic"
   },
-  "peerDependencies": {
-    "date-fns": "^2.4.1",
-    "react": "^16.10.2",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "color-interpolate": "^1.0.5",
+    "date-fns": "^2.6.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
     "react-icons": "^3.7.0",
+    "react-json-tree": "^0.11.2",
+    "react-modal": "^3.11.1",
+    "react-motion": "^0.5.2",
+    "react-tooltip": "^3.11.1",
+    "stringify-object": "^3.3.0",
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
-    "date-fns": "^2.4.1",
-    "react": "^16.10.2",
-    "react-icons": "^3.7.0",
-    "styled-components": "^4.4.0",
     "@babel/core": "^7.6.4",
     "@babel/preset-react": "^7.6.3",
     "@babel/preset-typescript": "^7.6.0",
-    "@storybook/addon-actions": "^5.2.3",
-    "@storybook/addon-links": "^5.2.3",
-    "@storybook/addon-knobs": "^5.2.3",
-    "@storybook/addons": "^5.2.3",
-    "@storybook/react": "^5.2.3",
+    "@semantic-release/git": "7.1.0-beta.6",
+    "@storybook/addon-actions": "^5.2.5",
+    "@storybook/addon-knobs": "^5.2.5",
+    "@storybook/addon-links": "^5.2.5",
+    "@storybook/addons": "^5.2.5",
+    "@storybook/react": "^5.2.5",
+    "@types/jest": "^24.0.21",
+    "@types/react-modal": "^3.10.0",
+    "@types/react-motion": "^0.0.29",
+    "@types/react-tooltip": "^3.9.3",
+    "@types/stringify-object": "^3.2.0",
     "@types/styled-components": "^4.1.19",
-    "@typescript-eslint/eslint-plugin": "^2.3.3",
-    "@typescript-eslint/parser": "^2.3.3",
+    "@typescript-eslint/eslint-plugin": "^2.5.0",
+    "@typescript-eslint/parser": "^2.5.0",
     "babel-loader": "^8.0.6",
     "eslint": "^6.5.1",
     "eslint-config-prettier": "6.4.0",
@@ -51,13 +69,17 @@
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "jest": "^24.9.0",
     "npm-run-all": "^4.1.5",
-    "rollup": "^1.23.1",
+    "rollup": "^1.25.1",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-babel-minify": "^9.1.0",
-    "rollup-plugin-filesize": "^6.2.0",
+    "rollup-plugin-filesize": "^6.2.1",
     "rollup-plugin-node-resolve": "^5.2.0",
+    "semantic-release": "16.0.0-beta.24",
+    "storybook-chromatic": "^3.0.3",
     "trash-cli": "^3.0.0",
+    "ts-jest": "^24.1.0",
     "typescript": "^3.6.4"
   },
   "eslintConfig": {
@@ -87,7 +109,15 @@
       "@typescript-eslint/no-object-literal-type-assertion": 0,
       "@typescript-eslint/no-empty-interface": 0,
       "@typescript-eslint/no-var-requires": 0,
-      "@typescript-eslint/member-delimiter-style": 0
+      "@typescript-eslint/member-delimiter-style": 0,
+      "@typescript-eslint/no-unused-vars": 0
     }
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/*.test.ts"
+    ]
   }
 }
