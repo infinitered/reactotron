@@ -53,7 +53,7 @@
     "@storybook/addon-links": "5.2.5",
     "@storybook/addons": "5.2.5",
     "@storybook/react": "5.2.5",
-    "@types/jest": "24.0.21",
+    "@types/jest": "24.0.23",
     "@types/react-modal": "3.10.0",
     "@types/react-motion": "0.0.29",
     "@types/react-tooltip": "3.9.3",
