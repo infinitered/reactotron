@@ -44,9 +44,9 @@
     "styled-components": "4.4.0"
   },
   "devDependencies": {
-    "@babel/core": "7.6.4",
-    "@babel/preset-react": "7.6.3",
-    "@babel/preset-typescript": "7.6.0",
+    "@babel/core": "7.7.5",
+    "@babel/preset-react": "7.7.4",
+    "@babel/preset-typescript": "7.7.4",
     "@semantic-release/git": "7.1.0-beta.10",
     "@storybook/addon-actions": "5.2.5",
     "@storybook/addon-knobs": "5.2.5",
