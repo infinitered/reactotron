@@ -56,7 +56,7 @@
     "@types/jest": "24.0.23",
     "@types/react-modal": "3.10.0",
     "@types/react-motion": "0.0.29",
-    "@types/react-tooltip": "3.9.3",
+    "@types/react-tooltip": "3.11.0",
     "@types/stringify-object": "3.2.0",
     "@types/styled-components": "4.1.19",
     "@typescript-eslint/eslint-plugin": "2.5.0",
