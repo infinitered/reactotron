@@ -2,6 +2,8 @@ import { app, BrowserWindow, ipcMain } from "electron"
 import * as path from "path"
 import { format as formatUrl } from "url"
 
+import createMenu from "./menu"
+
 const isDevelopment = process.env.NODE_ENV !== "production"
 
 let mainWindow: BrowserWindow | null
@@ -42,6 +44,8 @@ function createMainWindow() {
       window.focus()
     })
   })
+
+  createMenu(window, isDevelopment)
 
   return window
 }
