@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import React from "react"
 import { boolean } from "@storybook/addon-knobs"
 import { MdReorder } from "react-icons/md"
