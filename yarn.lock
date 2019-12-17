@@ -29,7 +29,7 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
-"@babel/core@7.7.5":
+"@babel/core@7.7.5", "@babel/core@^7.7.2":
   version "7.7.5"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.7.5.tgz#ae1323cd035b5160293307f50647e83f8ba62f7e"
   integrity sha512-M42+ScN4+1S9iB6f+TL7QBpoQETxbclx+KNoKJABghnKYE+fMzSGqst0BZJc8CpI625bwPwYgUyRvxZ+0mZzpw==
@@ -49,7 +49,7 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
-"@babel/core@^7.0.0", "@babel/core@^7.1.0", "@babel/core@^7.4.5", "@babel/core@^7.6.0":
+"@babel/core@^7.0.0", "@babel/core@^7.1.0", "@babel/core@^7.4.5":
   version "7.6.4"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.6.4.tgz#6ebd9fe00925f6c3e177bb726a188b5f578088ff"
   integrity sha512-Rm0HGw101GY8FTzpWSyRbki/jzq+/PkNQJ+nSulrdY6gFGOsNseCqD6KHRYe2E+EdzuBdr2pxCp6s4Uk6eJ+XQ==
@@ -11927,12 +11927,12 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
-rollup-plugin-babel-minify@9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-babel-minify/-/rollup-plugin-babel-minify-9.1.0.tgz#27cff4fe1c13728029992e7f1452852f2dfd5b6d"
-  integrity sha512-hA0/vAAPoc6wHH94o7qTI4Ja4BsbFIKWJ+Wy8XPdVhz1dDCbPoP44IMmqCJEpSsf5Gy4l1Uji3qWVeSJwxxVzg==
+rollup-plugin-babel-minify@9.1.1:
+  version "9.1.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-babel-minify/-/rollup-plugin-babel-minify-9.1.1.tgz#a08c7c231952e276f234bdbbc5b52072df6d60d9"
+  integrity sha512-/Jph4PungzuB4h8uPSNKJQ16GjxVTfaRT6f4EwZW5NfD7RU7niFSEMMCZAlM6ezf11MBo1ttQcei+FisyCxicg==
   dependencies:
-    "@babel/core" "^7.6.0"
+    "@babel/core" "^7.7.2"
     "@babel/plugin-syntax-dynamic-import" "^7.2.0"
     "@comandeer/babel-plugin-banner" "^5.0.0"
     babel-preset-minify "^0.5.1"
