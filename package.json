@@ -19,6 +19,7 @@
   ],
   "homepage": "https://github.com/infinitered/reactotron#readme",
   "scripts": {
+    "postinstall": "patch-package",
     "start": "electron-webpack dev"
   },
   "dependencies": {
@@ -30,8 +31,12 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.7.4",
+    "@babel/preset-typescript": "^7.7.4",
+    "@types/react": "^16.9.16",
+    "@types/react-dom": "^16.9.4",
     "electron": "^7.1.5",
     "electron-webpack": "^2.7.4",
+    "patch-package": "^6.2.0",
     "webpack": "^4.41.3"
   },
   "build": {
