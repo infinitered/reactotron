@@ -23,6 +23,10 @@
     "start": "electron-webpack dev"
   },
   "dependencies": {
+    "electron-log": "^4.0.0",
+    "electron-store": "^5.1.0",
+    "electron-updater": "^4.2.0",
+    "electron-window-state": "^5.0.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "reactotron-core-server": "^3.0.3",

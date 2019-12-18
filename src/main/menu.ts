@@ -1,4 +1,7 @@
-import { Menu, app, shell, MenuItemConstructorOptions, ipcMain } from "electron"
+import { Menu, app, shell } from "electron"
+import Store from "electron-store"
+
+const configStore = new Store()
 
 const isDarwin = process.platform === "darwin"
 
@@ -7,7 +10,7 @@ export default function createMenu(window: Electron.BrowserWindow, isDevelopment
     buildFileMenu(),
     buildEditMenu(),
     buildViewMenu(window, isDevelopment),
-    buildWindowMenu(),
+    buildWindowMenu(window),
     buildHelpMenu(),
   ]
 
@@ -47,8 +50,7 @@ function buildFileMenu() {
     {
       label: "Preferences",
       click: () => {
-        throw new Error("IMPLEMENT ME!")
-        // configStore.openInEditor()
+        configStore.openInEditor()
       },
     },
     { type: "separator" },
@@ -112,7 +114,7 @@ function buildViewMenu(window: Electron.BrowserWindow, isDevelopment: boolean) {
   return viewMenu
 }
 
-function buildWindowMenu() {
+function buildWindowMenu(window: Electron.BrowserWindow) {
   if (!isDarwin) return null
 
   return {
@@ -122,8 +124,8 @@ function buildWindowMenu() {
         type: "checkbox",
         label: "Always On Top",
         click: () => {
-          throw new Error("IMPLEMENT ME!")
-          // this.toggleAlwaysOnTop()
+          const nextValue = !window.isAlwaysOnTop()
+          window.setAlwaysOnTop(nextValue)
         },
       },
       {

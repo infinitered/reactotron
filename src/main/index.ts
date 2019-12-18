@@ -1,22 +1,41 @@
-import { app, BrowserWindow, ipcMain } from "electron"
+import { app, BrowserWindow } from "electron"
 import * as path from "path"
 import { format as formatUrl } from "url"
+import log from "electron-log"
+import { autoUpdater } from "electron-updater"
+import windowStateKeeper from "electron-window-state"
 
 import createMenu from "./menu"
 
 const isDevelopment = process.env.NODE_ENV !== "production"
 
+class AppUpdater {
+  constructor() {
+    log.transports.file.level = "debug"
+    autoUpdater.logger = log
+    autoUpdater.checkForUpdatesAndNotify()
+  }
+}
+
 let mainWindow: BrowserWindow | null
 
 function createMainWindow() {
+  let mainWindowState = windowStateKeeper({
+    file: 'reactotron-window-state.json',
+    defaultWidth: 650,
+    defaultHeight: 800,
+  })
+
   const window = new BrowserWindow({
-    // x: mainWindowState.x,
-    // y: mainWindowState.y,
-    // width: mainWindowState.width,
-    // height: mainWindowState.height,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
     titleBarStyle: "hiddenInset",
     webPreferences: { nodeIntegration: true },
   })
+
+  mainWindowState.manage(window)
 
   if (isDevelopment) {
     window.webContents.openDevTools()
@@ -46,6 +65,8 @@ function createMainWindow() {
   })
 
   createMenu(window, isDevelopment)
+
+  new AppUpdater()
 
   return window
 }
