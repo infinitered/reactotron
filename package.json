@@ -21,7 +21,9 @@
   "scripts": {
     "postinstall": "patch-package",
     "start": "electron-webpack dev",
-    "lint": "eslint src --ext .ts,.tsx"
+    "lint": "eslint src --ext .ts,.tsx",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "electron-log": "^4.0.0",
@@ -30,17 +32,29 @@
     "electron-window-state": "^5.0.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-icons": "^3.8.0",
+    "react-motion": "^0.5.2",
+    "react-router-dom": "^5.1.2",
     "reactotron-core-server": "^3.0.3",
     "reactotron-core-ui": "^1.0.1",
     "styled-components": "^4.4.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.7.5",
     "@babel/preset-react": "^7.7.4",
     "@babel/preset-typescript": "^7.7.4",
+    "@storybook/addon-actions": "^5.2.8",
+    "@storybook/addon-knobs": "^5.2.8",
+    "@storybook/addon-links": "^5.2.8",
+    "@storybook/addons": "^5.2.8",
+    "@storybook/react": "^5.2.8",
     "@types/react": "^16.9.16",
     "@types/react-dom": "^16.9.4",
+    "@types/react-router-dom": "^5.1.3",
+    "@types/styled-components": "^4.4.1",
     "@typescript-eslint/eslint-plugin": "^2.12.0",
     "@typescript-eslint/parser": "^2.12.0",
+    "babel-loader": "^8.0.6",
     "electron": "^7.1.5",
     "electron-webpack": "^2.7.4",
     "eslint": "^6.7.2",
@@ -91,7 +105,6 @@
     "rules": {
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
-
       "no-unused-vars": 0,
       "no-undef": 0,
       "space-before-function-paren": 0,
