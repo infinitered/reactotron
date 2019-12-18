@@ -20,7 +20,7 @@ class AppUpdater {
 let mainWindow: BrowserWindow | null
 
 function createMainWindow() {
-  let mainWindowState = windowStateKeeper({
+  const mainWindowState = windowStateKeeper({
     file: 'reactotron-window-state.json',
     defaultWidth: 650,
     defaultHeight: 800,
@@ -66,7 +66,7 @@ function createMainWindow() {
 
   createMenu(window, isDevelopment)
 
-  new AppUpdater()
+  new AppUpdater() // eslint-disable-line no-new
 
   return window
 }

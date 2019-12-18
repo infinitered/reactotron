@@ -20,7 +20,8 @@
   "homepage": "https://github.com/infinitered/reactotron#readme",
   "scripts": {
     "postinstall": "patch-package",
-    "start": "electron-webpack dev"
+    "start": "electron-webpack dev",
+    "lint": "eslint src --ext .ts,.tsx"
   },
   "dependencies": {
     "electron-log": "^4.0.0",
@@ -30,7 +31,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "reactotron-core-server": "^3.0.3",
-    "reactotron-core-ui": "^1.0.0",
+    "reactotron-core-ui": "^1.0.1",
     "styled-components": "^4.4.1"
   },
   "devDependencies": {
@@ -38,10 +39,71 @@
     "@babel/preset-typescript": "^7.7.4",
     "@types/react": "^16.9.16",
     "@types/react-dom": "^16.9.4",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
     "electron": "^7.1.5",
     "electron-webpack": "^2.7.4",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "eslint-plugin-standard": "^4.0.1",
     "patch-package": "^6.2.0",
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.3",
     "webpack": "^4.41.3"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "plugin:react/recommended",
+      "standard",
+      "prettier"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "project": "./tsconfig.json"
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "react-hooks"
+    ],
+    "globals": {
+      "__DEV__": false,
+      "jasmine": false,
+      "beforeAll": false,
+      "afterAll": false,
+      "beforeEach": false,
+      "afterEach": false,
+      "test": false,
+      "expect": false,
+      "describe": false,
+      "jest": false,
+      "it": false
+    },
+    "rules": {
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+
+      "no-unused-vars": 0,
+      "no-undef": 0,
+      "space-before-function-paren": 0,
+      "@typescript-eslint/indent": 0,
+      "@typescript-eslint/explicit-member-accessibility": 0,
+      "@typescript-eslint/explicit-function-return-type": 0,
+      "@typescript-eslint/no-explicit-any": 0,
+      "@typescript-eslint/no-object-literal-type-assertion": 0,
+      "@typescript-eslint/no-empty-interface": 0,
+      "@typescript-eslint/no-var-requires": 0,
+      "@typescript-eslint/member-delimiter-style": 0
+    }
   },
   "build": {
     "productName": "Reactotron",

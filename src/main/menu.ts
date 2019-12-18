@@ -5,19 +5,6 @@ const configStore = new Store()
 
 const isDarwin = process.platform === "darwin"
 
-export default function createMenu(window: Electron.BrowserWindow, isDevelopment: boolean) {
-  const template = [
-    buildFileMenu(),
-    buildEditMenu(),
-    buildViewMenu(window, isDevelopment),
-    buildWindowMenu(window),
-    buildHelpMenu(),
-  ]
-
-  const menu = Menu.buildFromTemplate(template.filter(t => !!t) as any)
-  Menu.setApplicationMenu(menu)
-}
-
 function buildFileMenu() {
   const fileMenu = {
     label: isDarwin ? "Reactotron" : "&File",
@@ -152,4 +139,17 @@ function buildHelpMenu() {
       },
     ],
   }
+}
+
+export default function createMenu(window: Electron.BrowserWindow, isDevelopment: boolean) {
+  const template = [
+    buildFileMenu(),
+    buildEditMenu(),
+    buildViewMenu(window, isDevelopment),
+    buildWindowMenu(window),
+    buildHelpMenu(),
+  ]
+
+  const menu = Menu.buildFromTemplate(template.filter(t => !!t) as any)
+  Menu.setApplicationMenu(menu)
 }
