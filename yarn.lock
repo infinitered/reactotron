@@ -4189,12 +4189,10 @@ get-caller-file@^2.0.1:
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-2.0.5.tgz#4f94412a82db32f36e3b0b9741f8a97feb031f7e"
   integrity sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==
 
-get-port@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/get-port/-/get-port-5.0.0.tgz#aa22b6b86fd926dd7884de3e23332c9f70c031a6"
-  integrity sha512-imzMU0FjsZqNa6BqOjbbW6w5BivHIuQKopjpPqcnx0AVHJQKCxK1O+Ab3OrVXhrekqfVMjwA9ZYu062R+KcIsQ==
-  dependencies:
-    type-fest "^0.3.0"
+get-port@5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/get-port/-/get-port-5.1.0.tgz#a8f6510d0000f07d5c65653a4b0ae648fe832683"
+  integrity sha512-bjioH1E9bTQUvgaB6VycVy1QVbTZI41yTnF9qkZz6ixgy/uhCH6D63bKeZ6Code/07JYA61MeI94jSdHss8PNA==
 
 get-stdin@^4.0.1:
   version "4.0.1"
