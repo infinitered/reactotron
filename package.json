@@ -78,7 +78,7 @@
     "react-icons": "3.8.0",
     "react-modal": "3.11.1",
     "react-motion": "0.5.2",
-    "react-tooltip": "3.11.1",
+    "react-tooltip": "3.11.2",
     "rollup": "1.27.14",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-babel-minify": "9.1.1",
