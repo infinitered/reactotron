@@ -1,10 +1,18 @@
 import React from "react"
 import { render } from "react-dom"
+import { ReactotronProvider } from "reactotron-core-ui"
 
-import App from './App'
+import "./global.css"
 
-render(<App />, document.getElementById("app"))
+import App from "./App"
 
-if (module.hot) {
-  module.hot.accept()
+render(
+  <ReactotronProvider>
+    <App />
+  </ReactotronProvider>,
+  document.getElementById("app")
+)
+
+if ((module as any).hot) {
+  ;(module as any).hot.accept()
 }

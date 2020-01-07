@@ -33,10 +33,12 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-icons": "^3.8.0",
+    "react-modal": "^3.11.1",
     "react-motion": "^0.5.2",
     "react-router-dom": "^5.1.2",
+    "react-tooltip": "^3.11.1",
     "reactotron-core-server": "^3.0.3",
-    "reactotron-core-ui": "^1.0.1",
+    "reactotron-core-ui": "^1.0.2",
     "styled-components": "^4.4.1"
   },
   "devDependencies": {
@@ -48,6 +50,7 @@
     "@storybook/addon-links": "^5.2.8",
     "@storybook/addons": "^5.2.8",
     "@storybook/react": "^5.2.8",
+    "@types/jest": "^24.0.24",
     "@types/react": "^16.9.16",
     "@types/react-dom": "^16.9.4",
     "@types/react-router-dom": "^5.1.3",
@@ -105,6 +108,7 @@
     "rules": {
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
+      "react/prop-types": 0,
       "no-unused-vars": 0,
       "no-undef": 0,
       "space-before-function-paren": 0,

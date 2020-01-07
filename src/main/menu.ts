@@ -80,13 +80,22 @@ function buildViewMenu(window: Electron.BrowserWindow, isDevelopment: boolean) {
     submenu: [],
   }
 
-  viewMenu.submenu.push({
-    label: isDarwin ? "Toggle Full Screen" : "Toggle &Full Screen",
-    accelerator: isDarwin ? "Ctrl+Command+F" : "F11",
-    click: () => {
-      window.setFullScreen(!window.isFullScreen())
+  viewMenu.submenu.push(
+    {
+      label: isDarwin ? "Toggle Full Screen" : "Toggle &Full Screen",
+      accelerator: isDarwin ? "Ctrl+Command+F" : "F11",
+      click: () => {
+        window.setFullScreen(!window.isFullScreen())
+      },
     },
-  })
+    {
+      label: "Toggle Developer Tools",
+      accelerator: "Alt+Command+I",
+      click: () => {
+        (window as any).toggleDevTools()
+      },
+    }
+  )
 
   if (isDevelopment) {
     viewMenu.submenu.push({
