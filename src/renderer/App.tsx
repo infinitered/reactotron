@@ -1,9 +1,11 @@
 import React from "react"
-import { ReactotronProvider } from "reactotron-core-ui"
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import styled from "styled-components"
 
 import SideBar from "./components/SideBar"
+import { StandaloneProvider } from "./contexts/Standalone"
+
+import Timeline from "./pages/timeline"
 
 const AppContainer = styled.div`
   display: flex;
@@ -20,8 +22,8 @@ const MainContainer = styled.div`
 
 function App() {
   return (
-    <ReactotronProvider>
-      <Router>
+    <Router>
+      <StandaloneProvider>
         <AppContainer>
           <MainContainer>
             <SideBar />
@@ -30,15 +32,15 @@ function App() {
             <Route path="/home" exact component={() => <div>The Home Page!</div>} />
 
             {/* Timeline */}
-            <Route path="/" exact component={() => <div>Timeline!</div>} />
+            <Route path="/" exact component={Timeline} />
 
             {/* State */}
             <Route path="/state/subscriptions" exact component={() => <div>Subscriptions!</div>} />
             <Route path="/state/backups" exact component={() => <div>Backups!</div>} />
           </MainContainer>
         </AppContainer>
-      </Router>
-    </ReactotronProvider>
+      </StandaloneProvider>
+    </Router>
   )
 }
 
