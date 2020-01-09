@@ -1275,10 +1275,10 @@
   resolved "https://registry.yarnpkg.com/@semantic-release/error/-/error-2.2.0.tgz#ee9d5a09c9969eade1ec864776aeda5c5cddbbf0"
   integrity sha512-9Tj/qn+y2j+sjCI3Jd+qseGtHjOAeg7dU2/lVcqIQ9TV3QDaDXDYXcoOHU+7o2Hwh8L8ymL4gfuO7KxDs3q2zg==
 
-"@semantic-release/git@7.1.0-beta.11":
-  version "7.1.0-beta.11"
-  resolved "https://registry.yarnpkg.com/@semantic-release/git/-/git-7.1.0-beta.11.tgz#38aabd2a749391133861e5ac7b2dfab1b0d64299"
-  integrity sha512-xsVf/ID9PROV1v9wVjCsSUfRABb8pxCZgj2Dhhmnmf7Y99bVarclwBqasbo+32v2hIwZd6CdeF/Pk3lddAHGlw==
+"@semantic-release/git@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@semantic-release/git/-/git-8.0.0.tgz#59be8e2cf061476a747c077808c2ccc01a217a2f"
+  integrity sha512-CfjEXtxd4zmhAPtPfrerHQi5QkdMzDhoZY7bUi4zjz3S6PaAlJrpAt09/iV+JKmePEJWiWFla/+a0Y9Qull7YQ==
   dependencies:
     "@semantic-release/error" "^2.1.0"
     aggregate-error "^3.0.0"
