@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from "react"
 
 export interface TimelineCommandPropsEx<T> {
   command: {
-    clientId: string
+    clientId?: string
     connectionId: number
     date: Date
     deltaTime: number
