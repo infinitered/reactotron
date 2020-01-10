@@ -5,7 +5,7 @@ import { Command } from "../Reactotron"
 export enum ActionTypes {
   AddConnection = "ADD_CONNECTION",
   RemoveConnection = "REMOVE_CONNECTION",
-  ClearConnectionCommands = "CLEAR_CONNECTION_COMMANDS", // TODO: Implement.
+  ClearConnectionCommands = "CLEAR_CONNECTION_COMMANDS",
   CommandReceived = "COMMAND_RECEIVED",
   ChangeSelectedConnectionId = "CHANGE_SELECTED_CONNECTION_ID", // TODO: Implement.
 }
@@ -113,6 +113,18 @@ export function reducer(state: State, action: Action) {
 
         connection.commands.push(action.payload)
       })
+    case ActionTypes.ClearConnectionCommands:
+      return produce(state, draftState => {
+        if (!draftState.selectedClientId) return
+
+        const selectedConnection = draftState.connections.find(
+          c => c.clientId === draftState.selectedClientId
+        )
+
+        if (!selectedConnection) return
+
+        selectedConnection.commands = []
+      })
     default:
       return state
   }
@@ -136,5 +148,12 @@ export function commandReceived(command: Command) {
   return {
     type: ActionTypes.CommandReceived,
     payload: command,
+  }
+}
+
+export function clearConnectionCommands() {
+  return {
+    type: ActionTypes.ClearConnectionCommands,
+    payload: null,
   }
 }

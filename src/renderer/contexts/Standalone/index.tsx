@@ -10,11 +10,13 @@ import { Connection } from "./manager"
 interface Context {
   connections: Connection[]
   selectedConnection: Connection
+  clearSelectedConnectionCommands: () => void
 }
 
 const StandaloneContext = React.createContext<Context>({
   connections: [],
   selectedConnection: null,
+  clearSelectedConnectionCommands: null,
 })
 
 const Provider: FunctionComponent<any> = ({ children }) => {
@@ -24,6 +26,7 @@ const Provider: FunctionComponent<any> = ({ children }) => {
   const {
     connections,
     selectedConnection,
+    clearSelectedConnectionCommands,
     handleConnectionEstablished,
     handleCommand,
     handleDisconnect,
@@ -49,7 +52,9 @@ const Provider: FunctionComponent<any> = ({ children }) => {
   }, [handleConnectionEstablished, handleCommand, handleDisconnect])
 
   return (
-    <StandaloneContext.Provider value={{ connections, selectedConnection }}>
+    <StandaloneContext.Provider
+      value={{ connections, selectedConnection, clearSelectedConnectionCommands }}
+    >
       <ReactotronBrain commands={(selectedConnection || { commands: [] }).commands}>
         {children}
       </ReactotronBrain>

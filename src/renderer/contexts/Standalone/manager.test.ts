@@ -1,4 +1,10 @@
-import { reducer, clientConnected, clientDisconnected, commandReceived } from "./manager"
+import {
+  reducer,
+  clientConnected,
+  clientDisconnected,
+  commandReceived,
+  clearConnectionCommands,
+} from "./manager"
 
 function buildState(updates?: {
   connections?: any[]
@@ -197,7 +203,7 @@ describe("contexts/Standalone/manager", () => {
           buildState(),
           commandReceived({
             id: 0,
-            date: new Date('2020-01-01T00:00:00Z'),
+            date: new Date("2020-01-01T00:00:00Z"),
             deltaTime: 0,
             important: false,
             messageId: 0,
@@ -212,7 +218,7 @@ describe("contexts/Standalone/manager", () => {
             orphanedCommands: [
               {
                 id: 0,
-                date: new Date('2020-01-01T00:00:00Z'),
+                date: new Date("2020-01-01T00:00:00Z"),
                 deltaTime: 0,
                 important: false,
                 messageId: 0,
@@ -230,7 +236,7 @@ describe("contexts/Standalone/manager", () => {
           buildState({ connections: [{ clientId: "1234", commands: [] }] }),
           commandReceived({
             id: 0,
-            date: new Date('2020-01-01T00:00:00Z'),
+            date: new Date("2020-01-01T00:00:00Z"),
             deltaTime: 0,
             important: false,
             messageId: 0,
@@ -249,7 +255,7 @@ describe("contexts/Standalone/manager", () => {
                 commands: [
                   {
                     id: 0,
-                    date: new Date('2020-01-01T00:00:00Z'),
+                    date: new Date("2020-01-01T00:00:00Z"),
                     deltaTime: 0,
                     important: false,
                     messageId: 0,
@@ -261,6 +267,53 @@ describe("contexts/Standalone/manager", () => {
                 ],
               },
             ],
+          })
+        )
+      })
+    })
+
+    describe("ClearConnectionCommands", () => {
+      it("should do nothing if there is no selected connection", () => {
+        const updatedState = reducer(buildState(), clearConnectionCommands())
+
+        expect(updatedState).toEqual(buildState())
+      })
+
+      it("should clear commands from a connection", () => {
+        const updatedState = reducer(
+          buildState({
+            connections: [
+              {
+                clientId: "1234",
+                commands: [
+                  {
+                    id: 0,
+                    date: new Date("2020-01-01T00:00:00Z"),
+                    deltaTime: 0,
+                    important: false,
+                    messageId: 0,
+                    payload: null,
+                    connectionId: 0,
+                    clientId: "1234",
+                    type: "api.response" as any,
+                  },
+                ],
+              },
+            ],
+            selectedClientId: "1234",
+          }),
+          clearConnectionCommands()
+        )
+
+        expect(updatedState).toEqual(
+          buildState({
+            connections: [
+              {
+                clientId: "1234",
+                commands: [],
+              },
+            ],
+            selectedClientId: "1234",
           })
         )
       })

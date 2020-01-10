@@ -3,6 +3,7 @@ import { clipboard } from "electron"
 import fs from "fs"
 import {
   Header,
+  filterCommands,
   TimelineFilterModal,
   DispatchActionModal,
   timelineCommandResolver,
@@ -11,6 +12,8 @@ import { MdSearch, MdDeleteSweep, MdFilterList, MdSwapVert } from "react-icons/m
 import styled from "styled-components"
 
 import ReactotronContext from "../../contexts/Reactotron"
+import StandaloneContext from "../../contexts/Standalone"
+import TimelineContext from "../../contexts/Timeline"
 
 const Container = styled.div`
   display: flex;
@@ -47,12 +50,27 @@ const SearchInput = styled.input`
 `
 
 function Timeline() {
+  const { clearSelectedConnectionCommands } = useContext(StandaloneContext)
   const { commands } = useContext(ReactotronContext)
+  const {
+    isSearchOpen,
+    toggleSearch,
+    setSearch,
+    search,
+    isReversed,
+    toggleReverse,
+    openFilter,
+    closeFilter,
+    isFilterOpen,
+    hiddenCommands,
+    setHiddenCommands,
+  } = useContext(TimelineContext)
 
-  const filteredCommands = commands
-  const isSearchOpen = false
-  const search = ""
-  const setSearch = () => {}
+  let filteredCommands = filterCommands(commands, search, hiddenCommands)
+
+  if (isReversed) {
+    filteredCommands = filteredCommands.reverse()
+  }
 
   return (
     <Container>
@@ -64,28 +82,28 @@ function Timeline() {
             tip: "Search",
             icon: MdSearch,
             onClick: () => {
-              // toggleSearch()
+              toggleSearch()
             },
           },
           {
             tip: "Filter",
             icon: MdFilterList,
             onClick: () => {
-              // openFilter()
+              openFilter()
             },
           },
           {
             tip: "Reverse Order",
             icon: MdSwapVert,
             onClick: () => {
-              // toggleReverse()
+              toggleReverse()
             },
           },
           {
             tip: "Clear",
             icon: MdDeleteSweep,
             onClick: () => {
-              // onClearCommands()
+              clearSelectedConnectionCommands()
             },
           },
         ]}
@@ -125,7 +143,7 @@ function Timeline() {
           return null
         })}
       </TimelineContainer>
-      {/* <TimelineFilterModal
+      <TimelineFilterModal
         isOpen={isFilterOpen}
         onClose={() => {
           closeFilter()
@@ -133,7 +151,7 @@ function Timeline() {
         hiddenCommands={hiddenCommands}
         setHiddenCommands={setHiddenCommands}
       />
-      <DispatchActionModal
+      {/* <DispatchActionModal
         isOpen={isDispatchOpen}
         initialValue={dispatchInitialAction}
         onClose={() => {

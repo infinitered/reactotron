@@ -8,6 +8,7 @@ import {
   clientConnected,
   commandReceived,
   clientDisconnected,
+  clearConnectionCommands,
 } from "./manager"
 
 function useStandalone() {
@@ -32,9 +33,14 @@ function useStandalone() {
     dispatch(clientDisconnected(connection))
   }, [])
 
+  const clearSelectedConnectionCommands = useCallback(() => {
+    dispatch(clearConnectionCommands())
+  }, [])
+
   return {
     ...state,
     selectedConnection: state.connections.find(c => c.clientId === state.selectedClientId),
+    clearSelectedConnectionCommands,
     handleConnectionEstablished,
     handleCommand,
     handleDisconnect,
