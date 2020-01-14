@@ -18,12 +18,10 @@ import TimelineContext from "../../contexts/Timeline"
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  flex: 1;
+  width: 100%;
 `
 
 const TimelineContainer = styled.div`
-  flex: 1;
   overflow-y: auto;
 `
 
@@ -50,7 +48,7 @@ const SearchInput = styled.input`
 `
 
 function Timeline() {
-  const { clearSelectedConnectionCommands } = useContext(StandaloneContext)
+  const { clearSelectedConnectionCommands, sendCommand } = useContext(StandaloneContext)
   const { commands } = useContext(ReactotronContext)
   const {
     isSearchOpen,
@@ -70,6 +68,10 @@ function Timeline() {
 
   if (isReversed) {
     filteredCommands = filteredCommands.reverse()
+  }
+
+  const dispatchAction = (action: any) => {
+    sendCommand("state.action.dispatch", { action })
   }
 
   return (
@@ -122,7 +124,7 @@ function Timeline() {
           if (CommandComponent) {
             return (
               <CommandComponent
-                key={command.id}
+                key={command.messageId}
                 command={command}
                 copyToClipboard={clipboard.writeText}
                 readFile={path => {
@@ -133,8 +135,8 @@ function Timeline() {
                     })
                   })
                 }}
-                // sendCommand={onSendCommand}
-                // dispatchAction={dispatchAction}
+                sendCommand={command => sendCommand(command.type, command.payload)}
+                dispatchAction={dispatchAction}
                 // openDispatchDialog={openDispatch}
               />
             )

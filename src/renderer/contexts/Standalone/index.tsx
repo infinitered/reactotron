@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useRef, useEffect } from "react"
+import React, { FunctionComponent, useRef, useEffect, useCallback } from "react"
 import Server, { createServer } from "reactotron-core-server"
 
 import ReactotronBrain from "../../ReactotronBrain"
@@ -11,12 +11,16 @@ interface Context {
   connections: Connection[]
   selectedConnection: Connection
   clearSelectedConnectionCommands: () => void
+  selectConnection: (clientId: string) => void
+  sendCommand: (type: string, payload: any) => void
 }
 
 const StandaloneContext = React.createContext<Context>({
   connections: [],
   selectedConnection: null,
   clearSelectedConnectionCommands: null,
+  selectConnection: null,
+  sendCommand: null,
 })
 
 const Provider: FunctionComponent<any> = ({ children }) => {
@@ -25,7 +29,9 @@ const Provider: FunctionComponent<any> = ({ children }) => {
 
   const {
     connections,
+    selectedClientId,
     selectedConnection,
+    selectConnection,
     clearSelectedConnectionCommands,
     handleConnectionEstablished,
     handleCommand,
@@ -51,9 +57,23 @@ const Provider: FunctionComponent<any> = ({ children }) => {
     }
   }, [handleConnectionEstablished, handleCommand, handleDisconnect])
 
+  const sendCommand = useCallback(
+    (type: string, payload: any) => {
+      // this.client.call("sendReactotronCommand", command)
+      reactotronServer.current.send("state.action.dispatch", payload, selectedClientId)
+    },
+    [reactotronServer, selectedClientId]
+  )
+
   return (
     <StandaloneContext.Provider
-      value={{ connections, selectedConnection, clearSelectedConnectionCommands }}
+      value={{
+        connections,
+        selectedConnection,
+        selectConnection,
+        clearSelectedConnectionCommands,
+        sendCommand,
+      }}
     >
       <ReactotronBrain commands={(selectedConnection || { commands: [] }).commands}>
         {children}

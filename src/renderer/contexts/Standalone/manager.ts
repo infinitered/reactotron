@@ -7,7 +7,7 @@ export enum ActionTypes {
   RemoveConnection = "REMOVE_CONNECTION",
   ClearConnectionCommands = "CLEAR_CONNECTION_COMMANDS",
   CommandReceived = "COMMAND_RECEIVED",
-  ChangeSelectedConnectionId = "CHANGE_SELECTED_CONNECTION_ID", // TODO: Implement.
+  ChangeSelectedClientId = "CHANGE_SELECTED_CLIENT_ID",
 }
 
 export interface ReactotronConnection {
@@ -125,6 +125,14 @@ export function reducer(state: State, action: Action) {
 
         selectedConnection.commands = []
       })
+    case ActionTypes.ChangeSelectedClientId:
+      return produce(state, draftState => {
+        const selectedConnection = draftState.connections.find(c => c.clientId === action.payload)
+
+        if (!selectedConnection) return
+
+        draftState.selectedClientId = action.payload
+      })
     default:
       return state
   }
@@ -155,5 +163,12 @@ export function clearConnectionCommands() {
   return {
     type: ActionTypes.ClearConnectionCommands,
     payload: null,
+  }
+}
+
+export function updateSelectConnection(clientId: string) {
+  return {
+    type: ActionTypes.ChangeSelectedClientId,
+    payload: clientId
   }
 }
