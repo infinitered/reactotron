@@ -7,6 +7,7 @@ import Footer from "./components/Footer"
 import { StandaloneProvider } from "./contexts/Standalone"
 
 import Timeline from "./pages/timeline"
+import Help from "./pages/help"
 
 const AppContainer = styled.div`
   position: absolute;
@@ -55,6 +56,11 @@ function App() {
                 component={() => <div>Subscriptions!</div>}
               />
               <Route path="/state/backups" exact component={() => <div>Backups!</div>} />
+
+              {/* React Native */}
+
+              {/* Help */}
+              <Route path="/help" exact component={Help} />
             </MainContainer>
           </TopSection>
           <Footer />

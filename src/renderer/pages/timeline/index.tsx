@@ -23,6 +23,7 @@ const Container = styled.div`
 
 const TimelineContainer = styled.div`
   overflow-y: auto;
+  overflow-x: hidden;
 `
 
 const SearchContainer = styled.div`
