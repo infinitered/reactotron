@@ -1320,16 +1320,16 @@
   resolved "https://registry.yarnpkg.com/@semantic-release/error/-/error-2.2.0.tgz#ee9d5a09c9969eade1ec864776aeda5c5cddbbf0"
   integrity sha512-9Tj/qn+y2j+sjCI3Jd+qseGtHjOAeg7dU2/lVcqIQ9TV3QDaDXDYXcoOHU+7o2Hwh8L8ymL4gfuO7KxDs3q2zg==
 
-"@semantic-release/git@7.1.0-beta.10":
-  version "7.1.0-beta.10"
-  resolved "https://registry.yarnpkg.com/@semantic-release/git/-/git-7.1.0-beta.10.tgz#e564e526953d171612a3aa2902fbd4c90bb43ac0"
-  integrity sha512-iwku0v0YBf5VgxKyG9WqweLgaAvm3wNBpVWl5SnDCHKbvg8B7Zz58Xwvgfy+cwto6z3PyXODO7AqN61k58Ff7w==
+"@semantic-release/git@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@semantic-release/git/-/git-8.0.0.tgz#59be8e2cf061476a747c077808c2ccc01a217a2f"
+  integrity sha512-CfjEXtxd4zmhAPtPfrerHQi5QkdMzDhoZY7bUi4zjz3S6PaAlJrpAt09/iV+JKmePEJWiWFla/+a0Y9Qull7YQ==
   dependencies:
     "@semantic-release/error" "^2.1.0"
     aggregate-error "^3.0.0"
     debug "^4.0.0"
     dir-glob "^3.0.0"
-    execa "^3.2.0"
+    execa "^4.0.0"
     lodash "^4.17.4"
     micromatch "^4.0.0"
     p-reduce "^2.0.0"
