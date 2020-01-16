@@ -30,8 +30,10 @@ cp ../../../reactotron-core-client/dist/index.js ./node_modules/reactotron-core-
 cd ../../../reactotron-react-native
 yarn run build:dev
 cd ../reactotron/examples/demo-react-native
-mkdir -p ./node_modules/reactotron-react-native
-cp ../../../reactotron-react-native/dist/index.js ./node_modules/reactotron-react-native/index.js
+mkdir -p ./node_modules/reactotron-react-native/dist
+cp ../../../reactotron-react-native/dist/index.js ./node_modules/reactotron-react-native/dist/index.js
+cp ../../../reactotron-react-native/dist/flipper.js ./node_modules/reactotron-react-native/dist/flipper.js
+cp ../../../reactotron-react-native/package.json ./node_modules/reactotron-react-native/package.json
 
 # reactotron-redux
 cd ../../../reactotron-redux

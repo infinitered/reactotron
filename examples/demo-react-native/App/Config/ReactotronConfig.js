@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native'
 import Reactotron from 'reactotron-react-native'
+import ReactotronFlipper from 'reactotron-react-native/dist/flipper'
 import { reactotronRedux as reduxPlugin } from 'reactotron-redux'
 import sagaPlugin from 'reactotron-redux-saga'
 
@@ -8,7 +9,8 @@ console.disableYellowBox = true
 // First, set some configuration settings on how to connect to the app
 Reactotron.setAsyncStorageHandler(AsyncStorage)
 Reactotron.configure({
-  name: 'Demo App'
+  name: 'Demo App',
+  createSocket: (path) => new ReactotronFlipper(path),
   // host: '10.0.1.1',
   // port: 9091
 })
