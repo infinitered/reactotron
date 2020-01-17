@@ -6,6 +6,7 @@ import SideBar from "./components/SideBar"
 import Footer from "./components/Footer"
 import { StandaloneProvider } from "./contexts/Standalone"
 
+import Home from "./pages/home"
 import Timeline from "./pages/timeline"
 import Help from "./pages/help"
 
@@ -44,7 +45,7 @@ function App() {
 
             <MainContainer>
               {/* Home */}
-              <Route path="/home" exact component={() => <div>The Home Page!</div>} />
+              <Route path="/home" exact component={Home} />
 
               {/* Timeline */}
               <Route path="/" exact component={Timeline} />
@@ -58,6 +59,8 @@ function App() {
               <Route path="/state/backups" exact component={() => <div>Backups!</div>} />
 
               {/* React Native */}
+
+              {/* Custom Commands */}
 
               {/* Help */}
               <Route path="/help" exact component={Help} />
