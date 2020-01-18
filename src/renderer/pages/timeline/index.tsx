@@ -5,7 +5,6 @@ import {
   Header,
   filterCommands,
   TimelineFilterModal,
-  DispatchActionModal,
   timelineCommandResolver,
   EmptyState,
 } from "reactotron-core-ui"
@@ -52,7 +51,7 @@ const SearchInput = styled.input`
 
 function Timeline() {
   const { clearSelectedConnectionCommands, sendCommand } = useContext(StandaloneContext)
-  const { commands } = useContext(ReactotronContext)
+  const { commands, openDispatchModal } = useContext(ReactotronContext)
   const {
     isSearchOpen,
     toggleSearch,
@@ -145,7 +144,7 @@ function Timeline() {
                   }}
                   sendCommand={command => sendCommand(command.type, command.payload)}
                   dispatchAction={dispatchAction}
-                  // openDispatchDialog={openDispatch}
+                  openDispatchDialog={openDispatchModal}
                 />
               )
             }
@@ -162,14 +161,6 @@ function Timeline() {
         hiddenCommands={hiddenCommands}
         setHiddenCommands={setHiddenCommands}
       />
-      {/* <DispatchActionModal
-        isOpen={isDispatchOpen}
-        initialValue={dispatchInitialAction}
-        onClose={() => {
-          closeDispatch()
-        }}
-        onDispatchAction={dispatchAction}
-      /> */}
     </Container>
   )
 }

@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { CommandType } from "reactotron-core-ui"
+import useReactotron from "./useReactotron"
 
 // TODO: Move up to better places like core somewhere!
 export interface Command {
@@ -18,12 +19,43 @@ interface Props {
   commands: Command[]
 }
 
-const ReactotronContext = React.createContext<Props>({
+interface ContextProps extends Props {
+  // Dispatch Modal
+  isDispatchModalOpen: boolean
+  dispatchModalInitialAction: string
+  openDispatchModal: (initialAction: string) => void
+  closeDispatchModal: () => void
+}
+
+const ReactotronContext = React.createContext<ContextProps>({
   commands: [],
+  isDispatchModalOpen: false,
+  dispatchModalInitialAction: "",
+  openDispatchModal: null,
+  closeDispatchModal: null,
 })
 
 const Provider: FunctionComponent<Props> = ({ commands, children }) => {
-  return <ReactotronContext.Provider value={{ commands }}>{children}</ReactotronContext.Provider>
+  const {
+    isDispatchModalOpen,
+    dispatchModalInitialAction,
+    openDispatchModal,
+    closeDispatchModal,
+  } = useReactotron()
+
+  return (
+    <ReactotronContext.Provider
+      value={{
+        commands,
+        isDispatchModalOpen,
+        dispatchModalInitialAction,
+        openDispatchModal,
+        closeDispatchModal,
+      }}
+    >
+      {children}
+    </ReactotronContext.Provider>
+  )
 }
 
 export default ReactotronContext

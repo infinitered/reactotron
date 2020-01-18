@@ -5,6 +5,7 @@ import styled from "styled-components"
 import SideBar from "./components/SideBar"
 import Footer from "./components/Footer"
 import { StandaloneProvider } from "./contexts/Standalone"
+import RootModals from "./RootModals"
 
 import Home from "./pages/home"
 import Timeline from "./pages/timeline"
@@ -68,6 +69,7 @@ function App() {
           </TopSection>
           <Footer />
         </AppContainer>
+        <RootModals />
       </StandaloneProvider>
     </Router>
   )

@@ -9,7 +9,6 @@ interface Props {
 }
 
 const ReactotronBrain: FunctionComponent<Props> = ({ commands, children }) => {
-  // TODO: Wire up timeline specific things
   return (
     <ReactotronProvider commands={commands}>
       <TimelineProvider>{children}</TimelineProvider>
