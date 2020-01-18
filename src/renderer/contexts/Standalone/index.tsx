@@ -2,6 +2,7 @@ import React, { FunctionComponent, useRef, useEffect, useCallback } from "react"
 import Server, { createServer } from "reactotron-core-server"
 
 import ReactotronBrain from "../../ReactotronBrain"
+import config from "../../config"
 
 import useStandalone from "./useStandalone"
 import { Connection } from "./manager"
@@ -39,7 +40,7 @@ const Provider: FunctionComponent<any> = ({ children }) => {
   } = useStandalone()
 
   useEffect(() => {
-    reactotronServer.current = createServer({ port: 9090 })
+    reactotronServer.current = createServer({ port: config.get('server.port') })
 
     reactotronServer.current.on("connectionEstablished", handleConnectionEstablished)
     reactotronServer.current.on("command", handleCommand)

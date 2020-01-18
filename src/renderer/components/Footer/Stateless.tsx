@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { MdSwapVert as ExpandIcon } from "react-icons/md"
 
+import config from "../../config"
 import { Connection } from "../../contexts/Standalone/manager"
 import { getPlatformName, getPlatformDetails } from "../../util/connectionHelpers"
 import ConnectionSelector from "../ConnectionSelector"
@@ -73,7 +74,9 @@ function renderExpanded(
 function renderCollapsed(connections: Connection[], selectedConnection: Connection | null) {
   return (
     <>
-      <ConnectionInfo>port ??? | {connections.length} connections</ConnectionInfo>
+      <ConnectionInfo>
+        port {config.get("server.port")} | {connections.length} connections
+      </ConnectionInfo>
       <ConnectionInfo>
         device:{" "}
         {selectedConnection ? renderDeviceName(selectedConnection) : "Waiting for connection"}
