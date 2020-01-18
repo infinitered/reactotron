@@ -6261,6 +6261,11 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-native-flipper@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.0.1.tgz#0ab983343f2243ed266b0928665a284e55d125bd"
+  integrity sha512-CXlv55ZlO64XB9+ziGyizWge+xJl+RYnqt3fl4i6Fivw2oZwzrDhTxB7tZT1LyRaQUaZhcbOFbDLTHVS2PiLNg==
+
 react-native-swipe-gestures@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.4.tgz#6a9c6613bfe06cd9014a36a2c4a09f719ff62451"
