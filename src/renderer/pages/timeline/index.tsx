@@ -7,8 +7,9 @@ import {
   TimelineFilterModal,
   DispatchActionModal,
   timelineCommandResolver,
+  EmptyState,
 } from "reactotron-core-ui"
-import { MdSearch, MdDeleteSweep, MdFilterList, MdSwapVert } from "react-icons/md"
+import { MdSearch, MdDeleteSweep, MdFilterList, MdSwapVert, MdReorder } from "react-icons/md"
 import styled from "styled-components"
 
 import ReactotronContext from "../../contexts/Reactotron"
@@ -22,6 +23,7 @@ const Container = styled.div`
 `
 
 const TimelineContainer = styled.div`
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 `
@@ -119,32 +121,38 @@ function Timeline() {
         )}
       </Header>
       <TimelineContainer>
-        {filteredCommands.map(command => {
-          const CommandComponent = timelineCommandResolver(command.type)
+        {filteredCommands.length === 0 ? (
+          <EmptyState icon={MdReorder} title="No Activity">
+            Once your app connects and starts sending events, they will appear here.
+          </EmptyState>
+        ) : (
+          filteredCommands.map(command => {
+            const CommandComponent = timelineCommandResolver(command.type)
 
-          if (CommandComponent) {
-            return (
-              <CommandComponent
-                key={command.messageId}
-                command={command}
-                copyToClipboard={clipboard.writeText}
-                readFile={path => {
-                  return new Promise((resolve, reject) => {
-                    fs.readFile(path, "utf-8", (err, data) => {
-                      if (err || !data) reject(new Error("Something failed"))
-                      else resolve(data)
+            if (CommandComponent) {
+              return (
+                <CommandComponent
+                  key={command.messageId}
+                  command={command}
+                  copyToClipboard={clipboard.writeText}
+                  readFile={path => {
+                    return new Promise((resolve, reject) => {
+                      fs.readFile(path, "utf-8", (err, data) => {
+                        if (err || !data) reject(new Error("Something failed"))
+                        else resolve(data)
+                      })
                     })
-                  })
-                }}
-                sendCommand={command => sendCommand(command.type, command.payload)}
-                dispatchAction={dispatchAction}
-                // openDispatchDialog={openDispatch}
-              />
-            )
-          }
+                  }}
+                  sendCommand={command => sendCommand(command.type, command.payload)}
+                  dispatchAction={dispatchAction}
+                  // openDispatchDialog={openDispatch}
+                />
+              )
+            }
 
-          return null
-        })}
+            return null
+          })
+        )}
       </TimelineContainer>
       <TimelineFilterModal
         isOpen={isFilterOpen}
