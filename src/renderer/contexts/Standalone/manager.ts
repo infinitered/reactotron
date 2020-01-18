@@ -111,7 +111,7 @@ export function reducer(state: State, action: Action) {
 
         const connection = draftState.connections.find(c => c.clientId === action.payload.clientId)
 
-        connection.commands.push(action.payload)
+        connection.commands = [action.payload, ...connection.commands]
       })
     case ActionTypes.ClearConnectionCommands:
       return produce(state, draftState => {
@@ -169,6 +169,6 @@ export function clearConnectionCommands() {
 export function updateSelectConnection(clientId: string) {
   return {
     type: ActionTypes.ChangeSelectedClientId,
-    payload: clientId
+    payload: clientId,
   }
 }

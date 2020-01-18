@@ -26,4 +26,27 @@ describe("contexts/Reactotron/useReactotron", () => {
       expect(result.current.isDispatchModalOpen).toBe(false)
     })
   })
+
+  describe("Subscription Modal", () => {
+    it("should allow opening the modal", () => {
+      const { result } = renderHook(() => useReactotron())
+
+      expect(result.current.isSubscriptionModalOpen).toBe(false)
+
+      result.current.openSubscriptionModal()
+
+      expect(result.current.isSubscriptionModalOpen).toBe(true)
+    })
+
+    it("should close the modal after it is open", () => {
+      const { result } = renderHook(() => useReactotron())
+
+      expect(result.current.isSubscriptionModalOpen).toBe(false)
+      result.current.openSubscriptionModal()
+
+      result.current.closeSubscriptionModal()
+
+      expect(result.current.isSubscriptionModalOpen).toBe(false)
+    })
+  })
 })

@@ -1,5 +1,5 @@
 import React from "react"
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import { HashRouter as Router, Route } from "react-router-dom"
 import styled from "styled-components"
 
 import SideBar from "./components/SideBar"
@@ -9,6 +9,7 @@ import RootModals from "./RootModals"
 
 import Home from "./pages/home"
 import Timeline from "./pages/timeline"
+import Subscriptions from "./pages/state/Subscriptions"
 import Help from "./pages/help"
 
 const AppContainer = styled.div`
@@ -52,11 +53,7 @@ function App() {
               <Route path="/" exact component={Timeline} />
 
               {/* State */}
-              <Route
-                path="/state/subscriptions"
-                exact
-                component={() => <div>Subscriptions!</div>}
-              />
+              <Route path="/state/subscriptions" exact component={Subscriptions} />
               <Route path="/state/backups" exact component={() => <div>Backups!</div>} />
 
               {/* React Native */}

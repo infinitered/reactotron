@@ -233,9 +233,9 @@ describe("contexts/Standalone/manager", () => {
 
     it("should store commands with a client id in the right connection", () => {
       const updatedState = reducer(
-        buildState({ connections: [{ clientId: "1234", commands: [] }] }),
+        buildState({ connections: [{ clientId: "1234", commands: [{ id: 0 }] }] }),
         commandReceived({
-          id: 0,
+          id: 1,
           date: new Date("2020-01-01T00:00:00Z"),
           deltaTime: 0,
           important: false,
@@ -254,7 +254,7 @@ describe("contexts/Standalone/manager", () => {
               clientId: "1234",
               commands: [
                 {
-                  id: 0,
+                  id: 1,
                   date: new Date("2020-01-01T00:00:00Z"),
                   deltaTime: 0,
                   important: false,
@@ -264,6 +264,7 @@ describe("contexts/Standalone/manager", () => {
                   clientId: "1234",
                   type: "api.response" as any,
                 },
+                { id: 0 }
               ],
             },
           ],

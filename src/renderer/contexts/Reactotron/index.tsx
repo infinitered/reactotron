@@ -25,6 +25,11 @@ interface ContextProps extends Props {
   dispatchModalInitialAction: string
   openDispatchModal: (initialAction: string) => void
   closeDispatchModal: () => void
+
+  // Subscription Modal
+  isSubscriptionModalOpen: boolean
+  openSubscriptionModal: () => void
+  closeSubscriptionModal: () => void
 }
 
 const ReactotronContext = React.createContext<ContextProps>({
@@ -33,6 +38,9 @@ const ReactotronContext = React.createContext<ContextProps>({
   dispatchModalInitialAction: "",
   openDispatchModal: null,
   closeDispatchModal: null,
+  isSubscriptionModalOpen: false,
+  openSubscriptionModal: null,
+  closeSubscriptionModal: null,
 })
 
 const Provider: FunctionComponent<Props> = ({ commands, children }) => {
@@ -41,6 +49,9 @@ const Provider: FunctionComponent<Props> = ({ commands, children }) => {
     dispatchModalInitialAction,
     openDispatchModal,
     closeDispatchModal,
+    isSubscriptionModalOpen,
+    openSubscriptionModal,
+    closeSubscriptionModal,
   } = useReactotron()
 
   return (
@@ -51,6 +62,9 @@ const Provider: FunctionComponent<Props> = ({ commands, children }) => {
         dispatchModalInitialAction,
         openDispatchModal,
         closeDispatchModal,
+        isSubscriptionModalOpen,
+        openSubscriptionModal,
+        closeSubscriptionModal,
       }}
     >
       {children}

@@ -40,7 +40,7 @@ const Provider: FunctionComponent<any> = ({ children }) => {
   } = useStandalone()
 
   useEffect(() => {
-    reactotronServer.current = createServer({ port: config.get('server.port') })
+    reactotronServer.current = createServer({ port: config.get("server.port") })
 
     reactotronServer.current.on("connectionEstablished", handleConnectionEstablished)
     reactotronServer.current.on("command", handleCommand)
@@ -60,8 +60,10 @@ const Provider: FunctionComponent<any> = ({ children }) => {
 
   const sendCommand = useCallback(
     (type: string, payload: any) => {
-      // this.client.call("sendReactotronCommand", command)
-      reactotronServer.current.send("state.action.dispatch", payload, selectedClientId)
+      // TODO: Do better then just throwing these away...
+      if (!reactotronServer.current) return
+
+      reactotronServer.current.send(type, payload, selectedClientId)
     },
     [reactotronServer, selectedClientId]
   )
