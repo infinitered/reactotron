@@ -16,6 +16,7 @@ function buildState(updates?: {
     connections: [],
     selectedClientId: null,
     orphanedCommands: [],
+    commandListeners: [],
     ...(updates || {}),
   }
 }
@@ -264,7 +265,7 @@ describe("contexts/Standalone/manager", () => {
                   clientId: "1234",
                   type: "api.response" as any,
                 },
-                { id: 0 }
+                { id: 0 },
               ],
             },
           ],

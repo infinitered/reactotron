@@ -10,6 +10,7 @@ import {
   clientDisconnected,
   clearConnectionCommands,
   updateSelectConnection,
+  addCommandHandler,
 } from "./manager"
 
 function useStandalone() {
@@ -17,6 +18,7 @@ function useStandalone() {
     connections: [],
     selectedClientId: null,
     orphanedCommands: [],
+    commandListeners: [],
   })
 
   // Called when we have client details. NOTE: Commands can start flying in before this gets called!
@@ -42,6 +44,10 @@ function useStandalone() {
     dispatch(updateSelectConnection(clientId))
   }, [])
 
+  const addCommandListener = useCallback((callback: (command: Command) => void) => {
+    dispatch(addCommandHandler(callback))
+  }, [])
+
   return {
     ...state,
     selectedConnection: state.connections.find(c => c.clientId === state.selectedClientId),
@@ -50,6 +56,7 @@ function useStandalone() {
     handleConnectionEstablished,
     handleCommand,
     handleDisconnect,
+    addCommandListener,
   }
 }
 

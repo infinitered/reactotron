@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { Header, CommandType, ContentView, EmptyState } from "reactotron-core-ui"
-import { MdDelete, MdAdd, MdDeleteSweep, MdNotificationsNone } from "react-icons/md"
+import { MdDelete, MdAdd, MdDeleteSweep, MdNotificationsNone, MdImportExport } from "react-icons/md"
 import styled from "styled-components"
 
 import ReactotronContext from "../../contexts/Reactotron"
@@ -57,8 +57,25 @@ function Subscriptions() {
   return (
     <Container>
       <Header
-        title="Subscriptions"
         isDraggable
+        tabs={[
+          {
+            text: "Subscriptions",
+            icon: MdNotificationsNone,
+            isActive: true,
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            onClick: () => {},
+          },
+          {
+            text: "Snapshots",
+            icon: MdImportExport,
+            isActive: false,
+            onClick: () => {
+              // TODO: Couldn't get react-router-dom to do it for me so I forced it.
+              window.location.hash = "#/state/snapshots"
+            },
+          },
+        ]}
         actions={[
           {
             tip: "Add",

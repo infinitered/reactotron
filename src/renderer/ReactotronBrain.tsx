@@ -7,11 +7,12 @@ import { StateProvider } from "./contexts/State"
 
 interface Props {
   commands: Command[]
+  addCommandListener: (callback: (command: Command) => void) => void
 }
 
-const ReactotronBrain: FunctionComponent<Props> = ({ commands, children }) => {
+const ReactotronBrain: FunctionComponent<Props> = ({ commands, addCommandListener, children }) => {
   return (
-    <ReactotronProvider commands={commands}>
+    <ReactotronProvider commands={commands} addCommandListener={addCommandListener}>
       <TimelineProvider>
         <StateProvider>{children}</StateProvider>
       </TimelineProvider>

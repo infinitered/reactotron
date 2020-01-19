@@ -8,6 +8,7 @@ export enum ActionTypes {
   ClearConnectionCommands = "CLEAR_CONNECTION_COMMANDS",
   CommandReceived = "COMMAND_RECEIVED",
   ChangeSelectedClientId = "CHANGE_SELECTED_CLIENT_ID",
+  AddCommandHandler = "ADD_COMMAND_HANDLER",
 }
 
 export interface ReactotronConnection {
@@ -33,6 +34,7 @@ interface State {
   connections: Connection[]
   selectedClientId: string
   orphanedCommands: Command[]
+  commandListeners: ((command: Command) => void)[]
 }
 
 interface Action {
@@ -109,6 +111,8 @@ export function reducer(state: State, action: Action) {
           return
         }
 
+        draftState.commandListeners.forEach(cl => cl(action.payload))
+
         const connection = draftState.connections.find(c => c.clientId === action.payload.clientId)
 
         connection.commands = [action.payload, ...connection.commands]
@@ -132,6 +136,10 @@ export function reducer(state: State, action: Action) {
         if (!selectedConnection) return
 
         draftState.selectedClientId = action.payload
+      })
+    case ActionTypes.AddCommandHandler:
+      return produce(state, draftState => {
+        draftState.commandListeners.push(action.payload)
       })
     default:
       return state
@@ -170,5 +178,12 @@ export function updateSelectConnection(clientId: string) {
   return {
     type: ActionTypes.ChangeSelectedClientId,
     payload: clientId,
+  }
+}
+
+export function addCommandHandler(callback: (command: Command) => void) {
+  return {
+    type: ActionTypes.AddCommandHandler,
+    payload: callback,
   }
 }

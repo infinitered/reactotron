@@ -10,6 +10,7 @@ import RootModals from "./RootModals"
 import Home from "./pages/home"
 import Timeline from "./pages/timeline"
 import Subscriptions from "./pages/state/Subscriptions"
+import Snapshots from "./pages/state/Snapshots"
 import Help from "./pages/help"
 
 const AppContainer = styled.div`
@@ -54,7 +55,7 @@ function App() {
 
               {/* State */}
               <Route path="/state/subscriptions" exact component={Subscriptions} />
-              <Route path="/state/backups" exact component={() => <div>Backups!</div>} />
+              <Route path="/state/snapshots" exact component={Snapshots} />
 
               {/* React Native */}
 

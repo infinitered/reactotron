@@ -37,6 +37,7 @@ const Provider: FunctionComponent<any> = ({ children }) => {
     handleConnectionEstablished,
     handleCommand,
     handleDisconnect,
+    addCommandListener,
   } = useStandalone()
 
   useEffect(() => {
@@ -78,7 +79,10 @@ const Provider: FunctionComponent<any> = ({ children }) => {
         sendCommand,
       }}
     >
-      <ReactotronBrain commands={(selectedConnection || { commands: [] }).commands}>
+      <ReactotronBrain
+        commands={(selectedConnection || { commands: [] }).commands}
+        addCommandListener={addCommandListener}
+      >
         {children}
       </ReactotronBrain>
     </StandaloneContext.Provider>

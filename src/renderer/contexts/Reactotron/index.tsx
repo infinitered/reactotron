@@ -17,9 +17,13 @@ export interface Command {
 
 interface Props {
   commands: Command[]
+  addCommandListener: (callback: (command: Command) => void) => void
 }
 
 interface ContextProps extends Props {
+  // Command Events
+  addCommandListener: (callback: (command: Command) => void) => void
+
   // Dispatch Modal
   isDispatchModalOpen: boolean
   dispatchModalInitialAction: string
@@ -34,6 +38,7 @@ interface ContextProps extends Props {
 
 const ReactotronContext = React.createContext<ContextProps>({
   commands: [],
+  addCommandListener: null,
   isDispatchModalOpen: false,
   dispatchModalInitialAction: "",
   openDispatchModal: null,
@@ -43,7 +48,7 @@ const ReactotronContext = React.createContext<ContextProps>({
   closeSubscriptionModal: null,
 })
 
-const Provider: FunctionComponent<Props> = ({ commands, children }) => {
+const Provider: FunctionComponent<Props> = ({ commands, addCommandListener, children }) => {
   const {
     isDispatchModalOpen,
     dispatchModalInitialAction,
@@ -58,6 +63,7 @@ const Provider: FunctionComponent<Props> = ({ commands, children }) => {
     <ReactotronContext.Provider
       value={{
         commands,
+        addCommandListener,
         isDispatchModalOpen,
         dispatchModalInitialAction,
         openDispatchModal,
