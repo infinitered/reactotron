@@ -1,4 +1,5 @@
 import { useContext, useEffect, useReducer, useCallback } from "react"
+import { CommandType } from "reactotron-core-ui"
 import { format } from "date-fns"
 import produce from "immer"
 
@@ -18,14 +19,17 @@ interface TimelineState {
 
 enum SnapshotActionType {
   SnapshotAdd = "SNAPSHOT_ADD",
+  SnapshotRemove = "SNAPSHOT_REMOVE",
 }
 
-interface TimelineAction {
-  type: SnapshotActionType
-  payload?: Command
-}
+type Action =
+  | {
+      type: SnapshotActionType.SnapshotAdd
+      payload: Command
+    }
+  | { type: SnapshotActionType.SnapshotRemove; payload: Snapshot }
 
-function timelineReducer(state: TimelineState, action: TimelineAction) {
+function timelineReducer(state: TimelineState, action: Action) {
   switch (action.type) {
     case SnapshotActionType.SnapshotAdd:
       return produce(state, draftState => {
@@ -34,6 +38,17 @@ function timelineReducer(state: TimelineState, action: TimelineAction) {
           name: action.payload.payload.name || format(new Date(), "dddd @ h:mm:ss a"),
           state: action.payload.payload.state,
         })
+      })
+    case SnapshotActionType.SnapshotRemove:
+      return produce(state, draftState => {
+        const snapshotIndex = draftState.snapshots.findIndex(s => s.id === action.payload.id)
+
+        if (snapshotIndex === -1) return
+
+        draftState.snapshots = [
+          ...draftState.snapshots.slice(0, snapshotIndex),
+          ...draftState.snapshots.slice(snapshotIndex + 1),
+        ]
       })
     default:
       return state
@@ -48,8 +63,7 @@ function useSnapshots() {
 
   useEffect(() => {
     addCommandListener(command => {
-      // TODO: Switch to the command type when the new core-ui is in!
-      if (command.type !== "state.backup.response") return
+      if (command.type !== CommandType.StateBackupResponse) return
 
       dispatch({
         type: SnapshotActionType.SnapshotAdd,
@@ -62,9 +76,27 @@ function useSnapshots() {
     sendCommand("state.backup.request", {})
   }, [sendCommand])
 
+  const restoreSnapshot = useCallback(
+    (snapshot: Snapshot) => {
+      if (!snapshot || !snapshot.state) return
+
+      sendCommand("state.restore.request", { state: snapshot.state })
+    },
+    [sendCommand]
+  )
+
+  const removeSnapshot = useCallback(snapshot => {
+    dispatch({
+      type: SnapshotActionType.SnapshotRemove,
+      payload: snapshot,
+    })
+  }, [])
+
   return {
     snapshots: state.snapshots,
     createSnapshot,
+    restoreSnapshot,
+    removeSnapshot,
   }
 }
 

@@ -12,6 +12,8 @@ interface Context {
   clearSubscriptions: () => void
   snapshots: Snapshot[]
   createSnapshot: () => void
+  restoreSnapshot: (snapshot: Snapshot) => void
+  removeSnapshot: (snapshot: Snapshot) => void
 }
 
 const StateContext = React.createContext<Context>({
@@ -21,6 +23,8 @@ const StateContext = React.createContext<Context>({
   clearSubscriptions: null,
   snapshots: [],
   createSnapshot: null,
+  restoreSnapshot: null,
+  removeSnapshot: null,
 })
 
 const Provider: FunctionComponent<any> = ({ children }) => {
@@ -34,7 +38,7 @@ const Provider: FunctionComponent<any> = ({ children }) => {
     clearSubscriptions,
   } = useSubscriptions(sendCommand)
 
-  const { snapshots, createSnapshot } = useSnapshots()
+  const { snapshots, createSnapshot, restoreSnapshot, removeSnapshot } = useSnapshots()
 
   return (
     <StateContext.Provider
@@ -45,6 +49,8 @@ const Provider: FunctionComponent<any> = ({ children }) => {
         clearSubscriptions,
         snapshots,
         createSnapshot,
+        restoreSnapshot,
+        removeSnapshot,
       }}
     >
       {children}

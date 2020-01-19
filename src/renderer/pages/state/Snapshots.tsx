@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react"
 import { Header, EmptyState, ContentView } from "reactotron-core-ui"
+import { clipboard } from "electron"
 import styled from "styled-components"
 import {
   MdCreate,
@@ -51,7 +52,15 @@ const SnapshotPreview = styled.div`
   padding: 0 40px 30px 40px;
 `
 
-function SnapshotItem({ snapshot }: { snapshot: Snapshot }) {
+function SnapshotItem({
+  snapshot,
+  restoreSnapshot,
+  removeSnapshot,
+}: {
+  snapshot: Snapshot
+  restoreSnapshot: (snapshot: Snapshot) => void
+  removeSnapshot: (snapshot: Snapshot) => void
+}) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -62,16 +71,31 @@ function SnapshotItem({ snapshot }: { snapshot: Snapshot }) {
         }}
       >
         <SnapshotName>{snapshot.name}</SnapshotName>
-        <SnapshotAction>
+        <SnapshotAction
+          onClick={e => {
+            e.stopPropagation()
+            clipboard.writeText(JSON.stringify(snapshot))
+          }}
+        >
           <MdCallReceived size={24} />
         </SnapshotAction>
-        <SnapshotAction>
+        <SnapshotAction
+          onClick={e => {
+            e.stopPropagation()
+            restoreSnapshot(snapshot)
+          }}
+        >
           <MdFileUpload size={24} />
         </SnapshotAction>
         <SnapshotAction>
           <MdCreate size={24} />
         </SnapshotAction>
-        <SnapshotAction>
+        <SnapshotAction
+          onClick={e => {
+            e.stopPropagation()
+            removeSnapshot(snapshot)
+          }}
+        >
           <MdDelete size={24} />
         </SnapshotAction>
       </SnapshotDetailRow>
@@ -85,7 +109,7 @@ function SnapshotItem({ snapshot }: { snapshot: Snapshot }) {
 }
 
 function Snapshots() {
-  const { snapshots, createSnapshot } = useContext(StateContext)
+  const { snapshots, createSnapshot, restoreSnapshot, removeSnapshot } = useContext(StateContext)
 
   return (
     <Container>
@@ -114,7 +138,7 @@ function Snapshots() {
             tip: "Copy all snapshots to clipboard",
             icon: MdCallReceived,
             onClick: () => {
-              // openSubscriptionModal()
+              clipboard.writeText(JSON.stringify(snapshots))
             },
           },
           {
@@ -133,7 +157,14 @@ function Snapshots() {
             button in the top right corner of this window.
           </EmptyState>
         ) : (
-          snapshots.map(snapshot => <SnapshotItem key={snapshot.id} snapshot={snapshot} />)
+          snapshots.map(snapshot => (
+            <SnapshotItem
+              key={snapshot.id}
+              snapshot={snapshot}
+              restoreSnapshot={restoreSnapshot}
+              removeSnapshot={removeSnapshot}
+            />
+          ))
         )}
       </SnapshotsContainer>
     </Container>
