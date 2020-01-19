@@ -11,6 +11,7 @@ import Home from "./pages/home"
 import Timeline from "./pages/timeline"
 import Subscriptions from "./pages/state/Subscriptions"
 import Snapshots from "./pages/state/Snapshots"
+import CustomCommands from "./pages/customCommands"
 import Help from "./pages/help"
 
 const AppContainer = styled.div`
@@ -60,6 +61,7 @@ function App() {
               {/* React Native */}
 
               {/* Custom Commands */}
+              <Route path="/customCommands" exact component={CustomCommands} />
 
               {/* Help */}
               <Route path="/help" exact component={Help} />

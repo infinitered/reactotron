@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { CommandType } from "reactotron-core-ui"
+
 import useReactotron from "./useReactotron"
 
 // TODO: Move up to better places like core somewhere!

@@ -12,7 +12,7 @@ export interface Snapshot {
   state: any
 }
 
-interface TimelineState {
+interface SnapshotState {
   uniqueIdCounter: number
   snapshots: Snapshot[]
 }
@@ -29,7 +29,7 @@ type Action =
     }
   | { type: SnapshotActionType.SnapshotRemove; payload: Snapshot }
 
-function timelineReducer(state: TimelineState, action: Action) {
+function timelineReducer(state: SnapshotState, action: Action) {
   switch (action.type) {
     case SnapshotActionType.SnapshotAdd:
       return produce(state, draftState => {

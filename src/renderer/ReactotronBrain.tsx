@@ -4,6 +4,7 @@ import React, { FunctionComponent } from "react"
 import { ReactotronProvider, Command } from "./contexts/Reactotron"
 import { TimelineProvider } from "./contexts/Timeline"
 import { StateProvider } from "./contexts/State"
+import { CustomCommandsProvider } from "./contexts/CustomCommands"
 
 interface Props {
   commands: Command[]
@@ -14,7 +15,9 @@ const ReactotronBrain: FunctionComponent<Props> = ({ commands, addCommandListene
   return (
     <ReactotronProvider commands={commands} addCommandListener={addCommandListener}>
       <TimelineProvider>
-        <StateProvider>{children}</StateProvider>
+        <StateProvider>
+          <CustomCommandsProvider>{children}</CustomCommandsProvider>
+        </StateProvider>
       </TimelineProvider>
     </ReactotronProvider>
   )
