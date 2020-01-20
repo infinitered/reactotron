@@ -22,6 +22,7 @@ interface CustomCommandState {
 enum CustomCommandsActionType {
   CommandAdd = "COMMAND_ADD",
   CommandRemove = "COMMAND_REMOVE",
+  CommandClear = "COMMAND_CLEAR",
 }
 
 type Action =
@@ -30,6 +31,7 @@ type Action =
       payload: Command
     }
   | { type: CustomCommandsActionType.CommandRemove; payload: Command }
+  | { type: CustomCommandsActionType.CommandClear; payload: string }
 
 function customCommandsReducer(state: CustomCommandState, action: Action) {
   switch (action.type) {
@@ -53,6 +55,12 @@ function customCommandsReducer(state: CustomCommandState, action: Action) {
           ...draftState.customCommands.slice(commandIndex + 1),
         ]
       })
+    case CustomCommandsActionType.CommandClear:
+      return produce(state, draftState => {
+        draftState.customCommands = draftState.customCommands.filter(
+          cc => cc.clientId !== action.payload
+        )
+      })
     default:
       return state
   }
@@ -64,7 +72,12 @@ function useCustomCommands() {
 
   useEffect(() => {
     addCommandListener(command => {
-      if (command.type === CommandType.CustomCommandRegister) {
+      if (command.type === CommandType.ClientIntro) {
+        dispatch({
+          type: CustomCommandsActionType.CommandClear,
+          payload: command.clientId,
+        })
+      } else if (command.type === CommandType.CustomCommandRegister) {
         dispatch({
           type: CustomCommandsActionType.CommandAdd,
           payload: command,
