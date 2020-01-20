@@ -1,7 +1,7 @@
 import React from "react"
 import { BrowserRouter as Router } from "react-router-dom"
 
-import SideBar from "./index"
+import SideBar from "./stateless"
 
 export default {
   title: "SideBar",
@@ -9,6 +9,6 @@ export default {
 
 export const Default = () => (
   <Router>
-    <SideBar />
+    <SideBar isOpen />
   </Router>
 )

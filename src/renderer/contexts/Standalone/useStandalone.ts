@@ -11,6 +11,7 @@ import {
   clearConnectionCommands,
   updateSelectConnection,
   addCommandHandler,
+  sideBarToggle,
 } from "./manager"
 
 function useStandalone() {
@@ -19,6 +20,7 @@ function useStandalone() {
     selectedClientId: null,
     orphanedCommands: [],
     commandListeners: [],
+    isSideBarOpen: true,
   })
 
   // Called when we have client details. NOTE: Commands can start flying in before this gets called!
@@ -48,6 +50,10 @@ function useStandalone() {
     dispatch(addCommandHandler(callback))
   }, [])
 
+  const toggleSideBar = useCallback(() => {
+    dispatch(sideBarToggle())
+  }, [])
+
   return {
     ...state,
     selectedConnection: state.connections.find(c => c.clientId === state.selectedClientId),
@@ -57,6 +63,7 @@ function useStandalone() {
     handleCommand,
     handleDisconnect,
     addCommandListener,
+    toggleSideBar,
   }
 }
 

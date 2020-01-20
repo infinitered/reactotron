@@ -9,6 +9,7 @@ export enum ActionTypes {
   CommandReceived = "COMMAND_RECEIVED",
   ChangeSelectedClientId = "CHANGE_SELECTED_CLIENT_ID",
   AddCommandHandler = "ADD_COMMAND_HANDLER",
+  ToggleSidebar = "TOGGLE_SIDEBAR",
 }
 
 export interface ReactotronConnection {
@@ -35,6 +36,7 @@ interface State {
   selectedClientId: string
   orphanedCommands: Command[]
   commandListeners: ((command: Command) => void)[]
+  isSideBarOpen: boolean
 }
 
 interface Action {
@@ -141,6 +143,10 @@ export function reducer(state: State, action: Action) {
       return produce(state, draftState => {
         draftState.commandListeners.push(action.payload)
       })
+    case ActionTypes.ToggleSidebar:
+      return produce(state, draftState => {
+        draftState.isSideBarOpen = !draftState.isSideBarOpen
+      })
     default:
       return state
   }
@@ -185,5 +191,12 @@ export function addCommandHandler(callback: (command: Command) => void) {
   return {
     type: ActionTypes.AddCommandHandler,
     payload: callback,
+  }
+}
+
+export function sideBarToggle() {
+  return {
+    type: ActionTypes.ToggleSidebar,
+    payload: null,
   }
 }
