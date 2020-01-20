@@ -6,6 +6,7 @@ import { TimelineProvider } from "./contexts/Timeline"
 import { StateProvider } from "./contexts/State"
 import { CustomCommandsProvider } from "./contexts/CustomCommands"
 import { ReactNativeProvider } from "./contexts/ReactNative"
+import KeybindHandler from "./KeybindHandler"
 
 interface Props {
   commands: Command[]
@@ -18,7 +19,9 @@ const ReactotronBrain: FunctionComponent<Props> = ({ commands, addCommandListene
       <TimelineProvider>
         <StateProvider>
           <CustomCommandsProvider>
-            <ReactNativeProvider>{children}</ReactNativeProvider>
+            <ReactNativeProvider>
+              <KeybindHandler>{children}</KeybindHandler>
+            </ReactNativeProvider>
           </CustomCommandsProvider>
         </StateProvider>
       </TimelineProvider>

@@ -8,6 +8,9 @@ import {
   GoSquirrel as ReleaseIcon,
 } from "react-icons/go"
 import { FaTwitter as TwitterIcon } from "react-icons/fa"
+import { getApplicationKeyMap } from "react-hotkeys"
+
+import KeybindGroup from "./components/KeybindGroup"
 
 const projectJson = require("../../../../package.json")
 const logo = require("../../images/Reactotron-128.png")
@@ -83,6 +86,27 @@ function openTwitter() {
   shell.openExternal("https://twitter.com/reactotron")
 }
 
+function Keybinds() {
+  const keyMap = getApplicationKeyMap()
+
+  const groupedKeyMap = Object.keys(keyMap).reduce((groups, k) => {
+    const keybind = keyMap[k]
+
+    let newGroup = groups.find(g => g.name === keybind.group)
+
+    if (!newGroup) {
+      newGroup = { name: keybind.group, keybinds: [] }
+      groups.push(newGroup)
+    }
+
+    newGroup.keybinds.push(keybind)
+
+    return groups
+  }, [])
+
+  return groupedKeyMap.map(group => <KeybindGroup key={group.name} group={group} />)
+}
+
 function Help() {
   return (
     <Container>
@@ -119,7 +143,7 @@ function Help() {
           </ConnectItemContainer>
         </ConnectContainer>
         <Title>Keystrokes</Title>
-        <div>TODO: Put them here... and implement them!!!!</div>
+        {Keybinds()}
       </HelpContainer>
     </Container>
   )
