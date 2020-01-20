@@ -13,7 +13,7 @@ interface Context {
   selectedConnection: Connection
   clearSelectedConnectionCommands: () => void
   selectConnection: (clientId: string) => void
-  sendCommand: (type: string, payload: any) => void
+  sendCommand: (type: string, payload: any, clientId?: string) => void
 }
 
 const StandaloneContext = React.createContext<Context>({
@@ -47,11 +47,6 @@ const Provider: FunctionComponent<any> = ({ children }) => {
     reactotronServer.current.on("command", handleCommand)
     reactotronServer.current.on("disconnect", handleDisconnect)
 
-    // resend the storybook state to newly arriving connections
-    // reactotronServer.current.on("connectionEstablished", connection =>
-    //   this.ui.sendStorybookState(connection.clientId)
-    // )
-
     reactotronServer.current.start()
 
     return () => {
@@ -60,11 +55,11 @@ const Provider: FunctionComponent<any> = ({ children }) => {
   }, [handleConnectionEstablished, handleCommand, handleDisconnect])
 
   const sendCommand = useCallback(
-    (type: string, payload: any) => {
+    (type: string, payload: any, clientId?: string) => {
       // TODO: Do better then just throwing these away...
       if (!reactotronServer.current) return
 
-      reactotronServer.current.send(type, payload, selectedClientId)
+      reactotronServer.current.send(type, payload, clientId || selectedClientId)
     },
     [reactotronServer, selectedClientId]
   )

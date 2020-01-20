@@ -11,6 +11,8 @@ import Home from "./pages/home"
 import Timeline from "./pages/timeline"
 import Subscriptions from "./pages/state/Subscriptions"
 import Snapshots from "./pages/state/Snapshots"
+import Overlay from "./pages/reactNative/Overlay"
+import Storybook from "./pages/reactNative/Storybook"
 import CustomCommands from "./pages/customCommands"
 import Help from "./pages/help"
 
@@ -59,6 +61,8 @@ function App() {
               <Route path="/state/snapshots" exact component={Snapshots} />
 
               {/* React Native */}
+              <Route path="/native/overlay" exact component={Overlay} />
+              <Route path="/native/storybook" exact component={Storybook} />
 
               {/* Custom Commands */}
               <Route path="/customCommands" exact component={CustomCommands} />

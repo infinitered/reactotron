@@ -29,7 +29,12 @@ function SideBar() {
         matchPath="/state"
         text="State"
       />
-      <SideBarButton icon={MdPhoneIphone} path="/reactNative" text="React Native" />
+      <SideBarButton
+        icon={MdPhoneIphone}
+        path="/native/overlay"
+        matchPath="/native"
+        text="React Native"
+      />
       <SideBarButton icon={FaMagic} path="/customCommands" text="Custom Commands" iconSize={25} />
       <Spacer />
       <SideBarButton icon={MdLiveHelp} path="/help" text="Help" hideTopBar />

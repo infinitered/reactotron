@@ -5,6 +5,7 @@ import { ReactotronProvider, Command } from "./contexts/Reactotron"
 import { TimelineProvider } from "./contexts/Timeline"
 import { StateProvider } from "./contexts/State"
 import { CustomCommandsProvider } from "./contexts/CustomCommands"
+import { ReactNativeProvider } from "./contexts/ReactNative"
 
 interface Props {
   commands: Command[]
@@ -16,7 +17,9 @@ const ReactotronBrain: FunctionComponent<Props> = ({ commands, addCommandListene
     <ReactotronProvider commands={commands} addCommandListener={addCommandListener}>
       <TimelineProvider>
         <StateProvider>
-          <CustomCommandsProvider>{children}</CustomCommandsProvider>
+          <CustomCommandsProvider>
+            <ReactNativeProvider>{children}</ReactNativeProvider>
+          </CustomCommandsProvider>
         </StateProvider>
       </TimelineProvider>
     </ReactotronProvider>
