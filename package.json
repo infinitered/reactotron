@@ -45,7 +45,7 @@
     "@semantic-release/git": "8.0.0",
     "@types/jest": "24.9.0",
     "@types/node": "12.12.21",
-    "@types/ramda": "0.26.39",
+    "@types/ramda": "0.26.40",
     "@types/ws": "6.0.4",
     "@typescript-eslint/eslint-plugin": "2.9.0",
     "@typescript-eslint/parser": "2.9.0",
