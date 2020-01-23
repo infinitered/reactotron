@@ -50,7 +50,7 @@
     "@babel/preset-env": "7.8.3",
     "@babel/preset-typescript": "7.8.3",
     "@semantic-release/git": "8.0.0",
-    "@types/jest": "24.0.25",
+    "@types/jest": "24.9.1",
     "@types/node": "12.7.8",
     "@types/react-native": "0.61.2",
     "@typescript-eslint/eslint-plugin": "2.17.0",
