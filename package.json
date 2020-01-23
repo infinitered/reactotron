@@ -38,7 +38,7 @@
     "@babel/preset-env": "7.8.3",
     "@babel/preset-typescript": "7.8.3",
     "@semantic-release/git": "8.0.0",
-    "@types/jest": "24.9.0",
+    "@types/jest": "24.9.1",
     "@types/node": "12.12.21",
     "@types/ws": "7.2.0",
     "@typescript-eslint/eslint-plugin": "2.17.0",
