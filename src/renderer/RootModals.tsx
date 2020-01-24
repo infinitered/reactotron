@@ -32,6 +32,7 @@ function RootModals() {
           closeDispatchModal()
         }}
         onDispatchAction={dispatchAction}
+        isDarwin={window.process.platform === "darwin"}
       />
       <SubscriptionAddModal
         isOpen={isSubscriptionModalOpen}
