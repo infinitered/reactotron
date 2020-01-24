@@ -19,6 +19,7 @@ export interface Command {
 interface Props {
   commands: Command[]
   sendCommand: (type: string, payload: any, clientId?: string) => void
+  clearCommands: () => void
   addCommandListener: (callback: (command: Command) => void) => void
 }
 
@@ -41,6 +42,7 @@ interface ContextProps extends Props {
 const ReactotronContext = React.createContext<ContextProps>({
   commands: [],
   sendCommand: null,
+  clearCommands: null,
   addCommandListener: null,
   isDispatchModalOpen: false,
   dispatchModalInitialAction: "",
@@ -54,6 +56,7 @@ const ReactotronContext = React.createContext<ContextProps>({
 const Provider: FunctionComponent<Props> = ({
   commands,
   sendCommand,
+  clearCommands,
   addCommandListener,
   children,
 }) => {
@@ -72,6 +75,7 @@ const Provider: FunctionComponent<Props> = ({
       value={{
         commands,
         sendCommand,
+        clearCommands,
         addCommandListener,
         isDispatchModalOpen,
         dispatchModalInitialAction,

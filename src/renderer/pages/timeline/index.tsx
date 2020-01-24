@@ -12,7 +12,6 @@ import { MdSearch, MdDeleteSweep, MdFilterList, MdSwapVert, MdReorder } from "re
 import styled from "styled-components"
 
 import ReactotronContext from "../../contexts/Reactotron"
-import StandaloneContext from "../../contexts/Standalone"
 import TimelineContext from "../../contexts/Timeline"
 
 const Container = styled.div`
@@ -50,8 +49,7 @@ const SearchInput = styled.input`
 `
 
 function Timeline() {
-  const { clearSelectedConnectionCommands } = useContext(StandaloneContext)
-  const { sendCommand, commands, openDispatchModal } = useContext(ReactotronContext)
+  const { sendCommand, clearCommands, commands, openDispatchModal } = useContext(ReactotronContext)
   const {
     isSearchOpen,
     toggleSearch,
@@ -107,7 +105,7 @@ function Timeline() {
             tip: "Clear",
             icon: MdDeleteSweep,
             onClick: () => {
-              clearSelectedConnectionCommands()
+              clearCommands()
             },
           },
         ]}

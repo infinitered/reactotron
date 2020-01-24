@@ -11,7 +11,6 @@ import { Connection } from "./manager"
 interface Context {
   connections: Connection[]
   selectedConnection: Connection
-  clearSelectedConnectionCommands: () => void
   selectConnection: (clientId: string) => void
   isSideBarOpen: boolean
   toggleSideBar: () => void
@@ -20,14 +19,12 @@ interface Context {
 const StandaloneContext = React.createContext<Context>({
   connections: [],
   selectedConnection: null,
-  clearSelectedConnectionCommands: null,
   selectConnection: null,
   isSideBarOpen: true,
   toggleSideBar: null,
 })
 
 const Provider: FunctionComponent<any> = ({ children }) => {
-  // TODO: Allow for setting up the port!
   const reactotronServer = useRef<Server>(null)
 
   const {
@@ -74,7 +71,6 @@ const Provider: FunctionComponent<any> = ({ children }) => {
         connections,
         selectedConnection,
         selectConnection,
-        clearSelectedConnectionCommands,
         isSideBarOpen,
         toggleSideBar,
       }}
@@ -82,6 +78,7 @@ const Provider: FunctionComponent<any> = ({ children }) => {
       <ReactotronBrain
         commands={(selectedConnection || { commands: [] }).commands}
         sendCommand={sendCommand}
+        clearCommands={clearSelectedConnectionCommands}
         addCommandListener={addCommandListener}
       >
         {children}

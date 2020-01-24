@@ -11,12 +11,14 @@ import KeybindHandler from "./KeybindHandler"
 interface Props {
   commands: Command[]
   sendCommand: (type: string, payload: any, clientId?: string) => void
+  clearCommands: () => void
   addCommandListener: (callback: (command: Command) => void) => void
 }
 
 const ReactotronBrain: FunctionComponent<Props> = ({
   commands,
   sendCommand,
+  clearCommands,
   addCommandListener,
   children,
 }) => {
@@ -24,6 +26,7 @@ const ReactotronBrain: FunctionComponent<Props> = ({
     <ReactotronProvider
       commands={commands}
       sendCommand={sendCommand}
+      clearCommands={clearCommands}
       addCommandListener={addCommandListener}
     >
       <TimelineProvider>
