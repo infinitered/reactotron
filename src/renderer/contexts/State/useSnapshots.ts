@@ -4,7 +4,6 @@ import { format } from "date-fns"
 import produce from "immer"
 
 import ReactotronContext, { Command } from "../Reactotron"
-import StandaloneContext from "../Standalone"
 
 export interface Snapshot {
   id: number
@@ -82,9 +81,7 @@ function timelineReducer(state: SnapshotState, action: Action) {
 }
 
 function useSnapshots() {
-  // TODO: Get this standalone usage out of here!
-  const { sendCommand } = useContext(StandaloneContext)
-  const { addCommandListener } = useContext(ReactotronContext)
+  const { sendCommand, addCommandListener } = useContext(ReactotronContext)
   const [state, dispatch] = useReducer(timelineReducer, {
     uniqueIdCounter: 0,
     snapshots: [],

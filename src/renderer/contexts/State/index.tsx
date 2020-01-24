@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useContext } from "react"
 
-import StandaloneContext from "../Standalone"
+import ReactotronContext from "../Reactotron"
 
 import useSubscriptions from "./useSubscriptions"
 import useSnapshots, { Snapshot } from "./useSnapshots"
@@ -38,8 +38,7 @@ const StateContext = React.createContext<Context>({
 })
 
 const Provider: FunctionComponent<any> = ({ children }) => {
-  // TODO: Get this to not use standalone...
-  const { sendCommand } = useContext(StandaloneContext)
+  const { sendCommand } = useContext(ReactotronContext)
 
   const {
     subscriptions,

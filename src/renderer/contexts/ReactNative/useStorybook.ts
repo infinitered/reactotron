@@ -1,12 +1,10 @@
 import { useState, useCallback, useContext, useEffect, useRef } from "react"
 import { CommandType } from "reactotron-core-ui"
 
-import StandaloneContext from "../Standalone"
 import ReactotronContext from "../Reactotron"
 
 function useStorybook() {
-  const { sendCommand } = useContext(StandaloneContext)
-  const { addCommandListener } = useContext(ReactotronContext)
+  const { sendCommand, addCommandListener } = useContext(ReactotronContext)
   const [isStorybookOn, setIsStorybookOn] = useState(false)
 
   // We use these refs to avoid executing the following useEffect over and over adding a bunch of listeners but allow it to have updated info.

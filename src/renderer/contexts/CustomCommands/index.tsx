@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useContext, useCallback } from "react"
 
-import StandaloneContext from "../Standalone"
+import ReactotronContext from "../Reactotron"
 import useCustomCommands, { CustomCommand } from "./useCustomCommands"
 
 interface Context {
@@ -14,8 +14,7 @@ const CustomCommandsContext = React.createContext<Context>({
 })
 
 const Provider: FunctionComponent<any> = ({ children }) => {
-  // TODO: Get this to not use standalone...
-  const { sendCommand } = useContext(StandaloneContext)
+  const { sendCommand } = useContext(ReactotronContext)
   const { customCommands } = useCustomCommands()
 
   const sendCustomCommand = useCallback(

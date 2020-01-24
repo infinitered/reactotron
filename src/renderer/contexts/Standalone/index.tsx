@@ -13,7 +13,6 @@ interface Context {
   selectedConnection: Connection
   clearSelectedConnectionCommands: () => void
   selectConnection: (clientId: string) => void
-  sendCommand: (type: string, payload: any, clientId?: string) => void
   isSideBarOpen: boolean
   toggleSideBar: () => void
 }
@@ -23,7 +22,6 @@ const StandaloneContext = React.createContext<Context>({
   selectedConnection: null,
   clearSelectedConnectionCommands: null,
   selectConnection: null,
-  sendCommand: null,
   isSideBarOpen: true,
   toggleSideBar: null,
 })
@@ -77,13 +75,13 @@ const Provider: FunctionComponent<any> = ({ children }) => {
         selectedConnection,
         selectConnection,
         clearSelectedConnectionCommands,
-        sendCommand,
         isSideBarOpen,
         toggleSideBar,
       }}
     >
       <ReactotronBrain
         commands={(selectedConnection || { commands: [] }).commands}
+        sendCommand={sendCommand}
         addCommandListener={addCommandListener}
       >
         {children}

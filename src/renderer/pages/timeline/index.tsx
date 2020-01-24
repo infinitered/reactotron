@@ -50,8 +50,8 @@ const SearchInput = styled.input`
 `
 
 function Timeline() {
-  const { clearSelectedConnectionCommands, sendCommand } = useContext(StandaloneContext)
-  const { commands, openDispatchModal } = useContext(ReactotronContext)
+  const { clearSelectedConnectionCommands } = useContext(StandaloneContext)
+  const { sendCommand, commands, openDispatchModal } = useContext(ReactotronContext)
   const {
     isSearchOpen,
     toggleSearch,
