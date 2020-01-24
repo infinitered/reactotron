@@ -35,7 +35,7 @@ function timelineReducer(state: SnapshotState, action: Action) {
       return produce(state, draftState => {
         draftState.snapshots.push({
           id: draftState.uniqueIdCounter++,
-          name: action.payload.payload.name || format(new Date(), "dddd @ h:mm:ss a"),
+          name: action.payload.payload.name || format(new Date(), "EEEE @ h:mm:ss a"),
           state: action.payload.payload.state,
         })
       })
