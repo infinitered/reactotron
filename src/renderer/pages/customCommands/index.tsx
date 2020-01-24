@@ -54,7 +54,6 @@ const ButtonContianer = styled.div`
 const Title = styled.div`
   font-size: 24px;
   margin-bottom: 12px;
-  /* color: white; */
 `
 const Description = styled.div`
   margin-bottom: 12px;
@@ -174,6 +173,17 @@ function CustomCommands() {
 
   const { customCommands, sendCustomCommand } = useContext(CustomCommandsContext)
 
+  const lowerSearch = search.toLowerCase()
+  const filteredCustomCommands =
+    search !== ""
+      ? customCommands.filter(
+          cc =>
+            cc.command.toLowerCase().indexOf(lowerSearch) > -1 ||
+            (cc.title || "").toLowerCase().indexOf(lowerSearch) > -1 ||
+            (cc.description || "").toLowerCase().indexOf(lowerSearch) > -1
+        )
+      : customCommands
+
   return (
     <Container>
       <Header
@@ -202,7 +212,7 @@ function CustomCommands() {
             When your app registers a custom command it will show here!
           </EmptyState>
         ) : (
-          customCommands.map(cc => (
+          filteredCustomCommands.map(cc => (
             <CustomCommandItem
               key={`${cc.clientId}-${cc.id}`}
               customCommand={cc}
