@@ -17,8 +17,11 @@ const Container = styled.div`
   color: ${props => props.theme.foreground};
 `
 
-const KeystrokeContainer = styled.div`
-  width: 180px;
+interface KeystrokeContainerProps {
+  addWidth: boolean
+}
+const KeystrokeContainer = styled.div<KeystrokeContainerProps>`
+  width: ${props => (props.addWidth ? "180px" : "auto")};
 `
 const Keystroke = styled.span`
   font-weight: bold;
@@ -35,12 +38,12 @@ const Plus = styled.span`
 
 const Description = styled.div``
 
-function KeybindKeys({ keybind, sequence }) {
+export function KeybindKeys({ keybind, sequence, addWidth }) {
   // const modifierName = platform === "darwin" ? "⌘" : "CTRL"
   const splitSequence = sequence.split("+")
 
   return (
-    <KeystrokeContainer>
+    <KeystrokeContainer addWidth={addWidth}>
       {splitSequence.map((key, idx) => (
         <Fragment key={`${keybind.name}-${idx}`}>
           <Keystroke>{KEY_REMAPS[key.toLowerCase()] || key.toLowerCase()}</Keystroke>
@@ -51,19 +54,21 @@ function KeybindKeys({ keybind, sequence }) {
   )
 }
 
-function Keybind({ keybind }) {
-  let platformSequence = null
-
+export function getPlatformSequence(keybind) {
   if (keybind.sequences.length === 1) {
-    platformSequence = keybind.sequences[0].sequence
-  } else {
-    // If there is more then one we assume its platform specific
-    platformSequence = keybind.sequences.find(s => s.sequence.indexOf(mouseTrap) > -1).sequence
+    return keybind.sequences[0].sequence
   }
+
+  // If there is more then one we assume its platform specific
+  return keybind.sequences.find(s => s.sequence.indexOf(mouseTrap) > -1).sequence
+}
+
+function Keybind({ keybind }) {
+  const platformSequence = getPlatformSequence(keybind)
 
   return (
     <Container>
-      <KeybindKeys keybind={keybind} sequence={platformSequence} />
+      <KeybindKeys keybind={keybind} sequence={platformSequence} addWidth />
       <Description>{keybind.name}</Description>
     </Container>
   )

@@ -2,6 +2,10 @@ import React, { useContext } from "react"
 import { Header, CommandType, ContentView, EmptyState } from "reactotron-core-ui"
 import { MdDelete, MdAdd, MdDeleteSweep, MdNotificationsNone, MdImportExport } from "react-icons/md"
 import styled from "styled-components"
+import { getApplicationKeyMap } from "react-hotkeys"
+
+// Move this out of this page. We are just hacking around this for now
+import { KeybindKeys, getPlatformSequence } from "../help/components/Keybind"
 
 import ReactotronContext from "../../contexts/Reactotron"
 import StateContext from "../../contexts/State"
@@ -52,6 +56,12 @@ function Subscriptions() {
   const { commands, openSubscriptionModal } = useContext(ReactotronContext)
   const { removeSubscription, clearSubscriptions } = useContext(StateContext)
 
+  // Get setup to show the right keybind!
+  const subscriptionModalKeybind = getApplicationKeyMap().OpenSubscriptionModal
+  const subscriptionModalSequence = subscriptionModalKeybind
+    ? getPlatformSequence(subscriptionModalKeybind)
+    : null
+
   const subscriptionValues = getLatestChanges(commands)
 
   return (
@@ -97,7 +107,13 @@ function Subscriptions() {
         {subscriptionValues.length === 0 ? (
           <EmptyState icon={MdNotificationsNone} title="No Subscriptions">
             You can subscribe to state changes in your redux or mobx-state-tree store by pressing{" "}
-            {/* <Key text={Keystroke.modifierName} /> + <Key text="N" />. */}
+            {subscriptionModalSequence && (
+              <KeybindKeys
+                keybind={subscriptionModalKeybind}
+                sequence={subscriptionModalSequence}
+                addWidth={false}
+              />
+            )}
           </EmptyState>
         ) : (
           subscriptionValues.map(subscription => {
