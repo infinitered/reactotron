@@ -15,11 +15,16 @@ export interface Snapshot {
 interface SnapshotState {
   uniqueIdCounter: number
   snapshots: Snapshot[]
+  renameingSnapshot: Snapshot
+  isSnapshotRenameModalOpen: boolean
 }
 
 enum SnapshotActionType {
   SnapshotAdd = "SNAPSHOT_ADD",
   SnapshotRemove = "SNAPSHOT_REMOVE",
+  SnapshotRename = "SNAPSHOT_RENAME",
+  RenameModalOpen = "RENAME_MODAL_OPEN",
+  RenameModalClose = "RENAME_MODAL_CLOSE",
 }
 
 type Action =
@@ -28,6 +33,9 @@ type Action =
       payload: Command
     }
   | { type: SnapshotActionType.SnapshotRemove; payload: Snapshot }
+  | { type: SnapshotActionType.SnapshotRename; payload: string }
+  | { type: SnapshotActionType.RenameModalOpen; payload: Snapshot }
+  | { type: SnapshotActionType.RenameModalClose }
 
 function timelineReducer(state: SnapshotState, action: Action) {
   switch (action.type) {
@@ -50,6 +58,24 @@ function timelineReducer(state: SnapshotState, action: Action) {
           ...draftState.snapshots.slice(snapshotIndex + 1),
         ]
       })
+    case SnapshotActionType.SnapshotRename:
+      return produce(state, draftState => {
+        const snapshot = draftState.snapshots.find(s => s.id === draftState.renameingSnapshot.id)
+
+        if (!snapshot) return
+
+        snapshot.name = action.payload
+        draftState.isSnapshotRenameModalOpen = false
+      })
+    case SnapshotActionType.RenameModalOpen:
+      return produce(state, draftState => {
+        draftState.renameingSnapshot = action.payload
+        draftState.isSnapshotRenameModalOpen = true
+      })
+    case SnapshotActionType.RenameModalClose:
+      return produce(state, draftState => {
+        draftState.isSnapshotRenameModalOpen = false
+      })
     default:
       return state
   }
@@ -59,7 +85,12 @@ function useSnapshots() {
   // TODO: Get this standalone usage out of here!
   const { sendCommand } = useContext(StandaloneContext)
   const { addCommandListener } = useContext(ReactotronContext)
-  const [state, dispatch] = useReducer(timelineReducer, { uniqueIdCounter: 0, snapshots: [] })
+  const [state, dispatch] = useReducer(timelineReducer, {
+    uniqueIdCounter: 0,
+    snapshots: [],
+    renameingSnapshot: null,
+    isSnapshotRenameModalOpen: false,
+  })
 
   useEffect(() => {
     addCommandListener(command => {
@@ -92,11 +123,36 @@ function useSnapshots() {
     })
   }, [])
 
+  const renameSnapshot = useCallback((name: string) => {
+    dispatch({
+      type: SnapshotActionType.SnapshotRename,
+      payload: name,
+    })
+  }, [])
+
+  const openSnapshotRenameModal = useCallback((snapshot: Snapshot) => {
+    dispatch({
+      type: SnapshotActionType.RenameModalOpen,
+      payload: snapshot,
+    })
+  }, [])
+
+  const closeSnapshotRenameModal = useCallback(() => {
+    dispatch({
+      type: SnapshotActionType.RenameModalClose,
+    })
+  }, [])
+
   return {
     snapshots: state.snapshots,
+    isSnapshotRenameModalOpen: state.isSnapshotRenameModalOpen,
+    renameingSnapshot: state.renameingSnapshot,
     createSnapshot,
     restoreSnapshot,
     removeSnapshot,
+    renameSnapshot,
+    openSnapshotRenameModal,
+    closeSnapshotRenameModal,
   }
 }
 

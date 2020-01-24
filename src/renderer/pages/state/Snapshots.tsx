@@ -56,10 +56,12 @@ function SnapshotItem({
   snapshot,
   restoreSnapshot,
   removeSnapshot,
+  openSnapshotRenameModal,
 }: {
   snapshot: Snapshot
   restoreSnapshot: (snapshot: Snapshot) => void
   removeSnapshot: (snapshot: Snapshot) => void
+  openSnapshotRenameModal: (snapshot: Snapshot) => void
 }) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -87,7 +89,7 @@ function SnapshotItem({
         >
           <MdFileUpload size={24} />
         </SnapshotAction>
-        <SnapshotAction>
+        <SnapshotAction onClick={() => openSnapshotRenameModal(snapshot)}>
           <MdCreate size={24} />
         </SnapshotAction>
         <SnapshotAction
@@ -109,7 +111,13 @@ function SnapshotItem({
 }
 
 function Snapshots() {
-  const { snapshots, createSnapshot, restoreSnapshot, removeSnapshot } = useContext(StateContext)
+  const {
+    snapshots,
+    createSnapshot,
+    restoreSnapshot,
+    removeSnapshot,
+    openSnapshotRenameModal,
+  } = useContext(StateContext)
 
   return (
     <Container>
@@ -163,6 +171,7 @@ function Snapshots() {
               snapshot={snapshot}
               restoreSnapshot={restoreSnapshot}
               removeSnapshot={removeSnapshot}
+              openSnapshotRenameModal={openSnapshotRenameModal}
             />
           ))
         )}
