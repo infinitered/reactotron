@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react"
-import { Header, EmptyState, ContentView } from "reactotron-core-ui"
+import { Header, EmptyState, ContentView, SnapshotRenameModal } from "reactotron-core-ui"
 import { clipboard } from "electron"
 import styled from "styled-components"
 import {
@@ -89,7 +89,12 @@ function SnapshotItem({
         >
           <MdFileUpload size={24} />
         </SnapshotAction>
-        <SnapshotAction onClick={() => openSnapshotRenameModal(snapshot)}>
+        <SnapshotAction
+          onClick={e => {
+            e.stopPropagation()
+            openSnapshotRenameModal(snapshot)
+          }}
+        >
           <MdCreate size={24} />
         </SnapshotAction>
         <SnapshotAction
@@ -117,6 +122,10 @@ function Snapshots() {
     restoreSnapshot,
     removeSnapshot,
     openSnapshotRenameModal,
+    isSnapshotRenameModalOpen,
+    closeSnapshotRenameModal,
+    renameingSnapshot,
+    renameSnapshot,
   } = useContext(StateContext)
 
   return (
@@ -176,6 +185,12 @@ function Snapshots() {
           ))
         )}
       </SnapshotsContainer>
+      <SnapshotRenameModal
+        snapshot={renameingSnapshot}
+        isOpen={isSnapshotRenameModalOpen}
+        onClose={closeSnapshotRenameModal}
+        onRenameSnapshot={renameSnapshot}
+      />
     </Container>
   )
 }

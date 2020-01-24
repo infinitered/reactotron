@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { DispatchActionModal, SubscriptionAddModal, SnapshotRenameModal } from "reactotron-core-ui"
+import { DispatchActionModal, SubscriptionAddModal } from "reactotron-core-ui"
 
 import ReactotronContext from "./contexts/Reactotron"
 import StandaloneContext from "./contexts/Standalone"
@@ -18,13 +18,7 @@ function RootModals() {
   } = useContext(ReactotronContext)
   // See about moving this out so we can share this between standalone and flipper
   const { sendCommand } = useContext(StandaloneContext)
-  const {
-    isSnapshotRenameModalOpen,
-    closeSnapshotRenameModal,
-    renameingSnapshot,
-    renameSnapshot,
-    addSubscription,
-  } = useContext(StateContext)
+  const { addSubscription } = useContext(StateContext)
 
   const dispatchAction = (action: any) => {
     sendCommand("state.action.dispatch", { action })
@@ -51,12 +45,6 @@ function RootModals() {
           closeSubscriptionModal()
           addSubscription(path)
         }}
-      />
-      <SnapshotRenameModal
-        snapshot={renameingSnapshot}
-        isOpen={isSnapshotRenameModalOpen}
-        onClose={closeSnapshotRenameModal}
-        onRenameSnapshot={renameSnapshot}
       />
     </>
   )
