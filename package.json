@@ -20,7 +20,11 @@
   "homepage": "https://github.com/infinitered/reactotron#readme",
   "scripts": {
     "postinstall": "patch-package",
+    "compile": "tsc",
     "start": "electron-webpack dev",
+    "build": "electron-webpack",
+    "package": "yarn build && electron-builder",
+    "package-all": "yarn package -mwl --publish never",
     "test": "jest",
     "test:watch": "jest --watch --notify",
     "lint": "eslint src --ext .ts,.tsx",
