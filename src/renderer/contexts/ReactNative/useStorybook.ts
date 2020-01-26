@@ -1,7 +1,5 @@
 import { useState, useCallback, useContext, useEffect, useRef } from "react"
-import { CommandType } from "reactotron-core-ui"
-
-import ReactotronContext from "../Reactotron"
+import { CommandType, ReactotronContext } from "reactotron-core-ui"
 
 function useStorybook() {
   const { sendCommand, addCommandListener } = useContext(ReactotronContext)

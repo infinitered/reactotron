@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useContext } from "react"
-
-import ReactotronContext from "../Reactotron"
+import { ReactotronContext } from "reactotron-core-ui"
 
 import useSubscriptions from "./useSubscriptions"
 import useSnapshots, { Snapshot } from "./useSnapshots"

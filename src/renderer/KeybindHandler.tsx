@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import { GlobalHotKeys, KeyEventName } from "react-hotkeys"
+import { ReactotronContext } from "reactotron-core-ui"
 
-import ReactotronContext from "./contexts/Reactotron"
 import StandaloneContext from "./contexts/Standalone"
 import StateContext from "./contexts/State"
 

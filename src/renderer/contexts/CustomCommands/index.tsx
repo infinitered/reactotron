@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useContext, useCallback } from "react"
+import { ReactotronContext } from "reactotron-core-ui"
 
-import ReactotronContext from "../Reactotron"
 import useCustomCommands, { CustomCommand } from "./useCustomCommands"
 
 interface Context {

@@ -1,7 +1,6 @@
 import React, { useContext } from "react"
-import { DispatchActionModal, SubscriptionAddModal } from "reactotron-core-ui"
+import { DispatchActionModal, SubscriptionAddModal, ReactotronContext } from "reactotron-core-ui"
 
-import ReactotronContext from "./contexts/Reactotron"
 import StateContext from "./contexts/State"
 
 function RootModals() {

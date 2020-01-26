@@ -1,7 +1,8 @@
 // TODO: Name this better...
 import React, { FunctionComponent } from "react"
+import { ReactotronProvider } from "reactotron-core-ui"
+import { Command } from "reactotron-core-ui/dist/types/types"
 
-import { ReactotronProvider, Command } from "./contexts/Reactotron"
 import { TimelineProvider } from "./contexts/Timeline"
 import { StateProvider } from "./contexts/State"
 import { CustomCommandsProvider } from "./contexts/CustomCommands"

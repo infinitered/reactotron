@@ -1,9 +1,8 @@
 import { useContext, useEffect, useReducer, useCallback } from "react"
-import { CommandType } from "reactotron-core-ui"
+import { CommandType, ReactotronContext } from "reactotron-core-ui"
 import { format } from "date-fns"
 import produce from "immer"
-
-import ReactotronContext, { Command } from "../Reactotron"
+import { Command } from "reactotron-core-server/dist/types/types"
 
 export interface Snapshot {
   id: number

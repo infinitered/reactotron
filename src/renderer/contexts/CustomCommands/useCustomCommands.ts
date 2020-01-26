@@ -1,7 +1,7 @@
 import { useReducer, useContext, useEffect } from "react"
-import { CommandType } from "reactotron-core-ui"
+import { CommandType, ReactotronContext } from "reactotron-core-ui"
+import { Command } from "reactotron-core-ui/dist/types/types"
 
-import ReactotronContext, { Command } from "../Reactotron"
 import produce from "immer"
 
 export interface CustomCommand {
