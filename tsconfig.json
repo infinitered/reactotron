@@ -3,7 +3,7 @@
     "allowJs": false,
     "jsx": "react",
     "noEmit": true,
-    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "experimentalDecorators": true,
     "module": "es2015",
     "moduleResolution": "node",

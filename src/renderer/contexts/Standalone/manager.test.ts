@@ -17,6 +17,7 @@ function buildState(updates?: {
     selectedClientId: null,
     orphanedCommands: [],
     commandListeners: [],
+    isSideBarOpen: false,
     ...(updates || {}),
   }
 }
