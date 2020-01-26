@@ -4,8 +4,8 @@
 #
 
 defaults: &defaults
-  macos:
-    xcode: "11.1.0"
+  docker:
+      - image: electronuserland/builder:wine
   working_directory: ~/repo
 
 version: 2
@@ -68,9 +68,9 @@ jobs:
       - run:
           name: TypeScript Compile
           command: yarn compile
-      - run:
-          name: Install Wine & RPM
-          command: brew install wine && brew install rpm
+      # - run:
+      #     name: Install Wine & RPM
+      #     command: brew install wine && brew install rpm
       - run:
           name: Decode Certificates
           command: base64 -D -o Certificates.p12 <<< $ReactotronCerts
