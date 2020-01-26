@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import styled from "styled-components"
-import { Header } from "reactotron-core-ui"
+import { Header, ReactNativeContext } from "reactotron-core-ui"
 import {
   MdCamera,
   MdBook,
@@ -8,8 +8,6 @@ import {
   MdRadioButtonUnchecked,
   MdWarning,
 } from "react-icons/md"
-
-import ReactNativeContext from "../../contexts/ReactNative"
 
 const storybookActiveImg = require("../../images/storybook-logo-color.png")
 const storybookInaactiveImg = require("../../images/storybook-logo.png")
