@@ -1,7 +1,5 @@
 import produce from "immer"
 
-import { Command } from "../Reactotron"
-
 export enum ActionTypes {
   AddConnection = "ADD_CONNECTION",
   RemoveConnection = "REMOVE_CONNECTION",
@@ -34,8 +32,8 @@ export interface Connection extends ReactotronConnection {
 interface State {
   connections: Connection[]
   selectedClientId: string
-  orphanedCommands: Command[]
-  commandListeners: ((command: Command) => void)[]
+  orphanedCommands: any[] // Command[]
+  commandListeners: ((command: any) => void)[] // ((command: Command) => void)[]
   isSideBarOpen: boolean
 }
 
@@ -166,7 +164,7 @@ export function clientDisconnected(connection: ReactotronConnection) {
   }
 }
 
-export function commandReceived(command: Command) {
+export function commandReceived(command: any) {// Command) {
   return {
     type: ActionTypes.CommandReceived,
     payload: command,
@@ -187,7 +185,7 @@ export function updateSelectConnection(clientId: string) {
   }
 }
 
-export function addCommandHandler(callback: (command: Command) => void) {
+export function addCommandHandler(callback: (command: any) => void) {// (command: Command) => void) {
   return {
     type: ActionTypes.AddCommandHandler,
     payload: callback,
