@@ -1,17 +1,21 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "noImplicitAny": false,
-    "removeComments": false,
+    "allowJs": false,
+    "jsx": "react",
+    "noEmit": true,
+    "esModuleInterop": true,
     "experimentalDecorators": true,
-    "preserveConstEnums": true,
-    "lib": ["es2015", "dom"],
-    "sourceMap": true,
-    "allowSyntheticDefaultImports": true,
+    "module": "es2015",
     "moduleResolution": "node",
-    "allowJs": true,
-    "jsx": "react"
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "target": "es5",
+    "lib": ["es2015", "dom"],
+    "types": ["jest"],
   },
+  "exclude": ["node_modules"],
   "include": ["src"]
 }

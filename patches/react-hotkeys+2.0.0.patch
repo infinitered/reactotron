@@ -1,0 +1,19 @@
+diff --git a/node_modules/react-hotkeys/index.d.ts b/node_modules/react-hotkeys/index.d.ts
+index 9760ab7..7446f77 100644
+--- a/node_modules/react-hotkeys/index.d.ts
++++ b/node_modules/react-hotkeys/index.d.ts
+@@ -8,12 +8,12 @@ export type KeyName = string;
+ export type KeyEventName = 'keyup' | 'keydown' | 'keypress';
+ 
+ export interface KeyMapOptions {
+-  sequence: MouseTrapKeySequence;
++  sequence?: MouseTrapKeySequence;
+   action: KeyEventName;
+ }
+ 
+ export interface ExtendedKeyMapOptions extends KeyMapOptions {
+-  sequences: Array<MouseTrapKeySequence> | Array<KeyMapOptions>;
++  sequences?: Array<MouseTrapKeySequence> | Array<KeyMapOptions>;
+   name?: string;
+   group?: string;
+   description?: string;

@@ -23,13 +23,22 @@ jobs:
       - run:
           name: Install dependencies
           command: yarn install
-      - save_cache:
-          name: Save node modules
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+      # - save_cache:
+      #     name: Save node modules
+      #     paths:
+      #       - node_modules
+      #     key: v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Build Apps
+          name: Lint
+          command: yarn lint
+      - run:
+          name: Tests
+          command: yarn test
+      - run:
+          name: TypeScript Compile
+          command: yarn compile
+      - run:
+          name: Build App
           command: yarn build
 
   releaseVersion:
@@ -45,11 +54,20 @@ jobs:
       - run:
           name: Install dependencies
           command: yarn install
-      - save_cache:
-          name: Save node modules
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+      # - save_cache:
+      #     name: Save node modules
+      #     paths:
+      #       - node_modules
+      #     key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Lint
+          command: yarn lint
+      - run:
+          name: Tests
+          command: yarn test
+      - run:
+          name: TypeScript Compile
+          command: yarn compile
       - run:
           name: Install Wine & RPM
           command: brew install wine && brew install rpm

@@ -1,0 +1,26 @@
+diff --git a/node_modules/electron-webpack/out/main.js b/node_modules/electron-webpack/out/main.js
+index d5b34cb..6e33971 100644
+--- a/node_modules/electron-webpack/out/main.js
++++ b/node_modules/electron-webpack/out/main.js
+@@ -215,7 +215,7 @@ class WebpackConfigurator {
+     this.rules = [];
+     this.plugins = []; // js must be first - e.g. iView has two files loading-bar.js and loading-bar.vue - when we require "loading-bar", js file must be resolved and not vue
+ 
+-    this.extensions = [".js", ".json", ".node"];
++    this.extensions = [".ts", ".tsx", ".js", ".json", ".node"];
+     this._electronVersion = null;
+     this.entryFiles = [];
+ 
+diff --git a/node_modules/electron-webpack/out/targets/BaseTarget.js b/node_modules/electron-webpack/out/targets/BaseTarget.js
+index 4a60147..10d6deb 100644
+--- a/node_modules/electron-webpack/out/targets/BaseTarget.js
++++ b/node_modules/electron-webpack/out/targets/BaseTarget.js
+@@ -93,7 +93,7 @@ class BaseTarget {
+     }
+ 
+     rules.push({
+-      test: /\.js$/,
++      test: /\.[tj]sx?$/,
+       exclude: /(node_modules|bower_components)/,
+       use: babelLoader
+     }, {
