@@ -1,7 +1,5 @@
 import { useCallback, useReducer } from "react"
 
-import { Command } from "../Reactotron"
-
 import {
   ReactotronConnection,
   reducer,
@@ -29,7 +27,7 @@ function useStandalone() {
   }, [])
 
   // Called when commands are flowing in.
-  const handleCommand = useCallback((command: Command) => {
+  const handleCommand = useCallback((command: any) => { // Command) => {
     dispatch(commandReceived(command))
   }, [])
 
@@ -46,7 +44,7 @@ function useStandalone() {
     dispatch(updateSelectConnection(clientId))
   }, [])
 
-  const addCommandListener = useCallback((callback: (command: Command) => void) => {
+  const addCommandListener = useCallback((callback: (command: any) => void) => { // Command) => void) => {
     dispatch(addCommandHandler(callback))
   }, [])
 
