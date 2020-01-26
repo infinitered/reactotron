@@ -53,7 +53,7 @@ jobs:
       #      - v1-dependencies-
       - run:
           name: Install dependencies
-          command: yarn install
+          command: yarn install --ignore-engines
       # - save_cache:
       #     name: Save node modules
       #     paths:
