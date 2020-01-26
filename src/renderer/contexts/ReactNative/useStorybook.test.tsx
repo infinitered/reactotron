@@ -1,9 +1,7 @@
 /* eslint-disable react/display-name */
 import React from "react"
 import { renderHook } from "@testing-library/react-hooks"
-import { CommandType } from "reactotron-core-ui"
-
-import ReactotronContext from "../Reactotron"
+import { CommandType, ReactotronContext } from "reactotron-core-ui"
 
 import useStorybook from "./useStorybook"
 
