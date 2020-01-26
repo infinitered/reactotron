@@ -49,8 +49,6 @@ describe("contexts/ReactNative/useStorybook", () => {
 
     const contextValues = buildContextValues({
       addCommandListener: callback => {
-        console.log("Adding!")
-
         addCallback = callback
       },
     })

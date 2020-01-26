@@ -1,12 +1,10 @@
 import React, { useState, useContext, useReducer } from "react"
-import { Header, EmptyState } from "reactotron-core-ui"
+import { Header, EmptyState, CustomCommandsContext } from "reactotron-core-ui"
 import styled from "styled-components"
 import { MdSearch } from "react-icons/md"
 import { FaMagic } from "react-icons/fa"
 import produce from "immer"
-
-import CustomCommandsContext from "../../contexts/CustomCommands"
-import { CustomCommand } from "../../contexts/CustomCommands/useCustomCommands"
+import { CustomCommand } from "reactotron-core-ui/dist/types/contexts/CustomCommands/useCustomCommands"
 
 const Container = styled.div`
   display: flex;
