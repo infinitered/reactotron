@@ -10563,10 +10563,10 @@ scheduler@0.15.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
 
-semantic-release@16.0.3:
-  version "16.0.3"
-  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-16.0.3.tgz#af152cbbc7e8d9b694ecb345f539219a2d10749f"
-  integrity sha512-k9AFk0v1AM241R2+d16Z0W6q7qjkd8bmKcpLfpE+8tttynwjOfJVrrqyAAzTscS+V/lTKqvJNZJVRjlyIkAYUg==
+semantic-release@16.0.4:
+  version "16.0.4"
+  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-16.0.4.tgz#9b96332bc67a2c402e1cd55507b36370357a6bbc"
+  integrity sha512-qiYHTNStxUs0UUb45ImRIid0Z8HsXwMNbpZXLvABs725SrxtZBgfuemaABnHdKDg7KBsuQMlSdZENaYLvkMqUg==
   dependencies:
     "@semantic-release/commit-analyzer" "^7.0.0"
     "@semantic-release/error" "^2.2.0"
