@@ -111,8 +111,8 @@ workflows:
     jobs:
       - setup_release
       - release_windows:
-        - requires:
+        requires:
           - setup_release
       - release_nix:
-        - requires:
+        requires:
           - setup_release
