@@ -71,7 +71,8 @@ jobs:
           keys:
             - v1-release-notes-{{ checksum "build/release-notes.md" }}
       - run:
-          name: yarn release -w
+          name: Release Windows
+          command: yarn release -w
 
   release_nix:
     <<: *defaults
@@ -99,7 +100,8 @@ jobs:
           name: Generate Semantic Release
           command: yarn semantic-release
       - run:
-          name: yarn release -ml
+          name: Release Mac and Linux
+          command: yarn release -ml
 
 workflows:
   version: 2
