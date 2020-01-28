@@ -86,7 +86,7 @@
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-peer-deps-external": "2.2.0",
     "semantic-release": "16.0.4",
-    "storybook-chromatic": "3.4.1",
+    "storybook-chromatic": "3.5.0",
     "styled-components": "5.0.0",
     "trash-cli": "3.0.0",
     "ts-jest": "25.0.0",
