@@ -10,6 +10,8 @@ version: 2
 jobs:
   build_and_test:
     <<: *defaults
+    macos:
+      xcode: "10.1.0"
     steps:
       - checkout
       - run:
