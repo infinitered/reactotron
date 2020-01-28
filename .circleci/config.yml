@@ -55,7 +55,7 @@ jobs:
           name: Save Release Notes
           paths:
             - build
-          key: v1-release-notes-{{ checksum "build/release-notes.md" }}
+          key: v1-release-notes
 
   release_windows:
     <<: *defaults
@@ -69,7 +69,7 @@ jobs:
       - restore_cache:
           name: Restore Release Notes
           keys:
-            - v1-release-notes-{{ checksum "build/release-notes.md" }}
+            - v1-release-notes
       - run:
           name: Release Windows
           command: yarn release -w
@@ -86,7 +86,7 @@ jobs:
       - restore_cache:
           name: Restore Release Notes
           keys:
-            - v1-release-notes-{{ checksum "build/release-notes.md" }}
+            - v1-release-notes
       - run:
           name: Decode Certificates
           command: base64 -D -o Certificates.p12 <<< $ReactotronCerts
