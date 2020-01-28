@@ -94,25 +94,35 @@ jobs:
 workflows:
   version: 2
   pull_request:
-    filters:
-      branches:
-        ignore:
-          - master
-          - beta
     jobs:
-      - build_and_test
+      - build_and_test:
+        filters:
+          branches:
+            ignore:
+              - master
+              - beta
 
   release:
-    filters:
-      branches:
-        only:
-          - master
-          - beta
     jobs:
-      - setup_release
+      - setup_release:
+        filters:
+          branches:
+            only:
+              - master
+              - beta
       - release_windows:
+        filters:
+          branches:
+            only:
+              - master
+              - beta
         requires:
           - setup_release
       - release_nix:
+        filters:
+          branches:
+            only:
+              - master
+              - beta
         requires:
           - setup_release
