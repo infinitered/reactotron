@@ -96,33 +96,33 @@ workflows:
   pull_request:
     jobs:
       - build_and_test:
-        filters:
-          branches:
-            ignore:
-              - master
-              - beta
+          filters:
+            branches:
+              ignore:
+                - master
+                - beta
 
   release:
     jobs:
       - setup_release:
-        filters:
-          branches:
-            only:
-              - master
-              - beta
+          filters:
+            branches:
+              only:
+                - master
+                - beta
       - release_windows:
-        filters:
-          branches:
-            only:
-              - master
-              - beta
-        requires:
-          - setup_release
+          filters:
+            branches:
+              only:
+                - master
+                - beta
+          requires:
+            - setup_release
       - release_nix:
-        filters:
-          branches:
-            only:
-              - master
-              - beta
-        requires:
-          - setup_release
+          filters:
+            branches:
+              only:
+                - master
+                - beta
+          requires:
+            - setup_release
