@@ -97,8 +97,8 @@ jobs:
           name: Install Cert
           command: bundle exec fastlane setup
       - run:
-          name: Generate Semantic Release
-          command: yarn semantic-release
+          name: Install Snapcraft
+          command: brew install snapcraft
       - run:
           name: Release Mac and Linux
           command: yarn release -ml
