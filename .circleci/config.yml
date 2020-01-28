@@ -62,6 +62,10 @@ jobs:
     docker:
       - image: electronuserland/builder:wine
     steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: yarn install --ignore-engines
       - restore_cache:
           name: Restore Release Notes
           keys:
@@ -74,6 +78,10 @@ jobs:
     macos:
       xcode: "10.1.0"
     steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: yarn install --ignore-engines
       - restore_cache:
           name: Restore Release Notes
           keys:
