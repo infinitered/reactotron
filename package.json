@@ -23,13 +23,13 @@
     "compile": "tsc",
     "start": "electron-webpack dev",
     "build": "electron-webpack",
-    "package": "yarn build && electron-builder",
-    "package-all": "yarn package -mwl --publish never",
+    "release": "yarn build && electron-builder",
     "test": "jest",
     "test:watch": "jest --watch --notify",
     "lint": "eslint src --ext .ts,.tsx",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "semantic-release": "semantic-release"
   },
   "electronWebpack": {
     "whiteListedModules": [

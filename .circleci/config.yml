@@ -4,8 +4,6 @@
 #
 
 defaults: &defaults
-  docker:
-      - image: electronuserland/builder:wine
   working_directory: ~/repo
 
 version: 2
@@ -14,20 +12,9 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      #- restore_cache:
-      #    name: Restore node modules
-      #    keys:
-      #      - v1-dependencies-{{ checksum "package.json" }}
-      #      # fallback to using the latest cache if no exact match is found
-      #      - v1-dependencies-
       - run:
           name: Install dependencies
           command: yarn install
-      # - save_cache:
-      #     name: Save node modules
-      #     paths:
-      #       - node_modules
-      #     key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Lint
           command: yarn lint
@@ -41,24 +28,15 @@ jobs:
           name: Build App
           command: yarn build
 
-  releaseVersion:
+  setup_release:
     <<: *defaults
+    macos:
+      xcode: "10.1.0"
     steps:
       - checkout
-      #- restore_cache:
-      #    name: Restore node modules
-      #    keys:
-      #      - v1-dependencies-{{ checksum "package.json" }}
-      #      # fallback to using the latest cache if no exact match is found
-      #      - v1-dependencies-
       - run:
           name: Install dependencies
           command: yarn install --ignore-engines
-      # - save_cache:
-      #     name: Save node modules
-      #     paths:
-      #       - node_modules
-      #     key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Lint
           command: yarn lint
@@ -68,9 +46,36 @@ jobs:
       - run:
           name: TypeScript Compile
           command: yarn compile
-      # - run:
-      #     name: Install Wine & RPM
-      #     command: brew install wine && brew install rpm
+      - run:
+          name: Generate Semantic Release
+          command: yarn semantic-release
+      - save_cache:
+          name: Save Release Notes
+          paths:
+            - build
+          key: v1-release-notes-{{ checksum "build/release-notes.md" }}
+
+  release_windows:
+    <<: *defaults
+    docker:
+      - image: electronuserland/builder:wine
+    steps:
+      - restore_cache:
+          name: Restore Release Notes
+          keys:
+            - v1-release-notes-{{ checksum "build/release-notes.md" }}
+      - run:
+          name: yarn release -w
+
+  release_nix:
+    <<: *defaults
+    macos:
+      xcode: "10.1.0"
+    steps:
+      - restore_cache:
+          name: Restore Release Notes
+          keys:
+            - v1-release-notes-{{ checksum "build/release-notes.md" }}
       - run:
           name: Decode Certificates
           command: base64 -D -o Certificates.p12 <<< $ReactotronCerts
@@ -81,23 +86,33 @@ jobs:
           name: Install Cert
           command: bundle exec fastlane setup
       - run:
-          name: Run Release
-          command: yarn ci:publish
+          name: Generate Semantic Release
+          command: yarn semantic-release
+      - run:
+          name: yarn release -ml
 
 workflows:
   version: 2
-  test_and_release:
+  pull_request:
+    filters:
+      branches:
+        ignore:
+          - master
+          - beta
     jobs:
-      - build_and_test:
-          filters:
-            branches:
-                ignore:
-                  - master
-                  - beta
-      - releaseVersion:
-          context: ReactotronCerts
-          filters:
-            branches:
-                only:
-                  - master
-                  - beta
+      - build_and_test
+
+  release:
+    filters:
+      branches:
+        only:
+          - master
+          - beta
+    jobs:
+      - setup_release
+      - release_windows:
+        - requires:
+          - setup_release
+      - release_nix:
+        - requires:
+          - setup_release
