@@ -102,7 +102,7 @@ jobs:
           command: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install snapcraft rpm
       - run:
           name: Release Mac and Linux
-          command: yarn release -ml
+          command: yarn release -ml -c.snap.publish=github
 
 workflows:
   version: 2
