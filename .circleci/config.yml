@@ -99,7 +99,7 @@ jobs:
           command: bundle exec fastlane setup
       - run:
           name: Install Snapcraft
-          command: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install snapcraft
+          command: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install snapcraft rpm
       - run:
           name: Release Mac and Linux
           command: yarn release -ml
