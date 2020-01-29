@@ -55,7 +55,7 @@
     "@storybook/addon-links": "5.3.9",
     "@storybook/addons": "5.3.9",
     "@storybook/react": "5.3.9",
-    "@types/jest": "25.1.0",
+    "@types/jest": "25.1.1",
     "@types/react-modal": "3.10.2",
     "@types/react-motion": "0.0.29",
     "@types/react-tooltip": "3.11.0",
