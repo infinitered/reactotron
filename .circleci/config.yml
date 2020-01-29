@@ -55,6 +55,7 @@ jobs:
           name: Save Release Notes
           paths:
             - build
+            - package.json
           key: v1-release-notes
 
   release_windows:
@@ -77,7 +78,7 @@ jobs:
   release_nix:
     <<: *defaults
     macos:
-      xcode: "10.1.0"
+      xcode: "11.3.0"
     steps:
       - checkout
       - run:
