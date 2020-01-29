@@ -78,7 +78,7 @@ jobs:
   release_nix:
     <<: *defaults
     macos:
-      xcode: "11.3.0"
+      xcode: "11.3.1"
     steps:
       - checkout
       - run:
@@ -99,7 +99,7 @@ jobs:
           command: bundle exec fastlane setup
       - run:
           name: Install Snapcraft
-          command: brew install snapcraft
+          command: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install snapcraft
       - run:
           name: Release Mac and Linux
           command: yarn release -ml
