@@ -4413,7 +4413,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.5:
+classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
@@ -12167,12 +12167,12 @@ react-textarea-autosize@^7.1.0:
     "@babel/runtime" "^7.1.2"
     prop-types "^15.6.0"
 
-react-tooltip@3.11.2:
-  version "3.11.2"
-  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-3.11.2.tgz#78972910657d6184defdcdc9a0182c1e44e01ce6"
-  integrity sha512-7EJ7Cv7lgctw02j0hyp+PpJklIP3gyDbm4CvVQvq7U6zgZtuI+bFFnRzsQB1oTiHPkkhE2NU04EIkgBDiVNzxw==
+react-tooltip@3.11.3:
+  version "3.11.3"
+  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-3.11.3.tgz#b6f8358518fb9dc076932d9078cd34879041afd2"
+  integrity sha512-j2t34JOZxopBq/80F0BxvMm+r6k7yj92avxTENNLoitYl/Htzzu02/T2Box0nPd6zlqCCaIhKaCrW5ZEAf45OQ==
   dependencies:
-    classnames "^2.2.5"
+    classnames "^2.2.6"
     prop-types "^15.6.0"
 
 react-transition-group@^2.2.1:
