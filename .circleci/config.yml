@@ -56,12 +56,13 @@ jobs:
           command: mkdir -p workspace
       - run:
           name: Copy everything into the workspace
-          command: cp -R build workspace/build && cp package.json workspace/package.json
+          command: cp -R build workspace/build && cp package.json workspace/package.json && cp release-info.txt workspace/release-info.txt
       - persist_to_workspace:
           root: workspace
           paths:
             - build
             - package.json
+            - release-info.txt
 
   release_windows:
     <<: *defaults
@@ -77,6 +78,12 @@ jobs:
       - run:
           name: Install dependencies
           command: yarn install --ignore-engines
+      - run:
+          name: Set prerelease if needed
+          command: |
+              if [[ `cat workspace/release-info.txt` == "beta" ]] || [[ `cat workspace/release-info.txt` == "alpha" ]] || [[ `cat workspace/release-info.txt` == "next" ]]; then
+                export EP_PRE_RELEASE=true
+              fi
       - run:
           name: Release Windows
           command: yarn release -w
@@ -107,6 +114,12 @@ jobs:
       - run:
           name: Install Snapcraft
           command: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install snapcraft rpm
+      - run:
+          name: Set prerelease if needed
+          command: |
+              if [[ `cat workspace/release-info.txt` == "beta" ]] || [[ `cat workspace/release-info.txt` == "alpha" ]] || [[ `cat workspace/release-info.txt` == "next" ]]; then
+                export EP_PRE_RELEASE=true
+              fi
       - run:
           name: Release Mac and Linux
           command: yarn release -ml -c.snap.publish=github

@@ -176,6 +176,7 @@
     },
     "publish": {
       "provider": "github",
+      "releaseType": "release",
       "owner": "infinitered",
       "repo": "reactotron",
       "private": false

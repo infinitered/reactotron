@@ -9,7 +9,7 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "mkdir build && echo \"${nextRelease.notes}\" >> ./build/release-notes.md"
+        "prepareCmd": "mkdir build && echo \"${nextRelease.notes}\" >> ./build/release-notes.md && echo \"${nextRelease.channel}\" >> ./release-info.txt"
       }
     ],
     [
