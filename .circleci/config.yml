@@ -152,6 +152,7 @@ workflows:
           requires:
             - setup_release
       - release_nix:
+          context: ReactotronCerts
           filters:
             branches:
               only:
