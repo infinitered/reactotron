@@ -51,6 +51,12 @@ jobs:
       - run:
           name: Generate Semantic Release
           command: yarn semantic-release
+      - run:
+          name: Setup worksapce
+          command: mkdir -p workspace
+      - run:
+          name: Copy everything into the workspace
+          command: cp -R build workspace/build && cp package.json workspace/package.json
       - persist_to_workspace:
           root: workspace
           paths:
@@ -63,6 +69,11 @@ jobs:
       - image: electronuserland/builder:wine
     steps:
       - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Move Build and Package into the right place
+          command: mv -R /tmp/workspace/build build && mv /tmp/workspace/package.json package.json
       - run:
           name: Install dependencies
           command: yarn install --ignore-engines
@@ -80,6 +91,11 @@ jobs:
       xcode: "11.3.1"
     steps:
       - checkout
+            - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Move Build and Package into the right place
+          command: mv -R /tmp/workspace/build build && mv /tmp/workspace/package.json package.json
       - run:
           name: Install dependencies
           command: yarn install --ignore-engines
