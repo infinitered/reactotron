@@ -84,7 +84,7 @@
     "rollup-plugin-babel-minify": "9.1.1",
     "rollup-plugin-filesize": "6.2.1",
     "rollup-plugin-node-resolve": "5.2.0",
-    "rollup-plugin-peer-deps-external": "2.2.0",
+    "rollup-plugin-peer-deps-external": "2.2.2",
     "semantic-release": "16.0.4",
     "storybook-chromatic": "3.5.0",
     "styled-components": "5.0.0",
