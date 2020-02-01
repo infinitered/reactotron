@@ -70,7 +70,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: /tmp/workspace
+          at: workspace
       - run:
           name: Move Build and Package into the right place
           command: mv -R /tmp/workspace/build build && mv /tmp/workspace/package.json package.json
@@ -91,8 +91,8 @@ jobs:
       xcode: "11.3.1"
     steps:
       - checkout
-            - attach_workspace:
-          at: /tmp/workspace
+      - attach_workspace:
+          at: workspace
       - run:
           name: Move Build and Package into the right place
           command: mv -R /tmp/workspace/build build && mv /tmp/workspace/package.json package.json
