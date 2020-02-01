@@ -73,7 +73,7 @@ jobs:
           at: workspace
       - run:
           name: Move Build and Package into the right place
-          command: mv -R /tmp/workspace/build build && mv /tmp/workspace/package.json package.json
+          command: mv workspace/build build && mv workspace/package.json package.json
       - run:
           name: Install dependencies
           command: yarn install --ignore-engines
@@ -95,7 +95,7 @@ jobs:
           at: workspace
       - run:
           name: Move Build and Package into the right place
-          command: mv -R /tmp/workspace/build build && mv /tmp/workspace/package.json package.json
+          command: mv workspace/build build && mv workspace/package.json package.json
       - run:
           name: Install dependencies
           command: yarn install --ignore-engines
