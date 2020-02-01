@@ -51,12 +51,11 @@ jobs:
       - run:
           name: Generate Semantic Release
           command: yarn semantic-release
-      - save_cache:
-          name: Save Release Notes
+      - persist_to_workspace:
+          root: workspace
           paths:
             - build
             - package.json
-          key: v1-release-notes
 
   release_windows:
     <<: *defaults
