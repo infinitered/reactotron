@@ -77,10 +77,6 @@ jobs:
       - run:
           name: Install dependencies
           command: yarn install --ignore-engines
-      - restore_cache:
-          name: Restore Release Notes
-          keys:
-            - v1-release-notes
       - run:
           name: Release Windows
           command: yarn release -w
@@ -99,10 +95,6 @@ jobs:
       - run:
           name: Install dependencies
           command: yarn install --ignore-engines
-      - restore_cache:
-          name: Restore Release Notes
-          keys:
-            - v1-release-notes
       - run:
           name: Decode Certificates
           command: base64 -D -o Certificates.p12 <<< $ReactotronCerts

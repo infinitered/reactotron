@@ -5,6 +5,7 @@
     ["@semantic-release/npm", {
       "npmPublish": false
     }],
+    "@semantic-release/github",
     [
       "@semantic-release/exec",
       {
