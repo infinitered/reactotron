@@ -134,6 +134,7 @@
   "build": {
     "productName": "Reactotron",
     "appId": "com.reactotron.app",
+    "afterSign": "scripts/notarize.js",
     "files": [
       "src/dist/",
       "src/app.html",
@@ -142,6 +143,7 @@
       "package.json"
     ],
     "dmg": {
+      "sign": false,
       "contents": [
         {
           "x": 130,
@@ -154,6 +156,12 @@
           "path": "/Applications"
         }
       ]
+    },
+    "mac": {
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist"
     },
     "win": {
       "icon": "./icon.png",
