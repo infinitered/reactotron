@@ -12487,10 +12487,10 @@ reactotron-core-server@^3.0.3:
     ramda "0.26.1"
     ws "7.1.0"
 
-reactotron-core-ui@^2.0.0-beta.1:
-  version "2.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/reactotron-core-ui/-/reactotron-core-ui-2.0.0-beta.1.tgz#24929fbcc4b45f1abd2f93f666cfe4c27b528f46"
-  integrity sha512-/GNjZ7XgpS6X6Ge/Bg8ayKWbD/3VOag4lQ4WxBr9qI7C36Eb8DxqbEJ+uYGeUGkU9j5/TlyRN4aGHbWaR9smpQ==
+reactotron-core-ui@^2.0.0-beta.2:
+  version "2.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/reactotron-core-ui/-/reactotron-core-ui-2.0.0-beta.2.tgz#68b933dc29e29de49a141d06c6c451eeae31ca53"
+  integrity sha512-QZPA+tdRQbkKA1egJQKWHy1UWBdsL8YDkKChAyJIvTNit+9pwTXZQiL9T3nlhTdMLf/+FSLgGpHBe1p7fej3Lw==
   dependencies:
     color-interpolate "1.0.5"
     date-fns "2.6.0"
