@@ -3,8 +3,8 @@ import styled from "styled-components"
 import { MdSwapVert as ExpandIcon } from "react-icons/md"
 
 import config from "../../config"
-import { Connection } from "../../contexts/Standalone/manager"
 import { getPlatformName, getPlatformDetails } from "../../util/connectionHelpers"
+import { Connection } from "../../contexts/Standalone/useStandalone"
 import ConnectionSelector from "../ConnectionSelector"
 
 const Container = styled.div`
