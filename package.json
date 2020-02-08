@@ -68,7 +68,7 @@
     "react-json-tree": "0.11.2",
     "react-modal": "3.9.1",
     "react-terminal-component": "^1.4.1",
-    "react-tooltip": "3.10.0",
+    "react-tooltip": "3.11.6",
     "reactotron-core-server": "3.0.2",
     "source-map-support": "0.5.13",
     "stringify-object": "3.3.0"
