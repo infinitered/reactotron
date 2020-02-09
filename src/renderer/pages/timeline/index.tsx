@@ -8,11 +8,10 @@ import {
   timelineCommandResolver,
   EmptyState,
   ReactotronContext,
+  TimelineContext,
 } from "reactotron-core-ui"
 import { MdSearch, MdDeleteSweep, MdFilterList, MdSwapVert, MdReorder } from "react-icons/md"
 import styled from "styled-components"
-
-import TimelineContext from "../../contexts/Timeline"
 
 const Container = styled.div`
   display: flex;

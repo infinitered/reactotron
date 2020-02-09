@@ -3,13 +3,13 @@ import { Header } from "reactotron-core-ui"
 import styled from "styled-components"
 
 import StandaloneContext from "../../contexts/Standalone"
-import { Connection } from "../../contexts/Standalone/manager"
 import {
   getPlatformName,
   getPlatformDetails,
   getScreen,
   getIcon,
 } from "../../util/connectionHelpers"
+import { Connection } from "../../contexts/Standalone/useStandalone"
 
 const Container = styled.div`
   display: flex;

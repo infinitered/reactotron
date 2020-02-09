@@ -1,13 +1,11 @@
 import React, { useContext } from "react"
-import { ReactotronContext, Header, CommandType, ContentView, EmptyState } from "reactotron-core-ui"
+import { ReactotronContext, Header, CommandType, ContentView, EmptyState, StateContext } from "reactotron-core-ui"
 import { MdDelete, MdAdd, MdDeleteSweep, MdNotificationsNone, MdImportExport } from "react-icons/md"
 import styled from "styled-components"
 import { getApplicationKeyMap } from "react-hotkeys"
 
 // Move this out of this page. We are just hacking around this for now
 import { KeybindKeys, getPlatformSequence } from "../help/components/Keybind"
-
-import StateContext from "../../contexts/State"
 
 const Container = styled.div`
   display: flex;

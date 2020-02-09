@@ -4,8 +4,7 @@ import Server, { createServer } from "reactotron-core-server"
 import ReactotronBrain from "../../ReactotronBrain"
 import config from "../../config"
 
-import useStandalone from "./useStandalone"
-import { Connection } from "./manager"
+import useStandalone, { Connection } from "./useStandalone"
 
 // TODO: Move up to better places like core somewhere!
 interface Context {
@@ -33,9 +32,9 @@ const Provider: FunctionComponent<any> = ({ children }) => {
     selectedConnection,
     selectConnection,
     clearSelectedConnectionCommands,
-    handleConnectionEstablished,
-    handleCommand,
-    handleDisconnect,
+    connectionEstablished,
+    commandReceived,
+    connectionDisconnected,
     addCommandListener,
     isSideBarOpen,
     toggleSideBar,
@@ -44,16 +43,16 @@ const Provider: FunctionComponent<any> = ({ children }) => {
   useEffect(() => {
     reactotronServer.current = createServer({ port: config.get("server.port") })
 
-    reactotronServer.current.on("connectionEstablished", handleConnectionEstablished)
-    reactotronServer.current.on("command", handleCommand)
-    reactotronServer.current.on("disconnect", handleDisconnect)
+    reactotronServer.current.on("connectionEstablished", connectionEstablished)
+    reactotronServer.current.on("command", commandReceived)
+    reactotronServer.current.on("disconnect", connectionDisconnected)
 
     reactotronServer.current.start()
 
     return () => {
       reactotronServer.current.stop()
     }
-  }, [handleConnectionEstablished, handleCommand, handleDisconnect])
+  }, [connectionEstablished, commandReceived, connectionDisconnected])
 
   const sendCommand = useCallback(
     (type: string, payload: any, clientId?: string) => {

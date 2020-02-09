@@ -16,7 +16,7 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: yarn install
+          command: yarn install --ignore-engines
       - run:
           name: Lint
           command: yarn lint

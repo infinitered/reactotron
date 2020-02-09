@@ -2,8 +2,8 @@ import React from "react"
 import styled from "styled-components"
 import { MdCheckCircle as Checkmark } from "react-icons/md"
 
-import { Connection } from "../../contexts/Standalone/manager"
 import { getIcon, getPlatformName, getPlatformDetails } from "../../util/connectionHelpers"
+import { Connection } from "../../contexts/Standalone/useStandalone"
 
 const Container = styled.div`
   display: flex;

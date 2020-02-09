@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react"
-import { Header, EmptyState, ContentView, SnapshotRenameModal } from "reactotron-core-ui"
+import { Header, EmptyState, ContentView, SnapshotRenameModal, StateContext } from "reactotron-core-ui"
 import { clipboard } from "electron"
 import styled from "styled-components"
 import {
@@ -11,9 +11,8 @@ import {
   MdCallReceived,
   MdFileDownload,
 } from "react-icons/md"
-
-import StateContext from "../../contexts/State"
-import { Snapshot } from "../../contexts/State/useSnapshots"
+// TODO: Get rid of this...
+import { Snapshot } from "reactotron-core-ui/dist/types/contexts/State/useSnapshots"
 
 const Container = styled.div`
   display: flex;

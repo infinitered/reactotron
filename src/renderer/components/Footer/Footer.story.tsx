@@ -2,7 +2,7 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
 
-import { Connection } from "../../contexts/Standalone/manager"
+import { Connection } from "../../contexts/Standalone/useStandalone"
 
 import Footer from "./Stateless"
 
