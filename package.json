@@ -60,7 +60,7 @@
     "@types/react-motion": "0.0.29",
     "@types/react-tooltip": "3.11.0",
     "@types/stringify-object": "3.2.0",
-    "@types/styled-components": "4.4.2",
+    "@types/styled-components": "4.4.3",
     "@typescript-eslint/eslint-plugin": "2.19.2",
     "@typescript-eslint/parser": "2.19.2",
     "babel-loader": "8.0.6",
