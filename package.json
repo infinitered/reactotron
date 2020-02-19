@@ -77,7 +77,7 @@
     "rollup-plugin-resolve": "0.0.1-predev.1",
     "semantic-release": "17.0.4",
     "trash-cli": "3.0.0",
-    "ts-jest": "25.2.0",
+    "ts-jest": "25.2.1",
     "typescript": "3.7.4"
   },
   "eslintConfig": {
