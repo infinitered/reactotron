@@ -33,7 +33,8 @@
   },
   "electronWebpack": {
     "whiteListedModules": [
-      "reactotron-core-ui"
+      "reactotron-core-ui",
+      "react-router-dom"
     ]
   },
   "dependencies": {
