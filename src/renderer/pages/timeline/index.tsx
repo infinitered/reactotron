@@ -139,7 +139,7 @@ function Timeline() {
                       })
                     })
                   }}
-                  sendCommand={command => sendCommand(command.type, command.payload)}
+                  sendCommand={sendCommand}
                   dispatchAction={dispatchAction}
                   openDispatchDialog={openDispatchModal}
                 />

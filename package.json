@@ -52,7 +52,7 @@
     "react-router-dom": "^5.1.2",
     "react-tooltip": "^3.11.1",
     "reactotron-core-server": "^3.0.3",
-    "reactotron-core-ui": "^2.0.0-beta.3",
+    "reactotron-core-ui": "^2.0.0-beta.4",
     "source-map-support": "^0.5.16",
     "styled-components": "^4.4.1"
   },
