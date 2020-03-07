@@ -69,7 +69,7 @@
     "prettier": "1.19.1",
     "react": "16.13.0",
     "react-native": "0.61.5",
-    "rollup": "2.0.0",
+    "rollup": "2.0.1",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-babel-minify": "9.1.1",
     "rollup-plugin-filesize": "6.2.1",
