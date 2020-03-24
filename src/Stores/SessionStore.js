@@ -69,8 +69,18 @@ class Session {
     }
 
     // safely matching the search term regexp against something passed in
-    const matching = value =>
-      value && typeof value === "string" && test(this.ui.searchRegexp, value)
+    const matching = value => {
+      if (!value) {
+        return false
+      }
+      if (typeof value === "string") {
+        return test(this.ui.searchRegexp, value)
+      } else {
+        const stringified = JSON.stringify(value)
+        const result = test(this.ui.searchRegexp, stringified)
+        return result
+      }
+    }
 
     // typical paths that might match
     if (any(x => matching(x(command)), COMMON_MATCHING_PATHS)) {
