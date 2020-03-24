@@ -36,7 +36,7 @@ export default function createSubscriptionHandler(
 
       const values = pathObject(cleanedPath, state)
 
-      if (starredPath && cleanedPath) {
+      if (starredPath && cleanedPath && values) {
         changes.push(
           ...Object.entries(values).map(val => ({
             path: `${cleanedPath}.${val[0]}`,
