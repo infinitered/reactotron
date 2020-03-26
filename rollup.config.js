@@ -18,6 +18,7 @@ function getPlugins() {
 
 const EXTERNALS = [
   "reactotron-core-client",
+  "react-native-flipper",
   "react",
   "react-native",
   "react-native/Libraries/Network/XHRInterceptor",
@@ -30,6 +31,15 @@ export default [
     input: "src/reactotron-react-native.ts",
     output: {
       file: "dist/index.js",
+      format: "cjs",
+    },
+    plugins: getPlugins(),
+    external: EXTERNALS,
+  },
+  {
+    input: "src/flipper-connection-manager.ts",
+    output: {
+      file: "dist/flipper.js",
       format: "cjs",
     },
     plugins: getPlugins(),

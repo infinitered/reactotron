@@ -1,6 +1,6 @@
 {
   "name": "reactotron-react-native",
-  "version": "4.0.3",
+  "version": "5.0.0-beta.4",
   "description": "A development tool to explore, inspect, and diagnose your React Native apps.",
   "author": "Infinite Red",
   "license": "MIT",
@@ -43,6 +43,9 @@
     "reactotron-core-client": "2.8.10",
     "rn-host-detect": "1.2.0"
   },
+  "optionalDependencies": {
+    "react-native-flipper": "^0.34.0"
+  },
   "devDependencies": {
     "@babel/core": "7.9.0",
     "@babel/plugin-proposal-class-properties": "7.8.3",
@@ -69,6 +72,7 @@
     "prettier": "2.0.2",
     "react": "16.13.1",
     "react-native": "0.61.5",
+    "react-native-flipper": "0.34.0",
     "rollup": "2.2.0",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-babel-minify": "10.0.0",

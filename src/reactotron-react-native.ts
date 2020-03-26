@@ -11,6 +11,7 @@ import trackGlobalErrors, { TrackGlobalErrorsOptions } from "./plugins/trackGlob
 import networking, { NetworkingOptions } from "./plugins/networking"
 import storybook from "./plugins/storybook"
 import devTools from "./plugins/devTools"
+import ConnectionManager from "./connection-manager"
 
 const constants = NativeModules.PlatformConstants || {}
 
@@ -19,7 +20,7 @@ const REACTOTRON_ASYNC_CLIENT_ID = "@REACTOTRON/clientId"
 let tempClientId = null
 
 const DEFAULTS = {
-  createSocket: (path: string) => new WebSocket(path), // eslint-disable-line
+  createSocket: (path: string) => new ConnectionManager(path), // eslint-disable-line
   host: getHost("localhost"),
   port: 9090,
   name: "React Native App",
