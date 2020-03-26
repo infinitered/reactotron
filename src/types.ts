@@ -11,4 +11,19 @@ export enum CommandType {
   StateKeysResponse = "state.keys.response",
   StateValuesChange = "state.values.change",
   StateValuesResponse = "state.values.response",
+  StateBackupResponse = "state.backup.response",
+  CustomCommandRegister = "customCommand.register",
+  CustomCommandUnregister = "customCommand.unregister",
+}
+
+export interface Command {
+  id: number
+  type: CommandType
+  connectionId: number
+  clientId?: string
+  date: Date
+  deltaTime: number
+  important: boolean
+  messageId: number
+  payload: any
 }

@@ -6,6 +6,7 @@
     "declarationDir": "dist/types",
     "emitDeclarationOnly": true,
     "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "module": "es2015",

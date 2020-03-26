@@ -49,6 +49,7 @@ function textForValue(value: any) {
   return value
 }
 
+// eslint-disable-next-line react/display-name
 export default (obj: any) => (
   <div>
     {Object.keys(obj).map(key => {

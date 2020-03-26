@@ -7,6 +7,10 @@ export default {
   title: "Dispatch Action Modal",
 }
 
-export const Default = () => (
-  <DispatchActionModal isOpen onClose={() => {}} onDispatchAction={() => {}} />
+export const Darwin = () => (
+  <DispatchActionModal isOpen onClose={() => {}} onDispatchAction={() => {}} isDarwin />
+)
+
+export const NonDarwin = () => (
+  <DispatchActionModal isOpen onClose={() => {}} onDispatchAction={() => {}} isDarwin={false} />
 )

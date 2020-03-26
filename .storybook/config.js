@@ -2,11 +2,9 @@ import React from "react"
 import { configure, addDecorator } from "@storybook/react"
 import { withKnobs } from "@storybook/addon-knobs"
 
-import ReactotronProvider from "../src/components/ReactotronProvider"
+import ReactotronAppProvider from "../src/components/ReactotronAppProvider"
 
-import theme from "../src/theme"
-
-const StyledDecorator = storyFn => <ReactotronProvider>{storyFn()}</ReactotronProvider>
+const StyledDecorator = storyFn => <ReactotronAppProvider>{storyFn()}</ReactotronAppProvider>
 addDecorator(StyledDecorator)
 
 addDecorator(withKnobs)

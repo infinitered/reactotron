@@ -3,6 +3,11 @@ import styled from "styled-components"
 
 import Modal, { KeystrokeContainer, Keystroke } from "../../components/Modal"
 
+const KEY_MAPS = {
+  command: "⌘",
+  ctrl: "CTRL",
+}
+
 const InstructionText = styled.div`
   text-align: left;
   color: ${props => props.theme.foreground};
@@ -36,6 +41,7 @@ interface Props {
   initialValue?: string
   onClose: () => void
   onDispatchAction: (action: string) => void
+  isDarwin: boolean
 }
 
 const DispatchActionModal: FunctionComponent<Props> = ({
@@ -43,6 +49,7 @@ const DispatchActionModal: FunctionComponent<Props> = ({
   initialValue,
   onClose,
   onDispatchAction,
+  isDarwin,
 }) => {
   const [prevIsOpen, setPrevIsOpen] = useState(isOpen)
   const [action, setAction] = useState("")
@@ -86,7 +93,7 @@ const DispatchActionModal: FunctionComponent<Props> = ({
       onAfterOpen={handleAfterOpen}
       additionalKeystrokes={
         <KeystrokeContainer>
-          <Keystroke>ENTER</Keystroke> Dispatch
+          <Keystroke>{isDarwin ? KEY_MAPS.command : KEY_MAPS.ctrl} + ENTER</Keystroke> Dispatch
         </KeystrokeContainer>
       }
     >

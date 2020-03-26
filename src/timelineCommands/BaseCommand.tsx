@@ -13,7 +13,7 @@ export interface TimelineCommandPropsEx<T> {
   }
   copyToClipboard?: (text: string) => void
   readFile?: (path: string) => void
-  sendCommand?: (command: any) => void
+  sendCommand?: (type: string, payload: any, clientId?: string) => void
   openDispatchDialog?: (action: string) => void
   dispatchAction?: (action: any) => void
 }
@@ -27,6 +27,7 @@ export function buildTimelineCommand<T>(
   Component: FunctionComponent<TimelineCommandProps<T>>,
   startOpen = false
 ) {
+  // eslint-disable-next-line react/display-name
   return (props: TimelineCommandPropsEx<T>) => {
     const [isOpen, setIsOpen] = useState(startOpen)
 
