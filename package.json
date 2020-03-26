@@ -46,9 +46,9 @@
     "styled-components": ">=4.4.0"
   },
   "devDependencies": {
-    "@babel/core": "7.8.3",
-    "@babel/preset-react": "7.8.3",
-    "@babel/preset-typescript": "7.8.3",
+    "@babel/core": "7.9.0",
+    "@babel/preset-react": "7.9.4",
+    "@babel/preset-typescript": "7.9.0",
     "@semantic-release/git": "9.0.0",
     "@storybook/addon-actions": "5.3.13",
     "@storybook/addon-knobs": "5.3.13",
@@ -64,7 +64,7 @@
     "@types/styled-components": "5.0.0",
     "@typescript-eslint/eslint-plugin": "2.20.0",
     "@typescript-eslint/parser": "2.20.0",
-    "babel-loader": "8.0.6",
+    "babel-loader": "8.1.0",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.10.0",
     "eslint-config-standard": "14.1.0",
