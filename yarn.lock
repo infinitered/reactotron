@@ -1747,13 +1747,13 @@
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@25.1.4":
-  version "25.1.4"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-25.1.4.tgz#9e9f1e59dda86d3fd56afce71d1ea1b331f6f760"
-  integrity sha512-QDDY2uNAhCV7TMCITrxz+MRk1EizcsevzfeS6LykIlq2V1E5oO4wXG8V2ZEd9w7Snxeeagk46YbMgZ8ESHx3sw==
+"@types/jest@25.1.5":
+  version "25.1.5"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-25.1.5.tgz#3c3c078b3cd19c6403e21277f1cfdc0ce5ebf9a9"
+  integrity sha512-FBmb9YZHoEOH56Xo/PIYtfuyTL0IzJLM3Hy0Sqc82nn5eqqXgefKcl/eMgChM8eSGVfoDee8cdlj7K74T8a6Yg==
   dependencies:
-    jest-diff "^25.1.0"
-    pretty-format "^25.1.0"
+    jest-diff "25.1.0"
+    pretty-format "25.1.0"
 
 "@types/json-schema@^7.0.3":
   version "7.0.3"
@@ -5600,7 +5600,7 @@ jest-config@^25.2.6:
     pretty-format "^25.2.6"
     realpath-native "^2.0.0"
 
-jest-diff@^25.1.0:
+jest-diff@25.1.0:
   version "25.1.0"
   resolved "https://registry.yarnpkg.com/jest-diff/-/jest-diff-25.1.0.tgz#58b827e63edea1bc80c1de952b80cec9ac50e1ad"
   integrity sha512-nepXgajT+h017APJTreSieh4zCqnSHEJ1iT8HDlewu630lSJ4Kjjr9KNzm+kzGwwcpsDE6Snx1GJGzzsefaEHw==
@@ -7925,7 +7925,7 @@ prettier@2.0.2:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.2.tgz#1ba8f3eb92231e769b7fcd7cb73ae1b6b74ade08"
   integrity sha512-5xJQIPT8BraI7ZnaDwSbu5zLrB6vvi8hVV58yHQ+QK64qrY40dULy0HSRlQ2/2IdzeBpjhDkqdcFBnFeDEMVdg==
 
-pretty-format@^25.1.0:
+pretty-format@25.1.0, pretty-format@^25.1.0:
   version "25.1.0"
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-25.1.0.tgz#ed869bdaec1356fc5ae45de045e2c8ec7b07b0c8"
   integrity sha512-46zLRSGLd02Rp+Lhad9zzuNZ+swunitn8zIpfD2B4OPCRLXbM87RJT2aBLBWYOznNUML/2l/ReMyWNC80PJBUQ==
