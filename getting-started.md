@@ -35,6 +35,23 @@ import './ReactotronConfig'
 
 - At this point reactotron should be sending some data. We will work on hooking more up in the next section.
 
+## Reactotron in Flipper
+
+If you would like to use the reactotron plugin in flipper setup reactotron following the instructions above but use the following snippit for the `ReactotronConfig.js`
+
+```javascript
+// File Name: ReactotronConfig.js (or similar)
+import Reactotron from 'reactotron-react-native'
+import ReactotronFlipper from 'reactotron-react-native/dist/flipper';
+
+Reactotron
+  .setAsyncStorageHandler(AsyncStorage)
+  .configure({
+    createSocket: path => new ReactotronFlipper(path)
+  })
+  .useReactNative()
+  .connect()
+```
 
 # React JS
 
