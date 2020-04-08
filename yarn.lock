@@ -13107,10 +13107,10 @@ react-textarea-autosize@^7.1.0:
     "@babel/runtime" "^7.1.2"
     prop-types "^15.6.0"
 
-react-tooltip@4.1.5:
-  version "4.1.5"
-  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-4.1.5.tgz#d1e9eac42b699b45b298e5ddb073f111c8981ad4"
-  integrity sha512-KOlsNxhUEgXcyM6Y2KPijBXhcCTnum7uO017ORnwB4M/rWnwyz/JpCx9+E/2CLTSZCqTmRdeEHryhuVhU2HIkA==
+react-tooltip@4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-4.2.0.tgz#1e38a335e61e7584652512eaf7321df2ef219f11"
+  integrity sha512-6P6oeKgkHrN6KAsoXoQr+tKw94znt8e/pvIAJsZ3QwD79z0B6HdZBMjk86xftVddjsLV8GAj86daNwcq9nfc0A==
   dependencies:
     prop-types "^15.7.2"
     uuid "^7.0.3"
