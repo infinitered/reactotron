@@ -90,7 +90,7 @@
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-peer-deps-external": "2.2.2",
     "semantic-release": "17.0.4",
-    "storybook-chromatic": "3.5.2",
+    "storybook-chromatic": "3.5.3",
     "styled-components": "5.1.0",
     "trash-cli": "3.0.0",
     "ts-jest": "25.3.1",
