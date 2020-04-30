@@ -86,7 +86,7 @@
     "react-test-renderer": "16.13.1",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-babel-minify": "10.0.0",
-    "rollup-plugin-filesize": "7.0.0",
+    "rollup-plugin-filesize": "8.0.0",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-peer-deps-external": "2.2.2",
     "semantic-release": "17.0.7",
