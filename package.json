@@ -76,7 +76,7 @@
     "rollup": "2.7.6",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-babel-minify": "10.0.0",
-    "rollup-plugin-filesize": "7.0.0",
+    "rollup-plugin-filesize": "8.0.0",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-resolve": "0.0.1-predev.1",
     "semantic-release": "17.0.7",
