@@ -73,7 +73,7 @@
     "react": "16.13.1",
     "react-native": "0.62.2",
     "react-native-flipper": "0.34.0",
-    "rollup": "2.7.6",
+    "rollup": "2.8.0",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-babel-minify": "10.0.0",
     "rollup-plugin-filesize": "8.0.2",
