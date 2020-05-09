@@ -93,7 +93,7 @@
     "storybook-chromatic": "3.5.5",
     "styled-components": "5.1.0",
     "trash-cli": "3.0.0",
-    "ts-jest": "25.5.0",
+    "ts-jest": "25.5.1",
     "typescript": "3.8.3"
   },
   "eslintConfig": {
