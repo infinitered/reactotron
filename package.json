@@ -67,7 +67,7 @@
     "trash-cli": "3.0.0",
     "ts-jest": "25.5.1",
     "typescript": "3.9.2",
-    "ws": "7.2.5"
+    "ws": "7.3.0"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
