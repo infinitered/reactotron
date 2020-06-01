@@ -1,6 +1,6 @@
 # reactotron-redux-saga
 
-[Redux Saga](https://github.com/yelouafi/redux-saga) is an side effect management package for Redux.
+[Redux Saga](https://github.com/yelouafi/redux-saga) is a side effect management package for Redux.
 
 When you run through a saga in your app, you'll be able to see the both the saga and how the effects that it triggers along the way.
 
