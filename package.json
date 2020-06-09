@@ -53,7 +53,7 @@
     "@babel/preset-env": "7.10.2",
     "@babel/preset-typescript": "7.10.1",
     "@semantic-release/git": "9.0.0",
-    "@types/jest": "25.2.3",
+    "@types/jest": "26.0.0",
     "@types/node": "12.12.31",
     "@types/react-native": "0.62.13",
     "@typescript-eslint/eslint-plugin": "3.2.0",
