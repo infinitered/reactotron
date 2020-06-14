@@ -11508,10 +11508,10 @@ rollup-plugin-babel@4.4.0:
     "@babel/helper-module-imports" "^7.0.0"
     rollup-pluginutils "^2.8.1"
 
-rollup-plugin-filesize@9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-filesize/-/rollup-plugin-filesize-9.0.0.tgz#aab722136f04aa9ea898cb7f3e65b1d60bbc56a0"
-  integrity sha512-m8hRJJpsxXfPeeOLND0UQMGcU103F11lcq4pdowzCwLko20z2pNBlnPUxQ8XwyE84NJmyllAj+auQsTBXA7Pug==
+rollup-plugin-filesize@9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-filesize/-/rollup-plugin-filesize-9.0.1.tgz#bae2408f008df518ee2bdaab4d234dc4272bc1da"
+  integrity sha512-k25SZsoFTaIwNCSbSU7401OyJIO+98Wa8sKtnUxcDiZgw2wGSSJ7+FhEYRpbIu1c2EXnvHJx/DJYGohG4lOmAw==
   dependencies:
     "@babel/runtime" "^7.9.6"
     boxen "^4.2.0"
