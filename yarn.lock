@@ -2035,10 +2035,10 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.9.tgz#f2d14df87b0739041bc53a7d75e3d77d726a3ec0"
   integrity sha512-Nha5b+jmBI271jdTMwrHiNXM+DvThjHOfyZtMX9kj/c/LUj2xiLHsG/1L3tJ8DjAoQN48cHwUwtqBotjyXaSdQ==
 
-"@types/react@16.9.37":
-  version "16.9.37"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.37.tgz#8fb93e7dbd5b1d3796f69aa979a7fe0439bc7bea"
-  integrity sha512-ZqnAXallQiZ08LTSqMfWMNvAfJEzRLOxdlbbbCIJlYGjU98BEU6bE2uBpKPGeWn+v3hIgCraHKtqUcKZBzMP/Q==
+"@types/react@16.9.38":
+  version "16.9.38"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.38.tgz#868405dace93a4095d3e054f4c4a1de7a1ac0680"
+  integrity sha512-pHAeZbjjNRa/hxyNuLrvbxhhnKyKNiLC6I5fRF2Zr/t/S6zS41MiyzH4+c+1I9vVfvuRt1VS2Lodjr4ZWnxrdA==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
