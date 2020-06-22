@@ -89,7 +89,7 @@
     "rollup-plugin-filesize": "9.0.1",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-peer-deps-external": "2.2.2",
-    "semantic-release": "17.0.8",
+    "semantic-release": "17.1.0",
     "storybook-chromatic": "3.5.5",
     "styled-components": "5.1.1",
     "trash-cli": "3.0.0",
