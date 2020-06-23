@@ -1,6 +1,12 @@
 # Installing the Application
 
-On the [Releases](https://github.com/infinitered/reactotron/releases) page, you can find the latest version of:
+Using homebrew on a mac will install the latest stable release:
+
+```
+brew cask install reactotron
+```
+
+On the [Releases](https://github.com/infinitered/reactotron/releases) page, you can find the latest (and beta) versions for:
 
 * macOS
 * Linux (32-bit & 64-bit)
