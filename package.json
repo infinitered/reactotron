@@ -43,7 +43,7 @@
     "@babel/preset-env": "7.10.3",
     "@babel/preset-typescript": "7.10.1",
     "@semantic-release/git": "8.0.0",
-    "@types/jest": "26.0.0",
+    "@types/jest": "26.0.2",
     "@types/node": "12.12.31",
     "@types/ramda": "0.26.40",
     "@types/ws": "6.0.4",
