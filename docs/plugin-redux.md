@@ -66,7 +66,7 @@ Note: passing enhancer as last argument requires redux@>=3.1.0
 ## If you have middleware
 
 ```diff
-import { createStore } from 'redux'
+import { createStore, compose } from 'redux'
 + import Reactotron from './ReactotronConfig'
 
 - const store = createStore(rootReducer, compose(middleware))
