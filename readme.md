@@ -1,6 +1,6 @@
 # ![Reactotron Logo](./docs/images/readme/Reactotron-128.png)
 
-[![Slack Community](https://infiniteredcommunity.herokuapp.com/badge.svg)](https://infiniteredcommunity.herokuapp.com/)
+[Join our Community Slack](http://community.infinite.red/)
 
 <a href="https://reactnative.cc" target="_blank"><img src="https://img.shields.io/badge/React%20Native%20Newsletter-Featured-blueviolet"></a>
 
