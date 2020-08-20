@@ -82,7 +82,7 @@
     "semantic-release": "17.1.1",
     "trash-cli": "3.1.0",
     "ts-jest": "26.2.0",
-    "typescript": "3.9.7"
+    "typescript": "4.0.2"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
