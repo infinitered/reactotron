@@ -33,9 +33,9 @@
     "semantic-release": "semantic-release"
   },
   "devDependencies": {
-    "@babel/core": "7.11.4",
+    "@babel/core": "7.11.5",
     "@babel/plugin-proposal-class-properties": "7.10.4",
-    "@babel/preset-env": "7.11.0",
+    "@babel/preset-env": "7.11.5",
     "@babel/preset-typescript": "7.10.4",
     "@semantic-release/git": "8.0.0",
     "@types/jest": "26.0.10",
