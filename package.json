@@ -63,7 +63,7 @@
     "react": "16.9.0",
     "react-base16-styling": "0.6.0",
     "react-dom": "16.9.0",
-    "react-hot-loader": "4.12.11",
+    "react-hot-loader": "4.13.0",
     "react-icons": "3.7.0",
     "react-json-tree": "0.11.2",
     "react-modal": "3.9.1",
