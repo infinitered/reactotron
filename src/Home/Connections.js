@@ -3,6 +3,7 @@ import React, { Component } from "react"
 import AppStyles from "../Theme/AppStyles"
 import ConnectionCell from "./ConnectionCell"
 
+/*CSS styles*/
 const Styles = {
   container: {
     display: "flex",
