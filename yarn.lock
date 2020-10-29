@@ -7050,10 +7050,10 @@ eslint-config-prettier@6.15.0:
   dependencies:
     get-stdin "^6.0.0"
 
-eslint-config-standard@15.0.1:
-  version "15.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-15.0.1.tgz#1262eafaba66f4f03fdf3cf655a28aa8b40868b7"
-  integrity sha512-UGorkix49kBium7Y124o2U9Qy7Lpa+nO0FsaqQSIPeno5hGNxZtSBJbqJX6gtpYfDFWCtqCAN9wyK+oDd9jT7Q==
+eslint-config-standard@16.0.0:
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-16.0.0.tgz#5f21e9b8be8be28c096e592e1137769d33c5cd92"
+  integrity sha512-kMCehB9yXIG+LNsu9uXfm06o6Pt63TFAOzn9tUOzw4r/hFIxHhNR1Xomxy+B5zMrXhqyfHVEcmanzttEjGei9w==
 
 eslint-import-resolver-node@^0.3.4:
   version "0.3.4"
