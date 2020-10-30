@@ -91,7 +91,7 @@
     "rollup-plugin-peer-deps-external": "2.2.4",
     "semantic-release": "17.2.2",
     "storybook-chromatic": "3.5.5",
-    "styled-components": "5.2.0",
+    "styled-components": "5.2.1",
     "trash-cli": "3.1.0",
     "ts-jest": "26.4.3",
     "typescript": "4.0.5"
