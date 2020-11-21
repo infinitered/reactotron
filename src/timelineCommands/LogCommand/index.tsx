@@ -170,7 +170,8 @@ function getLevelName(level: string) {
   }
 }
 
-function getPreview(message: string | object | boolean | number) {
+// function getPreview(message: string | object | boolean | number) {
+function getPreview(message: any) {
   if (typeof message === "string") {
     return message.substr(0, 500)
   } else if (typeof message === "object") {

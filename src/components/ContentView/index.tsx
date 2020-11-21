@@ -18,7 +18,8 @@ const StringContainer = styled.div`
 const StringLineSpan = styled.span``
 
 interface Props {
-  value: object | string | number | boolean | null | undefined
+  // value: object | string | number | boolean | null | undefined
+  value: any
   treeLevel?: number
 }
 

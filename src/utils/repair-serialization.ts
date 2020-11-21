@@ -34,7 +34,7 @@ export default function repairSerialization(payload: any) {
   }
 
   // the recursive iterator
-  function walker(obj: object) {
+  function walker(obj: any) {
     let k
     // NOTE: Object.prototype.hasOwnProperty IS defined however the bind to the object throws the def off.
     const has = Object.prototype.hasOwnProperty.bind(obj) as (key: string) => boolean

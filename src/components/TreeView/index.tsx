@@ -37,7 +37,8 @@ const treeTheme = {
 }
 
 interface Props {
-  value: object
+  // value: object
+  value: any
   level?: number
 }
 

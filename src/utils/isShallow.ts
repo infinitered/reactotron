@@ -1,4 +1,4 @@
-export default (value: object) => {
+export default (value: any) => {
   if (Array.isArray(value)) {
     return !value.some(v => typeof v === "object")
   }

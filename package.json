@@ -64,8 +64,8 @@
     "@types/react-tooltip": "3.11.0",
     "@types/stringify-object": "3.3.0",
     "@types/styled-components": "5.1.4",
-    "@typescript-eslint/eslint-plugin": "2.34.0",
-    "@typescript-eslint/parser": "2.34.0",
+    "@typescript-eslint/eslint-plugin": "4.8.1",
+    "@typescript-eslint/parser": "4.8.1",
     "babel-loader": "8.2.1",
     "eslint": "7.14.0",
     "eslint-config-prettier": "6.15.0",
@@ -119,6 +119,7 @@
     "rules": {
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
+      "no-use-before-define": 0,
       "react/prop-types": 0,
       "no-unused-vars": 0,
       "no-undef": 0,
