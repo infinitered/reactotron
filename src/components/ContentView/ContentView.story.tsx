@@ -16,7 +16,7 @@ export const Boolean = () => <ContentView value={false} />
 export const Number = () => <ContentView value={2} />
 export const Array = () => <ContentView value={[2]} />
 export const ArrayMultiLevel = () => <ContentView value={[2, { test: true }]} />
-export const Object = () => <ContentView value={{ test: true }} />
+export const Obj = () => <ContentView value={{ test: "This is only a test" }} />
 export const ObjectMultiLevel = () => (
   <ContentView value={{ test: true, test2: { test3: "A string" } }} />
 )

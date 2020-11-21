@@ -40,7 +40,7 @@ export const SimpleValue = () => (
   />
 )
 
-export const Object = () => (
+export const Obj = () => (
   <StateValuesResponseCommand
     command={buildCommand({ counter: 0 }, "dummyReducer")}
     isOpen
