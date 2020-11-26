@@ -14456,10 +14456,10 @@ react-hotkeys@2.0.0:
   dependencies:
     prop-types "^15.6.1"
 
-react-icons@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.0.0.tgz#7ee18489472eb5797719bf997a1e2037b22d37d1"
-  integrity sha512-HNS9Bsi73SImFZjwBAuaDIPfSqjLzDNZAN3PSjhZ7+7XJSCjkgFuzaMnyZetZXyawKwyoIPwmvGMSeFsEfsCPg==
+react-icons@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.1.0.tgz#9ca9bcbf2e3aee8e86e378bb9d465842947bbfc3"
+  integrity sha512-FCXBg1JbbR0vWALXIxmFAfozHdVIJmmwCD81Jk0EKOt7Ax4AdBNcaRkWhR0NaKy9ugJgoY3fFvo0PHpte55pXg==
 
 react-input-autosize@^2.2.2:
   version "2.2.2"
