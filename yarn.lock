@@ -3650,10 +3650,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-modal@3.10.2":
-  version "3.10.2"
-  resolved "https://registry.yarnpkg.com/@types/react-modal/-/react-modal-3.10.2.tgz#f0b065babb587f010e7c0802238c29a313e1515a"
-  integrity sha512-e1e/HDRo/x7rFF+kX0NgSpV1PvaIrojGpFPrNYIZmLlKR0IukpnMWhHLnRXD3hYXlHTtr4FdWOzhzufU5SfNjA==
+"@types/react-modal@3.10.6":
+  version "3.10.6"
+  resolved "https://registry.yarnpkg.com/@types/react-modal/-/react-modal-3.10.6.tgz#76717220f32bc72769190692147814a540053c7e"
+  integrity sha512-XpshhwVYir1TRZ2HS5EfmNotJjB8UEC2IkT3omNtiQzROOXSzVLz5xsjwEpACP8U+PctkpfZepX+WT5oDf0a9g==
   dependencies:
     "@types/react" "*"
 
@@ -14332,10 +14332,10 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-modal@3.11.1:
-  version "3.11.1"
-  resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-3.11.1.tgz#2a0d6877c9e98f123939ea92d2bb4ad7fa5a17f9"
-  integrity sha512-8uN744Yq0X2lbfSLxsEEc2UV3RjSRb4yDVxRQ1aGzPo86QjNOwhQSukDb8U8kR+636TRTvfMren10fgOjAy9eA==
+react-modal@3.11.2:
+  version "3.11.2"
+  resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-3.11.2.tgz#bad911976d4add31aa30dba8a41d11e21c4ac8a4"
+  integrity sha512-o8gvvCOFaG1T7W6JUvsYjRjMVToLZgLIsi5kdhFIQCtHxDkA47LznX62j+l6YQkpXDbvQegsDyxe/+JJsFQN7w==
   dependencies:
     exenv "^1.2.0"
     prop-types "^15.5.10"

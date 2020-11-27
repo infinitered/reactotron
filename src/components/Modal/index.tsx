@@ -68,7 +68,7 @@ const Modal: FunctionComponent<Props> = ({
           color: themeContext.foreground,
           borderColor: themeContext.backgroundLighter,
           width: 500,
-          position: "auto",
+          position: "auto" as any, // TODO: Fix this!
           top: "auto",
           bottom: "auto",
         },
