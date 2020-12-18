@@ -67,7 +67,7 @@
     "@typescript-eslint/eslint-plugin": "4.10.0",
     "@typescript-eslint/parser": "4.10.0",
     "babel-loader": "8.2.2",
-    "eslint": "7.15.0",
+    "eslint": "7.16.0",
     "eslint-config-prettier": "7.0.0",
     "eslint-config-standard": "16.0.2",
     "eslint-plugin-import": "2.22.1",
