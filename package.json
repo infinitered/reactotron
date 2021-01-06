@@ -136,7 +136,7 @@
     "webpack": "4.39.2",
     "webpack-bundle-analyzer": "3.4.1",
     "webpack-cli": "3.3.6",
-    "webpack-dev-middleware": "3.7.0",
+    "webpack-dev-middleware": "3.7.3",
     "webpack-dev-server": "3.8.0",
     "webpack-hot-middleware": "2.25.0",
     "webpack-merge": "4.2.1"
