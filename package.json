@@ -58,7 +58,7 @@
     "@storybook/addons": "6.1.11",
     "@storybook/react": "6.1.11",
     "@testing-library/react-hooks": "3.7.0",
-    "@types/jest": "26.0.19",
+    "@types/jest": "26.0.20",
     "@types/react-modal": "3.10.6",
     "@types/react-motion": "0.0.29",
     "@types/react-tooltip": "3.11.0",
