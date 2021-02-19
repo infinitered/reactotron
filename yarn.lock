@@ -2951,10 +2951,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.5.tgz#011eece9d3f839a806b63973e228f85967b79ed3"
   integrity sha512-vVjM0SVzgaOUpflq4GYBvCpozes8OgIIS5gVXVka+OfK3hvnkC1i93U8WiY2OtNE4XUWyyy/86Kf6e0IHTQw1Q==
 
-"@types/node@12.20.3":
-  version "12.20.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.20.3.tgz#fbabde59d96c23a80e337ca6a71b464da2a0a824"
-  integrity sha512-63cSd8J30Sr4/aFKKfDmCEM4GMH3W2efWT0Ii/B+Ohm3id0TU2xPEBFktiq3nXCZcN6VwVvpyv75I4zTP7YO/w==
+"@types/node@12.20.4":
+  version "12.20.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.20.4.tgz#73687043dd00fcb6962c60fbf499553a24d6bdf2"
+  integrity sha512-xRCgeE0Q4pT5UZ189TJ3SpYuX/QGl6QIAOAIeDSbAVAd2gX1NxSZup4jNVK7cxIeP8KDSbJgcckun495isP1jQ==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
