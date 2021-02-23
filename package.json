@@ -46,11 +46,11 @@
     "styled-components": ">=4.4.0"
   },
   "devDependencies": {
-    "@babel/core": "7.12.17",
-    "@babel/plugin-proposal-class-properties": "7.12.13",
-    "@babel/preset-env": "7.12.17",
+    "@babel/core": "7.13.1",
+    "@babel/plugin-proposal-class-properties": "7.13.0",
+    "@babel/preset-env": "7.13.0",
     "@babel/preset-react": "7.12.13",
-    "@babel/preset-typescript": "7.12.17",
+    "@babel/preset-typescript": "7.13.0",
     "@semantic-release/git": "9.0.0",
     "@storybook/addon-actions": "6.1.18",
     "@storybook/addon-knobs": "6.1.18",
