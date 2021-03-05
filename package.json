@@ -55,7 +55,7 @@
     "@semantic-release/git": "9.0.0",
     "@types/jest": "26.0.20",
     "@types/node": "12.20.4",
-    "@types/react-native": "0.63.50",
+    "@types/react-native": "0.63.51",
     "@typescript-eslint/eslint-plugin": "4.16.1",
     "@typescript-eslint/parser": "4.16.1",
     "babel-eslint": "10.1.0",
