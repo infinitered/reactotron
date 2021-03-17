@@ -65,7 +65,7 @@
     "rollup-plugin-resolve": "0.0.1-predev.1",
     "semantic-release": "16.0.4",
     "trash-cli": "4.0.0",
-    "ts-jest": "26.5.3",
+    "ts-jest": "26.5.4",
     "typescript": "4.2.3",
     "ws": "7.4.4"
   },
