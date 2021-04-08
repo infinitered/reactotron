@@ -38,9 +38,9 @@
     "stacktrace-js": "2.0.1"
   },
   "devDependencies": {
-    "@babel/core": "7.13.14",
+    "@babel/core": "7.13.15",
     "@babel/plugin-proposal-class-properties": "7.13.0",
-    "@babel/preset-env": "7.13.12",
+    "@babel/preset-env": "7.13.15",
     "@babel/preset-typescript": "7.13.0",
     "@semantic-release/git": "8.0.0",
     "@typescript-eslint/eslint-plugin": "4.21.0",
