@@ -8420,10 +8420,10 @@ eslint-plugin-node@11.1.0:
     resolve "^1.10.1"
     semver "^6.1.0"
 
-eslint-plugin-promise@4.3.1:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-4.3.1.tgz#61485df2a359e03149fdafc0a68b0e030ad2ac45"
-  integrity sha512-bY2sGqyptzFBDLh/GMbAxfdJC+b0f23ME63FOE4+Jao0oZ3E1LEwFtWJX/1pGMJLiTtrSSern2CRM/g+dfc0eQ==
+eslint-plugin-promise@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-5.0.0.tgz#676d1d1555e34976b4a9bd42663f70353ddb8fef"
+  integrity sha512-6ZoHypc/CbcB3sicGMGro4YmQLbcmoHL5KhDAtE/Gw5p8TrME7fbAlyD6rH+XN/knndMHKpXdk4A4Bq+njzeSQ==
 
 eslint-plugin-react-hooks@4.2.0:
   version "4.2.0"
