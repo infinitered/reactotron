@@ -46,7 +46,7 @@
     "styled-components": ">=4.4.0"
   },
   "devDependencies": {
-    "@babel/core": "7.13.15",
+    "@babel/core": "7.13.16",
     "@babel/plugin-proposal-class-properties": "7.13.0",
     "@babel/preset-env": "7.13.15",
     "@babel/preset-react": "7.13.13",
