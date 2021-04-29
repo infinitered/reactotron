@@ -38,9 +38,9 @@
     "ws": "7.1.2"
   },
   "devDependencies": {
-    "@babel/core": "7.13.16",
+    "@babel/core": "7.14.0",
     "@babel/plugin-proposal-class-properties": "7.13.0",
-    "@babel/preset-env": "7.13.15",
+    "@babel/preset-env": "7.14.0",
     "@babel/preset-typescript": "7.13.0",
     "@semantic-release/git": "8.0.0",
     "@types/jest": "26.0.23",
