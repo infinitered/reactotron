@@ -137,7 +137,7 @@ Well, at this point, we have a complicated version of `console.log`.
 
 Where Reactotron starts to shine is when you start plugging into [Redux](https://github.com/infinitered/reactotron/blob/master/docs/plugin-redux.md), tracking global errors, and watching network requests.
 
-Check out our [Demo](../packages/demo-react-js) for more goodies.
+Check out our [Demo](../examples/demo-react-js) for more goodies.
 
 ![Demo Web App](./images/quick-start-react-js/react-demo-js.jpg)
 
