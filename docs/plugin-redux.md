@@ -63,6 +63,19 @@ import { createStore } from 'redux'
 
 Note: passing enhancer as last argument requires redux@>=3.1.0
 
+## If you are using configureStore() instead of createStore()
+Declare the enhancers property which takes an array and add `Reactotron.createEnhancer()`
+
+```js
+configureStore({
+  reducer: {
+   ...reducers
+  },
+  middleware: [...middlewares],
+  enhancers: [Reactotron.createEnhancer()],
+});
+```
+
 ## If you have middleware
 
 ```diff
