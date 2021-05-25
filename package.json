@@ -47,10 +47,10 @@
     "react-native-flipper": "^0.34.0"
   },
   "devDependencies": {
-    "@babel/core": "7.14.0",
+    "@babel/core": "7.14.3",
     "@babel/plugin-proposal-class-properties": "7.13.0",
-    "@babel/plugin-transform-react-jsx": "7.13.12",
-    "@babel/preset-env": "7.14.1",
+    "@babel/plugin-transform-react-jsx": "7.14.3",
+    "@babel/preset-env": "7.14.2",
     "@babel/preset-typescript": "7.13.0",
     "@semantic-release/git": "9.0.0",
     "@types/jest": "26.0.23",
