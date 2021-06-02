@@ -3302,10 +3302,10 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.9.tgz#f2d14df87b0739041bc53a7d75e3d77d726a3ec0"
   integrity sha512-Nha5b+jmBI271jdTMwrHiNXM+DvThjHOfyZtMX9kj/c/LUj2xiLHsG/1L3tJ8DjAoQN48cHwUwtqBotjyXaSdQ==
 
-"@types/react-native@0.64.8":
-  version "0.64.8"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.64.8.tgz#6679198048581b1c33ac6050c1d46dced5e229b8"
-  integrity sha512-Jg1x3TTDTkVKu5gX1pPLKdkWqDQgDPOMP0wMG8d9br9tDITisA79zJ07o8dcPJWKETsBglHYPUQRVG2fxC2V8g==
+"@types/react-native@0.64.9":
+  version "0.64.9"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.64.9.tgz#8d2a393222a9bf21258fddc4b5f51e99356ce48e"
+  integrity sha512-T4bsjQ2MDTX1/5Z+ywXXaNX1NU5eBtZJSSpygytKslEWRzhiWAk5TnuJPRVLnFn4XFf53jJYOwIRBrNRnV199Q==
   dependencies:
     "@types/react" "*"
 
