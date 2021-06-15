@@ -81,7 +81,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-icons": "4.2.0",
-    "react-modal": "3.14.2",
+    "react-modal": "3.14.3",
     "react-motion": "0.5.2",
     "react-test-renderer": "17.0.2",
     "react-tooltip": "4.2.21",
