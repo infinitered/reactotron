@@ -85,7 +85,7 @@
     "react-motion": "0.5.2",
     "react-test-renderer": "17.0.2",
     "react-tooltip": "4.2.21",
-    "rollup": "2.52.1",
+    "rollup": "2.52.2",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-babel-minify": "10.0.0",
     "rollup-plugin-filesize": "9.1.1",
