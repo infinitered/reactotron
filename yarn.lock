@@ -4626,10 +4626,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-motion@0.0.29":
-  version "0.0.29"
-  resolved "https://registry.yarnpkg.com/@types/react-motion/-/react-motion-0.0.29.tgz#1a22e11bc1452150e8aa58463f72dd921ff10721"
-  integrity sha512-MD1DbdcDKruR0zz5Z0XIlrkPdjDMgYx0AHhbaoTBpDirUTt8Bd7x6OFE458nEINZxfPW0EcEOw2O8S/WwGNLsA==
+"@types/react-motion@0.0.30":
+  version "0.0.30"
+  resolved "https://registry.yarnpkg.com/@types/react-motion/-/react-motion-0.0.30.tgz#81dc6febb3f882516e80f8a0016f0991abeb3dc0"
+  integrity sha512-Kue6XkMvjEf8tViS8Psm2A0PxCXEqS4/2oRytI9oLbc7NHTD2HMZN14ECsLkaCR8bF3MfpWO+kKZgs+JdI60XA==
   dependencies:
     "@types/react" "*"
 
