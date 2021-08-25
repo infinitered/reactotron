@@ -79,7 +79,7 @@
     "rollup-plugin-filesize": "9.1.1",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-resolve": "0.0.1-predev.1",
-    "semantic-release": "17.4.6",
+    "semantic-release": "17.4.7",
     "trash-cli": "4.0.0",
     "ts-jest": "27.0.5",
     "typescript": "4.3.5"
