@@ -54,7 +54,7 @@
     "@babel/preset-typescript": "7.15.0",
     "@semantic-release/git": "9.0.1",
     "@types/jest": "27.0.1",
-    "@types/node": "14.17.15",
+    "@types/node": "14.17.16",
     "@types/react-native": "0.65.0",
     "@typescript-eslint/eslint-plugin": "4.31.1",
     "@typescript-eslint/parser": "4.31.1",
