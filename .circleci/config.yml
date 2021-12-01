@@ -5,7 +5,7 @@
 
 defaults: &defaults
   docker:
-    - image: circleci/node:10.11
+    - image: circleci/node:14.15.1
   working_directory: ~/repo
 
 version: 2
