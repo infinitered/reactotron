@@ -1,3 +1,3 @@
 # reactotron-react-native
 
-A development tool to explore, inspect, and diagnosis your React Native apps.
+A development tool to explore, inspect, and diagnose your React Native apps.
