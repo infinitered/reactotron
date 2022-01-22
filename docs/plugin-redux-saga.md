@@ -44,7 +44,7 @@ Wherever you create your Redux store, you'll have a line configured for configur
   // or from 'reactotron-react-js'
 
   // create our new saga monitor
-  const sagaMonitor = Reactotron.createSagaMonitor()
+  const sagaMonitor = Reactotron.createSagaMonitor
 
   // and in your call to createSagaMiddlware, pass it along inside
   // the 1st parameter's object.
