@@ -75,7 +75,7 @@ function renderCollapsed(connections: Connection[], selectedConnection: Connecti
   return (
     <>
       <ConnectionInfo>
-        port {config.get("server.port")} | {connections.length} connections
+        port {config.get("serverPort")} | {connections.length} connections
       </ConnectionInfo>
       <ConnectionInfo>
         device:{" "}

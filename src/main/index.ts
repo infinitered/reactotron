@@ -21,7 +21,7 @@ let mainWindow: BrowserWindow | null
 
 function createMainWindow() {
   const mainWindowState = windowStateKeeper({
-    file: 'reactotron-window-state.json',
+    file: "reactotron-window-state.json",
     defaultWidth: 650,
     defaultHeight: 800,
   })
@@ -32,7 +32,7 @@ function createMainWindow() {
     width: mainWindowState.width,
     height: mainWindowState.height,
     titleBarStyle: "hiddenInset",
-    webPreferences: { nodeIntegration: true },
+    webPreferences: { nodeIntegration: true, contextIsolation: false },
   })
 
   mainWindowState.manage(window)
