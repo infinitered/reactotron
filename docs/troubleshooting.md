@@ -43,6 +43,8 @@ While plugged in type:
 adb reverse tcp:9090 tcp:9090
 ```
 
+and reload the app on your device.
+
 This only works on Android 5.x+.
 
 As of 1.1.4, the proper IP address is auto-discovered.  Simply leave the `configure` as is.
