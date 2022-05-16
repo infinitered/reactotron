@@ -27,6 +27,7 @@ const session = new SessionStore(config.get("serverPort", 9090))
 const Styles = {
   container: {
     ...AppStyles.Layout.vbox,
+    height: "100vh",
   },
   content: {
     ...AppStyles.Layout.vbox,
@@ -36,7 +37,7 @@ const Styles = {
   body: { ...AppStyles.Layout.hbox },
   app: { ...AppStyles.Layout.vbox, scroll: "none", overflow: "hidden" },
   page: { ...AppStyles.Layout.vbox, flex: 1 },
-  pageHidden: { flex: 0, height: 0, visibility: "hidden" },
+  pageHidden: { flex: 0, height: 0, display: "none" },
 }
 
 @observer
