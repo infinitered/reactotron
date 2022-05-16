@@ -47,50 +47,54 @@ const installExtensions = /* async */ () => {
  */
 app.on("window-all-closed", app.quit)
 
-app.on("ready", /* async */ () => {
-//   if (process.env.NODE_ENV === "development" || process.env.DEBUG_PROD === "true") {
-//     await installExtensions()
-//   }
+app.on("ready", () => {
+  //   if (process.env.NODE_ENV === "development" || process.env.DEBUG_PROD === "true") {
+  //     await installExtensions()
+  //   }
 
-    // Load the previous state with fallback to defaults
-    let mainWindowState = windowStateKeeper({
-      file: 'reactotron-window-state.json',
-      defaultWidth: 650,
-      defaultHeight: 800,
-    })
+  // Load the previous state with fallback to defaults
+  let mainWindowState = windowStateKeeper({
+    file: "reactotron-window-state.json",
+    defaultWidth: 650,
+    defaultHeight: 800,
+  })
 
-    mainWindow = new BrowserWindow({
-      show: false,
-      x: mainWindowState.x,
-      y: mainWindowState.y,
-      width: mainWindowState.width,
-      height: mainWindowState.height,
-      titleBarStyle: "hiddenInset",
-    })
+  mainWindow = new BrowserWindow({
+    show: false,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
+    titleBarStyle: "hiddenInset",
+    useContentSize: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  })
 
-    mainWindowState.manage(mainWindow)
+  mainWindowState.manage(mainWindow)
 
-    mainWindow.loadURL(`file://${__dirname}/app.html`)
+  mainWindow.loadFile(`app.html`)
 
-    mainWindow.webContents.on("did-finish-load", () => {
-      if (!mainWindow) {
-        throw new Error('"mainWindow" is not defined')
-      }
-      if (process.env.START_MINIMIZED) {
-        mainWindow.minimize()
-      } else {
-        mainWindow.show()
-        mainWindow.focus()
-      }
-    })
+  mainWindow.webContents.on("did-finish-load", () => {
+    if (!mainWindow) {
+      throw new Error('"mainWindow" is not defined')
+    }
+    if (process.env.START_MINIMIZED) {
+      mainWindow.minimize()
+    } else {
+      mainWindow.show()
+      mainWindow.focus()
+    }
+  })
 
-    mainWindow.on("closed", () => {
-      mainWindow = null
-    })
+  mainWindow.on("closed", () => {
+    mainWindow = null
+  })
 
-    const menuBuilder = new MenuBuilder(mainWindow)
-    menuBuilder.buildMenu()
+  const menuBuilder = new MenuBuilder(mainWindow)
+  menuBuilder.buildMenu()
 
-    new AppUpdater()
-  }
-)
+  new AppUpdater()
+})

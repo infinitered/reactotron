@@ -22,16 +22,16 @@ import StatusBar from "./StatusBar"
 import CustomCommandsList from "../CustomCommands/CustomCommandsList"
 import ReactotronTerminal from "./ReactotronTerminal"
 
-const session = new SessionStore(config.get("server.port", 9090))
+const session = new SessionStore(config.get("serverPort", 9090))
 
 const Styles = {
-  container: { ...AppStyles.Layout.vbox },
+  container: {
+    ...AppStyles.Layout.vbox,
+  },
   content: {
     ...AppStyles.Layout.vbox,
     backgroundColor: Colors.background,
     color: Colors.foreground,
-    height: "100vh",
-    scroll: "hidden",
   },
   body: { ...AppStyles.Layout.hbox },
   app: { ...AppStyles.Layout.vbox, scroll: "none", overflow: "hidden" },

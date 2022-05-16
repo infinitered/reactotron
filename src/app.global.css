@@ -16,7 +16,7 @@ body {
   font-family: "Fira Code", "SF Mono", "Consolas", "Segoe UI", "Roboto", "-apple-system",
     "Helvetica Neue", sans-serif;
   font-size: 0.94em;
-  -webkit-user-select: none;
+  user-select: none;
 }
 th {
   font-weight: normal;
