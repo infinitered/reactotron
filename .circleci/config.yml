@@ -11,7 +11,7 @@ jobs:
   build_and_test:
     <<: *defaults
     macos:
-      xcode: "10.1.0"
+      xcode: "14"
     steps:
       - checkout
       - run:
@@ -33,7 +33,7 @@ jobs:
   setup_release:
     <<: *defaults
     macos:
-      xcode: "10.1.0"
+      xcode: "14"
     steps:
       - checkout
       - run:
@@ -81,9 +81,9 @@ jobs:
       - run:
           name: Set prerelease if needed
           command: |
-              if [[ `cat workspace/release-info.txt` == "beta" ]] || [[ `cat workspace/release-info.txt` == "alpha" ]] || [[ `cat workspace/release-info.txt` == "next" ]]; then
-                export EP_PRE_RELEASE=true
-              fi
+            if [[ `cat workspace/release-info.txt` == "beta" ]] || [[ `cat workspace/release-info.txt` == "alpha" ]] || [[ `cat workspace/release-info.txt` == "next" ]]; then
+              export EP_PRE_RELEASE=true
+            fi
       - run:
           name: Release Windows
           command: yarn release -w
@@ -91,7 +91,7 @@ jobs:
   release_nix:
     <<: *defaults
     macos:
-      xcode: "11.3.1"
+      xcode: "14"
     steps:
       - checkout
       - attach_workspace:
@@ -117,9 +117,9 @@ jobs:
       - run:
           name: Set prerelease if needed
           command: |
-              if [[ `cat workspace/release-info.txt` == "beta" ]] || [[ `cat workspace/release-info.txt` == "alpha" ]] || [[ `cat workspace/release-info.txt` == "next" ]]; then
-                export EP_PRE_RELEASE=true
-              fi
+            if [[ `cat workspace/release-info.txt` == "beta" ]] || [[ `cat workspace/release-info.txt` == "alpha" ]] || [[ `cat workspace/release-info.txt` == "next" ]]; then
+              export EP_PRE_RELEASE=true
+            fi
       - run:
           name: Release Mac and Linux
           command: yarn release -ml -c.snap.publish=github
