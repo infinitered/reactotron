@@ -11,7 +11,7 @@ jobs:
   build_and_test:
     <<: *defaults
     macos:
-      xcode: "14"
+      xcode: "13.3.1"
     steps:
       - checkout
       - run:
@@ -33,7 +33,7 @@ jobs:
   setup_release:
     <<: *defaults
     macos:
-      xcode: "14"
+      xcode: "13.3.1"
     steps:
       - checkout
       - run:
@@ -91,7 +91,7 @@ jobs:
   release_nix:
     <<: *defaults
     macos:
-      xcode: "14"
+      xcode: "13.3.1"
     steps:
       - checkout
       - attach_workspace:
