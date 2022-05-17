@@ -125,7 +125,7 @@ function KeybindHandler({ children }) {
   }
 
   return (
-    <GlobalHotKeys keyMap={keyMap} handlers={handlers}>
+    <GlobalHotKeys keyMap={keyMap as any} handlers={handlers}>
       {children}
     </GlobalHotKeys>
   )

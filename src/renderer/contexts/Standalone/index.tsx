@@ -41,7 +41,7 @@ const Provider: FunctionComponent<any> = ({ children }) => {
   } = useStandalone()
 
   useEffect(() => {
-    reactotronServer.current = createServer({ port: config.get("serverPort") })
+    reactotronServer.current = createServer({ port: config.get("serverPort") as number })
 
     reactotronServer.current.on("connectionEstablished", connectionEstablished)
     reactotronServer.current.on("command", commandReceived)
