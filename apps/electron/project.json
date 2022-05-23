@@ -1,0 +1,77 @@
+{
+  "sourceRoot": "apps/electron/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "nx-electron:build",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/electron",
+        "main": "apps/electron/src/main.ts",
+        "tsConfig": "apps/electron/tsconfig.app.json",
+        "assets": [
+          "apps/electron/src/assets"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/electron/src/environments/environment.ts",
+              "with": "apps/electron/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "nx-electron:execute",
+      "options": {
+        "buildTarget": "electron:build"
+      }
+    },
+    "package": {
+      "executor": "nx-electron:package",
+      "options": {
+        "name": "electron",
+        "frontendProject": "frontend",
+        "outputPath": "dist/packages",
+        "prepackageOnly": true
+      }
+    },
+    "make": {
+      "executor": "nx-electron:make",
+      "options": {
+        "name": "electron",
+        "frontendProject": "frontend",
+        "outputPath": "dist/executables"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "apps/electron/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/apps/electron"
+      ],
+      "options": {
+        "jestConfig": "apps/electron/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

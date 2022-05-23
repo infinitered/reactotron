@@ -17,12 +17,18 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["apps/frontend-e2e/**/*.{js,ts}"]
+        "lintFilePatterns": [
+          "apps/frontend-e2e/**/*.{js,ts}"
+        ]
       }
     }
   },
   "tags": [],
-  "implicitDependencies": ["frontend"]
+  "implicitDependencies": [
+    "frontend"
+  ]
 }
