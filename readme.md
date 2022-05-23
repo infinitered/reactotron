@@ -1,64 +1,90 @@
-# ![Reactotron Logo](./docs/images/readme/Reactotron-128.png)
+# Reactotron
 
-[Join our Community Slack](http://community.infinite.red/)
+This project was generated using [Nx](https://nx.dev).
 
-<a href="https://reactnative.cc" target="_blank"><img src="https://img.shields.io/badge/React%20Native%20Newsletter-Featured-blueviolet"></a>
+<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 
-[Quick Installation Guide](./docs/installing.md)
+🔎 **Smart, Fast and Extensible Build System**
 
-# What is Reactotron?
+## Adding capabilities to your workspace
 
-Reactotron is a macOS, Windows, and Linux app for inspecting your [React JS](https://facebook.github.io/react/) and [React Native](https://facebook.github.io/react-native/) apps.
+Nx supports many plugins which add capabilities for developing different types of applications and different tools.
 
-_Watch [Darin Wilson's](https://github.com/darinwilson) talk at [Chain React](https://infinite.red/ChainReactConf): [Chain React 2018: Debugging and Beyond with Reactotron](https://www.youtube.com/watch?v=UiPo9A9k7xc)!_
+These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
 
-Use it to:
+Below are our core plugins:
 
-- view your application state
-- show API requests & responses
-- perform quick performance benchmarks
-- subscribe to parts of your application state
-- display messages similar to `console.log`
-- track global errors with source-mapped stack traces including saga stack traces!
-- dispatch actions like a government-run mind control experiment
-- hot swap your app's state using Redux or mobx-state-tree
-- track your sagas
-- show image overlay in React Native
-- track your Async Storage in React Native
+- [React](https://reactjs.org)
+  - `npm install --save-dev @nrwl/react`
+- Web (no framework frontends)
+  - `npm install --save-dev @nrwl/web`
+- [Angular](https://angular.io)
+  - `npm install --save-dev @nrwl/angular`
+- [Nest](https://nestjs.com)
+  - `npm install --save-dev @nrwl/nest`
+- [Express](https://expressjs.com)
+  - `npm install --save-dev @nrwl/express`
+- [Node](https://nodejs.org)
+  - `npm install --save-dev @nrwl/node`
 
-You plug it into your app as a dev dependency so it adds nothing to your product builds.
+There are also many [community plugins](https://nx.dev/community) you could add.
 
-### Desktop
+## Generate an application
 
-Reactotron on the left, demo React Native app on the right.
-![Desktop](./docs/images/readme/reactotron-demo-app.gif)
+Run `nx g @nrwl/react:app my-app` to generate an application.
 
-# Documentation
+> You can use any of the plugins above to generate applications as well.
 
-- [Installing](./docs/installing.md)
-- Quick start for [React JS](./docs/quick-start-react-js.md)
-- Quick start for [React Native](./docs/quick-start-react-native.md)
-- [Custom Commands](./docs/custom-commands.md)
-- [Tracking errors globally](./docs/plugin-track-global-errors.md)
-- [Open in editor](./docs/plugin-open-in-editor.md)
-- [Image Overlays](./docs/plugin-overlay.md)
-- [Async Storage](./docs/plugin-async-storage.md)
-- [Networking](./docs/plugin-networking.md)
-- [Benchmarking](./docs/plugin-benchmark.md)
-- Integrating with [mobx-state-tree](./docs/plugin-mst.md)
-- Integrating with [Redux](./docs/plugin-redux.md)
-- Integrating with [Redux Saga](./docs/plugin-redux-saga.md)
-- Networking monitoring with [Apisauce](./docs/plugin-apisauce.md)
-- [Storybook (React Native Only)](./docs/plugin-storybook.md)
-- [Troubleshooting](./docs/troubleshooting.md)
-- [Tips and Tricks](./docs/tips.md)
-- [Release Notes](https://github.com/reactotron/reactotron/releases)
-- [Contributing](./docs/contributing.md)
+When using Nx, you can create multiple applications and libraries in the same workspace.
 
-# Credits
+## Generate a library
 
-Reactotron is developed by [Infinite Red](https://infinite.red), [@rmevans9](https://github.com/rmevans9), and 70+ amazing contributors! Special thanks to [@skellock](https://github.com/skellock) for originally creating Reactotron while at Infinite Red.
+Run `nx g @nrwl/react:lib my-lib` to generate a library.
 
-# Premium Support
+> You can also use any of the plugins above to generate libraries as well.
 
-[Reactotron](https://infinite.red/reactotron), as an open source project, is free to use and always will be. [Infinite Red](https://infinite.red/) offers premium React and [React Native](https://infinite.red/react-native) mobile app design/development services. Email us at [hello@infinite.red](mailto:hello@infinite.red) to get in touch for more details.
+Libraries are shareable across libraries and applications. They can be imported from `@reactotron/mylib`.
+
+## Development server
+
+Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+
+## Code scaffolding
+
+Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
+
+## Build
+
+Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+## Running unit tests
+
+Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
+
+Run `nx affected:test` to execute the unit tests affected by a change.
+
+## Running end-to-end tests
+
+Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
+
+Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
+
+## Understand your workspace
+
+Run `nx graph` to see a diagram of the dependencies of your projects.
+
+## Further help
+
+Visit the [Nx Documentation](https://nx.dev) to learn more.
+
+## ☁ Nx Cloud
+
+### Distributed Computation Caching & Distributed Task Execution
+
+<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
+
+Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
+
+Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
+
+Visit [Nx Cloud](https://nx.app/) to learn more.

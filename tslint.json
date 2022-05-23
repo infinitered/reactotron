@@ -1,7 +1,0 @@
-{
-  "rules": {
-    "quotemark": [true, "double", "jsx-double", "avoid-escape"],
-    "semicolon": [true, "never"],
-    "trailing-comma": [true, { "singleline": "never", "multiline": "always" }]
-  }
-}
