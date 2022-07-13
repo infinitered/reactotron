@@ -170,7 +170,7 @@ export default class MenuBuilder {
       label: "Help",
       submenu: [
         {
-          label: "Visit on Github",
+          label: "Visit on GitHub",
           click: () => {
             shell.openExternal("https://github.com/infinitered/reactotron")
           },
@@ -259,7 +259,7 @@ export default class MenuBuilder {
         label: "Help",
         submenu: [
           {
-            label: "Visit on Github",
+            label: "Visit on GitHub",
             click: () => {
               shell.openExternal("https://github.com/infinitered/reactotron")
             },
