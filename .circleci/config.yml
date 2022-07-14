@@ -99,6 +99,9 @@ jobs:
           name: Decode Certificates
           command: base64 -D -o Certificates.p12 <<< $ReactotronCerts
       - run:
+          name: Install Bundler
+          command: gem install bundler:1.16.1
+      - run:
           name: Install Gems
           command: bundle install
       - run:
