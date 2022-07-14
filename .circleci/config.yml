@@ -56,7 +56,7 @@ jobs:
           command: mkdir -p workspace
       - run:
           name: Copy everything into the workspace
-          command: cp -R cp package.json workspace/package.json
+          command: cp package.json workspace/package.json
       - persist_to_workspace:
           root: workspace
           paths:
