@@ -2,16 +2,13 @@
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
-    ["@semantic-release/npm", {
-      "npmPublish": false
-    }],
-    "@semantic-release/github",
     [
-      "@semantic-release/exec",
+      "@semantic-release/npm",
       {
-        "prepareCmd": "mkdir build && echo \"${nextRelease.notes}\" >> ./build/release-notes.md && echo \"${nextRelease.channel}\" >> ./release-info.txt"
+        "npmPublish": false
       }
     ],
+    "@semantic-release/github",
     [
       "@semantic-release/git",
       {
