@@ -49,14 +49,17 @@ jobs:
           name: TypeScript Compile
           command: yarn compile
       - run:
+          name: Build App
+          command: yarn build
+      - run:
           name: Generate Semantic Release
           command: yarn semantic-release
       - run:
-          name: Setup worksapce
+          name: Setup workspace
           command: mkdir -p workspace
       - run:
           name: Copy everything into the workspace
-          command: cp -R build workspace/build && cp package.json workspace/package.json && cp release-info.txt workspace/release-info.txt
+          command: cp -R dist workspace/build && cp package.json workspace/package.json && cp release-info.txt workspace/release-info.txt
       - persist_to_workspace:
           root: workspace
           paths:
@@ -74,7 +77,7 @@ jobs:
           at: workspace
       - run:
           name: Move Build and Package into the right place
-          command: mv workspace/build build && mv workspace/package.json package.json
+          command: mv workspace/build dist && mv workspace/package.json package.json
       - run:
           name: Install dependencies
           command: yarn install --ignore-engines
@@ -98,7 +101,7 @@ jobs:
           at: workspace
       - run:
           name: Move Build and Package into the right place
-          command: mv workspace/build build && mv workspace/package.json package.json
+          command: mv workspace/build dist && mv workspace/package.json package.json
       - run:
           name: Install dependencies
           command: yarn install --ignore-engines
