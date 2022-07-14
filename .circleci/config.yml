@@ -108,8 +108,8 @@ jobs:
           name: Install Cert
           command: bundle exec fastlane setup
       - run:
-          name: Run brew doctor
-          command: brew doctor
+          name: Run brew link --overwrite --dry-run six
+          command: brew link --overwrite --dry-run six
       - run:
           name: Install Snapcraft
           command: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install snapcraft rpm
