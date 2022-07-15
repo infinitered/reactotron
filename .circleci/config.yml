@@ -108,8 +108,11 @@ jobs:
           name: Install Cert
           command: bundle exec fastlane setup
       - run:
-          name: brew update
-          command: brew update
+          name: Install Python 3.9
+          command: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install python3
+      - run:
+          name: Fix six conflicting file
+          command: rm /usr/local/lib/python3.9/site-packages/six.py
       - run:
           name: Install Snapcraft
           command: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install snapcraft rpm
