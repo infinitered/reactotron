@@ -92,7 +92,7 @@ function buildViewMenu(window: Electron.BrowserWindow, isDevelopment: boolean) {
       label: "Toggle Developer Tools",
       accelerator: "Alt+Command+I",
       click: () => {
-        (window as any).toggleDevTools()
+        ;(window as any).toggleDevTools()
       },
     }
   )
@@ -141,7 +141,7 @@ function buildHelpMenu() {
     label: "Help",
     submenu: [
       {
-        label: "Visit on Github",
+        label: "Visit on GitHub",
         click: () => {
           shell.openExternal("https://github.com/infinitered/reactotron")
         },
