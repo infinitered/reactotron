@@ -67,9 +67,29 @@ Reactotron
   .connect();
 ```
 
-Finally, we import this on startup in
-- `App.js` (Create React Native App) or
+If you're using Expo, you will also need to configure the host:
+
+```js
+import Reactotron from 'reactotron-react-native'
+import { NativeModules } from 'react-native';
+
+const hostname = NativeModules.SourceCode.scriptURL
+  .split('://')[1] // Remove the scheme
+  .split('/')[0] // Remove the path
+  .split(':')[0]; // Remove the port
+
+Reactotron
+  .setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either come from `react-native` or `@react-native-community/async-storage` depending on where you get it from
+  .configure({ host: hostname }) // configure the hostname for Expo
+  .useReactNative() // add all built-in react native plugins
+  .connect() // let's connect!
+```
+
+Finally, we import this on startup in one of:
+
+- `App.js` (Create React Native App / Expo) or
 - `index.js`
+
 on line 1:
 
 ```js
