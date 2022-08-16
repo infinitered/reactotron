@@ -22,7 +22,7 @@ I like a separate file for initializing.  Create `ReactotronConfig.js` in your e
 import Reactotron from 'reactotron-react-native'
 
 Reactotron
-  .setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either come from `react-native` or `@react-native-community/async-storage` depending on where you get it from
+  .setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either come from `@react-native-async-storage/async-storage` or `@react-native-community/async-storage`
   .configure() // controls connection & communication settings
   .useReactNative() // add all built-in react native plugins
   .connect() // let's connect!
@@ -34,7 +34,7 @@ Or using a more advanced way to customize which plugins to include:
 import Reactotron from 'reactotron-react-native'
 
 Reactotron
-  .setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either come from `react-native` or `@react-native-community/async-storage` depending on where you get it from
+  .setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either come from `@react-native-async-storage/async-storage` or `@react-native-community/async-storage`
   .configure({
     name: "React Native Demo"
   })
@@ -58,7 +58,7 @@ import Reactotron from 'reactotron-react-native'
 const middleware = (tron) => { /* plugin definition */ };
 
 Reactotron
-  .setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either come from `react-native` or `@react-native-community/async-storage` depending on where you get it from
+  .setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either come from `@react-native-async-storage/async-storage` or `@react-native-community/async-storage`
   .configure({
     name: "React Native Demo"
   })
@@ -67,9 +67,29 @@ Reactotron
   .connect();
 ```
 
-Finally, we import this on startup in
-- `App.js` (Create React Native App) or
+If you're using Expo, you will also need to configure the host:
+
+```js
+import Reactotron from 'reactotron-react-native'
+import { NativeModules } from 'react-native';
+
+const hostname = NativeModules.SourceCode.scriptURL
+  .split('://')[1] // Remove the scheme
+  .split('/')[0] // Remove the path
+  .split(':')[0]; // Remove the port
+
+Reactotron
+  .setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either come from `@react-native-async-storage/async-storage` or `@react-native-community/async-storage`
+  .configure({ host: hostname }) // configure the hostname for Expo
+  .useReactNative() // add all built-in react native plugins
+  .connect() // let's connect!
+```
+
+Finally, we import this on startup in one of:
+
+- `App.js` (Create React Native App / Expo) or
 - `index.js`
+
 on line 1:
 
 ```js
