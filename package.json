@@ -43,7 +43,7 @@
     "rn-host-detect": "1.2.0"
   },
   "optionalDependencies": {
-    "react-native-flipper": "^0.34.0"
+    "react-native-flipper": "^0.164.0"
   },
   "devDependencies": {
     "@babel/core": "7.16.0",
@@ -54,7 +54,7 @@
     "@semantic-release/git": "9.0.1",
     "@types/jest": "27.0.3",
     "@types/node": "16.11.11",
-    "@types/react-native": "0.66.6",
+    "@types/react-native": "0.69.5",
     "@typescript-eslint/eslint-plugin": "4.33.0",
     "@typescript-eslint/parser": "4.33.0",
     "babel-eslint": "10.1.0",
@@ -69,9 +69,9 @@
     "jest": "27.4.3",
     "npm-run-all": "4.1.5",
     "prettier": "2.5.0",
-    "react": "16.14.0",
-    "react-native": "0.63.4",
-    "react-native-flipper": "0.34.0",
+    "react": "18.0.0",
+    "react-native": "0.69.5",
+    "react-native-flipper": "0.164.0",
     "rollup": "2.60.2",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-babel-minify": "10.0.0",
