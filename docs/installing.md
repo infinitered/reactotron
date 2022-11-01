@@ -1,6 +1,6 @@
 # Installing the Application
 
-On the [Releases](https://github.com/infinitered/reactotron/releases) page, you can find the latest version of:
+On the [Releases](https://github.com/infinitered/reactotron/releases/tag/v2.17.1) page, you can find the latest version of:
 
 * macOS
 * Linux (32-bit & 64-bit)
