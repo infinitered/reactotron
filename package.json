@@ -1,8 +1,10 @@
 {
-  "name": "reactotron-app",
-  "productName": "Reactotron",
-  "version": "3.0.0-alpha.8",
-  "description": "Reactotron desktop mode engage!",
+  "name": "reactotron",
+  "private": true,
+  "workspaces": [
+    "tools/*",
+    "packages/*"
+  ],
   "author": {
     "name": "Infinite Red",
     "email": "hello@infinite.red",
@@ -18,85 +20,11 @@
     "react native"
   ],
   "homepage": "https://github.com/infinitered/reactotron#readme",
-  "scripts": {
-    "postinstall": "patch-package",
-    "compile": "tsc",
-    "start": "electron-webpack dev",
-    "build": "electron-webpack",
-    "release": "yarn build && electron-builder",
-    "test": "jest",
-    "test:watch": "jest --watch --notify",
-    "lint": "eslint src --ext .ts,.tsx",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "semantic-release": "semantic-release"
-  },
-  "electronWebpack": {
-    "whiteListedModules": [
-      "reactotron-core-ui",
-      "react-router-dom"
-    ]
-  },
   "dependencies": {
-    "electron-log": "^4.4.7",
-    "electron-store": "^8.0.1",
-    "electron-updater": "^5.0.1",
-    "electron-window-state": "^5.0.3",
-    "immer": "^5.1.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-hotkeys": "^2.0.0",
-    "react-icons": "^3.8.0",
-    "react-modal": "^3.11.1",
-    "react-motion": "^0.5.2",
-    "react-router-dom": "^5.1.2",
-    "react-tooltip": "^3.11.1",
-    "reactotron-core-server": "^3.0.3",
-    "reactotron-core-ui": "^2.0.0-beta.4",
-    "source-map-support": "^0.5.16",
-    "styled-components": "^4.4.1"
+    "patch-package": "^6.2.0"
   },
-  "devDependencies": {
-    "@babel/core": "^7.7.5",
-    "@babel/preset-react": "^7.7.4",
-    "@babel/preset-typescript": "^7.7.4",
-    "@semantic-release/exec": "3.4.0-beta.10",
-    "@semantic-release/git": "7.1.0-beta.11",
-    "@storybook/addon-actions": "^5.2.8",
-    "@storybook/addon-knobs": "^5.2.8",
-    "@storybook/addon-links": "^5.2.8",
-    "@storybook/addons": "^5.2.8",
-    "@storybook/react": "^5.2.8",
-    "@testing-library/react-hooks": "^3.2.1",
-    "@types/jest": "^24.0.24",
-    "@types/react": "^16.9.16",
-    "@types/react-dom": "^16.9.4",
-    "@types/react-router-dom": "^5.1.3",
-    "@types/styled-components": "^4.4.1",
-    "@typescript-eslint/eslint-plugin": "^2.12.0",
-    "@typescript-eslint/parser": "^2.12.0",
-    "babel-loader": "^8.0.6",
-    "electron": "^18.2.3",
-    "electron-builder": "^23.1.0",
-    "electron-notarize": "^1.2.1",
-    "electron-webpack": "^2.7.4",
-    "eslint": "^6.7.2",
-    "eslint-config-prettier": "^6.7.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.19.1",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.17.0",
-    "eslint-plugin-react-hooks": "^2.3.0",
-    "eslint-plugin-standard": "^4.0.1",
-    "jest": "^24.9.0",
-    "patch-package": "^6.2.0",
-    "prettier": "^1.19.1",
-    "react-test-renderer": "16.12.0",
-    "semantic-release": "16.0.0-beta.47",
-    "ts-jest": "^24.2.0",
-    "typescript": "^4.6.4",
-    "webpack": "^4.41.3"
+  "scripts": {
+    "postinstall": "patch-package"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
@@ -110,7 +38,7 @@
       "ecmaFeatures": {
         "jsx": true
       },
-      "project": "./tsconfig.json"
+      "project": "./tsconfig.base.json"
     },
     "plugins": [
       "@typescript-eslint",
@@ -133,72 +61,8 @@
       "@typescript-eslint/member-delimiter-style": 0
     }
   },
-  "build": {
-    "productName": "Reactotron",
-    "appId": "com.reactotron.app",
-    "afterSign": "scripts/notarize.js",
-    "files": [
-      "src/dist/",
-      "src/app.html",
-      "src/main.prod.js",
-      "src/main.prod.js.map",
-      "package.json"
-    ],
-    "dmg": {
-      "sign": false,
-      "contents": [
-        {
-          "x": 130,
-          "y": 220
-        },
-        {
-          "x": 410,
-          "y": 220,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
-    "mac": {
-      "hardenedRuntime": true,
-      "gatekeeperAssess": false,
-      "entitlements": "entitlements.mac.plist",
-      "entitlementsInherit": "entitlements.mac.plist"
-    },
-    "win": {
-      "icon": "./icon.png",
-      "target": [
-        "nsis",
-        "msi"
-      ]
-    },
-    "linux": {
-      "target": [
-        "deb",
-        "rpm",
-        "snap",
-        "AppImage"
-      ],
-      "category": "Development"
-    },
-    "directories": {
-      "buildResources": "resources",
-      "output": "release"
-    },
-    "publish": {
-      "provider": "github",
-      "releaseType": "release",
-      "owner": "infinitered",
-      "repo": "reactotron",
-      "private": false
-    }
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "jsdom",
-    "testMatch": [
-      "**/*.test.ts",
-      "**/*.test.tsx"
-    ]
+  "resolutions": {
+    "js-yaml": "^3.13.1",
+    "html-loader": "1.0.0-alpha.0"
   }
 }

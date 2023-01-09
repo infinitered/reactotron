@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "allowJs": false,
     "jsx": "react",
@@ -15,7 +16,8 @@
     "target": "es5",
     "lib": ["es2015", "dom"],
     "types": ["jest"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "."
   },
   "exclude": ["node_modules"],
   "include": ["src"]
