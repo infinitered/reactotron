@@ -18,6 +18,9 @@ jobs:
           name: Install dependencies
           command: yarn install --ignore-engines
       - run:
+          name: cd to app workspace
+          command: cd apps/app
+      - run:
           name: Lint
           command: yarn lint
       - run:
@@ -39,6 +42,9 @@ jobs:
       - run:
           name: Install dependencies
           command: yarn install --ignore-engines
+      - run:
+          name: cd to app workspace
+          command: cd apps/app
       - run:
           name: Lint
           command: yarn lint
