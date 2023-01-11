@@ -2,8 +2,7 @@
   "name": "reactotron",
   "private": true,
   "workspaces": [
-    "tools/*",
-    "packages/*"
+    "apps/app"
   ],
   "author": {
     "name": "Infinite Red",
@@ -22,6 +21,20 @@
   "homepage": "https://github.com/infinitered/reactotron#readme",
   "dependencies": {
     "patch-package": "^6.2.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "eslint-plugin-standard": "^4.0.1",
+    "typescript": "^4.6.4"
   },
   "scripts": {
     "postinstall": "patch-package"
