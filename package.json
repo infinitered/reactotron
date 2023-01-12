@@ -2,7 +2,7 @@
   "name": "reactotron",
   "private": true,
   "workspaces": [
-    "apps/app"
+    "apps/*"
   ],
   "author": {
     "name": "Infinite Red",
