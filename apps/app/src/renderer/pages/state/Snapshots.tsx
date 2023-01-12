@@ -12,7 +12,7 @@ import {
   MdFileDownload,
 } from "react-icons/md"
 // TODO: Get rid of this...
-import { Snapshot } from "reactotron-core-ui/dist/types/contexts/State/useSnapshots"
+import type { Snapshot } from "reactotron-core-ui/dist/types/contexts/State/useSnapshots"
 
 const Container = styled.div`
   display: flex;

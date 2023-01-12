@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { MdSearch } from "react-icons/md"
 import { FaMagic } from "react-icons/fa"
 import produce from "immer"
-import { CustomCommand } from "reactotron-core-ui/dist/types/contexts/CustomCommands/useCustomCommands"
+import type { CustomCommand } from "reactotron-core-ui/dist/types/contexts/CustomCommands/useCustomCommands"
 
 const Container = styled.div`
   display: flex;

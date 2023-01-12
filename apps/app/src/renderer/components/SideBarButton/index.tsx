@@ -1,5 +1,6 @@
 import React from "react"
-import { withRouter, RouteComponentProps } from "react-router-dom"
+import { withRouter } from "react-router-dom"
+import type { RouteComponentProps } from "react-router-dom"
 
 import StatelessSideBarButton from "./Stateless"
 
