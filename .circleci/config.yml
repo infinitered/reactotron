@@ -19,20 +19,17 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - run:
-          name: cd to app workspace
-          command: cd apps/app && echo $PWD && ls
-      - run:
           name: Lint
-          command: yarn lint
+          command: yarn workspace app lint
       - run:
           name: Tests
-          command: yarn test
+          command: yarn workspace app test
       - run:
           name: TypeScript Compile
-          command: yarn compile
+          command: yarn workspace app compile
       - run:
           name: Build App
-          command: yarn build
+          command: yarn workspace app build
 
   setup_release:
     <<: *defaults
