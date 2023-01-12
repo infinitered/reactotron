@@ -1,11 +1,10 @@
 import React, { useContext } from "react"
-
-import StandaloneContext from "../../contexts/Standalone"
+import LayoutContext from "../../contexts/Layout"
 
 import SidebarStateless from "./Stateless"
 
 function SideBar() {
-  const { isSideBarOpen } = useContext(StandaloneContext)
+  const { isSideBarOpen } = useContext(LayoutContext)
 
   return <SidebarStateless isOpen={isSideBarOpen} />
 }

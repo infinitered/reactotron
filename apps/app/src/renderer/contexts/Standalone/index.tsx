@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useRef, useEffect, useCallback } from "react"
+import React, { useRef, useEffect, useCallback, PropsWithChildren } from "react"
 import Server, { createServer } from "reactotron-core-server"
 
 import ReactotronBrain from "../../ReactotronBrain"
@@ -11,19 +11,15 @@ interface Context {
   connections: Connection[]
   selectedConnection: Connection
   selectConnection: (clientId: string) => void
-  isSideBarOpen: boolean
-  toggleSideBar: () => void
 }
 
 const StandaloneContext = React.createContext<Context>({
   connections: [],
   selectedConnection: null,
   selectConnection: null,
-  isSideBarOpen: true,
-  toggleSideBar: null,
 })
 
-const Provider: FunctionComponent<any> = ({ children }) => {
+const Provider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const reactotronServer = useRef<Server>(null)
 
   const {
@@ -36,8 +32,6 @@ const Provider: FunctionComponent<any> = ({ children }) => {
     commandReceived,
     connectionDisconnected,
     addCommandListener,
-    isSideBarOpen,
-    toggleSideBar,
   } = useStandalone()
 
   useEffect(() => {
@@ -70,8 +64,6 @@ const Provider: FunctionComponent<any> = ({ children }) => {
         connections,
         selectedConnection,
         selectConnection,
-        isSideBarOpen,
-        toggleSideBar,
       }}
     >
       <ReactotronBrain

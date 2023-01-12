@@ -8,7 +8,6 @@ export enum ActionTypes {
   CommandReceived = "COMMAND_RECEIVED",
   ChangeSelectedClientId = "CHANGE_SELECTED_CLIENT_ID",
   AddCommandHandler = "ADD_COMMAND_HANDLER",
-  ToggleSideBar = "TOGGLE_SIDEBAR",
 }
 
 export interface ReactotronConnection {
@@ -35,7 +34,6 @@ interface State {
   selectedClientId: string
   orphanedCommands: any[] // Command[]
   commandListeners: ((command: any) => void)[] // ((command: Command) => void)[]
-  isSideBarOpen: boolean
 }
 
 type Action =
@@ -45,7 +43,7 @@ type Action =
     }
   | { type: ActionTypes.ChangeSelectedClientId; payload: string }
   | { type: ActionTypes.CommandReceived; payload: any } // TODO: Type this better!
-  | { type: ActionTypes.ClearConnectionCommands | ActionTypes.ToggleSideBar }
+  | { type: ActionTypes.ClearConnectionCommands }
   | { type: ActionTypes.AddCommandHandler; payload: (command: any) => void }
 
 export function reducer(state: State, action: Action) {
@@ -147,10 +145,6 @@ export function reducer(state: State, action: Action) {
       return produce(state, draftState => {
         draftState.commandListeners.push(action.payload)
       })
-    case ActionTypes.ToggleSideBar:
-      return produce(state, draftState => {
-        draftState.isSideBarOpen = !draftState.isSideBarOpen
-      })
     default:
       return state
   }
@@ -162,7 +156,6 @@ function useStandalone() {
     selectedClientId: null,
     orphanedCommands: [],
     commandListeners: [],
-    isSideBarOpen: true,
   })
 
   // Called when we have client details. NOTE: Commands can start flying in before this gets called!
@@ -195,10 +188,6 @@ function useStandalone() {
     dispatch({ type: ActionTypes.AddCommandHandler, payload: callback })
   }, [])
 
-  const toggleSideBar = useCallback(() => {
-    dispatch({ type: ActionTypes.ToggleSideBar })
-  }, [])
-
   return {
     ...state,
     selectedConnection: state.connections.find(c => c.clientId === state.selectedClientId),
@@ -208,7 +197,6 @@ function useStandalone() {
     commandReceived,
     clearSelectedConnectionCommands,
     addCommandListener,
-    toggleSideBar,
   }
 }
 

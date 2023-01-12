@@ -4,7 +4,7 @@ import styled from "styled-components"
 
 import SideBar from "./components/SideBar"
 import Footer from "./components/Footer"
-import { StandaloneProvider } from "./contexts/Standalone"
+import RootContextProvider from "./contexts"
 import RootModals from "./RootModals"
 
 import Home from "./pages/home"
@@ -44,7 +44,7 @@ const MainContainer = styled.div`
 function App() {
   return (
     <Router>
-      <StandaloneProvider>
+      <RootContextProvider>
         <AppContainer>
           <TopSection>
             <SideBar />
@@ -74,7 +74,7 @@ function App() {
           <Footer />
         </AppContainer>
         <RootModals />
-      </StandaloneProvider>
+      </RootContextProvider>
     </Router>
   )
 }

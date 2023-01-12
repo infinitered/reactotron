@@ -1,8 +1,7 @@
 import React, { useContext } from "react"
 import { GlobalHotKeys, KeyEventName } from "react-hotkeys"
 import { ReactotronContext, StateContext } from "reactotron-core-ui"
-
-import StandaloneContext from "./contexts/Standalone"
+import LayoutContext from "./contexts/Layout"
 
 const keyMap = {
   // Tab Navigation
@@ -79,7 +78,7 @@ const keyMap = {
 }
 
 function KeybindHandler({ children }) {
-  const { toggleSideBar } = useContext(StandaloneContext)
+  const { toggleSideBar } = useContext(LayoutContext)
   const { openDispatchModal, openSubscriptionModal } = useContext(ReactotronContext)
   const { createSnapshot } = useContext(StateContext)
 

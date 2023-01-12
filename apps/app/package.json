@@ -25,7 +25,7 @@
     "release": "yarn build && electron-builder",
     "test": "jest",
     "test:watch": "jest --watch --notify",
-    "lint": "eslint src --ext .ts,.tsx",
+    "lint": "eslint 'src/**/**.{ts,tsx}'",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "semantic-release": "semantic-release"

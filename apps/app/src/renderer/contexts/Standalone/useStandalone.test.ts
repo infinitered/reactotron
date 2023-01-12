@@ -276,20 +276,4 @@ describe("contexts/Standalone/useStandalone", () => {
       expect(mockListener).toHaveBeenCalledWith({ clientId: "1234", payload: true })
     })
   })
-
-  describe("UI Handling", () => {
-    it("should toggle the sidebar", () => {
-        const { result } = renderHook(() => useStandalone())
-
-        expect(result.current.isSideBarOpen).toBeTruthy();
-
-        result.current.toggleSideBar()
-
-        expect(result.current.isSideBarOpen).toBeFalsy();
-
-        result.current.toggleSideBar()
-
-        expect(result.current.isSideBarOpen).toBeTruthy();
-    })
-  })
 })
