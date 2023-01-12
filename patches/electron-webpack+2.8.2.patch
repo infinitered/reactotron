@@ -1,8 +1,8 @@
 diff --git a/node_modules/electron-webpack/out/main.js b/node_modules/electron-webpack/out/main.js
-index d5b34cb..6e33971 100644
+index 91a3786..983c1b3 100644
 --- a/node_modules/electron-webpack/out/main.js
 +++ b/node_modules/electron-webpack/out/main.js
-@@ -215,7 +215,7 @@ class WebpackConfigurator {
+@@ -217,7 +217,7 @@ class WebpackConfigurator {
      this.rules = [];
      this.plugins = []; // js must be first - e.g. iView has two files loading-bar.js and loading-bar.vue - when we require "loading-bar", js file must be resolved and not vue
  
@@ -12,10 +12,10 @@ index d5b34cb..6e33971 100644
      this.entryFiles = [];
  
 diff --git a/node_modules/electron-webpack/out/targets/BaseTarget.js b/node_modules/electron-webpack/out/targets/BaseTarget.js
-index 4a60147..10d6deb 100644
+index e4c6b00..3b485d5 100644
 --- a/node_modules/electron-webpack/out/targets/BaseTarget.js
 +++ b/node_modules/electron-webpack/out/targets/BaseTarget.js
-@@ -93,7 +93,7 @@ class BaseTarget {
+@@ -95,7 +95,7 @@ class BaseTarget {
      }
  
      rules.push({
