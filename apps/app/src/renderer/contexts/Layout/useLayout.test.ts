@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks"
+import { act, renderHook } from "@testing-library/react-hooks"
 
 import useLayout from "./useLayout"
 
@@ -9,11 +9,15 @@ describe("contexts/Layout/useLayout", () => {
 
       expect(result.current.isSideBarOpen).toBeTruthy()
 
-      result.current.toggleSideBar()
+      act(() => {
+        result.current.toggleSideBar()
+      })
 
       expect(result.current.isSideBarOpen).toBeFalsy()
 
-      result.current.toggleSideBar()
+      act(() => {
+        result.current.toggleSideBar()
+      })
 
       expect(result.current.isSideBarOpen).toBeTruthy()
     })

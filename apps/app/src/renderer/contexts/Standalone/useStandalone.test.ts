@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks"
+import { act, renderHook } from "@testing-library/react-hooks"
 
 import useStandalone from "./useStandalone"
 
@@ -10,10 +10,12 @@ describe("contexts/Standalone/useStandalone", () => {
       expect(result.current.connections.length).toEqual(0)
       expect(result.current.selectedClientId).toEqual(null)
 
-      result.current.connectionEstablished({
-        clientId: "1234",
-        id: 0,
-        platform: "ios",
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
       })
 
       expect(result.current.connections.length).toEqual(1)
@@ -32,17 +34,21 @@ describe("contexts/Standalone/useStandalone", () => {
 
       expect(result.current.connections.length).toEqual(0)
 
-      result.current.connectionEstablished({
-        clientId: "1234",
-        id: 0,
-        platform: "ios",
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
       })
 
-      // Try and duplicate the connection
-      result.current.connectionEstablished({
-        clientId: "1234",
-        id: 0,
-        platform: "ios",
+      act(() => {
+        // Try and duplicate the connection
+        result.current.connectionEstablished({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
       })
 
       expect(result.current.connections.length).toEqual(1)
@@ -58,12 +64,16 @@ describe("contexts/Standalone/useStandalone", () => {
     it("should grab orphaned commands for this connection", () => {
       const { result } = renderHook(() => useStandalone())
 
-      result.current.commandReceived({ connectionId: 0, payload: true })
+      act(() => {
+        result.current.commandReceived({ connectionId: 0, payload: true })
+      })
 
-      result.current.connectionEstablished({
-        clientId: "1234",
-        id: 0,
-        platform: "ios",
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
       })
 
       expect(result.current.connections.length).toEqual(1)
@@ -80,18 +90,22 @@ describe("contexts/Standalone/useStandalone", () => {
 
       expect(result.current.selectedClientId).toEqual(null)
 
-      result.current.connectionEstablished({
-        clientId: "1234",
-        id: 0,
-        platform: "ios",
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
       })
 
       expect(result.current.selectedClientId).toEqual("1234")
 
-      result.current.connectionEstablished({
-        clientId: "12345",
-        id: 1,
-        platform: "ios",
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "12345",
+          id: 1,
+          platform: "ios",
+        })
       })
 
       expect(result.current.selectedClientId).toEqual("1234")
@@ -100,18 +114,22 @@ describe("contexts/Standalone/useStandalone", () => {
     it("should mark a connection as disconnected", () => {
       const { result } = renderHook(() => useStandalone())
 
-      result.current.connectionEstablished({
-        clientId: "1234",
-        id: 0,
-        platform: "ios",
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
       })
 
       expect(result.current.connections[0].connected).toBeTruthy()
 
-      result.current.connectionDisconnected({
-        clientId: "1234",
-        id: 0,
-        platform: "ios",
+      act(() => {
+        result.current.connectionDisconnected({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
       })
 
       expect(result.current.connections[0].connected).toBeFalsy()
@@ -120,24 +138,30 @@ describe("contexts/Standalone/useStandalone", () => {
     it("should not change the selected connection id if this was not the selected connection", () => {
       const { result } = renderHook(() => useStandalone())
 
-      result.current.connectionEstablished({
-        clientId: "1234",
-        id: 0,
-        platform: "ios",
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
       })
 
-      result.current.connectionEstablished({
-        clientId: "567",
-        id: 1,
-        platform: "ios",
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "567",
+          id: 1,
+          platform: "ios",
+        })
       })
 
       expect(result.current.selectedClientId).toEqual("1234")
 
-      result.current.connectionDisconnected({
-        clientId: "567",
-        id: 1,
-        platform: "ios",
+      act(() => {
+        result.current.connectionDisconnected({
+          clientId: "567",
+          id: 1,
+          platform: "ios",
+        })
       })
 
       expect(result.current.selectedClientId).toEqual("1234")
@@ -146,24 +170,30 @@ describe("contexts/Standalone/useStandalone", () => {
     it("should change the selected client id if there is another connection available", () => {
       const { result } = renderHook(() => useStandalone())
 
-      result.current.connectionEstablished({
-        clientId: "1234",
-        id: 0,
-        platform: "ios",
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
       })
 
-      result.current.connectionEstablished({
-        clientId: "567",
-        id: 1,
-        platform: "ios",
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "567",
+          id: 1,
+          platform: "ios",
+        })
       })
 
       expect(result.current.selectedClientId).toEqual("1234")
 
-      result.current.connectionDisconnected({
-        clientId: "1234",
-        id: 0,
-        platform: "ios",
+      act(() => {
+        result.current.connectionDisconnected({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
       })
 
       expect(result.current.selectedClientId).toEqual("567")
@@ -172,18 +202,22 @@ describe("contexts/Standalone/useStandalone", () => {
     it("should clear out the selected connection id if there are no other connections available", () => {
       const { result } = renderHook(() => useStandalone())
 
-      result.current.connectionEstablished({
-        clientId: "1234",
-        id: 0,
-        platform: "ios",
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
       })
 
       expect(result.current.selectedClientId).toEqual("1234")
 
-      result.current.connectionDisconnected({
-        clientId: "1234",
-        id: 0,
-        platform: "ios",
+      act(() => {
+        result.current.connectionDisconnected({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
       })
 
       expect(result.current.selectedClientId).toEqual(null)
@@ -192,15 +226,19 @@ describe("contexts/Standalone/useStandalone", () => {
     it("should not change to a client id that doesn't exist", () => {
       const { result } = renderHook(() => useStandalone())
 
-      result.current.connectionEstablished({
-        clientId: "1234",
-        id: 0,
-        platform: "ios",
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
       })
 
       expect(result.current.selectedClientId).toEqual("1234")
 
-      result.current.selectConnection("456")
+      act(() => {
+        result.current.selectConnection("456")
+      })
 
       expect(result.current.selectedClientId).toEqual("1234")
     })
@@ -208,21 +246,27 @@ describe("contexts/Standalone/useStandalone", () => {
     it("should change to a new selected connection", () => {
       const { result } = renderHook(() => useStandalone())
 
-      result.current.connectionEstablished({
-        clientId: "1234",
-        id: 0,
-        platform: "ios",
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
       })
 
-      result.current.connectionEstablished({
-        clientId: "456",
-        id: 1,
-        platform: "ios",
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "456",
+          id: 1,
+          platform: "ios",
+        })
       })
 
       expect(result.current.selectedClientId).toEqual("1234")
 
-      result.current.selectConnection("456")
+      act(() => {
+        result.current.selectConnection("456")
+      })
 
       expect(result.current.selectedClientId).toEqual("456")
     })
@@ -234,7 +278,9 @@ describe("contexts/Standalone/useStandalone", () => {
 
       expect(result.current.orphanedCommands.length).toEqual(0)
 
-      result.current.commandReceived({ connectionId: 1, payload: true })
+      act(() => {
+        result.current.commandReceived({ connectionId: 1, payload: true })
+      })
 
       expect(result.current.orphanedCommands.length).toEqual(1)
       expect(result.current.orphanedCommands[0]).toEqual({ connectionId: 1, payload: true })
@@ -243,18 +289,24 @@ describe("contexts/Standalone/useStandalone", () => {
     it("should clear commands from a connection", () => {
       const { result } = renderHook(() => useStandalone())
 
-      result.current.connectionEstablished({
-        clientId: "1234",
-        id: 0,
-        platform: "ios",
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
       })
 
-      result.current.commandReceived({ clientId: "1234", payload: true })
+      act(() => {
+        result.current.commandReceived({ clientId: "1234", payload: true })
+      })
 
       expect(result.current.connections[0].commands.length).toEqual(1)
       expect(result.current.connections[0].commands[0]).toEqual({ clientId: "1234", payload: true })
 
-      result.current.clearSelectedConnectionCommands()
+      act(() => {
+        result.current.clearSelectedConnectionCommands()
+      })
 
       expect(result.current.connections[0].commands.length).toEqual(0)
     })
@@ -263,15 +315,21 @@ describe("contexts/Standalone/useStandalone", () => {
       const { result } = renderHook(() => useStandalone())
       const mockListener = jest.fn()
 
-      result.current.connectionEstablished({
-        clientId: "1234",
-        id: 0,
-        platform: "ios",
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
       })
 
-      result.current.addCommandListener(mockListener)
+      act(() => {
+        result.current.addCommandListener(mockListener)
+      })
 
-      result.current.commandReceived({ clientId: "1234", payload: true })
+      act(() => {
+        result.current.commandReceived({ clientId: "1234", payload: true })
+      })
 
       expect(mockListener).toHaveBeenCalledWith({ clientId: "1234", payload: true })
     })
