@@ -6,20 +6,21 @@
 defaults: &defaults
   working_directory: ~/repo
 
-version: 2
+version: 2.1
+orbs:
+  node: circleci/node@5.0.3
+
 jobs:
   build_and_test:
     <<: *defaults
-    macos:
-      xcode: "13.3.1"
+    executor: node/default
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: yarn install --ignore-engines
+      - node/install-packages:
+          pkg-manager: yarn
       - run:
           name: cd to app workspace
-          command: cd apps/app
+          command: cd apps/app && echo $PWD && ls
       - run:
           name: Lint
           command: yarn lint
@@ -103,7 +104,7 @@ jobs:
           command: yarn install --ignore-engines
       - run:
           name: Decode Certificates
-          command: base64 -D -o Certificates.p12 <<< $ReactotronCerts
+          command: 'base64 -D -o Certificates.p12 \<< $ReactotronCerts'
       - run:
           name: Install Bundler
           command: gem install bundler:1.16.1
@@ -127,7 +128,6 @@ jobs:
           command: yarn release -ml -c.snap.publish=github
 
 workflows:
-  version: 2
   pull_request:
     jobs:
       - build_and_test:
@@ -166,3 +166,4 @@ workflows:
                 - alpha
           requires:
             - setup_release
+# VS Code Extension Version: 1.5.1
