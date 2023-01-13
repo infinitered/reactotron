@@ -1,9 +1,14 @@
 {
   "name": "reactotron",
   "private": true,
-  "workspaces": [
-    "apps/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "apps/*"
+    ],
+    "nohoist": [
+      "electron"
+    ]
+  },
   "author": {
     "name": "Infinite Red",
     "email": "hello@infinite.red",
