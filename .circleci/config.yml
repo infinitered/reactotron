@@ -33,34 +33,32 @@ jobs:
 
   setup_release:
     <<: *defaults
-    macos:
-      xcode: "13.3.1"
+    executor: node/default
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: yarn install --ignore-engines
-      - run:
-          name: cd to app workspace
-          command: cd apps/app
+      - node/install-packages:
+          pkg-manager: yarn
       - run:
           name: Lint
-          command: yarn lint
+          command: yarn workspace app lint
       - run:
           name: Tests
-          command: yarn test
+          command: yarn workspace app test
       - run:
           name: TypeScript Compile
-          command: yarn compile
+          command: yarn workspace app compile
+      - run:
+          name: Build App
+          command: yarn workspace app build
       - run:
           name: Generate Semantic Release
-          command: yarn semantic-release
+          command: yarn workspace app semantic-release
       - run:
           name: Setup workspace
           command: mkdir -p workspace
       - run:
           name: Copy everything into the workspace
-          command: cp package.json workspace/package.json
+          command: cp apps/app/package.json workspace/package.json
       - persist_to_workspace:
           root: workspace
           paths:
@@ -80,7 +78,7 @@ jobs:
           command: mv workspace/package.json package.json
       - run:
           name: Install dependencies
-          command: yarn install --ignore-engines
+          command: yarn install --frozen-lockfile
       - run:
           name: Release Windows
           command: yarn release -w
@@ -98,7 +96,7 @@ jobs:
           command: mv workspace/package.json package.json
       - run:
           name: Install dependencies
-          command: yarn install --ignore-engines
+          command: yarn install --frozen-lockfile
       - run:
           name: Decode Certificates
           command: 'base64 -D -o Certificates.p12 \<< $ReactotronCerts'
