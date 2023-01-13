@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react"
-import { Header, EmptyState, ContentView, SnapshotRenameModal, StateContext } from "reactotron-core-ui"
+import { Header as _Header, EmptyState as _EmptyState, ContentView, SnapshotRenameModal, StateContext } from "reactotron-core-ui"
 import { clipboard } from "electron"
 import styled from "styled-components"
 import {
@@ -13,6 +13,11 @@ import {
 } from "react-icons/md"
 // TODO: Get rid of this...
 import type { Snapshot } from "reactotron-core-ui/dist/types/contexts/State/useSnapshots"
+
+// TODO: add PropsWithChildren type to reactotron-core-ui export
+const Header = _Header as React.FC<React.PropsWithChildren<Parameters<typeof _Header>[0]>>
+const EmptyState = _EmptyState as React.FC<React.PropsWithChildren<Parameters<typeof _EmptyState>[0]>>
+
 
 const Container = styled.div`
   display: flex;

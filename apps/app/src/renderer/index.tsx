@@ -1,6 +1,9 @@
 import React from "react"
 import { render } from "react-dom"
-import { ReactotronAppProvider } from "reactotron-core-ui"
+import { ReactotronAppProvider as _ReactotronAppProvider } from "reactotron-core-ui"
+
+// TODO: add PropsWithChildren type to reactotron-core-ui export
+const ReactotronAppProvider = _ReactotronAppProvider as React.FC<React.PropsWithChildren<{}>>
 
 import "./global.css"
 
