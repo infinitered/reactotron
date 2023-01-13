@@ -34,7 +34,14 @@
     "whiteListedModules": [
       "reactotron-core-ui",
       "react-router-dom"
-    ]
+    ],
+    "renderer": {
+      "webpackConfig": "webpack.config.js",
+      "webpackDllConfig": "webpack.config.js"
+    },
+    "main": {
+      "webpackConfig": "webpack.config.js"
+    }
   },
   "dependencies": {
     "electron-log": "^4.4.8",
