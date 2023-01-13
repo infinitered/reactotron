@@ -27,4 +27,10 @@ module.exports = {
     "@typescript-eslint/member-delimiter-style": 0,
     "import/no-cycle": "error",
   },
+  ignorePatterns: [
+    "**/dist/**/*",
+    "**/node_modules/**/*",
+    "**/build/**/*",
+    "examples",
+  ],
 };
