@@ -27,8 +27,7 @@
     "test:watch": "jest --watch --notify",
     "lint": "eslint 'src/**/**.{ts,tsx}'",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "semantic-release": "semantic-release"
+    "build-storybook": "build-storybook"
   },
   "electronWebpack": {
     "whiteListedModules": [
@@ -67,8 +66,6 @@
     "@babel/preset-react": "^7.7.4",
     "@babel/preset-typescript": "^7.7.4",
     "@electron/notarize": "^1.2.3",
-    "@semantic-release/exec": "3.4.0-beta.10",
-    "@semantic-release/git": "7.1.0-beta.11",
     "@storybook/addon-actions": "^5.2.8",
     "@storybook/addon-knobs": "^5.2.8",
     "@storybook/addon-links": "^5.2.8",
@@ -99,7 +96,6 @@
     "jest-environment-jsdom": "^29.3.1",
     "prettier": "^1.19.1",
     "react-test-renderer": "18.2.0",
-    "semantic-release": "16.0.0-beta.47",
     "ts-jest": "^29.0.4",
     "typescript": "^4.6.4",
     "webpack": "^4.41.3"

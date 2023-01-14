@@ -28,6 +28,8 @@
     "patch-package": "^6.2.0"
   },
   "devDependencies": {
+    "@jscutlery/semver": "^2.29.3",
+    "@nrwl/devkit": "^15.5.1",
     "@types/eslint": "^8.4.10",
     "@typescript-eslint/eslint-plugin": "^2.12.0",
     "@typescript-eslint/parser": "^2.12.0",
@@ -40,6 +42,7 @@
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^2.3.0",
     "eslint-plugin-standard": "^4.0.1",
+    "nx": "15.5.1",
     "typescript": "^4.6.4"
   },
   "scripts": {
