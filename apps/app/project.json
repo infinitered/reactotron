@@ -5,7 +5,17 @@
       "executor": "@jscutlery/semver:version",
       "options": {
         "baseBranch": "master",
-        "preset": "conventional"
+        "preset": "conventional",
+        "postTargets": ["app:github"]
+      }
+    },
+    "github": {
+      "executor": "@jscutlery/semver:github",
+      "options": {
+        "tag": "${tag}",
+        "notes": "${notes}",
+        "prerelease": true,
+        "files": "./release/*"
       }
     }
   }
