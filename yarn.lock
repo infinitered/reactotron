@@ -17419,16 +17419,6 @@ reactotron-core-server@^3.0.3:
     ramda "0.26.1"
     ws "7.1.0"
 
-reactotron-core-ui@^2.0.0-beta.4:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/reactotron-core-ui/-/reactotron-core-ui-2.0.0.tgz#8193151d031b6fd71650e7b21511f2ff4aa5b9e2"
-  integrity sha512-97wkfujoybbE42/3R3zhmNFoon8fMQp8NVqbDPzPNLzNKJFTSJzxPFz/ThfJVbMu0UCrwtrw/mPpEUYmy79jzw==
-  dependencies:
-    color-interpolate "1.0.5"
-    date-fns "2.6.0"
-    react-json-tree "0.11.2"
-    stringify-object "3.3.0"
-
 read-cmd-shim@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/read-cmd-shim/-/read-cmd-shim-2.0.0.tgz#4a50a71d6f0965364938e9038476f7eede3928d9"
