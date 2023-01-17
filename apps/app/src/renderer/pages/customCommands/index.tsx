@@ -1,14 +1,9 @@
 import React, { useState, useContext, useReducer } from "react"
-import { Header as _Header, EmptyState as _EmptyState, CustomCommandsContext } from "reactotron-core-ui"
+import { Header, EmptyState, CustomCommandsContext, CustomCommand } from "reactotron-core-ui"
 import styled from "styled-components"
 import { MdSearch } from "react-icons/md"
 import { FaMagic } from "react-icons/fa"
 import produce from "immer"
-import type { CustomCommand } from "reactotron-core-ui/dist/types/contexts/CustomCommands/useCustomCommands"
-
-// TODO: add PropsWithChildren type to reactotron-core-ui export
-const Header = _Header as React.FC<React.PropsWithChildren<Parameters<typeof _Header>[0]>>
-const EmptyState = _EmptyState as React.FC<React.PropsWithChildren<Parameters<typeof _EmptyState>[0]>>
 
 const Container = styled.div`
   display: flex;

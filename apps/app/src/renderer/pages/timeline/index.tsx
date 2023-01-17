@@ -2,22 +2,16 @@ import React, { useContext } from "react"
 import { clipboard } from "electron"
 import fs from "fs"
 import {
-  Header as _Header,
+  Header,
   filterCommands,
   TimelineFilterModal,
   timelineCommandResolver,
-  EmptyState as _EmptyState,
+  EmptyState,
   ReactotronContext,
   TimelineContext,
 } from "reactotron-core-ui"
 import { MdSearch, MdDeleteSweep, MdFilterList, MdSwapVert, MdReorder } from "react-icons/md"
 import styled from "styled-components"
-
-// TODO: add PropsWithChildren type to reactotron-core-ui export
-const Header = _Header as React.FC<React.PropsWithChildren<Parameters<typeof _Header>[0]>>
-const EmptyState = _EmptyState as React.FC<
-  React.PropsWithChildren<Parameters<typeof _EmptyState>[0]>
->
 
 const Container = styled.div`
   display: flex;

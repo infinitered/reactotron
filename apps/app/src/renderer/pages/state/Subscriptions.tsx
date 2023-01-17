@@ -1,11 +1,11 @@
 import React, { useContext } from "react"
 import {
   ReactotronContext,
-  Header as _Header,
   CommandType,
   ContentView,
-  EmptyState as _EmptyState,
   StateContext,
+  Header,
+  EmptyState,
 } from "reactotron-core-ui"
 import { MdDelete, MdAdd, MdDeleteSweep, MdNotificationsNone, MdImportExport } from "react-icons/md"
 import styled from "styled-components"
@@ -13,12 +13,6 @@ import { getApplicationKeyMap } from "react-hotkeys"
 
 // Move this out of this page. We are just hacking around this for now
 import { KeybindKeys, getPlatformSequence } from "../help/components/Keybind"
-
-// TODO: add PropsWithChildren type to reactotron-core-ui export
-const Header = _Header as React.FC<React.PropsWithChildren<Parameters<typeof _Header>[0]>>
-const EmptyState = _EmptyState as React.FC<
-  React.PropsWithChildren<Parameters<typeof _EmptyState>[0]>
->
 
 const Container = styled.div`
   display: flex;

@@ -1,13 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import { Header as _Header, EmptyState as _EmptyState } from "reactotron-core-ui"
+import { Header, EmptyState } from "reactotron-core-ui"
 import { MdBook, MdCamera } from "react-icons/md"
-
-// TODO: add PropsWithChildren type to reactotron-core-ui export
-const Header = _Header as React.FC<React.PropsWithChildren<Parameters<typeof _Header>[0]>>
-const EmptyState = _EmptyState as React.FC<
-  React.PropsWithChildren<Parameters<typeof _EmptyState>[0]>
->
 
 const Container = styled.div`
   display: flex;
