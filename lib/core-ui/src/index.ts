@@ -34,7 +34,7 @@ import repairSerialization from "./utils/repair-serialization"
 import filterCommands from "./utils/filterCommands"
 
 // Types
-import { CommandType } from "./types"
+export { CommandType } from "./types"
 
 export {
   theme,
@@ -55,7 +55,6 @@ export {
   TreeView,
   repairSerialization,
   filterCommands,
-  CommandType,
   // Contexts
   ReactotronContext,
   ReactotronProvider,
@@ -68,3 +67,7 @@ export {
   TimelineContext,
   TimelineProvider,
 }
+
+export type { CustomCommand } from "./contexts/CustomCommands/useCustomCommands"
+export type { Command } from "./types"
+export type { Snapshot } from "./contexts/State/useSnapshots"
