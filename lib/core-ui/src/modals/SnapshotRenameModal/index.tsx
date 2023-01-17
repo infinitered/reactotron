@@ -45,7 +45,7 @@ const SnapshotAddModal: FunctionComponent<Props> = ({
   const handleClose = useCallback(() => {
     setName("")
     onClose()
-  }, [])
+  }, [onClose])
 
   const handleChange = useCallback(e => {
     setName(e.target.value)
@@ -58,7 +58,7 @@ const SnapshotAddModal: FunctionComponent<Props> = ({
         setName("")
       }
     },
-    [snapshot, name]
+    [onRenameSnapshot, name]
   )
 
   return (

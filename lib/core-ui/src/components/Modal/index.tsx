@@ -36,7 +36,7 @@ interface Props {
   additionalKeystrokes?: React.ReactNode
 }
 
-const Modal: FunctionComponent<Props> = ({
+const Modal: FunctionComponent<React.PropsWithChildren<Props>> = ({
   isOpen,
   onClose,
   onAfterOpen,

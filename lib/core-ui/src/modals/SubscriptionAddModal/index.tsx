@@ -45,18 +45,21 @@ const SubscriptionAddModal: FunctionComponent<Props> = ({ isOpen, onClose, onAdd
   const handleClose = useCallback(() => {
     setPath("")
     onClose()
-  }, [])
+  }, [onClose])
 
   const handleChange = useCallback(e => {
     setPath(e.target.value)
   }, [])
 
-  const handleKeypress = useCallback(e => {
-    if (e.key === "Enter") {
-      onAddSubscription(path)
-      setPath("")
-    }
-  }, [path])
+  const handleKeypress = useCallback(
+    e => {
+      if (e.key === "Enter") {
+        onAddSubscription(path)
+        setPath("")
+      }
+    },
+    [onAddSubscription, path]
+  )
 
   return (
     <Modal

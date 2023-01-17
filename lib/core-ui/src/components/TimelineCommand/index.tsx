@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react"
+import React from "react"
 import styled from "styled-components"
 import {
   MdLabel as TagIcon,
@@ -108,7 +108,7 @@ function stopPropagation(
   }
 }
 
-const TimelineCommand: FunctionComponent<Props> = ({
+const TimelineCommand: React.FC<React.PropsWithChildren<Props>> = ({
   isOpen,
   setIsOpen,
   toolbar,

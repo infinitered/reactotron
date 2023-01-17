@@ -11,7 +11,7 @@ const ReactotronContainer = styled.div`
   user-select: none;
 `
 
-const ReactotronAppProvider: FunctionComponent = ({ children }) => {
+const ReactotronAppProvider: FunctionComponent<React.PropsWithChildren> = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <ReactotronContainer>{children}</ReactotronContainer>
@@ -19,4 +19,4 @@ const ReactotronAppProvider: FunctionComponent = ({ children }) => {
   )
 }
 
-export default ReactotronAppProvider;
+export default ReactotronAppProvider

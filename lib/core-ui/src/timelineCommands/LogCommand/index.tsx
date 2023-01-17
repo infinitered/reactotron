@@ -266,6 +266,7 @@ function useFileSource(stack, readFile) {
       .catch(() => {
         // Do nothing?
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return sourceCode

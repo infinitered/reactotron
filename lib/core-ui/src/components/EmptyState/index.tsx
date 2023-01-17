@@ -29,7 +29,11 @@ interface Props {
   title: string
 }
 
-const EmptyState: FunctionComponent<Props> = ({ title, icon: Icon, children }) => {
+const EmptyState: FunctionComponent<React.PropsWithChildren<Props>> = ({
+  title,
+  icon: Icon,
+  children,
+}) => {
   return (
     <Container>
       {Icon && <Icon size={100} />}

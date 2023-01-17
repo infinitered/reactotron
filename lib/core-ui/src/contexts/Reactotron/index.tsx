@@ -41,7 +41,7 @@ const ReactotronContext = React.createContext<ContextProps>({
   closeSubscriptionModal: null,
 })
 
-const Provider: FunctionComponent<Props> = ({
+const Provider: FunctionComponent<React.PropsWithChildren<Props>> = ({
   commands,
   sendCommand,
   clearCommands,

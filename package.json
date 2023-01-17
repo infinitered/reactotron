@@ -3,7 +3,8 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "apps/*"
+      "apps/*",
+      "lib/*"
     ],
     "nohoist": [
       "electron"

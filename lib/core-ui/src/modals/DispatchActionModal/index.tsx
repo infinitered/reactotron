@@ -61,6 +61,7 @@ const DispatchActionModal: FunctionComponent<Props> = ({
     }
 
     setPrevIsOpen(isOpen)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen])
 
   const handleAfterOpen = () => inputRef.current && inputRef.current.focus()
@@ -79,7 +80,7 @@ const DispatchActionModal: FunctionComponent<Props> = ({
   const handleClose = useCallback(() => {
     setAction("")
     onClose()
-  }, [])
+  }, [onClose])
 
   const handleChange = useCallback(e => {
     setAction(e.target.value)

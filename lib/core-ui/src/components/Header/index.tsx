@@ -67,7 +67,7 @@ interface Props {
   isDraggable?: boolean
 }
 
-const Header: FunctionComponent<Props> = ({
+const Header: FunctionComponent<React.PropsWithChildren<Props>> = ({
   tabs,
   title,
   actions,
