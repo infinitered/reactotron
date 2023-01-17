@@ -1,0 +1,8 @@
+.DS_STORE
+node_modules
+npm-debug.log
+coverage
+.nyc_output
+dist
+yarn-error.log
+.idea

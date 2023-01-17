@@ -1,0 +1,145 @@
+{
+  "name": "reactotron-core-ui",
+  "version": "0.0.1",
+  "description": "Core UI components for Reactotron",
+  "author": "Infinite Red",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/infinitered/reactotron-core-ui/issues"
+  },
+  "homepage": "https://github.com/infinitered/reactotron-core-ui",
+  "repository": "https://github.com/infinitered/reactotron-core-ui",
+  "main": "dist/index.js",
+  "typings": "dist/types/index.d.ts",
+  "scripts": {
+    "start": "start-storybook -p 6006",
+    "build": "npm-run-all clean tsc compile",
+    "build:dev": "npm-run-all clean tsc compile:dev",
+    "build-storybook": "build-storybook",
+    "clean": "trash dist",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "jest",
+    "tsc": "tsc",
+    "compile": "NODE_ENV=production rollup -c",
+    "compile:dev": "NODE_ENV=development rollup -c",
+    "ci:lint": "yarn lint",
+    "ci:test": "yarn test",
+    "ci:publish": "yarn semantic-release",
+    "chromatic": "chromatic"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "color-interpolate": "1.0.5",
+    "date-fns": "2.6.0",
+    "react-json-tree": "0.11.2",
+    "stringify-object": "3.3.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.11.0",
+    "react-dom": ">=16.11.0",
+    "react-icons": ">=3.7.0",
+    "react-modal": ">=3.11.1",
+    "react-motion": ">=0.5.2",
+    "react-tooltip": ">=3.11.1",
+    "styled-components": ">=4.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.15.0",
+    "@babel/plugin-proposal-class-properties": "7.14.5",
+    "@babel/preset-env": "7.15.0",
+    "@babel/preset-react": "7.14.5",
+    "@babel/preset-typescript": "7.15.0",
+    "@semantic-release/git": "9.0.0",
+    "@storybook/addon-actions": "6.1.21",
+    "@storybook/addon-knobs": "6.2.9",
+    "@storybook/addon-links": "6.1.21",
+    "@storybook/addons": "6.1.21",
+    "@storybook/react": "6.1.21",
+    "@testing-library/react-hooks": "3.7.0",
+    "@types/jest": "27.0.0",
+    "@types/react-modal": "3.12.1",
+    "@types/react-motion": "0.0.31",
+    "@types/react-tooltip": "3.11.0",
+    "@types/stringify-object": "3.3.1",
+    "@types/styled-components": "5.1.12",
+    "@typescript-eslint/eslint-plugin": "4.29.1",
+    "@typescript-eslint/parser": "4.29.1",
+    "babel-loader": "8.2.2",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-config-standard": "16.0.3",
+    "eslint-plugin-import": "2.24.0",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "5.1.0",
+    "eslint-plugin-react": "7.24.0",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "eslint-plugin-standard": "4.1.0",
+    "jest": "26.6.3",
+    "npm-run-all": "4.1.5",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-icons": "4.2.0",
+    "react-modal": "3.14.3",
+    "react-motion": "0.5.2",
+    "react-test-renderer": "17.0.2",
+    "react-tooltip": "4.2.21",
+    "rollup": "2.56.2",
+    "rollup-plugin-babel": "4.4.0",
+    "rollup-plugin-babel-minify": "10.0.0",
+    "rollup-plugin-filesize": "9.1.1",
+    "rollup-plugin-node-resolve": "5.2.0",
+    "rollup-plugin-peer-deps-external": "2.2.4",
+    "semantic-release": "17.4.4",
+    "storybook-chromatic": "3.5.5",
+    "styled-components": "5.3.0",
+    "trash-cli": "4.0.0",
+    "ts-jest": "26.5.6",
+    "typescript": "4.2.4"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "plugin:react/recommended",
+      "standard",
+      "prettier"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "project": "./tsconfig.json"
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "react-hooks"
+    ],
+    "rules": {
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+      "no-use-before-define": 0,
+      "react/prop-types": 0,
+      "no-unused-vars": 0,
+      "no-undef": 0,
+      "space-before-function-paren": 0,
+      "@typescript-eslint/indent": 0,
+      "@typescript-eslint/explicit-member-accessibility": 0,
+      "@typescript-eslint/explicit-function-return-type": 0,
+      "@typescript-eslint/no-explicit-any": 0,
+      "@typescript-eslint/no-object-literal-type-assertion": 0,
+      "@typescript-eslint/no-empty-interface": 0,
+      "@typescript-eslint/no-var-requires": 0,
+      "@typescript-eslint/member-delimiter-style": 0
+    }
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom",
+    "testMatch": [
+      "**/*.test.ts",
+      "**/*.test.tsx"
+    ]
+  }
+}
