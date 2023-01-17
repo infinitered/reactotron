@@ -52,7 +52,7 @@ jobs:
           command: yarn workspace app build
       - run:
           name: Generate Semantic Release
-          command: npx nx run app:version --releaseAs=prerelease --preid=alpha
+          command: npx nx affected --target version
       - run:
           name: Setup workspace
           command: mkdir -p workspace
