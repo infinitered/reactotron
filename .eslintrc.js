@@ -11,7 +11,22 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: {
     tsconfigRootDir: __dirname,
-    project: ["./tsconfig.base.json", "./apps/*/tsconfig.json"],
+    project: [
+      "./tsconfig.base.json",
+      "./apps/*/tsconfig.json",
+      "./libs/*/tsconfig.json",
+    ],
+  },
+  settings: {
+    "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"],
+    },
+    "import/resolver": {
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
+    },
   },
   rules: {
     "no-unused-vars": 0,
