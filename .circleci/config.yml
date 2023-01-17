@@ -49,7 +49,7 @@ jobs:
           command: yarn workspace app compile
       - run:
           name: Build App
-          command: yarn workspace app build
+          command: npx nx run-many --target=build
       - run:
           name: Generate Semantic Release
           command: npx nx run app:version --releaseAs=prerelease --preid=alpha
