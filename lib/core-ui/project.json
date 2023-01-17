@@ -1,22 +1,18 @@
 {
-  "name": "app",
+  "name": "core-ui",
   "targets": {
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "baseBranch": "beta",
-        "preset": "conventional",
-        "releaseAs": "prerelease",
-        "preid": "alpha"
+        "baseBranch": "master",
+        "preset": "conventional"
       }
     },
     "github": {
       "executor": "@jscutlery/semver:github",
       "options": {
         "tag": "${tag}",
-        "notes": "${notes}",
-        "prerelease": true,
-        "files": "./release/*"
+        "notes": "${notes}"
       }
     }
   }
