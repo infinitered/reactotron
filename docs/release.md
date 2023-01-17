@@ -18,7 +18,7 @@ To release a package, push a commit to `master`. CircleCI will run the `version`
 
 ### Alpha Releases
 
-To do a beta release, update `npx nx run <project>:version` in CircleCI to `npx nx run app:version --releaseAs=prerelease --preid=alpha`.
+To do a alpha release, update `npx nx run <project>:version` in CircleCI to `npx nx run app:version --releaseAs=prerelease --preid=alpha`.
 
 If you have a `package.json` in your workspace like so:
 
@@ -48,3 +48,36 @@ And a `project.json` like so:
 ```
 
 And you already have an existing git tag `app:3.0.0-alpha.8`, then the `version` task will update the `version` field in the `package.json` to `3.0.0-alpha.9` and create a new git tag `app:3.0.0-alpha.9`.
+
+### Beta Releases
+
+To do a beta release, update `npx nx run <project>:version` in CircleCI to `npx nx run app:version --releaseAs=prerelease --preid=beta`.
+
+If you have a `package.json` in your workspace like so:
+
+```json
+{
+  "name": "app",
+  "productName": "Reactotron",
+  "version": "3.0.0-beta.8"
+}
+```
+
+And a `project.json` like so:
+
+```json
+{
+  "name": "app",
+  "targets": {
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "baseBranch": "master",
+        "preset": "conventional"
+      }
+    }
+  }
+}
+```
+
+And you already have an existing git tag `app:3.0.0-beta.8`, then the `version` task will update the `version` field in the `package.json` to `3.0.0-beta.9` and create a new git tag `app:3.0.0-beta.9`.
