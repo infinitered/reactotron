@@ -47,7 +47,7 @@
     "typescript": "^4.6.4"
   },
   "scripts": {
-    "postinstall": "patch-package",
+    "postinstall": "sh ./scripts/postinstall.sh",
     "clean": "sh ./scripts/clean.sh",
     "reset": "sh ./scripts/reset.sh",
     "build": "npx nx run-many --target build",
