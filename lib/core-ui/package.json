@@ -26,7 +26,8 @@
     "ci:lint": "yarn lint",
     "ci:test": "yarn test",
     "ci:publish": "yarn semantic-release",
-    "chromatic": "chromatic"
+    "chromatic": "chromatic",
+    "typecheck": "tsc"
   },
   "files": [
     "dist"

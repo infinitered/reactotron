@@ -49,7 +49,11 @@
   "scripts": {
     "postinstall": "patch-package",
     "clean": "sh ./scripts/clean.sh",
-    "build": "npx nx run-many --target build"
+    "reset": "sh ./scripts/reset.sh",
+    "build": "npx nx run-many --target build",
+    "lint": "npx nx run-many --target lint",
+    "test": "npx nx run-many --target test",
+    "typecheck": "npx nx run-many --target typecheck"
   },
   "resolutions": {
     "js-yaml": "^3.13.1",
