@@ -52,7 +52,7 @@ jobs:
           command: yarn typecheck
       - run:
           name: Generate Semantic Release
-          command: npx nx affected --target version
+          command: yarn release
       - run:
           name: Setup workspace
           command: mkdir -p workspace

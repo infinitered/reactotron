@@ -53,7 +53,8 @@
     "build": "npx nx run-many --target build",
     "lint": "npx nx run-many --target lint",
     "test": "npx nx run-many --target test",
-    "typecheck": "npx nx run-many --target typecheck"
+    "typecheck": "npx nx run-many --target typecheck",
+    "release": "npx nx affected --target version"
   },
   "resolutions": {
     "js-yaml": "^3.13.1",
