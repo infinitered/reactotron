@@ -55,9 +55,5 @@
     "test": "npx nx run-many --target test",
     "typecheck": "npx nx run-many --target typecheck",
     "release": "npx nx affected --target version"
-  },
-  "resolutions": {
-    "js-yaml": "^3.13.1",
-    "html-loader": "1.0.0-alpha.0"
   }
 }
