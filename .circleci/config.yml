@@ -19,6 +19,9 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - run:
+          name: Build App
+          command: yarn workspace app build
+      - run:
           name: Lint
           command: yarn workspace app lint
       - run:
@@ -27,9 +30,6 @@ jobs:
       - run:
           name: TypeScript Compile
           command: yarn workspace app compile
-      - run:
-          name: Build App
-          command: yarn workspace app build
 
   setup_release:
     <<: *defaults
