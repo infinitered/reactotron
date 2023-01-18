@@ -10,7 +10,7 @@ module.exports = {
   plugins: ["@typescript-eslint"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    tsconfigRootDir: __dirname,
+    tsconfigRootDir: __dirname, // this option prevents us from specifying this file in "eslintConfig" package.json key https://github.com/typescript-eslint/typescript-eslint/issues/251
     project: [
       "./tsconfig.base.json",
       "./apps/*/tsconfig.json",
