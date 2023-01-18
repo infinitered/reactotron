@@ -23,13 +23,13 @@ jobs:
           command: yarn build
       - run:
           name: Lint
-          command: yarn workspace app lint
+          command: yarn lint
       - run:
           name: Tests
-          command: yarn workspace app test
+          command: yarn test
       - run:
-          name: TypeScript Compile
-          command: yarn workspace app compile
+          name: Typecheck
+          command: yarn typecheck
 
   setup_release:
     <<: *defaults
@@ -40,16 +40,16 @@ jobs:
           pkg-manager: yarn
       - run:
           name: Build App
-          command: npx nx run-many --target build
+          command: yarn build
       - run:
           name: Lint
-          command: npx nx affected --target lint --base beta
+          command: yarn lint
       - run:
           name: Tests
-          command: yarn workspace app test
+          command: yarn test
       - run:
-          name: TypeScript Compile
-          command: yarn workspace app compile
+          name: Typecheck
+          command: yarn typecheck
       - run:
           name: Generate Semantic Release
           command: npx nx affected --target version
