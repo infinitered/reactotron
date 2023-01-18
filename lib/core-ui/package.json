@@ -13,7 +13,8 @@
   "typings": "dist/types/index.d.ts",
   "scripts": {
     "start": "start-storybook -p 6006",
-    "build": "npm-run-all clean tsc compile",
+    "prebuild": "yarn clean",
+    "build": "yarn tsc && yarn compile",
     "build:dev": "npm-run-all clean tsc compile:dev",
     "build-storybook": "build-storybook",
     "clean": "trash dist",
