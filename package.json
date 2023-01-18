@@ -47,7 +47,9 @@
     "typescript": "^4.6.4"
   },
   "scripts": {
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "clean": "sh ./scripts/clean.sh",
+    "build": "npx nx run-many --target build"
   },
   "resolutions": {
     "js-yaml": "^3.13.1",
