@@ -20,7 +20,7 @@ jobs:
           pkg-manager: yarn
       - run:
           name: Build App
-          command: yarn workspace app build
+          command: yarn build
       - run:
           name: Lint
           command: yarn workspace app lint
