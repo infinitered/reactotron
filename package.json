@@ -47,6 +47,9 @@
     "nx": "15.5.1",
     "typescript": "^4.6.4"
   },
+  "resolutions": {
+    "@nrwl/devkit": "^15.4.5"
+  },
   "scripts": {
     "postinstall": "sh ./scripts/postinstall.sh",
     "clean": "sh ./scripts/clean.sh",

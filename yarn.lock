@@ -2314,18 +2314,7 @@
   dependencies:
     nx "15.5.1"
 
-"@nrwl/devkit@15.2.3":
-  version "15.2.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-15.2.3.tgz#70b4e914c4cd19cd1ba99389499ba854985a821e"
-  integrity sha512-3IZVahO6vvEFxp0N7mEO34ZnYT+8FaObyYI/2XVYZ0eDCAMihn2IIUMj+M42vAXPOJpctdghSKXovQDuHO031w==
-  dependencies:
-    "@phenomnomnominal/tsquery" "4.1.1"
-    ejs "^3.1.7"
-    ignore "^5.0.4"
-    semver "7.3.4"
-    tslib "^2.3.0"
-
-"@nrwl/devkit@^15.5.1":
+"@nrwl/devkit@15.2.3", "@nrwl/devkit@^15.4.5", "@nrwl/devkit@^15.5.1":
   version "15.5.2"
   resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-15.5.2.tgz#bb7268d6b49450befdc0a7988c897900e3aa7f44"
   integrity sha512-rvxuiYVpGDB9RzjOAWTNm7IBPwuYG6kL24LkJMUS8gCNqLBNNlYUsdkpa0PLRt5eNeGLKqpSDB8BpA+e1ty/zA==
