@@ -5,7 +5,8 @@
       "executor": "@jscutlery/semver:version",
       "options": {
         "baseBranch": "master",
-        "preset": "conventional"
+        "preset": "conventional",
+        "postTargets": ["core-ui:npm", "core-ui:github"]
       }
     },
     "github": {
@@ -13,6 +14,12 @@
       "options": {
         "tag": "${tag}",
         "notes": "${notes}"
+      }
+    },
+    "npm": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
       }
     }
   }

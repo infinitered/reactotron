@@ -7,7 +7,8 @@
         "baseBranch": "beta",
         "preset": "conventional",
         "releaseAs": "prerelease",
-        "preid": "alpha"
+        "preid": "alpha",
+        "postTargets": ["core-ui:github"]
       }
     },
     "github": {
