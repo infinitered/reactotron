@@ -136,6 +136,8 @@ workflows:
   release:
     jobs:
       - setup_release:
+          context:
+            - infinitered-npm-package
           filters:
             branches:
               only:
@@ -152,7 +154,9 @@ workflows:
           requires:
             - setup_release
       - release_nix:
-          context: ReactotronCerts
+          context:
+            - ReactotronCerts
+            - infinitered-npm-package
           filters:
             branches:
               only:
