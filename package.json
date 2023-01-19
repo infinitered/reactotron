@@ -43,6 +43,7 @@
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^2.3.0",
     "eslint-plugin-standard": "^4.0.1",
+    "ngx-deploy-npm": "^4.3.10",
     "nx": "15.5.1",
     "typescript": "^4.6.4"
   },
@@ -54,6 +55,6 @@
     "lint": "npx nx run-many --target lint",
     "test": "npx nx run-many --target test",
     "typecheck": "npx nx run-many --target typecheck",
-    "release": "npx nx affected --target version"
+    "release": "npx nx affected --target version --base beta"
   }
 }

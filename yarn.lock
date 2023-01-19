@@ -2314,6 +2314,17 @@
   dependencies:
     nx "15.5.1"
 
+"@nrwl/devkit@15.2.3":
+  version "15.2.3"
+  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-15.2.3.tgz#70b4e914c4cd19cd1ba99389499ba854985a821e"
+  integrity sha512-3IZVahO6vvEFxp0N7mEO34ZnYT+8FaObyYI/2XVYZ0eDCAMihn2IIUMj+M42vAXPOJpctdghSKXovQDuHO031w==
+  dependencies:
+    "@phenomnomnominal/tsquery" "4.1.1"
+    ejs "^3.1.7"
+    ignore "^5.0.4"
+    semver "7.3.4"
+    tslib "^2.3.0"
+
 "@nrwl/devkit@^15.5.1":
   version "15.5.2"
   resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-15.5.2.tgz#bb7268d6b49450befdc0a7988c897900e3aa7f44"
@@ -14603,6 +14614,13 @@ nested-error-stacks@^2.0.0, nested-error-stacks@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/nested-error-stacks/-/nested-error-stacks-2.1.1.tgz#26c8a3cee6cc05fbcf1e333cd2fc3e003326c0b5"
   integrity sha512-9iN1ka/9zmX1ZvLV9ewJYEk9h7RyRRtqdK0woXcqohu8EWIerfPUjYJPg0ULy0UqP7cslmdGc8xKDJcojlKiaw==
+
+ngx-deploy-npm@^4.3.10:
+  version "4.3.10"
+  resolved "https://registry.yarnpkg.com/ngx-deploy-npm/-/ngx-deploy-npm-4.3.10.tgz#e1d150512c9196e5a70f0f2d1e9f0d8666bc622b"
+  integrity sha512-6cLM1z0h6VD5SYH9fJSeslvTSKTkaySsH63k2AouXnAXsHQe4eFrdkmfMAZoVwUZHyaNIBOKMUcTvotgMwQnug==
+  dependencies:
+    "@nrwl/devkit" "15.2.3"
 
 nice-try@^1.0.4:
   version "1.0.5"
