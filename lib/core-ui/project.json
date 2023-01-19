@@ -6,7 +6,8 @@
       "options": {
         "baseBranch": "master",
         "preset": "conventional",
-        "postTargets": ["core-ui:npm", "core-ui:github"]
+        "postTargets": ["core-ui:npm", "core-ui:github"],
+        "releaseAs": "patch"
       }
     },
     "github": {
@@ -19,7 +20,8 @@
     "npm": {
       "executor": "ngx-deploy-npm:deploy",
       "options": {
-        "access": "public"
+        "access": "public",
+        "dryRun": true
       }
     }
   }
