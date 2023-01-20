@@ -19,7 +19,7 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - run:
-          name: Build App
+          name: Build
           command: yarn build
       - run:
           name: Lint
@@ -51,10 +51,6 @@ jobs:
       - run:
           name: Validate npm identity
           command: npm whoami
-      - persist_to_workspace:
-          root: ~/repo
-          paths:
-            - .npmrc
       - run:
           name: Release git tags and npm packages
           command: yarn release
