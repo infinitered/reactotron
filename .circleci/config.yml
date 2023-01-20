@@ -51,6 +51,11 @@ jobs:
           name: Typecheck
           command: yarn typecheck
       - run:
+          name: Set Git Identity
+          command: |
+            git config --global user.email "ci@infinite.red"
+            git config --global user.name "Infinite Red"
+      - run:
           name: Generate Semantic Release
           command: yarn release
 
