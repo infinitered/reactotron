@@ -6,7 +6,7 @@
       "options": {
         "baseBranch": "master",
         "preset": "conventional",
-        "postTargets": ["core-ui:npm", "core-ui:github"],
+        "postTargets": ["core-ui:github"],
         "releaseAs": "patch"
       }
     },
@@ -15,14 +15,6 @@
       "options": {
         "tag": "${tag}",
         "notes": "${notes}"
-      }
-    },
-    "npm": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "lib/core-ui",
-        "commands": ["npm publish --access public"],
-        "parallel": false
       }
     }
   }
