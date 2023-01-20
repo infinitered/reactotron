@@ -58,7 +58,7 @@
     "lint": "npx nx run-many --target lint",
     "test": "npx nx run-many --target test",
     "typecheck": "npx nx run-many --target typecheck",
-    "release": "npx nx affected --target version --base origin/beta",
+    "release": "npx nx affected --target version --base origin/beta --parallel=1",
     "releaseApp": "npx nx affected --target releaseApp --base origin/beta"
   }
 }
