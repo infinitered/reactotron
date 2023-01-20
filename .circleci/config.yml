@@ -36,8 +36,6 @@ jobs:
     executor: node/default
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/repo
       - node/install-packages:
           pkg-manager: yarn
       - run:
@@ -47,7 +45,7 @@ jobs:
             git config --global user.name "Infinite Red"
       - run:
           name: Set npm token
-          command: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ~/repo/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
       - run:
           name: Validate npm identity
           command: npm whoami
