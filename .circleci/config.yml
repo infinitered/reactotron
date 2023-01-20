@@ -39,33 +39,25 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - run:
-          name: Build App
-          command: yarn build
-      - run:
-          name: Lint
-          command: yarn lint
-      - run:
-          name: Tests
-          command: yarn test
-      - run:
-          name: Typecheck
-          command: yarn typecheck
-      - run:
           name: Set Git Identity
           command: |
             git config --global user.email "ci@infinite.red"
             git config --global user.name "Infinite Red"
       - run:
           name: Set npm token
-          command: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+          command: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ~/repo/.npmrc
       - run:
           name: Validate npm identity
           command: npm whoami
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - ~/repo/.npmrc
       - run:
-          name: Generate Semantic Release
+          name: Release git tags and npm packages
           command: yarn release
 
-  release_windows:
+  release_app_windows:
     <<: *defaults
     docker:
       - image: electronuserland/builder:wine
@@ -73,12 +65,8 @@ jobs:
       BUILD_TARGET: windows
     steps:
       - checkout
-      - run:
-          name: Set npm token
-          command: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
-      - run:
-          name: Validate npm identity
-          command: npm whoami
+      - attach_workspace: # grab .npmrc identity
+          at: ~/repo
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
@@ -86,7 +74,7 @@ jobs:
           name: Release Windows
           command: yarn releaseApp
 
-  release_nix:
+  release_app_nix:
     <<: *defaults
     macos:
       xcode: "13.3.1"
@@ -94,12 +82,8 @@ jobs:
       BUILD_TARGET: unix
     steps:
       - checkout
-      - run:
-          name: Set npm token
-          command: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
-      - run:
-          name: Validate npm identity
-          command: npm whoami
+      - attach_workspace: # grab .npmrc identity
+          at: ~/repo
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
@@ -141,6 +125,13 @@ workflows:
 
   release:
     jobs:
+      - build_and_test:
+          filters:
+            branches:
+              only:
+                - master
+                - beta
+                - alpha
       - setup_release:
           context:
             - infinitered-npm-package
@@ -150,7 +141,9 @@ workflows:
                 - master
                 - beta
                 - alpha
-      - release_windows:
+          requires:
+            - build_and_test
+      - release_app_windows:
           context:
             - infinitered-npm-package
           filters:
@@ -161,7 +154,7 @@ workflows:
                 - alpha
           requires:
             - setup_release
-      - release_nix:
+      - release_app_nix:
           context:
             - ReactotronCerts
             - infinitered-npm-package
