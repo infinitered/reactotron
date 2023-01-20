@@ -47,18 +47,15 @@ jobs:
           name: Set npm token
           command: |
             echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/lib/core-ui/.npmrc
       - run:
           name: Validate npm identity
           command: npm whoami
       - run:
           name: Release git tags and npm packages
           command: |
-            ls -a ~/
-            ls -a ~/repo/
-            ls -a ~/repo/lib/core-ui/
             yarn release
+            cd lib/core-ui
+            npm publish --dry-run
 
   release_app_windows:
     <<: *defaults
