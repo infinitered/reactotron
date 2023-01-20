@@ -6,7 +6,6 @@
       "options": {
         "baseBranch": "master",
         "preset": "conventional",
-        "postTargets": ["core-ui:github"],
         "releaseAs": "patch"
       }
     },
