@@ -52,10 +52,7 @@ jobs:
           command: npm whoami
       - run:
           name: Release git tags and npm packages
-          command: |
-            yarn release
-            cd lib/core-ui
-            npm publish --dry-run
+          command: yarn release
 
   release_app_windows:
     <<: *defaults

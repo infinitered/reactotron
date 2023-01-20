@@ -6,6 +6,7 @@
       "options": {
         "baseBranch": "master",
         "preset": "conventional",
+        "postTargets": ["core-ui:publish:npm"],
         "releaseAs": "patch"
       }
     },

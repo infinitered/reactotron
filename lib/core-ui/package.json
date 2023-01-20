@@ -27,7 +27,8 @@
     "ci:test": "yarn test",
     "ci:publish": "yarn semantic-release",
     "chromatic": "chromatic",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "publish:npm": "npm publish --access public --dry-run"
   },
   "files": [
     "dist"
