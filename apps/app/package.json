@@ -22,7 +22,7 @@
     "compile": "tsc",
     "start": "electron-webpack dev",
     "build": "electron-webpack",
-    "releaseApp": "yarn build && electron-builder",
+    "releaseApp": "node scripts/releaseApp.js",
     "test": "jest",
     "test:watch": "jest --watch --notify",
     "lint": "eslint 'src/**/**.{ts,tsx}'",

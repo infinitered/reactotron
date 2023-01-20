@@ -53,47 +53,30 @@ jobs:
       - run:
           name: Generate Semantic Release
           command: yarn release
-      - run:
-          name: Setup workspace
-          command: mkdir -p workspace
-      - run:
-          name: Copy everything into the workspace
-          command: cp apps/app/package.json workspace/package.json
-      - persist_to_workspace:
-          root: workspace
-          paths:
-            - build
-            - package.json
 
   release_windows:
     <<: *defaults
     docker:
       - image: electronuserland/builder:wine
+    environment:
+      BUILD_TARGET: windows
     steps:
       - checkout
-      - attach_workspace:
-          at: workspace
-      - run:
-          name: Move Build and Package into the right place
-          command: mv workspace/package.json package.json
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
       - run:
           name: Release Windows
-          command: yarn release -w
+          command: yarn releaseApp
 
   release_nix:
     <<: *defaults
     macos:
       xcode: "13.3.1"
+    environment:
+      BUILD_TARGET: unix
     steps:
       - checkout
-      - attach_workspace:
-          at: workspace
-      - run:
-          name: Move Build and Package into the right place
-          command: mv workspace/package.json package.json
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
@@ -120,7 +103,7 @@ jobs:
           command: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install snapcraft rpm
       - run:
           name: Release Mac and Linux
-          command: yarn release -ml -c.snap.publish=github
+          command: yarn releaseApp
 
 workflows:
   pull_request:
