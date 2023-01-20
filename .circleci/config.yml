@@ -36,6 +36,8 @@ jobs:
     executor: node/default
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/repo
       - node/install-packages:
           pkg-manager: yarn
       - run:
@@ -52,7 +54,7 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths:
-            - ~/repo/.npmrc
+            - .npmrc
       - run:
           name: Release git tags and npm packages
           command: yarn release
@@ -65,8 +67,6 @@ jobs:
       BUILD_TARGET: windows
     steps:
       - checkout
-      - attach_workspace: # grab .npmrc identity
-          at: ~/repo
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
@@ -82,8 +82,6 @@ jobs:
       BUILD_TARGET: unix
     steps:
       - checkout
-      - attach_workspace: # grab .npmrc identity
-          at: ~/repo
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
