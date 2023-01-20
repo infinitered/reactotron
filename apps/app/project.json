@@ -7,17 +7,7 @@
         "baseBranch": "beta",
         "preset": "conventional",
         "releaseAs": "prerelease",
-        "preid": "alpha",
-        "postTargets": ["core-ui:github"]
-      }
-    },
-    "github": {
-      "executor": "@jscutlery/semver:github",
-      "options": {
-        "tag": "${tag}",
-        "notes": "${notes}",
-        "prerelease": true,
-        "files": "./release/*"
+        "preid": "alpha"
       }
     }
   }
