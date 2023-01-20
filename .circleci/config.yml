@@ -81,6 +81,9 @@ jobs:
           name: Install dependencies
           command: yarn install --frozen-lockfile
       - run:
+          name: cd into apps/app workspace
+          command: cd apps/app
+      - run:
           name: Decode Certificates
           command: 'base64 -D -o Certificates.p12 \<< $ReactotronCerts'
       - run:
