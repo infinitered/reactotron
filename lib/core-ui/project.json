@@ -18,10 +18,11 @@
       }
     },
     "npm": {
-      "executor": "ngx-deploy-npm:deploy",
+      "executor": "nx:run-commands",
       "options": {
-        "access": "public",
-        "distFolderPath": "lib/core-ui"
+        "cwd": "lib/core-ui",
+        "commands": ["npm publish --access public"],
+        "parallel": false
       }
     }
   }
