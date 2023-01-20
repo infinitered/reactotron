@@ -56,6 +56,12 @@ jobs:
             git config --global user.email "ci@infinite.red"
             git config --global user.name "Infinite Red"
       - run:
+          name: Set npm token
+          command: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+      - run:
+          name: Validate npm identity
+          command: npm whoami
+      - run:
           name: Generate Semantic Release
           command: yarn release
 
@@ -67,6 +73,12 @@ jobs:
       BUILD_TARGET: windows
     steps:
       - checkout
+      - run:
+          name: Set npm token
+          command: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+      - run:
+          name: Validate npm identity
+          command: npm whoami
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
@@ -82,6 +94,12 @@ jobs:
       BUILD_TARGET: unix
     steps:
       - checkout
+      - run:
+          name: Set npm token
+          command: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+      - run:
+          name: Validate npm identity
+          command: npm whoami
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
@@ -133,6 +151,8 @@ workflows:
                 - beta
                 - alpha
       - release_windows:
+          context:
+            - infinitered-npm-package
           filters:
             branches:
               only:
