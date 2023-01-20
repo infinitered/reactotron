@@ -21,7 +21,7 @@
       "executor": "ngx-deploy-npm:deploy",
       "options": {
         "access": "public",
-        "dryRun": true
+        "distFolderPath": "lib/core-ui"
       }
     }
   }
