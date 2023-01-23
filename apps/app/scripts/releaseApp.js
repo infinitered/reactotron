@@ -9,8 +9,8 @@ const path = require("path")
 const fs = require("fs")
 const CSC_LINK = path.join(__dirname, "../../../", "Certificates.p12")
 
-if (!fs.existsSync(CSC_LINK)) {
-  throw new Error(`CSC_LINK not found at ${CSC_LINK}`)
+if (BUILD_TARGET === "unix" && !fs.existsSync(CSC_LINK)) {
+  throw new Error(`CSC_LINK not found at ${CSC_LINK} for ${BUILD_TARGET} target}`)
 }
 
 /** @see https://electron.build/cli.html */
