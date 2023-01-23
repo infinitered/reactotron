@@ -84,9 +84,9 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - node-deps-{{ arch }}-v1-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>><<^parameters.cache-only-lockfile>>{{ checksum "/tmp/node-project-package.json" }}-<</parameters.cache-only-lockfile>>{{ checksum "/tmp/node-project-lockfile" }}
-            - node-deps-{{ arch }}-v1-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "/tmp/node-project-package.json" }}
-            - node-deps-{{ arch }}-v1-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>
+            - node-deps-{{ arch }}-v1-{{ .Branch }}-{{ checksum "/tmp/node-project-package.json" }}-{{ checksum "/tmp/node-project-lockfile" }}
+            - node-deps-{{ arch }}-v1-{{ .Branch }}-{{ checksum "/tmp/node-project-package.json" }}
+            - node-deps-{{ arch }}-v1-{{ .Branch }}-
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
