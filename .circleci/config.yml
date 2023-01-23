@@ -66,6 +66,11 @@ jobs:
       BUILD_TARGET: windows
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - node-deps-{{ arch }}-v1-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
+            - node-deps-{{ arch }}-v1-{{ .Branch }}-{{ checksum "package.json" }}
+            - node-deps-{{ arch }}-v1-{{ .Branch }}-
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
@@ -83,8 +88,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - node-deps-{{ arch }}-v1-{{ .Branch }}-{{ checksum "/tmp/node-project-package.json" }}-{{ checksum "/tmp/node-project-lockfile" }}
-            - node-deps-{{ arch }}-v1-{{ .Branch }}-{{ checksum "/tmp/node-project-package.json" }}
+            - node-deps-{{ arch }}-v1-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
+            - node-deps-{{ arch }}-v1-{{ .Branch }}-{{ checksum "package.json" }}
             - node-deps-{{ arch }}-v1-{{ .Branch }}-
       - run:
           name: Install dependencies
@@ -94,9 +99,7 @@ jobs:
           command: echo --no-newline "$ReactotronCerts" | base64 --decode > Certificates.p12
       - run:
           name: Install Snapcraft
-          command: |
-            cd apps/app
-            HOMEBREW_NO_INSTALL_CLEANUP=1 brew install snapcraft rpm
+          command: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install snapcraft rpm
       - run:
           name: Release Mac and Linux
           command: yarn releaseApp
