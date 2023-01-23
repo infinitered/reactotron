@@ -84,7 +84,7 @@ jobs:
           name: Decode Certificates
           command: |
             cd apps/app
-            'base64 -D -o Certificates.p12 \<< $ReactotronCerts'
+            base64 -D -o Certificates.p12 << $ReactotronCerts
       - run:
           name: Install Bundler
           command: |
