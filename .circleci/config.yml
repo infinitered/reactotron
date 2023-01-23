@@ -77,7 +77,6 @@ jobs:
     <<: *defaults
     macos:
       xcode: "14.2.0"
-    resource_class: large
     environment:
       BUILD_TARGET: unix
     steps:
