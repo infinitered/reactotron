@@ -69,15 +69,15 @@ jobs:
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+            - yarn-packages-{{ arch }}-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+          command: yarn install --frozen-lockfile
       - save_cache:
           name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: yarn-packages-{{ arch }}-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache/yarn
+            - node_modules
       - run:
           name: Release Windows
           command: yarn releaseApp
@@ -85,7 +85,7 @@ jobs:
   release_app_nix:
     <<: *defaults
     macos:
-      xcode: "14.2.0"
+      xcode: "13.4.1"
     resource_class: macos.x86.medium.gen2 # required for MacOS ventura https://discuss.circleci.com/t/macos-resource-deprecation-in-2023/45701
     environment:
       BUILD_TARGET: unix
@@ -94,15 +94,15 @@ jobs:
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+            - yarn-packages-{{ arch }}-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+          command: yarn install --frozen-lockfile
       - save_cache:
           name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: yarn-packages-{{ arch }}-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache/yarn
+            - node_modules
       - run:
           name: Decode Certificates
           command: echo --no-newline "$ReactotronCerts" | base64 --decode > Certificates.p12
