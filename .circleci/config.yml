@@ -13,7 +13,9 @@ orbs:
 jobs:
   build_and_test:
     <<: *defaults
-    executor: node/default
+    executor:
+      name: node/default
+      resource_class: xlarge
     steps:
       - checkout
       - node/install-packages:
@@ -33,7 +35,9 @@ jobs:
 
   setup_release:
     <<: *defaults
-    executor: node/default
+    executor:
+      name: node/default
+      resource_class: xlarge
     steps:
       - checkout
       - node/install-packages:
@@ -73,43 +77,22 @@ jobs:
     <<: *defaults
     macos:
       xcode: "14.2.0"
+    resource_class: large
     environment:
       BUILD_TARGET: unix
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - node-deps-{{ arch }}-v1-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>><<^parameters.cache-only-lockfile>>{{ checksum "/tmp/node-project-package.json" }}-<</parameters.cache-only-lockfile>>{{ checksum "/tmp/node-project-lockfile" }}
+            - node-deps-{{ arch }}-v1-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "/tmp/node-project-package.json" }}
+            - node-deps-{{ arch }}-v1-<<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
       - run:
           name: Decode Certificates
-          command: |
-            cd apps/app
-            echo --no-newline "$ReactotronCerts" | base64 --decode > Certificates.p12
-      - run:
-          name: Install Bundler
-          command: |
-            cd apps/app
-            gem install bundler:1.16.1
-      - run:
-          name: Install Gems
-          command: |
-            cd apps/app
-            bundle install
-      - run:
-          name: Install Cert
-          command: |
-            cd apps/app
-            bundle exec fastlane setup
-      - run:
-          name: Install Python 3.9
-          command: |
-            cd apps/app
-            HOMEBREW_NO_INSTALL_CLEANUP=1 brew install python3
-      - run:
-          name: Fix six conflicting file
-          command: |
-            cd apps/app
-            rm /usr/local/lib/python3.9/site-packages/six.py
+          command: echo --no-newline "$ReactotronCerts" | base64 --decode > Certificates.p12
       - run:
           name: Install Snapcraft
           command: |

@@ -57,3 +57,4 @@ npm-debug.log.*
 TODO
 
 .npmrc
+Certificates.p12
