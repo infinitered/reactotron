@@ -110,10 +110,14 @@ jobs:
           command: gem install bundler:1.16.1
       - run:
           name: Install Gems
-          command: bundle install
+          command: |
+            cd apps/app
+            bundle install
       - run:
           name: Install Cert
-          command: bundle exec fastlane setup
+          command: |
+            cd apps/app 
+            bundle exec fastlane setup
       - run:
           name: Install Python 3.9
           command: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install python3
