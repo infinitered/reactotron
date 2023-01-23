@@ -15,7 +15,7 @@ jobs:
     <<: *defaults
     executor:
       name: node/default
-      resource_class: xlarge
+      resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -37,7 +37,7 @@ jobs:
     <<: *defaults
     executor:
       name: node/default
-      resource_class: xlarge
+      resource_class: large
     steps:
       - checkout
       - node/install-packages:
