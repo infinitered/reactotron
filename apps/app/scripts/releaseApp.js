@@ -18,7 +18,7 @@ const flags = targetFlags[BUILD_TARGET]
 
 /** @see https://www.electron.build/code-signing.html */
 const processVars = { unix: { CSC_LINK, CSC_IDENTITY_AUTO_DISCOVERY: "false" }, windows: {} }
-const env = { BUILD_TARGET, ...processVars[BUILD_TARGET] }
+const env = { ...process.env, BUILD_TARGET, ...processVars[BUILD_TARGET] }
 
 /** @param cmd {string} */
 const $ = cmd => {
