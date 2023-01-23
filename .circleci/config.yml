@@ -85,8 +85,7 @@ jobs:
   release_app_nix:
     <<: *defaults
     macos:
-      xcode: "13.4.1"
-    resource_class: macos.x86.medium.gen2 # required for MacOS ventura https://discuss.circleci.com/t/macos-resource-deprecation-in-2023/45701
+      xcode: "13.3.1"
     environment:
       BUILD_TARGET: unix
     steps:
@@ -105,7 +104,22 @@ jobs:
             - node_modules
       - run:
           name: Decode Certificates
-          command: echo --no-newline "$ReactotronCerts" | base64 --decode > Certificates.p12
+          command: echo --no-newline "$ReactotronCerts" | base64 --decode > apps/app/Certificates.p12
+      - run:
+          name: Install Bundler
+          command: gem install bundler:1.16.1
+      - run:
+          name: Install Gems
+          command: bundle install
+      - run:
+          name: Install Cert
+          command: bundle exec fastlane setup
+      - run:
+          name: Install Python 3.9
+          command: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install python3
+      - run:
+          name: Fix six conflicting file
+          command: rm /usr/local/lib/python3.9/site-packages/six.py
       - run:
           name: Install Snapcraft
           command: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install snapcraft rpm
