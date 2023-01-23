@@ -22,7 +22,9 @@ const $ = cmd => {
     env: {
       ...process.env,
       BUILD_TARGET,
+      // see https://www.electron.build/code-signing.html for following env vars
       CSC_LINK,
+      WIN_CSC_LINK: CSC_LINK,
       CSC_IDENTITY_AUTO_DISCOVERY: "false",
     },
     stdio: "inherit",
