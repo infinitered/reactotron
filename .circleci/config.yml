@@ -67,13 +67,17 @@ jobs:
     steps:
       - checkout
       - restore_cache:
+          name: Restore Yarn Package Cache
           keys:
-            - node-deps-{{ arch }}-v1-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
-            - node-deps-{{ arch }}-v1-{{ .Branch }}-{{ checksum "package.json" }}
-            - node-deps-{{ arch }}-v1-{{ .Branch }}-
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: Install dependencies
-          command: yarn install --frozen-lockfile
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
       - run:
           name: Release Windows
           command: yarn releaseApp
@@ -82,18 +86,23 @@ jobs:
     <<: *defaults
     macos:
       xcode: "14.2.0"
+    resource_class: macos.x86.medium.gen2 # required for MacOS ventura https://discuss.circleci.com/t/macos-resource-deprecation-in-2023/45701
     environment:
       BUILD_TARGET: unix
     steps:
       - checkout
       - restore_cache:
+          name: Restore Yarn Package Cache
           keys:
-            - node-deps-{{ arch }}-v1-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
-            - node-deps-{{ arch }}-v1-{{ .Branch }}-{{ checksum "package.json" }}
-            - node-deps-{{ arch }}-v1-{{ .Branch }}-
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: Install dependencies
-          command: yarn install --frozen-lockfile
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
       - run:
           name: Decode Certificates
           command: echo --no-newline "$ReactotronCerts" | base64 --decode > Certificates.p12

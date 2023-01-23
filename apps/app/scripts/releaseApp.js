@@ -1,5 +1,4 @@
 // @ts-check
-
 const BUILD_TARGET = process.env.BUILD_TARGET
 if (BUILD_TARGET !== "unix" && BUILD_TARGET !== "windows") {
   throw new Error('BUILD_TARGET must be either "unix" or "windows"')
@@ -15,21 +14,15 @@ if (BUILD_TARGET === "unix" && !fs.existsSync(CSC_LINK)) {
 
 /** @see https://electron.build/cli.html */
 const targetFlags = { unix: "-ml -c.snap.publish=github", windows: "-w" }
+const flags = targetFlags[BUILD_TARGET]
+
+/** @see https://www.electron.build/code-signing.html */
+const processVars = { unix: { CSC_LINK, CSC_IDENTITY_AUTO_DISCOVERY: "false" }, windows: {} }
+const env = { BUILD_TARGET, ...processVars[BUILD_TARGET] }
 
 /** @param cmd {string} */
 const $ = cmd => {
-  require("child_process").execSync(cmd, {
-    env: {
-      ...process.env,
-      BUILD_TARGET,
-      // see https://www.electron.build/code-signing.html for following env vars
-      CSC_LINK,
-      WIN_CSC_LINK: CSC_LINK,
-      CSC_IDENTITY_AUTO_DISCOVERY: "false",
-    },
-    stdio: "inherit",
-  })
+  require("child_process").execSync(cmd, { env, stdio: "inherit" })
 }
 
-const flags = targetFlags[BUILD_TARGET]
 $(`yarn build && electron-builder ${flags}`)
