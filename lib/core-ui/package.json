@@ -15,7 +15,8 @@
     "start": "start-storybook -p 6006",
     "prebuild": "yarn clean",
     "build": "yarn tsc && yarn compile",
-    "build:dev": "npm-run-all clean tsc compile:dev",
+    "prebuild:dev": "yarn clean",
+    "build:dev": "yarn tsc && yarn compile:dev",
     "build-storybook": "build-storybook",
     "clean": "trash dist",
     "lint": "eslint src --ext .ts,.tsx",
@@ -23,12 +24,8 @@
     "tsc": "tsc",
     "compile": "NODE_ENV=production rollup -c",
     "compile:dev": "NODE_ENV=development rollup -c",
-    "ci:lint": "yarn lint",
-    "ci:test": "yarn test",
-    "ci:publish": "yarn semantic-release",
     "chromatic": "chromatic",
-    "typecheck": "tsc",
-    "publish:npm": "npm publish --access public --dry-run"
+    "typecheck": "tsc"
   },
   "files": [
     "dist"
