@@ -1,8 +1,9 @@
 // @ts-check
 const BUILD_TARGET = process.env.BUILD_TARGET
-if (BUILD_TARGET !== "unix" && BUILD_TARGET !== "windows") {
-  throw new Error('BUILD_TARGET must be either "unix" or "windows"')
+if (BUILD_TARGET !== "macos" && BUILD_TARGET !== "linux" && BUILD_TARGET !== "windows") {
+  throw new Error('BUILD_TARGET must be either "macos", "linux" or "windows"')
 }
+console.log(`Releasing app for target: '${BUILD_TARGET}'`)
 
 const path = require("path")
 const fs = require("fs")
@@ -11,18 +12,19 @@ const CSC_LINK = path.join(
   "..",
   "Certificates.p12"
 )
-console.log(CSC_LINK)
-
-if (BUILD_TARGET === "unix" && !fs.existsSync(CSC_LINK)) {
+if (BUILD_TARGET === "macos" && !fs.existsSync(CSC_LINK)) {
   throw new Error(`CSC_LINK not found at ${CSC_LINK} for ${BUILD_TARGET} target}`)
 }
+if (BUILD_TARGET === "macos") {
+  console.log(`MacOS Code Signing Certificate found at: '${CSC_LINK}'`)
+}
 
-/** @see https://electron.build/cli.html */
-const targetFlags = { unix: "-ml -c.snap.publish=github", windows: "-w" }
+/** @type {Record<typeof BUILD_TARGET, string>} @see https://electron.build/cli.html */
+const targetFlags = { macos: "--macos", windows: "--windows", linux: "--linux" }
 const flags = targetFlags[BUILD_TARGET]
 
-/** @see https://www.electron.build/code-signing.html */
-const processVars = { unix: {}, windows: {} }
+/** @type {Record<typeof BUILD_TARGET, Record<string, string>>} @see https://www.electron.build/code-signing.html */
+const processVars = { macos: {}, windows: {}, linux: {} }
 const env = { ...process.env, BUILD_TARGET, ...processVars[BUILD_TARGET] }
 
 /** @param cmd {string} */
@@ -30,4 +32,5 @@ const $ = cmd => {
   require("child_process").execSync(cmd, { env, stdio: "inherit" })
 }
 
+console.log(`Building app with flags: '${flags}'...`)
 $(`yarn build && electron-builder ${flags}`)
