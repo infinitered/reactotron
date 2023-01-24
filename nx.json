@@ -15,6 +15,14 @@
         "{projectRoot}/build",
         "{projectRoot}/public/build"
       ]
+    },
+    "version": {
+      "options": {
+        "preset": "conventional",
+        "tagPrefix": "{projectName}@",
+        "skipCommitTypes": ["docs", "release"],
+        "commitMessageFormat": "release({projectName}): ${version}"
+      }
     }
   }
 }
