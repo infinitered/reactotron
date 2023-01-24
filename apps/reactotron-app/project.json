@@ -4,7 +4,7 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "baseBranch": "beta",
+        "baseBranch": "alpha",
         "preset": "conventional",
         "releaseAs": "prerelease",
         "preid": "alpha",

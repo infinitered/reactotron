@@ -22,7 +22,7 @@
     "compile": "tsc",
     "start": "electron-webpack dev",
     "build": "electron-webpack",
-    "release:artifacts": "node scripts/releaseApp.js",
+    "release:artifacts": "node scripts/release.artifacts.js",
     "test": "jest",
     "test:watch": "jest --watch --notify",
     "lint": "eslint 'src/**/**.{ts,tsx}'",
@@ -158,7 +158,8 @@
       "releaseType": "release",
       "owner": "infinitered",
       "repo": "reactotron",
-      "private": false
+      "private": false,
+      "vPrefixedTagName": false
     }
   },
   "jest": {

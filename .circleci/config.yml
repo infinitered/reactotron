@@ -33,7 +33,7 @@ jobs:
           name: Typecheck
           command: yarn typecheck
 
-  setup_release:
+  release_tags:
     <<: *defaults
     executor:
       name: node/default
@@ -55,8 +55,32 @@ jobs:
           name: Validate npm identity
           command: npm whoami
       - run:
-          name: Release git tags and npm packages
-          command: yarn release
+          name: Create git tags and commits for releases
+          command: yarn release:tags
+      - run:
+          name: Push new tags and commitst to release branch
+          command: git push origin $CIRCLE_BRANCH --force
+
+  release_package:
+    <<: *defaults
+    executor:
+      name: node/default
+      resource_class: large
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: Set npm token
+          command: |
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+      - run:
+          name: Validate npm identity
+          command: npm whoami
+      - run:
+          name: Release to npm and github
+          command: |
+            yarn release:artifacts $CIRCLE_TAG
 
   release_app_windows:
     <<: *defaults
@@ -80,7 +104,7 @@ jobs:
             - node_modules
       - run:
           name: Release Windows app
-          command: yarn releaseApp
+          command: yarn workspace reactotron-app release:artifacts
 
   release_app_linux:
     <<: *defaults
@@ -101,7 +125,7 @@ jobs:
           command: sudo apt-get install --no-install-recommends -y libopenjp2-tools rpm
       - run:
           name: Release Linux app
-          command: yarn releaseApp
+          command: yarn workspace reactotron-app release:artifacts
 
   release_app_macos:
     <<: *defaults
@@ -141,7 +165,7 @@ jobs:
             bundle exec fastlane setup
       - run:
           name: Release Mac app
-          command: yarn releaseApp
+          command: yarn workspace reactotron-app release:artifacts
 
 workflows:
   pull_request:
@@ -163,7 +187,7 @@ workflows:
                 - master
                 - beta
                 - alpha
-      - setup_release:
+      - release_tags:
           context:
             - infinitered-npm-package
           filters:
@@ -174,38 +198,29 @@ workflows:
                 - alpha
           requires:
             - build_and_test
-      - release_app_windows:
+      - release_package:
           context:
             - infinitered-npm-package
           filters:
-            branches:
+            tags:
               only:
-                - master
-                - beta
-                - alpha
-          requires:
-            - setup_release
+                - ^(?!reactotron-app).*$
+      - release_app_windows:
+          context:
+            - infinitered-npm-package
+          filters: &release_app_filter
+            tags:
+              only:
+                - /^reactotron-app.*/
       - release_app_macos:
           context:
             - ReactotronCerts
             - infinitered-npm-package
           filters:
-            branches:
-              only:
-                - master
-                - beta
-                - alpha
-          requires:
-            - setup_release
+            <<: *release_app_filter
       - release_app_linux:
           context:
             - infinitered-npm-package
           filters:
-            branches:
-              only:
-                - master
-                - beta
-                - alpha
-          requires:
-            - setup_release
+            <<: *release_app_filter
 # VS Code Extension Version: 1.5.1

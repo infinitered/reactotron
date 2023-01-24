@@ -45,7 +45,9 @@
     "eslint-plugin-standard": "^4.0.1",
     "ngx-deploy-npm": "^4.3.10",
     "nx": "15.5.1",
-    "typescript": "^4.6.4"
+    "octokit": "^2.0.14",
+    "typescript": "^4.6.4",
+    "zx": "^7.1.1"
   },
   "resolutions": {
     "@nrwl/devkit": "^15.5.3"
@@ -58,7 +60,7 @@
     "lint": "npx nx run-many --target lint",
     "test": "npx nx run-many --target test",
     "typecheck": "npx nx run-many --target typecheck",
-    "release": "npx nx affected --target version --base origin/beta --parallel=1",
-    "releaseApp": "npx nx affected --target releaseApp --base origin/beta"
+    "release:tags": "npx nx affected --target version --base origin/alpha --parallel=1",
+    "release:artifacts": "zx scripts/release.artifacts.mjs"
   }
 }

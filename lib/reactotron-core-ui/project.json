@@ -4,9 +4,10 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "baseBranch": "master",
+        "baseBranch": "alpha",
         "preset": "conventional",
-        "releaseAs": "patch",
+        "releaseAs": "prerelease",
+        "preid": "alpha",
         "tagPrefix": "${projectName}@"
       }
     }
