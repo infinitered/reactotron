@@ -47,7 +47,7 @@ jobs:
           command: |
             git config --global user.email "ci@infinite.red"
             git config --global user.name "Infinite Red"
-            git remote set-url origin https://${GITHUB_TOKEN}@https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git
+            git remote set-url origin https://$GITHUB_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
       - run:
           name: Create git tags and commits for releases
           command: yarn release:tags
