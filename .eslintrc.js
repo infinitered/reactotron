@@ -47,5 +47,6 @@ module.exports = {
     "**/node_modules/**/*",
     "**/build/**/*",
     "examples",
+    "scripts",
   ],
 };
