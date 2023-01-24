@@ -1,5 +1,5 @@
 {
-  "name": "core-ui",
+  "name": "reactotron-core-ui",
   "targets": {
     "version": {
       "executor": "@jscutlery/semver:version",

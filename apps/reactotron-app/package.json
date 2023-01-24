@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "reactotron-app",
   "productName": "Reactotron",
   "version": "3.0.0-alpha.8",
   "description": "Reactotron desktop mode engage!",
@@ -22,7 +22,7 @@
     "compile": "tsc",
     "start": "electron-webpack dev",
     "build": "electron-webpack",
-    "releaseApp": "node scripts/releaseApp.js",
+    "release:artifacts": "node scripts/releaseApp.js",
     "test": "jest",
     "test:watch": "jest --watch --notify",
     "lint": "eslint 'src/**/**.{ts,tsx}'",
@@ -58,7 +58,7 @@
     "react-router-dom": "^5.1.2",
     "react-tooltip": "4.2.21",
     "reactotron-core-server": "^3.0.3",
-    "reactotron-core-ui": "^2.0.0-beta.4",
+    "reactotron-core-ui": "^2.0.1",
     "source-map-support": "^0.5.16",
     "styled-components": "^4.4.1"
   },
