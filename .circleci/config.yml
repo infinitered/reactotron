@@ -47,19 +47,13 @@ jobs:
           command: |
             git config --global user.email "ci@infinite.red"
             git config --global user.name "Infinite Red"
-      - run:
-          name: Set npm token
-          command: |
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-      - run:
-          name: Validate npm identity
-          command: npm whoami
+            git remote set-url origin https://${GITHUB_TOKEN}@https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git
       - run:
           name: Create git tags and commits for releases
           command: yarn release:tags
       - run:
           name: Push new tags and commitst to release branch
-          command: git push origin $CIRCLE_BRANCH --force
+          command: git push origin $CIRCLE_BRANCH
 
   release_package:
     <<: *defaults
@@ -173,7 +167,7 @@ workflows:
       - build_and_test:
           filters:
             branches:
-              ignore:
+              ignore: &release_branch_names
                 - master
                 - beta
                 - alpha
@@ -183,19 +177,13 @@ workflows:
       - build_and_test:
           filters:
             branches:
-              only:
-                - master
-                - beta
-                - alpha
+              only: *release_branch_names
       - release_tags:
           context:
             - infinitered-npm-package
           filters:
             branches:
-              only:
-                - master
-                - beta
-                - alpha
+              only: *release_branch_names
           requires:
             - build_and_test
       - release_package:
