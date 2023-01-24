@@ -79,15 +79,33 @@ jobs:
           paths:
             - node_modules
       - run:
-          name: Release Windows
+          name: Release Windows app
           command: yarn releaseApp
 
-  release_app_nix:
+  release_app_linux:
+    <<: *defaults
+    executor:
+      name: node/default
+      resource_class: large
+    environment:
+      BUILD_TARGET: linux
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: Install dependencies
+          command: sudo apt-get install --no-install-recommends -y libopenjp2-tools rpm
+      - run:
+          name: Release Linux app
+          command: yarn releaseApp
+
+  release_app_macos:
     <<: *defaults
     macos:
       xcode: "13.3.1"
     environment:
-      BUILD_TARGET: unix
+      BUILD_TARGET: macos
     steps:
       - checkout
       - restore_cache:
@@ -119,16 +137,7 @@ jobs:
             cd apps/app 
             bundle exec fastlane setup
       - run:
-          name: Install Python 3.9
-          command: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install python3
-      - run:
-          name: Fix six conflicting file
-          command: rm /usr/local/lib/python3.9/site-packages/six.py
-      - run:
-          name: Install Snapcraft
-          command: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install snapcraft rpm
-      - run:
-          name: Release Mac and Linux
+          name: Release Mac app
           command: yarn releaseApp
 
 workflows:
@@ -173,9 +182,20 @@ workflows:
                 - alpha
           requires:
             - setup_release
-      - release_app_nix:
+      - release_app_macos:
           context:
             - ReactotronCerts
+            - infinitered-npm-package
+          filters:
+            branches:
+              only:
+                - master
+                - beta
+                - alpha
+          requires:
+            - setup_release
+      - release_app_linux:
+          context:
             - infinitered-npm-package
           filters:
             branches:
