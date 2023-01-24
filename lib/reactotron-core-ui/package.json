@@ -25,8 +25,7 @@
     "compile": "NODE_ENV=production rollup -c",
     "compile:dev": "NODE_ENV=development rollup -c",
     "chromatic": "chromatic",
-    "typecheck": "tsc",
-    "echo": "exit 0"
+    "typecheck": "tsc"
   },
   "files": [
     "dist"
