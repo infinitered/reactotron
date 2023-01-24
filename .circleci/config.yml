@@ -94,6 +94,9 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - run:
+          name: Update apt-get
+          command: sudo apt update
+      - run:
           name: Install dependencies
           command: sudo apt-get install --no-install-recommends -y libopenjp2-tools rpm
       - run:
