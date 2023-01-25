@@ -1,59 +1,109 @@
 // @ts-check
-// #region Validate inputs
-const BUILD_TARGET = process.env.BUILD_TARGET
-if (BUILD_TARGET !== "macos" && BUILD_TARGET !== "linux" && BUILD_TARGET !== "windows") {
-  throw new Error('BUILD_TARGET must be either "macos", "linux" or "windows"')
-}
-console.log(`Releasing app for target: '${BUILD_TARGET}'`)
-
-const path = require("path")
-const fs = require("fs")
-const CSC_LINK = path.join(
-  __dirname, // /apps/app/scripts
-  "..",
-  "Certificates.p12"
-)
-if (BUILD_TARGET === "macos" && !fs.existsSync(CSC_LINK)) {
-  throw new Error(`CSC_LINK not found at ${CSC_LINK} for ${BUILD_TARGET} target}`)
-}
-if (BUILD_TARGET === "macos") {
-  console.log(`MacOS Code Signing Certificate found at: '${CSC_LINK}'`)
-}
-
-const packageJson = require(path.join(__dirname, "..", "package.json"))
-if (
-  !packageJson ||
-  typeof packageJson !== "object" ||
-  "version" in packageJson === false ||
-  typeof packageJson.version !== "string"
-) {
-  throw new Error(`package.json not found at ${path.join(__dirname, "..", "package.json")}`)
-}
-/** @type {string} */
-const version = packageJson.version
+// #region Parse inputs
+const isCi = process.env.CI === "true"
+const [_NODE_PATH, _SCRIPT_PATH, ...args] = process.argv
+const [gitTag = ""] = args
+const [npmWorkspace, version] = gitTag.split("@")
 // #endregion
 
-/** @type {Record<typeof BUILD_TARGET, string>} @see https://electron.build/cli.html */
-const targetFlags = { macos: "--macos", windows: "--windows", linux: "--linux" }
-const flags = targetFlags[BUILD_TARGET]
-
-/**
- * @type {Record<typeof BUILD_TARGET, Record<string, string>>}
- * @see https://www.electron.build/code-signing.html
- * @see https://www.electron.build/configuration/publish#githuboptions
- */
-const processVars = { macos: {}, windows: {}, linux: {} }
-const env = {
-  ...process.env,
-  BUILD_TARGET,
-  EP_PRE_RELEASE: version.includes("beta") || version.includes("alpha") ? "true" : "false",
-  ...processVars[BUILD_TARGET],
+// #region assert tag matches 'app@1.1.1' format
+const GIT_TAG_REGEX = /^[a-z0-9-]+@[a-z0-9\.-]+$/ // 'reactotron-app@3.0.0'
+/** @see https://gist.github.com/jhorsman/62eeea161a13b80e39f5249281e17c39 */
+const SEM_VER_REGEX = /^([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$/
+if (
+  !gitTag ||
+  !gitTag.match(GIT_TAG_REGEX) ||
+  !npmWorkspace ||
+  !version ||
+  !version.match(SEM_VER_REGEX)
+) {
+  console.error(`First argument must match format: <workspace>@<version>, got '${gitTag}'`)
+  process.exit(1)
 }
+console.log(`Creating release for '${gitTag}'`)
+// #endregion
 
-/** @param cmd {string} */
-const $ = cmd => {
-  require("child_process").execSync(cmd, { env, stdio: "inherit" })
+//#region asserts that $GITHUB_TOKEN environment variable is set
+const githubToken = process.env.GITHUB_TOKEN
+if (!githubToken) {
+  console.error("GITHUB_TOKEN environment variable is required")
+  process.exit(1)
 }
+// #endregion
 
-console.log(`Building app with flags: '${flags}'...`)
-$(`yarn build && electron-builder ${flags}`)
+// #region release on github
+const { Octokit } = require("@octokit/rest")
+const fs = require("fs")
+const path = require("path")
+const octokit = new Octokit({ auth: githubToken })
+
+const owner = "infinitered"
+const repo = "reactotron"
+const folder = path.join(__dirname, "..", "/release")
+
+if (!fs.existsSync(folder)) {
+  console.error(`Folder '${folder}' does not exist`)
+  process.exit(1)
+}
+console.log(`Found release folder at ${folder}`)
+
+const files = fs
+  .readdirSync(folder)
+  // check if file is a directory
+  .filter(file => !fs.lstatSync(path.join(folder, file)).isDirectory())
+  // filter out yaml files
+  .filter(file => !file.endsWith(".yml"))
+if (files.length === 0) {
+  console.error(`Folder '${folder}' is empty`)
+  process.exit(1)
+}
+console.log(`Found ${files.length} files to upload`)
+console.log(`Files: ${files.join(", ")}`)
+;(async () => {
+  // Get the release by tag
+  octokit.repos
+    .createRelease({
+      owner,
+      repo,
+      tag_name: gitTag,
+      name: gitTag,
+      prerelease: gitTag.includes("beta") || gitTag.includes("alpha"),
+      draft: !isCi,
+      target_commitish: gitTag.includes("beta")
+        ? "beta"
+        : gitTag.includes("alpha")
+        ? "alpha"
+        : "master",
+    })
+    .then(({ data: release }) => {
+      Promise.allSettled(
+        files.map(file => {
+          console.log(`Uploading '${file}'...`)
+          return octokit.repos.uploadReleaseAsset({
+            owner,
+            repo,
+            release_id: release.id,
+            name: file,
+            data: fs.readFileSync(`${folder}/${file}`).toString("binary"),
+          })
+        })
+      ).then(results => {
+        const failed = results.filter(result => result.status === "rejected")
+        if (failed.length > 0) {
+          console.error(`Failed to upload ${failed.length} files`)
+          failed.forEach((result, index) => {
+            console.error(`Failed to upload ${files[index]}`)
+            console.error(result)
+          })
+          process.exit(1)
+        }
+        console.log(`Successfully uploaded ${files.length} files`)
+        process.exit(0)
+      })
+    })
+    .catch(err => {
+      console.error(err)
+      process.exit(1)
+    })
+})()
+// #endregion

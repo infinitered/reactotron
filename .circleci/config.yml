@@ -76,7 +76,7 @@ jobs:
           command: |
             yarn release:artifacts $CIRCLE_TAG
 
-  release_app_windows:
+  build_app_windows:
     <<: *defaults
     docker:
       - image: electronuserland/builder:16-wine
@@ -98,9 +98,13 @@ jobs:
             - node_modules
       - run:
           name: Release Windows app
-          command: yarn workspace reactotron-app release:artifacts
+          command: yarn workspace reactotron-app build:release
+      - persist_to_workspace:
+          root: ~/repo/apps/reactotron-app
+          paths:
+            - release/*
 
-  release_app_linux:
+  build_app_linux:
     <<: *defaults
     executor:
       name: node/default
@@ -119,9 +123,13 @@ jobs:
           command: sudo apt-get install --no-install-recommends -y libopenjp2-tools rpm
       - run:
           name: Release Linux app
-          command: yarn workspace reactotron-app release:artifacts
+          command: yarn workspace reactotron-app build:release
+      - persist_to_workspace:
+          root: ~/repo/apps/reactotron-app
+          paths:
+            - release/*
 
-  release_app_macos:
+  build_app_macos:
     <<: *defaults
     macos:
       xcode: "13.3.1"
@@ -159,7 +167,24 @@ jobs:
             bundle exec fastlane setup
       - run:
           name: Release Mac app
-          command: yarn workspace reactotron-app release:artifacts
+          command: yarn workspace reactotron-app build:release
+      - persist_to_workspace:
+          root: ~/repo/apps/reactotron-app
+          paths:
+            - release/*
+
+  release_app:
+    <<: *defaults
+    executor:
+      name: node/default
+      resource_class: large
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: Create git tags and commits for releases
+          command: yarn workspace reactotron-app release:artifacts $CIRCLE_TAG
 
 workflows:
   pull_request:
@@ -195,7 +220,7 @@ workflows:
             tags:
               only:
                 - /^(?!reactotron-app)reactotron-.*@.*/ # matches 'reactotron-core-ui@2.0.1' but not 'reactotron-app@3.0.0'
-      - release_app_windows:
+      - build_app_windows:
           context:
             - infinitered-npm-package
           filters:
@@ -203,7 +228,7 @@ workflows:
             tags:
               only: &release_app_filter
                 - /^reactotron-app@.*/
-      - release_app_macos:
+      - build_app_macos:
           context:
             - ReactotronCerts
             - infinitered-npm-package
@@ -211,11 +236,22 @@ workflows:
             branches: *release_branch_filter
             tags:
               only: *release_app_filter
-      - release_app_linux:
+      - build_app_linux:
           context:
             - infinitered-npm-package
           filters:
             branches: *release_branch_filter
             tags:
               only: *release_app_filter
+      - release_app:
+          context:
+            - infinitered-npm-package
+          filters:
+            branches: *release_branch_filter
+            tags:
+              only: *release_app_filter
+          requires:
+            - build_app_windows
+            - build_app_macos
+            - build_app_linux
 # VS Code Extension Version: 1.5.1

@@ -22,6 +22,7 @@
     "compile": "tsc",
     "start": "electron-webpack dev",
     "build": "electron-webpack",
+    "build:release": "node scripts/build.release.js",
     "release:artifacts": "node scripts/release.artifacts.js",
     "test": "jest",
     "test:watch": "jest --watch --notify",
@@ -152,14 +153,6 @@
     "directories": {
       "buildResources": "resources",
       "output": "release"
-    },
-    "publish": {
-      "provider": "github",
-      "releaseType": "release",
-      "owner": "infinitered",
-      "repo": "reactotron",
-      "private": false,
-      "vPrefixedTagName": false
     }
   },
   "jest": {
