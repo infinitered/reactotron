@@ -21,7 +21,7 @@
         "preset": "conventional",
         "tagPrefix": "{projectName}@",
         "skipCommitTypes": ["docs", "release"],
-        "commitMessageFormat": "release({projectName}): ${version}"
+        "commitMessageFormat": "release({projectName}): ${version} [skip ci]"
       }
     }
   }
