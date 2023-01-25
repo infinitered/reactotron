@@ -79,7 +79,7 @@ jobs:
   release_app_windows:
     <<: *defaults
     docker:
-      - image: electronuserland/builder:wine
+      - image: electronuserland/builder:16-wine
     environment:
       BUILD_TARGET: windows
     steps:
