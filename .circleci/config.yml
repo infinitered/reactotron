@@ -151,7 +151,7 @@ jobs:
             - node_modules
       - run:
           name: Decode Certificates
-          command: echo --no-newline "$ReactotronCerts" | base64 --decode > ~/repo/apps/app/Certificates.p12
+          command: echo "$ReactotronCerts" | base64 --decode > ~/repo/apps/reactotron-app/Certificates.p12
       - run:
           name: Install Bundler
           command: gem install bundler:1.16.1
