@@ -97,7 +97,7 @@ jobs:
           paths:
             - node_modules
       - run:
-          name: Release Windows app
+          name: Build release Windows app
           command: yarn workspace reactotron-app build:release
       - persist_to_workspace:
           root: ~/repo/apps/reactotron-app
@@ -122,7 +122,7 @@ jobs:
           name: Install dependencies
           command: sudo apt-get install --no-install-recommends -y libopenjp2-tools rpm
       - run:
-          name: Release Linux app
+          name: Build release Linux app
           command: yarn workspace reactotron-app build:release
       - persist_to_workspace:
           root: ~/repo/apps/reactotron-app
@@ -151,7 +151,7 @@ jobs:
             - node_modules
       - run:
           name: Decode Certificates
-          command: echo --no-newline "$ReactotronCerts" | base64 --decode > apps/app/Certificates.p12
+          command: echo --no-newline "$ReactotronCerts" | base64 --decode > ~/repo/apps/app/Certificates.p12
       - run:
           name: Install Bundler
           command: gem install bundler:1.16.1
@@ -166,7 +166,7 @@ jobs:
             cd apps/app 
             bundle exec fastlane setup
       - run:
-          name: Release Mac app
+          name: Build release Mac app
           command: yarn workspace reactotron-app build:release
       - persist_to_workspace:
           root: ~/repo/apps/reactotron-app
