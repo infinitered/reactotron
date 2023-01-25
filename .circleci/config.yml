@@ -191,29 +191,31 @@ workflows:
             - infinitered-npm-package
           filters:
             branches: &release_branch_filter
-              ignore: /.*/
+              ignore: /.*/ # ignore all branches
             tags:
               only:
-                - ^(?!reactotron-app).*$
+                - /^(?!reactotron-app)reactotron-.*@.*/ # matches 'reactotron-core-ui@2.0.1' but not 'reactotron-app@3.0.0'
       - release_app_windows:
           context:
             - infinitered-npm-package
           filters:
             branches: *release_branch_filter
-            tags: &release_app_filter
-              only:
-                - /^reactotron-app.*/
+            tags:
+              only: &release_app_filter
+                - /^reactotron-app@.*/
       - release_app_macos:
           context:
             - ReactotronCerts
             - infinitered-npm-package
           filters:
-            branches: *release_app_filter
-            tags: *release_branch_filter
+            branches: *release_branch_filter
+            tags:
+              only: *release_app_filter
       - release_app_linux:
           context:
             - infinitered-npm-package
           filters:
-            branches: *release_app_filter
-            tags: *release_branch_filter
+            branches: *release_branch_filter
+            tags:
+              only: *release_app_filter
 # VS Code Extension Version: 1.5.1
