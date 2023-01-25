@@ -182,6 +182,8 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: yarn
+      - attach_workspace:
+          at: ~/repo/apps/reactotron-app
       - run:
           name: Create git tags and commits for releases
           command: yarn workspace reactotron-app release:artifacts $CIRCLE_TAG
