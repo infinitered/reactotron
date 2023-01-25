@@ -158,12 +158,12 @@ jobs:
       - run:
           name: Install Gems
           command: |
-            cd apps/app
+            cd apps/reactotron-app
             bundle install
       - run:
           name: Install Cert
           command: |
-            cd apps/app 
+            cd apps/reactotron-app 
             bundle exec fastlane setup
       - run:
           name: Build release Mac app
