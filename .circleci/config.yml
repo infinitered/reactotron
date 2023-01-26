@@ -99,6 +99,9 @@ jobs:
       - run:
           name: Build release Windows app
           command: yarn workspace reactotron-app build:release
+      - run:
+          name: Remove release/builder-debug.yml file to prevent uploading identitical files between jobs
+          command: find apps/reactotron-app/release -type f \( -name "*.yml" -or -name "*.yaml" \) -delete
       - persist_to_workspace:
           root: ~/repo/apps/reactotron-app
           paths:
@@ -124,6 +127,9 @@ jobs:
       - run:
           name: Build release Linux app
           command: yarn workspace reactotron-app build:release
+      - run:
+          name: Remove release/builder-debug.yml file to prevent uploading identitical files between jobs
+          command: find apps/reactotron-app/release -type f \( -name "*.yml" -or -name "*.yaml" \) -delete
       - persist_to_workspace:
           root: ~/repo/apps/reactotron-app
           paths:
@@ -168,6 +174,9 @@ jobs:
       - run:
           name: Build release Mac app
           command: yarn workspace reactotron-app build:release
+      - run:
+          name: Remove release/builder-debug.yml file to prevent uploading identitical files between jobs
+          command: find apps/reactotron-app/release -type f \( -name "*.yml" -or -name "*.yaml" \) -delete
       - persist_to_workspace:
           root: ~/repo/apps/reactotron-app
           paths:
