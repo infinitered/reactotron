@@ -31,14 +31,10 @@ if (!githubToken) {
 }
 // #endregion
 
-// #region release on github
-const { Octokit } = require("@octokit/rest")
-const fs = require("fs")
+// #region assert release folder exists
 const path = require("path")
-const octokit = new Octokit({ auth: githubToken })
+const fs = require("fs")
 
-const owner = "infinitered"
-const repo = "reactotron"
 const folder = path.join(__dirname, "..", "/release")
 
 if (!fs.existsSync(folder)) {
@@ -46,19 +42,41 @@ if (!fs.existsSync(folder)) {
   process.exit(1)
 }
 console.log(`Found release folder at ${folder}`)
+// #endregion
 
+// #region assert release folder is not empty
 const files = fs
   .readdirSync(folder)
   // check if file is a directory
   .filter(file => !fs.lstatSync(path.join(folder, file)).isDirectory())
   // filter out yaml files
   .filter(file => !file.endsWith(".yml"))
+  .filter(file => !file.endsWith(".yaml"))
+  // filter out .blockmap files
+  .filter(file => !file.endsWith(".blockmap"))
 if (files.length === 0) {
   console.error(`Folder '${folder}' is empty`)
   process.exit(1)
 }
 console.log(`Found ${files.length} files to upload`)
 console.log(`Files: ${files.join(", ")}`)
+
+// get mimie types
+const mime = require("mime")
+mime.define({ "application/x-apple-diskimage": ["dmg"] }, true)
+files.forEach(file => {
+  const mimeType = mime.getType(file)
+  console.log(`File '${file}' has mime type '${mimeType}'`)
+})
+// #endregion
+
+// #region release on github
+const { Octokit } = require("@octokit/rest")
+const octokit = new Octokit({ auth: githubToken })
+
+const owner = "infinitered"
+const repo = "reactotron"
+
 ;(async () => {
   // Get the release by tag
   octokit.repos
@@ -84,7 +102,11 @@ console.log(`Files: ${files.join(", ")}`)
             repo,
             release_id: release.id,
             name: file,
-            data: fs.readFileSync(`${folder}/${file}`).toString("binary"),
+            headers: {
+              "Content-Type": mime.getType(file) || "application/octet-stream",
+            },
+            // @ts-ignore data is expecting json by default, but we want to send a buffer
+            data: fs.readFileSync(path.join(folder, file)),
           })
         })
       ).then(results => {
