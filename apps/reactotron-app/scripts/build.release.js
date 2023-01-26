@@ -10,8 +10,8 @@ const path = require("path")
 const fs = require("fs")
 const CSC_LINK = path.join(
   __dirname, // /apps/app/scripts
-  "..",
-  "Certificates.p12"
+  "..", // /apps/app/
+  "Certificates.p12" // /apps/app/Certificates.p12
 )
 if (BUILD_TARGET === "macos" && !fs.existsSync(CSC_LINK)) {
   throw new Error(`CSC_LINK not found at ${CSC_LINK} for ${BUILD_TARGET} target}`)
