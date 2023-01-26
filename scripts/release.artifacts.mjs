@@ -45,7 +45,7 @@ const npmTag = gitTag.includes("beta")
   : "latest";
 
 console.log(`Creating npm release for: ${gitTag}`);
-$`npm publish --access public --tag ${npmTag} --workspace ${npmWorkspace} --dry-run ${!isCi}`;
+await $`npm publish --access public --tag ${npmTag} --workspace ${npmWorkspace} --dry-run ${!isCi} --registry https://registry.npmjs.org/`;
 // #endregion
 
 // #region release on github
