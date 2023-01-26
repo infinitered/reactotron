@@ -10,16 +10,55 @@ version: 2.1
 orbs:
   node: circleci/node@5.1.0
 
+commands:
+  install-packages:
+    description: Install and cache npm packages
+    parameters:
+      cache-key:
+        description: Key to bust install package cache
+        type: string
+        default: v1
+    steps:
+      - restore_cache:
+          name: Restore yarn package cache
+          keys:
+            - node-deps-<<parameters.cache-key>>-{{ arch }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install packages
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          paths:
+            - node_modules/
+            - apps/reactotron-app/dist/
+            - lib/reactotron-core-ui/dist/
+          key: node-deps-<<parameters.cache-key>>-{{ arch }}-{{ checksum "yarn.lock" }}
+  release-reactotron-app:
+    description: Create release build of Reactotron app, upload to workspace
+    parameters:
+      os:
+        type: string
+    steps:
+      - run:
+          name: Build release <<parameters.os>> app
+          command: yarn workspace reactotron-app build:release
+      - run:
+          name: Remove release/builder-debug.yml file to prevent uploading identitical files between jobs
+          command: find apps/reactotron-app/release -type f \( -name "*.yml" -or -name "*.yaml" \) -delete
+      - persist_to_workspace:
+          root: ~/repo/apps/reactotron-app
+          paths:
+            - release/*
+
 jobs:
   build_and_test:
     <<: *defaults
-    executor:
+    executor: &node_executor
       name: node/default
       resource_class: large
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn
+      - install-packages:
+          cache-key: $INSTALL_CACHE_KEY
       - run:
           name: Build
           command: yarn build
@@ -35,13 +74,11 @@ jobs:
 
   release_tags:
     <<: *defaults
-    executor:
-      name: node/default
-      resource_class: large
+    executor: *node_executor
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn
+      - install-packages:
+          cache-key: $INSTALL_CACHE_KEY
       - run:
           name: Set Git Identity
           command: |
@@ -57,13 +94,11 @@ jobs:
 
   release_package:
     <<: *defaults
-    executor:
-      name: node/default
-      resource_class: large
+    executor: *node_executor
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn
+      - install-packages:
+          cache-key: $INSTALL_CACHE_KEY
       - run:
           name: Release to npm and github
           command: |
@@ -79,56 +114,28 @@ jobs:
       BUILD_TARGET: windows
     steps:
       - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ arch }}-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ arch }}-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
-      - run:
-          name: Build release Windows app
-          command: yarn workspace reactotron-app build:release
-      - run:
-          name: Remove release/builder-debug.yml file to prevent uploading identitical files between jobs
-          command: find apps/reactotron-app/release -type f \( -name "*.yml" -or -name "*.yaml" \) -delete
-      - persist_to_workspace:
-          root: ~/repo/apps/reactotron-app
-          paths:
-            - release/*
+      - install-packages:
+          cache-key: $INSTALL_CACHE_KEY
+      - release-reactotron-app:
+          os: Windows
 
   build_app_linux:
     <<: *defaults
-    executor:
-      name: node/default
-      resource_class: large
+    executor: *node_executor
     environment:
       BUILD_TARGET: linux
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn
+      - install-packages:
+          cache-key: $INSTALL_CACHE_KEY
       - run:
           name: Update apt-get
           command: sudo apt update
       - run:
           name: Install dependencies
           command: sudo apt-get install --no-install-recommends -y libopenjp2-tools rpm
-      - run:
-          name: Build release Linux app
-          command: yarn workspace reactotron-app build:release
-      - run:
-          name: Remove release/builder-debug.yml file to prevent uploading identitical files between jobs
-          command: find apps/reactotron-app/release -type f \( -name "*.yml" -or -name "*.yaml" \) -delete
-      - persist_to_workspace:
-          root: ~/repo/apps/reactotron-app
-          paths:
-            - release/*
+      - release-reactotron-app:
+          os: Linux
 
   build_app_macos:
     <<: *defaults
@@ -138,18 +145,8 @@ jobs:
       BUILD_TARGET: macos
     steps:
       - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ arch }}-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ arch }}-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
+      - install-packages:
+          cache-key: $INSTALL_CACHE_KEY
       - run:
           name: Decode Certificates
           command: echo "$ReactotronCerts" | base64 --decode > ~/repo/apps/reactotron-app/Certificates.p12
@@ -166,26 +163,16 @@ jobs:
           command: |
             cd apps/reactotron-app 
             bundle exec fastlane setup
-      - run:
-          name: Build release Mac app
-          command: yarn workspace reactotron-app build:release
-      - run:
-          name: Remove release/builder-debug.yml file to prevent uploading identitical files between jobs
-          command: find apps/reactotron-app/release -type f \( -name "*.yml" -or -name "*.yaml" \) -delete
-      - persist_to_workspace:
-          root: ~/repo/apps/reactotron-app
-          paths:
-            - release/*
+      - release-reactotron-app:
+          os: MacOS
 
   release_app:
     <<: *defaults
-    executor:
-      name: node/default
-      resource_class: large
+    executor: *node_executor
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn
+      - install-packages:
+          cache-key: $INSTALL_CACHE_KEY
       - attach_workspace:
           at: ~/repo/apps/reactotron-app
       - run:
