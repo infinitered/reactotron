@@ -65,15 +65,10 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - run:
-          name: Set npm token
-          command: |
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-      - run:
-          name: Validate npm identity
-          command: npm whoami
-      - run:
           name: Release to npm and github
           command: |
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+            npm whoami
             yarn release:artifacts $CIRCLE_TAG
 
   build_app_windows:
