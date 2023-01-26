@@ -67,7 +67,6 @@ try {
       ? "alpha"
       : "master",
     draft: !isCi,
-    generate_release_notes: true,
   });
 
   console.log(
