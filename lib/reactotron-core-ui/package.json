@@ -30,6 +30,10 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
   "dependencies": {
     "color-interpolate": "1.0.5",
     "date-fns": "2.6.0",
