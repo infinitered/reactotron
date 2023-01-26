@@ -52,7 +52,7 @@ jobs:
           name: Create git tags and commits for releases
           command: yarn release:tags
       - run:
-          name: Push new tags and commitst to release branch
+          name: Push new tags and commits to release branch
           command: git push origin $CIRCLE_BRANCH --tags
 
   release_package:
