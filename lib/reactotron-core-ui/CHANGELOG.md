@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.0.2-alpha.2](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2-alpha.1...reactotron-core-ui@2.0.2-alpha.2) (2023-01-27)
+
+
+### Bug Fixes
+
+* **.circleci:** run jest tests in band ([bc9cf48](https://github.com/infinitered/reactotron/commit/bc9cf4806f9eb5dbe6eba3a7dfe918f67cd958f3))
+* **eslint:** remove duplicate rules ([fe540f5](https://github.com/infinitered/reactotron/commit/fe540f55558b062ad664cd9baf5f609ff3e74d04))
+* **reactotron-core-ui:** add ./dist to clean script ([939c30e](https://github.com/infinitered/reactotron/commit/939c30e3e2b640de56d099b1a23cb4158099153d))
+* **reactotron-core-ui:** wrap tests in act ([1f42392](https://github.com/infinitered/reactotron/commit/1f423925dc1a50278b0eb4d9d31ada8a3f0914f7))
+
 ### [2.0.2-alpha.1](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2-alpha.0...reactotron-core-ui@2.0.2-alpha.1) (2023-01-26)
 
 
