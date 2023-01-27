@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React from "react"
-import { renderHook } from "@testing-library/react-hooks"
+import { act, renderHook } from "@testing-library/react-hooks"
 
 import { CommandType } from "../../types"
 import ReactotronContext from "../Reactotron"
@@ -28,7 +28,7 @@ describe("contexts/State/useSnapshots", () => {
     let addCallback = null
 
     const contextValues = buildContextValues({
-      addCommandListener: callback => {
+      addCommandListener: (callback) => {
         addCallback = callback
       },
     })
@@ -41,13 +41,15 @@ describe("contexts/State/useSnapshots", () => {
 
     expect(result.current.snapshots).toEqual([])
 
-    addCallback({
-      type: CommandType.StateBackupResponse,
-      clientId: "1234",
-      payload: {
-        id: 0,
-        name: "test",
-      },
+    act(() => {
+      addCallback({
+        type: CommandType.StateBackupResponse,
+        clientId: "1234",
+        payload: {
+          id: 0,
+          name: "test",
+        },
+      })
     })
 
     expect(result.current.snapshots).toEqual([
@@ -67,7 +69,9 @@ describe("contexts/State/useSnapshots", () => {
       ),
     })
 
-    result.current.createSnapshot()
+    act(() => {
+      result.current.createSnapshot()
+    })
 
     expect(contextValues.sendCommand).toHaveBeenCalledWith("state.backup.request", {})
   })
@@ -76,7 +80,7 @@ describe("contexts/State/useSnapshots", () => {
     let addCallback = null
 
     const contextValues = buildContextValues({
-      addCommandListener: callback => {
+      addCommandListener: (callback) => {
         addCallback = callback
       },
     })
@@ -87,17 +91,21 @@ describe("contexts/State/useSnapshots", () => {
       ),
     })
 
-    addCallback({
-      type: CommandType.StateBackupResponse,
-      clientId: "1234",
-      payload: {
-        id: 0,
-        name: "test",
-        state: { test: true },
-      },
+    act(() => {
+      addCallback({
+        type: CommandType.StateBackupResponse,
+        clientId: "1234",
+        payload: {
+          id: 0,
+          name: "test",
+          state: { test: true },
+        },
+      })
     })
 
-    result.current.restoreSnapshot(result.current.snapshots[0])
+    act(() => {
+      result.current.restoreSnapshot(result.current.snapshots[0])
+    })
 
     expect(contextValues.sendCommand).toHaveBeenCalledWith("state.restore.request", {
       state: result.current.snapshots[0].state,
@@ -108,7 +116,7 @@ describe("contexts/State/useSnapshots", () => {
     let addCallback = null
 
     const contextValues = buildContextValues({
-      addCommandListener: callback => {
+      addCommandListener: (callback) => {
         addCallback = callback
       },
     })
@@ -119,17 +127,21 @@ describe("contexts/State/useSnapshots", () => {
       ),
     })
 
-    addCallback({
-      type: CommandType.StateBackupResponse,
-      clientId: "1234",
-      payload: {
-        id: 0,
-        name: "test",
-        state: { test: true },
-      },
+    act(() => {
+      addCallback({
+        type: CommandType.StateBackupResponse,
+        clientId: "1234",
+        payload: {
+          id: 0,
+          name: "test",
+          state: { test: true },
+        },
+      })
     })
 
-    result.current.removeSnapshot(result.current.snapshots[0])
+    act(() => {
+      result.current.removeSnapshot(result.current.snapshots[0])
+    })
 
     expect(result.current.snapshots.length).toEqual(0)
   })
@@ -138,7 +150,7 @@ describe("contexts/State/useSnapshots", () => {
     let addCallback = null
 
     const contextValues = buildContextValues({
-      addCommandListener: callback => {
+      addCommandListener: (callback) => {
         addCallback = callback
       },
     })
@@ -149,20 +161,26 @@ describe("contexts/State/useSnapshots", () => {
       ),
     })
 
-    addCallback({
-      type: CommandType.StateBackupResponse,
-      clientId: "1234",
-      payload: {
-        id: 0,
-        name: "test",
-        state: { test: true },
-      },
+    act(() => {
+      addCallback({
+        type: CommandType.StateBackupResponse,
+        clientId: "1234",
+        payload: {
+          id: 0,
+          name: "test",
+          state: { test: true },
+        },
+      })
     })
 
-    result.current.openSnapshotRenameModal(result.current.snapshots[0])
+    act(() => {
+      result.current.openSnapshotRenameModal(result.current.snapshots[0])
+    })
     expect(result.current.isSnapshotRenameModalOpen).toBeTruthy()
 
-    result.current.closeSnapshotRenameModal()
+    act(() => {
+      result.current.closeSnapshotRenameModal()
+    })
     expect(result.current.isSnapshotRenameModalOpen).toBeFalsy()
   })
 
@@ -170,7 +188,7 @@ describe("contexts/State/useSnapshots", () => {
     let addCallback = null
 
     const contextValues = buildContextValues({
-      addCommandListener: callback => {
+      addCommandListener: (callback) => {
         addCallback = callback
       },
     })
@@ -181,21 +199,27 @@ describe("contexts/State/useSnapshots", () => {
       ),
     })
 
-    addCallback({
-      type: CommandType.StateBackupResponse,
-      clientId: "1234",
-      payload: {
-        id: 0,
-        name: "test",
-        state: { test: true },
-      },
+    act(() => {
+      addCallback({
+        type: CommandType.StateBackupResponse,
+        clientId: "1234",
+        payload: {
+          id: 0,
+          name: "test",
+          state: { test: true },
+        },
+      })
     })
 
-    result.current.openSnapshotRenameModal(result.current.snapshots[0])
+    act(() => {
+      result.current.openSnapshotRenameModal(result.current.snapshots[0])
+    })
 
     expect(result.current.renameingSnapshot).toEqual(result.current.snapshots[0])
 
-    result.current.renameSnapshot("test2")
+    act(() => {
+      result.current.renameSnapshot("test2")
+    })
 
     expect(result.current.snapshots[0].name).toEqual("test2")
   })

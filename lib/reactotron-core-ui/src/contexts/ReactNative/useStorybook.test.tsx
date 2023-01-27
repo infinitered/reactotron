@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React from "react"
-import { renderHook } from "@testing-library/react-hooks"
+import { act, renderHook } from "@testing-library/react-hooks"
 
 import ReactotronContext from "../Reactotron"
 import { CommandType } from "../../types"
@@ -35,12 +35,16 @@ describe("contexts/ReactNative/useStorybook", () => {
 
     expect(result.current.isStorybookOn).toBeFalsy()
 
-    result.current.turnOnStorybook()
+    act(() => {
+      result.current.turnOnStorybook()
+    })
 
     expect(result.current.isStorybookOn).toBeTruthy()
     expect(contextValues.sendCommand).toHaveBeenLastCalledWith("storybook", true)
 
-    result.current.turnOffStorybook()
+    act(() => {
+      result.current.turnOffStorybook()
+    })
 
     expect(result.current.isStorybookOn).toBeFalsy()
     expect(contextValues.sendCommand).toHaveBeenLastCalledWith("storybook", false)
@@ -50,7 +54,7 @@ describe("contexts/ReactNative/useStorybook", () => {
     let addCallback = null
 
     const contextValues = buildContextValues({
-      addCommandListener: callback => {
+      addCommandListener: (callback) => {
         addCallback = callback
       },
     })
@@ -64,7 +68,9 @@ describe("contexts/ReactNative/useStorybook", () => {
     addCallback({ type: CommandType.ClientIntro, clientId: "1234" })
     expect(contextValues.sendCommand).toHaveBeenLastCalledWith("storybook", false, "1234")
 
-    result.current.turnOnStorybook()
+    act(() => {
+      result.current.turnOnStorybook()
+    })
 
     addCallback({ type: CommandType.ClientIntro, clientId: "1234" })
     expect(contextValues.sendCommand).toHaveBeenLastCalledWith("storybook", true, "1234")

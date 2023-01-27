@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks"
+import { act, renderHook } from "@testing-library/react-hooks"
 
 import useReactotron from "./useReactotron"
 
@@ -9,7 +9,9 @@ describe("contexts/Reactotron/useReactotron", () => {
 
       expect(result.current.isDispatchModalOpen).toBe(false)
 
-      result.current.openDispatchModal("{ hello: true }")
+      act(() => {
+        result.current.openDispatchModal("{ hello: true }")
+      })
 
       expect(result.current.isDispatchModalOpen).toBe(true)
       expect(result.current.dispatchModalInitialAction).toBe("{ hello: true }")
@@ -19,9 +21,13 @@ describe("contexts/Reactotron/useReactotron", () => {
       const { result } = renderHook(() => useReactotron())
 
       expect(result.current.isDispatchModalOpen).toBe(false)
-      result.current.openDispatchModal("{ hello: true }")
+      act(() => {
+        result.current.openDispatchModal("{ hello: true }")
+      })
 
-      result.current.closeDispatchModal()
+      act(() => {
+        result.current.closeDispatchModal()
+      })
 
       expect(result.current.isDispatchModalOpen).toBe(false)
     })
@@ -33,7 +39,9 @@ describe("contexts/Reactotron/useReactotron", () => {
 
       expect(result.current.isSubscriptionModalOpen).toBe(false)
 
-      result.current.openSubscriptionModal()
+      act(() => {
+        result.current.openSubscriptionModal()
+      })
 
       expect(result.current.isSubscriptionModalOpen).toBe(true)
     })
@@ -42,9 +50,13 @@ describe("contexts/Reactotron/useReactotron", () => {
       const { result } = renderHook(() => useReactotron())
 
       expect(result.current.isSubscriptionModalOpen).toBe(false)
-      result.current.openSubscriptionModal()
+      act(() => {
+        result.current.openSubscriptionModal()
+      })
 
-      result.current.closeSubscriptionModal()
+      act(() => {
+        result.current.closeSubscriptionModal()
+      })
 
       expect(result.current.isSubscriptionModalOpen).toBe(false)
     })

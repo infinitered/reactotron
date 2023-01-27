@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React from "react"
-import { renderHook } from "@testing-library/react-hooks"
+import { act, renderHook } from "@testing-library/react-hooks"
 
 import ReactotronContext from "../Reactotron"
 
@@ -65,10 +65,14 @@ describe("contexts/State/useSubscriptions", () => {
         ),
       })
 
-      result.current.addSubscription("test")
+      act(() => {
+        result.current.addSubscription("test")
+      })
 
       expect(result.current.subscriptions).toEqual(["test"])
-      expect(contextValues.sendCommand).toHaveBeenCalledWith("state.values.subscribe", { paths: ["test"] })
+      expect(contextValues.sendCommand).toHaveBeenCalledWith("state.values.subscribe", {
+        paths: ["test"],
+      })
       expect(localStorage.getItem(StorageKey.Subscriptions)).toEqual(JSON.stringify(["test"]))
     })
 
@@ -81,13 +85,19 @@ describe("contexts/State/useSubscriptions", () => {
         ),
       })
 
-      result.current.addSubscription("test")
+      act(() => {
+        result.current.addSubscription("test")
+      })
 
       expect(result.current.subscriptions).toEqual(["test"])
-      expect(contextValues.sendCommand).toHaveBeenCalledWith("state.values.subscribe", { paths: ["test"] })
+      expect(contextValues.sendCommand).toHaveBeenCalledWith("state.values.subscribe", {
+        paths: ["test"],
+      })
       expect(localStorage.getItem(StorageKey.Subscriptions)).toEqual(JSON.stringify(["test"]))
 
-      result.current.addSubscription("test")
+      act(() => {
+        result.current.addSubscription("test")
+      })
       expect(result.current.subscriptions.length).toEqual(1)
     })
 
@@ -101,7 +111,9 @@ describe("contexts/State/useSubscriptions", () => {
         ),
       })
 
-      result.current.removeSubscription("test2")
+      act(() => {
+        result.current.removeSubscription("test2")
+      })
 
       expect(result.current.subscriptions).toEqual(["test", "test3"])
       expect(contextValues.sendCommand).toHaveBeenCalledWith("state.values.subscribe", {
@@ -122,7 +134,9 @@ describe("contexts/State/useSubscriptions", () => {
         ),
       })
 
-      result.current.removeSubscription("test3")
+      act(() => {
+        result.current.removeSubscription("test3")
+      })
 
       expect(result.current.subscriptions).toEqual(["test", "test2"])
       expect(contextValues.sendCommand).toHaveBeenCalledWith("state.values.subscribe", {
@@ -143,7 +157,9 @@ describe("contexts/State/useSubscriptions", () => {
         ),
       })
 
-      result.current.clearSubscriptions()
+      act(() => {
+        result.current.clearSubscriptions()
+      })
 
       expect(result.current.subscriptions).toEqual([])
       expect(contextValues.sendCommand).toHaveBeenCalledWith("state.values.subscribe", {

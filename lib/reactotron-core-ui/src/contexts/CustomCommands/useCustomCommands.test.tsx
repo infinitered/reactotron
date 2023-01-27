@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React from "react"
-import { renderHook } from "@testing-library/react-hooks"
+import { act, renderHook } from "@testing-library/react-hooks"
 
 import ReactotronContext from "../Reactotron"
 import { CommandType } from "../../types"
@@ -28,7 +28,7 @@ describe("contexts/CustomCommands/useCustomCommands", () => {
     let addCallback = null
 
     const contextValues = buildContextValues({
-      addCommandListener: callback => {
+      addCommandListener: (callback) => {
         addCallback = callback
       },
     })
@@ -41,12 +41,14 @@ describe("contexts/CustomCommands/useCustomCommands", () => {
 
     expect(result.current.customCommands).toEqual([])
 
-    addCallback({
-      type: CommandType.CustomCommandRegister,
-      clientId: "1234",
-      payload: {
-        id: 0,
-      },
+    act(() => {
+      addCallback({
+        type: CommandType.CustomCommandRegister,
+        clientId: "1234",
+        payload: {
+          id: 0,
+        },
+      })
     })
 
     expect(result.current.customCommands).toEqual([
@@ -56,12 +58,14 @@ describe("contexts/CustomCommands/useCustomCommands", () => {
       },
     ])
 
-    addCallback({
-      type: CommandType.CustomCommandUnregister,
-      clientId: "1234",
-      payload: {
-        id: 0,
-      },
+    act(() => {
+      addCallback({
+        type: CommandType.CustomCommandUnregister,
+        clientId: "1234",
+        payload: {
+          id: 0,
+        },
+      })
     })
 
     expect(result.current.customCommands).toEqual([])
@@ -71,7 +75,7 @@ describe("contexts/CustomCommands/useCustomCommands", () => {
     let addCallback = null
 
     const contextValues = buildContextValues({
-      addCommandListener: callback => {
+      addCommandListener: (callback) => {
         addCallback = callback
       },
     })
@@ -84,12 +88,14 @@ describe("contexts/CustomCommands/useCustomCommands", () => {
 
     expect(result.current.customCommands).toEqual([])
 
-    addCallback({
-      type: CommandType.CustomCommandRegister,
-      clientId: "1234",
-      payload: {
-        id: 0,
-      },
+    act(() => {
+      addCallback({
+        type: CommandType.CustomCommandRegister,
+        clientId: "1234",
+        payload: {
+          id: 0,
+        },
+      })
     })
 
     expect(result.current.customCommands).toEqual([
@@ -99,9 +105,11 @@ describe("contexts/CustomCommands/useCustomCommands", () => {
       },
     ])
 
-    addCallback({
-      type: CommandType.ClientIntro,
-      clientId: "1234",
+    act(() => {
+      addCallback({
+        type: CommandType.ClientIntro,
+        clientId: "1234",
+      })
     })
 
     expect(result.current.customCommands).toEqual([])

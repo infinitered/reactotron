@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks"
+import { act, renderHook } from "@testing-library/react-hooks"
 
 import { CommandType } from "../../types"
 
@@ -53,9 +53,13 @@ describe("contexts/Timline/useTimeline", () => {
       const { result } = renderHook(() => useTimline())
 
       expect(result.current.isSearchOpen).toBeFalsy()
-      result.current.toggleSearch()
+      act(() => {
+        result.current.toggleSearch()
+      })
       expect(result.current.isSearchOpen).toBeTruthy()
-      result.current.toggleSearch()
+      act(() => {
+        result.current.toggleSearch()
+      })
       expect(result.current.isSearchOpen).toBeFalsy()
     })
 
@@ -63,11 +67,17 @@ describe("contexts/Timline/useTimeline", () => {
       const { result } = renderHook(() => useTimline())
 
       expect(result.current.search).toEqual("")
-      result.current.setSearch("H")
+      act(() => {
+        result.current.setSearch("H")
+      })
       expect(result.current.search).toEqual("H")
-      result.current.setSearch("L")
+      act(() => {
+        result.current.setSearch("L")
+      })
       expect(result.current.search).toEqual("L")
-      result.current.setSearch("")
+      act(() => {
+        result.current.setSearch("")
+      })
       expect(result.current.search).toEqual("")
     })
 
@@ -75,16 +85,22 @@ describe("contexts/Timline/useTimeline", () => {
       const { result } = renderHook(() => useTimline())
 
       expect(result.current.isFilterOpen).toBeFalsy()
-      result.current.openFilter()
+      act(() => {
+        result.current.openFilter()
+      })
       expect(result.current.isFilterOpen).toBeTruthy()
     })
 
     it("should close the filter", () => {
       const { result } = renderHook(() => useTimline())
 
-      result.current.openFilter()
+      act(() => {
+        result.current.openFilter()
+      })
       expect(result.current.isFilterOpen).toBeTruthy()
-      result.current.closeFilter()
+      act(() => {
+        result.current.closeFilter()
+      })
       expect(result.current.isFilterOpen).toBeFalsy()
     })
 
@@ -92,10 +108,14 @@ describe("contexts/Timline/useTimeline", () => {
       const { result } = renderHook(() => useTimline())
 
       expect(result.current.isReversed).toBeFalsy()
-      result.current.toggleReverse()
+      act(() => {
+        result.current.toggleReverse()
+      })
       expect(localStorage.getItem(StorageKey.ReversedOrder)).toEqual("reversed")
       expect(result.current.isReversed).toBeTruthy()
-      result.current.toggleReverse()
+      act(() => {
+        result.current.toggleReverse()
+      })
       expect(localStorage.getItem(StorageKey.ReversedOrder)).toEqual("regular")
       expect(result.current.isReversed).toBeFalsy()
     })
@@ -104,7 +124,9 @@ describe("contexts/Timline/useTimeline", () => {
       const { result } = renderHook(() => useTimline())
 
       expect(result.current.hiddenCommands).toEqual([])
-      result.current.setHiddenCommands([CommandType.ClientIntro])
+      act(() => {
+        result.current.setHiddenCommands([CommandType.ClientIntro])
+      })
       expect(localStorage.getItem(StorageKey.HiddenCommands)).toEqual(
         JSON.stringify([CommandType.ClientIntro])
       )
