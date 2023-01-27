@@ -18,7 +18,7 @@
     "prebuild:dev": "yarn clean",
     "build:dev": "yarn tsc && yarn compile:dev",
     "build-storybook": "build-storybook",
-    "clean": "trash dist",
+    "clean": "trash ./dist",
     "lint": "eslint src --ext .ts,.tsx",
     "test": "jest",
     "tsc": "tsc",
