@@ -119,6 +119,10 @@ export interface ReactotronCore {
 
   // REPL Plugin
   repl?: (name: string, value: object | Function | string | number) => void
+
+  plugins: any[]
+
+  options: ClientOptions
 }
 
 export interface Reactotron<ReactotronSubtype = ReactotronCore> extends ReactotronCore {

@@ -2,14 +2,14 @@ import { createClient, corePlugins } from "../src/reactotron-core-client"
 import plugin from "../src/plugins/benchmark"
 import * as WebSocket from "ws"
 
-const createSocket = path => new WebSocket(path)
+const createSocket = (path) => new WebSocket(path)
 
 // a promise based delay that's not accurate at all
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 test("adds benchmarks to a report", async () => {
-  const client: any = createClient({ createSocket })
-  let commandType: string
+  const client = createClient({ createSocket })
+  let commandType = ""
   let report: any
 
   // mock the send to capture
@@ -25,11 +25,11 @@ test("adds benchmarks to a report", async () => {
   expect(typeof client.benchmark).toBe("function")
 
   // use the benchmark feature
-  const bench = client.benchmark("a")
+  const bench = client.benchmark?.("a")
   await delay(50)
-  bench.step("b")
+  bench?.step("b")
   await delay(50)
-  bench.stop("c")
+  bench?.stop("c")
 
   // checkout our results
   expect(commandType).toBe("benchmark.report")
@@ -41,4 +41,5 @@ test("adds benchmarks to a report", async () => {
   expect(report.steps[0].time).toBe(0)
   expect(report.steps[1].time > 0).toBe(true)
   expect(report.steps[2].time > report.steps[1].time).toBe(true)
+  client.close()
 })

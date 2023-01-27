@@ -1,24 +1,33 @@
-import { createClient, corePlugins } from "../src/reactotron-core-client"
+import { createClient, corePlugins, ReactotronCore } from "../src/reactotron-core-client"
 import * as WebSocket from "ws"
 
-const createSocket = path => new WebSocket(path)
+const createSocket = (path) => new WebSocket(path)
+
+let client: ReturnType<typeof createClient>
+
+beforeEach(() => {
+  client = createClient({ createSocket })
+})
+
+afterEach(() => {
+  client?.close()
+})
 
 test("client accepts plugins", () => {
-  const client = createClient({ createSocket }) as any
   expect(client.plugins).toBeTruthy()
   expect(client.plugins.length).toBe(corePlugins.length)
 })
 
 test("plugins are functions", () => {
-  const client = createClient({ createSocket })
   expect(() => client.use()).toThrow()
-  expect(() => client.use(null)).toThrow()
-  expect(() => client.use("" as any)).toThrow()
-  expect(() => client.use(1 as any)).toThrow()
+  expect(() => client.use(null as any)).toThrow()
+  // @ts-expect-error
+  expect(() => client.use("")).toThrow()
+  // @ts-expect-error
+  expect(() => client.use(1)).toThrow()
 })
 
 test("plugins are invoke and return an object", () => {
-  const client = createClient({ createSocket })
   expect(() => client.use(() => null)).toThrow()
   expect(() => client.use(() => 1)).toThrow()
   expect(() => client.use(() => "")).toThrow()
@@ -27,15 +36,13 @@ test("plugins are invoke and return an object", () => {
 })
 
 test("plugins can literally do nothing", () => {
-  const client = createClient({ createSocket }) as any
   const empty = () => ({})
   client.use(empty)
   expect(client.plugins.length).toBe(corePlugins.length + 1)
 })
 
-test("initialized with the config object", async done => {
-  const client = createClient({ createSocket }) as any
-  client.use(reactotron => {
+test("initialized with the config object", (done) => {
+  client.use((reactotron) => {
     expect(typeof reactotron).toBe("object")
     expect(reactotron).toBe(client)
     expect(typeof reactotron.send).toBe("function")
@@ -47,16 +54,24 @@ test("initialized with the config object", async done => {
 
 test("can be added in createClient", () => {
   const createPlugin = (name, value) => () => ({ features: { [name]: () => value } })
-  const client: any = createClient({
+  const clientWithPlugins = createClient<
+    ReactotronCore & { sayHello: () => void; sayGoodbye: () => void }
+  >({
     createSocket,
     plugins: [createPlugin("sayHello", "hello"), createPlugin("sayGoodbye", "goodbye")],
   })
 
-  expect(client.sayHello()).toBe("hello")
-  expect(client.sayGoodbye()).toBe("goodbye")
+  expect(clientWithPlugins.sayHello()).toBe("hello")
+  expect(clientWithPlugins.sayGoodbye()).toBe("goodbye")
+  clientWithPlugins.close()
 })
 
 test("plugins in createClient must be an array", () => {
-  const client = createClient({ createSocket, plugins: 5 as any }) as any
-  expect(client.plugins.length).toBe(0)
+  const invalidClient = createClient({
+    createSocket,
+    // @ts-expect-error
+    plugins: 5,
+  })
+  expect(invalidClient.plugins.length).toBe(0)
+  invalidClient.close()
 })

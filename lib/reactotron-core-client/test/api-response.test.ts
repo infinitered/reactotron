@@ -2,7 +2,7 @@ import { createClient, corePlugins } from "../src/reactotron-core-client"
 import plugin from "../src/plugins/state-responses"
 import * as WebSocket from "ws"
 
-const createSocket = path => new WebSocket(path)
+const createSocket = (path) => new WebSocket(path)
 
 test("stateActionComplete", () => {
   const client: any = createClient({ createSocket })
@@ -86,10 +86,16 @@ test("stateValuesChange", () => {
   expect(client.plugins.length).toBe(corePlugins.length + 1)
   expect(typeof client.stateValuesChange).toBe("function")
 
-  client.stateValuesChange([{ path: "a", value: 1 }, { path: "b", value: 2 }])
+  client.stateValuesChange([
+    { path: "a", value: 1 },
+    { path: "b", value: 2 },
+  ])
 
   expect(type).toBe("state.values.change")
-  expect(changes).toEqual([{ path: "a", value: 1 }, { path: "b", value: 2 }])
+  expect(changes).toEqual([
+    { path: "a", value: 1 },
+    { path: "b", value: 2 },
+  ])
 })
 
 test("stateBackupResponse", () => {
