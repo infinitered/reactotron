@@ -268,9 +268,21 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
       this.plugins.forEach((p) => p.onDisconnect && p.onDisconnect())
     }
 
+    const decodeCommandData = (data: unknown) => {
+      if (typeof data === "string") {
+        return JSON.parse(data)
+      }
+
+      if (Buffer.isBuffer(data)) {
+        return JSON.parse(data.toString())
+      }
+
+      return data
+    }
+
     // fires when we receive a command, just forward it off
     const onMessage = (data: any) => {
-      const command = typeof data === "string" ? JSON.parse(data) : data
+      const command = decodeCommandData(data)
       // trigger our own command handler
       onCommand && onCommand(command)
 
@@ -297,9 +309,10 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
 
     // this is ws style from require('ws') on node js
     if (socket.on) {
-      socket.on("open", onOpen)
-      socket.on("close", onClose)
-      socket.on("message", onMessage)
+      const nodeWebSocket = socket as WebSocket
+      nodeWebSocket.on("open", onOpen)
+      nodeWebSocket.on("close", onClose)
+      nodeWebSocket.on("message", onMessage)
     } else {
       // this is a browser
       socket.onopen = onOpen
