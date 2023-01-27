@@ -10,7 +10,8 @@ const [npmWorkspace, version] = gitTag.split("@");
 // #region assert tag matches 'app@1.1.1' format
 const GIT_TAG_REGEX = /^[a-z0-9-]+@[a-z0-9\.-]+$/; // 'reactotron-app@3.0.0' | 'reactotron-core-ui@2.0.1'
 /** @see https://gist.github.com/jhorsman/62eeea161a13b80e39f5249281e17c39 */
-const SEM_VER_REGEX = /^([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$/;
+const SEM_VER_REGEX =
+  /^([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$/;
 if (
   !gitTag ||
   !gitTag.match(GIT_TAG_REGEX) ||
@@ -37,6 +38,32 @@ if (
 }
 // #endregion
 
+// #region assert that workspace exists
+const workspaces = await $`yarn workspaces info --json`.quiet();
+/** @type {Record<string, any>} */
+const workspaceInfo = JSON.parse(workspaces.stdout);
+/** @type {string} */
+const relativePath = workspaceInfo[npmWorkspace]?.location;
+if (!relativePath) {
+  console.error(`Workspace '${npmWorkspace}' does not exist`);
+  process.exit(1);
+}
+const npmWorkspacePath = path.join(
+  __dirname, // ~/scripts
+  "..", // ~/
+  relativePath // ~/packages/reactotron-app
+);
+
+if (!fs.existsSync(npmWorkspacePath)) {
+  console.error(
+    `Workspace '${npmWorkspace}' does not exist at '${npmWorkspacePath}'`
+  );
+  process.exit(1);
+}
+
+console.log(`Found workspace '${npmWorkspace}' at '${npmWorkspacePath}'`);
+// #endregion
+
 // #region release on npm
 const npmTag = gitTag.includes("beta")
   ? "beta"
@@ -45,7 +72,9 @@ const npmTag = gitTag.includes("beta")
   : "latest";
 
 console.log(`Creating npm release for: ${gitTag}`);
-await $`npm publish --access public --tag ${npmTag} --workspace ${npmWorkspace} --dry-run ${!isCi} --registry https://registry.npmjs.org/`;
+cd(npmWorkspacePath); // cd to workspace to avoid using --workspace flag https://github.com/npm/cli/issues/5745
+await $`npm publish --access public --tag ${npmTag} --dry-run ${!isCi} --registry https://registry.npmjs.org/`;
+cd(__dirname);
 // #endregion
 
 // #region release on github
