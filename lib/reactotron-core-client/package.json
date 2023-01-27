@@ -29,6 +29,7 @@
     "compile": "NODE_ENV=production rollup -c",
     "compile:dev": "NODE_ENV=development rollup -c",
     "tsc": "tsc",
+    "typecheck": "tsc",
     "ci:lint": "yarn lint",
     "ci:test": "yarn test",
     "ci:publish": "yarn semantic-release",
