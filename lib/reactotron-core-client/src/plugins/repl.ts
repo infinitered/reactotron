@@ -1,4 +1,4 @@
-import { Reactotron } from "../reactotron-core-client"
+import type { Reactotron } from "../reactotron-core-client"
 
 export type AcceptableRepls = object | Function | string | number
 
@@ -44,7 +44,7 @@ export default () => (reactotron: Reactotron) => {
 
           reactotron.send(
             "repl.execute.response",
-            function() {
+            function () {
               return eval(payload) // eslint-disable-line no-eval
             }.call(myRepls)
           )

@@ -1,4 +1,4 @@
-import { ReactotronCore } from "./reactotron-core-client";
+import type { ReactotronCore } from "./reactotron-core-client"
 
 /**
  * Configuration options for the Reactotron Client.

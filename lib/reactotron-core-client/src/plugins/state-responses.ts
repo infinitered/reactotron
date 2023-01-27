@@ -1,4 +1,4 @@
-import { Reactotron } from "../reactotron-core-client";
+import type { Reactotron } from "../reactotron-core-client"
 
 /**
  * Provides helper functions for send state responses.
@@ -15,11 +15,11 @@ export default () => (reactotron: Reactotron) => {
       stateKeysResponse: (path, keys, valid = true) =>
         reactotron.send("state.keys.response", { path, keys, valid }),
 
-      stateValuesChange: changes =>
-        (changes.length > 0) && reactotron.send("state.values.change", { changes }),
+      stateValuesChange: (changes) =>
+        changes.length > 0 && reactotron.send("state.values.change", { changes }),
 
       // sends the state backup over to the server
-      stateBackupResponse: state => reactotron.send("state.backup.response", { state }),
+      stateBackupResponse: (state) => reactotron.send("state.backup.response", { state }),
     },
   }
 }

@@ -1,4 +1,4 @@
-import { Reactotron } from "../reactotron-core-client";
+import type { Reactotron } from "../reactotron-core-client"
 
 /**
  * Clears the reactotron server.

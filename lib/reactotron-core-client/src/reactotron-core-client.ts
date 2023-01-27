@@ -46,7 +46,7 @@ const reservedFeatures = [
   "use",
   "startTimer",
 ]
-const isReservedFeature = (value: string) => reservedFeatures.some(res => res === value)
+const isReservedFeature = (value: string) => reservedFeatures.some((res) => res === value)
 
 function emptyPromise() {
   return Promise.resolve("")
@@ -84,9 +84,7 @@ export interface ReactotronCore {
   apiResponse?: (request: any, response: any, duration: any) => void
 
   // Benchmark Plugin
-  benchmark?: (
-    title: string
-  ) => {
+  benchmark?: (title: string) => {
     step: (stepName: string) => void
     stop: (stopTitle: string) => void
     last: (stopTitle: string) => void
@@ -137,7 +135,8 @@ export interface Reactotron<ReactotronSubtype = ReactotronCore> extends Reactotr
 }
 
 export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
-  implements Reactotron<ReactotronSubtype> {
+  implements Reactotron<ReactotronSubtype>
+{
   // the configuration options
   options: ClientOptions = Object.assign({}, DEFAULT_OPTIONS)
 
@@ -197,10 +196,10 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
 
     // if we have plugins, let's add them here
     if (Array.isArray(this.options.plugins)) {
-      this.options.plugins.forEach(p => this.use(p))
+      this.options.plugins.forEach((p) => this.use(p))
     }
 
-    return (this as any) as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
+    return this as any as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
   }
 
   close() {
@@ -235,11 +234,11 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
       onConnect && onConnect()
 
       // trigger our plugins onConnect
-      this.plugins.forEach(p => p.onConnect && p.onConnect())
+      this.plugins.forEach((p) => p.onConnect && p.onConnect())
 
       const getClientIdPromise = getClientId || emptyPromise
 
-      getClientIdPromise().then(clientId => {
+      getClientIdPromise().then((clientId) => {
         this.isReady = true
         // introduce ourselves
         this.send("client.intro", {
@@ -266,7 +265,7 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
       onDisconnect && onDisconnect()
 
       // as well as the plugin's onDisconnect
-      this.plugins.forEach(p => p.onDisconnect && p.onDisconnect())
+      this.plugins.forEach((p) => p.onDisconnect && p.onDisconnect())
     }
 
     // fires when we receive a command, just forward it off
@@ -276,19 +275,19 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
       onCommand && onCommand(command)
 
       // trigger our plugins onCommand
-      this.plugins.forEach(p => p.onCommand && p.onCommand(command))
+      this.plugins.forEach((p) => p.onCommand && p.onCommand(command))
 
       // trigger our registered custom commands
       if (command.type === "custom") {
         this.customCommands
-          .filter(cc => {
+          .filter((cc) => {
             if (typeof command.payload === "string") {
               return cc.command === command.payload
             }
 
             return cc.command === command.payload.command
           })
-          .forEach(cc =>
+          .forEach((cc) =>
             cc.handler(typeof command.payload === "object" ? command.payload.args : undefined)
           )
       } else if (command.type === "setClientId") {
@@ -305,13 +304,13 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
       // this is a browser
       socket.onopen = onOpen
       socket.onclose = onClose
-      socket.onmessage = evt => onMessage(evt.data)
+      socket.onmessage = (evt) => onMessage(evt.data)
     }
 
     // assign the socket to the instance
     this.socket = socket
 
-    return (this as any) as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
+    return this as any as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
   }
 
   /**
@@ -418,7 +417,7 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
       }
 
       // let's inject
-      Object.keys(plugin.features).forEach(key => inject(key))
+      Object.keys(plugin.features).forEach((key) => inject(key))
     }
 
     // add it to the list
@@ -428,7 +427,7 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
     plugin.onPlugin && typeof plugin.onPlugin === "function" && plugin.onPlugin.bind(this)(this)
 
     // chain-friendly
-    return (this as any) as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
+    return this as any as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
   }
 
   onCustomCommand(config: CustomCommand | string, optHandler?: () => void): () => void {
@@ -462,11 +461,11 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
     }
 
     // Make sure the command doesn't already exist
-    const existingCommands = this.customCommands.filter(cc => cc.command === command)
+    const existingCommands = this.customCommands.filter((cc) => cc.command === command)
     if (existingCommands.length > 0) {
-      existingCommands.forEach(command => {
+      existingCommands.forEach((command) => {
         console.log(command)
-        this.customCommands = this.customCommands.filter(cc => cc.id !== command.id)
+        this.customCommands = this.customCommands.filter((cc) => cc.id !== command.id)
 
         this.send("customCommand.unregister", {
           id: command.id,
@@ -478,7 +477,7 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
     if (args) {
       const argNames = []
 
-      args.forEach(arg => {
+      args.forEach((arg) => {
         if (!arg.name) {
           throw new Error(`A arg on the command "${command}" is missing a name`)
         }
@@ -518,7 +517,7 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
     })
 
     return () => {
-      this.customCommands = this.customCommands.filter(cc => cc.id !== customHandler.id)
+      this.customCommands = this.customCommands.filter((cc) => cc.id !== customHandler.id)
 
       this.send("customCommand.unregister", {
         id: customHandler.id,
@@ -534,5 +533,5 @@ export function createClient<ReactotronSubtype = ReactotronCore>(
 ): Reactotron<ReactotronSubtype> & ReactotronSubtype {
   const client = new ReactotronImpl<ReactotronSubtype>()
   client.configure(options)
-  return (client as any) as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
+  return client as any as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
 }

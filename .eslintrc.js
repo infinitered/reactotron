@@ -14,7 +14,7 @@ module.exports = {
     project: [
       "./tsconfig.base.json",
       "./apps/*/tsconfig.json",
-      "./libs/*/tsconfig.json",
+      "./lib/*/tsconfig.json",
     ],
   },
   settings: {

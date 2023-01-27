@@ -1,9 +1,11 @@
 import * as WebSocket from "ws"
-import { ClientOptions } from "./client-options"
+import type { ClientOptions } from "./client-options"
 
-const isCreateSocketValid = (createSocket: (path: string) => WebSocket) => typeof createSocket !== "undefined" && createSocket !== null
+const isCreateSocketValid = (createSocket: (path: string) => WebSocket) =>
+  typeof createSocket !== "undefined" && createSocket !== null
 const isHostValid = (host: string): boolean => typeof host === "string" && host && host !== ""
-const isPortValid = (port: number): boolean => typeof port === "number" && port >= 1 && port <= 65535
+const isPortValid = (port: number): boolean =>
+  typeof port === "number" && port >= 1 && port <= 65535
 const onCommandValid = (fn: (cmd: string) => any) => typeof fn === "function"
 
 /**
