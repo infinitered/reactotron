@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0-alpha.11](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-alpha.10...reactotron-app@3.0.0-alpha.11) (2023-01-27)
+
+
+### Bug Fixes
+
+* **.circleci:** run jest tests in band ([bc9cf48](https://github.com/infinitered/reactotron/commit/bc9cf4806f9eb5dbe6eba3a7dfe918f67cd958f3))
+* **eslint:** remove duplicate rules ([fe540f5](https://github.com/infinitered/reactotron/commit/fe540f55558b062ad664cd9baf5f609ff3e74d04))
+* **reactotron-app:** add [@ts-ignore](https://github.com/ts-ignore) ([aabc188](https://github.com/infinitered/reactotron/commit/aabc188fe20148804714491da9492d63cee95ab1))
+* **reactotron-app:** supress eslint warn ([c7e7148](https://github.com/infinitered/reactotron/commit/c7e71484693d543444a6a22e40c90791141d471a))
+
 ## [3.0.0-alpha.10](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-alpha.9...reactotron-app@3.0.0-alpha.10) (2023-01-26)
 
 ## [3.0.0-alpha.9](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-alpha.8...reactotron-app@3.0.0-alpha.9) (2023-01-26)
