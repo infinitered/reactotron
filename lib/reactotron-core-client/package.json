@@ -31,7 +31,7 @@
     "tsc": "tsc",
     "typecheck": "tsc",
     "ci:lint": "yarn lint",
-    "ci:test": "yarn test",
+    "ci:test": "yarn test --runInBand",
     "ci:publish": "yarn semantic-release",
     "semantic-release": "semantic-release"
   },

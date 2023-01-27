@@ -59,6 +59,7 @@
     "build": "npx nx run-many --target build",
     "lint": "npx nx run-many --target lint",
     "test": "npx nx run-many --target test",
+    "ci:test": "npx nx run-many --target ci:test",
     "typecheck": "npx nx run-many --target typecheck",
     "release:tags": "npx nx affected --target version --base alpha~1 --head alpha --parallel=1",
     "release:artifacts": "zx scripts/release.artifacts.mjs"

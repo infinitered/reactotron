@@ -25,7 +25,8 @@
     "compile": "NODE_ENV=production rollup -c",
     "compile:dev": "NODE_ENV=development rollup -c",
     "chromatic": "chromatic",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "ci:test": "yarn test --runInBand"
   },
   "files": [
     "dist"

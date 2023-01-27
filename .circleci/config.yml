@@ -67,7 +67,7 @@ jobs:
           command: yarn lint
       - run:
           name: Tests
-          command: yarn test
+          command: yarn ci:test
       - run:
           name: Typecheck
           command: yarn typecheck

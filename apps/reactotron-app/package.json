@@ -29,7 +29,8 @@
     "lint": "eslint 'src/**/**.{ts,tsx}'",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "ci:test": "yarn test --runInBand"
   },
   "electronWebpack": {
     "whiteListedModules": [
