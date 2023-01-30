@@ -155,8 +155,8 @@ export default class Server {
     // In the future we should bake this in more and use it to clean up dropped connections
     this.keepAlive = setInterval(() => {
       this.wss.clients.forEach((ws) => {
-        ws.ping(() => {});
-      });
+        ws.ping(() => {})
+      })
     }, 30000)
 
     // register events
@@ -176,14 +176,14 @@ export default class Server {
       // trigger onConnect
       this.emitter.emit("connect", partialConnection)
 
-      socket.on("error", error => console.log("ERR", error));
+      socket.on("error", (error) => console.log("ERR", error))
 
       // when this client disconnects
       socket.on("close", () => {
         // remove them from the list partial list
         this.partialConnections = reject(
           propEq("id", thisConnectionId),
-          this.partialConnections,
+          this.partialConnections
         ) as any
 
         // remove them from the main connections list
@@ -204,7 +204,7 @@ export default class Server {
       }
 
       // when we receive a command from the client
-      socket.on("message", incoming => {
+      socket.on("message", (incoming) => {
         const message = JSON.parse(incoming as string)
         repair(message)
         const { type, important, payload, deltaTime = 0 } = message
@@ -232,7 +232,7 @@ export default class Server {
           // remove them from the partial connections list
           this.partialConnections = reject(
             propEq("id", thisConnectionId),
-            this.partialConnections,
+            this.partialConnections
           ) as any
 
           let connectionClientId = message.payload.clientId
@@ -240,26 +240,36 @@ export default class Server {
           if (!connectionClientId) {
             connectionClientId = createGuid()
 
-            socket.send(JSON.stringify({
-              type: "setClientId",
-              payload: connectionClientId,
-            }))
+            socket.send(
+              JSON.stringify({
+                type: "setClientId",
+                payload: connectionClientId,
+              })
+            )
           } else {
             // Check if we already have this connection
             const currentWssConnections = Array.from(this.wss.clients)
-            const currentClientConnections = currentWssConnections.filter(c => (c as any).clientId === connectionClientId)
+            const currentClientConnections = currentWssConnections.filter(
+              (c) => (c as any).clientId === connectionClientId
+            )
 
             for (let i = 0; i < currentClientConnections.length; i++) {
               setTimeout(currentClientConnections[i].close, 500) // Defer this for a small amount of time because reasons.
 
-              const severingConnection = find(propEq("clientId", connectionClientId), this.connections)
+              const severingConnection = find(
+                propEq("clientId", connectionClientId),
+                this.connections
+              )
               if (severingConnection) {
-                this.connections = reject(propEq("clientId", severingConnection.clientId), this.connections)
+                this.connections = reject(
+                  propEq("clientId", severingConnection.clientId),
+                  this.connections
+                )
               }
             }
           }
 
-          (socket as any).clientId = connectionClientId
+          ;(socket as any).clientId = connectionClientId
           fullCommand.clientId = connectionClientId
 
           // bestow the payload onto the connection
@@ -305,8 +315,8 @@ export default class Server {
    */
   stop() {
     forEach(
-      s => s && (s as any).connected && (s as any).disconnect(),
-      pluck("socket", this.connections),
+      (s) => s && (s as any).connected && (s as any).disconnect(),
+      pluck("socket", this.connections)
     )
 
     if (this.keepAlive) {
@@ -326,7 +336,7 @@ export default class Server {
    * Sends a command to the client
    */
   send = (type, payload, clientId?) => {
-    this.wss.clients.forEach(client => {
+    this.wss.clients.forEach((client) => {
       if (client.readyState === OPEN && (!clientId || (client as any).clientId === clientId)) {
         client.send(JSON.stringify({ type, payload }))
       }
@@ -355,7 +365,6 @@ export default class Server {
     } else {
       this.subscriptions.push(path)
     }
-
 
     // subscribe
     this.stateValuesSendSubscriptions()

@@ -19,7 +19,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --notify",
-    "format": "prettier --write {**,.}/*.ts",
+    "format": "prettier --write **/*.ts",
     "build": "npm-run-all clean tsc compile",
     "build:dev": "npm-run-all clean tsc compile:dev",
     "clean": "trash dist",
