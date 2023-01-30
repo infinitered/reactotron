@@ -3,11 +3,15 @@ import { createServer } from "../src/reactotron-core-server"
 import * as WebSocket from "ws"
 
 const mock = { type: "client.intro", payload: {} }
+let port: number
+let server: ReturnType<typeof createServer>
 
-test("sends a valid command", async (done: any) => {
-  const port = await getPort()
-  const server = createServer({ port })
+beforeEach(async () => {
+  port = await getPort()
+  server = createServer({ port })
+})
 
+test("sends a valid command", (done) => {
   server.on("command", () => server.send(mock.type, mock.payload))
   server.start()
 

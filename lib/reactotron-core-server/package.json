@@ -1,6 +1,6 @@
 {
   "name": "reactotron-core-server",
-  "version": "2.1.0",
+  "version": "3.0.5",
   "description": "Grants Reactotron servers the ability to talk to a Reactotron client.",
   "author": "Infinite Red",
   "license": "MIT",
@@ -20,17 +20,15 @@
     "test": "jest",
     "test:watch": "jest --watch --notify",
     "format": "prettier --write **/*.ts",
-    "build": "npm-run-all clean tsc compile",
-    "build:dev": "npm-run-all clean tsc compile:dev",
-    "clean": "trash dist",
+    "build": "yarn clean && yarn tsc && yarn compile",
+    "build:dev": "yarn clean && yarn tsc && yarn compile:dev",
+    "clean": "trash ./dist",
     "lint": "eslint src test --ext .ts,.tsx",
     "compile": "NODE_ENV=production rollup -c",
     "compile:dev": "NODE_ENV=dev rollup -c",
     "tsc": "tsc",
-    "ci:lint": "yarn lint",
     "ci:test": "yarn test",
-    "ci:publish": "yarn semantic-release",
-    "semantic-release": "semantic-release"
+    "typecheck": "tsc"
   },
   "dependencies": {
     "mitt": "1.1.3",
@@ -42,15 +40,14 @@
     "@babel/plugin-proposal-class-properties": "7.14.5",
     "@babel/preset-env": "7.14.5",
     "@babel/preset-typescript": "7.14.5",
-    "@semantic-release/git": "8.0.0",
-    "@types/jest": "26.0.23",
+    "@types/jest": "29.4.0",
     "@types/node": "14.17.3",
     "@types/ramda": "0.26.44",
     "@types/ws": "6.0.4",
     "@typescript-eslint/eslint-plugin": "2.9.0",
     "@typescript-eslint/parser": "2.9.0",
     "babel-eslint": "10.1.0",
-    "babel-jest": "26.6.3",
+    "babel-jest": "29.4.1",
     "eslint": "7.28.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-standard": "16.0.3",
@@ -59,8 +56,8 @@
     "eslint-plugin-promise": "5.1.0",
     "eslint-plugin-standard": "4.1.0",
     "get-port": "5.1.1",
-    "jest": "26.6.3",
-    "npm-run-all": "4.1.5",
+    "jest": "29.4.1",
+    "jest-environment-node": "29.4.1",
     "prettier": "2.3.1",
     "rollup": "2.52.1",
     "rollup-plugin-babel": "4.4.0",
@@ -68,27 +65,11 @@
     "rollup-plugin-filesize": "9.1.1",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-resolve": "0.0.1-predev.1",
-    "semantic-release": "16.0.4",
     "trash-cli": "4.0.0",
-    "ts-jest": "26.5.6",
-    "typescript": "4.3.3"
+    "ts-jest": "29.0.5",
+    "typescript": "^4.6.4"
   },
   "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "extends": [
-      "plugin:@typescript-eslint/recommended",
-      "standard",
-      "prettier"
-    ],
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "project": "./tsconfig.json"
-    },
-    "plugins": [
-      "@typescript-eslint"
-    ],
     "globals": {
       "__DEV__": false,
       "jasmine": false,
@@ -101,19 +82,6 @@
       "describe": false,
       "jest": false,
       "it": false
-    },
-    "rules": {
-      "no-unused-vars": 0,
-      "no-undef": 0,
-      "space-before-function-paren": 0,
-      "@typescript-eslint/indent": 0,
-      "@typescript-eslint/explicit-member-accessibility": 0,
-      "@typescript-eslint/explicit-function-return-type": 0,
-      "@typescript-eslint/no-explicit-any": 0,
-      "@typescript-eslint/no-object-literal-type-assertion": 0,
-      "@typescript-eslint/no-empty-interface": 0,
-      "@typescript-eslint/no-var-requires": 0,
-      "@typescript-eslint/member-delimiter-style": 0
     }
   },
   "jest": {

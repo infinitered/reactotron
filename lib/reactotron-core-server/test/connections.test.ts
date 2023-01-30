@@ -3,11 +3,15 @@ import { createServer } from "../src/reactotron-core-server"
 import * as WebSocket from "ws"
 
 const mock = { type: "client.intro", payload: {} }
+let port: number
+let server: ReturnType<typeof createServer>
 
-test("keeps track of connections", async (done: any) => {
-  const port = await getPort()
-  const server = createServer({ port })
+beforeEach(async () => {
+  port = await getPort()
+  server = createServer({ port })
+})
 
+test("keeps track of connections", (done) => {
   // when we get a command
   server.on("command", () => {
     expect(server.connections.length).toBe(1)

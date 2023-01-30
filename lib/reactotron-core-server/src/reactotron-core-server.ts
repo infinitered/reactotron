@@ -107,7 +107,7 @@ export default class Server {
   /**
    * Keep alive interval to be running while the server is up.
    */
-  keepAlive: NodeJS.Timer
+  keepAlive: ReturnType<typeof setInterval>
 
   /**
    * Set the configuration options.
@@ -155,7 +155,9 @@ export default class Server {
     // In the future we should bake this in more and use it to clean up dropped connections
     this.keepAlive = setInterval(() => {
       this.wss.clients.forEach((ws) => {
-        ws.ping(() => {})
+        ws.ping(() => {
+          // noop
+        })
       })
     }, 30000)
 
