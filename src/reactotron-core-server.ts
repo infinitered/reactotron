@@ -180,7 +180,6 @@ export default class Server {
 
       // when this client disconnects
       socket.on("close", () => {
-        console.log('Client disconnected');
         // remove them from the list partial list
         this.partialConnections = reject(
           propEq("id", thisConnectionId),
