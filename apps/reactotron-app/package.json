@@ -21,6 +21,7 @@
   "scripts": {
     "compile": "tsc",
     "start": "electron-webpack dev",
+    "clean": "rimraf ./dist",
     "build": "electron-webpack",
     "build:release": "node scripts/build.release.js",
     "release:artifacts": "node scripts/release.artifacts.js",
@@ -59,8 +60,8 @@
     "react-motion": "0.5.2",
     "react-router-dom": "^5.1.2",
     "react-tooltip": "4.2.21",
-    "reactotron-core-server": "^3.0.3",
-    "reactotron-core-ui": "^2.0.1",
+    "reactotron-core-server": "*",
+    "reactotron-core-ui": "*",
     "source-map-support": "^0.5.16",
     "styled-components": "^4.4.1"
   },
@@ -99,6 +100,7 @@
     "jest-environment-jsdom": "^29.3.1",
     "mime": "^3.0.0",
     "prettier": "^1.19.1",
+    "rimraf": "4.1.2",
     "react-test-renderer": "18.2.0",
     "ts-jest": "^29.0.4",
     "typescript": "^4.6.4",
