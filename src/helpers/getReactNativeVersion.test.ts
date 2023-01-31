@@ -1,4 +1,4 @@
-import { getReactNativeVersionWithModules } from "./getReactNativeVersion"
+import { getReactNativeVersionWithModules } from "./getReactNativeVersionWithModules"
 
 describe("getReactNativeVersion", () => {
   it("should return null if platform constants is null", () => {

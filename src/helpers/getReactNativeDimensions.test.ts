@@ -1,4 +1,4 @@
-import { getReactNativeDimensionsWithDimensions } from "./getReactNativeDimensions"
+import { getReactNativeDimensionsWithDimensions } from "./getReactNativeDimensionsWithDimensions"
 
 describe("getReactNativeDimensions", () => {
   it("should return dimensions", () => {
