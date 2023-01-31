@@ -1,7 +1,7 @@
 import { merge, find, propEq, without, contains, forEach, pluck, reject, equals } from "ramda"
 import { createServer as createHttpsServer, ServerOptions as HttpsServerOptions } from "https"
 import { Server as WebSocketServer, OPEN } from "ws"
-import * as Mitt from "mitt"
+import Mitt from "mitt"
 import validate from "./validation"
 import { repair } from "./repair-serialization"
 import {
