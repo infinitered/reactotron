@@ -15,12 +15,13 @@
     "README.md"
   ],
   "main": "dist/index.js",
-  "typings": "dist/types/reactotron-core-server.d.ts",
+  "typings": "dist/types/src/reactotron-core-server.d.ts",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --notify",
     "format": "prettier --write **/*.ts",
-    "build": "yarn clean && yarn tsc && yarn compile",
+    "prebuild": "yarn clean",
+    "build": "yarn tsc && yarn compile",
     "build:dev": "yarn clean && yarn tsc && yarn compile:dev",
     "clean": "rimraf ./dist",
     "lint": "eslint src test --ext .ts,.tsx",
