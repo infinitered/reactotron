@@ -1,7 +1,6 @@
 import { merge, find, propEq, without, contains, forEach, pluck, reject, equals } from "ramda"
 import { createServer as createHttpsServer, ServerOptions as HttpsServerOptions } from "https"
 import { Server as WebSocketServer, OPEN } from "ws"
-import Mitt from "mitt"
 import validate from "./validation"
 import { repair } from "./repair-serialization"
 import {
@@ -14,6 +13,8 @@ import {
   WssServerOptions,
 } from "./types"
 import { readFileSync } from "fs"
+import type { MittStatic } from "mitt"
+const Mitt: MittStatic = require("mitt") // Jest breaks with esm import, use cjs here ¯\_(ツ)_/¯
 
 /**
  * The default server options.
