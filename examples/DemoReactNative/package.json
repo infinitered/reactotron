@@ -5,14 +5,15 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "prestart": "yarn postinstall",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "postinstall": "npx pod-install"
+    "postinstall": "sh ./scripts/postinstall.sh"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "1.17.11",
     "@emotion/core": "11.0.0",
+    "@react-native-async-storage/async-storage": "1.17.11",
     "@storybook/addon-actions": "6.5.15",
     "@storybook/addon-links": "6.5.15",
     "@storybook/react-native": "5.3.27",
@@ -23,7 +24,7 @@
     "react-native": "0.70.6",
     "react-native-view-shot": "3.5.0",
     "react-redux": "8.0.5",
-    "reactotron-react-native": "5.0.3",
+    "reactotron-react-native": "file:../../lib/reactotron-react-native",
     "reactotron-redux": "3.1.3",
     "reactotron-redux-saga": "4.2.3",
     "redux-logger": "3.0.6",
