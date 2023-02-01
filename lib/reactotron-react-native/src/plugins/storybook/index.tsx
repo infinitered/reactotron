@@ -17,11 +17,14 @@ export default () => () => {
     },
 
     features: {
-      storybookSwitcher: (storybookUi: any) => (WrappedComponent: any) => (props: any) => (
-        <StorybookSwitcher storybookUi={storybookUi} emitter={emitter}>
-          <WrappedComponent {...props} />
-        </StorybookSwitcher>
-      ),
+      storybookSwitcher: (storybookUi: any) => (WrappedComponent: any) =>
+        function StorybookSwitcherContainer(props: any) {
+          return (
+            <StorybookSwitcher storybookUi={storybookUi} emitter={emitter}>
+              <WrappedComponent {...props} />
+            </StorybookSwitcher>
+          )
+        },
     },
   }
 }

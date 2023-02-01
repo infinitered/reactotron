@@ -1,0 +1,13 @@
+{
+  "name": "reactotron-react-native",
+  "targets": {
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "baseBranch": "alpha",
+        "releaseAs": "prerelease",
+        "preid": "alpha"
+      }
+    }
+  }
+}

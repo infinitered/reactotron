@@ -10,7 +10,7 @@ interface State {
   showStorybook: boolean
 }
 
-class StorybookSwitcher extends Component<Props, State> {
+class StorybookSwitcher extends Component<React.PropsWithChildren<Props>, State> {
   /**
    * Creates an instance of FullScreenOverlay.
    *
@@ -27,7 +27,7 @@ class StorybookSwitcher extends Component<Props, State> {
     }
 
     // when the server sends stuff
-    props.emitter.on("storybook", payload => {
+    props.emitter.on("storybook", (payload) => {
       this.setState({ showStorybook: payload })
     })
   }

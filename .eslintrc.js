@@ -27,6 +27,7 @@ module.exports = {
         extensions: [".js", ".jsx", ".ts", ".tsx"],
       },
     },
+    "import/ignore": ["node_modules/react-native/index\\.js$"],
   },
   rules: {
     "no-unused-vars": 0,
