@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0-alpha.12](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-alpha.11...reactotron-app@3.0.0-alpha.12) (2023-02-01)
+
+
+### Bug Fixes
+
+* **nx:** handle clean in task pipeline ([f0d4f77](https://github.com/infinitered/reactotron/commit/f0d4f77c6e4e903836f2b32bd5234f7b611028d1))
+
 ## [3.0.0-alpha.11](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-alpha.10...reactotron-app@3.0.0-alpha.11) (2023-01-27)
 
 
