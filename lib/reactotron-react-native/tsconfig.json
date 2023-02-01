@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "jsx": "react-native",
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "emitDeclarationOnly": true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "target": "es5",
+    "lib": ["dom"],
+    "types": ["node", "react", "react-native", "jest"],
+    "skipLibCheck": true // Hopefully temporary.
+  },
+  "exclude": ["node_modules"],
+  "include": ["src"]
+}

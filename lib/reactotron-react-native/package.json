@@ -1,0 +1,139 @@
+{
+  "name": "reactotron-react-native",
+  "version": "5.0.3",
+  "description": "A development tool to explore, inspect, and diagnose your React Native apps.",
+  "author": "Infinite Red",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/infinitered/reactotron/issues"
+  },
+  "homepage": "https://github.com/infinitered/reactotron-react-native",
+  "repository": "https://github.com/infinitered/reactotron-react-native",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "reactotron-react-native.d.ts"
+  ],
+  "main": "dist/index.js",
+  "types": "./dist/types/reactotron-react-native.d.ts",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch --notify",
+    "format": "prettier --write {**,.}/*.ts",
+    "build": "npm-run-all clean tsc compile",
+    "build:dev": "npm-run-all clean tsc compile:dev",
+    "clean": "trash dist",
+    "lint": "eslint src --ext .ts,.tsx",
+    "compile": "NODE_ENV=production rollup -c",
+    "compile:dev": "NODE_ENV=development rollup -c",
+    "tsc": "tsc",
+    "ci:lint": "yarn lint",
+    "ci:test": "yarn test",
+    "ci:publish": "yarn semantic-release",
+    "semantic-release": "semantic-release"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.40.0"
+  },
+  "dependencies": {
+    "mitt": "1.1.3",
+    "query-string": "6.10.1",
+    "reactotron-core-client": "2.8.10",
+    "rn-host-detect": "1.2.0"
+  },
+  "optionalDependencies": {
+    "react-native-flipper": "^0.164.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.16.0",
+    "@babel/plugin-proposal-class-properties": "7.16.0",
+    "@babel/plugin-transform-react-jsx": "7.16.0",
+    "@babel/preset-env": "7.16.4",
+    "@babel/preset-typescript": "7.16.0",
+    "@semantic-release/git": "9.0.1",
+    "@types/jest": "29.4.0",
+    "@types/node": "16.11.11",
+    "@types/react-native": "0.69.5",
+    "@typescript-eslint/eslint-plugin": "4.33.0",
+    "@typescript-eslint/parser": "5.50.0",
+    "babel-eslint": "10.1.0",
+    "babel-jest": "29.4.1",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-config-standard": "16.0.3",
+    "eslint-plugin-import": "2.25.3",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "5.2.0",
+    "eslint-plugin-standard": "4.1.0",
+    "jest": "29.4.1",
+    "npm-run-all": "4.1.5",
+    "prettier": "2.5.0",
+    "react": "18.0.0",
+    "react-native": "0.69.5",
+    "react-native-flipper": "0.164.0",
+    "rollup": "2.60.2",
+    "rollup-plugin-babel": "4.4.0",
+    "rollup-plugin-babel-minify": "10.0.0",
+    "rollup-plugin-filesize": "9.1.1",
+    "rollup-plugin-node-resolve": "5.2.0",
+    "rollup-plugin-resolve": "0.0.1-predev.1",
+    "semantic-release": "17.4.7",
+    "trash-cli": "4.0.0",
+    "ts-jest": "29.0.5",
+    "typescript": "4.5.2"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "standard",
+      "prettier"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "project": "./tsconfig.json"
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "globals": {
+      "__DEV__": false,
+      "jasmine": false,
+      "beforeAll": false,
+      "afterAll": false,
+      "beforeEach": false,
+      "afterEach": false,
+      "test": false,
+      "expect": false,
+      "describe": false,
+      "jest": false,
+      "it": false
+    },
+    "rules": {
+      "no-unused-vars": 0,
+      "no-undef": 0,
+      "space-before-function-paren": 0,
+      "@typescript-eslint/indent": 0,
+      "@typescript-eslint/explicit-member-accessibility": 0,
+      "@typescript-eslint/explicit-function-return-type": 0,
+      "@typescript-eslint/no-explicit-any": 0,
+      "@typescript-eslint/no-object-literal-type-assertion": 0,
+      "@typescript-eslint/no-empty-interface": 0,
+      "@typescript-eslint/no-var-requires": 0,
+      "@typescript-eslint/member-delimiter-style": 0,
+      "@typescript-eslint/explicit-module-boundary-types": 0,
+      "no-use-before-define": "off",
+      "@typescript-eslint/no-use-before-define": ["error"]
+    }
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/*.test.ts"
+    ]
+  }
+}
