@@ -1,0 +1,79 @@
+{
+  "name": "reactotron-mst",
+  "version": "3.1.4",
+  "description": "A Reactotron plugin for mobx-state-tree.",
+  "author": "Infinite Red",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/infinitered/reactotron-mst/issues"
+  },
+  "homepage": "https://github.com/inifinitered/reactotron-mst",
+  "repository": "https://github.com/infinitered/reactotron-mst",
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "main": "dist/reactotron-mst.umd.js",
+  "module": "dist/reactotron-mst.es5.js",
+  "typings": "dist/types/reactotron-mst.d.ts",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch --notify",
+    "format": "prettier --write {**,.}/*.ts",
+    "build": "npm-run-all clean tsc compile",
+    "build:dev": "npm-run-all clean tsc compile:dev",
+    "clean": "trash dist",
+    "lint": "eslint src --ext .ts,.tsx",
+    "compile": "NODE_ENV=production rollup -c rollup.config.ts",
+    "compile:dev": "NODE_ENV=development rollup -c rollup.config.ts",
+    "tsc": "tsc",
+    "ci:test": "yarn test",
+    "ci:publish": "yarn semantic-release",
+    "semantic-release": "semantic-release"
+  },
+  "peerDependencies": {
+    "mobx": "^3.4.1 || ^4.1.0 || >6.0.0",
+    "mobx-state-tree": "^1.4.0 || ^2.0.2 || >3.0.0",
+    "reactotron-core-client": "^2.5.0"
+  },
+  "dependencies": {
+    "ramda": "^0.25.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-typescript": "^7.1.0",
+    "@semantic-release/git": "^7.1.0-beta.3",
+    "@types/jest": "^24.0.6",
+    "@types/lodash.camelcase": "^4.3.5",
+    "@types/node": "^11.9.5",
+    "@types/ramda": "^0.25.50",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.1.0",
+    "eslint": "^5.13.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^24.1.0",
+    "lodash.camelcase": "^4.3.0",
+    "mobx": "^4.2.1",
+    "mobx-state-tree": "^2.0.4",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.16.4",
+    "reactotron-core-client": "^2.5.0",
+    "rollup": "^1.1.2",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-babel-minify": "^7.0.0",
+    "rollup-plugin-filesize": "^6.0.1",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-resolve": "^0.0.1-predev.1",
+    "semantic-release": "^18.0.1",
+    "testdouble": "^3.8.0",
+    "trash-cli": "^1.4.0",
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.3.3"
+  }
+}
