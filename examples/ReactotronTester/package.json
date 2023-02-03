@@ -39,7 +39,7 @@
     "react-test-renderer": "18.2.0",
     "reactotron-mst": "file:../../lib/reactotron-mst",
     "reactotron-react-native": "^5.0.3",
-    "reactotron-redux": "^3.1.3",
+    "reactotron-redux": "file:../../lib/reactotron-redux",
     "reactotron-redux-saga": "^4.2.3",
     "typescript": "4.8.4"
   },

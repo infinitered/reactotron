@@ -6030,7 +6030,7 @@ reactotron-core-client@2.8.10:
   integrity sha512-SYRO4OCutJzfWMnaULUGVyETZnMDCU5ECNflXyM3Z5Gnfxp/wV6d7jYonhfxHdpU/aGb4Eg15C22myOCXSu6HQ==
 
 "reactotron-mst@file:../../lib/reactotron-mst":
-  version "3.1.4"
+  version "3.1.5-alpha.0"
   dependencies:
     ramda "^0.25.0"
 
@@ -6051,10 +6051,8 @@ reactotron-redux-saga@^4.2.3:
   resolved "https://registry.yarnpkg.com/reactotron-redux-saga/-/reactotron-redux-saga-4.2.3.tgz#13071f792be987f47b89cae8c29a8e7254d8383d"
   integrity sha512-Vo/zjwYyd93nT4h4SJkvhE5WIBk7AnZg5NPM0NF3auwPEz78ZR2xnnyCt2JPYFSvyy6ykNpS7vA7FeREgFkNCQ==
 
-reactotron-redux@^3.1.3:
+"reactotron-redux@file:../../lib/reactotron-redux":
   version "3.1.3"
-  resolved "https://registry.yarnpkg.com/reactotron-redux/-/reactotron-redux-3.1.3.tgz#ec61ef7a7e1dffda766e534f858f3bb854396d53"
-  integrity sha512-8QVEbr2R4GtFlXwSe0uK5bkuz3xRWZx8Nwi2g9e6cRbpkesTfycWVK5Oyn+wR9XOTt894WSn8CAH2TB6dVuDyg==
 
 readable-stream@^3.4.0:
   version "3.6.0"
