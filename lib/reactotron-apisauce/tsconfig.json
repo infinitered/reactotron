@@ -1,8 +1,10 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "allowJs": false,
     "declaration": true,
     "declarationDir": "dist/types",
+    "rootDir": ".",
     "emitDeclarationOnly": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,

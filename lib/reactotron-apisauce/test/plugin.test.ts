@@ -17,9 +17,9 @@ describe("plugin", () => {
     const srv = server.listen(port)
 
     // captured these guys from our fake plugin
-    let request
-    let response
-    let duration
+    let request: Record<string, any>
+    let response: Record<string, any>
+    let duration: number
 
     // create a fake plugin to receive the real plugin's functionality
     const plugin = createPlugin()({
@@ -34,13 +34,14 @@ describe("plugin", () => {
     const api = apisauce.create({ baseURL: `http://localhost:${port}` })
 
     // make the call
-    return api
+    api
       .get("/hey")
       .then(plugin.features.apisauce)
       .then(() => {
         // can't seem to deep equals here... it's like we're getting a wierd Object()
         expect(request.url).toEqual(`http://localhost:${port}/hey`)
         expect(request.method).toEqual("get")
+        // eslint-disable-next-line dot-notation
         expect(request.headers["Accept"]).toEqual("application/json")
         expect(request.data).toBeFalsy()
         expect(response.body).toEqual({ a: "ok", b: 1 })
