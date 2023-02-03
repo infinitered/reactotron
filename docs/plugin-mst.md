@@ -13,7 +13,7 @@ This is also a plugin for `mobx-state-tree`, so you'll also need that installed 
 In your app, add a dev-dependency to `reactotron-mst`.
 
 ```sh
-yarn add reactotron-mst --save-dev
+yarn add reactotron-mst --dev
 ```
 
 or
