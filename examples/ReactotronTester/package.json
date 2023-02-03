@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "postinstall": "sh ./scripts/postinstall.sh"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.11",
@@ -36,7 +37,7 @@
     "metro-react-native-babel-preset": "0.73.5",
     "prettier": "^2.4.1",
     "react-test-renderer": "18.2.0",
-    "reactotron-mst": "^3.1.4",
+    "reactotron-mst": "file:../../lib/reactotron-mst",
     "reactotron-react-native": "^5.0.3",
     "reactotron-redux": "^3.1.3",
     "reactotron-redux-saga": "^4.2.3",
