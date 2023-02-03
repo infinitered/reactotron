@@ -29,8 +29,7 @@
     "compile": "NODE_ENV=production rollup -c rollup.config.ts",
     "compile:dev": "NODE_ENV=development rollup -c rollup.config.ts",
     "tsc": "tsc",
-    "ci:test": "yarn test --runInBand",
-    "ci:publish": "yarn semantic-release"
+    "ci:test": "yarn test --runInBand"
   },
   "peerDependencies": {
     "mobx": "^3.4.1 || ^4.1.0 || >6.0.0",
