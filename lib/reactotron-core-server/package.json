@@ -28,7 +28,7 @@
     "compile": "NODE_ENV=production rollup -c",
     "compile:dev": "NODE_ENV=dev rollup -c",
     "tsc": "tsc",
-    "ci:test": "yarn test",
+    "ci:test": "yarn test --runInBand",
     "typecheck": "tsc"
   },
   "dependencies": {

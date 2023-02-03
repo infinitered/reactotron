@@ -30,7 +30,7 @@
     "compile": "NODE_ENV=production rollup -c",
     "compile:dev": "NODE_ENV=development rollup -c",
     "tsc": "tsc",
-    "ci:test": "yarn test"
+    "ci:test": "yarn test --runInBand"
   },
   "peerDependencies": {
     "react-native": ">=0.40.0"
