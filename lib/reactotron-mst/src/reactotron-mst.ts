@@ -10,11 +10,9 @@ import {
   isAlive,
   isProtected,
   isRoot,
-  IStateTreeNode,
-  IType,
-  IMiddlewareEvent,
   onSnapshot,
 } from "mobx-state-tree"
+import type { IStateTreeNode, IType, IMiddlewareEvent } from "mobx-state-tree"
 import { Reactotron } from "reactotron-core-client"
 
 import {
