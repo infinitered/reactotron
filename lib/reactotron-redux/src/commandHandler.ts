@@ -1,11 +1,15 @@
-import { Reactotron } from "reactotron-core-client";
+import { Reactotron } from "reactotron-core-client"
 
 import stateCleaner from "./helpers/stateCleaner"
 import pathObject from "./helpers/pathObject"
 import createSubscriptionsHandler from "./subscriptionsHandler"
 import { PluginConfig } from "./pluginConfig"
 
-export default function createCommandHandler(reactotron: Reactotron, pluginConfig: PluginConfig, onReduxStoreCreation: (func: () => void) => void) {
+export default function createCommandHandler(
+  reactotron: Reactotron,
+  pluginConfig: PluginConfig,
+  onReduxStoreCreation: (func: () => void) => void
+) {
   const subscriptionsHandler = createSubscriptionsHandler(reactotron, onReduxStoreCreation)
 
   return ({ type, payload }: { type: string; payload?: any }) => {
@@ -15,31 +19,32 @@ export default function createCommandHandler(reactotron: Reactotron, pluginConfi
       // client is asking for keys
       case "state.keys.request":
       case "state.values.request":
-        const cleanedState = stateCleaner(reduxStore.getState())
+        {
+          const cleanedState = stateCleaner(reduxStore.getState())
 
-        if (!payload.path) {
-          reactotron.stateKeysResponse(
-            null,
-            type === "state.keys.request" ? Object.keys(cleanedState) : cleanedState
-          )
-        } else {
-          const filteredObj = pathObject(payload.path, cleanedState)
+          if (!payload.path) {
+            reactotron.stateKeysResponse(
+              null,
+              type === "state.keys.request" ? Object.keys(cleanedState) : cleanedState
+            )
+          } else {
+            const filteredObj = pathObject(payload.path, cleanedState)
 
-          const responseMethod =
-            type === "state.keys.request"
-              ? reactotron.stateKeysResponse
-              : reactotron.stateValuesResponse
+            const responseMethod =
+              type === "state.keys.request"
+                ? reactotron.stateKeysResponse
+                : reactotron.stateValuesResponse
 
-          responseMethod(
-            payload.path,
-            type === "state.keys.request"
-              ? typeof filteredObj === "object"
-                ? Object.keys(filteredObj)
-                : undefined
-              : filteredObj
-          )
+            responseMethod(
+              payload.path,
+              type === "state.keys.request"
+                ? typeof filteredObj === "object"
+                  ? Object.keys(filteredObj)
+                  : undefined
+                : filteredObj
+            )
+          }
         }
-
         break
 
       // client is asking to subscribe to some paths
@@ -54,7 +59,7 @@ export default function createCommandHandler(reactotron: Reactotron, pluginConfi
         break
 
       // server is asking to backup state
-      case "state.backup.request":
+      case "state.backup.request": {
         // run our state through our onBackup
         let backedUpState = reduxStore.getState()
 
@@ -64,9 +69,10 @@ export default function createCommandHandler(reactotron: Reactotron, pluginConfi
 
         reactotron.send("state.backup.response", { state: backedUpState })
         break
+      }
 
       // server is asking to clobber state with this
-      case "state.restore.request":
+      case "state.restore.request": {
         // run our state through our onRestore
         let restoredState = payload.state
 
@@ -80,6 +86,7 @@ export default function createCommandHandler(reactotron: Reactotron, pluginConfi
         })
 
         break
+      }
     }
   }
 }

@@ -1,3 +1,5 @@
+import type { Reactotron } from "reactotron-core-client"
+
 export const defaultReactotronMock = {
   startTimer: jest.fn(),
   configure: jest.fn(),
@@ -8,4 +10,4 @@ export const defaultReactotronMock = {
   reportError: jest.fn(),
   use: jest.fn(),
   onCustomCommand: jest.fn(),
-}
+} as unknown as Reactotron

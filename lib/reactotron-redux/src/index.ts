@@ -1,4 +1,4 @@
-import { StoreEnhancer } from "redux"
+import type { StoreEnhancer } from "redux"
 import { Reactotron } from "reactotron-core-client"
 
 import createCommandHander from "./commandHandler"
@@ -18,7 +18,7 @@ function reactotronRedux(pluginConfig: PluginConfig = {}) {
     storeCreationHandlers.push(func)
   }
   const handleStoreCreation = () => {
-    storeCreationHandlers.forEach(func => {
+    storeCreationHandlers.forEach((func) => {
       func()
     })
   }
@@ -28,7 +28,7 @@ function reactotronRedux(pluginConfig: PluginConfig = {}) {
       onCommand: createCommandHander(reactotron, mergedPluginConfig, onReduxStoreCreation),
       features: {
         createEnhancer: createEnhancer(reactotron, mergedPluginConfig, handleStoreCreation),
-        setReduxStore: store => {
+        setReduxStore: (store) => {
           reactotron.reduxStore = store
           handleStoreCreation()
         },
