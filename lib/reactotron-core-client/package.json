@@ -15,7 +15,7 @@
     "README.md"
   ],
   "main": "dist/index.js",
-  "typings": "dist/types/reactotron-core-client.d.ts",
+  "typings": "dist/types/src/reactotron-core-client.d.ts",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --notify",

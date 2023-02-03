@@ -3,6 +3,7 @@
   "compilerOptions": {
     "allowJs": false,
     "declaration": true,
+    "rootDir": ".",
     "declarationDir": "dist/types",
     "emitDeclarationOnly": true,
     "emitDecoratorMetadata": true,
