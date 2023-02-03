@@ -36,7 +36,10 @@ describe("subscribe", () => {
 
     const stateValuesChange = td.explain(reactotron.stateValuesChange)
     expect(stateValuesChange.callCount).toEqual(1)
-    expect(stateValuesChange.calls[0].args[0]).toEqual([{ path: "age", value: 100 }, { path: "name", value: "" }])
+    expect(stateValuesChange.calls[0].args[0]).toEqual([
+      { path: "age", value: 100 },
+      { path: "name", value: "" },
+    ])
   })
 
   it("ignores dupes", () => {

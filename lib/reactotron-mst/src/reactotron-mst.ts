@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 // --- Wall of imports ---------------------------------
 import {
   addMiddleware,
@@ -11,8 +12,8 @@ import {
   isRoot,
   IStateTreeNode,
   IType,
-  onSnapshot,
   IMiddlewareEvent,
+  onSnapshot,
 } from "mobx-state-tree"
 import { Reactotron } from "reactotron-core-client"
 
@@ -121,7 +122,7 @@ export function mst(opts: MstPluginOptions = {}) {
 
     // are we in the middle of restoring?  this will prevent
     // extra @APPLY_SNAPSHOT signals from being sent
-    let restoring: boolean = false
+    let restoring = false
 
     // a list of subscriptions the client is subscribing to
     let subscriptions: string[] = []
@@ -137,7 +138,7 @@ export function mst(opts: MstPluginOptions = {}) {
      * @param node The mobx-state-tree node to track
      * @param nodeName The name to call it if we have more than 1.
      */
-    function trackMstNode(node: IStateTreeNode, nodeName: string = "default") {
+    function trackMstNode(node: IStateTreeNode, nodeName = "default") {
       // sanity
       if (!node) {
         return { kind: "required" }
@@ -228,7 +229,7 @@ export function mst(opts: MstPluginOptions = {}) {
 
         // add nice display name
         const displayPath = replace(/^\./, "", replace(/\//g, ".", path))
-        let name = replace(/^\./, "", `${nodeName ? nodeName : ""}${displayPath}.${call.name}()`)
+        let name = replace(/^\./, "", `${nodeName ?? ""}${displayPath}.${call.name}()`)
         name = replace("/", ".", name)
         // fire this off to reactotron
         if (!restoring) {
@@ -372,7 +373,7 @@ export function mst(opts: MstPluginOptions = {}) {
           if (is(Object, value) && !isNilOrEmpty(value)) {
             return pipe(
               keys,
-              map(key => `${keyMinusWildcard}.${key}`)
+              map((key) => `${keyMinusWildcard}.${key}`)
             )(value || {})
           }
           return []

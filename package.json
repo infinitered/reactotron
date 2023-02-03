@@ -46,6 +46,7 @@
     "ngx-deploy-npm": "^4.3.10",
     "nx": "15.5.1",
     "octokit": "^2.0.14",
+    "prettier": "^2.5.0",
     "typescript": "^4.6.4",
     "zx": "^7.1.1"
   },
