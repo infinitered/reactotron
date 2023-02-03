@@ -34,6 +34,7 @@ commands:
             - lib/reactotron-core-client/dist/
             - lib/reactotron-core-server/dist/
             - lib/reactotron-react-native/dist/
+            - lib/reactotron-mst/dist/
           key: node-deps-<<parameters.cache-key>>-{{ arch }}-{{ checksum "yarn.lock" }}
   release-reactotron-app:
     description: Create release build of Reactotron app, upload to workspace
