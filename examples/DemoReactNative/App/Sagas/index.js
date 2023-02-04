@@ -16,7 +16,9 @@ const api = ApiSauce.create({
   },
 });
 
-// api.addMonitor(console.tron.apisauce)
+if (__DEV__) {
+  api.addMonitor(console.tron.apisauce);
+}
 
 export default function* rootSaga() {
   yield all([

@@ -26,6 +26,7 @@
     "react-redux": "8.0.5",
     "reactotron-react-native": "file:../../lib/reactotron-react-native",
     "reactotron-redux": "file:../../lib/reactotron-redux",
+    "reactotron-apisauce": "file:../../lib/reactotron-apisauce",
     "reactotron-redux-saga": "4.2.3",
     "redux-logger": "3.0.6",
     "redux-saga": "1.2.2"

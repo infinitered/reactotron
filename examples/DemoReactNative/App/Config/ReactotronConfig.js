@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Reactotron from 'reactotron-react-native';
 import {reactotronRedux as reduxPlugin} from 'reactotron-redux';
 import sagaPlugin from 'reactotron-redux-saga';
+import tronsauce from 'reactotron-apisauce';
 
 console.disableYellowBox = true;
 
@@ -26,6 +27,7 @@ Reactotron.useReactNative({
 // add some more plugins for redux & redux-saga
 Reactotron.use(reduxPlugin());
 Reactotron.use(sagaPlugin());
+Reactotron.use(tronsauce());
 
 // if we're running in DEV mode, then let's connect!
 if (__DEV__) {
