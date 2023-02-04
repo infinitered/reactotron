@@ -1,12 +1,13 @@
-import type { Reactotron } from "../reactotron-core-client"
+import type { ReactotronCore, Plugin } from "../reactotron-core-client"
 
 /**
  * Sends API request/response information.
  */
-export default () => (reactotron: Reactotron) => {
+
+const apiResponse = () => (reactotron: ReactotronCore) => {
   return {
     features: {
-      apiResponse: (request, response, duration) => {
+      apiResponse: (request: {status: number}, response: any, duration: number) => {
         const ok =
           response &&
           response.status &&
@@ -17,5 +18,7 @@ export default () => (reactotron: Reactotron) => {
         reactotron.send("api.response", { request, response, duration }, important)
       },
     },
-  }
-}
+  } satisfies Plugin<ReactotronCore>
+} 
+
+export default apiResponse

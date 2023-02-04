@@ -1,9 +1,9 @@
-import type { Reactotron } from "../reactotron-core-client"
+import type { ReactotronCore, Plugin } from "../reactotron-core-client"
 
 /**
  * Provides 4 features for logging.  log & debug are the same.
  */
-export default () => (reactotron: Reactotron) => {
+export default () => (reactotron: ReactotronCore) => {
   return {
     features: {
       log: (...args) => {
@@ -19,5 +19,5 @@ export default () => (reactotron: Reactotron) => {
       warn: (message) => reactotron.send("log", { level: "warn", message }, true),
       error: (message, stack) => reactotron.send("log", { level: "error", message, stack }, true),
     },
-  }
+  } satisfies Plugin<ReactotronCore>
 }

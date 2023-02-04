@@ -1,13 +1,13 @@
-import type { Reactotron } from "../reactotron-core-client"
+import type { ReactotronCore, Plugin } from "../reactotron-core-client"
 
 export type AcceptableRepls = object | Function | string | number
 
-export default () => (reactotron: Reactotron) => {
+export default () => (reactotron: ReactotronCore) => {
   const myRepls: { [key: string]: AcceptableRepls } = {}
   // let currentContext = null
 
   return {
-    onCommand: ({ type, payload }: { type: string; payload?: any }) => {
+    onCommand: ({ type, payload }) => {
       if (type.substr(0, 5) !== "repl.") return
 
       switch (type.substr(5)) {
@@ -64,5 +64,5 @@ export default () => (reactotron: Reactotron) => {
         myRepls[name] = value
       },
     },
-  }
+  } satisfies Plugin<ReactotronCore>
 }

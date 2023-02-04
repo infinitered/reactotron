@@ -1,9 +1,9 @@
-import type { Reactotron } from "../reactotron-core-client"
+import type { ReactotronCore, Plugin } from "../reactotron-core-client"
 
 /**
  * Runs small high-unscientific benchmarks for you.
  */
-export default () => (reactotron: Reactotron) => {
+export default () => (reactotron: ReactotronCore) => {
   const { startTimer } = reactotron
 
   const benchmark = (title) => {
@@ -24,5 +24,5 @@ export default () => (reactotron: Reactotron) => {
 
   return {
     features: { benchmark },
-  }
+  } satisfies Plugin<ReactotronCore>
 }
