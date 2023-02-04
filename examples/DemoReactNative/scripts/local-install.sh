@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Normally you should be able to do this by specifying 'file:../..' in the package.json
-# but this was causing weird and vague errors in the ReactotronTestser project.
+# but this was causing weird and vague errors in the project.
 # So we're doing it manually here. Ideally this should go away at some point.
 
 if [ -z "$1" ] || [ -z "$2" ]; then
