@@ -1,9 +1,9 @@
-import type { Reactotron } from "../reactotron-core-client"
+import type { ReactotronCore, Plugin } from "../reactotron-core-client"
 
 /**
  * Provides helper functions for send state responses.
  */
-export default () => (reactotron: Reactotron) => {
+export default () => (reactotron: ReactotronCore) => {
   return {
     features: {
       stateActionComplete: (name, action, important = false) =>
@@ -21,5 +21,5 @@ export default () => (reactotron: Reactotron) => {
       // sends the state backup over to the server
       stateBackupResponse: (state) => reactotron.send("state.backup.response", { state }),
     },
-  }
+  } satisfies Plugin<ReactotronCore>
 }
