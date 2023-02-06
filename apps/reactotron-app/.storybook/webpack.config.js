@@ -4,14 +4,14 @@ module.exports = async ({ config }) => {
     module: {
       ...config.module,
       rules: [
-        ...config.module.rules.map(rule => {
-          if (!rule.use || !rule.use.some(loader => loader.loader === "babel-loader")) return rule
+        ...config.module.rules.map((rule) => {
+          if (!rule.use || !rule.use.some((loader) => loader.loader === "babel-loader")) return rule
 
           return {
             ...rule,
             test: /\.(mjs|jsx?|tsx?)$/,
             use: [
-              ...rule.use.map(loader => {
+              ...rule.use.map((loader) => {
                 if (loader.loader !== "babel-loader") return loader
 
                 return {

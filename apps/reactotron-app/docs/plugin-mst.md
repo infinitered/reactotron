@@ -62,7 +62,7 @@ When you `use()` the `reactotron-mst`, you can also pass options.
 
 ### filter
 
-The `filter` property provides a way to control what is sent to Reactotron.  It is a function which takes an [`IMiddlewareEvent`](https://github.com/mobxjs/mobx-state-tree/blob/master/docs/middleware.md#call-attributes) and returns a `boolean`.  If you return `true`, the message will be sent to the Reactotron app.  `false` will ignore this message.
+The `filter` property provides a way to control what is sent to Reactotron. It is a function which takes an [`IMiddlewareEvent`](https://github.com/mobxjs/mobx-state-tree/blob/master/docs/middleware.md#call-attributes) and returns a `boolean`. If you return `true`, the message will be sent to the Reactotron app. `false` will ignore this message.
 
 Here's an example which will stop all `postProcessSnapshot`-based actions from jumping the wire.
 
@@ -71,7 +71,7 @@ import Tron from "reactotron-react-native"
 import { mst } from "reactotron-mst"
 
 const RX = /postProcessSnapshot/
-const filter = event => RX.test(event.name) === false
+const filter = (event) => RX.test(event.name) === false
 
 Tron.use(mst({ filter }))
 ```
@@ -86,13 +86,11 @@ The `queryMode` property provides a way to switch between subscribing to live st
 
 The `trackMstNode()` function will only be available after you setup the `reactotron-mst` plugin. Make sure you do the previous setup step first or you'll see an error that says, `trackMstNode is not a function`.
 
-
-
 # Caveats
 
 ### Phase 1
 
-This plugin hooks into Reactotron just like the `redux` one. So the basics are in place, but it'll be a much nicer experience once we start introducing some custom views specifically for `mobx-state-tree`.  Consider this plugin's status:  phase 1 right now. 😅
+This plugin hooks into Reactotron just like the `redux` one. So the basics are in place, but it'll be a much nicer experience once we start introducing some custom views specifically for `mobx-state-tree`. Consider this plugin's status: phase 1 right now. 😅
 
 ### Single Tree
 
@@ -104,4 +102,4 @@ As a short-term hack, we might be able to find a way to do this by using a prefi
 
 ### `flow()`-based actions issues
 
-Synchronous actions work well, however there's some issues with async actions when using the `mobx-state-tree` `flow()` function.  We're going to have to introduce a new UI view similar to `redux-saga` to display this.  In the meantime, the action which kicks off the flow will be logged immediate and the return value will be untracked (for now... sorry!).
+Synchronous actions work well, however there's some issues with async actions when using the `mobx-state-tree` `flow()` function. We're going to have to introduce a new UI view similar to `redux-saga` to display this. In the meantime, the action which kicks off the flow will be logged immediate and the return value will be untracked (for now... sorry!).

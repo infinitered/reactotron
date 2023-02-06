@@ -19,7 +19,7 @@ export default function createCustomDispatch(
 
     var unwrappedAction = action.type === "PERFORM_ACTION" && action.action ? action.action : action
 
-    const isException = exceptions.some(exception => {
+    const isException = exceptions.some((exception) => {
       if (typeof exception === "string") {
         return unwrappedAction.type === exception
       } else if (typeof exception === "function") {

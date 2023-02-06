@@ -1,15 +1,15 @@
 import { createClient } from "../src/reactotron-core-client"
 import * as WebSocket from "ws"
 
-const createSocket = path => new WebSocket(path)
+const createSocket = (path) => new WebSocket(path)
 
-test("plugins support onPlugin", done => {
+test("plugins support onPlugin", (done) => {
   // create a client
   const client = createClient({ createSocket })
 
   // make a plugin to capture onPlugin
   const plugin = () => ({
-    onPlugin: instance => {
+    onPlugin: (instance) => {
       expect(instance).toBe(client)
       done()
     },

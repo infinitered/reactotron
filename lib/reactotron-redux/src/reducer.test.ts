@@ -36,10 +36,7 @@ describe("reducer", () => {
 
     const reactotronReducer = reducer(rootReducer)
 
-    reactotronReducer(
-      { myState: true },
-      { type: DEFAULT_REPLACER_TYPE, state: { myState: true } }
-    )
+    reactotronReducer({ myState: true }, { type: DEFAULT_REPLACER_TYPE, state: { myState: true } })
 
     expect(rootReducer).toHaveBeenCalledWith(
       { myState: true },

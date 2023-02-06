@@ -21,12 +21,12 @@ if (__DEV__) {
     })
 ```
 
-
 Stop the React Native packager and re-deploy the app to your tethered iOS device. When the app starts up, Reactotron will connect to your machine's ip address.
 
 ## React Native Android
 
 #### Using Expo and Can't Connect?
+
 Make sure you are running your app using the command:
 
     exp start --localhost
@@ -35,7 +35,7 @@ Otherwise the app is not using the port 9000.
 
 #### Tethered and Can't Connect?
 
-If you're using an emulator like Genymotion or the one in Android Studio, or even if your own device, you can still use localhost (the default) to connect provided you __port forward__ back to your computer.
+If you're using an emulator like Genymotion or the one in Android Studio, or even if your own device, you can still use localhost (the default) to connect provided you **port forward** back to your computer.
 
 While plugged in type:
 
@@ -47,4 +47,4 @@ and reload the app on your device.
 
 This only works on Android 5.x+.
 
-As of 1.1.4, the proper IP address is auto-discovered.  Simply leave the `configure` as is.
+As of 1.1.4, the proper IP address is auto-discovered. Simply leave the `configure` as is.

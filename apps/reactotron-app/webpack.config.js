@@ -9,7 +9,7 @@
 // If this breaks again, you search webpack in node_modules for `createHash\(('|")md4('|")\)`,
 // replace it with `createHash("sha256")`, then run patch-package again.
 
-module.exports = function(config) {
+module.exports = function (config) {
   return {
     ...config,
     output: {

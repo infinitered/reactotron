@@ -8,28 +8,28 @@
 
 `npm i --save-dev reactotron-apisauce`
 
-
 # Configuring
 
 In the place where you setup your reactotron configuration, you import `reactotron-apisauce` plugin and throw it at Reactotron.
 
 ```js
-import apisaucePlugin from 'reactotron-apisauce'  // <--- import
+import apisaucePlugin from "reactotron-apisauce" // <--- import
 
 // then plug it in when you configure Reactotron.
 
-Reactotron
-  .configure()
-  .use(apisaucePlugin({
-    // ignoreContentTypes: /^(image)\/.*$/i   // <--- a way to skip printing the body of some requests (default is any image)
-  })) // <-- here we go!!!
+Reactotron.configure()
+  .use(
+    apisaucePlugin({
+      // ignoreContentTypes: /^(image)\/.*$/i   // <--- a way to skip printing the body of some requests (default is any image)
+    })
+  ) // <-- here we go!!!
   .connect()
 ```
 
 Next, wherever you create your api for you application, bring in Reactotron and attach the monitor to your apisauce instance.
 
 ```js
-import Reactotron from 'reactotron-react-js'
+import Reactotron from "reactotron-react-js"
 // import Reactotron from 'reactotron-react-native' // or use this for mobile
 
 // Apisauce has a feature where you can attach a handler to watch
@@ -39,8 +39,7 @@ api.addMonitor(Reactotron.apisauce)
 // or ...
 
 // if you just wanted to track on 500's
-api.addMonitor(response => {
-  if (response.problem === 'SERVER_ERROR')
-    Reactotron.apisauce(response)
+api.addMonitor((response) => {
+  if (response.problem === "SERVER_ERROR") Reactotron.apisauce(response)
 })
 ```

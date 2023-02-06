@@ -1,4 +1,4 @@
-import { Reactotron } from "reactotron-core-client";
+import { Reactotron } from "reactotron-core-client"
 
 export default function createSendAction(reactotron: Reactotron) {
   return (action: { type: any }, ms: number, important = false) => {

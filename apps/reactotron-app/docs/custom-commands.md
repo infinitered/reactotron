@@ -22,7 +22,8 @@ Reactotron.onCustomCommand("test", () => console.log("This is an example"))
 ## Unregistering a command
 
 ```js
-const selfRemoving = Reactotron.onCustomCommand({ // Save the result
+const selfRemoving = Reactotron.onCustomCommand({
+  // Save the result
   command: "remove",
   handler: () => {
     selfRemoving() // Calling it unregisters the command

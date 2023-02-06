@@ -2,7 +2,7 @@
 
 The library for all the shared UI between different reactotron clients.
 
-*This library is a WIP*
+_This library is a WIP_
 
 # Credits
 

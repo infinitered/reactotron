@@ -2,7 +2,7 @@ import { createClient, corePlugins } from "../src/reactotron-core-client"
 import plugin from "../src/plugins/logger"
 import * as WebSocket from "ws"
 
-const createSocket = path => new WebSocket(path)
+const createSocket = (path) => new WebSocket(path)
 
 test("the 4 functions send the right data", () => {
   const client: any = createClient({ createSocket })

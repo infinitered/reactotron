@@ -48,7 +48,7 @@ const DEFAULTS = {
       return reactotron.asyncStorageHandler.getItem(REACTOTRON_ASYNC_CLIENT_ID)
     }
 
-    return new Promise(resolve => resolve(tempClientId))
+    return new Promise((resolve) => resolve(tempClientId))
   },
   setClientId: (clientId: string) => {
     if (reactotron.asyncStorageHandler) {
@@ -79,7 +79,9 @@ export interface ReactotronReactNative {
   overlay: (App: React.ReactNode) => void
   storybookSwitcher: (App: React.ReactNode) => (Root: React.ReactNode) => React.ReactNode
   asyncStorageHandler?: any
-  setAsyncStorageHandler?: (asyncStorage: any) => Reactotron<ReactotronReactNative> & ReactotronReactNative
+  setAsyncStorageHandler?: (
+    asyncStorage: any
+  ) => Reactotron<ReactotronReactNative> & ReactotronReactNative
 }
 
 const reactotron: Reactotron<ReactotronReactNative> & ReactotronReactNative = createClient(DEFAULTS)
@@ -120,7 +122,7 @@ reactotron.useReactNative = (options: UseReactNativeOptions = {}) => {
   return reactotron
 }
 
-reactotron.setAsyncStorageHandler = asyncStorage => {
+reactotron.setAsyncStorageHandler = (asyncStorage) => {
   reactotron.asyncStorageHandler = asyncStorage
 
   return reactotron

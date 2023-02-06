@@ -27,7 +27,7 @@ let delta = (started: number) => performanceNow() - started
 
 if (hasHirezNodeTimer) {
   performanceNow = process.hrtime as any
-  delta = started => performanceNow(started)[1] / 1000000
+  delta = (started) => performanceNow(started)[1] / 1000000
 } else if (global.nativePerformanceNow) {
   // react native 47
   performanceNow = global.nativePerformanceNow

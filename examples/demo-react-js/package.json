@@ -4,7 +4,7 @@
   "private": true,
   "devDependencies": {
     "babel-eslint": "^8.2.1",
-    "prettier": "^1.10.2",
+    "prettier": "^2.8.3",
     "react-scripts": "^0.9.5",
     "reactotron-apisauce": "^2.0.0",
     "reactotron-core-client": "^2.0.0",
@@ -30,8 +30,11 @@
     "start": "react-scripts start",
     "build-prod": "react-scripts build",
     "eject": "react-scripts eject",
-    "format": "prettier --write {**,.}/*.js && standard --fix",
-    "lint": "standard"
+    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "format:write": "yarn format --write",
+    "format:check": "yarn format --check",
+    "lint": "standard",
+    "lint:fix": "yarn lint --fix"
   },
   "standard": {
     "parser": "babel-eslint",

@@ -24,7 +24,7 @@ export default function createSubscriptionHandler(
 
     const changes = []
 
-    subscriptions.forEach(path => {
+    subscriptions.forEach((path) => {
       let cleanedPath = path
       let starredPath = false
 
@@ -38,7 +38,7 @@ export default function createSubscriptionHandler(
 
       if (starredPath && cleanedPath && values) {
         changes.push(
-          ...Object.entries(values).map(val => ({
+          ...Object.entries(values).map((val) => ({
             path: `${cleanedPath}.${val[0]}`,
             value: val[1],
           }))

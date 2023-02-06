@@ -2,7 +2,7 @@ import { createClient, corePlugins } from "../src/reactotron-core-client"
 import plugin from "../src/plugins/api-response"
 import * as WebSocket from "ws"
 
-const createSocket = path => new WebSocket(path)
+const createSocket = (path) => new WebSocket(path)
 
 test("api response", async () => {
   const client: any = createClient({ createSocket })

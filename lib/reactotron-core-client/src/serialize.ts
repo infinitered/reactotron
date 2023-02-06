@@ -45,7 +45,7 @@ function serialize(source, proxyHack = false) {
    * @param {*} value - The value to replace.
    */
   function serializer(replacer) {
-    return function(this: any, key, value) {
+    return function (this: any, key, value) {
       // slam dunks
       if (value === true) return true
 

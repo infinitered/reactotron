@@ -101,7 +101,10 @@ describe("createSubscriptionHandler", () => {
     })
 
     it("should return an array with a all items in sub items of a * path at the second level", () => {
-      const mockState = { red1: { test: true, obj: { nested: true, anotherItem: 10 } }, red2: { test: false } }
+      const mockState = {
+        red1: { test: true, obj: { nested: true, anotherItem: 10 } },
+        red2: { test: false },
+      }
       const mockReactotron = {
         reduxStore: {
           getState: jest.fn().mockReturnValue(mockState),
@@ -122,7 +125,10 @@ describe("createSubscriptionHandler", () => {
     })
 
     it("should handle multipple subscriptions", () => {
-      const mockState = { red1: { test: true, obj: { nested: true, anotherItem: 10 } }, red2: { test: false } }
+      const mockState = {
+        red1: { test: true, obj: { nested: true, anotherItem: 10 } },
+        red2: { test: false },
+      }
       const mockReactotron = {
         reduxStore: {
           getState: jest.fn().mockReturnValue(mockState),
@@ -143,7 +149,10 @@ describe("createSubscriptionHandler", () => {
     })
 
     it("should handle subscription changes", () => {
-      const mockState = { red1: { test: true, obj: { nested: true, anotherItem: 10 } }, red2: { test: false } }
+      const mockState = {
+        red1: { test: true, obj: { nested: true, anotherItem: 10 } },
+        red2: { test: false },
+      }
       const mockReactotron = {
         reduxStore: {
           getState: jest.fn().mockReturnValue(mockState),
@@ -171,8 +180,11 @@ describe("createSubscriptionHandler", () => {
   })
 
   describe("sendSubscriptionsIfNeeded", () => {
-    it('should not send subscriptions when there are none', () => {
-      const mockState = { red1: { test: true, obj: { nested: true, anotherItem: 10 } }, red2: { test: false } }
+    it("should not send subscriptions when there are none", () => {
+      const mockState = {
+        red1: { test: true, obj: { nested: true, anotherItem: 10 } },
+        red2: { test: false },
+      }
       const mockReactotron = {
         reduxStore: {
           getState: jest.fn().mockReturnValue(mockState),
@@ -189,8 +201,11 @@ describe("createSubscriptionHandler", () => {
       expect(mockReactotron.stateValuesChange).not.toHaveBeenCalled()
     })
 
-    it('should send subscriptions when there are at least one', () => {
-      const mockState = { red1: { test: true, obj: { nested: true, anotherItem: 10 } }, red2: { test: false } }
+    it("should send subscriptions when there are at least one", () => {
+      const mockState = {
+        red1: { test: true, obj: { nested: true, anotherItem: 10 } },
+        red2: { test: false },
+      }
       const mockReactotron = {
         reduxStore: {
           getState: jest.fn().mockReturnValue(mockState),

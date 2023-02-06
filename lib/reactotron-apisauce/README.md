@@ -11,20 +11,17 @@ npm i --save-dev reactotron-apisauce
 yarn add -D reactotron-apisauce
 ```
 
-
-
 # Configuring
 
 In the file that you create your Redux store, add these two imports at the top:
 
 ```js
 // in your reactotron config (where you setup Reactotron) add this as a plugin.
-import tronsauce from 'reactotron-apisauce'
+import tronsauce from "reactotron-apisauce"
 
 // then plug it in when you configure Reactotron.
 
-Reactotron
-  .configure()
+Reactotron.configure()
   .use(tronsauce()) // <-- here we go!!!
   .connect()
 
@@ -37,9 +34,8 @@ Reactotron.apisauce(theResponseWeJustTalkedAbout)
 api.addMonitor(Reactotron.apisauce)
 
 // or if you just wanted to track on 500's
-api.addMonitor(response => {
-  if (response.problem === 'SERVER_ERROR')
-    Reactotron.apisauce(response)
+api.addMonitor((response) => {
+  if (response.problem === "SERVER_ERROR") Reactotron.apisauce(response)
 })
 
 // see https://github.com/infinitered/apisauce for more details.

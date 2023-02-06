@@ -7,7 +7,7 @@ It is used by [`reactotron-app`](https://github.com/infinitered/reactotron) and 
 # Usage
 
 ```js
-import { createServer } from 'reactotron-core-server'
+import { createServer } from "reactotron-core-server"
 
 // configure a server
 const server = createServer({
@@ -19,42 +19,42 @@ const server = createServer({
   onDisconnect: ({ id, address }) => null, // fires when a client disconnects
 
   // a handler that fires whenever a message is received
-  onCommand: ({type, payload, messageId, date}) => {
+  onCommand: ({ type, payload, messageId, date }) => {
     switch (type) {
-      case 'hello.client':
+      case "hello.client":
         break
-      case 'log':
+      case "log":
         break
-      case 'state.action.complete':
+      case "state.action.complete":
         break
-      case 'state.values.response':
+      case "state.values.response":
         break
-      case 'state.keys.response':
+      case "state.keys.response":
         break
-      case 'state.values.change':
+      case "state.values.change":
         break
-      case 'api.response':
+      case "api.response":
         break
-      case 'bench.report':
+      case "bench.report":
         break
     }
-  }
+  },
 })
 
 // start the server
 server.start()
 
 // say hello when we connect (this is automatic, you don't send this)
-server.send('hello.server', {})
+server.send("hello.server", {})
 
 // request some values from state
-server.send('state.values.request', { path: 'user.givenName' })
+server.send("state.values.request", { path: "user.givenName" })
 
 // request some keys from state
-server.send('state.keys.request', { path: 'user' })
+server.send("state.keys.request", { path: "user" })
 
 // subscribe to some state paths so when then change, we get notified
-server.send('state.values.subscribe', { paths: ['user.givenName', 'user'] })
+server.send("state.values.subscribe", { paths: ["user.givenName", "user"] })
 
 // stop the server
 server.stop()

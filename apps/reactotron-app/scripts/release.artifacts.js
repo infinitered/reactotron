@@ -9,7 +9,8 @@ const [npmWorkspace, version] = gitTag.split("@")
 // #region assert tag matches 'app@1.1.1' format
 const GIT_TAG_REGEX = /^[a-z0-9-]+@[a-z0-9\.-]+$/ // 'reactotron-app@3.0.0'
 /** @see https://gist.github.com/jhorsman/62eeea161a13b80e39f5249281e17c39 */
-const SEM_VER_REGEX = /^([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$/
+const SEM_VER_REGEX =
+  /^([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$/
 if (
   !gitTag ||
   !gitTag.match(GIT_TAG_REGEX) ||
@@ -48,12 +49,12 @@ console.log(`Found release folder at ${folder}`)
 const files = fs
   .readdirSync(folder)
   // check if file is a directory
-  .filter(file => !fs.lstatSync(path.join(folder, file)).isDirectory())
+  .filter((file) => !fs.lstatSync(path.join(folder, file)).isDirectory())
   // filter out yaml files
-  .filter(file => !file.endsWith(".yml"))
-  .filter(file => !file.endsWith(".yaml"))
+  .filter((file) => !file.endsWith(".yml"))
+  .filter((file) => !file.endsWith(".yaml"))
   // filter out .blockmap files
-  .filter(file => !file.endsWith(".blockmap"))
+  .filter((file) => !file.endsWith(".blockmap"))
 if (files.length === 0) {
   console.error(`Folder '${folder}' is empty`)
   process.exit(1)
@@ -64,7 +65,7 @@ console.log(`Files: ${files.join(", ")}`)
 // get mimie types
 const mime = require("mime")
 mime.define({ "application/x-apple-diskimage": ["dmg"] }, true)
-files.forEach(file => {
+files.forEach((file) => {
   const mimeType = mime.getType(file)
   console.log(`File '${file}' has mime type '${mimeType}'`)
 })
@@ -95,7 +96,7 @@ const repo = "reactotron"
     })
     .then(({ data: release }) => {
       Promise.allSettled(
-        files.map(file => {
+        files.map((file) => {
           console.log(`Uploading '${file}'...`)
           return octokit.repos.uploadReleaseAsset({
             owner,
@@ -109,8 +110,8 @@ const repo = "reactotron"
             data: fs.readFileSync(path.join(folder, file)),
           })
         })
-      ).then(results => {
-        const failed = results.filter(result => result.status === "rejected")
+      ).then((results) => {
+        const failed = results.filter((result) => result.status === "rejected")
         if (failed.length > 0) {
           console.error(`Failed to upload ${failed.length} files`)
           failed.forEach((result, index) => {
@@ -123,7 +124,7 @@ const repo = "reactotron"
         process.exit(0)
       })
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(err)
       process.exit(1)
     })

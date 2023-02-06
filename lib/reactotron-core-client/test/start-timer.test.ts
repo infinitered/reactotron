@@ -1,7 +1,7 @@
 import { createClient } from "../src/reactotron-core-client"
 import * as WebSocket from "ws"
 
-const createSocket = path => new WebSocket(path)
+const createSocket = (path) => new WebSocket(path)
 
 test("has a startTimer function", () => {
   const client = createClient({ createSocket })

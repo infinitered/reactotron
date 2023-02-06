@@ -1,5 +1,5 @@
 import createSendAction from "./sendAction"
-import { defaultReactotronMock } from './testHelpers'
+import { defaultReactotronMock } from "./testHelpers"
 
 describe("sendAction", () => {
   it("should send a basic action to reactotron", () => {

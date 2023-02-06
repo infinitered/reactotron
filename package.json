@@ -46,7 +46,7 @@
     "ngx-deploy-npm": "^4.3.10",
     "nx": "15.5.1",
     "octokit": "^2.0.14",
-    "prettier": "^2.5.0",
+    "prettier": "^2.8.3",
     "typescript": "^4.9.5",
     "zx": "^7.1.1"
   },
@@ -62,7 +62,10 @@
     "test": "npx nx run-many --target test",
     "ci:test": "npx nx run-many --target ci:test",
     "typecheck": "npx nx run-many --target typecheck",
+    "format:write": "npx nx run-many --target format:write",
+    "format:check": "npx nx run-many --target format:check",
     "release:tags": "npx nx affected --target version --base $CIRCLE_BRANCH~1 --head $CIRCLE_BRANCH --parallel=1",
-    "release:artifacts": "zx scripts/release.artifacts.mjs"
+    "release:artifacts": "zx scripts/release.artifacts.mjs",
+    "copy-prettier-ignore": "zx scripts/copy-prettier-ignore.mjs"
   }
 }

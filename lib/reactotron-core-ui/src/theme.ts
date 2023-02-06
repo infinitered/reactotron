@@ -1,5 +1,6 @@
 export default {
-  fontFamily: '"Fira Code", "SF Mono", "Consolas", "Segoe UI", "Roboto", "-apple-system", "Helvetica Neue", sans-serif',
+  fontFamily:
+    '"Fira Code", "SF Mono", "Consolas", "Segoe UI", "Roboto", "-apple-system", "Helvetica Neue", sans-serif',
   background: "#1e1e1e",
   backgroundDarker: "hsl(0, 0%, 10.6%)",
   backgroundHighlight: "#464b50",

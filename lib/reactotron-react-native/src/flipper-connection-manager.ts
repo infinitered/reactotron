@@ -33,16 +33,16 @@ export default class FlipperConnectionManager {
       responder.success()
     })
 
-    this.openCallbacks.forEach(callback => callback())
+    this.openCallbacks.forEach((callback) => callback())
   }
 
-  handleMessage = data => {
-    this.messageCallbacks.forEach(callback => callback(data))
+  handleMessage = (data) => {
+    this.messageCallbacks.forEach((callback) => callback(data))
   }
 
   handleDisconnect = () => {
     this.flipperConnection = null
-    this.closeCallbacks.forEach(callback => callback())
+    this.closeCallbacks.forEach((callback) => callback())
   }
 
   send(payload: any) {

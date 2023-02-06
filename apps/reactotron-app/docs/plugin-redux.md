@@ -1,8 +1,8 @@
 # reactotron-redux
 
-[Redux](http://redux.js.org/) is library for managing global state.  It's pretty damn awesome.
+[Redux](http://redux.js.org/) is library for managing global state. It's pretty damn awesome.
 
-And everyone knows when you combine two great things, you get a super-awesome thing.  Except for toothpaste & orange juice.  Keep those separate.
+And everyone knows when you combine two great things, you get a super-awesome thing. Except for toothpaste & orange juice. Keep those separate.
 
 ![Keys and Values](./images/redux/redux-keys-values.jpg)
 
@@ -10,10 +10,9 @@ And everyone knows when you combine two great things, you get a super-awesome th
 
 ![Subscriptions](./images/redux/subscriptions.jpg)
 
-
 # Installing
 
-`reactotron-redux` is a plugin which lives in a different npm package.  You can install it by typing:
+`reactotron-redux` is a plugin which lives in a different npm package. You can install it by typing:
 
 ```
 npm install --save-dev reactotron-redux
@@ -21,18 +20,17 @@ npm install --save-dev reactotron-redux
 
 # Features
 
-* track when actions are dispatched including timing
-* subscribe to changes within the state tree
-* pull values out on demand
-* view list of keys
-* dispatch actions from Reactotron
-* replay actions
-* hot swap your app state on the fly
-
+- track when actions are dispatched including timing
+- subscribe to changes within the state tree
+- pull values out on demand
+- view list of keys
+- dispatch actions from Reactotron
+- replay actions
+- hot swap your app state on the fly
 
 # Configuring
 
-Two files need to change to hookup Reactotron to Redux.  First, in your
+Two files need to change to hookup Reactotron to Redux. First, in your
 ReactotronConfig, you'll need to add `reactotron-redux` as plugin
 
 ```diff
@@ -46,7 +44,7 @@ ReactotronConfig, you'll need to add `reactotron-redux` as plugin
   .configure({ name: 'React Native Demo' })
 + .use(reactotronRedux()) //  <- here i am!
   .connect() //Don't forget about me!
-  
+
 + export default reactotron
 ```
 
@@ -87,7 +85,7 @@ triggers a little bit of noise), you can suppress them:
 
 ```js
 reactotronRedux({
-  except: ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'EFFECT_REJECTED']
+  except: ["EFFECT_TRIGGERED", "EFFECT_RESOLVED", "EFFECT_REJECTED"],
 })
 ```
 
@@ -98,14 +96,14 @@ reactotronRedux({
 
 ```js
 reactotronRedux({
-  isActionImportant: action => action.type === 'repo.receive'
+  isActionImportant: (action) => action.type === "repo.receive",
 })
 ```
 
 #### onBackup
 
 `onBackup` fires when we're about to transfer a copy of your Redux global state
-tree and send it to the server.  It accepts an object called `state` and returns
+tree and send it to the server. It accepts an object called `state` and returns
 an object called `state`.
 
 You can use this to prevent big, sensitive, or transient data from going to
@@ -113,9 +111,9 @@ Reactotron.
 
 #### onRestore
 
-`onRestore` is the opposite of `onBackup`.  It will fire when the Reactotron app
+`onRestore` is the opposite of `onBackup`. It will fire when the Reactotron app
 sends a new copy of state to the app.
 
+# Using saga?
 
-# Using saga? 
 Go configure the [plugin](https://github.com/infinitered/reactotron/blob/master/docs/plugin-redux-saga.md) next

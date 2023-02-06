@@ -24,5 +24,3 @@ When `slowFunction` is invoked, Reactotron should show something like this:
 ![Benchmarking Output](./images/benchmarking/benchmark-output.png)
 
 Tips: Time bar `Thing B` is the code execution time from `bench.step("Thing A")` to `bench.step("Thing B")`.
-
-

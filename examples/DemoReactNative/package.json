@@ -9,7 +9,10 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "postinstall": "sh ./scripts/postinstall.sh"
+    "postinstall": "sh ./scripts/postinstall.sh",
+    "format": "prettier '*.{js,ts,tsx,json}|**/*.{js,ts,tsx,json}'",
+    "format:check": "yarn format --check",
+    "format:write": "yarn format --write"
   },
   "dependencies": {
     "@emotion/core": "11.0.0",
@@ -37,6 +40,7 @@
     "@react-native-community/eslint-config": "^2.0.0",
     "babel-jest": "^26.6.3",
     "eslint": "^7.32.0",
+    "prettier": "^2.8.3",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "0.72.3",
     "react-test-renderer": "18.1.0"

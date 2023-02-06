@@ -26,7 +26,10 @@
     "compile:dev": "NODE_ENV=development rollup -c",
     "chromatic": "chromatic",
     "typecheck": "tsc",
-    "ci:test": "yarn test --runInBand"
+    "ci:test": "yarn test --runInBand",
+    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "format:check": "yarn format --check",
+    "format:write": "yarn format --write"
   },
   "files": [
     "dist"
@@ -82,6 +85,7 @@
     "eslint-plugin-react-hooks": "4.2.0",
     "eslint-plugin-standard": "4.1.0",
     "jest": "26.6.3",
+    "prettier": "^2.8.3",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-icons": "4.2.0",
@@ -96,7 +100,6 @@
     "rollup-plugin-filesize": "9.1.1",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-peer-deps-external": "2.2.4",
-    "semantic-release": "17.4.4",
     "storybook-chromatic": "3.5.5",
     "styled-components": "5.3.0",
     "ts-jest": "26.5.6",

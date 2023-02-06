@@ -72,6 +72,9 @@ jobs:
           name: Lint
           command: yarn lint
       - run:
+          name: Format Check
+          command: yarn format:check
+      - run:
           name: Tests
           command: yarn ci:test
       - run:

@@ -207,7 +207,7 @@ describe("customDispatch", () => {
 
     const dispatch = createCustomDispatch(mockReactotron, mockStore, {
       restoreActionType: DEFAULT_REPLACER_TYPE,
-      isActionImportant: action => action.type === "MAKE_ME_IMPORTANT",
+      isActionImportant: (action) => action.type === "MAKE_ME_IMPORTANT",
     })
 
     dispatch(action)
@@ -231,7 +231,7 @@ describe("customDispatch", () => {
 
     const dispatch = createCustomDispatch(mockReactotron, mockStore, {
       restoreActionType: DEFAULT_REPLACER_TYPE,
-      isActionImportant: action => action.type === "MAKE_ME_IMPORTANT",
+      isActionImportant: (action) => action.type === "MAKE_ME_IMPORTANT",
     })
 
     dispatch(action)

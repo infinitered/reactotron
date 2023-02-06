@@ -38,7 +38,7 @@ const env = {
 }
 
 /** @param cmd {string} */
-const $ = cmd => {
+const $ = (cmd) => {
   require("child_process").execSync(cmd, { env, stdio: "inherit" })
 }
 

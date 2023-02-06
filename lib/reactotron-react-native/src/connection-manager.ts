@@ -15,7 +15,7 @@ export default class ConnectionManager {
     if (event === "open") {
       this.webSocket.onopen = callback
     } else if (event === "message") {
-      this.webSocket.onmessage = evt => callback(evt.data)
+      this.webSocket.onmessage = (evt) => callback(evt.data)
     }
   }
 

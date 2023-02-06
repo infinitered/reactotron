@@ -1,7 +1,7 @@
 import createCommandHandler from "./commandHandler"
 import { DEFAULT_REPLACER_TYPE } from "./reducer"
 import { PluginConfig } from "./pluginConfig"
-import { defaultReactotronMock } from './testHelpers'
+import { defaultReactotronMock } from "./testHelpers"
 
 // TODO: Write more tests around onBackup and onRestore.
 
@@ -17,7 +17,7 @@ describe("commandHandler", () => {
       ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: true } }),
-        subscribe: jest.fn()
+        subscribe: jest.fn(),
       },
       stateKeysResponse: jest.fn(),
     }
@@ -32,7 +32,7 @@ describe("commandHandler", () => {
       ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: true } }),
-        subscribe: jest.fn()
+        subscribe: jest.fn(),
       },
       stateKeysResponse: jest.fn(),
     }
@@ -49,7 +49,7 @@ describe("commandHandler", () => {
       ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: true } }),
-        subscribe: jest.fn()
+        subscribe: jest.fn(),
       },
       stateKeysResponse: jest.fn(),
     }
@@ -66,7 +66,7 @@ describe("commandHandler", () => {
       ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: { nested: true } } }),
-        subscribe: jest.fn()
+        subscribe: jest.fn(),
       },
       stateKeysResponse: jest.fn(),
     }
@@ -83,7 +83,7 @@ describe("commandHandler", () => {
       ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: { nested: true } } }),
-        subscribe: jest.fn()
+        subscribe: jest.fn(),
       },
       stateKeysResponse: jest.fn(),
     }
@@ -100,7 +100,7 @@ describe("commandHandler", () => {
       ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: { nested: true } } }),
-        subscribe: jest.fn()
+        subscribe: jest.fn(),
       },
       stateKeysResponse: jest.fn(),
     }
@@ -109,7 +109,10 @@ describe("commandHandler", () => {
 
     commandHandler({ type: "state.keys.request", payload: { path: "topLevel2.here.nested" } })
 
-    expect(reactotronMock.stateKeysResponse).toHaveBeenCalledWith("topLevel2.here.nested", undefined)
+    expect(reactotronMock.stateKeysResponse).toHaveBeenCalledWith(
+      "topLevel2.here.nested",
+      undefined
+    )
   })
 
   it("should handle a 'state.values.request' command type for a single level", () => {
@@ -117,7 +120,7 @@ describe("commandHandler", () => {
       ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: true } }),
-        subscribe: jest.fn()
+        subscribe: jest.fn(),
       },
       stateValuesResponse: jest.fn(),
     }
@@ -134,7 +137,7 @@ describe("commandHandler", () => {
       ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: { nested: true } } }),
-        subscribe: jest.fn()
+        subscribe: jest.fn(),
       },
       stateValuesResponse: jest.fn(),
     }
@@ -143,7 +146,9 @@ describe("commandHandler", () => {
 
     commandHandler({ type: "state.values.request", payload: { path: "topLevel.here" } })
 
-    expect(reactotronMock.stateValuesResponse).toHaveBeenCalledWith("topLevel.here", { nested: true })
+    expect(reactotronMock.stateValuesResponse).toHaveBeenCalledWith("topLevel.here", {
+      nested: true,
+    })
   })
 
   it("should handle a 'state.values.request' command type for a path that isn't an object", () => {
@@ -151,7 +156,7 @@ describe("commandHandler", () => {
       ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: { nested: true } } }),
-        subscribe: jest.fn()
+        subscribe: jest.fn(),
       },
       stateValuesResponse: jest.fn(),
     }
@@ -168,7 +173,7 @@ describe("commandHandler", () => {
       ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ topLevel: { here: { nested: true } } }),
-        subscribe: jest.fn()
+        subscribe: jest.fn(),
       },
       stateValuesResponse: jest.fn(),
     }
@@ -177,7 +182,10 @@ describe("commandHandler", () => {
 
     commandHandler({ type: "state.values.request", payload: { path: "topLevel2.here.nested" } })
 
-    expect(reactotronMock.stateValuesResponse).toHaveBeenCalledWith("topLevel2.here.nested", undefined)
+    expect(reactotronMock.stateValuesResponse).toHaveBeenCalledWith(
+      "topLevel2.here.nested",
+      undefined
+    )
   })
 
   it.todo("should handle a 'state.values.subscribe' command type")
@@ -187,7 +195,7 @@ describe("commandHandler", () => {
       ...defaultReactotronMock,
       reduxStore: {
         dispatch: jest.fn(),
-        subscribe: jest.fn()
+        subscribe: jest.fn(),
       },
     }
     const commandHandler = createCommandHandler(reactotronMock, defaultPluginConfig, () => {})
@@ -202,7 +210,7 @@ describe("commandHandler", () => {
       ...defaultReactotronMock,
       reduxStore: {
         getState: jest.fn().mockReturnValue({ myState: true }),
-        subscribe: jest.fn()
+        subscribe: jest.fn(),
       },
       send: jest.fn(),
     }
@@ -223,7 +231,7 @@ describe("commandHandler", () => {
       reduxStore: {
         getState: jest.fn(),
         dispatch: jest.fn(),
-        subscribe: jest.fn()
+        subscribe: jest.fn(),
       },
     }
 

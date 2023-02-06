@@ -1,7 +1,7 @@
 import { createClient } from "../src/reactotron-core-client"
 import * as WebSocket from "ws"
 
-const createSocket = path => new WebSocket(path)
+const createSocket = (path) => new WebSocket(path)
 
 test("features must be an object if they appear", () => {
   const client = createClient({ createSocket })
@@ -11,7 +11,7 @@ test("features must be an object if they appear", () => {
 
 test("some names are not allowed", () => {
   const client = createClient({ createSocket })
-  const createPlugin = features => () => ({ features })
+  const createPlugin = (features) => () => ({ features })
 
   const badPlugins = [
     "options",
@@ -23,9 +23,9 @@ test("some names are not allowed", () => {
     "send",
     "use",
     "startTimer",
-  ].map(name => createPlugin({ [name]: x => x }))
+  ].map((name) => createPlugin({ [name]: (x) => x }))
 
-  badPlugins.forEach(plugin => {
+  badPlugins.forEach((plugin) => {
     expect(() => client.use(plugin)).toThrow()
   })
 })
@@ -45,7 +45,7 @@ test("features can be added and called", () => {
 
 test("you can overwrite other feature names", () => {
   const client: any = createClient({ createSocket })
-  const createPlugin = number => () => ({ features: { hello: () => number } })
+  const createPlugin = (number) => () => ({ features: { hello: () => number } })
   client.use(createPlugin(69))
   expect(client.hello()).toBe(69)
   client.use(createPlugin(9001))
