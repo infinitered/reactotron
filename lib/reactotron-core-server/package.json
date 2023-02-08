@@ -34,7 +34,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "mitt": "1.1.3",
+    "mitt": "3.0.0",
     "ramda": "0.26.1",
     "ws": "7.1.2"
   },

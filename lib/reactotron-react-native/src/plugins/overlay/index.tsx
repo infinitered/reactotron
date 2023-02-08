@@ -1,11 +1,11 @@
 import React from "react"
 import { View } from "react-native"
-import Mitt from "mitt"
+import mitt from "mitt"
 
 import FullScreenOverlay from "./overlay"
 
 export default () => () => {
-  const emitter = new Mitt()
+  const emitter = mitt()
 
   return {
     /**
@@ -13,19 +13,20 @@ export default () => () => {
      *
      * @param {object} command The Reactotron command object.
      */
-    onCommand: command => {
+    onCommand: (command) => {
       if (command.type !== "overlay") return
       // relay this payload on to the emitter
       emitter.emit("overlay", command.payload)
     },
 
     features: {
-      overlay: (WrappedComponent: any) => props => (
-        <View style={{ flex: 1 }}>
-          <WrappedComponent {...props} />
-          <FullScreenOverlay emitter={emitter} />
-        </View>
-      ),
+      overlay: (WrappedComponent: any) => (props) =>
+        (
+          <View style={{ flex: 1 }}>
+            <WrappedComponent {...props} />
+            <FullScreenOverlay emitter={emitter} />
+          </View>
+        ),
     },
   }
 }

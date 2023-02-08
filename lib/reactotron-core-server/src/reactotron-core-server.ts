@@ -13,8 +13,7 @@ import {
   WssServerOptions,
 } from "./types"
 import { readFileSync } from "fs"
-import type { MittStatic } from "mitt"
-const Mitt: MittStatic = require("mitt") // Jest breaks with esm import, use cjs here ¯\_(ツ)_/¯
+import mitt from "mitt"
 
 /**
  * The default server options.
@@ -63,7 +62,7 @@ export default class Server {
   /**
    * An event emitter which fires events from connected clients.
    */
-  emitter = new Mitt()
+  emitter = mitt()
 
   /**
    * Additional server configuration.

@@ -25,6 +25,9 @@
     "react native"
   ],
   "homepage": "https://github.com/infinitered/reactotron#readme",
+  "engines": {
+    "node": ">= 18.0.0"
+  },
   "dependencies": {
     "patch-package": "^6.2.0"
   },

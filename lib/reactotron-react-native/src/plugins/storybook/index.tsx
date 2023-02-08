@@ -1,5 +1,5 @@
 import React from "react"
-import Mitt from "mitt"
+import mitt from "mitt"
 
 import StorybookSwitcher from "./storybook"
 
@@ -7,7 +7,7 @@ import StorybookSwitcher from "./storybook"
  * A plugin which provides .storybookSwitcher() on Reactotron.
  */
 export default () => () => {
-  const emitter = new Mitt()
+  const emitter = mitt()
 
   return {
     onCommand: (command: any) => {
