@@ -8,9 +8,7 @@ import {
   MdRadioButtonUnchecked,
   MdWarning,
 } from "react-icons/md"
-
-const storybookActiveImg = require("../../images/storybook-logo-color.png")
-const storybookInaactiveImg = require("../../images/storybook-logo.png")
+import { storybookActiveImg, storybookInactiveImg } from "../../images"
 
 const Container = styled.div`
   display: flex;
@@ -40,7 +38,7 @@ const StorybookLogo = styled.img`
 
 const ToggleContainer = styled.div`
   display: flex;
-  color: ${props => props.theme.foreground};
+  color: ${(props) => props.theme.foreground};
 `
 const RadioButton = styled.div`
   display: flex;
@@ -51,9 +49,9 @@ const RadioButton = styled.div`
 
 const WarningContainer = styled.div`
   display: flex;
-  color: ${props => props.theme.warning};
-  background-color: ${props => props.theme.backgroundDarker};
-  border-top: 1px solid ${props => props.theme.chromeLine};
+  color: ${(props) => props.theme.warning};
+  background-color: ${(props) => props.theme.backgroundDarker};
+  border-top: 1px solid ${(props) => props.theme.chromeLine};
   align-items: center;
   padding: 0 20px;
 `
@@ -120,7 +118,7 @@ function Storybook() {
       />
       <StorybookContainer>
         <TopSection>
-          <StorybookLogo src={isStorybookOn ? storybookActiveImg : storybookInaactiveImg} />
+          <StorybookLogo src={isStorybookOn ? storybookActiveImg : storybookInactiveImg} />
 
           <ToggleContainer>
             <RadioButton onClick={() => turnOnStorybook()}>
