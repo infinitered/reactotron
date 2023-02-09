@@ -54,7 +54,11 @@
     "zx": "^7.1.1"
   },
   "resolutions": {
-    "@nrwl/devkit": "^15.5.3"
+    "@nrwl/devkit": "^15.5.3",
+    "webpack@^4.41.3": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
+    "webpack@^4.44.2": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
+    "webpack@^4.33.0": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
+    "webpack@^4.38.0": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch"
   },
   "scripts": {
     "postinstall": "sh ./scripts/postinstall.sh",
@@ -70,5 +74,6 @@
     "release:tags": "npx nx affected --target version --base $CIRCLE_BRANCH~1 --head $CIRCLE_BRANCH --parallel=1",
     "release:artifacts": "zx scripts/release.artifacts.mjs",
     "copy-prettier-ignore": "zx scripts/copy-prettier-ignore.mjs"
-  }
+  },
+  "packageManager": "yarn@3.4.1"
 }

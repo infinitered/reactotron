@@ -1,0 +1,65 @@
+diff --git a/lib/ModuleFilenameHelpers.js b/lib/ModuleFilenameHelpers.js
+index bd0742b7f70fd7fccb9af5cd3138b4635321e65f..3c3eba8de6e1d4a63aeca962a70230c3c381c1c4 100644
+--- a/lib/ModuleFilenameHelpers.js
++++ b/lib/ModuleFilenameHelpers.js
+@@ -42,7 +42,7 @@ const getBefore = (str, token) => {
+ };
+ 
+ const getHash = str => {
+-	const hash = createHash("md4");
++	const hash = createHash("sha256");
+ 	hash.update(str);
+ 	const digest = /** @type {string} */ (hash.digest("hex"));
+ 	return digest.substr(0, 4);
+diff --git a/lib/NamedModulesPlugin.js b/lib/NamedModulesPlugin.js
+index 2d84aafe297a2423af70e1606183790c09c101d8..fe35290f1ca162012ae452aeb112f97da46d6cbc 100644
+--- a/lib/NamedModulesPlugin.js
++++ b/lib/NamedModulesPlugin.js
+@@ -8,7 +8,7 @@ const createHash = require("./util/createHash");
+ const RequestShortener = require("./RequestShortener");
+ 
+ const getHash = str => {
+-	const hash = createHash("md4");
++	const hash = createHash("sha256");
+ 	hash.update(str);
+ 	const digest = /** @type {string} */ (hash.digest("hex"));
+ 	return digest.substr(0, 4);
+diff --git a/lib/SourceMapDevToolPlugin.js b/lib/SourceMapDevToolPlugin.js
+index 3018eb2551fe9ddcfc6178f1752a93d6b67bc930..bb37fd6efb39b273ccebc70c02a5ac4f3479682c 100644
+--- a/lib/SourceMapDevToolPlugin.js
++++ b/lib/SourceMapDevToolPlugin.js
+@@ -346,7 +346,7 @@ class SourceMapDevToolPlugin {
+ 									: filename,
+ 								query,
+ 								basename: basename(filename),
+-								contentHash: createHash("md4")
++								contentHash: createHash("sha256")
+ 									.update(sourceMapString)
+ 									.digest("hex")
+ 							};
+diff --git a/lib/optimize/ConcatenatedModule.js b/lib/optimize/ConcatenatedModule.js
+index df4d216b12901b24e0fc18f96f1c6ea4dc7b57ae..03711c47e7a5c1b021a257dba9f436289b9851b6 100644
+--- a/lib/optimize/ConcatenatedModule.js
++++ b/lib/optimize/ConcatenatedModule.js
+@@ -560,7 +560,7 @@ class ConcatenatedModule extends Module {
+ 				orderedConcatenationListIdentifiers += " ";
+ 			}
+ 		}
+-		const hash = createHash("md4");
++		const hash = createHash("sha256");
+ 		hash.update(orderedConcatenationListIdentifiers);
+ 		return this.rootModule.identifier() + " " + hash.digest("hex");
+ 	}
+diff --git a/lib/optimize/SplitChunksPlugin.js b/lib/optimize/SplitChunksPlugin.js
+index e7d560bf6ce0eab8c57e820f406ea77838425898..0c531294b1f7816f5610e17d5aff698ebf533f9c 100644
+--- a/lib/optimize/SplitChunksPlugin.js
++++ b/lib/optimize/SplitChunksPlugin.js
+@@ -22,7 +22,7 @@ const deterministicGroupingForModules = /** @type {function(DeterministicGroupin
+ 
+ const hashFilename = name => {
+ 	return crypto
+-		.createHash("md4")
++		.createHash("sha256")
+ 		.update(name)
+ 		.digest("hex")
+ 		.slice(0, 8);

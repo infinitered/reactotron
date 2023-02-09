@@ -36,7 +36,7 @@
   "peerDependencies": {
     "mobx": "^3.4.1 || ^4.1.0 || >6.0.0",
     "mobx-state-tree": "^1.4.0 || ^2.0.2 || >3.0.0",
-    "reactotron-core-client": "*"
+    "reactotron-core-client": "workspace:*"
   },
   "dependencies": {
     "ramda": "^0.25.0"
@@ -67,7 +67,7 @@
     "mobx": "^4.2.1",
     "mobx-state-tree": "^2.0.4",
     "prettier": "^2.8.3",
-    "reactotron-core-client": "*",
+    "reactotron-core-client": "workspace:*",
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-babel-minify": "^7.0.0",

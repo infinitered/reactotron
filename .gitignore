@@ -58,3 +58,11 @@ TODO
 
 .npmrc
 *.p12
+
+# Yarn 3
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

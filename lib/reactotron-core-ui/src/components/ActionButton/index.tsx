@@ -1,5 +1,5 @@
 import React from "react"
-import ReactTooltip from "react-tooltip"
+import { Tooltip } from "react-tooltip"
 import styled from "styled-components"
 
 const Container = styled.div`
@@ -17,7 +17,7 @@ function ActionButton({ icon: Icon, tip, onClick }: Props) {
   return (
     <Container data-tip={tip} onClick={onClick}>
       <Icon size={24} />
-      <ReactTooltip place="bottom" />
+      <Tooltip place="bottom" />
     </Container>
   )
 }
