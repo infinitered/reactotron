@@ -29,6 +29,8 @@ commands:
       - save_cache:
           paths:
             - node_modules/
+            - .yarn/cache
+            - .yarn/install-state.gz
             - apps/reactotron-app/dist/
             - lib/reactotron-core-ui/dist/
             - lib/reactotron-core-client/dist/
