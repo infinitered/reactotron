@@ -2522,19 +2522,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/core@npm:^1.2.0":
+"@floating-ui/core@npm:^1.1.0":
   version: 1.2.0
   resolution: "@floating-ui/core@npm:1.2.0"
   checksum: 1afde471b0d2ba11e2cf416ef5ca9e6280e3f42542a707d958b66631fe2aa551272c1544a1e8ed4815bf562e4462adedb356ce3f2de5c1738d6aab1568f580f4
   languageName: node
   linkType: hard
 
-"@floating-ui/dom@npm:^1.0.4":
-  version: 1.2.0
-  resolution: "@floating-ui/dom@npm:1.2.0"
+"@floating-ui/dom@npm:1.1.1":
+  version: 1.1.1
+  resolution: "@floating-ui/dom@npm:1.1.1"
   dependencies:
-    "@floating-ui/core": ^1.2.0
-  checksum: 3f5cf02a784286473f451939b5641454e7256cdc7a6899a0ecc67e084a572b52e5e23a08a7e5b8ba186dca668815eba5ed6d69baec543abaeb5092d6c672f6b2
+    "@floating-ui/core": ^1.1.0
+  checksum: 8b7f3b98ed7ec0b634e4a0b735253b0442358c5cea8302935fc185b2bd882202a053622abe9248c76d0908645dd35f93adeaed2d64371b2ab76b36725ce3f7d3
   languageName: node
   linkType: hard
 
@@ -7210,12 +7210,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^16.9.4":
-  version: 16.9.17
-  resolution: "@types/react-dom@npm:16.9.17"
+"@types/react-dom@npm:17.0.2":
+  version: 17.0.2
+  resolution: "@types/react-dom@npm:17.0.2"
   dependencies:
-    "@types/react": ^16
-  checksum: c9246eb4d35993463608de61111f2bdae5afbd22556c8b9918081516b67eafd1a9ef141c3ed459dd4c753dd7ea037b6a375a856e677c2586396c23732772831d
+    "@types/react": "*"
+  checksum: 1725928a1c3a0026044e6401e6b53729e1a88849034fc67138d7784ec44a5132fe2e9056a19b741ccb462ff0ec0d8c2c01ef316bda19be0e31f2ead9346f600b
   languageName: node
   linkType: hard
 
@@ -7303,23 +7303,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-tooltip@npm:4.2.4":
-  version: 4.2.4
-  resolution: "@types/react-tooltip@npm:4.2.4"
-  dependencies:
-    react-tooltip: "*"
-  checksum: 6ecfdd6216baaf2392c82a2b2aa76fbc1b9df1a5543cf6da10b72aadc5ae7da74d2b2d619e529a13c7337387678a54975916626117b7cc08268a2650829c3ce1
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:16.14.35":
-  version: 16.14.35
-  resolution: "@types/react@npm:16.14.35"
+"@types/react@npm:17.0.2":
+  version: 17.0.2
+  resolution: "@types/react@npm:17.0.2"
   dependencies:
     "@types/prop-types": "*"
-    "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: ed9c551a7d50d073a5fb0295c1d939536c66c3286d42b6c94c20749464492ed95a408e6d3694bf49df0012da69e22202065c8c2fac0406356972a7fcb4960dd3
+  checksum: a5198857165feddcbfc7d33e3322460ac62b8894d702414496a825b0c82272911ec33a42ef7c9d623a59308070eef4dfee6ff834b0674aa3f87eeb644196ee3b
   languageName: node
   linkType: hard
 
@@ -7354,13 +7344,6 @@ __metadata:
   version: 0.12.0
   resolution: "@types/retry@npm:0.12.0"
   checksum: 61a072c7639f6e8126588bf1eb1ce8835f2cb9c2aba795c4491cf6310e013267b0c8488039857c261c387e9728c1b43205099223f160bb6a76b4374f741b5603
-  languageName: node
-  linkType: hard
-
-"@types/scheduler@npm:*":
-  version: 0.16.2
-  resolution: "@types/scheduler@npm:0.16.2"
-  checksum: b6b4dcfeae6deba2e06a70941860fb1435730576d3689225a421280b7742318d1548b3d22c1f66ab68e414f346a9542f29240bc955b6332c5b11e561077583bc
   languageName: node
   linkType: hard
 
@@ -7409,14 +7392,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/styled-components@npm:5.1.12":
-  version: 5.1.12
-  resolution: "@types/styled-components@npm:5.1.12"
+"@types/styled-components@npm:5.1.26":
+  version: 5.1.26
+  resolution: "@types/styled-components@npm:5.1.26"
   dependencies:
     "@types/hoist-non-react-statics": "*"
     "@types/react": "*"
     csstype: ^3.0.2
-  checksum: f7ea1edbcd6ed24f7223f8f311bd33e3f1b832783a8e7fb6e180b9e6b5e57d72cd864b8cab8f334d047a6823589e086707c430a3de9d1c3e262ed49afc368a15
+  checksum: 84f53b3101739b20d1731554fb7735bc2f3f5d050a8b392e9845403c8c8bbd729737d033978649f9195a97b557875b010d46e35a4538564a2d0dbcce661dbf76
   languageName: node
   linkType: hard
 
@@ -14064,6 +14047,47 @@ __metadata:
   languageName: node
   linkType: hard
 
+"electron-webpack@patch:electron-webpack@npm%3A2.8.2#./.yarn/patches/electron-webpack-npm-2.8.2-1bda600605.patch::locator=reactotron%40workspace%3A.":
+  version: 2.8.2
+  resolution: "electron-webpack@patch:electron-webpack@npm%3A2.8.2#./.yarn/patches/electron-webpack-npm-2.8.2-1bda600605.patch::version=2.8.2&hash=662ffe&locator=reactotron%40workspace%3A."
+  dependencies:
+    "@types/webpack-env": ^1.15.1
+    async-exit-hook: ^2.0.1
+    bluebird: ^3.7.2
+    chalk: ^4.0.0
+    crocket: ^0.9.11
+    css-hot-loader: ^1.4.4
+    css-loader: ^3.4.2
+    debug: ^4.1.1
+    dotenv: ^8.2.0
+    dotenv-expand: ^5.1.0
+    electron-devtools-installer: ^2.2.4
+    electron-webpack-js: ~2.4.1
+    file-loader: ^6.0.0
+    fs-extra: ^9.0.0
+    html-loader: ^1.1.0
+    html-webpack-plugin: ^4.0.4
+    lazy-val: ^1.0.4
+    mini-css-extract-plugin: ^0.9.0
+    node-loader: ^0.6.0
+    read-config-file: ~4.0.1
+    semver: ^7.1.3
+    source-map-support: ^0.5.16
+    style-loader: ^1.1.3
+    terser-webpack-plugin: ^2.3.5
+    url-loader: ^4.0.0
+    webpack-cli: ^3.3.11
+    webpack-dev-server: ^3.10.3
+    webpack-merge: ^4.2.2
+    yargs: ^15.3.1
+  peerDependencies:
+    webpack: ^4.42.1
+  bin:
+    electron-webpack: out/cli.js
+  checksum: 4768052162cb896a233d18e5a90c3261df427839c43386149e307f842f3c0e1d967a90c55370648e58565611e37972e58ff7803d439b4172411cb7fac88d1e73
+  languageName: node
+  linkType: hard
+
 "electron-window-state@npm:^5.0.3":
   version: 5.0.3
   resolution: "electron-window-state@npm:5.0.3"
@@ -16030,15 +16054,6 @@ __metadata:
   dependencies:
     semver-regex: ^3.1.2
   checksum: 2b4c749dc33e3fa73a457ca4df616ac13b4b32c53f6297bc862b0814d402a6cfec93a0d308d5502eeb47f2c125906e0f861bf01b756f08395640892186357711
-  languageName: node
-  linkType: hard
-
-"find-yarn-workspace-root@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "find-yarn-workspace-root@npm:2.0.0"
-  dependencies:
-    micromatch: ^4.0.2
-  checksum: fa5ca8f9d08fe7a54ce7c0a5931ff9b7e36f9ee7b9475fb13752bcea80ec6b5f180fa5102d60b376d5526ce924ea3fc6b19301262efa0a5d248dd710f3644242
   languageName: node
   linkType: hard
 
@@ -22165,15 +22180,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"klaw-sync@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "klaw-sync@npm:6.0.0"
-  dependencies:
-    graceful-fs: ^4.1.11
-  checksum: 0da397f8961313c3ef8f79fb63af9002cde5a8fb2aeb1a37351feff0dd6006129c790400c3f5c3b4e757bedcabb13d21ec0a5eaef5a593d59515d4f2c291e475
-  languageName: node
-  linkType: hard
-
 "klaw@npm:^1.0.0":
   version: 1.3.1
   resolution: "klaw@npm:1.3.1"
@@ -25393,7 +25399,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"open@npm:^7.0.0, open@npm:^7.0.2, open@npm:^7.0.3, open@npm:^7.4.2":
+"open@npm:^7.0.0, open@npm:^7.0.2, open@npm:^7.0.3":
   version: 7.4.2
   resolution: "open@npm:7.4.2"
   dependencies:
@@ -26034,30 +26040,6 @@ __metadata:
   version: 0.1.1
   resolution: "pascalcase@npm:0.1.1"
   checksum: f83681c3c8ff75fa473a2bb2b113289952f802ff895d435edd717e7cb898b0408cbdb247117a938edcbc5d141020909846cc2b92c47213d764e2a94d2ad2b925
-  languageName: node
-  linkType: hard
-
-"patch-package@npm:^6.2.0":
-  version: 6.5.1
-  resolution: "patch-package@npm:6.5.1"
-  dependencies:
-    "@yarnpkg/lockfile": ^1.1.0
-    chalk: ^4.1.2
-    cross-spawn: ^6.0.5
-    find-yarn-workspace-root: ^2.0.0
-    fs-extra: ^9.0.0
-    is-ci: ^2.0.0
-    klaw-sync: ^6.0.0
-    minimist: ^1.2.6
-    open: ^7.4.2
-    rimraf: ^2.6.3
-    semver: ^5.6.0
-    slash: ^2.0.0
-    tmp: ^0.0.33
-    yaml: ^1.10.2
-  bin:
-    patch-package: index.js
-  checksum: 8530ffa30f11136b527c6eddf6da48fa12856ee510a47edb1f9cdf8a025636adb82968f5fae778b5e04ce8c87915ebdf5911422b54add59a5a42e372a8f30eb2
   languageName: node
   linkType: hard
 
@@ -27469,7 +27451,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hotkeys@npm:2.0.0, react-hotkeys@npm:^2.0.0":
+"react-hotkeys@npm:2.0.0":
   version: 2.0.0
   resolution: "react-hotkeys@npm:2.0.0"
   dependencies:
@@ -27477,6 +27459,17 @@ __metadata:
   peerDependencies:
     react: ">= 0.14.0"
   checksum: 1b269159cbae45d8712369a187fb708dc89d0227cd91bdaa83509587e10bd3c5409d8828c5ced7fe0636088de4d63248a6df16e92493d0d89ecaa59e661da5dd
+  languageName: node
+  linkType: hard
+
+"react-hotkeys@patch:react-hotkeys@npm%3A2.0.0#./.yarn/patches/react-hotkeys-npm-2.0.0-8e6c50bd05.patch::locator=reactotron%40workspace%3A.":
+  version: 2.0.0
+  resolution: "react-hotkeys@patch:react-hotkeys@npm%3A2.0.0#./.yarn/patches/react-hotkeys-npm-2.0.0-8e6c50bd05.patch::version=2.0.0&hash=793202&locator=reactotron%40workspace%3A."
+  dependencies:
+    prop-types: ^15.6.1
+  peerDependencies:
+    react: ">= 0.14.0"
+  checksum: df53e17b79ba446bd4bf1cd73a5f96f484896130cb415c0bc516653a832e19997490feea9f66e6075931681dbe411dd348ecaa85d46f8a302035f8d0a0d586bc
   languageName: node
   linkType: hard
 
@@ -27906,29 +27899,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-tooltip@npm:*, react-tooltip@npm:5.7.4":
-  version: 5.7.4
-  resolution: "react-tooltip@npm:5.7.4"
+"react-tooltip@npm:5.7.5":
+  version: 5.7.5
+  resolution: "react-tooltip@npm:5.7.5"
   dependencies:
-    "@floating-ui/dom": ^1.0.4
+    "@floating-ui/dom": 1.1.1
     classnames: ^2.3.2
   peerDependencies:
     react: ">=16.14.0"
     react-dom: ">=16.14.0"
-  checksum: dbcc6f292a740b94342a9d2f938b84d2bcedd32e09460892aa1b018481996ccb919da272f64af80c0f97ee7cbde6876cdebb42e1cc2ca48e67567fd880bbbb24
+  checksum: 36cfee9c8b97ac098721fcf87f3a841822db04dc5e4de389aedcc22db398f42515ee8850bc8a34d4c61e8a5dccb6a896ee9fb9c43971cc28cadffc113ce80a62
   languageName: node
   linkType: hard
 
-"react-tooltip@npm:4.2.21":
-  version: 4.2.21
-  resolution: "react-tooltip@npm:4.2.21"
+"react-tooltip@patch:react-tooltip@npm%3A5.7.5#./.yarn/patches/react-tooltip-npm-5.7.5-5f946db699.patch::locator=reactotron%40workspace%3A.":
+  version: 5.7.5
+  resolution: "react-tooltip@patch:react-tooltip@npm%3A5.7.5#./.yarn/patches/react-tooltip-npm-5.7.5-5f946db699.patch::version=5.7.5&hash=9d92ca&locator=reactotron%40workspace%3A."
   dependencies:
-    prop-types: ^15.7.2
-    uuid: ^7.0.3
+    "@floating-ui/dom": 1.1.1
+    classnames: ^2.3.2
   peerDependencies:
-    react: ">=16.0.0"
-    react-dom: ">=16.0.0"
-  checksum: dd145ae90768a8af5518672bfd91b985a57ff021b50a60044caedd872b457ea5134793cf8d5426bd45587fa6f722320936009f5c6533a4f94d665c0a23589222
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
+  checksum: a6d20abe01e002ac7b13f87e0ac527e361d3eda6fdd6812225014d82763f98908ae0c0d5ef18316ad70eb698d0930f1562ca721f08e3b1f5a14cf3fd0a1715bd
   languageName: node
   linkType: hard
 
@@ -28041,8 +28034,8 @@ __metadata:
     "@storybook/react": ^5.2.8
     "@testing-library/react-hooks": ^8.0.1
     "@types/jest": ^29.2.5
-    "@types/react": ^16.9.16
-    "@types/react-dom": ^16.9.4
+    "@types/react": 17.0.2
+    "@types/react-dom": 17.0.2
     "@types/react-router-dom": ^5.1.3
     "@types/styled-components": ^4.4.1
     "@typescript-eslint/eslint-plugin": ^2.12.0
@@ -28077,7 +28070,7 @@ __metadata:
     react-motion: 0.5.2
     react-router-dom: ^5.1.2
     react-test-renderer: 18.2.0
-    react-tooltip: 4.2.21
+    react-tooltip: 5.7.5
     reactotron-core-server: "workspace:*"
     reactotron-core-ui: "workspace:*"
     rimraf: 4.1.2
@@ -28189,11 +28182,13 @@ __metadata:
     "@storybook/react": 6.1.21
     "@testing-library/react-hooks": 8.0.1
     "@types/jest": 27.0.0
+    "@types/react": 17.0.2
+    "@types/react-dom": 17.0.2
     "@types/react-modal": 3.13.1
     "@types/react-motion": 0.0.31
-    "@types/react-tooltip": 4.2.4
+    "@types/react-router-dom": ^5.1.3
     "@types/stringify-object": 3.3.1
-    "@types/styled-components": 5.1.12
+    "@types/styled-components": 5.1.26
     "@typescript-eslint/eslint-plugin": 4.29.1
     "@typescript-eslint/parser": 4.29.1
     babel-loader: 8.2.2
@@ -28217,7 +28212,7 @@ __metadata:
     react-modal: 3.16.1
     react-motion: 0.5.2
     react-test-renderer: 17.0.2
-    react-tooltip: 5.7.4
+    react-tooltip: 5.7.5
     rimraf: 4.1.2
     rollup: 2.56.2
     rollup-plugin-babel: 4.4.0
@@ -28236,7 +28231,7 @@ __metadata:
     react-icons: ">=4.2.0"
     react-modal: ">=3.16.1"
     react-motion: ">=0.5.2"
-    react-tooltip: ">=5.7.4"
+    react-tooltip: ">=5.7.5"
     styled-components: ">=5.3.0"
   languageName: unknown
   linkType: soft
@@ -28301,6 +28296,7 @@ __metadata:
     "@semantic-release/git": 9.0.1
     "@types/jest": 29.4.0
     "@types/node": 16.11.11
+    "@types/react": 18.0.0
     "@types/react-native": 0.69.5
     "@typescript-eslint/eslint-plugin": 4.33.0
     "@typescript-eslint/parser": 5.50.0
@@ -28401,7 +28397,6 @@ __metadata:
     ngx-deploy-npm: ^4.3.10
     nx: 15.5.1
     octokit: ^2.0.14
-    patch-package: ^6.2.0
     prettier: ^2.8.3
     typescript: ^4.9.5
     zx: ^7.1.1
@@ -33132,15 +33127,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^7.0.3":
-  version: 7.0.3
-  resolution: "uuid@npm:7.0.3"
-  bin:
-    uuid: dist/bin/uuid
-  checksum: f5b7b5cc28accac68d5c083fd51cca64896639ebd4cca88c6cfb363801aaa83aa439c86dfc8446ea250a7a98d17afd2ad9e88d9d4958c79a412eccb93bae29de
-  languageName: node
-  linkType: hard
-
 "uuid@npm:^8.0.0, uuid@npm:^8.3.0, uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
@@ -34241,7 +34227,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yaml@npm:^1.10.0, yaml@npm:^1.10.2, yaml@npm:^1.7.2":
+"yaml@npm:^1.10.0, yaml@npm:^1.7.2":
   version: 1.10.2
   resolution: "yaml@npm:1.10.2"
   checksum: ce4ada136e8a78a0b08dc10b4b900936912d15de59905b2bf415b4d33c63df1d555d23acb2a41b23cf9fb5da41c256441afca3d6509de7247daa062fd2c5ea5f

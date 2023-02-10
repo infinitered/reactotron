@@ -1,7 +1,7 @@
-diff --git a/node_modules/react-hotkeys/index.d.ts b/node_modules/react-hotkeys/index.d.ts
-index 9760ab7..7446f77 100644
---- a/node_modules/react-hotkeys/index.d.ts
-+++ b/node_modules/react-hotkeys/index.d.ts
+diff --git a/index.d.ts b/index.d.ts
+index 9760ab72bd6de4f79abcfbbf7cf24054f9ba3ab4..7446f7714ab855319d5f4e6ace8ebb0471b2f7d8 100644
+--- a/index.d.ts
++++ b/index.d.ts
 @@ -8,12 +8,12 @@ export type KeyName = string;
  export type KeyEventName = 'keyup' | 'keydown' | 'keypress';
  
