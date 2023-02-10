@@ -5,9 +5,6 @@
     "packages": [
       "apps/*",
       "lib/*"
-    ],
-    "nohoist": [
-      "electron"
     ]
   },
   "author": {
@@ -25,8 +22,8 @@
     "react native"
   ],
   "homepage": "https://github.com/infinitered/reactotron#readme",
-  "dependencies": {
-    "patch-package": "^6.2.0"
+  "engines": {
+    "node": ">= 18.0.0"
   },
   "devDependencies": {
     "@jscutlery/semver": "^2.29.3",
@@ -51,13 +48,22 @@
     "zx": "^7.1.1"
   },
   "resolutions": {
-    "@nrwl/devkit": "^15.5.3"
+    "@nrwl/devkit": "^15.5.3",
+    "@types/react": "17.0.2",
+    "webpack@^4.41.3": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
+    "webpack@^4.44.2": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
+    "webpack@^4.33.0": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
+    "webpack@^4.38.0": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
+    "electron-webpack@2.8.2": "patch:electron-webpack@npm%3A2.8.2#./.yarn/patches/electron-webpack-npm-2.8.2-1bda600605.patch",
+    "react-hotkeys@^2.0.0": "patch:react-hotkeys@npm%3A2.0.0#./.yarn/patches/react-hotkeys-npm-2.0.0-8e6c50bd05.patch",
+    "react-hotkeys@2.0.0": "patch:react-hotkeys@npm%3A2.0.0#./.yarn/patches/react-hotkeys-npm-2.0.0-8e6c50bd05.patch"
   },
   "scripts": {
     "postinstall": "sh ./scripts/postinstall.sh",
     "clean": "sh ./scripts/clean.sh",
     "reset": "sh ./scripts/reset.sh",
     "build": "npx nx run-many --target build",
+    "build:dev": "npx nx run-many --target build:dev",
     "lint": "npx nx run-many --target lint",
     "test": "npx nx run-many --target test",
     "ci:test": "npx nx run-many --target ci:test",
@@ -65,7 +71,10 @@
     "format:write": "npx nx run-many --target format:write",
     "format:check": "npx nx run-many --target format:check",
     "release:tags": "npx nx affected --target version --base $CIRCLE_BRANCH~1 --head $CIRCLE_BRANCH --parallel=1",
+    "release:tags:local": "CIRCLE_BRANCH=$(git branch --show-current) yarn release:tags",
     "release:artifacts": "zx scripts/release.artifacts.mjs",
-    "copy-prettier-ignore": "zx scripts/copy-prettier-ignore.mjs"
-  }
+    "copy-prettier-ignore": "zx scripts/copy-prettier-ignore.mjs",
+    "remove-local-tags": "git tag -l | xargs git tag -d && git fetch -t"
+  },
+  "packageManager": "yarn@3.4.1"
 }

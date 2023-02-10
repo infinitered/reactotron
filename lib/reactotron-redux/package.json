@@ -36,7 +36,7 @@
     "ci:test": "yarn test"
   },
   "peerDependencies": {
-    "reactotron-core-client": "*",
+    "reactotron-core-client": "workspace:*",
     "redux": "^4.0.1"
   },
   "devDependencies": {
@@ -57,7 +57,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "jest": "29.4.1",
     "prettier": "^2.8.3",
-    "reactotron-core-client": "*",
+    "reactotron-core-client": "workspace:*",
     "redux": "4.0.1",
     "rollup": "1.1.2",
     "rollup-plugin-babel": "4.3.2",

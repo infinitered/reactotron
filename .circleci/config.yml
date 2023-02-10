@@ -25,10 +25,12 @@ commands:
             - node-deps-<<parameters.cache-key>>-{{ arch }}-{{ checksum "yarn.lock" }}
       - run:
           name: Install packages
-          command: yarn install --frozen-lockfile
+          command: yarn install --immutable
       - save_cache:
           paths:
             - node_modules/
+            - .yarn/cache
+            - .yarn/install-state.gz
             - apps/reactotron-app/dist/
             - lib/reactotron-core-ui/dist/
             - lib/reactotron-core-client/dist/
@@ -170,7 +172,7 @@ jobs:
       - run:
           name: Install Cert
           command: |
-            cd apps/reactotron-app 
+            cd apps/reactotron-app
             bundle exec fastlane setup
       - release-reactotron-app:
           os: MacOS
