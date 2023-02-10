@@ -5,9 +5,6 @@
     "packages": [
       "apps/*",
       "lib/*"
-    ],
-    "nohoist": [
-      "electron"
     ]
   },
   "author": {
@@ -57,7 +54,6 @@
     "webpack@^4.44.2": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
     "webpack@^4.33.0": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
     "webpack@^4.38.0": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
-    "react-tooltip@5.7.5": "patch:react-tooltip@npm%3A5.7.5#./.yarn/patches/react-tooltip-npm-5.7.5-5f946db699.patch",
     "electron-webpack@2.8.2": "patch:electron-webpack@npm%3A2.8.2#./.yarn/patches/electron-webpack-npm-2.8.2-1bda600605.patch",
     "react-hotkeys@^2.0.0": "patch:react-hotkeys@npm%3A2.0.0#./.yarn/patches/react-hotkeys-npm-2.0.0-8e6c50bd05.patch",
     "react-hotkeys@2.0.0": "patch:react-hotkeys@npm%3A2.0.0#./.yarn/patches/react-hotkeys-npm-2.0.0-8e6c50bd05.patch"
@@ -67,6 +63,7 @@
     "clean": "sh ./scripts/clean.sh",
     "reset": "sh ./scripts/reset.sh",
     "build": "npx nx run-many --target build",
+    "build:dev": "npx nx run-many --target build:dev",
     "lint": "npx nx run-many --target lint",
     "test": "npx nx run-many --target test",
     "ci:test": "npx nx run-many --target ci:test",
