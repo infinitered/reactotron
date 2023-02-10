@@ -1,6 +1,7 @@
 #!/usr/bin/env zx
 // @ts-check
 import "zx/globals";
+import { getWorkspaceList } from "./tools/workspace.mjs";
 $.verbose = false;
 
 const ROOT_DIR = path.join(__dirname, "..");
@@ -14,39 +15,11 @@ if (!fs.existsSync(PRETTIER_IGNORE_PATH)) {
 console.log(`found ".prettierignore" file at ${PRETTIER_IGNORE_PATH}`);
 
 // get all the workspaces in the directory
-const cmd = await $`yarn workspaces info --json`;
-
-/**
- * Expected `yarn workspaces info --json` output
- * @typedef {Object.<string, WorkspaceMetadata>} WorkspaceInfo
- */
-
-/**
- * yarn workspace metaddata
- * @typedef {Object} WorkspaceMetadata
- * @property {string} location
- * @property {string[]} workspaceDependencies
- * @property {string[]} mismatchedWorkspaceDependencies
- * @example 
-    {
-      "location": "apps/reactotron-app",
-      "workspaceDependencies": [],
-      "mismatchedWorkspaceDependencies": [
-        "reactotron-core-server",
-        "reactotron-core-ui"
-      ]
-    },
- */
-
-/** @type {WorkspaceInfo} */
-const workspaces = JSON.parse(cmd.stdout);
-
-// get the list of all the workspaces
-const workspaceNames = Object.keys(workspaces);
+const workspaceList = await getWorkspaceList();
 
 // get a path to the root of each workspace
-const workspacePaths = workspaceNames.map((name) => {
-  return path.join(ROOT_DIR, workspaces[name].location);
+const workspacePaths = workspaceList.map((workspace) => {
+  return path.join(ROOT_DIR, workspace.location);
 });
 
 console.log(

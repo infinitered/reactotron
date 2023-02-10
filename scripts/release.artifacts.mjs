@@ -1,6 +1,7 @@
 #!/usr/bin/env zx
 // @ts-check
 import "zx/globals";
+import { getWorkspaceList } from "./tools/workspace.mjs";
 
 const isCi = process.env.CI === "true";
 const [_NODE_PATH, _ZX_PATH, _SCRIPT_PATH, ...args] = process.argv;
@@ -39,11 +40,8 @@ if (
 // #endregion
 
 // #region assert that workspace exists
-const workspaces = await $`yarn workspaces info --json`.quiet();
-/** @type {Record<string, any>} */
-const workspaceInfo = JSON.parse(workspaces.stdout);
-/** @type {string} */
-const relativePath = workspaceInfo[npmWorkspace]?.location;
+const workspaces = await getWorkspaceList();
+const relativePath = workspaces.find((w) => w.name === npmWorkspace)?.location;
 if (!relativePath) {
   console.error(`Workspace '${npmWorkspace}' does not exist`);
   process.exit(1);
