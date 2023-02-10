@@ -13,7 +13,9 @@ import {
   WssServerOptions,
 } from "./types"
 import { readFileSync } from "fs"
-import mitt from "mitt"
+
+type Mitt = typeof import("mitt").default // I'm so sorry, Jest made me do this :'(
+const mitt: Mitt = require("mitt")
 
 /**
  * The default server options.
