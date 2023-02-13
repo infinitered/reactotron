@@ -101,7 +101,7 @@ jobs:
           command: yarn release:tags
       - run:
           name: Push new tags and commits to release branch
-          command: git push origin $CIRCLE_BRANCH --tags
+          command: yarn release:tags:push
 
   release_package:
     <<: *defaults

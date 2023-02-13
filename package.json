@@ -72,6 +72,7 @@
     "release:tags": "npx nx affected --target version --base $CIRCLE_BRANCH~1 --head $CIRCLE_BRANCH --parallel=1",
     "release:tags:local": "CIRCLE_BRANCH=$(git branch --show-current) yarn release:tags",
     "release:artifacts": "zx scripts/release.artifacts.mjs",
+    "release:tags:push": "zx scripts/release.tags.push.mjs",
     "copy-prettier-ignore": "zx scripts/copy-prettier-ignore.mjs",
     "remove-local-tags": "git tag -l | xargs git tag -d && git fetch -t",
     "build-and-test:local": "yarn build && yarn lint && yarn format:check && yarn test && yarn typecheck"
