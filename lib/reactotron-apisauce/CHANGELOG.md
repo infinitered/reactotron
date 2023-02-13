@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.0.1-alpha.1](https://github.com/infinitered/reactotron/compare/reactotron-apisauce@3.0.1-alpha.0...reactotron-apisauce@3.0.1-alpha.1) (2023-02-13)
+
+
+### Features
+
+* **package.json:** update prettier, add format scripts, run format:write ([c330d81](https://github.com/infinitered/reactotron/commit/c330d81426c3f6f371a29a8a00ba9d1d6ce2d97a))
+
 ### [3.0.1-alpha.0](https://github.com/infinitered/reactotron/compare/reactotron-apisauce@3.0.0...reactotron-apisauce@3.0.1-alpha.0) (2023-02-04)
 
 
