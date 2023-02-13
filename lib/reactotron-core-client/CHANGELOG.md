@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.8.11-alpha.1](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.8.11-alpha.0...reactotron-core-client@2.8.11-alpha.1) (2023-02-13)
+
+
+### Features
+
+* **package.json:** update prettier, add format scripts, run format:write ([c330d81](https://github.com/infinitered/reactotron/commit/c330d81426c3f6f371a29a8a00ba9d1d6ce2d97a))
+
+
+### Bug Fixes
+
+* **config.yml:** remove unused circleci files ([5d40a4d](https://github.com/infinitered/reactotron/commit/5d40a4ddba0b5ac8759216152000f54158d32669))
+* **nx:** handle clean in task pipeline ([f0d4f77](https://github.com/infinitered/reactotron/commit/f0d4f77c6e4e903836f2b32bd5234f7b611028d1))
+* **reactotron-core-client:** update type output ([f430cdd](https://github.com/infinitered/reactotron/commit/f430cdda70deb3bc02a767c91da39a014b18c631))
+
 ### [2.8.11-alpha.0](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.8.10...reactotron-core-client@2.8.11-alpha.0) (2023-01-27)
 
 
