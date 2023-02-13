@@ -71,6 +71,7 @@
     "ws": "8.2.0"
   },
   "eslintConfig": {
+    "root": false,
     "globals": {
       "__DEV__": false,
       "jasmine": false,

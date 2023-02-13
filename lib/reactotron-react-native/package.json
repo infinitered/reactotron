@@ -87,6 +87,7 @@
     "typescript": "4.9.5"
   },
   "eslintConfig": {
+    "root": false,
     "extends": [
       "plugin:react/recommended"
     ],
