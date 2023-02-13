@@ -24258,15 +24258,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ngx-deploy-npm@npm:^4.3.10":
-  version: 4.3.10
-  resolution: "ngx-deploy-npm@npm:4.3.10"
-  dependencies:
-    "@nrwl/devkit": 15.2.3
-  checksum: c513d9753b4c76eedfb0d0ac09687b38a13ba1c9c2cfc2846808443e4f79809609a716e61ebc473b6b20c75a82f0d3bf42ce1dff9bf48afee04f7c97dbebbdee
-  languageName: node
-  linkType: hard
-
 "nice-try@npm:^1.0.4":
   version: 1.0.5
   resolution: "nice-try@npm:1.0.5"
@@ -28332,7 +28323,6 @@ __metadata:
     eslint-plugin-react: ^7.17.0
     eslint-plugin-react-hooks: ^2.3.0
     eslint-plugin-standard: ^4.0.1
-    ngx-deploy-npm: ^4.3.10
     nx: 15.5.1
     octokit: ^2.0.14
     prettier: ^2.8.3

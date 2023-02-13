@@ -40,7 +40,6 @@
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^2.3.0",
     "eslint-plugin-standard": "^4.0.1",
-    "ngx-deploy-npm": "^4.3.10",
     "nx": "15.5.1",
     "octokit": "^2.0.14",
     "prettier": "^2.8.3",
