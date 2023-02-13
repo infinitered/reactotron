@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0-alpha.13](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-alpha.12...reactotron-app@3.0.0-alpha.13) (2023-02-13)
+
+
+### Features
+
+* **package.json:** update prettier, add format scripts, run format:write ([c330d81](https://github.com/infinitered/reactotron/commit/c330d81426c3f6f371a29a8a00ba9d1d6ce2d97a))
+
 ## [3.0.0-alpha.12](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-alpha.11...reactotron-app@3.0.0-alpha.12) (2023-02-01)
 
 
