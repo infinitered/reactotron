@@ -50,8 +50,8 @@ commands:
           name: Build release <<parameters.os>> app
           command: yarn workspace reactotron-app build:release
       - run:
-          name: Remove release/builder-debug.yml file to prevent uploading identitical files between jobs
-          command: find apps/reactotron-app/release -type f \( -name "*.yml" -or -name "*.yaml" \) -delete
+          name: Remove release/builder-debug.yml and default._Reactotron-x.x.x.dmg file to prevent uploading identitical files between jobs
+          command: find apps/reactotron-app/release -type f \( -name "*.yml" -or -name "*.yaml" -or -name "default.*" \) -delete
       - persist_to_workspace:
           root: ~/repo/apps/reactotron-app
           paths:
