@@ -100,7 +100,10 @@ jobs:
           name: Create git tags and commits for releases
           command: yarn release:tags
       - run:
-          name: Push new tags and commits to release branch
+          name: Push new commits to release branch
+          command: git push origin $CIRCLE_BRANCH
+      - run:
+          name: Publish new tags from commits created on release branch
           command: yarn release:tags:push
 
   release_package:
