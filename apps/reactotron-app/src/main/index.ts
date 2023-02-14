@@ -35,7 +35,7 @@ function createMainWindow() {
     webPreferences: { nodeIntegration: true, contextIsolation: false },
   })
 
-  window.setBackgroundColor("#1e1e1e")
+  window.setBackgroundColor("#1e1e1e") // see reactotron-core-ui for background color
 
   mainWindowState.manage(window)
 
