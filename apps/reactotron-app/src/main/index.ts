@@ -35,6 +35,8 @@ function createMainWindow() {
     webPreferences: { nodeIntegration: true, contextIsolation: false },
   })
 
+  window.setBackgroundColor("#1e1e1e")
+
   mainWindowState.manage(window)
 
   if (isDevelopment) {
