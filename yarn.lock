@@ -3755,19 +3755,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jscutlery/semver@npm:^2.29.3":
-  version: 2.29.3
-  resolution: "@jscutlery/semver@npm:2.29.3"
+"@jscutlery/semver@npm:^2.30.1":
+  version: 2.30.1
+  resolution: "@jscutlery/semver@npm:2.30.1"
   dependencies:
     chalk: 4.1.2
     conventional-changelog: ^3.1.25
     conventional-recommended-bump: ^6.1.0
     detect-indent: 6.1.0
     inquirer: 8.2.5
-    rxjs: 7.6.0
+    rxjs: 7.8.0
   peerDependencies:
     "@nrwl/devkit": ^15.0.0
-  checksum: c69813276d9e4c98309b77cbaf5e5dea64033cbbe065e90c855a00999f21b9a524a4b09cc6188aab84a202e9a38fc94d9c170a192fbac123c76f92171a1119e4
+  checksum: 8e4219c49214746b9a75d4a0c96cc8d2bfa1f375bd26c849fde3601416b3c1a67f86f92f4755486697ffbb0e616b6d12f11f8b90410910a5732b2f396e80facf
   languageName: node
   linkType: hard
 
@@ -28309,7 +28309,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "reactotron@workspace:."
   dependencies:
-    "@jscutlery/semver": ^2.29.3
+    "@jscutlery/semver": ^2.30.1
     "@nrwl/devkit": ^15.5.1
     "@types/eslint": ^8.4.10
     "@typescript-eslint/eslint-plugin": ^2.12.0
@@ -29541,21 +29541,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:*, rxjs@npm:^7.5.5":
+"rxjs@npm:*, rxjs@npm:7.8.0, rxjs@npm:^7.5.5":
   version: 7.8.0
   resolution: "rxjs@npm:7.8.0"
   dependencies:
     tslib: ^2.1.0
   checksum: 61b4d4fd323c1043d8d6ceb91f24183b28bcf5def4f01ca111511d5c6b66755bc5578587fe714ef5d67cf4c9f2e26f4490d4e1d8cabf9bd5967687835e9866a2
-  languageName: node
-  linkType: hard
-
-"rxjs@npm:7.6.0":
-  version: 7.6.0
-  resolution: "rxjs@npm:7.6.0"
-  dependencies:
-    tslib: ^2.1.0
-  checksum: b3abbbfe1ddfd06fca9314b83cbd13bcddc3320429218136f75c79a4802ac430dd13873364aac1ded54fd457f8c77df332d205a92d8a1c61656565bb718c50af
   languageName: node
   linkType: hard
 

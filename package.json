@@ -26,7 +26,7 @@
     "node": ">= 18.0.0"
   },
   "devDependencies": {
-    "@jscutlery/semver": "^2.29.3",
+    "@jscutlery/semver": "^2.30.1",
     "@nrwl/devkit": "^15.5.1",
     "@types/eslint": "^8.4.10",
     "@typescript-eslint/eslint-plugin": "^2.12.0",
