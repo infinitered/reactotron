@@ -27,7 +27,7 @@
     "prebuild:dev": "yarn clean",
     "build:dev": "yarn tsc && yarn compile:dev",
     "clean": "trash dist",
-    "lint": "eslint src --ext .ts,.tsx",
+    "lint": "eslint 'src/**/**.{ts,tsx}'",
     "compile": "NODE_ENV=production rollup -c rollup.config.ts",
     "compile:dev": "NODE_ENV=development rollup -c rollup.config.ts",
     "tsc": "tsc",
