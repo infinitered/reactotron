@@ -62,6 +62,13 @@ if (!fs.existsSync(npmWorkspacePath)) {
 console.log(`Found workspace '${npmWorkspace}' at '${npmWorkspacePath}'`);
 // #endregion
 
+// #region assert NPM_TOKEN is set
+if (typeof process.env.NPM_TOKEN !== "string" || process.env.NPM_TOKEN === "") {
+  console.error("NPM_TOKEN environment variable is required");
+  process.exit(1);
+}
+// #endregion
+
 // #region release on npm
 const npmTag = gitTag.includes("beta")
   ? "beta"
@@ -70,8 +77,8 @@ const npmTag = gitTag.includes("beta")
   : "latest";
 
 console.log(`Creating npm release for: ${gitTag}`);
-cd(npmWorkspacePath); // cd to workspace to avoid using --workspace flag https://github.com/npm/cli/issues/5745
-await $`npm publish --access public --tag ${npmTag} --dry-run ${!isCi} --registry https://registry.npmjs.org/`;
+cd(npmWorkspacePath);
+await $`yarn npm publish --access public --tag ${npmTag}`;
 cd(__dirname);
 // #endregion
 
