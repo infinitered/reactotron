@@ -1,4 +1,4 @@
-# ![Reactotron Logo](./images/readme/Reactotron-128.png)
+# ![Reactotron Logo](./docs/plugin-docs/images/readme/Reactotron-128.png)
 
 [Join our Community Slack](http://community.infinite.red/)
 
@@ -22,22 +22,21 @@ Once you have the application installed it should download and alert you that a 
 
 ## How to setup Reactotron in our app
 
-- [React Native](https://github.com/infinitered/reactotron/blob/master/docs/quick-start-react-native.md#installing-reactotronapp)
-- [React](https://github.com/infinitered/reactotron/blob/master/docs/quick-start-react-js.md)
+- [React Native](./docs/plugin-docs/quick-start-react-native.md#installing-reactotronapp)
+- [React](./docs/plugin-docs/quick-start-react-js.md#installing-reactotronapp)
 
 ## How to use Reactotron's features/plugins
 
-- [**Track Global Errors**]()
-- [**Async Storage**]()
-- [**Benchmark**]()
-- [**apisauce**]()
-- [**Networking**]()
-- [**Overlay**]()
-- [**MST**]()
-- [**Redux**]()
-- [**Open in Editor**]()
-- [**Redux**]()
-- [**Storybook (only for React Native)**]() \
+- [**Track Global Errors**](./docs/plugin-docs/plugin-track-global-errors.md)
+- [**Async Storage**](./docs/plugin-docs/plugin-async-storage.md)
+- [**Benchmark**](./docs/plugin-docs/plugin-benchmark.md)
+- [**apisauce**](./docs/plugin-docs/plugin-apisauce.md)
+- [**Networking**](./docs/plugin-docs/plugin-networking.md)
+- [**Overlay**](./docs/plugin-docs/plugin-overlay.md)
+- [**MST**](./docs/plugin-docs/plugin-mst.md)
+- [**Redux**](./docs/plugin-docs/plugin-redux.md)
+- [**Open in Editor**](./docs/plugin-docs/plugin-open-in-editor.md)
+- [**Storybook (only for React Native)**](./docs/plugin-docs/plugin-storybook.md) \
  `reactotron-react-native` ships with [Storybook](https://storybook.js.org/).
 This allows the switching to Storybook from the reactotron interface.
 <!-- add link here -->
@@ -48,8 +47,8 @@ This allows the switching to Storybook from the reactotron interface.
 
 ## Troubleshooting
 
-- [React Native iOS](https://github.com/infinitered/reactotron/blob/master/docs/troubleshooting.md#react-native-ios)
-- [React Native Android](https://github.com/infinitered/reactotron/blob/master/docs/troubleshooting.md#react-native-android)
+- [React Native iOS](./docs/plugin-docs/troubleshooting.md#react-native-ios)
+- [React Native Android](./docs/plugin-docs/troubleshooting.md#react-native-android)
 
 ## Contributing
 
