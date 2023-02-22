@@ -22,8 +22,8 @@ Once you have the application installed it should download and alert you that a 
 
 ## How to setup Reactotron in our app
 
-- [React Native](./docs/plugin-docs/quick-start-react-native.md#installing-reactotronapp)
-- [React](./docs/plugin-docs/quick-start-react-js.md#installing-reactotronapp)
+- [**React Native**](./docs/plugin-docs/quick-start-react-native.md#installing-reactotronapp)
+- [**React**](./docs/plugin-docs/quick-start-react-js.md#installing-reactotronapp)
 
 ## How to use Reactotron's features/plugins
 
@@ -40,42 +40,16 @@ Once you have the application installed it should download and alert you that a 
  `reactotron-react-native` ships with [Storybook](https://storybook.js.org/).
 This allows the switching to Storybook from the reactotron interface.
 <!-- add link here -->
-- [**Custom Commands**]() \
+- [**Custom Commands**](./docs/plugin-docs/custom-commands.md)
 
 <!-- ## Tips and Tricks
 - think we should add this in a different section  -->
 
 ## Troubleshooting
 
-- [React Native iOS](./docs/plugin-docs/troubleshooting.md#react-native-ios)
-- [React Native Android](./docs/plugin-docs/troubleshooting.md#react-native-android)
+- [**React Native iOS**](./docs/plugin-docs/troubleshooting.md#react-native-ios)
+- [**React Native Android**](./docs/plugin-docs/troubleshooting.md#react-native-android)
 
-## Contributing
+## [Contributing ](./docs/plugin-docs/contributing.md)
 
 We welcome contributions from the community!
-
-<!-- Needs to be updated
-### Dev Tools
-
-Make sure you've got at least `yarn` (1.7.0) and `node` (8.6.0).  There are some issues with older combos of these.  =)
-
-Also if you encounter a problem with `electron 1.8.6` passing checksums, there was a bug in
-earlier versions of node with their checksum process.  Clear your Yarn cache `yarn cache clean` to
-grab the latests copies.
-
-
-### Getting Started
-
-Clone & switch to the right branch.
-
-```
-git clone git@github.com:infinitered/reactotron.git
-cd reactotron
-```
-
-Install the dependencies & run the app.
-
-```
-yarn install
-yarn dev
-``` -->
