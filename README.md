@@ -4,9 +4,9 @@
 
 # Introduction
 
-Reactotron is a powerful debugger for React and React Native applications. It provides an easy-to-use interface for developers to monitor their application's **state, network requests, and performance metrics** and can be used for any size of project, from small personal apps to large-scale enterprise applications. The OG debugger [Infinite Red](https://infinite.red) team uses on a day-to-day basis to build client apps. Additionally, Reactotron is completely open source and free to use, making it an invaluable tool for developers at all levels of experience.
+Reactotron is a powerful debugger for React and React Native applications. It provides an easy-to-use interface for developers to monitor their application's **state, network requests, and performance metrics** and can be used for any size of project, from small personal apps to large-scale enterprise applications. The OG debugger at [Infinite Red](https://infinite.red) that we use on a day-to-day basis to build client apps. Additionally, Reactotron is completely open source and free to use, making it an invaluable tool for developers at all levels of experience.
 
-We recommend to watch [Darin Wilson's](https://github.com/darinwilson) talk at [Chain React](https://chainreactconf.com/): [Chain React 2018: Debugging and Beyond with Reactotron](https://www.youtube.com/watch?v=UiPo9A9k7xc)!
+We recommend that you watch [Darin Wilson's](https://github.com/darinwilson) talk at [Chain React](https://chainreactconf.com/): [Chain React 2018: Debugging and Beyond with Reactotron](https://www.youtube.com/watch?v=UiPo9A9k7xc)!
 
 ## Installation
 
@@ -37,9 +37,8 @@ Once you have the application installed it should download and alert you that a 
 - [**Redux**](./docs/plugin-docs/plugin-redux.md)
 - [**Open in Editor**](./docs/plugin-docs/plugin-open-in-editor.md)
 - [**Storybook (only for React Native)**](./docs/plugin-docs/plugin-storybook.md) \
- `reactotron-react-native` ships with [Storybook](https://storybook.js.org/).
-This allows the switching to Storybook from the reactotron interface.
-<!-- add link here -->
+   `reactotron-react-native` ships with [Storybook](https://storybook.js.org/).
+  This enables you to switch to Storybook from the Reactotron app.
 - [**Custom Commands**](./docs/plugin-docs/custom-commands.md)
 
 <!-- ## Tips and Tricks
