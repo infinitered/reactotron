@@ -4,7 +4,7 @@
   "private": true,
   "devDependencies": {
     "babel-eslint": "^8.2.1",
-    "prettier": "^2.8.3",
+    "prettier": "^2.8.4",
     "react-scripts": "^0.9.5",
     "reactotron-apisauce": "^2.0.0",
     "reactotron-core-client": "^2.0.0",
