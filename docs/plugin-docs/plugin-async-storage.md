@@ -1,13 +1,13 @@
-# Async Storage
+# AsyncStorage
 
-Included in `reactotron-react-native` is a plugin called `asyncStorage` which allows you to track [AsyncStorage](https://facebook.github.io/react-native/docs/asyncstorage.html) on React Native.
+A plugin called `asyncStorage` is part of `reactotron-react-native` which allows you to track [AsyncStorage](https://facebook.github.io/react-native/docs/asyncstorage.html) on React Native.
 
 ## Usage
 
-Wherever you setup your Reactotron in your app, you also add the additional plugin on the `import` line.
+To use the Async Storage plugin you need to add the additional plugin on the `import` line.
 
 ```js
-import Reactotron, { asyncStorage } from "reactotron-react-native"
+import Reactotron, { asyncStorage } from "reactotron-react-native";
 ```
 
 Next, add it as a plugin to Reactotron.
@@ -15,10 +15,10 @@ Next, add it as a plugin to Reactotron.
 ```js
 Reactotron.configure()
   .use(asyncStorage()) // <--- here we go!
-  .connect()
+  .connect();
 ```
 
-You're done.
+And you're done! Now you can see your AsyncStorage in Reactotron.
 
 ## Advanced Usage
 
@@ -27,5 +27,5 @@ You're done.
 ```js
 asyncStorage({
   ignore: ["secret"],
-})
+});
 ```
