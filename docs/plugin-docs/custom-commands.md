@@ -1,21 +1,22 @@
 # Setting up custom commands
 
-Reactotron supports registering custom commands that can do anything you want when they are executed. When there are registered commands you can find them in the "Custom Commands" tab in reactotron.
+With Reactotron you can register custom commands that can do anything you want when they are executed. You can see all your registered commands in the "Custom Commands" tab in reactotron.
 
 ## Registering a command
 
+There are two ways you can write your custom commands.
+
 ```js
-// Way 1
 Reactotron.onCustomCommand({
   command: "test2",
   handler: () => console.log("This is an example 2"),
-
   // Optional settings
   title: "A thing", // This shows on the button
   description: "The desc", // This shows below the button
 })
+```
 
-// Way 2
+```js
 Reactotron.onCustomCommand("test", () => console.log("This is an example"))
 ```
 
@@ -29,4 +30,8 @@ const selfRemoving = Reactotron.onCustomCommand({
     selfRemoving() // Calling it unregisters the command
   },
 })
+```
+
+```
+
 ```
