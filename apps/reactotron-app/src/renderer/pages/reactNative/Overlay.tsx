@@ -187,7 +187,7 @@ function Overlay() {
     if (newOpacity === opacity) {
       return
     }
-    if (!!uri) {
+    if (uri) {
       updateOverlayParams({ opacity: newOpacity })
     }
   }
@@ -211,13 +211,13 @@ function Overlay() {
           onDragLeave={handlePreventDefault}
           onDragEnd={handlePreventDefault}
         >
-          {!!uri ? <OverlayPreview src={uri} onClick={removeImage} /> : "Drop Image Here"}
+          {uri ? <OverlayPreview src={uri} onClick={removeImage} /> : "Drop Image Here"}
         </DropZone>
-        {!!uri && (
+        {uri ? (
           <ReapplyContainer>
             <OverlayButton onClick={() => applyOverlay()} title={"Reapply Overlay"} />
           </ReapplyContainer>
-        )}
+        ) : null}
       </>
     )
   }
