@@ -37,7 +37,7 @@ function SideBar({ isOpen }: { isOpen: boolean }) {
       />
       <SideBarButton
         icon={MdPhoneIphone}
-        path="/native/storybook"
+        path="/native/overlay"
         matchPath="/native"
         text="React Native"
       />
