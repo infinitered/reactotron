@@ -1,7 +1,21 @@
 import React, { Component } from "react"
-import { Dimensions, View, Image, ImageResizeMode, FlexAlignType, ViewStyle } from "react-native"
+import {
+  Dimensions,
+  View,
+  Image,
+  ImageResizeMode,
+  FlexAlignType,
+  ViewStyle,
+  Text,
+  TextStyle,
+} from "react-native"
 
-const Styles: { container: ViewStyle } = {
+const Styles: {
+  container: ViewStyle
+  debugContainer: ViewStyle
+  debugTextContainer: ViewStyle
+  debugText: TextStyle
+} = {
   container: {
     position: "absolute",
     left: 0,
@@ -10,6 +24,27 @@ const Styles: { container: ViewStyle } = {
     bottom: 0,
     zIndex: 1000,
     opacity: 0.25,
+  },
+  debugContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "transparent",
+    zIndex: 2000,
+  },
+  debugTextContainer: {
+    backgroundColor: "lightgray",
+    margin: 50,
+    padding: 20,
+  },
+  debugText: {
+    color: "red",
+    fontSize: 16,
+    marginBottom: 10,
   },
 }
 
@@ -20,7 +55,13 @@ interface Props {
 interface State {
   opacity: number
   uri: string
-  justifyContent: "flex-start" | "flex-end" | "center" | "space-between" | "space-around" | "space-evenly"
+  justifyContent:
+    | "flex-start"
+    | "flex-end"
+    | "center"
+    | "space-between"
+    | "space-around"
+    | "space-evenly"
   alignItems: FlexAlignType
   width?: number
   height?: number
@@ -30,6 +71,7 @@ interface State {
   marginRight?: number
   marginTop?: number
   marginBottom?: number
+  showDebug?: boolean
 }
 
 /** An overlay for showing an image to help with layout.
@@ -69,6 +111,31 @@ class FullScreenOverlay extends Component<Props, State> {
     return containerStyle
   }
 
+  renderDebug() {
+    const { showDebug } = this.state
+
+    // If Reactotron is configured properly it should be disabled in production.
+    // We'll throw a __DEV__ check in here just in case it get's feisty.
+    if (!__DEV__ || !showDebug) return null
+
+    return (
+      <View style={Styles.debugContainer} pointerEvents="none">
+        <View style={Styles.debugTextContainer}>
+          {Object.keys(this.state).map((key) => {
+            if (key === "showDebug") return null
+            const keyName = key === "uri" ? "have image" : key
+            const value = key === "uri" ? !!this.state[key] : this.state[key]
+            return (
+              <Text key={key} style={Styles.debugText}>
+                {`${keyName}: ${value}`}
+              </Text>
+            )
+          })}
+        </View>
+      </View>
+    )
+  }
+
   /**
    * Draw.
    */
@@ -97,9 +164,12 @@ class FullScreenOverlay extends Component<Props, State> {
     )
 
     return (
-      <View style={this.createContainerStyle()} pointerEvents="none">
-        {image}
-      </View>
+      <>
+        <View style={this.createContainerStyle()} pointerEvents="none">
+          {image}
+        </View>
+        {this.renderDebug()}
+      </>
     )
   }
 }
