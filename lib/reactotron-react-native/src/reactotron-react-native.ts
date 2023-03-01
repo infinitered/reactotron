@@ -6,6 +6,7 @@ import getReactNativeVersion from "./helpers/getReactNativeVersion"
 import getReactNativeDimensions from "./helpers/getReactNativeDimensions"
 import asyncStorage, { AsyncStorageOptions } from "./plugins/asyncStorage"
 import overlay from "./plugins/overlay"
+import type { OverlayFeatures } from "./plugins/overlay"
 import openInEditor, { OpenInEditorOptions } from "./plugins/openInEditor"
 import trackGlobalErrors, { TrackGlobalErrorsOptions } from "./plugins/trackGlobalErrors"
 import networking, { NetworkingOptions } from "./plugins/networking"
@@ -76,7 +77,7 @@ export interface ReactotronReactNative {
   useReactNative: (
     options?: UseReactNativeOptions
   ) => Reactotron<ReactotronReactNative> & ReactotronReactNative
-  overlay: (App: React.ReactNode) => void
+  overlay: OverlayFeatures["overlay"]
   storybookSwitcher: (App: React.ReactNode) => (Root: React.ReactNode) => React.ReactNode
   asyncStorageHandler?: any
   setAsyncStorageHandler?: (
