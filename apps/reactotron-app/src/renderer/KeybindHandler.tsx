@@ -4,6 +4,13 @@ import { ReactotronContext, StateContext } from "reactotron-core-ui"
 import LayoutContext from "./contexts/Layout"
 
 const keyMap = {
+  // Application wide
+  ToggleSidebar: {
+    name: "Toggle Sidebar",
+    group: "Application",
+    sequences: ["command+shift+s", "ctrl+shift+s"],
+    action: "keyup" as KeyEventName,
+  },
   // Tab Navigation
   OpenHomeTab: {
     name: "Home tab",
@@ -41,14 +48,21 @@ const keyMap = {
     sequences: ["command+?", "ctrl+?"],
     action: "keyup" as KeyEventName,
   },
-
-  // Modals
-  OpenFindKeysValuesModal: {
-    name: "Find keys or values",
-    group: "State",
+  // Timeline
+  ClearTimeline: {
+    name: "Clear Timeline",
+    group: "Timeline",
     sequences: ["command+k", "ctrl+k"],
     action: "keyup" as KeyEventName,
   },
+  // Modals
+  // TODO: What keybinding should this be set to?
+  // OpenFindKeysValuesModal: {
+  //   name: "Find keys or values",
+  //   group: "State",
+  //   sequences: ["command+k", "ctrl+k"],
+  //   action: "keyup" as KeyEventName,
+  // },
   OpenSubscriptionModal: {
     name: "Open Subscription modal",
     group: "State",
@@ -67,19 +81,11 @@ const keyMap = {
     sequences: ["command+s", "ctrl+s"],
     action: "keyup" as KeyEventName,
   },
-
-  // Miscellaneous
-  ToggleSidebar: {
-    name: "Toggle Sidebar",
-    group: "State",
-    sequences: ["command+shift+s", "ctrl+shift+s"],
-    action: "keyup" as KeyEventName,
-  },
 }
 
 function KeybindHandler({ children }) {
   const { toggleSideBar } = useContext(LayoutContext)
-  const { openDispatchModal, openSubscriptionModal } = useContext(ReactotronContext)
+  const { openDispatchModal, openSubscriptionModal, clearCommands } = useContext(ReactotronContext)
   const { createSnapshot } = useContext(StateContext)
 
   const handlers = {
@@ -104,9 +110,9 @@ function KeybindHandler({ children }) {
     },
 
     // Modals
-    OpenFindKeysValuesModal: () => {
-      throw new Error("Implement Me!")
-    },
+    // OpenFindKeysValuesModal: () => {
+    //   throw new Error("Implement Me!")
+    // },
     OpenSubscriptionModal: () => {
       openSubscriptionModal()
     },
@@ -120,6 +126,9 @@ function KeybindHandler({ children }) {
     // Miscellaneous
     ToggleSidebar: () => {
       toggleSideBar()
+    },
+    ClearTimeline: () => {
+      clearCommands()
     },
   }
 
