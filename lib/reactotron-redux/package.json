@@ -33,7 +33,7 @@
     "compile:dev": "NODE_ENV=development rollup -c",
     "tsc": "tsc",
     "typecheck": "yarn tsc",
-    "ci:test": "yarn test"
+    "ci:test": "yarn test --runInBand"
   },
   "peerDependencies": {
     "reactotron-core-client": "workspace:*",
