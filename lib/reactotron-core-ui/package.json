@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "color-interpolate": "1.0.5",
-    "date-fns": "2.29.0",
+    "date-fns": "2.29.3",
     "react-json-tree": "0.18.0",
     "stringify-object": "5.0.0"
   },
