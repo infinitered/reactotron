@@ -38,10 +38,11 @@ module.exports = {
     "@typescript-eslint/explicit-function-return-type": 0,
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-object-literal-type-assertion": 0,
+    "@typescript-eslint/no-empty-function": [2, { allow: ["arrowFunctions"] }],
     "@typescript-eslint/no-empty-interface": 0,
     "@typescript-eslint/no-var-requires": 0,
     "@typescript-eslint/member-delimiter-style": 0,
-    "import/no-cycle": "error",
+    "import/no-cycle": "error"
   },
   ignorePatterns: [
     "**/dist/**/*",
