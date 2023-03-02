@@ -40,9 +40,9 @@
   },
   "dependencies": {
     "color-interpolate": "1.0.5",
-    "date-fns": "2.6.0",
-    "react-json-tree": "0.11.2",
-    "stringify-object": "3.3.0"
+    "date-fns": "2.29.0",
+    "react-json-tree": "0.18.0",
+    "stringify-object": "5.0.0"
   },
   "peerDependencies": {
     "react": ">=17.0.2",
@@ -95,7 +95,7 @@
     "react-motion": "0.5.2",
     "react-test-renderer": "17.0.2",
     "react-tooltip": "4.5.1",
-    "rimraf": "4.1.2",
+    "rimraf": "4.1.3",
     "rollup": "2.56.2",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-babel-minify": "10.0.0",
