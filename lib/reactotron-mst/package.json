@@ -31,6 +31,7 @@
     "compile": "NODE_ENV=production rollup -c rollup.config.ts",
     "compile:dev": "NODE_ENV=development rollup -c rollup.config.ts",
     "tsc": "tsc",
+    "typecheck": "tsc",
     "ci:test": "yarn test --runInBand"
   },
   "peerDependencies": {
