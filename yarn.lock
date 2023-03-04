@@ -24126,14 +24126,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"reactotron-core-client@workspace:*":
-  version: 2.8.11-alpha.2
-  resolution: "reactotron-core-client@npm:2.8.11-alpha.2"
-  checksum: e00884224562279f424fa060a252d8974c59423314f4428a5bc97064d4bfef41ea2acd8d64f6089b84f71d765d849af823fba6a5a3c59a236b788c3e20acf7e7
-  languageName: node
-  linkType: hard
-
-"reactotron-core-client@workspace:lib/reactotron-core-client":
+"reactotron-core-client@workspace:*, reactotron-core-client@workspace:lib/reactotron-core-client":
   version: 0.0.0-use.local
   resolution: "reactotron-core-client@workspace:lib/reactotron-core-client"
   dependencies:
