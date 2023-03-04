@@ -61,6 +61,7 @@
     "postinstall": "sh ./scripts/postinstall.sh",
     "clean": "sh ./scripts/clean.sh",
     "reset": "sh ./scripts/reset.sh",
+    "start": "yarn workspace reactotron-app start",
     "build": "npx nx run-many --target build",
     "build:dev": "npx nx run-many --target build:dev",
     "lint": "npx nx run-many --target lint",
