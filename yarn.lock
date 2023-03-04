@@ -7845,7 +7845,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"async-limiter@npm:^1.0.0, async-limiter@npm:~1.0.0":
+"async-limiter@npm:~1.0.0":
   version: 1.0.1
   resolution: "async-limiter@npm:1.0.1"
   checksum: 2b849695b465d93ad44c116220dee29a5aeb63adac16c1088983c339b0de57d76e82533e8e364a93a9f997f28bbfc6a92948cefc120652bd07f3b59f8d75cf2b
@@ -24173,18 +24173,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"reactotron-core-server@workspace:*":
-  version: 3.0.6-alpha.2
-  resolution: "reactotron-core-server@npm:3.0.6-alpha.2"
-  dependencies:
-    mitt: 3.0.0
-    ramda: 0.26.1
-    ws: 7.1.2
-  checksum: c82df3dc73d07d9a1608eac9e5578407ef0949e0cef8fc992ec2d3619f9bc1c77d54161f58510a100cc81fc075ac0d75b01295679092980c695ddf03eda755a9
-  languageName: node
-  linkType: hard
-
-"reactotron-core-server@workspace:lib/reactotron-core-server":
+"reactotron-core-server@workspace:*, reactotron-core-server@workspace:lib/reactotron-core-server":
   version: 0.0.0-use.local
   resolution: "reactotron-core-server@workspace:lib/reactotron-core-server"
   dependencies:
@@ -29431,15 +29420,6 @@ __metadata:
   dependencies:
     mkdirp: ^0.5.1
   checksum: 6496197ceb2d6faeeb8b5fe2659ca804e801e4989dff9fb8a66fe76179ce4ccc378c982ef906733caea1220c8dbe05a666d82127959ac4456e70111af8b8df73
-  languageName: node
-  linkType: hard
-
-"ws@npm:7.1.2":
-  version: 7.1.2
-  resolution: "ws@npm:7.1.2"
-  dependencies:
-    async-limiter: ^1.0.0
-  checksum: 73f1d3c11032552b8f0b1dedda8510863ff470faf498d55413916e422924201f697045380ba480239c35f0a2c051a996f620bca88bf01732db13b29ddedf8296
   languageName: node
   linkType: hard
 
