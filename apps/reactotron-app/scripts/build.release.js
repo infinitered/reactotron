@@ -1,29 +1,41 @@
 // @ts-check
 // #region Validate inputs
+const isCi = process.env.CI === "true"
+let skipSigning = false
 const BUILD_TARGET = process.env.BUILD_TARGET
 if (BUILD_TARGET !== "macos" && BUILD_TARGET !== "linux" && BUILD_TARGET !== "windows") {
   throw new Error('BUILD_TARGET must be either "macos", "linux" or "windows"')
 }
 console.log(`Releasing app for target: '${BUILD_TARGET}'`)
 
-const path = require("path")
-const fs = require("fs")
-const CSC_LINK = path.join(
-  __dirname, // /apps/app/scripts
-  "..", // /apps/app/
-  "Certificates.p12" // /apps/app/Certificates.p12
-)
-if (BUILD_TARGET === "macos" && !fs.existsSync(CSC_LINK)) {
-  throw new Error(`CSC_LINK not found at ${CSC_LINK} for ${BUILD_TARGET} target}`)
-}
-if (BUILD_TARGET === "macos") {
-  console.log(`MacOS Code Signing Certificate found at: '${CSC_LINK}'`)
+if (isCi) {
+  const path = require("path")
+  const fs = require("fs")
+  const CSC_LINK = path.join(
+    __dirname, // /apps/app/scripts
+    "..", // /apps/app/
+    "Certificates.p12" // /apps/app/Certificates.p12
+  )
+  if (BUILD_TARGET === "macos" && !fs.existsSync(CSC_LINK)) {
+    throw new Error(`CSC_LINK not found at ${CSC_LINK} for ${BUILD_TARGET} target}`)
+  }
+  if (BUILD_TARGET === "macos") {
+    console.log(`MacOS Code Signing Certificate found at: '${CSC_LINK}'`)
+  }
+} else {
+  console.log("Not running in CI, skipping code signing")
+  console.log("If you want a signed build, run electron-builder directly")
+  skipSigning = true
 }
 // #endregion
 
 /** @type {Record<typeof BUILD_TARGET, string>} @see https://electron.build/cli.html */
 const targetFlags = { macos: "--macos", windows: "--windows", linux: "--linux" }
-const flags = `${targetFlags[BUILD_TARGET]} --publish never`
+let flags = `${targetFlags[BUILD_TARGET]} --publish never`
+
+if (skipSigning) {
+  flags += " -c.mac.identity=null"
+}
 
 /**
  * @type {Record<typeof BUILD_TARGET, Record<string, string>>}
