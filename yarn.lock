@@ -12342,16 +12342,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:^23.1.1":
-  version: 23.1.1
-  resolution: "electron@npm:23.1.1"
+"electron@npm:23.1.2":
+  version: 23.1.2
+  resolution: "electron@npm:23.1.2"
   dependencies:
     "@electron/get": ^2.0.0
     "@types/node": ^16.11.26
     extract-zip: ^2.0.1
   bin:
     electron: cli.js
-  checksum: 8f1ade0518957f40f399d2e47dfeea690ff5cea81201e4f9cfaa1ad768d14699168c37c1376586a9f21bca2dc9f7fde01885967a88f39af6667df25d574452fa
+  checksum: d083f2fa6c63bdf09f60b53867cdfde60b27abd395ad02d878d130fb5b591c8beacc7c2ea19b7fc13cf3e594caefb1012e3175b88a7cc6dc5e63daaecc9548cf
   languageName: node
   linkType: hard
 
@@ -24107,7 +24107,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^2.12.0
     "@typescript-eslint/parser": ^2.12.0
     babel-loader: ^8.3.0
-    electron: ^23.1.1
+    electron: 23.1.2
     electron-builder: ^23.6.0
     electron-log: ^4.4.8
     electron-store: ^8.1.0
