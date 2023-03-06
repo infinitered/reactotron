@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0-alpha.20](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-alpha.19...reactotron-app@3.0.0-alpha.20) (2023-03-06)
+
+
+### Bug Fixes
+
+* **release:** Pin electron correctly, allow building unsigned release builds locally ([#1275](https://github.com/infinitered/reactotron/issues/1275)) ([b4f04c3](https://github.com/infinitered/reactotron/commit/b4f04c375d858f3aad2f14911559fe895d8c9ebc))
+
 ## [3.0.0-alpha.19](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-alpha.18...reactotron-app@3.0.0-alpha.19) (2023-03-06)
 
 ## [3.0.0-alpha.18](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-alpha.17...reactotron-app@3.0.0-alpha.18) (2023-03-06)
