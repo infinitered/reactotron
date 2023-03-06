@@ -42,7 +42,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "nx": "15.5.1",
     "octokit": "^2.0.14",
-    "prettier": "^2.8.3",
+    "prettier": "^2.8.4",
     "typescript": "^4.9.5",
     "zx": "^7.1.1"
   },
@@ -61,6 +61,7 @@
     "postinstall": "sh ./scripts/postinstall.sh",
     "clean": "sh ./scripts/clean.sh",
     "reset": "sh ./scripts/reset.sh",
+    "start": "yarn workspace reactotron-app start",
     "build": "npx nx run-many --target build",
     "build:dev": "npx nx run-many --target build:dev",
     "lint": "npx nx run-many --target lint",

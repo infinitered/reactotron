@@ -11,6 +11,10 @@ beforeEach(async () => {
   server = createServer({ port })
 })
 
+afterEach(() => {
+  server.stop()
+})
+
 test("sends a valid command", (done) => {
   server.on("command", () => server.send(mock.type, mock.payload))
   server.start()
@@ -25,6 +29,7 @@ test("sends a valid command", (done) => {
       server.stop()
       expect(type).toBe(mock.type)
       expect(payload).toEqual(mock.payload)
+      client.close()
       done()
     }
   })

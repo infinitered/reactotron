@@ -1,5 +1,5 @@
 import React from "react"
-import JSONTree from "react-json-tree"
+import { JSONTree } from "react-json-tree"
 import styled from "styled-components"
 
 import baseTheme from "../../theme"
@@ -27,7 +27,7 @@ const theme = {
 }
 
 const MutedContainer = styled.span`
-  color: ${props => props.theme.highlight};
+  color: ${(props) => props.theme.highlight};
 `
 
 const treeTheme = {
@@ -47,7 +47,7 @@ export default function TreeView({ value, level = 1 }: Props) {
     <JSONTree
       data={value}
       hideRoot
-      shouldExpandNode={(keyName, data, minLevel) => minLevel <= level}
+      shouldExpandNodeInitially={(keyName, data, minLevel) => minLevel <= level}
       theme={treeTheme}
       getItemString={(type, data, itemType, itemString) => {
         if (type === "Object") {

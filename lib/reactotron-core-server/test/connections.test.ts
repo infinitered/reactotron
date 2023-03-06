@@ -11,6 +11,10 @@ beforeEach(async () => {
   server = createServer({ port })
 })
 
+afterEach(() => {
+  server.stop()
+})
+
 test("keeps track of connections", (done) => {
   // when we get a command
   server.on("command", () => {

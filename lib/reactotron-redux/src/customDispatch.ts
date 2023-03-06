@@ -17,7 +17,8 @@ export default function createCustomDispatch(
     // stop the timer
     const ms = elapsed()
 
-    var unwrappedAction = action.type === "PERFORM_ACTION" && action.action ? action.action : action
+    const unwrappedAction =
+      action.type === "PERFORM_ACTION" && action.action ? action.action : action
 
     const isException = exceptions.some((exception) => {
       if (typeof exception === "string") {
