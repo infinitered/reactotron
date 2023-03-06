@@ -24,7 +24,9 @@ if (isCi) {
   }
 } else {
   console.log("Not running in CI, skipping code signing")
-  console.log("For production builds: electron-builder needs a MacOS Developer Certificate in the MacOS Keychain or linked at CNC_LINK variable. See: https://www.electron.build/code-signing.html")
+  console.log(
+    "For production builds: electron-builder needs a MacOS Developer Certificate in the MacOS Keychain or linked at CNC_LINK variable. See: https://www.electron.build/code-signing.html"
+  )
   skipSigning = true
 }
 // #endregion
