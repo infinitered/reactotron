@@ -28,6 +28,7 @@
   "devDependencies": {
     "@jscutlery/semver": "^2.30.1",
     "@nrwl/devkit": "^15.5.1",
+    "@octokit/rest": "^19.0.7",
     "@types/eslint": "^8.4.10",
     "@typescript-eslint/eslint-plugin": "^2.12.0",
     "@typescript-eslint/parser": "^2.12.0",
