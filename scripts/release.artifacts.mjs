@@ -62,24 +62,31 @@ if (!fs.existsSync(npmWorkspacePath)) {
 console.log(`Found workspace '${npmWorkspace}' at '${npmWorkspacePath}'`);
 // #endregion
 
+
 // #region assert NPM_TOKEN is set
-if (typeof process.env.NPM_TOKEN !== "string" || process.env.NPM_TOKEN === "") {
-  console.error("NPM_TOKEN environment variable is required");
-  process.exit(1);
+if (isCi) {
+  if (typeof process.env.NPM_TOKEN !== "string" || process.env.NPM_TOKEN === "") {
+    console.error("NPM_TOKEN environment variable is required");
+    process.exit(1);
+  }
 }
 // #endregion
 
 // #region release on npm
-const npmTag = gitTag.includes("beta")
-  ? "beta"
-  : gitTag.includes("alpha")
-  ? "alpha"
-  : "latest";
+if (isCi) {
+  const npmTag = gitTag.includes("beta")
+    ? "beta"
+    : gitTag.includes("alpha")
+    ? "alpha"
+    : "latest";
 
-console.log(`Creating npm release for: ${gitTag}`);
-cd(npmWorkspacePath);
-await $`yarn npm publish --access public --tag ${npmTag}`;
-cd(__dirname);
+  console.log(`Creating npm release for: ${gitTag}`);
+  cd(npmWorkspacePath);
+  await $`yarn npm publish --access public --tag ${npmTag}`;
+  cd(__dirname);
+} else {
+  console.log("Skipping npm release because this is not a CI build");
+}
 // #endregion
 
 // #region release on github
