@@ -12,9 +12,9 @@ if (isCi) {
   const path = require("path")
   const fs = require("fs")
   const CSC_LINK = path.join(
-    __dirname, // /apps/app/scripts
-    "..", // /apps/app/
-    "Certificates.p12" // /apps/app/Certificates.p12
+    __dirname, // ~/apps/reactotron-app/scripts
+    "..", // ~/apps/reactotron-app/
+    "Certificates.p12" // ~/apps/reactotron-app/Certificates.p12
   )
   if (BUILD_TARGET === "macos" && !fs.existsSync(CSC_LINK)) {
     throw new Error(`CSC_LINK not found at ${CSC_LINK} for ${BUILD_TARGET} target}`)
@@ -24,7 +24,7 @@ if (isCi) {
   }
 } else {
   console.log("Not running in CI, skipping code signing")
-  console.log("If you want a signed build, run electron-builder directly")
+  console.log("For production builds: electron-builder needs a MacOS Developer Certificate in the MacOS Keychain or linked at CNC_LINK variable. See: https://www.electron.build/code-signing.html")
   skipSigning = true
 }
 // #endregion
