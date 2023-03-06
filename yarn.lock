@@ -3323,7 +3323,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@octokit/core@npm:^4.0.0, @octokit/core@npm:^4.0.4":
+"@octokit/core@npm:^4.0.0, @octokit/core@npm:^4.0.4, @octokit/core@npm:^4.1.0":
   version: 4.2.0
   resolution: "@octokit/core@npm:4.2.0"
   dependencies:
@@ -3415,6 +3415,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@octokit/plugin-request-log@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "@octokit/plugin-request-log@npm:1.0.4"
+  peerDependencies:
+    "@octokit/core": ">=3"
+  checksum: 2086db00056aee0f8ebd79797b5b57149ae1014e757ea08985b71eec8c3d85dbb54533f4fd34b6b9ecaa760904ae6a7536be27d71e50a3782ab47809094bfc0c
+  languageName: node
+  linkType: hard
+
 "@octokit/plugin-rest-endpoint-methods@npm:^7.0.0":
   version: 7.0.1
   resolution: "@octokit/plugin-rest-endpoint-methods@npm:7.0.1"
@@ -3473,6 +3482,18 @@ __metadata:
     node-fetch: ^2.6.7
     universal-user-agent: ^6.0.0
   checksum: fef4097be8375d20bb0b3276d8a3adf866ec628f2b0664d334f3c29b92157da847899497abdc7a5be540053819b55564990543175ad48f04e9e6f25f0395d4d3
+  languageName: node
+  linkType: hard
+
+"@octokit/rest@npm:^19.0.7":
+  version: 19.0.7
+  resolution: "@octokit/rest@npm:19.0.7"
+  dependencies:
+    "@octokit/core": ^4.1.0
+    "@octokit/plugin-paginate-rest": ^6.0.0
+    "@octokit/plugin-request-log": ^1.0.4
+    "@octokit/plugin-rest-endpoint-methods": ^7.0.0
+  checksum: 1f970c4de2cf3d1691d3cf5dd4bfa5ac205629e76417b5c51561e1beb5b4a7e6c65ba647f368727e67e5243418e06ca9cdafd9e733173e1529385d4f4d053d3d
   languageName: node
   linkType: hard
 
@@ -24422,6 +24443,7 @@ __metadata:
   dependencies:
     "@jscutlery/semver": ^2.30.1
     "@nrwl/devkit": ^15.5.1
+    "@octokit/rest": ^19.0.7
     "@types/eslint": ^8.4.10
     "@typescript-eslint/eslint-plugin": ^2.12.0
     "@typescript-eslint/parser": ^2.12.0
