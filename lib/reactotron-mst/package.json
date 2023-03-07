@@ -5,10 +5,10 @@
   "author": "Infinite Red",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/infinitered/reactotron-mst/issues"
+    "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/inifinitered/reactotron-mst",
-  "repository": "https://github.com/infinitered/reactotron-mst",
+  "homepage": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-mst",
+  "repository": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-mst",
   "files": [
     "dist",
     "LICENSE"

@@ -5,10 +5,10 @@
   "author": "Infinite Red",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/infinitered/reactotron-core-client/issues"
+    "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/infinitered/reactotron-core-client",
-  "repository": "https://github.com/infinitered/reactotron-core-client",
+  "homepage": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-core-client",
+  "repository": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-core-client",
   "files": [
     "dist",
     "LICENSE",
