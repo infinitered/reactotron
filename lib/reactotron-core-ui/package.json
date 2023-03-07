@@ -5,10 +5,10 @@
   "author": "Infinite Red",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/infinitered/reactotron-core-ui/issues"
+    "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/infinitered/reactotron-core-ui",
-  "repository": "https://github.com/infinitered/reactotron-core-ui",
+  "homepage": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-core-ui",
+  "repository": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-core-ui",
   "main": "dist/index.js",
   "typings": "dist/types/index.d.ts",
   "scripts": {
