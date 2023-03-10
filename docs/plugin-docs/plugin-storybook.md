@@ -4,7 +4,7 @@
 
 This plugin, when configured properly, allows the switching to Storybook from the reactotron interface
 
-# Usage
+## Configuration
 
 The storybook plugin gets turned on automatically when you use `.useReactNative()`. If you don't want to use that method you can manually wire up the plugin:
 
@@ -23,6 +23,8 @@ Reactotron.configure()
   })
   .connect()
 ```
+
+## Usage
 
 Once the plugin is configured you have to wrap your entire app in a HOC provided by Reactotron. In addition to that Storybook requires some configuration. Here is an example:
 

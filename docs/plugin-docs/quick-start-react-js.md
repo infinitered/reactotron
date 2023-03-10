@@ -93,7 +93,11 @@ While collapsed, the grey area to the right shows a preview. Click to open.
 Let's change our log statement to:
 
 ```js
-Reactotron.log({ numbers: [1, 2, 3], boolean: false, nested: { here: "we go" } })
+Reactotron.log({
+  numbers: [1, 2, 3],
+  boolean: false,
+  nested: { here: "we go" },
+})
 ```
 
 Or this

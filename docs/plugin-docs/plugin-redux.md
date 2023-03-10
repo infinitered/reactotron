@@ -1,6 +1,6 @@
 # reactotron-redux
 
-[Redux](http://redux.js.org/) is library for managing global state. It's pretty damn awesome.
+[Redux](http://redux.js.org/) is a library for managing global state. It's pretty damn awesome.
 
 And everyone knows when you combine two great things, you get a super-awesome thing. Except for toothpaste & orange juice. Keep those separate.
 
@@ -16,6 +16,12 @@ And everyone knows when you combine two great things, you get a super-awesome th
 
 ```
 npm install --save-dev reactotron-redux
+```
+
+or
+
+```
+yarn add reactotron-redux -D
 ```
 
 # Features
@@ -113,7 +119,3 @@ Reactotron.
 
 `onRestore` is the opposite of `onBackup`. It will fire when the Reactotron app
 sends a new copy of state to the app.
-
-# Using saga?
-
-Go configure the [plugin](https://github.com/infinitered/reactotron/blob/master/docs/plugin-redux-saga.md) next

@@ -1,6 +1,6 @@
 # reactotron-mst
 
-Behold. A plugin for Reactotron for working with mobx-state-tree.
+Behold! A plugin for Reactotron for working with mobx-state-tree.
 
 # Prerequisites
 
@@ -10,7 +10,7 @@ This is also a plugin for `mobx-state-tree`, so you'll also need that installed 
 
 # Installation
 
-In your app, add a dev-dependency to `reactotron-mst`.
+Add a dev-dependency to `reactotron-mst` to your app.
 
 ```sh
 yarn add reactotron-mst --save-dev
@@ -22,7 +22,7 @@ or
 npm i reactotron-mst --save-dev
 ```
 
-# Setup
+# Configuration
 
 To make Reactotron aware of this plugin, go to the file you are configuring reactotron currently and add this:
 

@@ -2,7 +2,7 @@
 
 The `openInEditor` plugin allows you to click on a line of code in Reactotron and have it open in your editor.
 
-## Usage
+## Configuration
 
 To use the `openInEditor` plugin, add the additional plugin on the `import` line.
 

@@ -1,8 +1,12 @@
 # Benchmarking
 
-If you have a function you believe is slow, you can benchmark it to find any bottlenecks like this:
+If you have a function that you believe is slow, you can benchmark it to find any bottlenecks like this:
+
+## Usage
 
 ```js
+import Reactotron from "reactotron-react-native"
+
 function slowFunction() {
   const bench = Reactotron.benchmark("slow function benchmark")
 
@@ -17,7 +21,7 @@ function slowFunction() {
 }
 ```
 
-Note that the last call is to `stop` instead of `step`! This is important because otherwise the benchmark results won't display in Reactotron.
+Note that the last call is to `stop` instead of `step`! This is important, otherwise the benchmark results won't display in Reactotron.
 
 When `slowFunction` is invoked, Reactotron should show something like this:
 

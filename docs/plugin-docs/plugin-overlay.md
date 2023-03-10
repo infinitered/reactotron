@@ -1,11 +1,11 @@
 # Overlay
 
 Overlay is a plugin for `reactotron-react-native` which allows you to have an image uploaded
-to your simulator to stay on top of your app.
+to your simulator to stay on top of your app. This helps you to create those pixel perfect screens by helping ypu compare your app to the design.
 
-# Usage
+## Configuration
 
-Wherever you setup your Reactotron in your app, you also add the additional plugin on the `import` line.
+To use the Overlay plugin, add the additional plugin on the `import` line.
 
 ```js
 import Reactotron, { overlay } from "reactotron-react-native"
@@ -18,6 +18,8 @@ Reactotron.configure()
   .use(overlay()) // <--- here we go!
   .connect()
 ```
+
+## Usage
 
 Next, find the root UI component in your app and wrap it.
 
