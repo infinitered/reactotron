@@ -26,6 +26,7 @@ Once you have the application installed it should download and alert you that a 
 
 ## How to use Reactotron's features/plugins
 
+- [**Reactotron Functions**](./docs/plugin-docs/reactotron-functions.md)
 - [**Track Global Errors**](./docs/plugin-docs/plugin-track-global-errors.md)
 - [**Async Storage**](./docs/plugin-docs/plugin-async-storage.md)
 - [**Benchmark**](./docs/plugin-docs/plugin-benchmark.md)
@@ -40,8 +41,9 @@ Once you have the application installed it should download and alert you that a 
   This enables you to switch to Storybook from the Reactotron app.
 - [**Custom Commands**](./docs/plugin-docs/custom-commands.md)
 
-<!-- ## Tips and Tricks
-- think we should add this in a different section  -->
+## Tips and Tricks
+
+[Some tips that will elevate your Reactotron experience.](./docs/plugin-docs/tips.md)
 
 ## Troubleshooting
 
