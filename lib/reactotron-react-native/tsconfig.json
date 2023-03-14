@@ -1,5 +1,4 @@
 {
-  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "allowJs": false,
     "jsx": "react-native",
@@ -20,7 +19,6 @@
     "target": "es5",
     "lib": ["dom"],
     "types": ["node", "react", "react-native", "jest"],
-    "skipLibCheck": true // Hopefully temporary.
   },
   "exclude": ["node_modules"],
   "include": ["src"]

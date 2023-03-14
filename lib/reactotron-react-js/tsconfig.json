@@ -16,7 +16,7 @@
     "sourceMap": true,
     "target": "es5",
     "lib": ["dom", "es2015"],
-    "types": ["react"]
+    "types": ["react", "jest"]
   },
   "exclude": ["node_modules"],
   "include": ["src"]
