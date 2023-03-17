@@ -1,14 +1,11 @@
 # Track Global Errors
 
-Both `reactotron-react-native` and `reactotron-react-js` ship with a plugin called `trackGlobalErrors`.
-
-The goal of this plugin is to ensure all errors will get thrown over to Reactotron for display.
-
-![Installing The App](./images/track-global-errors/stack-trace.jpg)
+The goal of this plugin is to ensure all errors are thrown over to Reactotron for display.
+Both `reactotron-react-native` and `reactotron-react-js` ship with this plugin.
 
 # Usage
 
-Wherever you setup your Reactotron in your app, you also add the additional plugin on the `import` line.
+To use the `trackGlobalErrors` plugin, add the additional plugin on the `import` line.
 
 ```js
 import Reactotron, { trackGlobalErrors } from "reactotron-react-native"
@@ -28,15 +25,18 @@ Reactotron.configure()
   .connect()
 ```
 
-One option `trackGlobalErrors()` supports is `veto`. Veto is function that allows you to some frames you would like to leave out of the stack trace passed along.
+## Options
 
-For example, on React Native, perhaps you'd like to leave off any frames sourced from React Native itself?
+Veto is function that allows you to select frames you would like to leave out of the stack trace.
+
+For example, on React Native, you'd like to leave off any frames sourced from React Native itself
 
 ```js
 Reactotron.configure()
   .use(
     trackGlobalErrors({
-      veto: (frame) => frame.fileName.indexOf("/node_modules/react-native/") >= 0,
+      veto: (frame) =>
+        frame.fileName.indexOf("/node_modules/react-native/") >= 0,
     })
   )
   .connect()
@@ -55,7 +55,7 @@ fileName:      the name of the file
 
 ### React JS Source Maps
 
-Source maps for projects in webpack need to have the `devtool` set to `source-map`. On `create-react-app`-based apps, they use `eval`, so this will not work. You will have to switch your development webpack configuration to support this.
+Source maps for projects in webpack need to have the `devtool` set to `source-map`. On `create-react-app` based apps, they use `eval`, so this will not work. You will have to switch your development webpack configuration to support this.
 
 You also have the option to not do source map lookups, but still pass errors along by going into offline mode.
 

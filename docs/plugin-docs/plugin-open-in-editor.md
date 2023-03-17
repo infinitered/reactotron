@@ -1,12 +1,10 @@
 # Open In Editor
 
-`reactotron-react-native` ships with a plugin called `openInEditor`.
+The `openInEditor` plugin allows you to click on a line of code in Reactotron and have it open in your editor.
 
-With this enabled, you can now click on the error line of code to have the file open in your editor.
+## Configuration
 
-# Usage
-
-Wherever you setup your Reactotron in your app, you also add the additional plugin on the `import` line.
+To use the `openInEditor` plugin, add the additional plugin on the `import` line.
 
 ```js
 import Reactotron, { openInEditor } from "reactotron-react-native"

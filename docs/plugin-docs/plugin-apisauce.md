@@ -4,41 +4,56 @@
 
 ![API Response](./images/apisauce/apisauce.jpg)
 
-# Installing
+## Installing
 
-`npm i --save-dev reactotron-apisauce`
+```
+npm i --save-dev reactotron-apisauce
+```
 
-# Configuring
+```
+yarn add reactotron-apisauce -D
+```
 
-In the place where you setup your reactotron configuration, you import `reactotron-apisauce` plugin and throw it at Reactotron.
+## Configuration
+
+To use the apisauce plugin, add the additional plugin on the `import` line.
 
 ```js
-import apisaucePlugin from "reactotron-apisauce" // <--- import
+import apisaucePlugin from "reactotron-apisauce" //
+```
 
-// then plug it in when you configure Reactotron.
+Then plug it in when you configure Reactotron.
 
+```js
 Reactotron.configure()
   .use(
     apisaucePlugin({
-      // ignoreContentTypes: /^(image)\/.*$/i   // <--- a way to skip printing the body of some requests (default is any image)
+      // ignoreContentTypes: /^(image)\/.\*$/i // <--- a way to skip printing the body of some requests (default is any image)
     })
   ) // <-- here we go!!!
   .connect()
 ```
 
-Next, wherever you create your api for you application, bring in Reactotron and attach the monitor to your apisauce instance.
+## Usage
+
+Next, wherever you create api functions for you application, bring in Reactotron and attach the monitor to your apisauce instance. Apisauce has a feature where you can attach a handler to watch.
+
+1. To view all requests/response flowing through your api
 
 ```js
+//for web
 import Reactotron from "reactotron-react-js"
-// import Reactotron from 'reactotron-react-native' // or use this for mobile
 
-// Apisauce has a feature where you can attach a handler to watch
-// all requests/response flowing through your api.  You can hook this up:
+//for mobile
+import Reactotron from "reactotron-react-native"
+
 api.addMonitor(Reactotron.apisauce)
+```
 
-// or ...
+2. To view only the requests/response that have a problem
 
-// if you just wanted to track on 500's
+```js
+//if you just wanted to track on 500's
 api.addMonitor((response) => {
   if (response.problem === "SERVER_ERROR") Reactotron.apisauce(response)
 })

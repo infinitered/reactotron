@@ -2,7 +2,7 @@
 
 ## Installing Reactotron.app
 
-Let’s [download the desktop app](./installing.md) to start. You can download for Linux, Windows, and Mac.
+Let’s [download the desktop app](../../README.md#installation) to start. You can download for Linux, Windows, and Mac.
 
 Unzip & run.
 
@@ -10,29 +10,39 @@ Unzip & run.
 
 ## Configure Reactotron with your project
 
-Let's install Reactotron on your project as a dev dependency. Don't have a React Native project yet? [Follow the Getting Started guide in the React Native documentation](https://facebook.github.io/react-native/docs/getting-started.html).
+#### **Step 1 - Add Reactotron as DEV dependency**
+
+Add Reactotron on your React Native project as a dev dependency.
 
 ```
 npm i --save-dev reactotron-react-native
 ```
 
-I like a separate file for initializing. Create `ReactotronConfig.js` in your editor of choice and paste this:
+```
+yarn add reactotron-react-native -D
+```
+
+#### **Step 2 - Initialisation**
+
+Create a file in your root folder `ReactotronConfig.js` and paste this:
 
 ```js
-import Reactotron from "reactotron-react-native"
+import Reactotron from "reactotron-react-native";
+import { AsyncStorage } from "@react-native-async-storage/async-storage";
 
-Reactotron.setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either come from `@react-native-async-storage/async-storage` or `@react-native-community/async-storage`
+Reactotron.setAsyncStorageHandler(AsyncStorage)
   .configure() // controls connection & communication settings
   .useReactNative() // add all built-in react native plugins
-  .connect() // let's connect!
+  .connect(); // let's connect!
 ```
 
 Or using a more advanced way to customize which plugins to include:
 
 ```js
-import Reactotron from "reactotron-react-native"
+import Reactotron from "reactotron-react-native";
+import { AsyncStorage } from "@react-native-async-storage/async-storage";
 
-Reactotron.setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either come from `@react-native-async-storage/async-storage` or `@react-native-community/async-storage`
+Reactotron.setAsyncStorageHandler(AsyncStorage)
   .configure({
     name: "React Native Demo",
   })
@@ -46,45 +56,48 @@ Reactotron.setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either com
     errors: { veto: (stackFrame) => false }, // or turn it off with false
     overlay: false, // just turning off overlay
   })
-  .connect()
+  .connect();
 ```
 
 Alternatively, you can create your own plugin and provide it via:
 
 ```js
-import Reactotron from "reactotron-react-native"
+import Reactotron from "reactotron-react-native";
 
 const middleware = (tron) => {
   /* plugin definition */
-}
+};
 
-Reactotron.setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either come from `@react-native-async-storage/async-storage` or `@react-native-community/async-storage`
+Reactotron.setAsyncStorageHandler(AsyncStorage)
   .configure({
     name: "React Native Demo",
   })
   .useReactNative() // add all built-in react native plugins
   .use(middleware) // plus some custom made plugin.
-  .connect()
+  .connect();
 ```
 
 If you're using Expo, you will also need to configure the host:
 
 ```js
-import Reactotron from "reactotron-react-native"
-import { NativeModules } from "react-native"
+import Reactotron from "reactotron-react-native";
+import { NativeModules } from "react-native";
+import { AsyncStorage } from "@react-native-async-storage/async-storage";
 
 const hostname = NativeModules.SourceCode.scriptURL
   .split("://")[1] // Remove the scheme
   .split("/")[0] // Remove the path
-  .split(":")[0] // Remove the port
+  .split(":")[0]; // Remove the port
 
-Reactotron.setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either come from `@react-native-async-storage/async-storage` or `@react-native-community/async-storage`
+Reactotron.setAsyncStorageHandler(AsyncStorage)
   .configure({ host: hostname }) // configure the hostname for Expo
   .useReactNative() // add all built-in react native plugins
-  .connect() // let's connect!
+  .connect(); // let's connect!
 ```
 
-Finally, we import this on startup in one of:
+#### **Step 3 - Add Reactotron to your app**
+
+Finally, we import this on in one of:
 
 - `App.js` (Create React Native App / Expo) or
 - `index.js`
@@ -93,17 +106,11 @@ on line 1:
 
 ```js
 if (__DEV__) {
-  import("./ReactotronConfig").then(() => console.log("Reactotron Configured"))
+  import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
 }
 ```
 
-At this point, Reactotron is hooked up.
-
-**Note**: If using an Android device or emulator run the following command to make sure it can connect to Reactotron:
-
-```
-adb reverse tcp:9090 tcp:9090
-```
+At this point, Reactotron is hooked up. **HOUSTON, WE HAVE A CONNECTION!**
 
 Refresh your app (or start it up `react-native start`) and have a look at Reactotron now. Do you see the `CONNECTION` line? Click that to expand.
 
@@ -113,86 +120,12 @@ Go back to your app and refresh it 5 or 6 times. Now look.
 
 ![Chatty](./images/quick-start-react-native/spammy.jpg)
 
-Pretty underwhelming huh?
+[Checkout all the amazing things you can do with Reactotron.](./examples.md)
 
-## Hello World
+## Troubleshooting
 
-Let's do some classic programming.
+**Android**: If you are using an Android device or an emulator run the following command to make sure it can connect to Reactotron:
 
-Open up
-
-- `App.js` (Create React Native App) or
-- `index.js`
-
-Right after the line you just added in the previous step lets put this:
-
-```js
-import Reactotron from "reactotron-react-native"
 ```
-
-Next, inside the `render()` function, put this as the first line:
-
-```js
-Reactotron.log("hello rendering world")
+adb reverse tcp:9090 tcp:9090
 ```
-
-Save that file and refresh your app if you don't have live reloading.
-
-Now Reactotron looks like this:
-
-![Hello 1](./images/quick-start-react-native/hello-1.jpg)
-
-While collapsed, the grey area to the right shows a preview. Click to open.
-
-![Hello 2](./images/quick-start-react-native/hello-2.jpg)
-
-Let's change our log statement to:
-
-```js
-Reactotron.log({ numbers: [1, 2, 3], boolean: false, nested: { here: "we go" } })
-```
-
-Or this
-
-```js
-Reactotron.warn("*glares*")
-```
-
-Or this
-
-```js
-Reactotron.error("Now you've done it.")
-```
-
-Or this
-
-```js
-Reactotron.display({
-  name: "KNOCK KNOCK",
-  preview: "Who's there?",
-  value: "Orange.",
-})
-
-Reactotron.display({
-  name: "ORANGE",
-  preview: "Who?",
-  value: "Orange you glad you don't know me in real life?",
-  important: true,
-})
-```
-
-## Monitor your Redux store state changes
-
-Hooking up to redux requires some [additional set up](https://github.com/infinitered/reactotron/blob/master/docs/plugin-redux.md).
-
-## Now What?
-
-Well, at this point, we have a complicated version of `console.log`.
-
-Where Reactotron starts to shine is when you start plugging into [Redux](./plugin-redux.md), tracking global errors, and watching network requests.
-
-Check out our [Demo](../examples/demo-react-native) for more goodies.
-
-![Demo Native App](./images/quick-start-react-native/react-demo-native.jpg)
-
-![Demo Reactotron](./images/quick-start-react-native/react-demo-native-reactotron.jpg)

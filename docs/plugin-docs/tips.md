@@ -54,7 +54,7 @@ In ES6, you must import Reactotron at the top of your file before using it like 
 
 ```js
 import Reactotron from "reactotron-react-native"
-// or import Reactotron from 'reactotron-react-native'
+// or import Reactotron from 'reactotron-react'
 ```
 
 And later on in your file, you type:

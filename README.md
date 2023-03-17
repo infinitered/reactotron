@@ -8,6 +8,29 @@ Reactotron is a powerful debugger for React and React Native applications. It pr
 
 We recommend that you watch [Darin Wilson's](https://github.com/darinwilson) talk at [Chain React](https://chainreactconf.com/): [Chain React 2018: Debugging and Beyond with Reactotron](https://www.youtube.com/watch?v=UiPo9A9k7xc)!
 
+## Reactotron Superpowers
+
+Use Reactotron to:
+
+- view your application state
+- show API requests & responses
+- perform quick performance benchmarks
+- subscribe to parts of your application state
+- display messages similar to `console.log`
+- track global errors with source-mapped stack traces including saga stack traces!
+- dispatch actions like a government-run mind control experiment
+- hot swap your app's state using Redux or mobx-state-tree
+- track your sagas
+- show image overlay in React Native
+- track your Async Storage in React Native
+
+You plug it into your app as a dev dependency so it adds nothing to your product builds.
+
+### Desktop
+
+Reactotron on the left, demo React Native app on the right.
+![Desktop](./docs/plugin-docs/images/readme/reactotron-demo-app.gif)
+
 ## Installation
 
 On the [Releases](https://github.com/infinitered/reactotron/releases/tag/v2.17.1) page, you can find the latest version of:
@@ -26,6 +49,7 @@ Once you have the application installed it should download and alert you that a 
 
 ## How to use Reactotron's features/plugins
 
+- [**Reactotron Functions**](./docs/plugin-docs/reactotron-functions.md)
 - [**Track Global Errors**](./docs/plugin-docs/plugin-track-global-errors.md)
 - [**Async Storage**](./docs/plugin-docs/plugin-async-storage.md)
 - [**Benchmark**](./docs/plugin-docs/plugin-benchmark.md)
@@ -40,8 +64,9 @@ Once you have the application installed it should download and alert you that a 
   This enables you to switch to Storybook from the Reactotron app.
 - [**Custom Commands**](./docs/plugin-docs/custom-commands.md)
 
-<!-- ## Tips and Tricks
-- think we should add this in a different section  -->
+## Tips and Tricks
+
+[Some tips that will elevate your Reactotron experience.](./docs/plugin-docs/tips.md)
 
 ## Troubleshooting
 
