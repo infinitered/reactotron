@@ -8,6 +8,29 @@ Reactotron is a powerful debugger for React and React Native applications. It pr
 
 We recommend that you watch [Darin Wilson's](https://github.com/darinwilson) talk at [Chain React](https://chainreactconf.com/): [Chain React 2018: Debugging and Beyond with Reactotron](https://www.youtube.com/watch?v=UiPo9A9k7xc)!
 
+## Reactotron Superpowers
+
+Use Reactotron to:
+
+- view your application state
+- show API requests & responses
+- perform quick performance benchmarks
+- subscribe to parts of your application state
+- display messages similar to `console.log`
+- track global errors with source-mapped stack traces including saga stack traces!
+- dispatch actions like a government-run mind control experiment
+- hot swap your app's state using Redux or mobx-state-tree
+- track your sagas
+- show image overlay in React Native
+- track your Async Storage in React Native
+
+You plug it into your app as a dev dependency so it adds nothing to your product builds.
+
+### Desktop
+
+Reactotron on the left, demo React Native app on the right.
+![Desktop](./docs/images/readme/reactotron-demo-app.gif)
+
 ## Installation
 
 On the [Releases](https://github.com/infinitered/reactotron/releases/tag/v2.17.1) page, you can find the latest version of:
