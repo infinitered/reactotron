@@ -13,6 +13,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
+    "skipLibCheck": true,
     "sourceMap": true,
     "target": "es5",
     "lib": ["dom", "es2015"],

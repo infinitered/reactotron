@@ -34,7 +34,7 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
-    "reactotron-core-client": "2.8.9",
+    "reactotron-core-client": "workspace:*",
     "stacktrace-js": "2.0.1"
   },
   "devDependencies": {
