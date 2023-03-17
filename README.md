@@ -29,7 +29,7 @@ You plug it into your app as a dev dependency so it adds nothing to your product
 ### Desktop
 
 Reactotron on the left, demo React Native app on the right.
-![Desktop](./docs/images/readme/reactotron-demo-app.gif)
+![Desktop](./docs/plugin-docs/images/readme/reactotron-demo-app.gif)
 
 ## Installation
 
