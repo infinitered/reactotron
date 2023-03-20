@@ -4550,28 +4550,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/error@npm:^2.1.0, @semantic-release/error@npm:^2.2.0":
+"@semantic-release/error@npm:^2.2.0":
   version: 2.2.0
   resolution: "@semantic-release/error@npm:2.2.0"
   checksum: a264a8e16a89e5fcb104ffb2c4339fde3135b90a6d8fe4497a95fe0776a2bf77771d4c702343c47324aefee2e2a2af72f48b5310c84e8a0902fadb631272700f
-  languageName: node
-  linkType: hard
-
-"@semantic-release/git@npm:8.0.0":
-  version: 8.0.0
-  resolution: "@semantic-release/git@npm:8.0.0"
-  dependencies:
-    "@semantic-release/error": ^2.1.0
-    aggregate-error: ^3.0.0
-    debug: ^4.0.0
-    dir-glob: ^3.0.0
-    execa: ^4.0.0
-    lodash: ^4.17.4
-    micromatch: ^4.0.0
-    p-reduce: ^2.0.0
-  peerDependencies:
-    semantic-release: ">=16.0.0-beta <17.0.0"
-  checksum: 23cffe9043db3fe0b30382b237f07201c8baef75000518a54e07bbc80a1b2dac467e449dab3076bf776a1612553b8df92faf9c9e39b5525515b8d73465513d7a
   languageName: node
   linkType: hard
 
@@ -22683,7 +22665,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"micromatch@npm:^4.0.0, micromatch@npm:^4.0.2, micromatch@npm:^4.0.4":
+"micromatch@npm:^4.0.2, micromatch@npm:^4.0.4":
   version: 4.0.5
   resolution: "micromatch@npm:4.0.5"
   dependencies:
@@ -27296,7 +27278,6 @@ __metadata:
     "@babel/plugin-proposal-class-properties": 7.16.0
     "@babel/preset-env": 7.16.4
     "@babel/preset-typescript": 7.16.0
-    "@semantic-release/git": 8.0.0
     "@types/react": 17.0.37
     "@typescript-eslint/eslint-plugin": 4.33.0
     "@typescript-eslint/parser": 4.33.0

@@ -20,7 +20,9 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --notify",
-    "format": "prettier --write {**,.}/*.ts",
+    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "format:check": "yarn format --check",
+    "format:write": "yarn format --write",
     "build": "npm-run-all clean tsc compile",
     "build:dev": "npm-run-all clean tsc compile:dev",
     "clean": "trash dist",
@@ -28,10 +30,9 @@
     "compile": "NODE_ENV=production rollup -c",
     "compile:dev": "NODE_ENV=development rollup -c",
     "tsc": "tsc",
+    "typecheck": "yarn tsc",
     "ci:lint": "yarn lint",
-    "ci:test": "yarn test",
-    "ci:publish": "yarn semantic-release",
-    "semantic-release": "semantic-release"
+    "ci:test": "yarn test --runInBand"
   },
   "dependencies": {
     "reactotron-core-client": "workspace:*",
@@ -42,7 +43,6 @@
     "@babel/plugin-proposal-class-properties": "7.16.0",
     "@babel/preset-env": "7.16.4",
     "@babel/preset-typescript": "7.16.0",
-    "@semantic-release/git": "8.0.0",
     "@types/react": "17.0.37",
     "@typescript-eslint/eslint-plugin": "4.33.0",
     "@typescript-eslint/parser": "4.33.0",
@@ -101,19 +101,6 @@
       "describe": false,
       "jest": false,
       "it": false
-    },
-    "rules": {
-      "no-unused-vars": 0,
-      "no-undef": 0,
-      "space-before-function-paren": 0,
-      "@typescript-eslint/indent": 0,
-      "@typescript-eslint/explicit-member-accessibility": 0,
-      "@typescript-eslint/explicit-function-return-type": 0,
-      "@typescript-eslint/no-explicit-any": 0,
-      "@typescript-eslint/no-object-literal-type-assertion": 0,
-      "@typescript-eslint/no-empty-interface": 0,
-      "@typescript-eslint/no-var-requires": 0,
-      "@typescript-eslint/member-delimiter-style": 0
     }
   },
   "jest": {
