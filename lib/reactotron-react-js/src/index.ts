@@ -10,7 +10,7 @@ export { trackGlobalErrors }
 const REACTOTRON_ASYNC_CLIENT_ID = "@REACTOTRON/clientId"
 
 function isBrowser() {
-  return typeof window !== 'undefined'
+  return typeof window !== "undefined"
 }
 
 /**
@@ -26,7 +26,7 @@ function getNavigatorProperty(name) {
 }
 
 const DEFAULTS = {
-  createSocket: path => new WebSocket(path), // eslint-disable-line
+  createSocket: (path) => new WebSocket(path), // eslint-disable-line
   host: "localhost",
   port: 9090,
   name: "React JS App",
@@ -38,7 +38,7 @@ const DEFAULTS = {
     localStorage.setItem(REACTOTRON_ASYNC_CLIENT_ID, clientId)
     return Promise.resolve()
   },
-};
+}
 
 if (isBrowser()) {
   DEFAULTS.client = {

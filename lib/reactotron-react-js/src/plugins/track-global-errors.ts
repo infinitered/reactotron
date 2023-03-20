@@ -13,7 +13,7 @@ const PLUGIN_DEFAULTS = {
 }
 
 // our plugin entry point
-export default options => reactotron => {
+export default (options) => (reactotron) => {
   // setup configuration
   const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
 
@@ -27,9 +27,9 @@ export default options => reactotron => {
     // resolve the stack trace
     StackTrace.fromError(error, { offline: config.offline })
       // then try to send it up to the server
-      .then(stackFrames => reactotron.error(msg, stackFrames))
+      .then((stackFrames) => reactotron.error(msg, stackFrames))
       // can't resolve, well, let the user know, but still upload something sane
-      .catch(resolvingError =>
+      .catch((resolvingError) =>
         reactotron.error({
           message: CANNOT_RESOLVE_ERROR,
           original: { msg, file, line, col, error },
