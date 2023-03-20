@@ -19,7 +19,7 @@
     "target": "es5",
     "lib": ["dom"],
     "skipLibCheck": true,
-    "types": ["node", "react", "react-native", "jest"],
+    "types": ["node", "react", "react-native", "jest"]
   },
   "exclude": ["node_modules"],
   "include": ["src"]
