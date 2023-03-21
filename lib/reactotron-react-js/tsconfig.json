@@ -1,26 +1,21 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "rootDir": "src",
     "allowJs": false,
-    "jsx": "react-native",
-    "rootDir": ".",
     "declaration": true,
     "declarationDir": "dist/types",
     "emitDeclarationOnly": true,
-    "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    "sourceMap": true,
     "target": "es5",
-    "lib": ["dom"],
-    "skipLibCheck": true,
-    "types": ["node", "react", "react-native", "jest"]
+    "lib": ["dom", "es2017"],
+    "types": ["react", "jest"]
   },
   "exclude": ["node_modules"],
   "include": ["src"]
