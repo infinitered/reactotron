@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.1.5-alpha.7](https://github.com/infinitered/reactotron/compare/reactotron-mst@3.1.5-alpha.6...reactotron-mst@3.1.5-alpha.7) (2023-03-21)
+
+
+### Bug Fixes
+
+* **package.json:** Update package metadata ([#1276](https://github.com/infinitered/reactotron/issues/1276)) [skip ci] ([07a4020](https://github.com/infinitered/reactotron/commit/07a4020bf528de100a9191bd92a92d835d5ccaa7))
+
 ### [3.1.5-alpha.6](https://github.com/infinitered/reactotron/compare/reactotron-mst@3.1.5-alpha.5...reactotron-mst@3.1.5-alpha.6) (2023-03-06)
 
 ### [3.1.5-alpha.5](https://github.com/infinitered/reactotron/compare/reactotron-mst@3.1.5-alpha.4...reactotron-mst@3.1.5-alpha.5) (2023-03-06)
