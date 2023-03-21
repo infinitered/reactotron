@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [5.0.4-alpha.7](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.0.4-alpha.6...reactotron-react-native@5.0.4-alpha.7) (2023-03-21)
+
+
+### Bug Fixes
+
+* **package.json:** Update package metadata ([#1276](https://github.com/infinitered/reactotron/issues/1276)) [skip ci] ([07a4020](https://github.com/infinitered/reactotron/commit/07a4020bf528de100a9191bd92a92d835d5ccaa7))
+* **reactotron-react-js:** Add stub tests, remove yarn.lock ([8d90df3](https://github.com/infinitered/reactotron/commit/8d90df386381734792bbddafac58df46a9e8ac24))
+* **reactotron-react-native:** Set skipLibCheck to true to avoid build error ([b52521b](https://github.com/infinitered/reactotron/commit/b52521b3b11cbdfde1932138f43b0de374690095))
+
 ### [5.0.4-alpha.6](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.0.4-alpha.5...reactotron-react-native@5.0.4-alpha.6) (2023-03-06)
 
 ### [5.0.4-alpha.5](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.0.4-alpha.4...reactotron-react-native@5.0.4-alpha.5) (2023-03-06)
