@@ -7,13 +7,12 @@
   "bugs": {
     "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/infinitered/reactotron-react-js",
-  "repository": "https://github.com/infinitered/reactotron-react-js",
+  "homepage": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-react-js",
+  "repository": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-react-js",
   "files": [
     "dist",
     "LICENSE",
-    "README.md",
-    "reactotron-react-js.d.ts"
+    "README.md"
   ],
   "main": "dist/index.js",
   "types": "./dist/types/index.d.ts",
