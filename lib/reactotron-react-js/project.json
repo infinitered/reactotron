@@ -1,0 +1,13 @@
+{
+  "name": "reactotron-react-js",
+  "targets": {
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "baseBranch": "alpha",
+        "releaseAs": "prerelease",
+        "preid": "alpha"
+      }
+    }
+  }
+}
