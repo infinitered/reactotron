@@ -1,6 +1,6 @@
 {
   "name": "reactotron-react-js",
-  "version": "2.1.2-alpha.0",
+  "version": "3.3.9-alpha.0",
   "description": "A development tool to explore, inspect, and diagnose your React JS/DOM apps.",
   "author": "Infinite Red",
   "license": "MIT",
@@ -19,7 +19,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --notify",
-    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "format": "prettier '*.{js,ts,tsx,json,css,yml}|**/*.{js,ts,tsx,json,css,yml}'",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",
     "build": "npm-run-all clean tsc compile",
