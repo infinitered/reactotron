@@ -19,7 +19,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --notify",
-    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "format": "prettier '*.{js,ts,tsx,json,css,yml}|**/*.{js,ts,tsx,json,css,yml}'",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",
     "build": "npm-run-all clean tsc compile",
