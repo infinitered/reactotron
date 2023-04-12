@@ -29,15 +29,15 @@ const SearchContainer = styled.div`
 const SearchLabel = styled.p`
   padding: 0 10px;
   font-size: 14px;
-  color: ${props => props.theme.foregroundDark};
+  color: ${(props) => props.theme.foregroundDark};
 `
 const SearchInput = styled.input`
   border-radius: 4px;
   padding: 10px;
   flex: 1;
-  background-color: ${props => props.theme.backgroundSubtleDark};
+  background-color: ${(props) => props.theme.backgroundSubtleDark};
   border: none;
-  color: ${props => props.theme.foregroundDark};
+  color: ${(props) => props.theme.foregroundDark};
   font-size: 14px;
 `
 
@@ -46,7 +46,7 @@ const ButtonContianer = styled.div`
   flex-direction: column;
   width: 100%;
   margin-bottom: 24px;
-  color: ${props => props.theme.foreground};
+  color: ${(props) => props.theme.foreground};
 `
 const Title = styled.div`
   font-size: 24px;
@@ -62,7 +62,7 @@ const SendButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${props => props.theme.backgroundLighter};
+  background-color: ${(props) => props.theme.backgroundLighter};
   border-radius: 4px;
   width: 200px;
   min-height: 50px;
@@ -97,7 +97,7 @@ const ArgInput = styled.input`
 function customCommandItemReducer(state: any, action: any) {
   switch (action.type) {
     case "UPDATE_ARG":
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         draftState[action.payload.argName] = action.payload.value
       })
     default:
@@ -112,12 +112,12 @@ function CustomCommandItem({
   customCommand: CustomCommand
   sendCustomCommand: (command: any, args: any) => void
 }) {
-  const [state, dispatch] = useReducer(customCommandItemReducer, customCommand.args, args => {
+  const [state, dispatch] = useReducer(customCommandItemReducer, customCommand.args, (args) => {
     if (!args) return {}
 
     const argMap = {}
 
-    args.forEach(arg => {
+    args.forEach((arg) => {
       argMap[arg.name] = ""
     })
 
@@ -130,7 +130,7 @@ function CustomCommandItem({
       <Description>{customCommand.description || "No Description Provided"}</Description>
       {!!customCommand.args && customCommand.args.length > 0 && (
         <ArgsContainer>
-          {customCommand.args.map(arg => {
+          {customCommand.args.map((arg) => {
             return (
               <ArgContainer key={arg.name}>
                 <ArgName>{arg.name}</ArgName>
@@ -138,7 +138,7 @@ function CustomCommandItem({
                   type="text"
                   placeholder={arg.name}
                   value={state[arg.name]}
-                  onChange={e => {
+                  onChange={(e) => {
                     dispatch({
                       type: "UPDATE_ARG",
                       payload: {
@@ -174,7 +174,7 @@ function CustomCommands() {
   const filteredCustomCommands =
     search !== ""
       ? customCommands.filter(
-          cc =>
+          (cc) =>
             cc.command.toLowerCase().indexOf(lowerSearch) > -1 ||
             (cc.title || "").toLowerCase().indexOf(lowerSearch) > -1 ||
             (cc.description || "").toLowerCase().indexOf(lowerSearch) > -1
@@ -199,7 +199,7 @@ function CustomCommands() {
         {isSearchOpen && (
           <SearchContainer>
             <SearchLabel>Search</SearchLabel>
-            <SearchInput value={search} onChange={e => setSearch(e.target.value)} />
+            <SearchInput value={search} onChange={(e) => setSearch(e.target.value)} />
           </SearchContainer>
         )}
       </Header>
@@ -209,7 +209,7 @@ function CustomCommands() {
             When your app registers a custom command it will show here!
           </EmptyState>
         ) : (
-          filteredCustomCommands.map(cc => (
+          filteredCustomCommands.map((cc) => (
             <CustomCommandItem
               key={`${cc.clientId}-${cc.id}`}
               customCommand={cc}

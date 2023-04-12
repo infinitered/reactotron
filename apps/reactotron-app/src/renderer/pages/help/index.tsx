@@ -41,14 +41,14 @@ const Title = styled.div`
   font-size: 18px;
   margin: 10px 0;
   padding-bottom: 2px;
-  color: ${props => props.theme.foregroundLight};
-  border-bottom: 1px solid ${props => props.theme.highlight};
+  color: ${(props) => props.theme.foregroundLight};
+  border-bottom: 1px solid ${(props) => props.theme.highlight};
 `
 
 const ConnectContainer = styled.div`
   display: flex;
   align-items: flex-start;
-  color: ${props => props.theme.foreground};
+  color: ${(props) => props.theme.foreground};
   margin-bottom: 50px;
 `
 const ConnectItemContainer = styled.div`
@@ -61,12 +61,12 @@ const ConnectItemContainer = styled.div`
   margin: 5px;
   flex: 1;
   /* width: 90px; */
-  background-color: ${props => props.theme.chrome};
+  background-color: ${(props) => props.theme.chrome};
   border-radius: 5px;
-  border: 1px solid ${props => props.theme.chromeLine};
+  border: 1px solid ${(props) => props.theme.chromeLine};
 `
 const ConnectItemIconContainer = styled.div`
-  color: ${props => props.theme.foregroundLight};
+  color: ${(props) => props.theme.foregroundLight};
   margin-bottom: 8px;
 `
 
@@ -92,7 +92,7 @@ function Keybinds() {
   const groupedKeyMap = Object.keys(keyMap).reduce((groups, k) => {
     const keybind = keyMap[k]
 
-    let newGroup = groups.find(g => g.name === keybind.group)
+    let newGroup = groups.find((g) => g.name === keybind.group)
 
     if (!newGroup) {
       newGroup = { name: keybind.group, keybinds: [] }
@@ -104,7 +104,7 @@ function Keybinds() {
     return groups
   }, [])
 
-  return groupedKeyMap.map(group => <KeybindGroup key={group.name} group={group} />)
+  return groupedKeyMap.map((group) => <KeybindGroup key={group.name} group={group} />)
 }
 
 function Help() {

@@ -22,25 +22,25 @@ const ConnectionContainer = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px solid ${props => props.theme.line};
+  border-bottom: 1px solid ${(props) => props.theme.line};
 `
 const IconContainer = styled.div`
-  color: ${props => props.theme.foregroundLight};
+  color: ${(props) => props.theme.foregroundLight};
 `
 const PlatformName = styled.div`
   padding-left: 10px;
-  color: ${props => props.theme.tag};
+  color: ${(props) => props.theme.tag};
   width: 25%;
 `
 const PlatformDetails = styled.div`
-  border-left: 1px solid ${props => props.theme.subtleLine};
-  color: ${props => props.theme.foregroundDark};
+  border-left: 1px solid ${(props) => props.theme.subtleLine};
+  color: ${(props) => props.theme.foregroundDark};
   padding-left: 10px;
   margin-left: 10px;
 `
 const Screen = styled.div`
-  border-left: 1px solid ${props => props.theme.subtleLine};
-  color: ${props => props.theme.backgroundHighlight};
+  border-left: 1px solid ${(props) => props.theme.subtleLine};
+  color: ${(props) => props.theme.backgroundHighlight};
   padding-left: 10px;
   margin-left: 10px;
 `
@@ -66,7 +66,7 @@ function Connections() {
   return (
     <Container>
       <Header title="Connections" isDraggable />
-      {connections.map(connection => (
+      {connections.map((connection) => (
         <ConnectionCell key={connection.clientId} connection={connection} />
       ))}
     </Container>
