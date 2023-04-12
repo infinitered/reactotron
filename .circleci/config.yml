@@ -17,12 +17,48 @@ commands:
       cache-key:
         description: Key to bust install package cache
         type: string
-        default: v1
+        default: "cache-key-1681340799350"
     steps:
       - restore_cache:
           name: Restore yarn package cache
           keys:
             - node-deps-<<parameters.cache-key>>-{{ arch }}-{{ checksum "yarn.lock" }}
+      - restore_cache:
+          name: Restore apps/reactotron-app/dist/
+          keys:
+            - apps/reactotron-app/dist/-<<parameters.cache-key>>-{{ arch }}-{{ checksum "apps/reactotron-app/package.json" }}
+      - restore_cache:
+          name: Restoring lib/reactotron-apisauce/dist/
+          keys:
+            - lib/reactotron-apisauce/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-apisauce/package.json" }}
+      - restore_cache:
+          name: Restore lib/reactotron-core-client/dist/
+          keys:
+            - lib/reactotron-core-client/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-core-client/package.json" }}
+      - restore_cache:
+          name: Restore lib/reactotron-core-server/dist/
+          keys:
+            - lib/reactotron-core-server/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-core-server/package.json" }}
+      - restore_cache:
+          name: Restore lib/reactotron-core-ui/dist/
+          keys:
+            - lib/reactotron-core-ui/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-core-ui/package.json" }}
+      - restore_cache:
+          name: Restore lib/reactotron-mst/dist/
+          keys:
+            - lib/reactotron-mst/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-mst/package.json" }}
+      - restore_cache:
+          name: Restore lib/reactotron-react-js/dist/
+          keys:
+            - lib/reactotron-react-js/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-react-js/package.json" }}
+      - restore_cache:
+          name: Restore lib/reactotron-react-native/dist/
+          keys:
+            - lib/reactotron-react-native/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-react-native/package.json" }}
+      - restore_cache:
+          name: Restore lib/reactotron-redux/dist/
+          keys:
+            - lib/reactotron-redux/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-redux/package.json" }}
       - run:
           name: Install packages
           command: yarn install --immutable
@@ -31,15 +67,52 @@ commands:
             - node_modules/
             - .yarn/cache
             - .yarn/install-state.gz
-            - apps/reactotron-app/dist/
-            - lib/reactotron-core-ui/dist/
-            - lib/reactotron-core-client/dist/
-            - lib/reactotron-core-server/dist/
-            - lib/reactotron-react-native/dist/
-            - lib/reactotron-mst/dist/
-            - lib/reactotron-redux/dist/
-            - lib/reactotron-apisauce/dist/
           key: node-deps-<<parameters.cache-key>>-{{ arch }}-{{ checksum "yarn.lock" }}
+      - save_cache:
+          name: Saving lib/reactotron-app/dist/
+          paths:
+            - apps/reactotron-app/dist/
+          key: apps/reactotron-app/dist/-<<parameters.cache-key>>-{{ arch }}-{{ checksum "apps/reactotron-app/package.json" }}
+      - save_cache:
+          name: Saving lib/reactotron-apisauce/dist/
+          paths:
+            - lib/reactotron-apisauce/dist/
+          key: lib/reactotron-apisauce/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-apisauce/package.json" }}
+      - save_cache:
+          name: Saving lib/reactotron-core-client/dist/
+          paths:
+            - lib/reactotron-core-client/dist/
+          key: lib/reactotron-core-client/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-core-client/package.json" }}
+      - save_cache:
+          name: Saving lib/reactotron-core-server/dist/
+          paths:
+            - lib/reactotron-core-server/dist/
+          key: lib/reactotron-core-server/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-core-server/package.json" }}
+      - save_cache:
+          name: Saving lib/reactotron-core-ui/dist/
+          paths:
+            - lib/reactotron-core-ui/dist/
+          key: lib/reactotron-core-ui/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-core-ui/package.json" }}
+      - save_cache:
+          name: Saving lib/reactotron-mst/dist/
+          paths:
+            - lib/reactotron-mst/dist/
+          key: lib/reactotron-mst/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-mst/package.json" }}
+      - save_cache:
+          name: Saving lib/reactotron-react-native/dist/
+          paths:
+            - lib/reactotron-react-native/dist/
+          key: lib/reactotron-react-native/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-react-native/package.json" }}
+      - save_cache:
+          name: Saving lib/reactotron-react-js/dist/
+          paths:
+            - lib/reactotron-react-js/dist/
+          key: lib/reactotron-react-js/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-react-js/package.json" }}
+      - save_cache:
+          name: Saving lib/reactotron-redux/dist/
+          paths:
+            - lib/reactotron-redux/dist/
+          key: lib/reactotron-redux/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-redux/package.json" }}
   release-reactotron-app:
     description: Create release build of Reactotron app, upload to workspace
     parameters:
@@ -65,8 +138,7 @@ jobs:
       resource_class: large
     steps:
       - checkout
-      - install-packages:
-          cache-key: $INSTALL_CACHE_KEY
+      - install-packages
       - run:
           name: Build
           command: yarn build
@@ -88,8 +160,7 @@ jobs:
     executor: *node_executor
     steps:
       - checkout
-      - install-packages:
-          cache-key: $INSTALL_CACHE_KEY
+      - install-packages
       - run:
           name: Set Git Identity
           command: |
@@ -111,8 +182,7 @@ jobs:
     executor: *node_executor
     steps:
       - checkout
-      - install-packages:
-          cache-key: $INSTALL_CACHE_KEY
+      - install-packages
       - run:
           name: Release to npm and github
           command: |
@@ -128,8 +198,7 @@ jobs:
       BUILD_TARGET: windows
     steps:
       - checkout
-      - install-packages:
-          cache-key: $INSTALL_CACHE_KEY
+      - install-packages
       - release-reactotron-app:
           os: Windows
 
@@ -140,8 +209,7 @@ jobs:
       BUILD_TARGET: linux
     steps:
       - checkout
-      - install-packages:
-          cache-key: $INSTALL_CACHE_KEY
+      - install-packages
       - run:
           name: Update apt-get
           command: sudo apt update
@@ -159,8 +227,7 @@ jobs:
       BUILD_TARGET: macos
     steps:
       - checkout
-      - install-packages:
-          cache-key: $INSTALL_CACHE_KEY
+      - install-packages
       - run:
           name: Decode Certificates
           command: echo "$ReactotronCerts" | base64 --decode > ~/repo/apps/reactotron-app/Certificates.p12
@@ -185,8 +252,7 @@ jobs:
     executor: *node_executor
     steps:
       - checkout
-      - install-packages:
-          cache-key: $INSTALL_CACHE_KEY
+      - install-packages
       - attach_workspace:
           at: ~/repo/apps/reactotron-app
       - run:
