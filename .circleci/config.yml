@@ -17,7 +17,7 @@ commands:
       cache-key:
         description: Key to bust install package cache
         type: string
-        default: "1681340799350"
+        default: "cache-key-1681340799350"
     steps:
       - restore_cache:
           name: Restore yarn package cache
@@ -138,8 +138,7 @@ jobs:
       resource_class: large
     steps:
       - checkout
-      - install-packages:
-          cache-key: $INSTALL_CACHE_KEY
+      - install-packages
       - run:
           name: Build
           command: yarn build
@@ -161,8 +160,7 @@ jobs:
     executor: *node_executor
     steps:
       - checkout
-      - install-packages:
-          cache-key: $INSTALL_CACHE_KEY
+      - install-packages
       - run:
           name: Set Git Identity
           command: |
@@ -184,8 +182,7 @@ jobs:
     executor: *node_executor
     steps:
       - checkout
-      - install-packages:
-          cache-key: $INSTALL_CACHE_KEY
+      - install-packages
       - run:
           name: Release to npm and github
           command: |
@@ -201,8 +198,7 @@ jobs:
       BUILD_TARGET: windows
     steps:
       - checkout
-      - install-packages:
-          cache-key: $INSTALL_CACHE_KEY
+      - install-packages
       - release-reactotron-app:
           os: Windows
 
@@ -213,8 +209,7 @@ jobs:
       BUILD_TARGET: linux
     steps:
       - checkout
-      - install-packages:
-          cache-key: $INSTALL_CACHE_KEY
+      - install-packages
       - run:
           name: Update apt-get
           command: sudo apt update
@@ -232,8 +227,7 @@ jobs:
       BUILD_TARGET: macos
     steps:
       - checkout
-      - install-packages:
-          cache-key: $INSTALL_CACHE_KEY
+      - install-packages
       - run:
           name: Decode Certificates
           command: echo "$ReactotronCerts" | base64 --decode > ~/repo/apps/reactotron-app/Certificates.p12
@@ -258,8 +252,7 @@ jobs:
     executor: *node_executor
     steps:
       - checkout
-      - install-packages:
-          cache-key: $INSTALL_CACHE_KEY
+      - install-packages
       - attach_workspace:
           at: ~/repo/apps/reactotron-app
       - run:
