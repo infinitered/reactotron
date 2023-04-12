@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.0.2-beta.1](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2-beta.0...reactotron-core-ui@2.0.2-beta.1) (2023-04-12)
+
+
+### Bug Fixes
+
+* **reactotron-core-ui:** Fix draggable header eating all onClick events from child components ([1d24482](https://github.com/infinitered/reactotron/commit/1d24482c605014cc6d13a745c2432c9be3912cf6))
+
 ### [2.0.2-beta.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2-alpha.9...reactotron-core-ui@2.0.2-beta.0) (2023-04-06)
 
 ### [2.0.2-alpha.9](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2-alpha.8...reactotron-core-ui@2.0.2-alpha.9) (2023-03-21)
