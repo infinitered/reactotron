@@ -15,8 +15,8 @@ interface ContainerProps {
 const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
-  border-bottom: ${props => `1px solid ${props.theme.line}`};
-  background-color: ${props =>
+  border-bottom: ${(props) => `1px solid ${props.theme.line}`};
+  background-color: ${(props) =>
     props.isOpen ? props.theme.backgroundSubtleLight : props.theme.background};
 `
 
@@ -47,15 +47,15 @@ interface TitleTextProps {
 }
 const TitleText = styled.div<TitleTextProps>`
   display: flex;
-  color: ${props => (props.isImportant ? props.theme.tagComplement : props.theme.tag)};
-  background-color: ${props => (props.isImportant ? props.theme.tag : "transparent")};
+  color: ${(props) => (props.isImportant ? props.theme.tagComplement : props.theme.tag)};
+  background-color: ${(props) => (props.isImportant ? props.theme.tag : "transparent")};
   border-radius: 4px;
   padding: 4px 8px;
 `
 
 const PreviewContainer = styled.div`
   flex: 1;
-  color: ${props => props.theme.highlight};
+  color: ${(props) => props.theme.highlight};
   text-align: left;
   overflow: hidden;
   word-break: break-all;
@@ -64,7 +64,7 @@ const PreviewContainer = styled.div`
 
 const ToolbarContainer = styled.div`
   display: flex;
-  color: ${props => props.theme.foreground};
+  color: ${(props) => props.theme.foreground};
 `
 
 const Spacer = styled.div`
@@ -72,7 +72,7 @@ const Spacer = styled.div`
 `
 
 const ExpandIconContainer = styled.div`
-  color: ${props => props.theme.backgroundHighlight};
+  color: ${(props) => props.theme.backgroundHighlight};
 `
 
 const ChildrenContainer = styled.div`
@@ -101,7 +101,7 @@ interface Props {
 function stopPropagation(
   handler: () => void
 ): (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void {
-  return e => {
+  return (e) => {
     e.stopPropagation()
 
     handler()

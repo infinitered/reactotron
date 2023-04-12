@@ -35,15 +35,15 @@ const SearchContainer = styled.div`
 const SearchLabel = styled.p`
   padding: 0 10px;
   font-size: 14px;
-  color: ${props => props.theme.foregroundDark};
+  color: ${(props) => props.theme.foregroundDark};
 `
 const SearchInput = styled.input`
   border-radius: 4px;
   padding: 10px;
   flex: 1;
-  background-color: ${props => props.theme.backgroundSubtleDark};
+  background-color: ${(props) => props.theme.backgroundSubtleDark};
   border: none;
-  color: ${props => props.theme.foregroundDark};
+  color: ${(props) => props.theme.foregroundDark};
   font-size: 14px;
 `
 
@@ -112,7 +112,7 @@ function Timeline() {
         {isSearchOpen && (
           <SearchContainer>
             <SearchLabel>Search</SearchLabel>
-            <SearchInput value={search} onChange={e => setSearch(e.target.value)} />
+            <SearchInput value={search} onChange={(e) => setSearch(e.target.value)} />
           </SearchContainer>
         )}
       </Header>
@@ -122,7 +122,7 @@ function Timeline() {
             Once your app connects and starts sending events, they will appear here.
           </EmptyState>
         ) : (
-          filteredCommands.map(command => {
+          filteredCommands.map((command) => {
             const CommandComponent = timelineCommandResolver(command.type)
 
             if (CommandComponent) {
@@ -131,7 +131,7 @@ function Timeline() {
                   key={command.messageId}
                   command={command}
                   copyToClipboard={clipboard.writeText}
-                  readFile={path => {
+                  readFile={(path) => {
                     return new Promise((resolve, reject) => {
                       fs.readFile(path, "utf-8", (err, data) => {
                         if (err || !data) reject(new Error("Something failed"))

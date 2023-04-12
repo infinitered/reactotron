@@ -8,7 +8,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: ${props => props.theme.foregroundLight};
+  color: ${(props) => props.theme.foregroundLight};
 `
 
 const Title = styled.div`
@@ -18,7 +18,7 @@ const Title = styled.div`
 `
 
 const Message = styled.div`
-  color: ${props => props.theme.foreground};
+  color: ${(props) => props.theme.foreground};
   max-width: 400px;
   line-height: 1.4;
   text-align: center;

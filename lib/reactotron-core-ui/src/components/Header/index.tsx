@@ -5,17 +5,17 @@ import ActionButton from "../ActionButton"
 import HeaderTabButton from "../HeaderTabButton"
 
 const Container = styled.div`
-  background-color: ${props => props.theme.backgroundSubtleLight};
-  border-bottom: 1px solid ${props => props.theme.chromeLine};
-  color: ${props => props.theme.foregroundDark};
-  box-shadow: 0 30px 30px -25px ${props => props.theme.glow};
+  background-color: ${(props) => props.theme.backgroundSubtleLight};
+  border-bottom: 1px solid ${(props) => props.theme.chromeLine};
+  color: ${(props) => props.theme.foregroundDark};
+  box-shadow: 0 30px 30px -25px ${(props) => props.theme.glow};
 `
 
 interface ContentContainerProps {
   isDraggable: boolean
 }
 const ContentContainer = styled.div<ContentContainerProps>`
-  -webkit-app-region: ${props => (props.isDraggable ? "drag" : "")};
+  -webkit-app-region: ${(props) => (props.isDraggable ? "drag" : "")};
   height: 70px;
   padding: 0 10px;
   display: flex;
@@ -24,6 +24,7 @@ const ContentContainer = styled.div<ContentContainerProps>`
 `
 
 const LeftContainer = styled.div`
+  -webkit-app-region: no-drag;
   display: flex;
   flex-direction: row;
   flex: 1;
@@ -38,6 +39,7 @@ const MiddleContainer = styled.div`
   align-items: center;
 `
 const RightContainer = styled.div`
+  -webkit-app-region: no-drag;
   display: flex;
   flex-direction: row;
   flex: 1;
@@ -47,7 +49,7 @@ const RightContainer = styled.div`
 `
 
 const Title = styled.div`
-  color: ${props => props.theme.foregroundLight};
+  color: ${(props) => props.theme.foregroundLight};
   text-align: center;
 `
 
