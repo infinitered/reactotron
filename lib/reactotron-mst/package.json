@@ -11,11 +11,13 @@
   "repository": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-mst",
   "files": [
     "dist",
-    "LICENSE"
+    "LICENSE",
+    "src"
   ],
   "main": "dist/reactotron-mst.umd.js",
   "module": "dist/reactotron-mst.es5.js",
   "typings": "dist/types/reactotron-mst.d.ts",
+  "react-native": "src/reactotron-mst.ts",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --notify",
