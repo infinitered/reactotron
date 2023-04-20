@@ -12,10 +12,12 @@
   "files": [
     "dist",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "src"
   ],
   "main": "dist/index.js",
   "typings": "dist/types/src/reactotron-core-client.d.ts",
+  "react-native": "src/reactotron-core-client.ts",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --notify",

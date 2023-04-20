@@ -13,10 +13,12 @@
     "dist",
     "LICENSE",
     "README.md",
-    "reactotron-redux.d.ts"
+    "reactotron-redux.d.ts",
+    "src"
   ],
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
+  "react-native": "src/index.ts",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --notify",
