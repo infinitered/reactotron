@@ -11,9 +11,9 @@ import { FaTwitter as TwitterIcon } from "react-icons/fa"
 import { getApplicationKeyMap } from "react-hotkeys"
 
 import KeybindGroup from "./components/KeybindGroup"
+import { reactotronLogo } from "../../images"
 
 const projectJson = require("../../../../package.json")
-const logo = require("../../images/Reactotron-128.png")
 
 const Container = styled.div`
   display: flex;
@@ -113,7 +113,7 @@ function Help() {
       <Header title={`Using Reactotron ${projectJson.version}`} isDraggable />
       <HelpContainer>
         <LogoContainer>
-          <LogoImage src={logo} />
+          <LogoImage src={reactotronLogo} />
         </LogoContainer>
         <Title>Let&apos;s Connect!</Title>
         <ConnectContainer>
