@@ -17,7 +17,7 @@
   "module": "dist/reactotron-react-native-mmkv.es5.js",
   "typings": "dist/types/reactotron-react-native-mmkv.d.ts",
   "scripts": {
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch --notify",
     "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
     "format:check": "yarn format --check",
