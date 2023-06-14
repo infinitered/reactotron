@@ -1,5 +1,6 @@
 import { Platform, NativeModules } from "react-native"
-import { createClient, Reactotron } from "reactotron-core-client"
+import { createClient } from "reactotron-core-client"
+import type { ReactotronCore, ClientOptions } from "reactotron-core-client"
 import getHost from "rn-host-detect"
 
 import getReactNativeVersion from "./helpers/getReactNativeVersion"
@@ -12,7 +13,6 @@ import trackGlobalErrors, { TrackGlobalErrorsOptions } from "./plugins/trackGlob
 import networking, { NetworkingOptions } from "./plugins/networking"
 import storybook from "./plugins/storybook"
 import devTools from "./plugins/devTools"
-import ConnectionManager from "./connection-manager"
 
 const constants = NativeModules.PlatformConstants || {}
 
@@ -20,8 +20,8 @@ const REACTOTRON_ASYNC_CLIENT_ID = "@REACTOTRON/clientId"
 
 let tempClientId = null
 
-const DEFAULTS = {
-  createSocket: (path: string) => new ConnectionManager(path), // eslint-disable-line
+const DEFAULTS: ClientOptions<ReactotronReactNative> = {
+  createSocket: (path: string) => new WebSocket(path), // eslint-disable-line
   host: getHost("localhost"),
   port: 9090,
   name: "React Native App",
@@ -73,19 +73,17 @@ export interface UseReactNativeOptions {
   devTools?: boolean
 }
 
-export interface ReactotronReactNative {
-  useReactNative: (
-    options?: UseReactNativeOptions
-  ) => Reactotron<ReactotronReactNative> & ReactotronReactNative
+export interface ReactotronReactNative extends ReactotronCore {
+  useReactNative: (options?: UseReactNativeOptions) => this
   overlay: OverlayFeatures["overlay"]
   storybookSwitcher: (App: React.ReactNode) => (Root: React.ReactNode) => React.ReactNode
   asyncStorageHandler?: any
-  setAsyncStorageHandler?: (
-    asyncStorage: any
-  ) => Reactotron<ReactotronReactNative> & ReactotronReactNative
+  setAsyncStorageHandler?: (asyncStorage: any) => this
 }
 
-const reactotron: Reactotron<ReactotronReactNative> & ReactotronReactNative = createClient(DEFAULTS)
+const reactotron = createClient<ReactotronReactNative, ClientOptions<ReactotronReactNative>>(
+  DEFAULTS
+)
 
 function getPluginOptions<T>(options?: T | boolean): T {
   return typeof options === "object" ? options : null
@@ -130,5 +128,7 @@ reactotron.setAsyncStorageHandler = (asyncStorage) => {
 }
 
 export { asyncStorage, trackGlobalErrors, openInEditor, overlay, networking, storybook, devTools }
+
+export type { ClientOptions }
 
 export default reactotron

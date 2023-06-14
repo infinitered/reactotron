@@ -78,10 +78,10 @@ export interface ReactotronCore {
    * Set the configuration options.
    */
   configure: (
-    options?: ClientOptions<this>
+    options: ClientOptions<this>
   ) => this & InferFeaturesFromPlugins<this, ClientOptions<this>["plugins"]>
 
-  use: (pluginCreator?: PluginCreator<this>) => this & PluginFeatures<this, typeof pluginCreator>
+  use: (pluginCreator: PluginCreator<this>) => this & PluginFeatures<this, typeof pluginCreator>
 
   connect: () => this
 }
@@ -146,7 +146,7 @@ export class ReactotronImpl<Options extends ClientOptions<ReactotronCore>>
   /**
    * Available plugins.
    */
-  plugins: Plugin<ReactotronCore>[] = []
+  plugins: Plugin<this>[] = []
 
   /**
    * Messages that need to be sent.
@@ -181,9 +181,7 @@ export class ReactotronImpl<Options extends ClientOptions<ReactotronCore>>
   /**
    * Set the configuration options.
    */
-  configure(
-    options?: Options
-  ): this & InferFeaturesFromPlugins<ReactotronCore, Options["plugins"]> {
+  configure(options: Options): this & InferFeaturesFromPlugins<ReactotronCore, Options["plugins"]> {
     // options get merged & validated before getting set
     const newOptions = Object.assign(
       {
@@ -209,7 +207,7 @@ export class ReactotronImpl<Options extends ClientOptions<ReactotronCore>>
       this.options.plugins.forEach((p) => this.use(p))
     }
 
-    return this as this & InferFeaturesFromPlugins<ReactotronCore, Options["plugins"]>
+    return this as this & InferFeaturesFromPlugins<this, Options["plugins"]>
   }
 
   close() {
@@ -399,7 +397,7 @@ export class ReactotronImpl<Options extends ClientOptions<ReactotronCore>>
   /**
    * Adds a plugin to the system
    */
-  use(pluginCreator?: PluginCreator<this>): this & PluginFeatures<this, typeof pluginCreator> {
+  use(pluginCreator: PluginCreator<this>): this & PluginFeatures<this, typeof pluginCreator> {
     // we're supposed to be given a function
     if (typeof pluginCreator !== "function") {
       throw new Error("plugins must be a function")
@@ -552,8 +550,9 @@ export class ReactotronImpl<Options extends ClientOptions<ReactotronCore>>
 
 // convenience factory function
 export function createClient<
-  O extends ClientOptions<ReactotronCore> = ClientOptions<ReactotronCore>
->(options?: O) {
-  const client = new ReactotronImpl<O>()
-  return client.configure(options)
+  Client extends ReactotronCore = ReactotronCore,
+  Options extends ClientOptions<Client> = ClientOptions<Client>
+>(options?: Options) {
+  const client = new ReactotronImpl<Options>()
+  return client.configure(options) as Client
 }
