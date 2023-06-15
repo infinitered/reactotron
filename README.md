@@ -52,6 +52,7 @@ Once you have the application installed it should download and alert you that a 
 - [**Reactotron Functions**](./docs/plugin-docs/reactotron-functions.md)
 - [**Track Global Errors**](./docs/plugin-docs/plugin-track-global-errors.md)
 - [**Async Storage**](./docs/plugin-docs/plugin-async-storage.md)
+- [**React Native MMKV**](./docs/plugin-docs/plugin-react-native-mmkv.md)
 - [**Benchmark**](./docs/plugin-docs/plugin-benchmark.md)
 - [**apisauce**](./docs/plugin-docs/plugin-apisauce.md)
 - [**Networking**](./docs/plugin-docs/plugin-networking.md)

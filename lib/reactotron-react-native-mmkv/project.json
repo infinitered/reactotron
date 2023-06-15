@@ -1,0 +1,8 @@
+{
+  "name": "reactotron-react-native-mmkv",
+  "targets": {
+    "version": {
+      "executor": "@jscutlery/semver:version"
+    }
+  }
+}

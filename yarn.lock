@@ -26633,6 +26633,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-mmkv@npm:^2.8.0":
+  version: 2.8.0
+  resolution: "react-native-mmkv@npm:2.8.0"
+  peerDependencies:
+    react: "*"
+    react-native: ">=0.71.0"
+  checksum: 993b486533b00c0b8092ea0b7682428fe704726ec03daf244fbd046bd772e3cfc0aba67b8a9eece31adcb6492c76d838f167eeed877657349a0cae51c8844b8d
+  languageName: node
+  linkType: hard
+
 "react-native@npm:0.69.5":
   version: 0.69.5
   resolution: "react-native@npm:0.69.5"
@@ -27306,6 +27316,50 @@ __metadata:
     trash-cli: 4.0.0
     ts-jest: 29.0.5
     typescript: 4.5.2
+  languageName: unknown
+  linkType: soft
+
+"reactotron-react-native-mmkv@workspace:lib/reactotron-react-native-mmkv":
+  version: 0.0.0-use.local
+  resolution: "reactotron-react-native-mmkv@workspace:lib/reactotron-react-native-mmkv"
+  dependencies:
+    "@babel/core": ^7.21.0
+    "@babel/preset-env": ^7.20.2
+    "@babel/preset-typescript": ^7.21.0
+    "@types/jest": ^29.4.0
+    "@types/node": ^11.9.5
+    "@types/ramda": ^0.25.50
+    "@typescript-eslint/eslint-plugin": ^5.54.0
+    "@typescript-eslint/parser": ^5.54.0
+    babel-eslint: ^10.1.0
+    babel-jest: ^29.4.3
+    eslint: ^8.35.0
+    eslint-config-prettier: ^8.6.0
+    eslint-config-standard: ^17.0.0
+    eslint-plugin-import: ^2.27.5
+    eslint-plugin-node: ^11.1.0
+    eslint-plugin-promise: ^6.1.1
+    eslint-plugin-react: ^7.32.2
+    eslint-plugin-react-hooks: ^4.6.0
+    eslint-plugin-standard: ^5.0.0
+    jest: ^29.4.3
+    prettier: ^2.8.4
+    ramda: ^0.25.0
+    react-native-mmkv: ^2.8.0
+    reactotron-core-client: "workspace:*"
+    rollup: ^1.1.2
+    rollup-plugin-babel: ^4.3.2
+    rollup-plugin-babel-minify: ^7.0.0
+    rollup-plugin-filesize: ^6.0.1
+    rollup-plugin-node-resolve: ^4.0.0
+    rollup-plugin-resolve: ^0.0.1-predev.1
+    testdouble: ^3.16.8
+    trash-cli: ^5.0.0
+    ts-jest: ^29.0.5
+    typescript: 4.9.5
+  peerDependencies:
+    react-native-mmkv: "*"
+    reactotron-core-client: "workspace:*"
   languageName: unknown
   linkType: soft
 
