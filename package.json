@@ -42,7 +42,6 @@
     "eslint-plugin-react-hooks": "^2.3.0",
     "eslint-plugin-standard": "^4.0.1",
     "nx": "15.5.1",
-    "octokit": "^2.0.14",
     "prettier": "^2.8.4",
     "typescript": "^4.9.5",
     "zx": "^7.1.1"
