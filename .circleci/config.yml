@@ -66,6 +66,9 @@ commands:
       - run:
           name: Install packages
           command: yarn install --immutable
+      - run:
+          name: Build workspace packages
+          command: yarn build
       - save_cache:
           paths:
             - node_modules/
