@@ -24,7 +24,6 @@ const ContentContainer = styled.div<ContentContainerProps>`
 `
 
 const LeftContainer = styled.div`
-  -webkit-app-region: no-drag;
   display: flex;
   flex-direction: row;
   flex: 1;
@@ -39,7 +38,6 @@ const MiddleContainer = styled.div`
   align-items: center;
 `
 const RightContainer = styled.div`
-  -webkit-app-region: no-drag;
   display: flex;
   flex-direction: row;
   flex: 1;
