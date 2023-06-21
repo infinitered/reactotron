@@ -5,6 +5,7 @@ import styled from "styled-components"
 const Container = styled.div`
   cursor: pointer;
   margin: 0 5px;
+  -webkit-app-region: none;
 `
 
 interface Props {

@@ -24,7 +24,8 @@ const HeaderTabButtonContainer = styled.div<HeaderTabButtonProps>`
   padding: 15px 0;
   margin: 0 10px;
   cursor: pointer;
-  color: ${props => colorInterpolater(props.colorAnimation)};
+  color: ${(props) => colorInterpolater(props.colorAnimation)};
+  -webkit-app-region: none;
 `
 
 const Title = styled.div`
@@ -33,19 +34,11 @@ const Title = styled.div`
   font-size: 12px;
 `
 
-function HeaderTabButton({
-  icon: Icon,
-  text,
-  isActive,
-  onClick,
-}: Props) {
+function HeaderTabButton({ icon: Icon, text, isActive, onClick }: Props) {
   return (
     <Motion style={{ color: spring(isActive ? 1 : 0) }}>
       {({ color }) => (
-        <HeaderTabButtonContainer
-          colorAnimation={color}
-          onClick={onClick}
-        >
+        <HeaderTabButtonContainer colorAnimation={color} onClick={onClick}>
           {Icon && <Icon size={32} />}
           <Title>{text}</Title>
         </HeaderTabButtonContainer>
