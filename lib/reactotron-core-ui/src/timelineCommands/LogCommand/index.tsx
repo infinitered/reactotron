@@ -124,11 +124,21 @@ const StackFrameLineNumber = styled.div`
   text-align: right;
 `
 
-interface LogPayload {
-  level: any // TODO: ¯\_(ツ)_/¯
-  message: any // TODO: ¯\_(ツ)_/¯
-  stack?: any // TODO: ¯\_(ツ)_/¯
-}
+/** @see `lib/reactotron-core-client/src/plugins/logger.ts` */
+type LogPayload =
+  | {
+      level: "debug"
+      message: string
+    }
+  | {
+      level: "warn"
+      message: string
+    }
+  | {
+      level: "error"
+      message: string
+      stack: string | string[] | null
+    }
 
 interface Props extends TimelineCommandProps<LogPayload> {}
 
@@ -335,8 +345,8 @@ const LogCommand: FunctionComponent<Props> = ({
       isOpen={isOpen}
       setIsOpen={setIsOpen}
     >
-      {!payload.stack && <ContentView value={payload.message} />}
-      {payload.stack && (
+      {"stack" in payload === false && <ContentView value={payload.message} />}
+      {"stack" in payload && (
         <>
           <ErrorMessage>{payload.message}</ErrorMessage>
           {source && (
@@ -366,9 +376,11 @@ const LogCommand: FunctionComponent<Props> = ({
                 <StackTableHeaderFunction>File</StackTableHeaderFunction>
                 <StackTableHeaderLineNumber>Line</StackTableHeaderLineNumber>
               </StackTableHeadRow>
-              {payload.stack.map((stackFrame, idx) =>
-                renderStackFrame(stackFrame, idx, openInEditor)
-              )}
+              {Array.isArray(payload.stack)
+                ? payload.stack
+                : [payload.stack].map((stackFrame, idx) => {
+                    return renderStackFrame(stackFrame, idx, openInEditor)
+                  })}
             </StackTable>
           </StackContainer>
         </>
