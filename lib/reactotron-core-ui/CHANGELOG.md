@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.0.2-beta.6](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2-beta.5...reactotron-core-ui@2.0.2-beta.6) (2023-06-22)
+
+
+### Bug Fixes
+
+* **reactotron-core-ui:** handle string error.stack properties ([137c8b9](https://github.com/infinitered/reactotron/commit/137c8b9da78b3cf437ee40383244c3af3d27b2ab))
+
 ### [2.0.2-beta.5](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2-beta.4...reactotron-core-ui@2.0.2-beta.5) (2023-06-21)
 
 ### [2.0.2-beta.4](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2-beta.3...reactotron-core-ui@2.0.2-beta.4) (2023-06-20)
