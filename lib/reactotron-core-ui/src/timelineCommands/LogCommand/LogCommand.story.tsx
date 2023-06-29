@@ -90,7 +90,7 @@ export const OpenWithObject = () => (
     })}
     isOpen
     setIsOpen={() => {}}
-    readFile={() => {}}
+    readFile={async () => ""}
   />
 )
 
@@ -158,7 +158,7 @@ export const OpenWithStackAndSource = () => (
     isOpen
     setIsOpen={() => {}}
     readFile={() =>
-      new Promise(resolve =>
+      new Promise((resolve) =>
         resolve(`
 module.exports = {
   test: true,
