@@ -128,14 +128,14 @@ const StackFrameLineNumber = styled.div`
   text-align: right;
 `
 
-interface ErrorStack {
+export interface ErrorStackFrame {
   fileName: string
   functionName: string
   lineNumber: number
-  columnNumber?: number
+  columnNumber: number | null
 }
 
-const isErrorStack = (value: unknown): value is ErrorStack =>
+const isErrorStackFrame = (value: unknown): value is ErrorStackFrame =>
   value &&
   typeof value === "object" &&
   "fileName" in value &&
@@ -143,15 +143,18 @@ const isErrorStack = (value: unknown): value is ErrorStack =>
   "functionName" in value &&
   typeof value.functionName === "string" &&
   "lineNumber" in value &&
-  typeof value.lineNumber === "number"
+  typeof value.lineNumber === "number" &&
+  ("columnNumber" in value
+    ? value.columnNumber === null || typeof value.columnNumber === "number"
+    : true)
 
-const isErrorStackArray = (value: unknown): value is ErrorStack[] =>
-  Array.isArray(value) && value.every(isErrorStack)
+const isErrorStackFrameArray = (value: unknown): value is ErrorStackFrame[] =>
+  Array.isArray(value) && value.every(isErrorStackFrame)
 
 interface ErrorLogPayload {
   level: "error"
   message: string
-  stack: Error["stack"] | string[] | ErrorStack[]
+  stack: Error["stack"] | string[] | ErrorStackFrame[]
 }
 
 /** @see `lib/reactotron-core-client/src/plugins/logger.ts` */
@@ -321,7 +324,7 @@ function useFileSource(stack: LogPayload, readFile: (path: string) => Promise<st
 }
 
 function renderStackFrame(
-  stackFrame: ErrorStack,
+  stackFrame: ErrorStackFrame,
   idx: number,
   openInEditor: (file: string, lineNumber: number) => void
 ) {
@@ -422,7 +425,7 @@ const LogCommand: FunctionComponent<Props> = ({
                 <StackTableHeaderFunction>File</StackTableHeaderFunction>
                 <StackTableHeaderLineNumber>Line</StackTableHeaderLineNumber>
               </StackTableHeadRow>
-              {isErrorStackArray(payload.stack)
+              {isErrorStackFrameArray(payload.stack)
                 ? payload.stack.map((stackFrame, idx) =>
                     renderStackFrame(stackFrame, idx, openInEditor)
                   )
