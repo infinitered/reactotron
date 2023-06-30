@@ -1,7 +1,6 @@
 /**
  * Provides a global error handler to report errors..
  */
-import { NativeModules } from "react-native"
 import { Reactotron, ReactotronCore } from "reactotron-core-client"
 import {
   LogBox as _LogBox,
@@ -41,52 +40,6 @@ export default <ReactotronSubtype = ReactotronCore>(options: TrackGlobalErrorsOp
   (reactotron: Reactotron<ReactotronSubtype> & ReactotronSubtype) => {
     // setup configuration
     const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
-
-    let swizzled = null
-    let isSwizzled = false
-
-    function reactotronExceptionHijacker(message, prettyStack, currentExceptionID) {
-      // do Facebook's stuff first
-      swizzled(message, prettyStack, currentExceptionID)
-
-      // then convert & transport it
-      try {
-        // rewrite the stack frames to be in the format we're expecting
-        let stack = prettyStack.map((frame) => ({
-          functionName: frame.methodName === "<unknown>" ? null : frame.methodName,
-          lineNumber: frame.lineNumber,
-          columnNumber: frame.column,
-          fileName: frame.file,
-        }))
-
-        // does the dev want us to keep each frame?
-        if (config.veto) {
-          stack = stack.filter((frame) => config.veto(frame))
-        }
-
-        // throw it over to us
-        ;(reactotron as any).error(message, stack) // TODO: Fix this.
-      } catch (e) {
-        // TODO: no one must ever know our dark secrets
-      }
-    }
-
-    // here's how to swizzle
-    function trackGlobalErrors() {
-      if (isSwizzled) return
-      if (!NativeModules.ExceptionsManager) return
-      swizzled = NativeModules.ExceptionsManager.updateExceptionMessage
-      NativeModules.ExceptionsManager.updateExceptionMessage = reactotronExceptionHijacker
-      isSwizzled = true
-    }
-
-    // restore the original
-    function untrackGlobalErrors() {
-      if (!swizzled) return
-      if (!NativeModules.ExceptionsManager) return
-      NativeModules.ExceptionsManager.updateExceptionMessage = swizzled
-      isSwizzled = false
-    }
 
     // manually fire an error
     function reportError(error: Parameters<typeof LogBox.addException>[0]) {
@@ -137,8 +90,6 @@ export default <ReactotronSubtype = ReactotronCore>(options: TrackGlobalErrorsOp
       // attach these functions to the Reactotron
       features: {
         reportError,
-        trackGlobalErrors,
-        untrackGlobalErrors,
       },
     }
   }
