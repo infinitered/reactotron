@@ -1,6 +1,6 @@
 declare module "react-native/Libraries/Core/NativeExceptionsManager" {
   /**
-   * @see https://github.com/facebook/react-native/blob/330639f74018cfeda28e74c6dae8110d97603860/packages/react-native/Libraries/Core/NativeExceptionsManager.js#L17-L24
+   * @see https://github.com/facebook/react-native/blob/v0.72.1/packages/react-native/Libraries/Core/NativeExceptionsManager.js#L17-L23
    */
   export interface StackFrame {
     column?: number;
@@ -10,7 +10,7 @@ declare module "react-native/Libraries/Core/NativeExceptionsManager" {
     collapse?: boolean;
   }
   /**
-   * @see https://github.com/facebook/react-native/blob/330639f74018cfeda28e74c6dae8110d97603860/packages/react-native/Libraries/Core/NativeExceptionsManager.js#L24-L35
+   * @see https://github.com/facebook/react-native/blob/v0.72.1/packages/react-native/Libraries/Core/NativeExceptionsManager.js#L24-L35
    */
   export interface ExceptionData {
     message: string;

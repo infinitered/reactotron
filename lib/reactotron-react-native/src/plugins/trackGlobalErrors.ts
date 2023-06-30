@@ -3,8 +3,22 @@
  */
 import { NativeModules } from "react-native"
 import { Reactotron, ReactotronCore } from "reactotron-core-client"
-// eslint-disable-next-line import/default, import/namespace
-import LogBox from "react-native/Libraries/LogBox/LogBox"
+import {
+  LogBox as _LogBox,
+  LogBoxStatic as LogBoxStaticPublic,
+  // eslint-disable-next-line import/default, import/namespace
+} from "react-native/Libraries/LogBox/LogBox"
+// eslint-disable-next-line import/namespace
+import type { ExtendedExceptionData } from "react-native/Libraries/LogBox/Data/parseLogBoxLog"
+
+interface LogboxStaticPrivate extends LogBoxStaticPublic {
+  /**
+   * @see https://github.com/facebook/react-native/blob/v0.72.1/packages/react-native/Libraries/LogBox/LogBox.js#L29
+   */
+  addException: (error: ExtendedExceptionData) => void
+}
+
+const LogBox = _LogBox as unknown as LogboxStaticPrivate
 
 // a few functions to help source map errors -- these seem to be not available immediately
 // so we're lazy loading.
@@ -83,9 +97,10 @@ export default <ReactotronSubtype = ReactotronCore>(options: TrackGlobalErrorsOp
           symbolicateStackTrace ||
           require("react-native/Libraries/Core/Devtools/symbolicateStackTrace")
         if (parseErrorStack && symbolicateStackTrace) {
+          // @ts-expect-error parseErrorStack arg type is wrong, it's expecting an array, a string, or a hermes error data, https://github.com/facebook/react-native/blob/v0.72.1/packages/react-native/Libraries/Core/Devtools/parseErrorStack.js#L41
           const parsedStacktrace = parseErrorStack(error.stack)
-          symbolicateStackTrace(parsedStacktrace).then(function (res) {
-            let stack = res.stack.map(function (stackFrame) {
+          symbolicateStackTrace(parsedStacktrace).then(function (stackFrames) {
+            let prettyStackFrames = stackFrames.map(function (stackFrame) {
               return {
                 fileName: stackFrame.file,
                 functionName: stackFrame.methodName,
@@ -95,11 +110,11 @@ export default <ReactotronSubtype = ReactotronCore>(options: TrackGlobalErrorsOp
 
             // does the dev want us to keep each frame?
             if (config.veto) {
-              stack = stack.filter(function (frame) {
+              prettyStackFrames = prettyStackFrames.filter(function (frame) {
                 return config.veto(frame)
               })
             }
-            reactotron.error(error.message, stack) // TODO: Fix this.
+            reactotron.error(error.message, prettyStackFrames) // TODO: Fix this.
           })
         }
       } catch (e) {
