@@ -8,6 +8,7 @@ import {
   ViewStyle,
   Text,
   TextStyle,
+  AnimatableNumericValue,
 } from "react-native"
 
 const Styles: {
@@ -53,7 +54,7 @@ interface Props {
 }
 
 interface State {
-  opacity: number
+  opacity: AnimatableNumericValue
   uri: string
   justifyContent:
     | "flex-start"
