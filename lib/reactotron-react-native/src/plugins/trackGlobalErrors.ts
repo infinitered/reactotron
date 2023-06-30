@@ -50,7 +50,7 @@ export default <ReactotronSubtype = ReactotronCore>(options: TrackGlobalErrorsOp
           symbolicateStackTrace ||
           require("react-native/Libraries/Core/Devtools/symbolicateStackTrace")
         if (parseErrorStack && symbolicateStackTrace) {
-          // @ts-expect-error parseErrorStack arg type is wrong, it's expecting an array, a string, or a hermes error data, https://github.com/facebook/react-native/blob/v0.72.1/packages/react-native/Libraries/Core/Devtools/parseErrorStack.js#L41
+          // parseErrorStack arg type is wrong, it's expecting an array, a string, or a hermes error data, https://github.com/facebook/react-native/blob/v0.72.1/packages/react-native/Libraries/Core/Devtools/parseErrorStack.js#L41
           const parsedStacktrace = parseErrorStack(error.stack)
           symbolicateStackTrace(parsedStacktrace).then(function (stackFrames) {
             let prettyStackFrames = stackFrames.map(function (stackFrame) {
