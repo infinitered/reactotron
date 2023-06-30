@@ -24,8 +24,15 @@ const LogBox = _LogBox as unknown as LogBoxStaticPrivate
 let parseErrorStack: typeof import("react-native/Libraries/Core/Devtools/parseErrorStack").default
 let symbolicateStackTrace: typeof import("react-native/Libraries/Core/Devtools/symbolicateStackTrace").default
 
+export interface ErrorStackFrame {
+  fileName: string
+  functionName: string
+  lineNumber: number
+  columnNumber: number | null
+}
+
 export interface TrackGlobalErrorsOptions {
-  veto?: (frame: any) => boolean
+  veto?: (frame: ErrorStackFrame) => boolean
 }
 
 // defaults
@@ -58,6 +65,7 @@ export default <ReactotronSubtype = ReactotronCore>(options: TrackGlobalErrorsOp
                 fileName: stackFrame.file,
                 functionName: stackFrame.methodName,
                 lineNumber: stackFrame.lineNumber,
+                columnNumber: stackFrame?.column,
               }
             })
 
