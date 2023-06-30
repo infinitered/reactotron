@@ -2,13 +2,14 @@
  * Provides a global error handler to report errors..
  */
 import { Reactotron, ReactotronCore } from "reactotron-core-client"
-import {
-  LogBox as _LogBox,
+import _LogBox, {
   LogBoxStatic as LogBoxStaticPublic,
   // eslint-disable-next-line import/default, import/namespace
 } from "react-native/Libraries/LogBox/LogBox"
 // eslint-disable-next-line import/namespace
 import type { ExtendedExceptionData } from "react-native/Libraries/LogBox/Data/parseLogBoxLog"
+import type { SymbolicateStackTraceFn } from "../helpers/symbolicateStackTrace"
+import type { ParseErrorStackFn } from "../helpers/parseErrorStack"
 
 interface LogBoxStaticPrivate extends LogBoxStaticPublic {
   /**
@@ -21,14 +22,14 @@ const LogBox = _LogBox as unknown as LogBoxStaticPrivate
 
 // a few functions to help source map errors -- these seem to be not available immediately
 // so we're lazy loading.
-let parseErrorStack: typeof import("react-native/Libraries/Core/Devtools/parseErrorStack").default
-let symbolicateStackTrace: typeof import("react-native/Libraries/Core/Devtools/symbolicateStackTrace").default
+let parseErrorStack: ParseErrorStackFn
+let symbolicateStackTrace: SymbolicateStackTraceFn
 
 export interface ErrorStackFrame {
   fileName: string
   functionName: string
   lineNumber: number
-  columnNumber: number | null
+  columnNumber?: number | null
 }
 
 export interface TrackGlobalErrorsOptions {
@@ -38,6 +39,14 @@ export interface TrackGlobalErrorsOptions {
 // defaults
 const PLUGIN_DEFAULTS: TrackGlobalErrorsOptions = {
   veto: null,
+}
+
+const objectifyError = (error: Error) => {
+  const objectifiedError = {} as Record<string, unknown>
+  Object.getOwnPropertyNames(error).forEach((key) => {
+    objectifiedError[key] = error[key]
+  })
+  return objectifiedError
 }
 
 // const reactNativeFrameFinder = frame => contains('/node_modules/react-native/', frame.fileName)
@@ -56,31 +65,47 @@ export default <ReactotronSubtype = ReactotronCore>(options: TrackGlobalErrorsOp
         symbolicateStackTrace =
           symbolicateStackTrace ||
           require("react-native/Libraries/Core/Devtools/symbolicateStackTrace")
-        if (parseErrorStack && symbolicateStackTrace) {
-          // parseErrorStack arg type is wrong, it's expecting an array, a string, or a hermes error data, https://github.com/facebook/react-native/blob/v0.72.1/packages/react-native/Libraries/Core/Devtools/parseErrorStack.js#L41
-          const parsedStacktrace = parseErrorStack(error.stack)
-          symbolicateStackTrace(parsedStacktrace).then(function (stackFrames) {
-            let prettyStackFrames = stackFrames.map(function (stackFrame) {
-              return {
-                fileName: stackFrame.file,
-                functionName: stackFrame.methodName,
-                lineNumber: stackFrame.lineNumber,
-                columnNumber: stackFrame?.column,
-              }
-            })
-
-            // does the dev want us to keep each frame?
-            if (config.veto) {
-              prettyStackFrames = prettyStackFrames.filter(function (frame) {
-                return config.veto(frame)
-              })
-            }
-            reactotron.error(error.message, prettyStackFrames) // TODO: Fix this.
-          })
-        }
       } catch (e) {
-        // nothing happened. move along.
+        reactotron.error(
+          'Unable to load "react-native/Libraries/Core/Devtools/parseErrorStack" or "react-native/Libraries/Core/Devtools/symbolicateStackTrace"',
+          []
+        )
+        reactotron.debug(objectifyError(e))
+        return
       }
+
+      if (!parseErrorStack || !symbolicateStackTrace) {
+        return
+      }
+
+      let parsedStacktrace: ReturnType<typeof parseErrorStack>
+
+      try {
+        // parseErrorStack arg type is wrong, it's expecting an array, a string, or a hermes error data, https://github.com/facebook/react-native/blob/v0.72.1/packages/react-native/Libraries/Core/Devtools/parseErrorStack.js#L41
+        parsedStacktrace = parseErrorStack(error.stack)
+      } catch (e) {
+        reactotron.error("Unable to parse stack trace from error object", [])
+        reactotron.debug(objectifyError(e))
+        return
+      }
+
+      symbolicateStackTrace(parsedStacktrace)
+        .then((symbolicatedStackTrace) => {
+          let prettyStackFrames = symbolicatedStackTrace.stack.map((stackFrame) => ({
+            fileName: stackFrame.file,
+            functionName: stackFrame.methodName,
+            lineNumber: stackFrame.lineNumber,
+          }))
+          // does the dev want us to keep each frame?
+          if (config.veto) {
+            prettyStackFrames = prettyStackFrames.filter((frame) => config?.veto(frame))
+          }
+          reactotron.error(error.message, prettyStackFrames) // TODO: Fix this.
+        })
+        .catch((e) => {
+          reactotron.error("Unable to symbolicate stack trace from error object", [])
+          reactotron.debug(objectifyError(e))
+        })
     }
 
     // the reactotron plugin interface
