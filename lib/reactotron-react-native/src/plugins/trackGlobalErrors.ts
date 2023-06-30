@@ -10,14 +10,14 @@ import {
 // eslint-disable-next-line import/namespace
 import type { ExtendedExceptionData } from "react-native/Libraries/LogBox/Data/parseLogBoxLog"
 
-interface LogboxStaticPrivate extends LogBoxStaticPublic {
+interface LogBoxStaticPrivate extends LogBoxStaticPublic {
   /**
    * @see https://github.com/facebook/react-native/blob/v0.72.1/packages/react-native/Libraries/LogBox/LogBox.js#L29
    */
   addException: (error: ExtendedExceptionData) => void
 }
 
-const LogBox = _LogBox as unknown as LogboxStaticPrivate
+const LogBox = _LogBox as unknown as LogBoxStaticPrivate
 
 // a few functions to help source map errors -- these seem to be not available immediately
 // so we're lazy loading.
