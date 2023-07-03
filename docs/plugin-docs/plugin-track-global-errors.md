@@ -8,13 +8,13 @@ Both `reactotron-react-native` and `reactotron-react-js` ship with this plugin.
 To use the `trackGlobalErrors` plugin, add the additional plugin on the `import` line.
 
 ```js
-import Reactotron, { trackGlobalErrors } from "reactotron-react-native"
+import Reactotron, { trackGlobalErrors } from "reactotron-react-native";
 ```
 
 or
 
 ```js
-import Reactotron, { trackGlobalErrors } from "reactotron-react-js"
+import Reactotron, { trackGlobalErrors } from "reactotron-react-js";
 ```
 
 Next, add it as a plugin to Reactotron.
@@ -22,7 +22,7 @@ Next, add it as a plugin to Reactotron.
 ```js
 Reactotron.configure()
   .use(trackGlobalErrors()) // <--- here we go!
-  .connect()
+  .connect();
 ```
 
 ## Options
@@ -39,7 +39,7 @@ Reactotron.configure()
         frame.fileName.indexOf("/node_modules/react-native/") >= 0,
     })
   )
-  .connect()
+  .connect();
 ```
 
 `veto` is a function that takes an `object` and returns a `boolean`. `true` = ditch it. `false` = keep it.
@@ -66,7 +66,7 @@ Reactotron.configure()
       offline: true,
     })
   )
-  .connect()
+  .connect();
 ```
 
 # How It Works Internally
@@ -77,6 +77,6 @@ It hijacks the browser's `window.onerror` event, immediately calling the previou
 
 ### React Native
 
-On React Native, it hooks `NativeModules.ExceptionsManager.updateExceptionMessage`. This is a message that occurs after the source map lookup for React Native. It always calls the original function so it won't break anything internally. Your Red Box will still show.
+On React Native, it hooks `NativeModules.LogBox.addException`. This is an internal method that React Native uses internally to report errors to LogBox. It always calls the original function so it won't break anything internally. Your Red Box will still show.
 
 Because we're hooking a Facebook internal function, this is a bit fragile. We'll stay on top of any React Native upgrades that might cause problems should the API change.
