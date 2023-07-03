@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.3.9-beta.3](https://github.com/infinitered/reactotron/compare/reactotron-react-js@3.3.9-beta.2...reactotron-react-js@3.3.9-beta.3) (2023-07-03)
+
 ### [3.3.9-beta.2](https://github.com/infinitered/reactotron/compare/reactotron-react-js@3.3.9-beta.1...reactotron-react-js@3.3.9-beta.2) (2023-06-15)
 
 ### [3.3.9-beta.1](https://github.com/infinitered/reactotron/compare/reactotron-react-js@3.3.9-beta.0...reactotron-react-js@3.3.9-beta.1) (2023-06-15)
