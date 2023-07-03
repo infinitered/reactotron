@@ -17,24 +17,24 @@ const ErrorMessage = styled.div`
   padding: 20px 0 20px 10px;
   cursor: text;
   user-select: text;
-  color: ${props => props.theme.tag};
-  background-color: ${props => props.theme.backgroundDarker};
-  border-left: 1px solid ${props => props.theme.tag};
-  border-right: 1px solid ${props => props.theme.subtleLine};
-  border-top: 1px solid ${props => props.theme.subtleLine};
-  border-bottom: 1px solid ${props => props.theme.subtleLine};
+  color: ${(props) => props.theme.tag};
+  background-color: ${(props) => props.theme.backgroundDarker};
+  border-left: 1px solid ${(props) => props.theme.tag};
+  border-right: 1px solid ${(props) => props.theme.subtleLine};
+  border-top: 1px solid ${(props) => props.theme.subtleLine};
+  border-bottom: 1px solid ${(props) => props.theme.subtleLine};
 `
 
 const SourceContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 10px;
-  color: ${props => props.theme.foreground};
+  color: ${(props) => props.theme.foreground};
 `
 const SourceFilename = styled.div`
   padding: 5px 0;
   margin-bottom: 5px;
-  color: ${props => props.theme.tag};
+  color: ${(props) => props.theme.tag};
 `
 interface SourceLineContainerProps {
   isSelected: boolean
@@ -43,17 +43,19 @@ const SourceLineContainer = styled.div<SourceLineContainerProps>`
   display: flex;
   padding: 6px 0;
   cursor: pointer;
-  color: ${props => (props.isSelected ? props.theme.tag : props.theme.foregroundDark)};
-  background-color: ${props => (props.isSelected ? props.theme.backgroundDarker : "transparent")};
-  border-left: ${props => (props.isSelected ? `1px solid ${props.theme.tag}` : undefined)};
-  border-right: ${props => (props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined)};
-  border-top: ${props => (props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined)};
-  border-bottom: ${props => (props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined)};
+  color: ${(props) => (props.isSelected ? props.theme.tag : props.theme.foregroundDark)};
+  background-color: ${(props) => (props.isSelected ? props.theme.backgroundDarker : "transparent")};
+  border-left: ${(props) => (props.isSelected ? `1px solid ${props.theme.tag}` : undefined)};
+  border-right: ${(props) =>
+    props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined};
+  border-top: ${(props) => (props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined)};
+  border-bottom: ${(props) =>
+    props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined};
 `
 const SourceLineNumber = styled.div`
   width: 60px;
   padding-right: 15px;
-  color: ${props => props.theme.constant};
+  color: ${(props) => props.theme.constant};
   text-align: right;
 `
 const SourceLineCode = styled.div`
@@ -70,8 +72,8 @@ const StackTitle = styled.div`
   padding-top: 5px;
   padding-bottom: 5px;
   margin-bottom: 5px;
-  color: ${props => props.theme.tag};
-  border-bottom: 1px solid ${props => props.theme.line};
+  color: ${(props) => props.theme.tag};
+  border-bottom: 1px solid ${(props) => props.theme.line};
 `
 const StackTable = styled.div`
   display: flex;
@@ -80,7 +82,7 @@ const StackTable = styled.div`
 const StackTableHeadRow = styled.div`
   display: flex;
   padding: 6px;
-  color: ${props => props.theme.foregroundDark};
+  color: ${(props) => props.theme.foregroundDark};
 `
 const StackTableHeaderFunction = styled.div`
   text-align: left;
@@ -100,15 +102,17 @@ const StackFrameContainer = styled.div<StackFrameContainerProps>`
   padding: 6px;
   word-break: break-all;
   /* cursor: pointer; */
-  opacity: ${props => (props.isNodeModule ? 0.4 : 1)};
+  opacity: ${(props) => (props.isNodeModule ? 0.4 : 1)};
   cursor: pointer;
 
-  color: ${props => (props.isSelected ? props.theme.tag : props.theme.foreground)};
-  background-color: ${props => (props.isSelected ? props.theme.backgroundDarker : "transparent")};
-  border-left: ${props => (props.isSelected ? `1px solid ${props.theme.tag}` : undefined)};
-  border-right: ${props => (props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined)};
-  border-top: ${props => (props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined)};
-  border-bottom: ${props => (props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined)};
+  color: ${(props) => (props.isSelected ? props.theme.tag : props.theme.foreground)};
+  background-color: ${(props) => (props.isSelected ? props.theme.backgroundDarker : "transparent")};
+  border-left: ${(props) => (props.isSelected ? `1px solid ${props.theme.tag}` : undefined)};
+  border-right: ${(props) =>
+    props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined};
+  border-top: ${(props) => (props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined)};
+  border-bottom: ${(props) =>
+    props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined};
 `
 const StackFrameFunction = styled.div`
   flex: 1;
@@ -118,11 +122,40 @@ const StackFrameFile = styled.div`
   word-break: break-all;
 `
 const StackFrameLineNumber = styled.div`
-  color: ${props => props.theme.constant};
+  color: ${(props) => props.theme.constant};
   word-break: break-all;
   width: 50px;
   text-align: right;
 `
+
+export interface ErrorStackFrame {
+  fileName: string
+  functionName: string
+  lineNumber: number
+  columnNumber: number | null
+}
+
+const isErrorStackFrame = (value: unknown): value is ErrorStackFrame =>
+  value &&
+  typeof value === "object" &&
+  "fileName" in value &&
+  typeof value.fileName === "string" &&
+  "functionName" in value &&
+  typeof value.functionName === "string" &&
+  "lineNumber" in value &&
+  typeof value.lineNumber === "number" &&
+  ("columnNumber" in value
+    ? value.columnNumber === null || typeof value.columnNumber === "number"
+    : true)
+
+const isErrorStackFrameArray = (value: unknown): value is ErrorStackFrame[] =>
+  Array.isArray(value) && value.every(isErrorStackFrame)
+
+interface ErrorLogPayload {
+  level: "error"
+  message: string
+  stack: Error["stack"] | string[] | ErrorStackFrame[]
+}
 
 /** @see `lib/reactotron-core-client/src/plugins/logger.ts` */
 type LogPayload =
@@ -134,11 +167,7 @@ type LogPayload =
       level: "warn"
       message: string
     }
-  | {
-      level: "error"
-      message: string
-      stack: string | string[] | null
-    }
+  | ErrorLogPayload
 
 interface Props extends TimelineCommandProps<LogPayload> {}
 
@@ -189,7 +218,7 @@ function getPreview(message: any) {
 
     Object.keys(message)
       .slice(0, 5)
-      .forEach(key => (firstValues[key] = message[key]))
+      .forEach((key) => (firstValues[key] = message[key]))
 
     const preview = stringifyObject(firstValues, {
       transform: (obj, prop, originalResult) => {
@@ -215,14 +244,26 @@ function getPreview(message: any) {
   return message
 }
 
-function useFileSource(stack, readFile) {
-  const [sourceCode, setSourceCode] = useState(null)
+function useFileSource(stack: LogPayload, readFile: (path: string) => Promise<string>) {
+  const [sourceCode, setSourceCode] = useState<{
+    lines: {
+      isSelected: boolean
+      lineNumber: number
+      source: string
+    }[]
+    lineNumber: number
+    fileName: string
+    partialFilename: string
+  }>(null)
 
   useEffect(() => {
     if (!readFile) return
     if (!stack) return
+    if (stack.level !== "error") return
+    if (!stack.stack) return
     if (!stack.stack) return
     if (stack.stack.length === 0) return
+    if (typeof stack.stack[0] === "string") return
 
     const { fileName, lineNumber } = stack.stack[0]
     if (!fileName) return
@@ -233,7 +274,7 @@ function useFileSource(stack, readFile) {
       .join("/")
 
     readFile(fileName)
-      .then(source => {
+      .then((source) => {
         if (!source || typeof source !== "string") return
 
         try {
@@ -242,7 +283,7 @@ function useFileSource(stack, readFile) {
 
           const contents = source.split(/\n/g)
 
-          const sourceLines = contents.map(line => {
+          const sourceLines = contents.map((line) => {
             lineCounter = lineCounter + 1
 
             // Normalize indentation
@@ -282,8 +323,12 @@ function useFileSource(stack, readFile) {
   return sourceCode
 }
 
-function renderStackFrame(stackFrame, idx, openInEditor) {
-  let fileName = stackFrame.fileName || ""
+function renderStackFrame(
+  stackFrame: ErrorStackFrame,
+  idx: number,
+  openInEditor: (file: string, lineNumber: number) => void
+) {
+  let fileName = stackFrame?.fileName || ""
   let functionName = stackFrame.functionName || ""
   const lineNumber = stackFrame.lineNumber || 0
 
@@ -322,7 +367,7 @@ const LogCommand: FunctionComponent<Props> = ({
 }) => {
   const { payload, date, deltaTime, important } = command
 
-  const openInEditor = (file, lineNumber) => {
+  const openInEditor = (file: string, lineNumber: number) => {
     if (file === "") return
 
     sendCommand("editor.open", {
@@ -333,6 +378,10 @@ const LogCommand: FunctionComponent<Props> = ({
 
   const source = useFileSource(payload, readFile)
   const toolbar = buildToolbar(payload, copyToClipboard)
+
+  useEffect(() => {
+    console.log(payload)
+  }, [payload])
 
   return (
     <TimelineCommand
@@ -352,7 +401,7 @@ const LogCommand: FunctionComponent<Props> = ({
           {source && (
             <SourceContainer>
               <SourceFilename>{source.partialFilename}</SourceFilename>
-              {source.lines.map(line => {
+              {source.lines.map((line) => {
                 return (
                   <SourceLineContainer
                     key={`${line.source}-${line.lineNumber}`}
@@ -376,11 +425,11 @@ const LogCommand: FunctionComponent<Props> = ({
                 <StackTableHeaderFunction>File</StackTableHeaderFunction>
                 <StackTableHeaderLineNumber>Line</StackTableHeaderLineNumber>
               </StackTableHeadRow>
-              {Array.isArray(payload.stack)
-                ? payload.stack
-                : [payload.stack].map((stackFrame, idx) => {
-                    return renderStackFrame(stackFrame, idx, openInEditor)
-                  })}
+              {isErrorStackFrameArray(payload.stack)
+                ? payload.stack.map((stackFrame, idx) =>
+                    renderStackFrame(stackFrame, idx, openInEditor)
+                  )
+                : null}
             </StackTable>
           </StackContainer>
         </>
