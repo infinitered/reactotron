@@ -2,10 +2,9 @@ import type { ReactotronCore, Plugin } from "../reactotron-core-client"
 
 export type AcceptableRepls = object | Function | string | number
 
-export default () => (reactotron: ReactotronCore) => {
+const repl = () => (reactotron: ReactotronCore) => {
   const myRepls: { [key: string]: AcceptableRepls } = {}
   // let currentContext = null
-
   return {
     onCommand: ({ type, payload }) => {
       if (type.substr(0, 5) !== "repl.") return
@@ -16,14 +15,11 @@ export default () => (reactotron: ReactotronCore) => {
           break
         // case "cd":
         //   const changeTo = myRepls.find(r => r.name === payload)
-
         //   if (!changeTo) {
         //     reactotron.send("repl.cd.response", "That REPL does not exist")
         //     break
         //   }
-
         //   currentContext = payload
-
         //   reactotron.send("repl.cd.response", `Change REPL to "${payload}"`)
         //   break
         case "execute":
@@ -34,14 +30,11 @@ export default () => (reactotron: ReactotronCore) => {
           //   )
           //   break
           // }
-
           // const currentRepl = myRepls.find(r => r.name === currentContext)
-
           // if (!currentRepl) {
           //   reactotron.send("repl.execute.response", "The selected REPL no longer exists.")
           //   break
           // }
-
           reactotron.send(
             "repl.execute.response",
             function () {
@@ -66,3 +59,4 @@ export default () => (reactotron: ReactotronCore) => {
     },
   } satisfies Plugin<ReactotronCore>
 }
+export default repl

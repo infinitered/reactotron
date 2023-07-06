@@ -21,7 +21,7 @@ const stateResponse = () => (reactotron: ReactotronCore) => {
       stateValuesChange: (changes: Action[]) =>
         changes.length > 0 && reactotron.send("state.values.change", { changes }),
 
-      // sends the state backup over to the server
+      /** sends the state backup over to the server */
       stateBackupResponse: (state: State) => reactotron.send("state.backup.response", { state }),
     },
   } satisfies Plugin<ReactotronCore>
