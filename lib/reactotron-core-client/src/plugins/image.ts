@@ -1,6 +1,6 @@
 import type { ReactotronCore, Plugin } from "../reactotron-core-client"
 
-interface ImagePayload {
+export interface ImagePayload {
   uri: string
   preview: string
   caption?: string
@@ -16,8 +16,10 @@ const image = () => (reactotron: ReactotronCore) => {
   return {
     features: {
       // expanded just to show the specs
-      image: ({ uri, preview, filename, width, height, caption }: ImagePayload) =>
-        reactotron.send("image", { uri, preview, filename, width, height, caption }),
+      image: (payload: ImagePayload) => {
+        const { uri, preview, filename, width, height, caption } = payload
+        return reactotron.send("image", { uri, preview, filename, width, height, caption })
+      },
     },
   } satisfies Plugin<ReactotronCore>
 }

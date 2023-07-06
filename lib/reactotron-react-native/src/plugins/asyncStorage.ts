@@ -1,4 +1,4 @@
-import type { ReactotronCore } from "reactotron-core-client"
+import type { ReactotronCore, Plugin } from "reactotron-core-client"
 export interface AsyncStorageOptions {
   ignore?: string[]
 }
@@ -202,7 +202,7 @@ const asyncStorage = (options: AsyncStorageOptions) => (reactotron: ReactotronCo
       trackAsyncStorage,
       untrackAsyncStorage,
     },
-  }
+  } satisfies Plugin<ReactotronCore>
 }
 
 export default asyncStorage

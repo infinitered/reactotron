@@ -1,6 +1,6 @@
 import XHRInterceptor from "react-native/Libraries/Network/XHRInterceptor"
 import queryString from "query-string"
-import { ReactotronCore } from "reactotron-core-client"
+import type { ReactotronCore, Plugin } from "reactotron-core-client"
 
 /**
  * Don't include the response bodies for images by default.
@@ -19,7 +19,7 @@ const networking =
   (reactotron: ReactotronCore) => {
     const options = Object.assign({}, DEFAULTS, pluginConfig)
 
-    // a RegExp to suppess adding the body cuz it costs a lot to serialize
+    // a RegExp to suppress adding the body cuz it costs a lot to serialize
     const ignoreContentTypes = options.ignoreContentTypes || DEFAULT_CONTENT_TYPES_RX
 
     // a XHR call tracker
@@ -146,6 +146,6 @@ const networking =
     XHRInterceptor.enableInterception()
 
     // nothing of use to offer to the plugin
-    return {}
+    return {} satisfies Plugin<ReactotronCore>
   }
 export default networking
