@@ -19,14 +19,14 @@ export type { StateResponsePlugin } from "./plugins/state-responses"
 
 // #region Plugin Types
 type OnCommandCommand = Record<string, any>
-export interface LifeCycleMethods<Client> {
+export interface LifeCycleMethods {
   onCommand?: (command: OnCommandCommand) => void
-  onConnect?: (client: Client) => void
-  onDisconnect?: (client: Client) => void
+  onConnect?: () => void
+  onDisconnect?: () => void
 }
 
 type AnyFunction = (...args: any[]) => any
-export interface Plugin<Client> extends LifeCycleMethods<Client> {
+export interface Plugin<Client> extends LifeCycleMethods {
   features?: {
     [key: string]: AnyFunction
   }
@@ -171,7 +171,7 @@ export class ReactotronImpl implements ReactotronCore {
   /**
    * Messages that need to be sent.
    */
-  sendQueue: any[] = []
+  sendQueue: string[] = []
 
   /**
    * Are we ready to start communicating?
@@ -266,7 +266,7 @@ export class ReactotronImpl implements ReactotronCore {
       onConnect && onConnect()
 
       // trigger our plugins onConnect
-      this.plugins.forEach((p) => p.onConnect && p.onConnect(this))
+      this.plugins.forEach((p) => p.onConnect && p.onConnect())
 
       const getClientIdPromise = getClientId || emptyPromise
 
@@ -297,7 +297,7 @@ export class ReactotronImpl implements ReactotronCore {
       onDisconnect && onDisconnect()
 
       // as well as the plugin's onDisconnect
-      this.plugins.forEach((p) => p.onDisconnect && p.onDisconnect(this))
+      this.plugins.forEach((p) => p.onDisconnect && p.onDisconnect())
     }
 
     const decodeCommandData = (data: unknown) => {

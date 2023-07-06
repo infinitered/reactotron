@@ -6,7 +6,7 @@ type BrowserWebSocket = WebSocket
 /**
  * Configuration options for the Reactotron Client.
  */
-export interface ClientOptions<Client> extends LifeCycleMethods<Client> {
+export interface ClientOptions<Client> extends LifeCycleMethods {
   /**
    * A function which returns a websocket.
    *
