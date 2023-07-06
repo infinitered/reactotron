@@ -3,11 +3,10 @@ import type { ReactotronCore, Plugin } from "../reactotron-core-client"
 /**
  * Sends API request/response information.
  */
-
 const apiResponse = () => (reactotron: ReactotronCore) => {
   return {
     features: {
-      apiResponse: (request: {status: number}, response: any, duration: number) => {
+      apiResponse: (request: { status: number }, response: any, duration: number) => {
         const ok =
           response &&
           response.status &&
@@ -19,6 +18,6 @@ const apiResponse = () => (reactotron: ReactotronCore) => {
       },
     },
   } satisfies Plugin<ReactotronCore>
-} 
+}
 
 export default apiResponse

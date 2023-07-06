@@ -3,7 +3,7 @@ import * as WebSocket from "ws"
 import * as getPort from "get-port"
 import { createClosingServer } from "./create-closing-server"
 
-const createSocket = (path) => new WebSocket(path)
+const createSocket = (path: string) => new WebSocket(path)
 
 let port: number
 beforeEach(async () => {

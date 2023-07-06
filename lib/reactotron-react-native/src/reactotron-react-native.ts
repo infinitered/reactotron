@@ -5,7 +5,7 @@ import getHost from "rn-host-detect"
 
 import getReactNativeVersion from "./helpers/getReactNativeVersion"
 import getReactNativeDimensions from "./helpers/getReactNativeDimensions"
-import asyncStorage, { AsyncStorageOptions } from "./plugins/asyncStorage"
+import asyncStorage, { AsyncStorageHandler, AsyncStorageOptions } from "./plugins/asyncStorage"
 import overlay from "./plugins/overlay"
 import type { OverlayFeatures } from "./plugins/overlay"
 import openInEditor, { OpenInEditorOptions } from "./plugins/openInEditor"
@@ -18,7 +18,7 @@ const constants = NativeModules.PlatformConstants || {}
 
 const REACTOTRON_ASYNC_CLIENT_ID = "@REACTOTRON/clientId"
 
-let tempClientId = null
+let tempClientId: string | null = null
 
 const DEFAULTS: ClientOptions<ReactotronReactNative> = {
   createSocket: (path: string) => new WebSocket(path), // eslint-disable-line
@@ -44,22 +44,20 @@ const DEFAULTS: ClientOptions<ReactotronReactNative> = {
     ...getReactNativeDimensions(),
   },
   /* eslint-disable @typescript-eslint/no-use-before-define */
-  getClientId: () => {
+  getClientId: async () => {
     if (reactotron.asyncStorageHandler) {
       return reactotron.asyncStorageHandler.getItem(REACTOTRON_ASYNC_CLIENT_ID)
     }
 
-    return new Promise((resolve) => resolve(tempClientId))
+    return tempClientId
   },
-  setClientId: (clientId: string) => {
+  setClientId: async (clientId: string) => {
     if (reactotron.asyncStorageHandler) {
       return reactotron.asyncStorageHandler.setItem(REACTOTRON_ASYNC_CLIENT_ID, clientId)
     }
 
     tempClientId = clientId
-    return Promise.resolve()
   },
-  /* eslint-enable @typescript-eslint/no-use-before-define */
   proxyHack: true,
 }
 
@@ -77,13 +75,11 @@ export interface ReactotronReactNative extends ReactotronCore {
   useReactNative: (options?: UseReactNativeOptions) => this
   overlay: OverlayFeatures["overlay"]
   storybookSwitcher: (App: React.ReactNode) => (Root: React.ReactNode) => React.ReactNode
-  asyncStorageHandler?: any
+  asyncStorageHandler?: AsyncStorageHandler
   setAsyncStorageHandler?: (asyncStorage: any) => this
 }
 
-const reactotron = createClient<ReactotronReactNative, ClientOptions<ReactotronReactNative>>(
-  DEFAULTS
-)
+const reactotron = createClient<ReactotronReactNative>(DEFAULTS)
 
 function getPluginOptions<T>(options?: T | boolean): T {
   return typeof options === "object" ? options : null

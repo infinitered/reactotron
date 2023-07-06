@@ -11,6 +11,12 @@ import serialize from "./serialize"
 import { start } from "./stopwatch"
 import { ClientOptions } from "./client-options"
 
+export type { ClientOptions }
+export { assertHasLoggerPlugin } from "./plugins/logger"
+export type { LoggerPlugin } from "./plugins/logger"
+export { assertHasStateResponsePlugin, hasStateResponsePlugin } from "./plugins/state-responses"
+export type { StateResponsePlugin } from "./plugins/state-responses"
+
 // #region Plugin Types
 type OnCommandCommand = Record<string, any>
 export interface LifeCycleMethods<Client> {
@@ -27,7 +33,12 @@ export interface Plugin<Client> extends LifeCycleMethods<Client> {
   onPlugin?: (client: Client) => void
 }
 
-export type PluginCreator<Client> = (client: Client) => Partial<Plugin<Client>>
+export type PluginCreator<Client> = (client: Client) => Plugin<Client>
+
+export type InferFeatures<
+  Client = ReactotronCore,
+  PC extends PluginCreator<Client> = PluginCreator<Client>
+> = PC extends (client: Client) => { features: infer U } ? U : never
 
 export const corePlugins = [
   image(),
@@ -52,6 +63,10 @@ export type InferFeaturesFromPlugins<
   Plugins extends PluginCreator<Client>[]
 > = UnionToIntersection<PluginFeatures<Client, Plugins[number]>>
 
+type InferFeaturesFromPlugin<Client, P extends PluginCreator<Client>> = UnionToIntersection<
+  PluginFeatures<Client, P>
+>
+
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void
   ? I
   : never
@@ -60,18 +75,21 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
 type ActionType = string
 type ActionPayload = Record<string, any>
 
+interface DisplayConfig {
+  name: string
+  value?: object | string | number | boolean | null | undefined
+  preview?: string
+  image?: string
+  important?: boolean
+}
+
 export interface ReactotronCore {
+  options: ClientOptions<this>
   plugins: Plugin<this>[]
   startTimer: () => () => number
   close: () => void
   send: (type: ActionType, payload?: ActionPayload, important?: boolean) => void
-  display: (config?: {
-    name: string
-    value: string
-    preview: string
-    image: string
-    important: boolean
-  }) => void
+  display: (config: DisplayConfig) => void
   reportError: (this: any, error: Error) => void
   onCustomCommand: (config: CustomCommand | string, optHandler?: () => void) => () => void
   /**
@@ -79,14 +97,18 @@ export interface ReactotronCore {
    */
   configure: (
     options: ClientOptions<this>
-  ) => this & InferFeaturesFromPlugins<this, ClientOptions<this>["plugins"]>
+  ) => ClientOptions<this>["plugins"] extends PluginCreator<this>[]
+    ? this & InferFeaturesFromPlugins<this, ClientOptions<this>["plugins"]>
+    : this
 
-  use: (pluginCreator: PluginCreator<this>) => this & PluginFeatures<this, typeof pluginCreator>
+  use: <P extends PluginCreator<this>>(pluginCreator: P) => this & InferFeaturesFromPlugin<this, P>
 
   connect: () => this
 }
 
-export interface Reactotron extends ReactotronCore {}
+type CorePluginFeatures = InferFeaturesFromPlugins<ReactotronCore, typeof corePlugins>
+
+export interface Reactotron extends ReactotronCore, CorePluginFeatures {}
 
 // these are not for you.
 const reservedFeatures = [
@@ -117,21 +139,19 @@ export interface CustomCommandArg {
   type: ArgType
 }
 
-export interface CustomCommand {
+export interface CustomCommand<Args extends CustomCommandArg[] = CustomCommandArg[]> {
   id?: number
   command: string
-  handler: (args?: any) => void
+  handler: (args?: Record<keyof Args[number], Args[number]>) => void
 
   title?: string
   description?: string
-  args?: CustomCommandArg[]
+  args?: Args
 }
 
-export class ReactotronImpl<Options extends ClientOptions<ReactotronCore>>
-  implements ReactotronCore
-{
+export class ReactotronImpl implements ReactotronCore {
   // the configuration options
-  options: Options
+  options: ClientOptions<ReactotronCore>
 
   /**
    * Are we connected to a server?
@@ -181,7 +201,11 @@ export class ReactotronImpl<Options extends ClientOptions<ReactotronCore>>
   /**
    * Set the configuration options.
    */
-  configure(options: Options): this & InferFeaturesFromPlugins<ReactotronCore, Options["plugins"]> {
+  configure(
+    options: ClientOptions<this>
+  ): ClientOptions<this>["plugins"] extends PluginCreator<this>[]
+    ? this & InferFeaturesFromPlugins<this, ClientOptions<this>["plugins"]>
+    : this {
     // options get merged & validated before getting set
     const newOptions = Object.assign(
       {
@@ -207,7 +231,7 @@ export class ReactotronImpl<Options extends ClientOptions<ReactotronCore>>
       this.options.plugins.forEach((p) => this.use(p))
     }
 
-    return this as this & InferFeaturesFromPlugins<this, Options["plugins"]>
+    return this as this & InferFeaturesFromPlugins<this, ClientOptions<this>["plugins"]>
   }
 
   close() {
@@ -339,7 +363,7 @@ export class ReactotronImpl<Options extends ClientOptions<ReactotronCore>>
   /**
    * Sends a command to the server
    */
-  send = (type, payload = {}, important = false) => {
+  send = (type: ActionType, payload: ActionPayload = {}, important = false) => {
     // set the timing info
     const date = new Date()
     let deltaTime = date.getTime() - this.lastMessageDate.getTime()
@@ -376,7 +400,7 @@ export class ReactotronImpl<Options extends ClientOptions<ReactotronCore>>
   /**
    * Sends a custom command to the server to displays nicely.
    */
-  display(config: any = {}) {
+  display(config: DisplayConfig) {
     const { name, value, preview, image: img, important = false } = config
     const payload = {
       name,
@@ -390,7 +414,7 @@ export class ReactotronImpl<Options extends ClientOptions<ReactotronCore>>
   /**
    * Client libraries can hijack this to report errors.
    */
-  reportError(this: any, error) {
+  reportError(this: any, error: Error) {
     this.error(error)
   }
 
@@ -549,10 +573,9 @@ export class ReactotronImpl<Options extends ClientOptions<ReactotronCore>>
 }
 
 // convenience factory function
-export function createClient<
-  Client extends ReactotronCore = ReactotronCore,
-  Options extends ClientOptions<Client> = ClientOptions<Client>
->(options?: Options) {
-  const client = new ReactotronImpl<Options>()
-  return client.configure(options) as Client
+export function createClient<Client extends ReactotronCore = ReactotronCore>(
+  options?: ClientOptions<Client>
+) {
+  const client = new ReactotronImpl()
+  return client.configure(options as unknown) as unknown as Client
 }

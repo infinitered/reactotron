@@ -1,7 +1,12 @@
 /**
  * Provides a global error handler to report errors..
  */
-import { Reactotron, ReactotronCore } from "reactotron-core-client"
+import {
+  InferFeatures,
+  LoggerPlugin,
+  ReactotronCore,
+  assertHasLoggerPlugin,
+} from "reactotron-core-client"
 import _LogBox, {
   LogBoxStatic as LogBoxStaticPublic,
   // eslint-disable-next-line import/default, import/namespace
@@ -51,78 +56,82 @@ const objectifyError = (error: Error) => {
 
 // const reactNativeFrameFinder = frame => contains('/node_modules/react-native/', frame.fileName)
 
-// our plugin entry point
-export default <ReactotronSubtype = ReactotronCore>(options: TrackGlobalErrorsOptions) =>
-  (reactotron: Reactotron<ReactotronSubtype> & ReactotronSubtype) => {
-    // setup configuration
-    const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
+const trackGlobalErrors = (options: TrackGlobalErrorsOptions) => (reactotron: ReactotronCore) => {
+  // make sure we have the logger plugin
+  assertHasLoggerPlugin(reactotron)
+  const client = reactotron as ReactotronCore & InferFeatures<ReactotronCore, LoggerPlugin>
 
-    // manually fire an error
-    function reportError(error: Parameters<typeof LogBox.addException>[0]) {
-      try {
-        parseErrorStack =
-          parseErrorStack || require("react-native/Libraries/Core/Devtools/parseErrorStack")
-        symbolicateStackTrace =
-          symbolicateStackTrace ||
-          require("react-native/Libraries/Core/Devtools/symbolicateStackTrace")
-      } catch (e) {
-        reactotron.error(
-          'Unable to load "react-native/Libraries/Core/Devtools/parseErrorStack" or "react-native/Libraries/Core/Devtools/symbolicateStackTrace"',
-          []
-        )
-        reactotron.debug(objectifyError(e))
-        return
-      }
+  // setup configuration
+  const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
 
-      if (!parseErrorStack || !symbolicateStackTrace) {
-        return
-      }
-
-      let parsedStacktrace: ReturnType<typeof parseErrorStack>
-
-      try {
-        // parseErrorStack arg type is wrong, it's expecting an array, a string, or a hermes error data, https://github.com/facebook/react-native/blob/v0.72.1/packages/react-native/Libraries/Core/Devtools/parseErrorStack.js#L41
-        parsedStacktrace = parseErrorStack(error.stack)
-      } catch (e) {
-        reactotron.error("Unable to parse stack trace from error object", [])
-        reactotron.debug(objectifyError(e))
-        return
-      }
-
-      symbolicateStackTrace(parsedStacktrace)
-        .then((symbolicatedStackTrace) => {
-          let prettyStackFrames = symbolicatedStackTrace.stack.map((stackFrame) => ({
-            fileName: stackFrame.file,
-            functionName: stackFrame.methodName,
-            lineNumber: stackFrame.lineNumber,
-          }))
-          // does the dev want us to keep each frame?
-          if (config.veto) {
-            prettyStackFrames = prettyStackFrames.filter((frame) => config?.veto(frame))
-          }
-          reactotron.error(error.message, prettyStackFrames) // TODO: Fix this.
-        })
-        .catch((e) => {
-          reactotron.error("Unable to symbolicate stack trace from error object", [])
-          reactotron.debug(objectifyError(e))
-        })
+  // manually fire an error
+  function reportError(error: Parameters<typeof LogBox.addException>[0]) {
+    try {
+      parseErrorStack =
+        parseErrorStack || require("react-native/Libraries/Core/Devtools/parseErrorStack")
+      symbolicateStackTrace =
+        symbolicateStackTrace ||
+        require("react-native/Libraries/Core/Devtools/symbolicateStackTrace")
+    } catch (e) {
+      client.error(
+        'Unable to load "react-native/Libraries/Core/Devtools/parseErrorStack" or "react-native/Libraries/Core/Devtools/symbolicateStackTrace"',
+        []
+      )
+      client.debug(objectifyError(e))
+      return
     }
 
-    // the reactotron plugin interface
-    return {
-      onConnect: () => {
-        LogBox.addException = new Proxy(LogBox.addException, {
-          apply: function (target, thisArg, argumentsList: Parameters<typeof LogBox.addException>) {
-            const error = argumentsList[0]
-            reportError(error)
-            return target.apply(thisArg, argumentsList)
-          },
-        })
-      },
-
-      // attach these functions to the Reactotron
-      features: {
-        reportError,
-      },
+    if (!parseErrorStack || !symbolicateStackTrace) {
+      return
     }
+
+    let parsedStacktrace: ReturnType<typeof parseErrorStack>
+
+    try {
+      // parseErrorStack arg type is wrong, it's expecting an array, a string, or a hermes error data, https://github.com/facebook/react-native/blob/v0.72.1/packages/react-native/Libraries/Core/Devtools/parseErrorStack.js#L41
+      parsedStacktrace = parseErrorStack(error.stack)
+    } catch (e) {
+      client.error("Unable to parse stack trace from error object", [])
+      client.debug(objectifyError(e))
+      return
+    }
+
+    symbolicateStackTrace(parsedStacktrace)
+      .then((symbolicatedStackTrace) => {
+        let prettyStackFrames = symbolicatedStackTrace.stack.map((stackFrame) => ({
+          fileName: stackFrame.file,
+          functionName: stackFrame.methodName,
+          lineNumber: stackFrame.lineNumber,
+        }))
+        // does the dev want us to keep each frame?
+        if (config.veto) {
+          prettyStackFrames = prettyStackFrames.filter((frame) => config?.veto(frame))
+        }
+        client.error(error.message, prettyStackFrames) // TODO: Fix this.
+      })
+      .catch((e) => {
+        client.error("Unable to symbolicate stack trace from error object", [])
+        client.debug(objectifyError(e))
+      })
   }
+
+  // the reactotron plugin interface
+  return {
+    onConnect: () => {
+      LogBox.addException = new Proxy(LogBox.addException, {
+        apply: function (target, thisArg, argumentsList: Parameters<typeof LogBox.addException>) {
+          const error = argumentsList[0]
+          reportError(error)
+          return target.apply(thisArg, argumentsList)
+        },
+      })
+    },
+
+    // attach these functions to the Reactotron
+    features: {
+      reportError,
+    },
+  }
+}
+
+export default trackGlobalErrors

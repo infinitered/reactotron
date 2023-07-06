@@ -1,6 +1,6 @@
 import type { Reactotron } from "reactotron-core-client"
 
-export const defaultReactotronMock = {
+export const defaultReactotronMock: Reactotron = {
   startTimer: jest.fn(),
   configure: jest.fn(),
   close: jest.fn(),
@@ -10,4 +10,24 @@ export const defaultReactotronMock = {
   reportError: jest.fn(),
   use: jest.fn(),
   onCustomCommand: jest.fn(),
-} as unknown as Reactotron
+  clear: jest.fn(),
+  apiResponse: jest.fn(),
+  benchmark: jest.fn(),
+  debug: jest.fn(),
+  error: jest.fn(),
+  image: jest.fn(),
+  log: jest.fn(),
+  logImportant: jest.fn(),
+  plugins: [],
+  options: {},
+  repl: jest.fn(),
+  stateActionComplete: jest.fn(),
+  stateBackupResponse: jest.fn(),
+  stateKeysResponse: jest.fn(),
+  stateValuesChange: jest.fn(),
+  stateValuesResponse: jest.fn(),
+  warn: jest.fn(),
+  createEnhancer: jest.fn(),
+  reduxStore: jest.fn(),
+  setReduxStore: jest.fn(),
+}

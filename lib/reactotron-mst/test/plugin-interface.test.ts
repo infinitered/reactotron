@@ -1,4 +1,5 @@
 import { mst } from "../src/reactotron-mst"
+import { createMockReactotron } from "./mocks/create-mock-reactotron"
 
 describe("plugin-interface", () => {
   it("factory interface", () => {
@@ -6,7 +7,7 @@ describe("plugin-interface", () => {
   })
 
   it("plugin interface", () => {
-    const plugin = mst()({})
+    const plugin = mst()(createMockReactotron())
 
     expect(typeof plugin).toEqual("object")
     expect(typeof plugin.onCommand).toEqual("function")

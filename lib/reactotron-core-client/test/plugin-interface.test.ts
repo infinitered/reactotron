@@ -19,8 +19,10 @@ test("client accepts plugins", () => {
 })
 
 test("plugins are functions", () => {
+  // @ts-expect-error
   expect(() => client.use()).toThrow()
-  expect(() => client.use(null as any)).toThrow()
+  // @ts-expect-error
+  expect(() => client.use(null)).toThrow()
   // @ts-expect-error
   expect(() => client.use("")).toThrow()
   // @ts-expect-error
@@ -28,9 +30,13 @@ test("plugins are functions", () => {
 })
 
 test("plugins are invoke and return an object", () => {
+  // @ts-expect-error
   expect(() => client.use(() => null)).toThrow()
+  // @ts-expect-error
   expect(() => client.use(() => 1)).toThrow()
+  // @ts-expect-error
   expect(() => client.use(() => "")).toThrow()
+  // @ts-expect-error
   expect(() => client.use(() => undefined)).toThrow()
   client.use(() => ({}))
 })
