@@ -1,6 +1,6 @@
 import { Platform, NativeModules } from "react-native"
 import { createClient } from "reactotron-core-client"
-import type { ReactotronCore, ClientOptions } from "reactotron-core-client"
+import type { ClientOptions, Reactotron } from "reactotron-core-client"
 import getHost from "rn-host-detect"
 
 import getReactNativeVersion from "./helpers/getReactNativeVersion"
@@ -71,7 +71,7 @@ export interface UseReactNativeOptions {
   devTools?: boolean
 }
 
-export interface ReactotronReactNative extends ReactotronCore {
+export interface ReactotronReactNative extends Reactotron {
   useReactNative: (options?: UseReactNativeOptions) => this
   overlay: OverlayFeatures["overlay"]
   storybookSwitcher: (App: React.ReactNode) => (Root: React.ReactNode) => React.ReactNode
