@@ -1,16 +1,19 @@
-import type { ReactotronCore } from "./reactotron-core-client"
+import type { LifeCycleMethods, PluginCreator } from "./reactotron-core-client"
+import * as NodeWebSocket from "ws"
+
+type BrowserWebSocket = WebSocket
 
 /**
  * Configuration options for the Reactotron Client.
  */
-export interface ClientOptions {
+export interface ClientOptions<Client> extends LifeCycleMethods {
   /**
    * A function which returns a websocket.
    *
    * This is over-engineered because we need the ability to create different
    * types of websockets for React Native, React, and NodeJS.  :|
    */
-  createSocket?: (path?: string) => any
+  createSocket?: ((path: string) => BrowserWebSocket) | ((path: string) => NodeWebSocket)
 
   /**
    * The hostname or ip address of the server.  Default: localhost.
@@ -35,7 +38,7 @@ export interface ClientOptions {
   /**
    * A list of plugins.
    */
-  plugins?: ((reactotron: ReactotronCore) => any)[]
+  plugins?: PluginCreator<Client>[]
 
   /**
    * Performs safety checks when serializing.  Default: true.
@@ -72,12 +75,12 @@ export interface ClientOptions {
   /**
    * A way for the client libraries to identify themselves.
    */
-  client?: any
+  client?: Record<string, string | number | boolean>
 
   /**
    * Save the client id provided by the server
    */
-  setClientId?: (clientId) => Promise<void>
+  setClientId?: (clientId: string) => Promise<void>
 
   /**
    * Get the client id provided by the server

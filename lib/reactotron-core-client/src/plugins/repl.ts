@@ -1,13 +1,12 @@
-import type { Reactotron } from "../reactotron-core-client"
+import type { ReactotronCore, Plugin } from "../reactotron-core-client"
 
 export type AcceptableRepls = object | Function | string | number
 
-export default () => (reactotron: Reactotron) => {
+const repl = () => (reactotron: ReactotronCore) => {
   const myRepls: { [key: string]: AcceptableRepls } = {}
   // let currentContext = null
-
   return {
-    onCommand: ({ type, payload }: { type: string; payload?: any }) => {
+    onCommand: ({ type, payload }) => {
       if (type.substr(0, 5) !== "repl.") return
 
       switch (type.substr(5)) {
@@ -16,14 +15,11 @@ export default () => (reactotron: Reactotron) => {
           break
         // case "cd":
         //   const changeTo = myRepls.find(r => r.name === payload)
-
         //   if (!changeTo) {
         //     reactotron.send("repl.cd.response", "That REPL does not exist")
         //     break
         //   }
-
         //   currentContext = payload
-
         //   reactotron.send("repl.cd.response", `Change REPL to "${payload}"`)
         //   break
         case "execute":
@@ -34,14 +30,11 @@ export default () => (reactotron: Reactotron) => {
           //   )
           //   break
           // }
-
           // const currentRepl = myRepls.find(r => r.name === currentContext)
-
           // if (!currentRepl) {
           //   reactotron.send("repl.execute.response", "The selected REPL no longer exists.")
           //   break
           // }
-
           reactotron.send(
             "repl.execute.response",
             function () {
@@ -64,5 +57,6 @@ export default () => (reactotron: Reactotron) => {
         myRepls[name] = value
       },
     },
-  }
+  } satisfies Plugin<ReactotronCore>
 }
+export default repl

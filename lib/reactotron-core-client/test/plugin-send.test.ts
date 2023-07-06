@@ -1,6 +1,7 @@
-import { createClient } from "../src/reactotron-core-client"
+import { ReactotronCore, createClient } from "../src/reactotron-core-client"
 import * as WebSocket from "ws"
 import * as getPort from "get-port"
+import { PluginCreator } from "reactotron-core-client"
 
 const createSocket = (path) => new WebSocket(path)
 const mock = { type: "type", payload: "payload" }
@@ -21,7 +22,7 @@ test("plugins support send", (done) => {
   let capturedSend: any
 
   // the plugin to extract the send function
-  const plugin = (reactotron) => {
+  const plugin: PluginCreator<ReactotronCore> = (reactotron) => {
     capturedSend = reactotron.send
     return {}
   }

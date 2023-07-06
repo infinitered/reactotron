@@ -13,7 +13,14 @@ import {
   onSnapshot,
 } from "mobx-state-tree"
 import type { IStateTreeNode, IType, IMiddlewareEvent } from "mobx-state-tree"
-import { Reactotron } from "reactotron-core-client"
+import {
+  Reactotron,
+  ReactotronCore,
+  Plugin,
+  assertHasStateResponsePlugin,
+  InferFeatures,
+  StateResponsePlugin,
+} from "reactotron-core-client"
 
 import {
   always,
@@ -113,6 +120,10 @@ export function mst(opts: MstPluginOptions = {}) {
    * @param reactotron The reactotron instance we're attaching to.
    */
   function plugin(reactotron: Reactotron) {
+    // make sure have loaded the StateResponsePlugin
+    assertHasStateResponsePlugin(reactotron)
+    const client = reactotron as Reactotron & InferFeatures<Reactotron, StateResponsePlugin>
+
     // --- Plugin-scoped variables ---------------------------------
 
     // the stores we're tracking
@@ -139,12 +150,12 @@ export function mst(opts: MstPluginOptions = {}) {
     function trackMstNode(node: IStateTreeNode, nodeName = "default") {
       // sanity
       if (!node) {
-        return { kind: "required" }
+        return { kind: "required" } as const
       }
 
       // prevent double tracking
       if (trackedNodes[nodeName]) {
-        return { kind: "already-tracking" }
+        return { kind: "already-tracking" } as const
       }
 
       try {
@@ -157,15 +168,15 @@ export function mst(opts: MstPluginOptions = {}) {
             attachReactotronToMstNode(node)
             // track this
             trackedNodes[nodeName] = { node, modelType }
-            return { kind: "ok" }
+            return { kind: "ok" } as const
           } catch (e) {
-            return { kind: "tracking-error", message: e.message }
+            return { kind: "tracking-error", message: e.message } as const
           }
         } else {
-          return { kind: "invalid-node" }
+          return { kind: "invalid-node" } as const
         }
       } catch (e) {
-        return { kind: "invalid-node" }
+        return { kind: "invalid-node" } as const
       }
     }
 
@@ -327,12 +338,12 @@ export function mst(opts: MstPluginOptions = {}) {
       const trackedNode = trackedNodes[command.mstNodeName || "default"]
       const atPath: string = (command && command.payload && command.payload.path) || []
       if (trackedNode && trackedNode.node && atPath) {
-        const state = getSnapshot(trackedNode.node)
+        const state = getSnapshot<IStateTreeNode>(trackedNode.node)
         if (isNilOrEmpty(atPath)) {
-          reactotron.stateKeysResponse(null, keys(state))
+          client.stateKeysResponse(null, keys(state))
         } else {
           const keyList = keys(dotPath(atPath, state))
-          reactotron.stateKeysResponse(atPath, keyList)
+          client.stateKeysResponse(atPath, keyList)
         }
       }
     }
@@ -348,9 +359,9 @@ export function mst(opts: MstPluginOptions = {}) {
       if (trackedNode && trackedNode.node && atPath) {
         const state = getSnapshot(trackedNode.node)
         if (isNilOrEmpty(atPath)) {
-          reactotron.stateValuesResponse(null, state)
+          client.stateValuesResponse(null, state)
         } else {
-          reactotron.stateValuesResponse(atPath, dotPath(atPath, state))
+          client.stateValuesResponse(atPath, dotPath(atPath, state))
         }
       }
     }
@@ -387,7 +398,7 @@ export function mst(opts: MstPluginOptions = {}) {
         }))
       )(subscriptions)
 
-      reactotron.stateValuesChange(changes)
+      client.stateValuesChange(changes)
     }
 
     // --- Reactotron Hooks ---------------------------------
@@ -420,7 +431,7 @@ export function mst(opts: MstPluginOptions = {}) {
       // All keys in this object will be attached to the main Reactotron instance
       // and available to be called directly.
       features: { trackMstNode },
-    }
+    } satisfies Plugin<ReactotronCore>
   }
 
   return plugin

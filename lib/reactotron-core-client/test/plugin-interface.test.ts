@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { createClient, corePlugins, ReactotronCore } from "../src/reactotron-core-client"
 import * as WebSocket from "ws"
 
@@ -19,8 +20,10 @@ test("client accepts plugins", () => {
 })
 
 test("plugins are functions", () => {
+  // @ts-expect-error
   expect(() => client.use()).toThrow()
-  expect(() => client.use(null as any)).toThrow()
+  // @ts-ignore should be ts-expect-error but jest doesn't like it for null or undefined values for some reason
+  expect(() => client.use(null)).toThrow()
   // @ts-expect-error
   expect(() => client.use("")).toThrow()
   // @ts-expect-error
@@ -28,9 +31,13 @@ test("plugins are functions", () => {
 })
 
 test("plugins are invoke and return an object", () => {
+  // @ts-ignore should be ts-expect-error but jest doesn't like it for null or undefined values for some reason
   expect(() => client.use(() => null)).toThrow()
+  // @ts-expect-error
   expect(() => client.use(() => 1)).toThrow()
+  // @ts-expect-error
   expect(() => client.use(() => "")).toThrow()
+  // @ts-ignore should be ts-expect-error but jest doesn't like it for null or undefined values for some reason
   expect(() => client.use(() => undefined)).toThrow()
   client.use(() => ({}))
 })

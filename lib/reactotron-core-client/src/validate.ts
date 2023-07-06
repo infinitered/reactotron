@@ -1,7 +1,9 @@
-import * as WebSocket from "ws"
 import type { ClientOptions } from "./client-options"
+import type { ReactotronCore } from "./reactotron-core-client"
 
-const isCreateSocketValid = (createSocket: (path: string) => WebSocket) =>
+const isCreateSocketValid = (
+  createSocket: unknown
+): createSocket is ClientOptions<ReactotronCore>["createSocket"] =>
   typeof createSocket !== "undefined" && createSocket !== null
 const isHostValid = (host: string): boolean => typeof host === "string" && host && host !== ""
 const isPortValid = (port: number): boolean =>
@@ -12,7 +14,7 @@ const onCommandValid = (fn: (cmd: string) => any) => typeof fn === "function"
  * Ensures the options are sane to run this baby.  Throw if not.  These
  * are basically sanity checks.
  */
-const validate = (options: ClientOptions) => {
+const validate = (options: ClientOptions<ReactotronCore>) => {
   const { createSocket, host, port, onCommand } = options
 
   if (!isCreateSocketValid(createSocket)) {

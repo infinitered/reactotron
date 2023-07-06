@@ -1,10 +1,11 @@
 import { Platform, NativeModules } from "react-native"
-import { createClient, Reactotron } from "reactotron-core-client"
+import { createClient } from "reactotron-core-client"
+import type { ClientOptions, Reactotron } from "reactotron-core-client"
 import getHost from "rn-host-detect"
 
 import getReactNativeVersion from "./helpers/getReactNativeVersion"
 import getReactNativeDimensions from "./helpers/getReactNativeDimensions"
-import asyncStorage, { AsyncStorageOptions } from "./plugins/asyncStorage"
+import asyncStorage, { AsyncStorageHandler, AsyncStorageOptions } from "./plugins/asyncStorage"
 import overlay from "./plugins/overlay"
 import type { OverlayFeatures } from "./plugins/overlay"
 import openInEditor, { OpenInEditorOptions } from "./plugins/openInEditor"
@@ -12,16 +13,15 @@ import trackGlobalErrors, { TrackGlobalErrorsOptions } from "./plugins/trackGlob
 import networking, { NetworkingOptions } from "./plugins/networking"
 import storybook from "./plugins/storybook"
 import devTools from "./plugins/devTools"
-import ConnectionManager from "./connection-manager"
 
 const constants = NativeModules.PlatformConstants || {}
 
 const REACTOTRON_ASYNC_CLIENT_ID = "@REACTOTRON/clientId"
 
-let tempClientId = null
+let tempClientId: string | null = null
 
-const DEFAULTS = {
-  createSocket: (path: string) => new ConnectionManager(path), // eslint-disable-line
+const DEFAULTS: ClientOptions<ReactotronReactNative> = {
+  createSocket: (path: string) => new WebSocket(path), // eslint-disable-line
   host: getHost("localhost"),
   port: 9090,
   name: "React Native App",
@@ -44,22 +44,20 @@ const DEFAULTS = {
     ...getReactNativeDimensions(),
   },
   /* eslint-disable @typescript-eslint/no-use-before-define */
-  getClientId: () => {
+  getClientId: async () => {
     if (reactotron.asyncStorageHandler) {
       return reactotron.asyncStorageHandler.getItem(REACTOTRON_ASYNC_CLIENT_ID)
     }
 
-    return new Promise((resolve) => resolve(tempClientId))
+    return tempClientId
   },
-  setClientId: (clientId: string) => {
+  setClientId: async (clientId: string) => {
     if (reactotron.asyncStorageHandler) {
       return reactotron.asyncStorageHandler.setItem(REACTOTRON_ASYNC_CLIENT_ID, clientId)
     }
 
     tempClientId = clientId
-    return Promise.resolve()
   },
-  /* eslint-enable @typescript-eslint/no-use-before-define */
   proxyHack: true,
 }
 
@@ -73,19 +71,15 @@ export interface UseReactNativeOptions {
   devTools?: boolean
 }
 
-export interface ReactotronReactNative {
-  useReactNative: (
-    options?: UseReactNativeOptions
-  ) => Reactotron<ReactotronReactNative> & ReactotronReactNative
+export interface ReactotronReactNative extends Reactotron {
+  useReactNative: (options?: UseReactNativeOptions) => this
   overlay: OverlayFeatures["overlay"]
   storybookSwitcher: (App: React.ReactNode) => (Root: React.ReactNode) => React.ReactNode
-  asyncStorageHandler?: any
-  setAsyncStorageHandler?: (
-    asyncStorage: any
-  ) => Reactotron<ReactotronReactNative> & ReactotronReactNative
+  asyncStorageHandler?: AsyncStorageHandler
+  setAsyncStorageHandler?: (asyncStorage: any) => this
 }
 
-const reactotron: Reactotron<ReactotronReactNative> & ReactotronReactNative = createClient(DEFAULTS)
+const reactotron = createClient<ReactotronReactNative>(DEFAULTS)
 
 function getPluginOptions<T>(options?: T | boolean): T {
   return typeof options === "object" ? options : null
@@ -130,5 +124,7 @@ reactotron.setAsyncStorageHandler = (asyncStorage) => {
 }
 
 export { asyncStorage, trackGlobalErrors, openInEditor, overlay, networking, storybook, devTools }
+
+export type { ClientOptions }
 
 export default reactotron

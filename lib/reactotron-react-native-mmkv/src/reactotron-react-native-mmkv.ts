@@ -35,7 +35,13 @@ export default function mmkvPlugin(config: MmkvPluginConfig) {
   let listener: Listener | undefined
 
   return (reactotron: Reactotron) => {
-    const log = ({ value, preview }: { value: unknown; preview: string }) => {
+    const log = ({
+      value,
+      preview,
+    }: {
+      value: string | number | boolean | object
+      preview: string
+    }) => {
       reactotron.display({
         name: "MMKV",
         value,

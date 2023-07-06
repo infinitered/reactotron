@@ -11,6 +11,35 @@ import serialize from "./serialize"
 import { start } from "./stopwatch"
 import { ClientOptions } from "./client-options"
 
+export type { ClientOptions }
+export { assertHasLoggerPlugin } from "./plugins/logger"
+export type { LoggerPlugin } from "./plugins/logger"
+export { assertHasStateResponsePlugin, hasStateResponsePlugin } from "./plugins/state-responses"
+export type { StateResponsePlugin } from "./plugins/state-responses"
+
+// #region Plugin Types
+type OnCommandCommand = Record<string, any>
+export interface LifeCycleMethods {
+  onCommand?: (command: OnCommandCommand) => void
+  onConnect?: () => void
+  onDisconnect?: () => void
+}
+
+type AnyFunction = (...args: any[]) => any
+export interface Plugin<Client> extends LifeCycleMethods {
+  features?: {
+    [key: string]: AnyFunction
+  }
+  onPlugin?: (client: Client) => void
+}
+
+export type PluginCreator<Client> = (client: Client) => Plugin<Client>
+
+export type InferFeatures<
+  Client = ReactotronCore,
+  PC extends PluginCreator<Client> = PluginCreator<Client>
+> = PC extends (client: Client) => { features: infer U } ? U : never
+
 export const corePlugins = [
   image(),
   logger(),
@@ -19,34 +48,85 @@ export const corePlugins = [
   apiResponse(),
   clear(),
   repl(),
-]
+] satisfies PluginCreator<ReactotronCore>[]
 
-const DEFAULT_OPTIONS: ClientOptions = {
-  createSocket: null,
-  host: "localhost",
-  port: 9090,
-  name: "reactotron-core-client",
-  secure: false,
-  plugins: corePlugins,
-  safeRecursion: true,
-  onCommand: () => null,
-  onConnect: () => null,
-  onDisconnect: () => null,
+export type InferPluginsFromCreators<Client, PC extends PluginCreator<Client>[]> = PC extends Array<
+  infer P extends PluginCreator<Client>
+>
+  ? ReturnType<P>[]
+  : never
+
+type ExtractFeatures<T> = T extends { features: infer U } ? U : never
+type PluginFeatures<Client, P extends PluginCreator<Client>> = ExtractFeatures<ReturnType<P>>
+export type InferFeaturesFromPlugins<
+  Client,
+  Plugins extends PluginCreator<Client>[]
+> = UnionToIntersection<PluginFeatures<Client, Plugins[number]>>
+
+type InferFeaturesFromPlugin<Client, P extends PluginCreator<Client>> = UnionToIntersection<
+  PluginFeatures<Client, P>
+>
+
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void
+  ? I
+  : never
+// #endregion
+
+type ActionType = string
+type ActionPayload = Record<string, any>
+
+interface DisplayConfig {
+  name: string
+  value?: object | string | number | boolean | null | undefined
+  preview?: string
+  image?: string
+  important?: boolean
 }
+
+export interface ReactotronCore {
+  options: ClientOptions<this>
+  plugins: Plugin<this>[]
+  startTimer: () => () => number
+  close: () => void
+  send: (type: ActionType, payload?: ActionPayload, important?: boolean) => void
+  display: (config: DisplayConfig) => void
+  reportError: (this: any, error: Error) => void
+  onCustomCommand: <Args extends CustomCommandArg[] = CustomCommand["args"]>(
+    config: CustomCommand<Args>
+  ) => () => void | ((config: string, optHandler?: () => void) => () => void)
+  /**
+   * Set the configuration options.
+   */
+  configure: (
+    options: ClientOptions<this>
+  ) => ClientOptions<this>["plugins"] extends PluginCreator<this>[]
+    ? this & InferFeaturesFromPlugins<this, ClientOptions<this>["plugins"]>
+    : this
+
+  use: <P extends PluginCreator<this>>(pluginCreator: P) => this & InferFeaturesFromPlugin<this, P>
+
+  connect: () => this
+}
+
+type CorePluginFeatures = InferFeaturesFromPlugins<ReactotronCore, typeof corePlugins>
+
+export interface Reactotron extends ReactotronCore, CorePluginFeatures {}
 
 // these are not for you.
 const reservedFeatures = [
-  "options",
-  "connected",
-  "socket",
-  "plugins",
   "configure",
   "connect",
+  "connected",
+  "options",
+  "plugins",
   "send",
-  "use",
+  "socket",
   "startTimer",
-]
-const isReservedFeature = (value: string) => reservedFeatures.some((res) => res === value)
+  "use",
+] as const
+type ReservedKeys = (typeof reservedFeatures)[number]
+const isReservedFeature = (value: string): value is ReservedKeys =>
+  reservedFeatures.some((res) => res === value)
 
 function emptyPromise() {
   return Promise.resolve("")
@@ -61,88 +141,27 @@ export interface CustomCommandArg {
   type: ArgType
 }
 
-export interface CustomCommand {
+export type CustomCommandArgs<Args extends CustomCommandArg[]> = UnionToIntersection<
+  Args extends Array<infer U>
+    ? U extends CustomCommandArg
+      ? { [K in U as U["name"]]: U["type"] }
+      : never
+    : never
+>
+
+export interface CustomCommand<Args extends CustomCommandArg[] = CustomCommandArg[]> {
   id?: number
   command: string
-  handler: (args?: any) => void
+  handler: (args?: CustomCommandArgs<Args>) => void
 
   title?: string
   description?: string
-  args?: CustomCommandArg[]
+  args?: Args
 }
 
-export interface ReactotronCore {
-  startTimer: () => () => number
-  close: () => void
-  send: (type: any, payload?: any, important?: boolean) => void
-  display: (config?: any) => void
-  reportError: (this: any, error: any) => void
-  onCustomCommand: (config: CustomCommand | string, optHandler?: () => void) => () => void
-
-  /* Provided by plugins */
-  // API Response Plugin
-  apiResponse?: (request: any, response: any, duration: any) => void
-
-  // Benchmark Plugin
-  benchmark?: (title: string) => {
-    step: (stepName: string) => void
-    stop: (stopTitle: string) => void
-    last: (stopTitle: string) => void
-  }
-
-  // Clear Plugin
-  clear?: () => void
-
-  // Image Plugin
-  image?: (options: {
-    uri: any
-    preview: any
-    filename: any
-    width: any
-    height: any
-    caption: any
-  }) => void
-
-  // Logger Plugin
-  log?: (...args: any[]) => void
-  logImportant?: (...args: any[]) => void
-  debug?: (message: any, important?: boolean) => void
-  warn?: (message: any) => void
-  error?: (message: any, stack: any) => void
-
-  // State Plugin
-  stateActionComplete?: (name: any, action: any, important?: boolean) => void
-  stateValuesResponse?: (path: any, value: any, valid?: boolean) => void
-  stateKeysResponse?: (path: any, keys: any, valid?: boolean) => void
-  stateValuesChange?: (changes: any) => void
-  stateBackupResponse?: (state: any) => void
-
-  // REPL Plugin
-  repl?: (name: string, value: object | Function | string | number) => void
-
-  plugins: any[]
-
-  options: ClientOptions
-}
-
-export interface Reactotron<ReactotronSubtype = ReactotronCore> extends ReactotronCore {
-  /**
-   * Set the configuration options.
-   */
-  configure: (options?: ClientOptions) => Reactotron<ReactotronSubtype> & ReactotronSubtype
-
-  use: (
-    pluginCreator?: (client: Reactotron<ReactotronSubtype> & ReactotronSubtype) => any
-  ) => Reactotron<ReactotronSubtype> & ReactotronSubtype
-
-  connect: () => Reactotron<ReactotronSubtype> & ReactotronSubtype
-}
-
-export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
-  implements Reactotron<ReactotronSubtype>
-{
+export class ReactotronImpl implements ReactotronCore {
   // the configuration options
-  options: ClientOptions = Object.assign({}, DEFAULT_OPTIONS)
+  options: ClientOptions<ReactotronCore>
 
   /**
    * Are we connected to a server?
@@ -157,12 +176,12 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
   /**
    * Available plugins.
    */
-  plugins: any[] = []
+  plugins: Plugin<this>[] = []
 
   /**
    * Messages that need to be sent.
    */
-  sendQueue: any[] = []
+  sendQueue: string[] = []
 
   /**
    * Are we ready to start communicating?
@@ -192,9 +211,28 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
   /**
    * Set the configuration options.
    */
-  configure(options: ClientOptions = {}): Reactotron<ReactotronSubtype> & ReactotronSubtype {
+  configure(
+    options: ClientOptions<this>
+  ): ClientOptions<this>["plugins"] extends PluginCreator<this>[]
+    ? this & InferFeaturesFromPlugins<this, ClientOptions<this>["plugins"]>
+    : this {
     // options get merged & validated before getting set
-    const newOptions = Object.assign({}, this.options, options)
+    const newOptions = Object.assign(
+      {
+        createSocket: null,
+        host: "localhost",
+        port: 9090,
+        name: "reactotron-core-client",
+        secure: false,
+        plugins: corePlugins,
+        safeRecursion: true,
+        onCommand: () => null,
+        onConnect: () => null,
+        onDisconnect: () => null,
+      } satisfies ClientOptions<ReactotronCore>,
+      this.options,
+      options
+    )
     validate(newOptions)
     this.options = newOptions
 
@@ -203,7 +241,7 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
       this.options.plugins.forEach((p) => this.use(p))
     }
 
-    return this as any as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
+    return this as this & InferFeaturesFromPlugins<this, ClientOptions<this>["plugins"]>
   }
 
   close() {
@@ -214,7 +252,7 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
   /**
    * Connect to the Reactotron server.
    */
-  connect(): Reactotron<ReactotronSubtype> & ReactotronSubtype {
+  connect() {
     this.connected = true
     const {
       createSocket,
@@ -312,28 +350,30 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
     }
 
     // this is ws style from require('ws') on node js
-    if (socket.on) {
+    if ("on" in socket && socket.on) {
       const nodeWebSocket = socket as WebSocket
       nodeWebSocket.on("open", onOpen)
       nodeWebSocket.on("close", onClose)
       nodeWebSocket.on("message", onMessage)
+      // assign the socket to the instance
+      this.socket = socket
     } else {
       // this is a browser
+      const browserWebSocket = socket as WebSocket
       socket.onopen = onOpen
       socket.onclose = onClose
       socket.onmessage = (evt) => onMessage(evt.data)
+      // assign the socket to the instance
+      this.socket = browserWebSocket
     }
 
-    // assign the socket to the instance
-    this.socket = socket
-
-    return this as any as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
+    return this
   }
 
   /**
    * Sends a command to the server
    */
-  send = (type, payload = {}, important = false) => {
+  send = (type: ActionType, payload: ActionPayload = {}, important = false) => {
     // set the timing info
     const date = new Date()
     let deltaTime = date.getTime() - this.lastMessageDate.getTime()
@@ -370,7 +410,7 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
   /**
    * Sends a custom command to the server to displays nicely.
    */
-  display(config: any = {}) {
+  display(config: DisplayConfig) {
     const { name, value, preview, image: img, important = false } = config
     const payload = {
       name,
@@ -384,23 +424,21 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
   /**
    * Client libraries can hijack this to report errors.
    */
-  reportError(this: any, error) {
+  reportError(this: any, error: Error) {
     this.error(error)
   }
 
   /**
    * Adds a plugin to the system
    */
-  use(
-    pluginCreator?: (client: Reactotron<ReactotronSubtype> & ReactotronSubtype) => any
-  ): Reactotron<ReactotronSubtype> & ReactotronSubtype {
+  use(pluginCreator: PluginCreator<this>): this & PluginFeatures<this, typeof pluginCreator> {
     // we're supposed to be given a function
     if (typeof pluginCreator !== "function") {
       throw new Error("plugins must be a function")
     }
 
     // execute it immediately passing the send function
-    const plugin = pluginCreator.bind(this)(this)
+    const plugin = pluginCreator.bind(this)(this) as ReturnType<typeof pluginCreator>
 
     // ensure we get an Object-like creature back
     if (typeof plugin !== "object") {
@@ -444,7 +482,7 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
     plugin.onPlugin && typeof plugin.onPlugin === "function" && plugin.onPlugin.bind(this)(this)
 
     // chain-friendly
-    return this as any as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
+    return this as this & PluginFeatures<this, typeof pluginCreator>
   }
 
   onCustomCommand(config: CustomCommand | string, optHandler?: () => void): () => void {
@@ -545,10 +583,9 @@ export class ReactotronImpl<ReactotronSubtype = ReactotronCore>
 }
 
 // convenience factory function
-export function createClient<ReactotronSubtype = ReactotronCore>(
-  options?: ClientOptions
-): Reactotron<ReactotronSubtype> & ReactotronSubtype {
-  const client = new ReactotronImpl<ReactotronSubtype>()
-  client.configure(options)
-  return client as any as Reactotron<ReactotronSubtype> & ReactotronSubtype // cast needed to allow patching by other implementations like reactotron-react-native
+export function createClient<Client extends ReactotronCore = ReactotronCore>(
+  options?: ClientOptions<Client>
+) {
+  const client = new ReactotronImpl()
+  return client.configure(options as unknown) as unknown as Client
 }

@@ -1,4 +1,9 @@
-import { Reactotron } from "reactotron-core-client"
+import {
+  InferFeatures,
+  Reactotron,
+  StateResponsePlugin,
+  assertHasStateResponsePlugin,
+} from "reactotron-core-client"
 
 import stateCleaner from "./helpers/stateCleaner"
 import pathObject from "./helpers/pathObject"
@@ -10,10 +15,15 @@ export default function createCommandHandler(
   pluginConfig: PluginConfig,
   onReduxStoreCreation: (func: () => void) => void
 ) {
+  // make sure have loaded the StateResponsePlugin
+  assertHasStateResponsePlugin(reactotron)
+  const client = reactotron as Reactotron & InferFeatures<Reactotron, StateResponsePlugin>
+
+  // create our subscriptions handler
   const subscriptionsHandler = createSubscriptionsHandler(reactotron, onReduxStoreCreation)
 
   return ({ type, payload }: { type: string; payload?: any }) => {
-    const reduxStore = reactotron.reduxStore
+    const reduxStore = client.reduxStore
 
     switch (type) {
       // client is asking for keys
@@ -23,7 +33,7 @@ export default function createCommandHandler(
           const cleanedState = stateCleaner(reduxStore.getState())
 
           if (!payload.path) {
-            reactotron.stateKeysResponse(
+            client.stateKeysResponse(
               null,
               type === "state.keys.request" ? Object.keys(cleanedState) : cleanedState
             )
@@ -31,9 +41,7 @@ export default function createCommandHandler(
             const filteredObj = pathObject(payload.path, cleanedState)
 
             const responseMethod =
-              type === "state.keys.request"
-                ? reactotron.stateKeysResponse
-                : reactotron.stateValuesResponse
+              type === "state.keys.request" ? client.stateKeysResponse : client.stateValuesResponse
 
             responseMethod(
               payload.path,
@@ -67,7 +75,7 @@ export default function createCommandHandler(
           backedUpState = pluginConfig.onBackup(backedUpState)
         }
 
-        reactotron.send("state.backup.response", { state: backedUpState })
+        client.send("state.backup.response", { state: backedUpState })
         break
       }
 
@@ -80,7 +88,7 @@ export default function createCommandHandler(
           restoredState = pluginConfig.onRestore(payload.state, reduxStore.getState())
         }
 
-        reactotron.reduxStore.dispatch({
+        client.reduxStore.dispatch({
           type: pluginConfig.restoreActionType,
           state: restoredState,
         })

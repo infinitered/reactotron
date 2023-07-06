@@ -1,5 +1,5 @@
 import type { StoreEnhancer } from "redux"
-import { Reactotron } from "reactotron-core-client"
+import { Plugin, Reactotron } from "reactotron-core-client"
 
 import createCommandHander from "./commandHandler"
 import createSendAction from "./sendAction"
@@ -34,7 +34,7 @@ function reactotronRedux(pluginConfig: PluginConfig = {}) {
         },
         reportReduxAction: createSendAction(reactotron),
       },
-    }
+    } satisfies Plugin<Reactotron>
   }
 }
 

@@ -2,15 +2,17 @@ import { createClient, corePlugins } from "../src/reactotron-core-client"
 import plugin from "../src/plugins/image"
 import * as WebSocket from "ws"
 
-const createSocket = (path) => new WebSocket(path)
+const createSocket = (path: string) => new WebSocket(path)
 
 test("the image function send the right data", () => {
-  const client: any = createClient({ createSocket })
-  const results = []
+  const client = createClient({ createSocket }).use(plugin())
+  const results: {
+    type: Parameters<typeof client.send>[0]
+    payload: Parameters<typeof client.send>[1]
+  }[] = []
   client.send = (type, payload) => {
     results.push({ type, payload })
   }
-  client.use(plugin())
   expect(client.plugins.length).toBe(corePlugins.length + 1)
   expect(typeof client.image).toBe("function")
   client.image({
@@ -20,15 +22,18 @@ test("the image function send the right data", () => {
     filename: "f",
     preview: "p",
     caption: "c",
+    // @ts-expect-error
     zoo: "lol",
   })
   expect(results.length).toBe(1)
-  expect(results[0].type).toBe("image")
-  expect(results[0].payload.uri).toBe("a")
-  expect(results[0].payload.width).toBe(1)
-  expect(results[0].payload.height).toBe(2)
-  expect(results[0].payload.filename).toBe("f")
-  expect(results[0].payload.preview).toBe("p")
-  expect(results[0].payload.caption).toBe("c")
-  expect(results[0].payload.zoo).toBe(undefined)
+
+  const result = results[0]
+  expect(result.type).toBe("image")
+  expect(result?.payload?.uri).toBe("a")
+  expect(result?.payload?.width).toBe(1)
+  expect(result?.payload?.height).toBe(2)
+  expect(result?.payload?.filename).toBe("f")
+  expect(result?.payload?.preview).toBe("p")
+  expect(result?.payload?.caption).toBe("c")
+  expect(result?.payload?.zoo).toBe(undefined)
 })

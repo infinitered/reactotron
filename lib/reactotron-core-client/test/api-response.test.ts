@@ -2,10 +2,11 @@ import { createClient, corePlugins } from "../src/reactotron-core-client"
 import plugin from "../src/plugins/state-responses"
 import * as WebSocket from "ws"
 
-const createSocket = (path) => new WebSocket(path)
+const createSocket = (path: string) => new WebSocket(path)
 
 test("stateActionComplete", () => {
-  const client: any = createClient({ createSocket })
+  const options = { createSocket }
+  const client = createClient(options).use(plugin())
   let type
   let name
   let action
@@ -14,7 +15,6 @@ test("stateActionComplete", () => {
     name = y.name
     action = y.action
   }
-  client.use(plugin())
   expect(client.plugins.length).toBe(corePlugins.length + 1)
   expect(typeof client.stateActionComplete).toBe("function")
 
@@ -26,7 +26,7 @@ test("stateActionComplete", () => {
 })
 
 test("stateValuesResponse", () => {
-  const client: any = createClient({ createSocket })
+  const client = createClient({ createSocket }).use(plugin())
   let type
   let path
   let value
@@ -37,7 +37,6 @@ test("stateValuesResponse", () => {
     value = y.value
     valid = y.valid
   }
-  client.use(plugin())
   expect(client.plugins.length).toBe(corePlugins.length + 1)
   expect(typeof client.stateValuesResponse).toBe("function")
 
@@ -50,7 +49,7 @@ test("stateValuesResponse", () => {
 })
 
 test("stateKeysResponse", () => {
-  const client: any = createClient({ createSocket })
+  const client = createClient({ createSocket }).use(plugin())
   let type
   let path
   let keys
@@ -61,7 +60,6 @@ test("stateKeysResponse", () => {
     keys = y.keys
     valid = y.valid
   }
-  client.use(plugin())
 
   expect(client.plugins.length).toBe(corePlugins.length + 1)
   expect(typeof client.stateKeysResponse).toBe("function")

@@ -1,12 +1,14 @@
-import type { Reactotron } from "../reactotron-core-client"
+import type { ReactotronCore, Plugin } from "../reactotron-core-client"
 
 /**
  * Clears the reactotron server.
  */
-export default () => (reactotron: Reactotron) => {
+const clear = () => (reactotron: ReactotronCore) => {
   return {
     features: {
       clear: () => reactotron.send("clear"),
     },
-  }
+  } satisfies Plugin<ReactotronCore>
 }
+
+export default clear
