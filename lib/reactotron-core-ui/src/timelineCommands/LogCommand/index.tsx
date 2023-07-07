@@ -379,10 +379,6 @@ const LogCommand: FunctionComponent<Props> = ({
   const source = useFileSource(payload, readFile)
   const toolbar = buildToolbar(payload, copyToClipboard)
 
-  useEffect(() => {
-    console.log(payload)
-  }, [payload])
-
   return (
     <TimelineCommand
       date={date}
