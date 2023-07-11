@@ -97,27 +97,6 @@ export type ServerEvent =
    */
   | "disconnect"
 
-/**
- * A command.
- */
-export interface Command {
-  /**
-   * The message type.
-   */
-  type: string
-  /**
-   * The payload of the message.
-   */
-  payload: any
-  /**
-   * A unique message id number.
-   */
-  messageId?: number
-  /**
-   * When the message was received.
-   */
-  date?: Date
-}
-
-export type CommandEvent = (command: Command) => void
 export type WebSocketEvent = (socket: WebSocket) => void
+
+export type ServerEventMap = Record<ServerEvent, any>

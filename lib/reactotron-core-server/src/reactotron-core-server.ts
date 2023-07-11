@@ -1,9 +1,7 @@
 import { merge, find, propEq, without, contains, forEach, pluck, reject, equals } from "ramda"
 import { createServer as createHttpsServer, ServerOptions as HttpsServerOptions } from "https"
-import { Server as WebSocketServer, OPEN } from "ws"
-import validate from "./validation"
-import { repair } from "./repair-serialization"
 import {
+  ServerEventMap,
   ServerOptions,
   PartialConnection,
   ServerEvent,
@@ -11,7 +9,10 @@ import {
   WebSocketEvent,
   PfxServerOptions,
   WssServerOptions,
-} from "./types"
+} from "reactotron-core-contract"
+import { Server as WebSocketServer, OPEN } from "ws"
+import validate from "./validation"
+import { repair } from "./repair-serialization"
 import { readFileSync } from "fs"
 
 type Mitt = typeof import("mitt").default // I'm so sorry, Jest made me do this :'(
@@ -64,7 +65,7 @@ export default class Server {
   /**
    * An event emitter which fires events from connected clients.
    */
-  emitter = mitt()
+  emitter = mitt<ServerEventMap>()
 
   /**
    * Additional server configuration.
@@ -172,7 +173,7 @@ export default class Server {
         id: thisConnectionId,
         address: request.socket.remoteAddress,
         socket,
-      }
+      } as PartialConnection
 
       // tuck them away in a "almost connected status"
       this.partialConnections.push(partialConnection)

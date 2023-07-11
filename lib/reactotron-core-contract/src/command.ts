@@ -27,3 +27,5 @@ export interface Command {
   messageId: number
   payload: any
 }
+
+export type CommandEvent = (command: Command) => void
