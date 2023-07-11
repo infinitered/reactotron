@@ -4,11 +4,12 @@ import {
   ServerEventMap,
   ServerOptions,
   PartialConnection,
-  ServerEvent,
   CommandEvent,
   WebSocketEvent,
   PfxServerOptions,
   WssServerOptions,
+  ServerEventKey,
+  Command,
 } from "reactotron-core-contract"
 import { Server as WebSocketServer, OPEN } from "ws"
 import validate from "./validation"
@@ -126,14 +127,14 @@ export default class Server {
   /**
    * Listens to an event.
    */
-  on(event: ServerEvent, handler: CommandEvent | WebSocketEvent) {
+  on(event: ServerEventKey, handler: CommandEvent | WebSocketEvent) {
     this.emitter.on(event, handler)
   }
 
   /**
    * Turns off an event listener
    */
-  off(type: ServerEvent, handler: (any) => any) {
+  off(type: ServerEventKey, handler: (any) => any) {
     this.emitter.off(type, handler)
   }
 
@@ -215,7 +216,7 @@ export default class Server {
         const { type, important, payload, deltaTime = 0 } = message
         this.messageId++
 
-        const fullCommand = {
+        const fullCommand: Command = {
           type,
           important,
           payload,

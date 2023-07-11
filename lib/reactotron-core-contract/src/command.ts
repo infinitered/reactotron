@@ -17,7 +17,6 @@ export enum CommandType {
 }
 
 export interface Command {
-  id: number
   type: CommandType
   connectionId: number
   clientId?: string
