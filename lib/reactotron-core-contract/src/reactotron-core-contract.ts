@@ -1,3 +1,1 @@
-type Test = {}
-
-export { Test }
+export * from "./command"

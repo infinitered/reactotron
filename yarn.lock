@@ -27174,6 +27174,7 @@ __metadata:
     react-router-dom: ^5.1.2
     react-test-renderer: 17.0.2
     react-tooltip: 4.5.1
+    reactotron-core-contract: "workspace:*"
     reactotron-core-server: "workspace:*"
     reactotron-core-ui: "workspace:*"
     rimraf: 4.1.2
@@ -27224,7 +27225,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"reactotron-core-contract@workspace:lib/reactotron-core-contract":
+"reactotron-core-contract@workspace:*, reactotron-core-contract@workspace:lib/reactotron-core-contract":
   version: 0.0.0-use.local
   resolution: "reactotron-core-contract@workspace:lib/reactotron-core-contract"
   dependencies:
@@ -27352,6 +27353,7 @@ __metadata:
     react-motion: 0.5.2
     react-test-renderer: 17.0.2
     react-tooltip: 4.5.1
+    reactotron-core-contract: "workspace:*"
     rimraf: 4.1.3
     rollup: 2.56.2
     rollup-plugin-babel: 4.4.0

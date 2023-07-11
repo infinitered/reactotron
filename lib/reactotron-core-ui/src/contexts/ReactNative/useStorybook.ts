@@ -1,7 +1,7 @@
 import { useState, useCallback, useContext, useEffect, useRef } from "react"
 
 import ReactotronContext from "../Reactotron"
-import { CommandType } from "../../types"
+import { CommandType } from "reactotron-core-contract"
 
 function useStorybook() {
   const { sendCommand, addCommandListener } = useContext(ReactotronContext)
@@ -16,7 +16,7 @@ function useStorybook() {
   sendCommandRef.current = sendCommand
 
   useEffect(() => {
-    addCommandListener(command => {
+    addCommandListener((command) => {
       // TODO: Switch to a connection event if/when that is available
       if (command.type !== CommandType.ClientIntro) return
 

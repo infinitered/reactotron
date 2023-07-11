@@ -33,9 +33,6 @@ import timelineCommandResolver from "./timelineCommands"
 import repairSerialization from "./utils/repair-serialization"
 import filterCommands from "./utils/filterCommands"
 
-// Types
-export { CommandType } from "./types"
-
 export {
   theme,
   ContentView,
@@ -69,5 +66,4 @@ export {
 }
 
 export type { CustomCommand } from "./contexts/CustomCommands/useCustomCommands"
-export type { Command } from "./types"
 export type { Snapshot } from "./contexts/State/useSnapshots"

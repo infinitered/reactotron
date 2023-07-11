@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react"
 
-import { CommandType } from "../types"
+import { CommandType } from "reactotron-core-contract"
 
 import ApiResponseCommand from "./ApiResponseCommand"
 import AsyncStorageMutationCommand from "./AsyncStorageMutationCommand"

@@ -1,7 +1,7 @@
 import { useReducer, useContext, useEffect } from "react"
 import produce from "immer"
 
-import { Command, CommandType } from "../../types"
+import { Command, CommandType } from "reactotron-core-contract"
 import ReactotronContext from "../Reactotron"
 
 export interface CustomCommand {
@@ -36,16 +36,16 @@ type Action =
 function customCommandsReducer(state: CustomCommandState, action: Action) {
   switch (action.type) {
     case CustomCommandsActionType.CommandAdd:
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         draftState.customCommands.push({
           clientId: action.payload.clientId,
           ...action.payload.payload,
         })
       })
     case CustomCommandsActionType.CommandRemove:
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         const commandIndex = draftState.customCommands.findIndex(
-          cc => cc.clientId === action.payload.clientId && cc.id === action.payload.payload.id
+          (cc) => cc.clientId === action.payload.clientId && cc.id === action.payload.payload.id
         )
 
         if (commandIndex === -1) return
@@ -56,9 +56,9 @@ function customCommandsReducer(state: CustomCommandState, action: Action) {
         ]
       })
     case CustomCommandsActionType.CommandClear:
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         draftState.customCommands = draftState.customCommands.filter(
-          cc => cc.clientId !== action.payload
+          (cc) => cc.clientId !== action.payload
         )
       })
     default:
@@ -71,7 +71,7 @@ function useCustomCommands() {
   const [state, dispatch] = useReducer(customCommandsReducer, { customCommands: [] })
 
   useEffect(() => {
-    addCommandListener(command => {
+    addCommandListener((command) => {
       if (command.type === CommandType.ClientIntro) {
         dispatch({
           type: CustomCommandsActionType.CommandClear,

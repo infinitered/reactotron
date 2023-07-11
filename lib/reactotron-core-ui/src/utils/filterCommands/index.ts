@@ -1,7 +1,7 @@
-import { CommandType } from "../../types"
+import { CommandType } from "reactotron-core-contract"
 
 function path(...searchPath) {
-  return obj => {
+  return (obj) => {
     let scaledObj = obj
 
     for (let i = 0; i < searchPath.length; i++) {
@@ -35,8 +35,8 @@ export function filterSearch(commands: any[], search: string) {
   const matching = (value: string) => value && typeof value === "string" && searchRegex.test(value)
 
   return commands.filter(
-    command =>
-      COMMON_MATCHING_PATHS.filter(c => {
+    (command) =>
+      COMMON_MATCHING_PATHS.filter((c) => {
         if (matching(c(command))) return true
         if (
           command.type === CommandType.Log &&
@@ -52,7 +52,7 @@ export function filterSearch(commands: any[], search: string) {
 export function filterHidden(commands: any[], hiddenCommands: CommandType[]) {
   if (hiddenCommands.length === 0) return commands
 
-  return commands.filter(command => hiddenCommands.indexOf(command.type) === -1)
+  return commands.filter((command) => hiddenCommands.indexOf(command.type) === -1)
 }
 
 function filterCommands(commands: any[], search: string, hiddenCommands: CommandType[]) {

@@ -63,6 +63,7 @@
     "react-motion": "0.5.2",
     "react-router-dom": "^5.1.2",
     "react-tooltip": "4.5.1",
+    "reactotron-core-contract": "workspace:*",
     "reactotron-core-server": "workspace:*",
     "reactotron-core-ui": "workspace:*",
     "source-map-support": "^0.5.16",

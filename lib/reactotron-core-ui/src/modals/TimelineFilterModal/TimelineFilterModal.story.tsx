@@ -2,7 +2,7 @@
 import React from "react"
 
 import TimelineFilterModal from "./index"
-import { CommandType } from "../../types"
+import { CommandType } from "reactotron-core-contract"
 
 export default {
   title: "Timeline Filter Modal",

@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
 
-import { Command } from "../../types"
+import { Command } from "reactotron-core-contract"
 
 import useReactotron from "./useReactotron"
 
