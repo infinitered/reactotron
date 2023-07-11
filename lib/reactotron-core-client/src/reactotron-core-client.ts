@@ -1,4 +1,5 @@
 import * as WebSocket from "ws"
+import { CommandTypeKey } from "reactotron-core-contract"
 import validate from "./validate"
 import logger from "./plugins/logger"
 import image from "./plugins/image"
@@ -88,7 +89,7 @@ export interface ReactotronCore {
   plugins: Plugin<this>[]
   startTimer: () => () => number
   close: () => void
-  send: (type: ActionType, payload?: ActionPayload, important?: boolean) => void
+  send: (type: CommandTypeKey, payload?: ActionPayload, important?: boolean) => void
   display: (config: DisplayConfig) => void
   reportError: (this: any, error: Error) => void
   onCustomCommand: <Args extends CustomCommandArg[] = CustomCommand["args"]>(
