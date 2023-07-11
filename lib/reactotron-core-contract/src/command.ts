@@ -1,3 +1,5 @@
+import { LogPayload } from "./log"
+
 export enum CommandType {
   ApiResponse = "api.response",
   AsyncStorageMutation = "asyncStorage.mutation",
@@ -16,7 +18,10 @@ export enum CommandType {
   CustomCommandUnregister = "customCommand.unregister",
 }
 
-export interface Command {
+export interface Command<
+  Type extends CommandType = CommandType,
+  Payload extends Record<string, any> = CommandMap[Type]
+> {
   type: CommandType
   connectionId: number
   clientId?: string
@@ -24,7 +29,25 @@ export interface Command {
   deltaTime: number
   important: boolean
   messageId: number
-  payload: any
+  payload: Payload
+}
+
+export interface CommandMap {
+  [CommandType.ApiResponse]: any
+  [CommandType.AsyncStorageMutation]: any
+  [CommandType.Benchmark]: any
+  [CommandType.ClientIntro]: any
+  [CommandType.Display]: any
+  [CommandType.Image]: any
+  [CommandType.Log]: LogPayload
+  [CommandType.SagaTaskComplete]: any
+  [CommandType.StateActionComplete]: any
+  [CommandType.StateKeysResponse]: any
+  [CommandType.StateValuesChange]: any
+  [CommandType.StateValuesResponse]: any
+  [CommandType.StateBackupResponse]: any
+  [CommandType.CustomCommandRegister]: any
+  [CommandType.CustomCommandUnregister]: any
 }
 
 export type CommandEvent = (command: Command) => void
