@@ -73,7 +73,6 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
   : never
 // #endregion
 
-type ActionType = string
 type ActionPayload = Record<string, any>
 
 interface DisplayConfig {
@@ -374,7 +373,7 @@ export class ReactotronImpl implements ReactotronCore {
   /**
    * Sends a command to the server
    */
-  send = (type: ActionType, payload: ActionPayload = {}, important = false) => {
+  send = (type: CommandTypeKey, payload: ActionPayload = {}, important = false) => {
     // set the timing info
     const date = new Date()
     let deltaTime = date.getTime() - this.lastMessageDate.getTime()

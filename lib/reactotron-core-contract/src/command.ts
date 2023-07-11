@@ -1,28 +1,33 @@
 import { LogPayload } from "./log"
 
-export enum CommandType {
-  ApiResponse = "api.response",
-  AsyncStorageMutation = "asyncStorage.mutation",
-  Benchmark = "benchmark.report",
-  ClientIntro = "client.intro",
-  Display = "display",
-  Image = "image",
-  Log = "log",
-  SagaTaskComplete = "saga.task.complete",
-  StateActionComplete = "state.action.complete",
-  StateKeysResponse = "state.keys.response",
-  StateValuesChange = "state.values.change",
-  StateValuesResponse = "state.values.response",
-  StateBackupResponse = "state.backup.response",
-  CustomCommandRegister = "customCommand.register",
-  CustomCommandUnregister = "customCommand.unregister",
-}
+export const CommandType = {
+  ApiResponse: "api.response",
+  AsyncStorageMutation: "asyncStorage.mutation",
+  Benchmark: "benchmark.report",
+  ClientIntro: "client.intro",
+  Display: "display",
+  Image: "image",
+  Log: "log",
+  SagaTaskComplete: "saga.task.complete",
+  StateActionComplete: "state.action.complete",
+  StateKeysResponse: "state.keys.response",
+  StateValuesChange: "state.values.change",
+  StateValuesResponse: "state.values.response",
+  StateBackupResponse: "state.backup.response",
+  CustomCommandRegister: "customCommand.register",
+  CustomCommandUnregister: "customCommand.unregister",
+  Clear: "clear",
+  ReplLsResponse: "repl.ls.response",
+  ReplExecuteResponse: "repl.execute.response",
+} as const
+
+export type CommandTypeKey = (typeof CommandType)[keyof typeof CommandType]
 
 export interface Command<
-  Type extends CommandType = CommandType,
+  Type extends CommandTypeKey = CommandTypeKey,
   Payload extends Record<string, any> = CommandMap[Type]
 > {
-  type: CommandType
+  type: CommandTypeKey
   connectionId: number
   clientId?: string
   date: Date
@@ -48,6 +53,9 @@ export interface CommandMap {
   [CommandType.StateBackupResponse]: any
   [CommandType.CustomCommandRegister]: any
   [CommandType.CustomCommandUnregister]: any
+  [CommandType.Clear]: any
+  [CommandType.ReplLsResponse]: any
+  [CommandType.ReplExecuteResponse]: any
 }
 
 export type CommandEvent = (command: Command) => void

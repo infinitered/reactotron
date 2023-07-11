@@ -1,4 +1,4 @@
-import { CommandType } from "reactotron-core-contract"
+import { CommandType, CommandTypeKey } from "reactotron-core-contract"
 
 function path(...searchPath) {
   return (obj) => {
@@ -49,13 +49,13 @@ export function filterSearch(commands: any[], search: string) {
   )
 }
 
-export function filterHidden(commands: any[], hiddenCommands: CommandType[]) {
+export function filterHidden(commands: any[], hiddenCommands: CommandTypeKey[]) {
   if (hiddenCommands.length === 0) return commands
 
   return commands.filter((command) => hiddenCommands.indexOf(command.type) === -1)
 }
 
-function filterCommands(commands: any[], search: string, hiddenCommands: CommandType[]) {
+function filterCommands(commands: any[], search: string, hiddenCommands: CommandTypeKey[]) {
   const searchFilteredCommands = filterSearch(commands, search)
   return filterHidden(searchFilteredCommands, hiddenCommands)
 }

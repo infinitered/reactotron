@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import Modal from "../../components/Modal"
 import Checkbox from "../../components/Checkbox"
-import { CommandType } from "reactotron-core-contract"
+import { CommandType, CommandTypeKey } from "reactotron-core-contract"
 
 const GROUPS = [
   {
@@ -55,8 +55,8 @@ const GroupName = styled.div`
 interface Props {
   isOpen: boolean
   onClose: () => void
-  hiddenCommands: CommandType[]
-  setHiddenCommands: (hiddenCommands: CommandType[]) => void
+  hiddenCommands: CommandTypeKey[]
+  setHiddenCommands: (hiddenCommands: CommandTypeKey[]) => void
 }
 
 const TimelineFilterModal: FunctionComponent<Props> = ({
@@ -79,7 +79,7 @@ const TimelineFilterModal: FunctionComponent<Props> = ({
     )
   }
 
-  const buildCheckboxToggle = (value: CommandType) => {
+  const buildCheckboxToggle = (value: CommandTypeKey) => {
     const isSelected = hiddenCommands.indexOf(value) === -1
 
     return () => {
