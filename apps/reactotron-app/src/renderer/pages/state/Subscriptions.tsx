@@ -1,12 +1,12 @@
 import React, { useContext } from "react"
 import {
   ReactotronContext,
-  CommandType,
   ContentView,
   StateContext,
   Header,
   EmptyState,
 } from "reactotron-core-ui"
+import { CommandType } from "reactotron-core-contract"
 import { MdDelete, MdAdd, MdDeleteSweep, MdNotificationsNone, MdImportExport } from "react-icons/md"
 import styled from "styled-components"
 import { getApplicationKeyMap } from "react-hotkeys"
@@ -30,14 +30,14 @@ const SubscriptionContainer = styled.div`
   display: flex;
   padding: 15px 20px;
   justify-content: space-between;
-  border-bottom: 1px solid ${props => props.theme.line};
+  border-bottom: 1px solid ${(props) => props.theme.line};
 `
 const SubscriptionPath = styled.div`
   flex: 0.3;
   word-break: break-all;
   cursor: text;
   user-select: text;
-  color: ${props => props.theme.tag};
+  color: ${(props) => props.theme.tag};
 `
 const SubscriptionValue = styled.div`
   flex: 0.7;
@@ -47,11 +47,11 @@ const SubscriptionValue = styled.div`
 const SubscriptionRemove = styled.div`
   cursor: pointer;
   padding-left: 10px;
-  color: ${props => props.theme.foreground};
+  color: ${(props) => props.theme.foreground};
 `
 
 function getLatestChanges(commands: any[]) {
-  const changeCommands = commands.filter(c => c.type === CommandType.StateValuesChange)
+  const changeCommands = commands.filter((c) => c.type === CommandType.StateValuesChange)
   const latestChangeCommands = changeCommands.length > 0 ? changeCommands[0] : { payload: {} }
   return latestChangeCommands.payload.changes || []
 }
@@ -120,7 +120,7 @@ function Subscriptions() {
             )}
           </EmptyState>
         ) : (
-          subscriptionValues.map(subscription => {
+          subscriptionValues.map((subscription) => {
             const value =
               typeof subscription.value === "object"
                 ? { value: subscription.value }

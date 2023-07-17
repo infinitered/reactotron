@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react-hooks"
 
-import { CommandType } from "../../types"
+import { CommandType } from "reactotron-core-contract"
 
 import useTimline, { StorageKey } from "./useTimeline"
 

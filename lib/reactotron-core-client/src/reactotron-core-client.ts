@@ -1,4 +1,5 @@
 import * as WebSocket from "ws"
+import { Command, CommandTypeKey } from "reactotron-core-contract"
 import validate from "./validate"
 import logger from "./plugins/logger"
 import image from "./plugins/image"
@@ -72,9 +73,6 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
   : never
 // #endregion
 
-type ActionType = string
-type ActionPayload = Record<string, any>
-
 interface DisplayConfig {
   name: string
   value?: object | string | number | boolean | null | undefined
@@ -88,7 +86,11 @@ export interface ReactotronCore {
   plugins: Plugin<this>[]
   startTimer: () => () => number
   close: () => void
-  send: (type: ActionType, payload?: ActionPayload, important?: boolean) => void
+  send: <Type extends CommandTypeKey, Payload extends Command<Type>["payload"]>(
+    type: Type,
+    payload?: Payload,
+    important?: boolean
+  ) => void
   display: (config: DisplayConfig) => void
   reportError: (this: any, error: Error) => void
   onCustomCommand: <Args extends CustomCommandArg[] = CustomCommand["args"]>(
@@ -373,7 +375,11 @@ export class ReactotronImpl implements ReactotronCore {
   /**
    * Sends a command to the server
    */
-  send = (type: ActionType, payload: ActionPayload = {}, important = false) => {
+  send = <Type extends CommandTypeKey, Payload extends Command<Type>["payload"]>(
+    type: Type,
+    payload?: Payload,
+    important?: boolean
+  ) => {
     // set the timing info
     const date = new Date()
     let deltaTime = date.getTime() - this.lastMessageDate.getTime()

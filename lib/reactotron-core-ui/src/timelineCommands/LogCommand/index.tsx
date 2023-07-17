@@ -6,6 +6,7 @@ import stringifyObject from "stringify-object"
 import TimelineCommand from "../../components/TimelineCommand"
 import ContentView from "../../components/ContentView"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
+import { ErrorStackFrame, LogPayload, isErrorStackFrameArray } from "reactotron-core-contract"
 
 const SOURCE_LINES_UP = 3
 const SOURCE_LINES_DOWN = 3
@@ -127,47 +128,6 @@ const StackFrameLineNumber = styled.div`
   width: 50px;
   text-align: right;
 `
-
-export interface ErrorStackFrame {
-  fileName: string
-  functionName: string
-  lineNumber: number
-  columnNumber: number | null
-}
-
-const isErrorStackFrame = (value: unknown): value is ErrorStackFrame =>
-  value &&
-  typeof value === "object" &&
-  "fileName" in value &&
-  typeof value.fileName === "string" &&
-  "functionName" in value &&
-  typeof value.functionName === "string" &&
-  "lineNumber" in value &&
-  typeof value.lineNumber === "number" &&
-  ("columnNumber" in value
-    ? value.columnNumber === null || typeof value.columnNumber === "number"
-    : true)
-
-const isErrorStackFrameArray = (value: unknown): value is ErrorStackFrame[] =>
-  Array.isArray(value) && value.every(isErrorStackFrame)
-
-interface ErrorLogPayload {
-  level: "error"
-  message: string
-  stack: Error["stack"] | string[] | ErrorStackFrame[]
-}
-
-/** @see `lib/reactotron-core-client/src/plugins/logger.ts` */
-type LogPayload =
-  | {
-      level: "debug"
-      message: string
-    }
-  | {
-      level: "warn"
-      message: string
-    }
-  | ErrorLogPayload
 
 interface Props extends TimelineCommandProps<LogPayload> {}
 

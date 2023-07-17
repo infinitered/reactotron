@@ -1,6 +1,6 @@
 import { useReducer, useEffect } from "react"
 
-import { CommandType } from "../../types"
+import { CommandTypeKey } from "reactotron-core-contract"
 
 export enum StorageKey {
   ReversedOrder = "ReactotronTimelineReversedOrder",
@@ -12,7 +12,7 @@ interface TimelineState {
   search: string
   isFilterOpen: boolean
   isReversed: boolean
-  hiddenCommands: CommandType[]
+  hiddenCommands: CommandTypeKey[]
 }
 
 enum TimelineActionType {
@@ -42,7 +42,7 @@ type Action =
     }
   | {
       type: TimelineActionType.HiddenCommandsSet
-      payload: CommandType[]
+      payload: CommandTypeKey[]
     }
 
 function timelineReducer(state: TimelineState, action: Action) {
@@ -128,7 +128,7 @@ function useTimeline() {
     })
   }
 
-  const setHiddenCommands = (hiddenCommands: CommandType[]) => {
+  const setHiddenCommands = (hiddenCommands: CommandTypeKey[]) => {
     localStorage.setItem(StorageKey.HiddenCommands, JSON.stringify(hiddenCommands))
 
     dispatch({

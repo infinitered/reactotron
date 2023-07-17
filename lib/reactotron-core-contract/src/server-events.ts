@@ -1,4 +1,5 @@
 import * as WebSocket from "ws"
+import { Command } from "./command"
 
 /**
  * Configuration options for the Reactotron server.
@@ -66,58 +67,48 @@ export interface PartialConnection {
 /**
  * One of the events which be subscribed to.
  */
-export type ServerEvent =
+export const ServerEvent = {
   /**
    * When a command arrives from a client.
    */
-  | "command"
-
+  command: "command",
   /**
    * The server has started.
    */
-  | "start"
-
+  start: "start",
   /**
    * The server has stopped.
    */
-  | "stop"
-
+  stop: "stop",
   /**
    * A client has connected.
    */
-  | "connect"
-
+  connect: "connect",
   /**
    * A client has connected and provided us the initial detail we want.
    */
-  | "connectionEstablished"
-
+  connectionEstablished: "connectionEstablished",
   /**
    * A client has disconnected.
    */
-  | "disconnect"
+  disconnect: "disconnect",
+} as const
 
-/**
- * A command.
- */
-export interface Command {
-  /**
-   * The message type.
-   */
-  type: string
-  /**
-   * The payload of the message.
-   */
-  payload: any
-  /**
-   * A unique message id number.
-   */
-  messageId?: number
-  /**
-   * When the message was received.
-   */
-  date?: Date
+export type ServerEventKey = keyof typeof ServerEvent
+
+type StartPayload = any
+type StopPayload = any
+type ConnectPayload = PartialConnection
+type ConnectionEstablishedPayload = any
+type DisconnectPayload = any
+
+export type ServerEventMap = {
+  [ServerEvent.command]: Command
+  [ServerEvent.start]: StartPayload
+  [ServerEvent.stop]: StopPayload
+  [ServerEvent.connect]: ConnectPayload
+  [ServerEvent.connectionEstablished]: ConnectionEstablishedPayload
+  [ServerEvent.disconnect]: DisconnectPayload
 }
 
-export type CommandEvent = (command: Command) => void
 export type WebSocketEvent = (socket: WebSocket) => void

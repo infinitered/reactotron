@@ -1,12 +1,12 @@
 // TODO: Name this better...
 import React, { FunctionComponent } from "react"
+import { Command } from "reactotron-core-contract"
 import {
   ReactotronProvider,
   CustomCommandsProvider,
   ReactNativeProvider,
   TimelineProvider,
   StateProvider,
-  Command,
 } from "reactotron-core-ui"
 
 import KeybindHandler from "./KeybindHandler"

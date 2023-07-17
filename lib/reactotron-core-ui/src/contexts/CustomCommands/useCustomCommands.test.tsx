@@ -3,7 +3,7 @@ import React from "react"
 import { act, renderHook } from "@testing-library/react-hooks"
 
 import ReactotronContext from "../Reactotron"
-import { CommandType } from "../../types"
+import { CommandType } from "reactotron-core-contract"
 
 import useCustomCommands from "./useCustomCommands"
 

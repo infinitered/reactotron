@@ -36,6 +36,10 @@ commands:
           keys:
             - lib/reactotron-core-client/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-core-client/package.json" }}
       - restore_cache:
+          name: Restore lib/reactotron-core-contract/dist/
+          keys:
+            - lib/reactotron-core-contract/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-core-contract/package.json" }}
+      - restore_cache:
           name: Restore lib/reactotron-core-server/dist/
           keys:
             - lib/reactotron-core-server/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-core-server/package.json" }}
@@ -90,6 +94,11 @@ commands:
           paths:
             - lib/reactotron-core-client/dist/
           key: lib/reactotron-core-client/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-core-client/package.json" }}
+      - save_cache:
+          name: Saving lib/reactotron-core-contract/dist/
+          paths:
+            - lib/reactotron-core-contract/dist/
+          key: lib/reactotron-core-contract/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-core-contract/package.json" }}
       - save_cache:
           name: Saving lib/reactotron-core-server/dist/
           paths:

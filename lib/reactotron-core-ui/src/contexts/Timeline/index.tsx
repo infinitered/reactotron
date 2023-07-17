@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
 
-import { CommandType } from "../../types"
+import { CommandTypeKey } from "reactotron-core-contract"
 
 import useTimeline from "./useTimeline"
 
@@ -14,8 +14,8 @@ interface Context {
   closeFilter: () => void
   isReversed: boolean
   toggleReverse: () => void
-  hiddenCommands: CommandType[]
-  setHiddenCommands: (commandTypes: CommandType[]) => void
+  hiddenCommands: CommandTypeKey[]
+  setHiddenCommands: (commandTypes: CommandTypeKey[]) => void
 }
 
 const TimelineContext = React.createContext<Context>({

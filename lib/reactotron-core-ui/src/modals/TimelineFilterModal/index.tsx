@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import Modal from "../../components/Modal"
 import Checkbox from "../../components/Checkbox"
-import { CommandType } from "../../types"
+import { CommandType, CommandTypeKey } from "reactotron-core-contract"
 
 const GROUPS = [
   {
@@ -41,22 +41,22 @@ const BulkActionContainer = styled.div`
 `
 const BulkAction = styled.span`
   cursor: pointer;
-  color: ${props => props.theme.tag};
+  color: ${(props) => props.theme.tag};
 `
 
 const GroupName = styled.div`
   font-size: 18px;
   margin: 10px 0;
   padding-bottom: 2px;
-  border-bottom: 1px solid ${props => props.theme.highlight};
-  color: ${props => props.theme.foregroundLight};
+  border-bottom: 1px solid ${(props) => props.theme.highlight};
+  color: ${(props) => props.theme.foregroundLight};
 `
 
 interface Props {
   isOpen: boolean
   onClose: () => void
-  hiddenCommands: CommandType[]
-  setHiddenCommands: (hiddenCommands: CommandType[]) => void
+  hiddenCommands: CommandTypeKey[]
+  setHiddenCommands: (hiddenCommands: CommandTypeKey[]) => void
 }
 
 const TimelineFilterModal: FunctionComponent<Props> = ({
@@ -74,19 +74,19 @@ const TimelineFilterModal: FunctionComponent<Props> = ({
     // To turn everything off we need the list to have all options.
     setHiddenCommands(
       GROUPS.reduce((itms, g) => {
-        return [...itms, ...g.items.map(i => i.value)]
+        return [...itms, ...g.items.map((i) => i.value)]
       }, [])
     )
   }
 
-  const buildCheckboxToggle = (value: CommandType) => {
+  const buildCheckboxToggle = (value: CommandTypeKey) => {
     const isSelected = hiddenCommands.indexOf(value) === -1
 
     return () => {
       if (isSelected) {
         setHiddenCommands([...hiddenCommands, value])
       } else {
-        setHiddenCommands([...hiddenCommands.filter(f => f !== value)])
+        setHiddenCommands([...hiddenCommands.filter((f) => f !== value)])
       }
     }
   }

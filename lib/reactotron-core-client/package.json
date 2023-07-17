@@ -91,5 +91,8 @@
     "testMatch": [
       "**/*.test.[tj]s"
     ]
+  },
+  "dependencies": {
+    "reactotron-core-contract": "workspace:*"
   }
 }

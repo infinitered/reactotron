@@ -1,7 +1,7 @@
 import { useState, useCallback, useContext, useEffect, useRef } from "react"
 
 import ReactotronContext from "../Reactotron"
-import { CommandType } from "../../types"
+import { CommandType } from "reactotron-core-contract"
 
 export interface OverlayParams {
   opacity?: number

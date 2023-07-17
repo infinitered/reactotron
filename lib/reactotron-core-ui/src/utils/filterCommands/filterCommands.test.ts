@@ -1,5 +1,5 @@
 import filterCommands, { filterSearch, filterHidden } from "./index"
-import { CommandType } from "../../types"
+import { CommandType } from "reactotron-core-contract"
 
 const TEST_COMMANDS = [
   { type: "SEARCHTYPE" },
@@ -88,7 +88,7 @@ const TESTS = [
 
 describe("utils/filterCommands", () => {
   describe("filterSearch", () => {
-    TESTS.forEach(test => {
+    TESTS.forEach((test) => {
       it(`should search in '${test.name}'`, () => {
         const result = filterSearch(TEST_COMMANDS, test.search)
 
@@ -101,12 +101,12 @@ describe("utils/filterCommands", () => {
     it("should filter out only command types that are in the list", () => {
       const result = filterHidden(TEST_COMMANDS, [CommandType.ClientIntro])
 
-      expect(result).toEqual(TEST_COMMANDS.filter(tc => tc.type !== CommandType.ClientIntro))
+      expect(result).toEqual(TEST_COMMANDS.filter((tc) => tc.type !== CommandType.ClientIntro))
     })
   })
 
   describe("filterCommands", () => {
-    TESTS.forEach(test => {
+    TESTS.forEach((test) => {
       it(`should search in '${test.name}'`, () => {
         const result = filterCommands(TEST_COMMANDS, test.search, [])
 
@@ -117,7 +117,7 @@ describe("utils/filterCommands", () => {
     it("should filter out only command types that are in the list", () => {
       const result = filterCommands(TEST_COMMANDS, "", [CommandType.ClientIntro])
 
-      expect(result).toEqual(TEST_COMMANDS.filter(tc => tc.type !== CommandType.ClientIntro))
+      expect(result).toEqual(TEST_COMMANDS.filter((tc) => tc.type !== CommandType.ClientIntro))
     })
   })
 })

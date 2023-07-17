@@ -1,17 +1,19 @@
 import { merge, find, propEq, without, contains, forEach, pluck, reject, equals } from "ramda"
 import { createServer as createHttpsServer, ServerOptions as HttpsServerOptions } from "https"
-import { Server as WebSocketServer, OPEN } from "ws"
-import validate from "./validation"
-import { repair } from "./repair-serialization"
 import {
+  ServerEventMap,
   ServerOptions,
   PartialConnection,
-  ServerEvent,
   CommandEvent,
   WebSocketEvent,
   PfxServerOptions,
   WssServerOptions,
-} from "./types"
+  ServerEventKey,
+  Command,
+} from "reactotron-core-contract"
+import { Server as WebSocketServer, OPEN } from "ws"
+import validate from "./validation"
+import { repair } from "./repair-serialization"
 import { readFileSync } from "fs"
 
 type Mitt = typeof import("mitt").default // I'm so sorry, Jest made me do this :'(
@@ -64,7 +66,7 @@ export default class Server {
   /**
    * An event emitter which fires events from connected clients.
    */
-  emitter = mitt()
+  emitter = mitt<ServerEventMap>()
 
   /**
    * Additional server configuration.
@@ -125,14 +127,14 @@ export default class Server {
   /**
    * Listens to an event.
    */
-  on(event: ServerEvent, handler: CommandEvent | WebSocketEvent) {
+  on(event: ServerEventKey, handler: CommandEvent | WebSocketEvent) {
     this.emitter.on(event, handler)
   }
 
   /**
    * Turns off an event listener
    */
-  off(type: ServerEvent, handler: (any) => any) {
+  off(type: ServerEventKey, handler: (any) => any) {
     this.emitter.off(type, handler)
   }
 
@@ -172,7 +174,7 @@ export default class Server {
         id: thisConnectionId,
         address: request.socket.remoteAddress,
         socket,
-      }
+      } as PartialConnection
 
       // tuck them away in a "almost connected status"
       this.partialConnections.push(partialConnection)
@@ -214,7 +216,7 @@ export default class Server {
         const { type, important, payload, deltaTime = 0 } = message
         this.messageId++
 
-        const fullCommand = {
+        const fullCommand: Command = {
           type,
           important,
           payload,

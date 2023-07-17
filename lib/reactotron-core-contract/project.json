@@ -1,0 +1,8 @@
+{
+  "name": "reactotron-core-contract",
+  "targets": {
+    "version": {
+      "executor": "@jscutlery/semver:version"
+    }
+  }
+}

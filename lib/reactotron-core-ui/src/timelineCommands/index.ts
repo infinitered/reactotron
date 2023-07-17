@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react"
 
-import { CommandType } from "../types"
+import { CommandType, CommandTypeKey } from "reactotron-core-contract"
 
 import ApiResponseCommand from "./ApiResponseCommand"
 import AsyncStorageMutationCommand from "./AsyncStorageMutationCommand"
@@ -17,7 +17,7 @@ import StateValuesResponseCommand from "./StateValuesResponseCommand"
 import { TimelineCommandPropsEx } from "./BaseCommand"
 
 function timelineCommandResolver(
-  type: CommandType
+  type: CommandTypeKey
 ): FunctionComponent<TimelineCommandPropsEx<any>> {
   switch (type) {
     case CommandType.ApiResponse:

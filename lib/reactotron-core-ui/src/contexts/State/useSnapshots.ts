@@ -2,7 +2,7 @@ import { useContext, useEffect, useReducer, useCallback } from "react"
 import { format } from "date-fns"
 import produce from "immer"
 
-import { Command, CommandType } from "../../types"
+import { Command, CommandType } from "reactotron-core-contract"
 import ReactotronContext from "../Reactotron"
 
 export interface Snapshot {
@@ -39,7 +39,7 @@ type Action =
 function timelineReducer(state: SnapshotState, action: Action) {
   switch (action.type) {
     case SnapshotActionType.SnapshotAdd:
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         draftState.snapshots.push({
           id: draftState.uniqueIdCounter++,
           name: action.payload.payload.name || format(new Date(), "EEEE @ h:mm:ss a"),
@@ -47,8 +47,8 @@ function timelineReducer(state: SnapshotState, action: Action) {
         })
       })
     case SnapshotActionType.SnapshotRemove:
-      return produce(state, draftState => {
-        const snapshotIndex = draftState.snapshots.findIndex(s => s.id === action.payload.id)
+      return produce(state, (draftState) => {
+        const snapshotIndex = draftState.snapshots.findIndex((s) => s.id === action.payload.id)
 
         if (snapshotIndex === -1) return
 
@@ -58,8 +58,8 @@ function timelineReducer(state: SnapshotState, action: Action) {
         ]
       })
     case SnapshotActionType.SnapshotRename:
-      return produce(state, draftState => {
-        const snapshot = draftState.snapshots.find(s => s.id === draftState.renameingSnapshot.id)
+      return produce(state, (draftState) => {
+        const snapshot = draftState.snapshots.find((s) => s.id === draftState.renameingSnapshot.id)
 
         if (!snapshot) return
 
@@ -67,12 +67,12 @@ function timelineReducer(state: SnapshotState, action: Action) {
         draftState.isSnapshotRenameModalOpen = false
       })
     case SnapshotActionType.RenameModalOpen:
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         draftState.renameingSnapshot = action.payload
         draftState.isSnapshotRenameModalOpen = true
       })
     case SnapshotActionType.RenameModalClose:
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         draftState.isSnapshotRenameModalOpen = false
       })
     default:
@@ -90,7 +90,7 @@ function useSnapshots() {
   })
 
   useEffect(() => {
-    addCommandListener(command => {
+    addCommandListener((command) => {
       if (command.type !== CommandType.StateBackupResponse) return
 
       dispatch({
@@ -113,7 +113,7 @@ function useSnapshots() {
     [sendCommand]
   )
 
-  const removeSnapshot = useCallback(snapshot => {
+  const removeSnapshot = useCallback((snapshot) => {
     dispatch({
       type: SnapshotActionType.SnapshotRemove,
       payload: snapshot,
