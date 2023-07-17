@@ -27211,7 +27211,7 @@ __metadata:
     jest: ^29.4.3
     jest-environment-node: ^29.4.3
     prettier: ^2.8.4
-    reactotron-core-contract: "workspace:^"
+    reactotron-core-contract: "workspace:*"
     rimraf: 4.1.2
     rollup: 2.56.3
     rollup-plugin-babel: 4.4.0
@@ -27226,7 +27226,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"reactotron-core-contract@workspace:*, reactotron-core-contract@workspace:^, reactotron-core-contract@workspace:lib/reactotron-core-contract":
+"reactotron-core-contract@workspace:*, reactotron-core-contract@workspace:lib/reactotron-core-contract":
   version: 0.0.0-use.local
   resolution: "reactotron-core-contract@workspace:lib/reactotron-core-contract"
   dependencies:
@@ -27294,7 +27294,7 @@ __metadata:
     mitt: 3.0.0
     prettier: ^2.8.4
     ramda: 0.26.1
-    reactotron-core-contract: "workspace:^"
+    reactotron-core-contract: "workspace:*"
     rimraf: 4.1.2
     rollup: 2.52.1
     rollup-plugin-babel: 4.4.0

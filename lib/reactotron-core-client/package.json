@@ -93,6 +93,6 @@
     ]
   },
   "dependencies": {
-    "reactotron-core-contract": "workspace:^"
+    "reactotron-core-contract": "workspace:*"
   }
 }

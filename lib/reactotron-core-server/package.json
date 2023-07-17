@@ -36,7 +36,7 @@
   "dependencies": {
     "mitt": "3.0.0",
     "ramda": "0.26.1",
-    "reactotron-core-contract": "workspace:^",
+    "reactotron-core-contract": "workspace:*",
     "ws": "8.12.1"
   },
   "devDependencies": {
