@@ -11,8 +11,16 @@ export interface StateRestoreRequestPayload {
 }
 
 export interface StateActionDispatchPayload {
-  type: string
-  payload: Record<string, any>
+  action:
+    | {
+        type: string
+        payload: Record<string, any>
+      }
+    | {
+        name: string
+        path?: string
+        args?: any[]
+      }
 }
 
 type Path = string
