@@ -1,4 +1,17 @@
-import { LogPayload } from "./log"
+import type { LogPayload } from "./log"
+import type {
+  StateActionCompletePayload,
+  StateActionDispatchPayload,
+  StateBackupRequestPayload,
+  StateBackupResponsePayload,
+  StateKeysRequestPayload,
+  StateKeysResponsePayload,
+  StateRestoreRequestPayload,
+  StateValuesChangePayload,
+  StateValuesRequestPayload,
+  StateValuesResponsePayload,
+  StateValuesSubscribePayload,
+} from "./state"
 
 export const CommandType = {
   ApiResponse: "api.response",
@@ -14,6 +27,12 @@ export const CommandType = {
   StateValuesChange: "state.values.change",
   StateValuesResponse: "state.values.response",
   StateBackupResponse: "state.backup.response",
+  StateBackupRequest: "state.backup.request",
+  StateRestoreRequest: "state.restore.request",
+  StateActionDispatch: "state.action.dispatch",
+  StateValuesSubscribe: "state.values.subscribe",
+  StateKeysRequest: "state.keys.request",
+  StateValuesRequest: "state.values.request",
   CustomCommandRegister: "customCommand.register",
   CustomCommandUnregister: "customCommand.unregister",
   Clear: "clear",
@@ -46,11 +65,17 @@ export interface CommandMap {
   [CommandType.Image]: any
   [CommandType.Log]: LogPayload
   [CommandType.SagaTaskComplete]: any
-  [CommandType.StateActionComplete]: any
-  [CommandType.StateKeysResponse]: any
-  [CommandType.StateValuesChange]: any
-  [CommandType.StateValuesResponse]: any
-  [CommandType.StateBackupResponse]: any
+  [CommandType.StateActionComplete]: StateActionCompletePayload
+  [CommandType.StateKeysResponse]: StateKeysResponsePayload
+  [CommandType.StateValuesChange]: StateValuesChangePayload
+  [CommandType.StateValuesResponse]: StateValuesResponsePayload
+  [CommandType.StateBackupResponse]: StateBackupResponsePayload
+  [CommandType.StateBackupRequest]: StateBackupRequestPayload
+  [CommandType.StateRestoreRequest]: StateRestoreRequestPayload
+  [CommandType.StateActionDispatch]: StateActionDispatchPayload
+  [CommandType.StateValuesSubscribe]: StateValuesSubscribePayload
+  [CommandType.StateKeysRequest]: StateKeysRequestPayload
+  [CommandType.StateValuesRequest]: StateValuesRequestPayload
   [CommandType.CustomCommandRegister]: any
   [CommandType.CustomCommandUnregister]: any
   [CommandType.Clear]: any
