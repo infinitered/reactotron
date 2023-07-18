@@ -1,4 +1,5 @@
 import type { LogPayload } from "./log"
+import { EditorOpenPayload } from "./openInEditor"
 import type {
   StateActionCompletePayload,
   StateActionDispatchPayload,
@@ -38,6 +39,10 @@ export const CommandType = {
   Clear: "clear",
   ReplLsResponse: "repl.ls.response",
   ReplExecuteResponse: "repl.execute.response",
+  // these technically are commands only in reactotron-react-native, but I felt lazy so they can live here
+  DevtoolsOpen: "devtools.open",
+  DevtoolsReload: "devtools.reload",
+  EditorOpen: "editor.open",
 } as const
 
 export type CommandTypeKey = (typeof CommandType)[keyof typeof CommandType]
@@ -81,6 +86,9 @@ export interface CommandMap {
   [CommandType.Clear]: any
   [CommandType.ReplLsResponse]: any
   [CommandType.ReplExecuteResponse]: any
+  [CommandType.DevtoolsOpen]: undefined
+  [CommandType.DevtoolsReload]: undefined
+  [CommandType.EditorOpen]: EditorOpenPayload
 }
 
 export type CommandEvent = (command: Command) => void
