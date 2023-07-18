@@ -14,7 +14,6 @@ import {
 } from "mobx-state-tree"
 import type { IStateTreeNode, IType, IMiddlewareEvent } from "mobx-state-tree"
 import {
-  Reactotron,
   ReactotronCore,
   Plugin,
   assertHasStateResponsePlugin,
@@ -119,10 +118,10 @@ export function mst(opts: MstPluginOptions = {}) {
    *
    * @param reactotron The reactotron instance we're attaching to.
    */
-  function plugin(reactotron: Reactotron) {
+  function plugin<Client extends ReactotronCore = ReactotronCore>(reactotron: Client) {
     // make sure have loaded the StateResponsePlugin
     assertHasStateResponsePlugin(reactotron)
-    const client = reactotron as Reactotron & InferFeatures<Reactotron, StateResponsePlugin>
+    const client = reactotron as Client & InferFeatures<Client, StateResponsePlugin>
 
     // --- Plugin-scoped variables ---------------------------------
 
@@ -250,7 +249,7 @@ export function mst(opts: MstPluginOptions = {}) {
           })
         }
 
-        // return the result of the next middlware
+        // return the result of the next middleware
         return result
       })
     }
@@ -431,15 +430,8 @@ export function mst(opts: MstPluginOptions = {}) {
       // All keys in this object will be attached to the main Reactotron instance
       // and available to be called directly.
       features: { trackMstNode },
-    } satisfies Plugin<ReactotronCore>
+    } satisfies Plugin<Client>
   }
 
   return plugin
-}
-
-declare module "reactotron-core-client" {
-  // eslint-disable-next-line import/export
-  export interface Reactotron {
-    trackMstNode?: (node: IStateTreeNode, nodeName?: string) => { kind: string; message?: string }
-  }
 }
