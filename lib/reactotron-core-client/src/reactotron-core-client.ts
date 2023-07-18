@@ -19,9 +19,8 @@ export { assertHasStateResponsePlugin, hasStateResponsePlugin } from "./plugins/
 export type { StateResponsePlugin } from "./plugins/state-responses"
 
 // #region Plugin Types
-type OnCommandCommand = Record<string, any>
 export interface LifeCycleMethods {
-  onCommand?: (command: OnCommandCommand) => void
+  onCommand?: (command: Command) => void
   onConnect?: () => void
   onDisconnect?: () => void
 }
