@@ -1,8 +1,9 @@
 import * as td from "testdouble"
 import { TestUserModel, createMstPlugin } from "./fixtures"
+import { Command } from "reactotron-core-contract"
 
 function createAction(path: string) {
-  return { type: "state.keys.request", payload: { path } }
+  return { type: "state.keys.request", payload: { path } } as Command<"state.keys.request">
 }
 
 describe("request-keys", () => {

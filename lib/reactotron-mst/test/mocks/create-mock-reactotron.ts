@@ -10,7 +10,7 @@ export function createMockReactotron() {
     startTimer: td.func<Reactotron["startTimer"]>(),
     stateValuesChange: td.func<Reactotron["stateValuesChange"]>(),
     send: td.func<Reactotron["send"]>(),
-    stateKeysResponse: td.func<Reactotron["send"]>(),
+    stateKeysResponse: td.func<Reactotron["stateKeysResponse"]>(),
     stateValuesResponse: td.func<Reactotron["stateValuesResponse"]>(),
     apiResponse: td.func<Reactotron["apiResponse"]>(),
     stateActionComplete: td.func<Reactotron["stateActionComplete"]>(),

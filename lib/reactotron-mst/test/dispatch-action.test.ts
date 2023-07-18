@@ -1,10 +1,12 @@
+import type { ISerializedActionCall } from "mobx-state-tree"
 import { TestUserModel, createMstPlugin } from "./fixtures"
+import { Command } from "reactotron-core-contract"
 
-function createAction(action: any) {
+function createAction(action: ISerializedActionCall) {
   return {
     type: "state.action.dispatch",
     payload: { action },
-  }
+  } as Command<"state.action.dispatch">
 }
 
 describe("dispatch-action", () => {
