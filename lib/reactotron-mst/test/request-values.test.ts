@@ -1,9 +1,13 @@
 import * as td from "testdouble"
-import { TestUserModel, createMstPlugin } from "./fixtures"
+import { TestUserModel, commandMetadataFixture, createMstPlugin } from "./fixtures"
 import { Command } from "reactotron-core-contract"
 
 function createAction(path: string) {
-  return { type: "state.values.request", payload: { path } } as Command<"state.values.request">
+  return {
+    ...commandMetadataFixture,
+    type: "state.values.request",
+    payload: { path },
+  } satisfies Command<"state.values.request">
 }
 
 describe("request-values", () => {

@@ -30,8 +30,8 @@ export function createMockReactotron() {
     image: td.func<Reactotron["image"]>(),
     warn: td.func<Reactotron["warn"]>(),
     onCustomCommand: td.func<Reactotron["onCustomCommand"]>(),
-    plugins: [],
-    options: {},
+    plugins: td.object(),
+    options: td.object(),
     repl: td.func<Reactotron["repl"]>(),
   }
 

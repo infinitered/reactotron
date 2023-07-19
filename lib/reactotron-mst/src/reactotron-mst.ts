@@ -53,7 +53,7 @@ import {
 
 // --- Helpers ---------------------------------
 
-const dotPath = (fullPath: string, o: any) => path(split(".", fullPath), o)
+const dotPath = (fullPath: string, o: Record<string, any>) => path(split(".", fullPath), o)
 const isNilOrEmpty = (value: any) => isNil(value) || isEmpty(value)
 const isReactNativeEvent = (value: any) =>
   typeof value !== "undefined" &&
@@ -78,12 +78,15 @@ const convertUnsafeArguments = (args: any) => {
   })
 }
 
-const isSerializedActionCall = (value: unknown): value is ISerializedActionCall =>
-  typeof value === "object" &&
-  "name" in value &&
-  value.name === "string" &&
-  ("path" in value ? typeof value.path === "string" : true) &&
-  ("args" in value ? Array.isArray(value.args) : true)
+const isSerializedActionCall = (value: unknown): value is ISerializedActionCall => {
+  return (
+    typeof value === "object" &&
+    "name" in value &&
+    typeof value.name === "string" &&
+    ("path" in value ? typeof value.path === "string" : true) &&
+    ("args" in value ? Array.isArray(value.args) : true)
+  )
+}
 
 const isSerializedActionCallArray = (value: unknown): value is ISerializedActionCall[] =>
   Array.isArray(value) && value.every(isSerializedActionCall)
@@ -334,12 +337,8 @@ export function mst(opts: MstPluginOptions = {}) {
             : "default"
         ]
       const action = command && command.payload && command.payload.action
-      if (
-        trackedNode &&
-        trackedNode.node &&
-        action &&
-        (isSerializedActionCall(action) || isSerializedActionCallArray(action))
-      ) {
+      const isValidAction = isSerializedActionCall(action) || isSerializedActionCallArray(action)
+      if (trackedNode && trackedNode.node && action && isValidAction) {
         const { node } = trackedNode
         try {
           applyAction(node, action)
@@ -387,8 +386,8 @@ export function mst(opts: MstPluginOptions = {}) {
             ? command.mstNodeName
             : "default"
         ]
-      const atPath = command && command.payload && command.payload.path
-      if (trackedNode && trackedNode.node && atPath) {
+      const atPath = command?.payload?.path
+      if (trackedNode && trackedNode.node) {
         const state = getSnapshot<IStateTreeNode>(trackedNode.node)
         if (isNilOrEmpty(atPath)) {
           client.stateKeysResponse(null, keys(state))
@@ -411,9 +410,9 @@ export function mst(opts: MstPluginOptions = {}) {
             ? command.mstNodeName
             : "default"
         ]
-      const atPath: string = command && command.payload && command.payload.path
-      if (trackedNode && trackedNode.node && atPath) {
-        const state = getSnapshot(trackedNode.node)
+      const atPath = command?.payload?.path
+      if (trackedNode && trackedNode.node) {
+        const state = getSnapshot<IStateTreeNode>(trackedNode.node)
         if (isNilOrEmpty(atPath)) {
           client.stateValuesResponse(null, state)
         } else {
