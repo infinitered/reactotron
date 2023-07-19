@@ -1,12 +1,18 @@
 import * as td from "testdouble"
-import { TestUserModel, createMstPlugin, createTestCompany } from "./fixtures"
+import {
+  TestUserModel,
+  commandMetadataFixture,
+  createMstPlugin,
+  createTestCompany,
+} from "./fixtures"
 import { Command } from "reactotron-core-contract"
 
 function createAction(paths: string[]) {
   return {
+    ...commandMetadataFixture,
     type: "state.values.subscribe",
     payload: { paths },
-  } as Command<"state.values.subscribe">
+  } satisfies Command<"state.values.subscribe">
 }
 describe("subscribe", () => {
   it("won't die if we're not tracking nodes", () => {
