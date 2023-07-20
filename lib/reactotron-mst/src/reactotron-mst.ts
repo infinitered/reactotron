@@ -12,9 +12,14 @@ import {
   isRoot,
   onSnapshot,
 } from "mobx-state-tree"
-import type { IStateTreeNode, IType, IMiddlewareEvent } from "mobx-state-tree"
+import type {
+  IStateTreeNode,
+  IType,
+  IMiddlewareEvent,
+  ISerializedActionCall,
+} from "mobx-state-tree"
+import type { Command } from "reactotron-core-contract"
 import {
-  Reactotron,
   ReactotronCore,
   Plugin,
   assertHasStateResponsePlugin,
@@ -48,7 +53,7 @@ import {
 
 // --- Helpers ---------------------------------
 
-const dotPath = (fullPath: string, o: any) => path(split(".", fullPath), o)
+const dotPath = (fullPath: string, o: Record<string, any>) => path(split(".", fullPath), o)
 const isNilOrEmpty = (value: any) => isNil(value) || isEmpty(value)
 const isReactNativeEvent = (value: any) =>
   typeof value !== "undefined" &&
@@ -72,6 +77,19 @@ const convertUnsafeArguments = (args: any) => {
     return arg
   })
 }
+
+const isSerializedActionCall = (value: unknown): value is ISerializedActionCall => {
+  return (
+    typeof value === "object" &&
+    "name" in value &&
+    typeof value.name === "string" &&
+    ("path" in value ? typeof value.path === "string" : true) &&
+    ("args" in value ? Array.isArray(value.args) : true)
+  )
+}
+
+const isSerializedActionCallArray = (value: unknown): value is ISerializedActionCall[] =>
+  Array.isArray(value) && value.every(isSerializedActionCall)
 
 // --- Interfaces ---------------------------------
 
@@ -119,10 +137,10 @@ export function mst(opts: MstPluginOptions = {}) {
    *
    * @param reactotron The reactotron instance we're attaching to.
    */
-  function plugin(reactotron: Reactotron) {
+  function plugin<Client extends ReactotronCore = ReactotronCore>(reactotron: Client) {
     // make sure have loaded the StateResponsePlugin
     assertHasStateResponsePlugin(reactotron)
-    const client = reactotron as Reactotron & InferFeatures<Reactotron, StateResponsePlugin>
+    const client = reactotron as Client & InferFeatures<Client, StateResponsePlugin>
 
     // --- Plugin-scoped variables ---------------------------------
 
@@ -160,7 +178,7 @@ export function mst(opts: MstPluginOptions = {}) {
 
       try {
         // grab the mst model type
-        const modelType = getType<any, any>(node)
+        const modelType = getType(node)
 
         // we only want types
         if (modelType.isType) {
@@ -170,7 +188,13 @@ export function mst(opts: MstPluginOptions = {}) {
             trackedNodes[nodeName] = { node, modelType }
             return { kind: "ok" } as const
           } catch (e) {
-            return { kind: "tracking-error", message: e.message } as const
+            return {
+              kind: "tracking-error",
+              message:
+                e instanceof Error
+                  ? e.message
+                  : "Unknown error - tracking error did not have message",
+            } as const
           }
         } else {
           return { kind: "invalid-node" } as const
@@ -250,7 +274,7 @@ export function mst(opts: MstPluginOptions = {}) {
           })
         }
 
-        // return the result of the next middlware
+        // return the result of the next middleware
         return result
       })
     }
@@ -263,10 +287,15 @@ export function mst(opts: MstPluginOptions = {}) {
      *
      * @param command A reactotron command.
      */
-    function backup(command: any) {
-      const trackedNode = trackedNodes[command.mstNodeName || "default"]
+    function backup(command: Command<"state.backup.request">) {
+      const trackedNode =
+        trackedNodes[
+          "mstNodeName" in command && typeof command.mstNodeName === "string"
+            ? command.mstNodeName
+            : "default"
+        ]
       if (trackedNode && trackedNode.node) {
-        const state = getSnapshot(trackedNode.node)
+        const state = getSnapshot<IStateTreeNode>(trackedNode.node)
         reactotron.send("state.backup.response", { state })
       }
     }
@@ -277,8 +306,13 @@ export function mst(opts: MstPluginOptions = {}) {
      *
      * @param command A reactotron command.
      */
-    function restore(command: any) {
-      const trackedNode = trackedNodes[command.mstNodeName || "default"]
+    function restore(command: Command<"state.restore.request">) {
+      const trackedNode =
+        trackedNodes[
+          "mstNodeName" in command && typeof command.mstNodeName === "string"
+            ? command.mstNodeName
+            : "default"
+        ]
       const state = command && command.payload && command.payload.state
       if (trackedNode && trackedNode.node) {
         const { node } = trackedNode
@@ -295,10 +329,16 @@ export function mst(opts: MstPluginOptions = {}) {
      *
      * @param command A reactotron command.
      */
-    function dispatchAction(command: any) {
-      const trackedNode = trackedNodes[command.mstNodeName || "default"]
+    function dispatchAction(command: Command<"state.action.dispatch">) {
+      const trackedNode =
+        trackedNodes[
+          "mstNodeName" in command && typeof command.mstNodeName === "string"
+            ? command.mstNodeName
+            : "default"
+        ]
       const action = command && command.payload && command.payload.action
-      if (trackedNode && trackedNode.node && action) {
+      const isValidAction = isSerializedActionCall(action) || isSerializedActionCallArray(action)
+      if (trackedNode && trackedNode.node && action && isValidAction) {
         const { node } = trackedNode
         try {
           applyAction(node, action)
@@ -314,8 +354,13 @@ export function mst(opts: MstPluginOptions = {}) {
      *
      * @param command The command received from the reactotron app.
      */
-    function subscribe(command: any) {
-      const trackedNode = trackedNodes[command.mstNodeName || "default"]
+    function subscribe(command: Command<"state.values.subscribe">) {
+      const trackedNode =
+        trackedNodes[
+          "mstNodeName" in command && typeof command.mstNodeName === "string"
+            ? command.mstNodeName
+            : "default"
+        ]
       const paths: string[] = (command && command.payload && command.payload.paths) || []
 
       if (paths) {
@@ -334,10 +379,15 @@ export function mst(opts: MstPluginOptions = {}) {
      *
      * @param command The command received from the reactotron app.
      */
-    function requestKeys(command: any) {
-      const trackedNode = trackedNodes[command.mstNodeName || "default"]
-      const atPath: string = (command && command.payload && command.payload.path) || []
-      if (trackedNode && trackedNode.node && atPath) {
+    function requestKeys(command: Command<"state.keys.request">) {
+      const trackedNode =
+        trackedNodes[
+          "mstNodeName" in command && typeof command.mstNodeName === "string"
+            ? command.mstNodeName
+            : "default"
+        ]
+      const atPath = command?.payload?.path
+      if (trackedNode && trackedNode.node) {
         const state = getSnapshot<IStateTreeNode>(trackedNode.node)
         if (isNilOrEmpty(atPath)) {
           client.stateKeysResponse(null, keys(state))
@@ -353,11 +403,16 @@ export function mst(opts: MstPluginOptions = {}) {
      *
      * @param command The command received from the reactotron app.
      */
-    function requestValues(command: any) {
-      const trackedNode = trackedNodes[command.mstNodeName || "default"]
-      const atPath: string = (command && command.payload && command.payload.path) || []
-      if (trackedNode && trackedNode.node && atPath) {
-        const state = getSnapshot(trackedNode.node)
+    function requestValues(command: Command<"state.values.request">) {
+      const trackedNode =
+        trackedNodes[
+          "mstNodeName" in command && typeof command.mstNodeName === "string"
+            ? command.mstNodeName
+            : "default"
+        ]
+      const atPath = command?.payload?.path
+      if (trackedNode && trackedNode.node) {
+        const state = getSnapshot<IStateTreeNode>(trackedNode.node)
         if (isNilOrEmpty(atPath)) {
           client.stateValuesResponse(null, state)
         } else {
@@ -371,7 +426,7 @@ export function mst(opts: MstPluginOptions = {}) {
      *
      * @param node The tree to grab the state data from
      */
-    function sendSubscriptions(state: any) {
+    function sendSubscriptions(state: IStateTreeNode) {
       // this is unreadable
       const changes = (pipe as any)(
         map(when(isNil, always(""))) as any,
@@ -404,19 +459,19 @@ export function mst(opts: MstPluginOptions = {}) {
     // --- Reactotron Hooks ---------------------------------
 
     // maps inbound commands to functions to run
-    const COMMAND_MAP: { [name: string]: (command: any) => void } = {
+    const COMMAND_MAP = {
       "state.backup.request": backup,
       "state.restore.request": restore,
       "state.action.dispatch": dispatchAction,
       "state.values.subscribe": subscribe,
       "state.keys.request": requestKeys,
       "state.values.request": requestValues,
-    }
+    } satisfies { [name: string]: (command: Command) => void }
 
     /**
      * Fires when we receive a command from the reactotron app.
      */
-    function onCommand(command: any) {
+    function onCommand(command: Command) {
       // lookup the command and execute
       const handler = COMMAND_MAP[command && command.type]
       handler && handler(command)
@@ -431,15 +486,8 @@ export function mst(opts: MstPluginOptions = {}) {
       // All keys in this object will be attached to the main Reactotron instance
       // and available to be called directly.
       features: { trackMstNode },
-    } satisfies Plugin<ReactotronCore>
+    } satisfies Plugin<Client>
   }
 
   return plugin
-}
-
-declare module "reactotron-core-client" {
-  // eslint-disable-next-line import/export
-  export interface Reactotron {
-    trackMstNode?: (node: IStateTreeNode, nodeName?: string) => { kind: string; message?: string }
-  }
 }

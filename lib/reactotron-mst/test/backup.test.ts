@@ -1,8 +1,17 @@
 import * as td from "testdouble"
-import { TestUserModel, createMstPlugin } from "./fixtures"
+import { TestUserModel, commandMetadataFixture, createMstPlugin } from "./fixtures"
+import { Command } from "reactotron-core-contract"
 
-const INBOUND = { type: "state.backup.request" }
-const OUTBOUND = { type: "state.backup.response" }
+const INBOUND = {
+  ...commandMetadataFixture,
+  type: "state.backup.request",
+  payload: { state: { age: 100, name: "" } },
+} satisfies Command<"state.backup.request">
+const OUTBOUND = {
+  ...commandMetadataFixture,
+  type: "state.backup.response",
+  payload: { state: { age: 100, name: "" } },
+} satisfies Command<"state.backup.response">
 
 describe("backup", () => {
   it("responds with current state", () => {

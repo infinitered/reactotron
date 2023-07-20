@@ -1,7 +1,11 @@
+import type {
+  StateActionCompletePayload,
+  StateBackupResponsePayload,
+  StateKeysResponsePayload,
+  StateValuesChangePayload,
+  StateValuesResponsePayload,
+} from "reactotron-core-contract"
 import type { ReactotronCore, Plugin, InferFeatures } from "../reactotron-core-client"
-
-type Action = Record<string, any>
-type State = Record<string, any>
 
 /**
  * Provides helper functions for send state responses.
@@ -9,20 +13,30 @@ type State = Record<string, any>
 const stateResponse = () => (reactotron: ReactotronCore) => {
   return {
     features: {
-      stateActionComplete: (name: string, action: Action, important = false) =>
-        reactotron.send("state.action.complete", { name, action }, !!important),
+      stateActionComplete: (
+        name: StateActionCompletePayload["name"],
+        action: StateActionCompletePayload["action"],
+        important = false
+      ) => reactotron.send("state.action.complete", { name, action }, !!important),
 
-      stateValuesResponse: (path: string, value, valid = true) =>
-        reactotron.send("state.values.response", { path, value, valid }),
+      stateValuesResponse: (
+        path: StateValuesResponsePayload["path"],
+        value: StateValuesResponsePayload["value"],
+        valid: StateValuesResponsePayload["value"] = true
+      ) => reactotron.send("state.values.response", { path, value, valid }),
 
-      stateKeysResponse: (path: string, keys: string[], valid = true) =>
-        reactotron.send("state.keys.response", { path, keys, valid }),
+      stateKeysResponse: (
+        path: StateKeysResponsePayload["path"],
+        keys: StateKeysResponsePayload["keys"],
+        valid: StateKeysResponsePayload["valid"] = true
+      ) => reactotron.send("state.keys.response", { path, keys, valid }),
 
-      stateValuesChange: (changes: Action[]) =>
+      stateValuesChange: (changes: StateValuesChangePayload["changes"]) =>
         changes.length > 0 && reactotron.send("state.values.change", { changes }),
 
       /** sends the state backup over to the server */
-      stateBackupResponse: (state: State) => reactotron.send("state.backup.response", { state }),
+      stateBackupResponse: (state: StateBackupResponsePayload["state"]) =>
+        reactotron.send("state.backup.response", { state }),
     },
   } satisfies Plugin<ReactotronCore>
 }

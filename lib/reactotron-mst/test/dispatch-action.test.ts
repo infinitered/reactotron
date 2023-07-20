@@ -1,10 +1,13 @@
-import { TestUserModel, createMstPlugin } from "./fixtures"
+import type { ISerializedActionCall } from "mobx-state-tree"
+import type { Command } from "reactotron-core-contract"
+import { TestUserModel, commandMetadataFixture, createMstPlugin } from "./fixtures"
 
-function createAction(action: any) {
+function createAction(action: ISerializedActionCall) {
   return {
+    ...commandMetadataFixture,
     type: "state.action.dispatch",
     payload: { action },
-  }
+  } satisfies Command<"state.action.dispatch">
 }
 
 describe("dispatch-action", () => {
