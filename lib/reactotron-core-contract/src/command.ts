@@ -43,6 +43,8 @@ export const CommandType = {
   DevtoolsOpen: "devtools.open",
   DevtoolsReload: "devtools.reload",
   EditorOpen: "editor.open",
+  Storybook: "storybook",
+  Overlay: "overlay",
 } as const
 
 export type CommandTypeKey = (typeof CommandType)[keyof typeof CommandType]
@@ -89,6 +91,8 @@ export interface CommandMap {
   [CommandType.DevtoolsOpen]: undefined
   [CommandType.DevtoolsReload]: undefined
   [CommandType.EditorOpen]: EditorOpenPayload
+  [CommandType.Storybook]: boolean
+  [CommandType.Overlay]: boolean
 }
 
 export type CommandEvent = (command: Command) => void
