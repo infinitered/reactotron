@@ -140,12 +140,13 @@ const networking =
       }
     }
 
-    // register our monkey-patch
-    XHRInterceptor.setSendCallback(onSend)
-    XHRInterceptor.setResponseCallback(onResponse)
-    XHRInterceptor.enableInterception()
-
-    // nothing of use to offer to the plugin
-    return {} satisfies Plugin<ReactotronCore>
+    return {
+      onConnect: () => {
+        // register our monkey-patch
+        XHRInterceptor.setSendCallback(onSend)
+        XHRInterceptor.setResponseCallback(onResponse)
+        XHRInterceptor.enableInterception()
+      },
+    } satisfies Plugin<ReactotronCore>
   }
 export default networking

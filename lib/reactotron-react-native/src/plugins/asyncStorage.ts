@@ -18,7 +18,7 @@ export interface AsyncStorageHandler {
   multiMerge: (pairs: string[][], callback?: (error: Error) => void) => void
 }
 
-const asyncStorage = (options: AsyncStorageOptions) => (reactotron: ReactotronCore) => {
+const asyncStorage = (options?: AsyncStorageOptions) => (reactotron: ReactotronCore) => {
   // setup configuration
   const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
   const ignore = config.ignore || PLUGIN_DEFAULTS.ignore

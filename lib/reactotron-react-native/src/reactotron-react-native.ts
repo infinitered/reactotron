@@ -1,13 +1,18 @@
 import { Platform, NativeModules } from "react-native"
 import { createClient } from "reactotron-core-client"
-import type { ClientOptions, Reactotron } from "reactotron-core-client"
+import type {
+  ClientOptions,
+  InferFeaturesFromPlugins,
+  PluginCreator,
+  Reactotron,
+  ReactotronCore,
+} from "reactotron-core-client"
 import getHost from "rn-host-detect"
 
 import getReactNativeVersion from "./helpers/getReactNativeVersion"
 import getReactNativeDimensions from "./helpers/getReactNativeDimensions"
 import asyncStorage, { AsyncStorageHandler, AsyncStorageOptions } from "./plugins/asyncStorage"
 import overlay from "./plugins/overlay"
-import type { OverlayFeatures } from "./plugins/overlay"
 import openInEditor, { OpenInEditorOptions } from "./plugins/openInEditor"
 import trackGlobalErrors, { TrackGlobalErrorsOptions } from "./plugins/trackGlobalErrors"
 import networking, { NetworkingOptions } from "./plugins/networking"
@@ -71,12 +76,25 @@ export interface UseReactNativeOptions {
   devTools?: boolean
 }
 
-export interface ReactotronReactNative extends Reactotron {
+const reactNativeCorePlugins = [
+  asyncStorage(),
+  trackGlobalErrors(),
+  openInEditor(),
+  overlay(),
+  networking(),
+  storybook(),
+  devTools(),
+] satisfies PluginCreator<ReactotronCore>[]
+
+type ReactNativePluginFeatures = InferFeaturesFromPlugins<
+  ReactotronCore,
+  typeof reactNativeCorePlugins
+>
+
+export interface ReactotronReactNative extends Reactotron, ReactNativePluginFeatures {
   useReactNative: (options?: UseReactNativeOptions) => this
-  overlay: OverlayFeatures["overlay"]
-  storybookSwitcher: (App: React.ReactNode) => (Root: React.ReactNode) => React.ReactNode
   asyncStorageHandler?: AsyncStorageHandler
-  setAsyncStorageHandler?: (asyncStorage: any) => this
+  setAsyncStorageHandler: (asyncStorage: AsyncStorageHandler) => this
 }
 
 const reactotron = createClient<ReactotronReactNative>(DEFAULTS)
@@ -117,7 +135,7 @@ reactotron.useReactNative = (options: UseReactNativeOptions = {}) => {
   return reactotron
 }
 
-reactotron.setAsyncStorageHandler = (asyncStorage) => {
+reactotron.setAsyncStorageHandler = (asyncStorage: AsyncStorageHandler) => {
   reactotron.asyncStorageHandler = asyncStorage
 
   return reactotron

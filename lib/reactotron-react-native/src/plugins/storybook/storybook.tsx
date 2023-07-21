@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { View } from "react-native"
 
 interface Props {
-  storybookUi: any
+  storybookUi: React.ComponentType
   emitter: any
 }
 
@@ -14,12 +14,9 @@ class StorybookSwitcher extends Component<React.PropsWithChildren<Props>, State>
   /**
    * Creates an instance of FullScreenOverlay.
    *
-   * @param {any} props
-   * @param {Object} props.emitter An event emitter.
-   *
    * @memberOf FullScreenOverlay
    */
-  constructor(props) {
+  constructor(props: Props) {
     super(props)
 
     this.state = {
@@ -27,7 +24,7 @@ class StorybookSwitcher extends Component<React.PropsWithChildren<Props>, State>
     }
 
     // when the server sends stuff
-    props.emitter.on("storybook", (payload) => {
+    props.emitter.on("storybook", (payload: boolean) => {
       this.setState({ showStorybook: payload })
     })
   }
