@@ -91,7 +91,6 @@ export interface ReactotronCore {
     important?: boolean
   ) => void
   display: (config: DisplayConfig) => void
-  reportError: (this: any, error: Error) => void
   onCustomCommand: <Args extends CustomCommandArg[] = CustomCommand["args"]>(
     config: CustomCommand<Args>
   ) => () => void | ((config: string, optHandler?: () => void) => () => void)

@@ -7,7 +7,6 @@ export const defaultReactotronMock: Reactotron = {
   connect: jest.fn(),
   send: jest.fn(),
   display: jest.fn(),
-  reportError: jest.fn(),
   use: jest.fn(),
   onCustomCommand: jest.fn(),
   clear: jest.fn(),

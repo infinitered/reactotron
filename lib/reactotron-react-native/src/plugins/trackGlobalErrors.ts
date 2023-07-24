@@ -6,6 +6,7 @@ import {
   LoggerPlugin,
   ReactotronCore,
   assertHasLoggerPlugin,
+  Plugin,
 } from "reactotron-core-client"
 import _LogBox, {
   LogBoxStatic as LogBoxStaticPublic,
@@ -56,7 +57,7 @@ const objectifyError = (error: Error) => {
 
 // const reactNativeFrameFinder = frame => contains('/node_modules/react-native/', frame.fileName)
 
-const trackGlobalErrors = (options: TrackGlobalErrorsOptions) => (reactotron: ReactotronCore) => {
+const trackGlobalErrors = (options?: TrackGlobalErrorsOptions) => (reactotron: ReactotronCore) => {
   // make sure we have the logger plugin
   assertHasLoggerPlugin(reactotron)
   const client = reactotron as ReactotronCore & InferFeatures<ReactotronCore, LoggerPlugin>
@@ -131,7 +132,7 @@ const trackGlobalErrors = (options: TrackGlobalErrorsOptions) => (reactotron: Re
     features: {
       reportError,
     },
-  }
+  } satisfies Plugin<ReactotronCore>
 }
 
 export default trackGlobalErrors

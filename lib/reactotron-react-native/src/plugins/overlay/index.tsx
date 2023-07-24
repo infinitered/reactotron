@@ -1,6 +1,7 @@
 import React from "react"
 import { View } from "react-native"
 import mitt from "mitt"
+import type { ReactotronCore, Plugin } from "reactotron-core-client"
 
 import FullScreenOverlay from "./overlay"
 
@@ -11,8 +12,6 @@ export default function OverlayCreator() {
     return {
       /**
        * Fires when any Reactotron message arrives.
-       *
-       * @param {object} command The Reactotron command object.
        */
       onCommand: (command) => {
         if (command.type !== "overlay") return
@@ -31,7 +30,7 @@ export default function OverlayCreator() {
               </View>
             ),
       },
-    }
+    } satisfies Plugin<ReactotronCore>
   }
 }
 

@@ -1,4 +1,5 @@
 import type { ReactotronCore, Plugin } from "reactotron-core-client"
+import type { AsyncStorageStatic } from "@react-native-async-storage/async-storage"
 export interface AsyncStorageOptions {
   ignore?: string[]
 }
@@ -7,36 +8,25 @@ const PLUGIN_DEFAULTS: AsyncStorageOptions = {
   ignore: [],
 }
 
-export interface AsyncStorageHandler {
-  getItem: (key: string) => string
-  setItem: (key: string, value: string, callback?: (error: Error) => void) => void
-  removeItem: (key: string, callback?: (error: Error) => void) => void
-  mergeItem: (key: string, value: string, callback?: (error: Error) => void) => void
-  clear: (callback: (error: Error) => void) => void
-  multiSet: (pairs: string[][], callback?: (error: Error) => void) => void
-  multiRemove: (keys: string[], callback?: (error: Error) => void) => void
-  multiMerge: (pairs: string[][], callback?: (error: Error) => void) => void
-}
-
-const asyncStorage = (options: AsyncStorageOptions) => (reactotron: ReactotronCore) => {
+const asyncStorage = (options?: AsyncStorageOptions) => (reactotron: ReactotronCore) => {
   // setup configuration
   const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
   const ignore = config.ignore || PLUGIN_DEFAULTS.ignore
 
-  let swizzSetItem: AsyncStorageHandler["setItem"]
-  let swizzRemoveItem: AsyncStorageHandler["removeItem"]
-  let swizzMergeItem: AsyncStorageHandler["mergeItem"]
-  let swizzClear: AsyncStorageHandler["clear"]
-  let swizzMultiSet: AsyncStorageHandler["multiSet"]
-  let swizzMultiRemove: AsyncStorageHandler["multiRemove"]
-  let swizzMultiMerge: AsyncStorageHandler["multiMerge"]
+  let swizzSetItem: AsyncStorageStatic["setItem"]
+  let swizzRemoveItem: AsyncStorageStatic["removeItem"]
+  let swizzMergeItem: AsyncStorageStatic["mergeItem"]
+  let swizzClear: AsyncStorageStatic["clear"]
+  let swizzMultiSet: AsyncStorageStatic["multiSet"]
+  let swizzMultiRemove: AsyncStorageStatic["multiRemove"]
+  let swizzMultiMerge: AsyncStorageStatic["multiMerge"]
   let isSwizzled = false
 
   const sendToReactotron = (action: string, data?: any) => {
     reactotron.send("asyncStorage.mutation", { action, data })
   }
 
-  const setItem: AsyncStorageHandler["setItem"] = async (key, value, callback) => {
+  const setItem: AsyncStorageStatic["setItem"] = async (key, value, callback) => {
     try {
       if (ignore.indexOf(key) < 0) {
         sendToReactotron("setItem", { key, value })
@@ -45,7 +35,7 @@ const asyncStorage = (options: AsyncStorageOptions) => (reactotron: ReactotronCo
     return swizzSetItem(key, value, callback)
   }
 
-  const removeItem: AsyncStorageHandler["removeItem"] = async (key, callback) => {
+  const removeItem: AsyncStorageStatic["removeItem"] = async (key, callback) => {
     try {
       if (ignore.indexOf(key) < 0) {
         sendToReactotron("removeItem", { key })
@@ -54,7 +44,7 @@ const asyncStorage = (options: AsyncStorageOptions) => (reactotron: ReactotronCo
     return swizzRemoveItem(key, callback)
   }
 
-  const mergeItem: AsyncStorageHandler["mergeItem"] = async (key, value, callback) => {
+  const mergeItem: AsyncStorageStatic["mergeItem"] = async (key, value, callback) => {
     try {
       if (ignore.indexOf(key) < 0) {
         sendToReactotron("mergeItem", { key, value })
@@ -63,14 +53,14 @@ const asyncStorage = (options: AsyncStorageOptions) => (reactotron: ReactotronCo
     return swizzMergeItem(key, value, callback)
   }
 
-  const clear: AsyncStorageHandler["clear"] = async (callback) => {
+  const clear: AsyncStorageStatic["clear"] = async (callback) => {
     try {
       sendToReactotron("clear")
     } catch (e) {}
     return swizzClear(callback)
   }
 
-  const multiSet: AsyncStorageHandler["multiSet"] = async (pairs, callback) => {
+  const multiSet: AsyncStorageStatic["multiSet"] = async (pairs, callback) => {
     try {
       const shippablePairs = (pairs || []).filter(
         (pair) => pair && pair[0] && ignore.indexOf(pair[0]) < 0
@@ -82,7 +72,7 @@ const asyncStorage = (options: AsyncStorageOptions) => (reactotron: ReactotronCo
     return swizzMultiSet(pairs, callback)
   }
 
-  const multiRemove: AsyncStorageHandler["multiRemove"] = async (keys, callback) => {
+  const multiRemove: AsyncStorageStatic["multiRemove"] = async (keys, callback) => {
     try {
       const shippableKeys = (keys || []).filter((key) => ignore.indexOf(key) < 0)
       if (shippableKeys.length > 0) {
@@ -92,7 +82,7 @@ const asyncStorage = (options: AsyncStorageOptions) => (reactotron: ReactotronCo
     return swizzMultiRemove(keys, callback)
   }
 
-  const multiMerge: AsyncStorageHandler["multiMerge"] = async (pairs, callback) => {
+  const multiMerge: AsyncStorageStatic["multiMerge"] = async (pairs, callback) => {
     try {
       const shippablePairs = (pairs || []).filter(
         (pair) => pair && pair[0] && ignore.indexOf(pair[0]) < 0

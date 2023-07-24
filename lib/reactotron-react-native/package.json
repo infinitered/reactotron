@@ -56,6 +56,7 @@
     "@babel/plugin-transform-react-jsx": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-typescript": "^7.21.0",
+    "@react-native-async-storage/async-storage": "^1.19.1",
     "@types/jest": "29.4.0",
     "@types/node": "16.11.11",
     "@types/react": "18.0.0",
