@@ -2,7 +2,9 @@ import React, { PropsWithChildren } from "react"
 import { LayoutProvider } from "./Layout"
 import { StandaloneProvider } from "./Standalone"
 
-const RootContextProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+interface Props {}
+
+const RootContextProvider: React.FC<PropsWithChildren<Props>> = ({ children }) => {
   return (
     <LayoutProvider>
       <StandaloneProvider>{children}</StandaloneProvider>

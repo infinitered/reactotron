@@ -19,7 +19,9 @@ const StandaloneContext = React.createContext<Context>({
   selectConnection: null,
 })
 
-const Provider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+interface Props {}
+
+const Provider: React.FC<PropsWithChildren<Props>> = ({ children }) => {
   const reactotronServer = useRef<Server>(null)
 
   const {
@@ -37,12 +39,8 @@ const Provider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   useEffect(() => {
     reactotronServer.current = createServer({ port: config.get("serverPort") as number })
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore need to sync these types between reactotron-core-server and reactotron-app
     reactotronServer.current.on("connectionEstablished", connectionEstablished)
     reactotronServer.current.on("command", commandReceived)
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore need to sync these types between reactotron-core-server and reactotron-app
     reactotronServer.current.on("disconnect", connectionDisconnected)
 
     reactotronServer.current.start()

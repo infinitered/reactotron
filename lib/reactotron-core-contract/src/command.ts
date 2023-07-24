@@ -49,20 +49,6 @@ export const CommandType = {
 
 export type CommandTypeKey = (typeof CommandType)[keyof typeof CommandType]
 
-export interface Command<
-  Type extends CommandTypeKey = CommandTypeKey,
-  Payload extends Record<string, any> = CommandMap[Type]
-> {
-  type: CommandTypeKey
-  connectionId: number
-  clientId?: string
-  date: Date
-  deltaTime: number
-  important: boolean
-  messageId: number
-  payload: Payload
-}
-
 export interface CommandMap {
   [CommandType.ApiResponse]: any
   [CommandType.AsyncStorageMutation]: any
@@ -93,6 +79,20 @@ export interface CommandMap {
   [CommandType.EditorOpen]: EditorOpenPayload
   [CommandType.Storybook]: boolean
   [CommandType.Overlay]: boolean
+}
+
+export interface Command<
+  Type extends CommandTypeKey = CommandTypeKey,
+  Payload extends Record<string, any> = CommandMap[Type]
+> {
+  type: CommandTypeKey
+  connectionId: number
+  clientId?: string
+  date: Date
+  deltaTime: number
+  important: boolean
+  messageId: number
+  payload: Payload
 }
 
 export type CommandEvent = (command: Command) => void

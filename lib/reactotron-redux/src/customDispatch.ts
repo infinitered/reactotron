@@ -1,8 +1,10 @@
 import { PluginConfig } from "./pluginConfig"
 
+type AnyFunction = (...args: any[]) => any
+
 export default function createCustomDispatch(
   reactotron: any,
-  store: { dispatch: Function },
+  store: { dispatch: AnyFunction },
   pluginConfig: PluginConfig
 ) {
   const exceptions = [pluginConfig.restoreActionType, ...(pluginConfig.except || [])]

@@ -4,12 +4,11 @@ import {
   ServerEventMap,
   ServerOptions,
   PartialConnection,
-  CommandEvent,
-  WebSocketEvent,
   PfxServerOptions,
   WssServerOptions,
   ServerEventKey,
   Command,
+  ConnectionEstablishedPayload,
 } from "reactotron-core-contract"
 import { Server as WebSocketServer, OPEN } from "ws"
 import validate from "./validation"
@@ -127,7 +126,10 @@ export default class Server {
   /**
    * Listens to an event.
    */
-  on(event: ServerEventKey, handler: CommandEvent | WebSocketEvent) {
+  on<Event extends ServerEventKey = ServerEventKey>(
+    event: Event,
+    handler: (payload: ServerEventMap[Event]) => void
+  ) {
     this.emitter.on(event, handler)
   }
 
@@ -287,7 +289,10 @@ export default class Server {
 
           // then trigger the connection
           this.connections.push(connection)
-          this.emitter.emit("connectionEstablished", connection)
+          this.emitter.emit(
+            "connectionEstablished",
+            connection as unknown as ConnectionEstablishedPayload
+          )
         }
 
         // refresh subscriptions

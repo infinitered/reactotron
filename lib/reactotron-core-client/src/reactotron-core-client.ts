@@ -35,11 +35,6 @@ export interface Plugin<Client> extends LifeCycleMethods {
 
 export type PluginCreator<Client> = (client: Client) => Plugin<Client>
 
-export type InferFeatures<
-  Client = ReactotronCore,
-  PC extends PluginCreator<Client> = PluginCreator<Client>
-> = PC extends (client: Client) => { features: infer U } ? U : never
-
 export const corePlugins = [
   image(),
   logger(),
@@ -48,6 +43,7 @@ export const corePlugins = [
   apiResponse(),
   clear(),
   repl(),
+  // eslint-disable-next-line no-use-before-define
 ] satisfies PluginCreator<ReactotronCore>[]
 
 export type InferPluginsFromCreators<Client, PC extends PluginCreator<Client>[]> = PC extends Array<
@@ -56,6 +52,9 @@ export type InferPluginsFromCreators<Client, PC extends PluginCreator<Client>[]>
   ? ReturnType<P>[]
   : never
 
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void
+  ? I
+  : never
 type ExtractFeatures<T> = T extends { features: infer U } ? U : never
 type PluginFeatures<Client, P extends PluginCreator<Client>> = ExtractFeatures<ReturnType<P>>
 export type InferFeaturesFromPlugins<
@@ -67,10 +66,38 @@ type InferFeaturesFromPlugin<Client, P extends PluginCreator<Client>> = UnionToI
   PluginFeatures<Client, P>
 >
 
-type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void
-  ? I
-  : never
 // #endregion
+
+// #region Custom Commands
+
+export enum ArgType {
+  String = "string",
+}
+
+export interface CustomCommandArg {
+  name: string
+  type: ArgType
+}
+
+export type CustomCommandArgs<Args extends CustomCommandArg[]> = UnionToIntersection<
+  Args extends Array<infer U>
+    ? U extends CustomCommandArg
+      ? { [K in U as U["name"]]: U["type"] }
+      : never
+    : never
+>
+
+export interface CustomCommand<Args extends CustomCommandArg[] = CustomCommandArg[]> {
+  id?: number
+  command: string
+  handler: (args?: CustomCommandArgs<Args>) => void
+
+  title?: string
+  description?: string
+  args?: Args
+}
+
+// #endregion Custom Commands
 
 interface DisplayConfig {
   name: string
@@ -108,6 +135,11 @@ export interface ReactotronCore {
   connect: () => this
 }
 
+export type InferFeatures<
+  Client = ReactotronCore,
+  PC extends PluginCreator<Client> = PluginCreator<Client>
+> = PC extends (client: Client) => { features: infer U } ? U : never
+
 type CorePluginFeatures = InferFeaturesFromPlugins<ReactotronCore, typeof corePlugins>
 
 export interface Reactotron extends ReactotronCore, CorePluginFeatures {}
@@ -130,33 +162,6 @@ const isReservedFeature = (value: string): value is ReservedKeys =>
 
 function emptyPromise() {
   return Promise.resolve("")
-}
-
-export enum ArgType {
-  String = "string",
-}
-
-export interface CustomCommandArg {
-  name: string
-  type: ArgType
-}
-
-export type CustomCommandArgs<Args extends CustomCommandArg[]> = UnionToIntersection<
-  Args extends Array<infer U>
-    ? U extends CustomCommandArg
-      ? { [K in U as U["name"]]: U["type"] }
-      : never
-    : never
->
-
-export interface CustomCommand<Args extends CustomCommandArg[] = CustomCommandArg[]> {
-  id?: number
-  command: string
-  handler: (args?: CustomCommandArgs<Args>) => void
-
-  title?: string
-  description?: string
-  args?: Args
 }
 
 export class ReactotronImpl implements ReactotronCore {

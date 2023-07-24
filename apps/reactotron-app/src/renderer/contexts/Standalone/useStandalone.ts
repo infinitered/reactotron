@@ -49,9 +49,9 @@ type Action =
 export function reducer(state: State, action: Action) {
   switch (action.type) {
     case ActionTypes.AddConnection:
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         let existingConnection = draftState.connections.find(
-          c => c.clientId === action.payload.clientId
+          (c) => c.clientId === action.payload.clientId
         )
 
         if (existingConnection) {
@@ -69,29 +69,29 @@ export function reducer(state: State, action: Action) {
         if (draftState.orphanedCommands.length > 0) {
           // TODO: Make this better... filtering this list twice probably is a terrible idea.
           const orphanedCommands = draftState.orphanedCommands.filter(
-            oc => oc.connectionId === action.payload.id
+            (oc) => oc.connectionId === action.payload.id
           )
 
           // TODO: Consider if we need to do a one time sort of these... just in case.
           existingConnection.commands.push(...orphanedCommands)
 
           draftState.orphanedCommands = draftState.orphanedCommands.filter(
-            oc => oc.connectionId !== action.payload.id
+            (oc) => oc.connectionId !== action.payload.id
           )
         }
 
         // TODO: Figure out if we can stop having these dumb commands so early. Make core client only send once we actually have a client ID! (maybe won't work for flipper if it doesn't assign client id? Maybe that is how this broke?!?)
 
-        const filteredConnections = draftState.connections.filter(c => c.connected)
+        const filteredConnections = draftState.connections.filter((c) => c.connected)
 
         if (filteredConnections.length === 1) {
           draftState.selectedClientId = filteredConnections[0].clientId
         }
       })
     case ActionTypes.RemoveConnection:
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         const existingConnection = draftState.connections.find(
-          c => c.clientId === action.payload.clientId
+          (c) => c.clientId === action.payload.clientId
         )
 
         if (!existingConnection) return
@@ -99,7 +99,7 @@ export function reducer(state: State, action: Action) {
         existingConnection.connected = false
 
         if (draftState.selectedClientId === action.payload.clientId) {
-          const filteredConnections = draftState.connections.filter(c => c.connected)
+          const filteredConnections = draftState.connections.filter((c) => c.connected)
 
           if (filteredConnections.length > 0) {
             draftState.selectedClientId = filteredConnections[0].clientId
@@ -109,24 +109,26 @@ export function reducer(state: State, action: Action) {
         }
       })
     case ActionTypes.CommandReceived:
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         if (!action.payload.clientId) {
           draftState.orphanedCommands.push(action.payload)
           return
         }
 
-        draftState.commandListeners.forEach(cl => cl(action.payload))
+        draftState.commandListeners.forEach((cl) => cl(action.payload))
 
-        const connection = draftState.connections.find(c => c.clientId === action.payload.clientId)
+        const connection = draftState.connections.find(
+          (c) => c.clientId === action.payload.clientId
+        )
 
         connection.commands = [action.payload, ...connection.commands]
       })
     case ActionTypes.ClearConnectionCommands:
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         if (!draftState.selectedClientId) return
 
         const selectedConnection = draftState.connections.find(
-          c => c.clientId === draftState.selectedClientId
+          (c) => c.clientId === draftState.selectedClientId
         )
 
         if (!selectedConnection) return
@@ -134,15 +136,15 @@ export function reducer(state: State, action: Action) {
         selectedConnection.commands = []
       })
     case ActionTypes.ChangeSelectedClientId:
-      return produce(state, draftState => {
-        const selectedConnection = draftState.connections.find(c => c.clientId === action.payload)
+      return produce(state, (draftState) => {
+        const selectedConnection = draftState.connections.find((c) => c.clientId === action.payload)
 
         if (!selectedConnection) return
 
         draftState.selectedClientId = action.payload
       })
     case ActionTypes.AddCommandHandler:
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         draftState.commandListeners.push(action.payload)
       })
     default:
@@ -190,7 +192,7 @@ function useStandalone() {
 
   return {
     ...state,
-    selectedConnection: state.connections.find(c => c.clientId === state.selectedClientId),
+    selectedConnection: state.connections.find((c) => c.clientId === state.selectedClientId),
     selectConnection,
     connectionEstablished,
     connectionDisconnected,

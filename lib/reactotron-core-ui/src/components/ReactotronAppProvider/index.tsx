@@ -11,7 +11,9 @@ const ReactotronContainer = styled.div`
   user-select: none;
 `
 
-const ReactotronAppProvider: FunctionComponent<React.PropsWithChildren<{}>> = ({ children }) => {
+interface Props {}
+
+const ReactotronAppProvider: FunctionComponent<React.PropsWithChildren<Props>> = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <ReactotronContainer>{children}</ReactotronContainer>

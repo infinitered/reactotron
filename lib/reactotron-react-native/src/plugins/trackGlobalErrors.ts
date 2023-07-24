@@ -8,11 +8,7 @@ import {
   assertHasLoggerPlugin,
   Plugin,
 } from "reactotron-core-client"
-import _LogBox, {
-  LogBoxStatic as LogBoxStaticPublic,
-  // eslint-disable-next-line import/default, import/namespace
-} from "react-native/Libraries/LogBox/LogBox"
-// eslint-disable-next-line import/namespace
+import _LogBox, { LogBoxStatic as LogBoxStaticPublic } from "react-native/Libraries/LogBox/LogBox"
 import type { ExtendedExceptionData } from "react-native/Libraries/LogBox/Data/parseLogBoxLog"
 import type { SymbolicateStackTraceFn } from "../helpers/symbolicateStackTrace"
 import type { ParseErrorStackFn } from "../helpers/parseErrorStack"

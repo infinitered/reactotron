@@ -1,6 +1,7 @@
 import type { ReactotronCore, Plugin } from "../reactotron-core-client"
 
-export type AcceptableRepls = object | Function | string | number
+type AnyFunction = (...args: any[]) => any
+export type AcceptableRepls = object | AnyFunction | string | number
 
 const repl = () => (reactotron: ReactotronCore) => {
   const myRepls: { [key: string]: AcceptableRepls } = {}

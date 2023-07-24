@@ -18,7 +18,9 @@ const LayoutContext = React.createContext<Context>({
   toggleSideBar: noop,
 })
 
-const Provider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+interface Props {}
+
+const Provider: React.FC<PropsWithChildren<Props>> = ({ children }) => {
   const { isSideBarOpen, toggleSideBar } = useLayout()
 
   return (

@@ -1,21 +1,6 @@
 import * as WebSocket from "ws"
 import { Command } from "./command"
 
-/**
- * Configuration options for the Reactotron server.
- */
-export interface ServerOptions {
-  /**
-   * Which port to listen to.  Default: 9090.
-   */
-  port: number
-
-  /**
-   * Web Socket Secure Configuration
-   */
-  wss?: WssServerOptions
-}
-
 export interface PfxServerOptions {
   /**
    * Path to a PFX file.
@@ -43,6 +28,21 @@ export interface CertServerOptions {
 }
 
 export type WssServerOptions = PfxServerOptions | CertServerOptions
+
+/**
+ * Configuration options for the Reactotron server.
+ */
+export interface ServerOptions {
+  /**
+   * Which port to listen to.  Default: 9090.
+   */
+  port: number
+
+  /**
+   * Web Socket Secure Configuration
+   */
+  wss?: WssServerOptions
+}
 
 /**
  * A client which is in the process of connecting.
@@ -96,10 +96,18 @@ export const ServerEvent = {
 
 export type ServerEventKey = keyof typeof ServerEvent
 
-type StartPayload = any
-type StopPayload = any
-type ConnectPayload = PartialConnection
-type ConnectionEstablishedPayload = any
+export type StartPayload = any
+export type StopPayload = any
+export type ConnectPayload = PartialConnection
+export type ConnectionEstablishedPayload = {
+  id: number
+  clientId: string
+  platform?: "ios" | "android" | "browser"
+  name?: string
+  platformVersion?: string
+  osRelease?: string
+  userAgent?: string
+}
 type DisconnectPayload = any
 
 export type ServerEventMap = {

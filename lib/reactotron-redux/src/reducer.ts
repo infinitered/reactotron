@@ -1,7 +1,9 @@
 export const DEFAULT_REPLACER_TYPE = "REACTOTRON_RESTORE_STATE"
 
+type AnyFunction = (...args: any[]) => any
+
 export default function reactotronReducer(
-  rootReducer: Function,
+  rootReducer: AnyFunction,
   actionName = DEFAULT_REPLACER_TYPE
 ) {
   // return this reducer
