@@ -7,11 +7,12 @@ import type {
   Reactotron,
   ReactotronCore,
 } from "reactotron-core-client"
+import type { AsyncStorageStatic } from "@react-native-async-storage/async-storage"
 import getHost from "rn-host-detect"
 
 import getReactNativeVersion from "./helpers/getReactNativeVersion"
 import getReactNativeDimensions from "./helpers/getReactNativeDimensions"
-import asyncStorage, { AsyncStorageHandler, AsyncStorageOptions } from "./plugins/asyncStorage"
+import asyncStorage, { AsyncStorageOptions } from "./plugins/asyncStorage"
 import overlay from "./plugins/overlay"
 import openInEditor, { OpenInEditorOptions } from "./plugins/openInEditor"
 import trackGlobalErrors, { TrackGlobalErrorsOptions } from "./plugins/trackGlobalErrors"
@@ -76,7 +77,7 @@ export interface UseReactNativeOptions {
   devTools?: boolean
 }
 
-const reactNativeCorePlugins = [
+export const reactNativeCorePlugins = [
   asyncStorage(),
   trackGlobalErrors(),
   openInEditor(),
@@ -93,8 +94,8 @@ type ReactNativePluginFeatures = InferFeaturesFromPlugins<
 
 export interface ReactotronReactNative extends Reactotron, ReactNativePluginFeatures {
   useReactNative: (options?: UseReactNativeOptions) => this
-  asyncStorageHandler?: AsyncStorageHandler
-  setAsyncStorageHandler: (asyncStorage: AsyncStorageHandler) => this
+  asyncStorageHandler?: AsyncStorageStatic
+  setAsyncStorageHandler: (asyncStorage: AsyncStorageStatic) => this
 }
 
 const reactotron = createClient<ReactotronReactNative>(DEFAULTS)
@@ -135,7 +136,7 @@ reactotron.useReactNative = (options: UseReactNativeOptions = {}) => {
   return reactotron
 }
 
-reactotron.setAsyncStorageHandler = (asyncStorage: AsyncStorageHandler) => {
+reactotron.setAsyncStorageHandler = (asyncStorage: AsyncStorageStatic) => {
   reactotron.asyncStorageHandler = asyncStorage
 
   return reactotron
