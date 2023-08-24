@@ -27,7 +27,12 @@ module.exports = {
         extensions: [".js", ".jsx", ".ts", ".tsx"],
       },
     },
-    "import/ignore": ["node_modules/react-native/index\\.js$"],
+    "import/ignore": [
+      "node_modules/react-native/index\\.js$",
+      "react-native/Libraries/LogBox/Data/parseLogBoxLog.js",
+      "react-native/Libraries/LogBox/LogBox.js",
+      "react-native/Libraries/Core/NativeExceptionsManager.js",
+    ],
   },
   rules: {
     "no-unused-vars": 0,
@@ -42,7 +47,7 @@ module.exports = {
     "@typescript-eslint/no-empty-interface": 0,
     "@typescript-eslint/no-var-requires": 0,
     "@typescript-eslint/member-delimiter-style": 0,
-    "import/no-cycle": "error"
+    "import/no-cycle": "error",
   },
   ignorePatterns: [
     "**/dist/**/*",
