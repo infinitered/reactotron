@@ -403,7 +403,7 @@ export class ReactotronImpl implements ReactotronCore {
         this.socket.send(serializedMessage)
       } catch {
         this.isReady = false
-        console.log("An error occured communicating with reactotron. Please reload your app")
+        console.log("An error occurred communicating with reactotron. Please reload your app")
       }
     } else {
       // queue it up until we can connect
@@ -523,7 +523,6 @@ export class ReactotronImpl implements ReactotronCore {
     const existingCommands = this.customCommands.filter((cc) => cc.command === command)
     if (existingCommands.length > 0) {
       existingCommands.forEach((command) => {
-        console.log(command)
         this.customCommands = this.customCommands.filter((cc) => cc.id !== command.id)
 
         this.send("customCommand.unregister", {
