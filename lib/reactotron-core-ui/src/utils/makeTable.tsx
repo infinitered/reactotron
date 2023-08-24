@@ -12,7 +12,7 @@ const KeyContainer = styled.div`
   padding-right: 10px;
   word-break: break-all;
   text-align: left;
-  color: ${props => props.theme.foregroundDark};
+  color: ${(props) => props.theme.foregroundDark};
   user-select: text;
   cursor: text;
 `
@@ -24,7 +24,7 @@ const ValueContainer = styled.div<ValueContainerProps>`
   word-break: break-all;
   user-select: text;
   cursor: text;
-  color: ${props => {
+  color: ${(props) => {
     if (props.value === null || props.value === undefined) return props.theme.tag
     switch (typeof props.value) {
       case "boolean":
@@ -50,19 +50,26 @@ function textForValue(value: any) {
 }
 
 // eslint-disable-next-line react/display-name
-export default (obj: any) => (
-  <div>
-    {Object.keys(obj).map(key => {
-      const value = obj[key]
+const makeTable = (obj: unknown) => {
+  const input = obj !== null && typeof obj === "object" ? obj : {}
+  const keys = Object.keys(input) ?? []
 
-      const textValue = textForValue(value)
+  return (
+    <div>
+      {keys.map((key) => {
+        const value = input[key]
 
-      return (
-        <RowContainer key={key}>
-          <KeyContainer>{key}</KeyContainer>
-          <ValueContainer value={value}>{textValue}</ValueContainer>
-        </RowContainer>
-      )
-    })}
-  </div>
-)
+        const textValue = textForValue(value)
+
+        return (
+          <RowContainer key={key}>
+            <KeyContainer>{key}</KeyContainer>
+            <ValueContainer value={value}>{textValue}</ValueContainer>
+          </RowContainer>
+        )
+      })}
+    </div>
+  )
+}
+
+export default makeTable
