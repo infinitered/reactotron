@@ -85,7 +85,7 @@ export interface CommandMap {
   [CommandType.StateValuesRequest]: StateValuesRequestPayload
   [CommandType.CustomCommandRegister]: any
   [CommandType.CustomCommandUnregister]: any
-  [CommandType.Clear]: any
+  [CommandType.Clear]: undefined
   [CommandType.ReplLsResponse]: any
   [CommandType.ReplExecuteResponse]: any
   [CommandType.DevtoolsOpen]: undefined
