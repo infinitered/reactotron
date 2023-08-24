@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.0.2-beta.13](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2-beta.12...reactotron-core-ui@2.0.2-beta.13) (2023-08-24)
+
+
+### Bug Fixes
+
+* **reactotron-core-ui:** make makeTable handle non-object handles ([4fad5fd](https://github.com/infinitered/reactotron/commit/4fad5fd64c95c9eac6e50abd621e990e5824e63a))
+
 ### [2.0.2-beta.12](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2-beta.11...reactotron-core-ui@2.0.2-beta.12) (2023-07-24)
 
 ### [2.0.2-beta.11](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2-beta.10...reactotron-core-ui@2.0.2-beta.11) (2023-07-20)
