@@ -243,7 +243,7 @@ jobs:
   build_app_macos:
     <<: *defaults
     macos:
-      xcode: "13.3.1"
+      xcode: "13.4.1"
     environment:
       BUILD_TARGET: macos
     steps:
