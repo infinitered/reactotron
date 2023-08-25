@@ -27205,7 +27205,7 @@ __metadata:
     reactotron-core-server: "workspace:*"
     reactotron-core-ui: "workspace:*"
     rimraf: 4.1.2
-    source-map-support: ^0.5.16
+    source-map-support: ^0.5.21
     styled-components: ^4.4.1
     ts-jest: ^29.0.4
     typescript: 4.9.5
@@ -29751,7 +29751,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-support@npm:^0.5.16, source-map-support@npm:^0.5.19, source-map-support@npm:^0.5.6, source-map-support@npm:~0.5.12, source-map-support@npm:~0.5.20":
+"source-map-support@npm:^0.5.16, source-map-support@npm:^0.5.19, source-map-support@npm:^0.5.21, source-map-support@npm:^0.5.6, source-map-support@npm:~0.5.12, source-map-support@npm:~0.5.20":
   version: 0.5.21
   resolution: "source-map-support@npm:0.5.21"
   dependencies:
