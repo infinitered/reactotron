@@ -27450,7 +27450,7 @@ __metadata:
   peerDependencies:
     mobx: ^3.4.1 || ^4.1.0 || >6.0.0
     mobx-state-tree: ^1.4.0 || ^2.0.2 || >3.0.0
-    reactotron-core-client: "workspace:*"
+    reactotron-core-client: "*"
   languageName: unknown
   linkType: soft
 
@@ -27533,7 +27533,7 @@ __metadata:
     typescript: 4.9.5
   peerDependencies:
     react-native-mmkv: "*"
-    reactotron-core-client: "workspace:*"
+    reactotron-core-client: "*"
   languageName: unknown
   linkType: soft
 
@@ -27623,7 +27623,7 @@ __metadata:
     ts-jest: 29.0.5
     typescript: 4.9.5
   peerDependencies:
-    reactotron-core-client: "workspace:*"
+    reactotron-core-client: "*"
     redux: ">=4.0.0"
   languageName: unknown
   linkType: soft

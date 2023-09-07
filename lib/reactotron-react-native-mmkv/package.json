@@ -36,7 +36,7 @@
   },
   "peerDependencies": {
     "react-native-mmkv": "*",
-    "reactotron-core-client": "workspace:*"
+    "reactotron-core-client": "*"
   },
   "dependencies": {
     "ramda": "^0.25.0"

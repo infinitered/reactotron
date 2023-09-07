@@ -36,7 +36,7 @@
     "ci:test": "yarn test --runInBand"
   },
   "peerDependencies": {
-    "reactotron-core-client": "workspace:*",
+    "reactotron-core-client": "*",
     "redux": ">=4.0.0"
   },
   "devDependencies": {
