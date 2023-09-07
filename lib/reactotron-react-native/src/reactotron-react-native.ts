@@ -143,6 +143,7 @@ reactotron.setAsyncStorageHandler = (asyncStorage: AsyncStorageStatic) => {
 }
 
 export { asyncStorage, trackGlobalErrors, openInEditor, overlay, networking, storybook, devTools }
+export { default as trackGlobalLogs } from "./plugins/trackGlobalLogs"
 
 export type { ClientOptions }
 

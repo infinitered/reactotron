@@ -57,6 +57,9 @@ const objectifyError = (error: Error) => {
 
 // const reactNativeFrameFinder = frame => contains('/node_modules/react-native/', frame.fileName)
 
+/**
+ * Track global errors and send them to Reactotron logger.
+ */
 const trackGlobalErrors = (options?: TrackGlobalErrorsOptions) => (reactotron: ReactotronCore) => {
   // make sure we have the logger plugin
   assertHasLoggerPlugin(reactotron)
