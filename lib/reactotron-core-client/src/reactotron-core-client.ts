@@ -141,10 +141,14 @@ export interface CustomCommandArg {
   type: ArgType
 }
 
+interface ArgTypeMap {
+  [ArgType.String]: string
+}
+
 export type CustomCommandArgs<Args extends CustomCommandArg[]> = UnionToIntersection<
   Args extends Array<infer U>
     ? U extends CustomCommandArg
-      ? { [K in U as U["name"]]: U["type"] }
+      ? { [K in U as U["name"]]: ArgTypeMap[U["type"]] }
       : never
     : never
 >
