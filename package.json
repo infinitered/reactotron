@@ -78,5 +78,5 @@
     "remove-local-tags": "git tag -l | xargs git tag -d && git fetch -t",
     "build-and-test:local": "yarn build && yarn lint && yarn format:check && yarn test && yarn typecheck"
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@3.6.3"
 }
