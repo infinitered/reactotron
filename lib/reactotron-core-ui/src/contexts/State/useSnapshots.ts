@@ -1,6 +1,6 @@
 import { useContext, useEffect, useReducer, useCallback } from "react"
 import { format } from "date-fns"
-import produce from "immer"
+import { produce } from "immer"
 
 import { Command, CommandType } from "reactotron-core-contract"
 import ReactotronContext from "../Reactotron"
