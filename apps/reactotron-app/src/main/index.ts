@@ -32,7 +32,18 @@ function createMainWindow() {
     width: mainWindowState.width,
     height: mainWindowState.height,
     titleBarStyle: "hiddenInset",
-    webPreferences: { nodeIntegration: true, contextIsolation: false },
+    webPreferences: { 
+      nodeIntegration: true, 
+      contextIsolation: false,
+      webgl: false, // Disable webGL for performance reasons
+      spellcheck: false, // Disable spellcheck for performance reasons
+    },
+    show: false, // We don't show immediately to avoid flickering while the web content is loading.
+  })
+
+  // Shows the main window once the web content is loaded.
+  window.once("ready-to-show", () => {
+    window.show()
   })
 
   window.setBackgroundColor("#1e1e1e") // see reactotron-core-ui for background color
