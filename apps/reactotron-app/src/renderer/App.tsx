@@ -1,5 +1,5 @@
 import React from "react"
-import { HashRouter as Router, Route } from "react-router-dom"
+import { HashRouter as Router, Route, Switch } from "react-router-dom"
 import styled from "styled-components"
 
 import SideBar from "./components/SideBar"
@@ -25,7 +25,7 @@ const AppContainer = styled.div`
 
   display: flex;
   flex-direction: column;
-  background-color: ${props => props.theme.background};
+  background-color: ${(props) => props.theme.background};
 `
 
 const TopSection = styled.div`
@@ -50,25 +50,43 @@ function App() {
             <SideBar />
 
             <MainContainer>
-              {/* Home */}
-              <Route path="/home" exact component={Home} />
+              <Switch>
+                {/* Home */}
+                <Route path="/home" exact>
+                  <Home />
+                </Route>
 
-              {/* Timeline */}
-              <Route path="/" exact component={Timeline} />
+                {/* Timeline */}
+                <Route path="/" exact>
+                  <Timeline />
+                </Route>
 
-              {/* State */}
-              <Route path="/state/subscriptions" exact component={Subscriptions} />
-              <Route path="/state/snapshots" exact component={Snapshots} />
+                {/* State */}
+                <Route path="/state/subscriptions" exact>
+                  <Subscriptions />
+                </Route>
+                <Route path="/state/snapshots" exact>
+                  <Snapshots />
+                </Route>
 
-              {/* React Native */}
-              <Route path="/native/overlay" exact component={Overlay} />
-              <Route path="/native/storybook" exact component={Storybook} />
+                {/* React Native */}
+                <Route path="/native/overlay" exact>
+                  <Overlay />
+                </Route>
+                <Route path="/native/storybook" exact>
+                  <Storybook />
+                </Route>
 
-              {/* Custom Commands */}
-              <Route path="/customCommands" exact component={CustomCommands} />
+                {/* Custom Commands */}
+                <Route path="/customCommands" exact>
+                  <CustomCommands />
+                </Route>
 
-              {/* Help */}
-              <Route path="/help" exact component={Help} />
+                {/* Help */}
+                <Route path="/help" exact>
+                  <Help />
+                </Route>
+              </Switch>
             </MainContainer>
           </TopSection>
           <Footer />

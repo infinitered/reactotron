@@ -1,10 +1,9 @@
 import React from "react"
-import { withRouter } from "react-router-dom"
-import type { RouteComponentProps } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 import StatelessSideBarButton from "./Stateless"
 
-type Props = RouteComponentProps<never> & {
+type Props = {
   icon?: any
   image?: any
   path: string
@@ -14,7 +13,9 @@ type Props = RouteComponentProps<never> & {
   iconSize?: number
 }
 
-function SideBarButton({ path, matchPath, location, ...rest }: Props) {
+function SideBarButton({ path, matchPath, ...rest }: Props) {
+  const location = useLocation()
+
   const isActive = matchPath
     ? location.pathname.indexOf(matchPath) === 0
     : location.pathname === path
@@ -22,4 +23,4 @@ function SideBarButton({ path, matchPath, location, ...rest }: Props) {
   return <StatelessSideBarButton {...rest} path={path} isActive={isActive} />
 }
 
-export default withRouter(SideBarButton)
+export default SideBarButton
