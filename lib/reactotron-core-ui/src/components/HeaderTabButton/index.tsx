@@ -16,7 +16,7 @@ interface HeaderTabButtonProps {
   colorAnimation: number
 }
 
-const colorInterpolater = colorInterpolate([Theme.highlight, Theme.foregroundLight])
+const colorInterpolator = colorInterpolate([Theme.highlight, Theme.foregroundLight])
 const HeaderTabButtonContainer = styled.div<HeaderTabButtonProps>`
   display: flex;
   flex-direction: column;
@@ -24,7 +24,7 @@ const HeaderTabButtonContainer = styled.div<HeaderTabButtonProps>`
   padding: 15px 0;
   margin: 0 10px;
   cursor: pointer;
-  color: ${(props) => colorInterpolater(props.colorAnimation)};
+  color: ${props => colorInterpolator(props.colorAnimation)};
   -webkit-app-region: none;
 `
 

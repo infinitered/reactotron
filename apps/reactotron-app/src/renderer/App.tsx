@@ -1,5 +1,5 @@
 import React from "react"
-import { HashRouter as Router, Route, Switch } from "react-router-dom"
+import { HashRouter as Router, Route, Routes } from "react-router-dom"
 import styled from "styled-components"
 
 import SideBar from "./components/SideBar"
@@ -50,43 +50,27 @@ function App() {
             <SideBar />
 
             <MainContainer>
-              <Switch>
+              <Routes>
                 {/* Home */}
-                <Route path="/home" exact>
-                  <Home />
-                </Route>
+                <Route path="/home" element={<Home />} />
 
                 {/* Timeline */}
-                <Route path="/" exact>
-                  <Timeline />
-                </Route>
+                <Route path="/" element={<Timeline />} />
 
                 {/* State */}
-                <Route path="/state/subscriptions" exact>
-                  <Subscriptions />
-                </Route>
-                <Route path="/state/snapshots" exact>
-                  <Snapshots />
-                </Route>
+                <Route path="/state/subscriptions" element={<Subscriptions />} />
+                <Route path="/state/snapshots" element={<Snapshots />} />
 
                 {/* React Native */}
-                <Route path="/native/overlay" exact>
-                  <Overlay />
-                </Route>
-                <Route path="/native/storybook" exact>
-                  <Storybook />
-                </Route>
+                <Route path="/native/overlay" element={<Overlay />} />
+                <Route path="/native/storybook" element={<Storybook />} />
 
                 {/* Custom Commands */}
-                <Route path="/customCommands" exact>
-                  <CustomCommands />
-                </Route>
+                <Route path="/customCommands" element={<CustomCommands />} />
 
                 {/* Help */}
-                <Route path="/help" exact>
-                  <Help />
-                </Route>
-              </Switch>
+                <Route path="/help" element={<Help />} />
+              </Routes>
             </MainContainer>
           </TopSection>
           <Footer />
