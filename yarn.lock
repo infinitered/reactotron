@@ -27007,7 +27007,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^5.1.2":
+"react-router-dom@npm:^5.3.4":
   version: 5.3.4
   resolution: "react-router-dom@npm:5.3.4"
   dependencies:
@@ -27314,7 +27314,7 @@ __metadata:
     react-icons: 4.2.0
     react-modal: 3.16.1
     react-motion: 0.5.2
-    react-router-dom: ^5.1.2
+    react-router-dom: ^5.3.4
     react-test-renderer: 17.0.2
     react-tooltip: 4.5.1
     reactotron-core-contract: "workspace:*"

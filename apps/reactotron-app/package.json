@@ -61,7 +61,7 @@
     "react-icons": "4.2.0",
     "react-modal": "3.16.1",
     "react-motion": "0.5.2",
-    "react-router-dom": "^5.1.2",
+    "react-router-dom": "^5.3.4",
     "react-tooltip": "4.5.1",
     "reactotron-core-contract": "workspace:*",
     "reactotron-core-server": "workspace:*",
