@@ -39,7 +39,8 @@
   "electronWebpack": {
     "whiteListedModules": [
       "reactotron-core-ui",
-      "react-router-dom"
+      "react-router-dom",
+      "styled-components"
     ],
     "renderer": {
       "webpackConfig": "webpack.config.js",
@@ -67,7 +68,7 @@
     "reactotron-core-server": "workspace:*",
     "reactotron-core-ui": "workspace:*",
     "source-map-support": "^0.5.21",
-    "styled-components": "^4.4.1",
+    "styled-components": "^6.0.8",
     "v8-compile-cache": "^2.4.0"
   },
   "devDependencies": {
@@ -82,9 +83,8 @@
     "@storybook/react": "^5.2.8",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/jest": "^29.2.5",
-    "@types/react": "17.0.2",
-    "@types/react-dom": "17.0.2",
-    "@types/styled-components": "^4.4.1",
+    "@types/react": "17.0.65",
+    "@types/react-dom": "17.0.20",
     "@typescript-eslint/eslint-plugin": "^2.12.0",
     "@typescript-eslint/parser": "^2.12.0",
     "babel-loader": "^8.3.0",
