@@ -198,5 +198,6 @@
       "react-hooks/exhaustive-deps": "warn",
       "react/prop-types": 0
     }
-  }
+  },
+  "sideEffects": false
 }
