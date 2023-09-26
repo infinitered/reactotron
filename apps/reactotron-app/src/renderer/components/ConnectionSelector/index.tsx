@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import styled from "styled-components"
 import { MdCheckCircle as Checkmark } from "react-icons/md"
 
@@ -29,7 +29,7 @@ const InfoContainer = styled.div`
   margin-left: 10px;
 `
 
-interface Props {
+interface ConnectionSelectorProps {
   selectedConnection: Connection | null
   connection: Connection
   showName: boolean
@@ -41,9 +41,12 @@ export default function ConnectionSelector({
   connection,
   showName,
   onClick,
-}: Props) {
+}: ConnectionSelectorProps) {
   const isSelected = selectedConnection && selectedConnection.clientId === connection.clientId
-  const ConnectionIcon = getIcon(connection)
+
+  const [ConnectionIcon, platformName, platformDetails] = useMemo(() => {
+    return [getIcon(connection), getPlatformName(connection), getPlatformDetails(connection)]
+  }, [connection])
 
   return (
     <Container onClick={onClick}>
@@ -57,10 +60,10 @@ export default function ConnectionSelector({
       </IconContainer>
       <InfoContainer>
         <div>
-          {getPlatformName(connection)}
+          {platformName}
           {showName ? ` - ${connection.name}` : ""}
         </div>
-        <div>{getPlatformDetails(connection)}</div>
+        <div>{platformDetails}</div>
       </InfoContainer>
     </Container>
   )

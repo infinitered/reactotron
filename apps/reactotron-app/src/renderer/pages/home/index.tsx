@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useMemo } from "react"
 import { Header } from "reactotron-core-ui"
 import styled from "styled-components"
 
@@ -46,16 +46,23 @@ const Screen = styled.div`
 `
 
 function ConnectionCell({ connection }: { connection: Connection }) {
-  const ConnectionIcon = getIcon(connection)
+  const [ConnectionIcon, platformName, platformDetails, screen] = useMemo(() => {
+    return [
+      getIcon(connection),
+      getPlatformName(connection),
+      getPlatformDetails(connection),
+      getScreen(connection),
+    ]
+  }, [connection])
 
   return (
     <ConnectionContainer>
       <IconContainer>
         <ConnectionIcon size={32} />
       </IconContainer>
-      <PlatformName>{getPlatformName(connection)}</PlatformName>
-      <PlatformDetails>{getPlatformDetails(connection)}</PlatformDetails>
-      <Screen>{getScreen(connection)}</Screen>
+      <PlatformName>{platformName}</PlatformName>
+      <PlatformDetails>{platformDetails}</PlatformDetails>
+      <Screen>{screen}</Screen>
     </ConnectionContainer>
   )
 }
