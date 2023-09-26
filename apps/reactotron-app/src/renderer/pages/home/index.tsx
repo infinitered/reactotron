@@ -10,6 +10,7 @@ import {
   getIcon,
 } from "../../util/connectionHelpers"
 import { Connection } from "../../contexts/Standalone/useStandalone"
+import Welcome from "./welcome"
 
 const Container = styled.div`
   display: flex;
@@ -73,9 +74,13 @@ function Connections() {
   return (
     <Container>
       <Header title="Connections" isDraggable />
-      {connections.map((connection) => (
-        <ConnectionCell key={connection.clientId} connection={connection} />
-      ))}
+      {connections.length > 0 ? (
+        connections.map((connection) => (
+          <ConnectionCell key={connection.clientId} connection={connection} />
+        ))
+      ) : (
+        <Welcome />
+      )}
     </Container>
   )
 }
