@@ -23,7 +23,7 @@ const Container = styled.div`
 `
 
 function openDocs() {
-  shell.openExternal("https://github.com/infinitered/reactotron#documentation")
+  shell.openExternal("https://github.com/infinitered/reactotron")
 }
 
 function Welcome() {
