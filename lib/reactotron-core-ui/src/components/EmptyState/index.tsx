@@ -30,7 +30,6 @@ const Image = styled.img`
   padding-bottom: 4px;
 `
 
-
 interface Props {
   icon?: any // TODO: Type Better?
   image?: any
