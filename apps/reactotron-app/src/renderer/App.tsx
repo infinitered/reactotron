@@ -1,5 +1,5 @@
 import React from "react"
-import { HashRouter as Router, Route } from "react-router-dom"
+import { HashRouter as Router, Route, Routes } from "react-router-dom"
 import styled from "styled-components"
 
 import SideBar from "./components/SideBar"
@@ -25,7 +25,7 @@ const AppContainer = styled.div`
 
   display: flex;
   flex-direction: column;
-  background-color: ${props => props.theme.background};
+  background-color: ${(props) => props.theme.background};
 `
 
 const TopSection = styled.div`
@@ -50,25 +50,27 @@ function App() {
             <SideBar />
 
             <MainContainer>
-              {/* Home */}
-              <Route path="/home" exact component={Home} />
+              <Routes>
+                {/* Home */}
+                <Route path="/home" element={<Home />} />
 
-              {/* Timeline */}
-              <Route path="/" exact component={Timeline} />
+                {/* Timeline */}
+                <Route path="/" element={<Timeline />} />
 
-              {/* State */}
-              <Route path="/state/subscriptions" exact component={Subscriptions} />
-              <Route path="/state/snapshots" exact component={Snapshots} />
+                {/* State */}
+                <Route path="/state/subscriptions" element={<Subscriptions />} />
+                <Route path="/state/snapshots" element={<Snapshots />} />
 
-              {/* React Native */}
-              <Route path="/native/overlay" exact component={Overlay} />
-              <Route path="/native/storybook" exact component={Storybook} />
+                {/* React Native */}
+                <Route path="/native/overlay" element={<Overlay />} />
+                <Route path="/native/storybook" element={<Storybook />} />
 
-              {/* Custom Commands */}
-              <Route path="/customCommands" exact component={CustomCommands} />
+                {/* Custom Commands */}
+                <Route path="/customCommands" element={<CustomCommands />} />
 
-              {/* Help */}
-              <Route path="/help" exact component={Help} />
+                {/* Help */}
+                <Route path="/help" element={<Help />} />
+              </Routes>
             </MainContainer>
           </TopSection>
           <Footer />

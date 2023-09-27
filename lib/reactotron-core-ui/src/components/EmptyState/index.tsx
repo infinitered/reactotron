@@ -24,19 +24,28 @@ const Message = styled.div`
   text-align: center;
 `
 
+const Image = styled.img`
+  width: 100px;
+  height: 100px;
+  padding-bottom: 4px;
+`
+
 interface Props {
   icon?: any // TODO: Type Better?
+  image?: any
   title: string
 }
 
 const EmptyState: FunctionComponent<React.PropsWithChildren<Props>> = ({
   title,
   icon: Icon,
+  image,
   children,
 }) => {
   return (
     <Container>
       {Icon && <Icon size={100} />}
+      {image && <Image src={image} />}
       <Title>{title}</Title>
       <Message>{children}</Message>
     </Container>

@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-const Button = styled.button.attrs((props: { selected: boolean }) => ({
+const Button = styled.button.attrs<{ selected: boolean }>((props) => ({
   selected: props.selected ? props.selected : false,
 }))`
   height: 30px;

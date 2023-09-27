@@ -32,12 +32,12 @@ const OverlayContainer = styled.div`
 const DropZone = styled.div`
   display: flex;
   flex: 1;
-  flex-direction: column
   height: 200px;
   width: 200px;
   background-color: ${(props) => props.theme.subtleLine};
   border-radius: 2px;
   border: 1px solid ${(props) => props.theme.backgroundSubtleDark};
+  color: ${(props) => props.theme.foregroundLight};
   justify-content: center;
   align-items: center;
 `

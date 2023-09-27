@@ -21,7 +21,7 @@ interface SideBarButtonProps {
   colorAnimation: number
 }
 
-const colorInterpolater = colorInterpolate([Theme.highlight, Theme.foregroundLight])
+const colorInterpolator = colorInterpolate([Theme.highlight, Theme.foregroundLight])
 const SideBarButtonContainer = styled.div<SideBarButtonProps>`
   display: flex;
   flex-direction: column;
@@ -29,16 +29,16 @@ const SideBarButtonContainer = styled.div<SideBarButtonProps>`
   padding: 15px 0;
   margin: 0 10px;
   cursor: pointer;
-  border-top: ${props => (props.hideTopBar ? "none" : `1px solid ${props.theme.line}`)};
-  color: ${props => colorInterpolater(props.colorAnimation)};
+  border-top: ${(props) => (props.hideTopBar ? "none" : `1px solid ${props.theme.line}`)};
+  color: ${(props) => colorInterpolator(props.colorAnimation)};
 `
 
 const Image = styled.img<SideBarButtonProps>`
   width: 32px;
   height: 32px;
   padding-bottom: 4px;
-  filter: grayscale(${props => 100 - 100 * props.colorAnimation}%)
-    brightness(${props => 70 + 30 * props.colorAnimation}%);
+  filter: grayscale(${(props) => 100 - 100 * props.colorAnimation}%)
+    brightness(${(props) => 70 + 30 * props.colorAnimation}%);
 `
 
 const Title = styled.div`

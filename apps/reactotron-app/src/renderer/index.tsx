@@ -1,3 +1,4 @@
+import "v8-compile-cache"
 import React from "react"
 import { render } from "react-dom"
 import { ReactotronAppProvider } from "reactotron-core-ui"

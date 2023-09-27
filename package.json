@@ -48,7 +48,7 @@
   },
   "resolutions": {
     "@nrwl/devkit": "^15.5.3",
-    "@types/react": "17.0.2",
+    "@types/react": "17.0.65",
     "webpack@^4.41.3": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
     "webpack@^4.44.2": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
     "webpack@^4.33.0": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
@@ -78,5 +78,5 @@
     "remove-local-tags": "git tag -l | xargs git tag -d && git fetch -t",
     "build-and-test:local": "yarn build && yarn lint && yarn format:check && yarn test && yarn typecheck"
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@3.6.3"
 }

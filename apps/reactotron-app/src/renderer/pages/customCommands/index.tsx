@@ -3,7 +3,7 @@ import { Header, EmptyState, CustomCommandsContext, CustomCommand } from "reacto
 import styled from "styled-components"
 import { MdSearch } from "react-icons/md"
 import { FaMagic } from "react-icons/fa"
-import produce from "immer"
+import { produce } from "immer"
 
 const Container = styled.div`
   display: flex;

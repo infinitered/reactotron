@@ -1,7 +1,5 @@
-import React from "react"
+import React, { type MouseEvent } from "react"
 import styled from "styled-components"
-
-import type { MouseEvent } from "react"
 
 interface OverlayAlignmentButtonProps {
   justifyContent: string
@@ -11,7 +9,7 @@ interface OverlayAlignmentButtonProps {
   onClick: (justifyContent: string, alignItems: string) => void
 }
 
-const Button = styled.button.attrs((props: { selected: boolean }) => ({
+const Button = styled.button.attrs<{ selected: boolean }>((props) => ({
   selected: props.selected ? props.selected : false,
 }))`
   height: 32px;
