@@ -1,6 +1,6 @@
 {
   "name": "reactotron-mst",
-  "version": "3.1.5-beta.12",
+  "version": "3.1.5-beta.13",
   "description": "A Reactotron plugin for mobx-state-tree.",
   "author": "Infinite Red",
   "license": "MIT",
