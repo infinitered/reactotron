@@ -44,15 +44,15 @@ function createMainWindow() {
   // Shows the main window once the web content is loaded.
   window.once("ready-to-show", () => {
     window.show()
+
+    if (isDevelopment) {
+      window.webContents.openDevTools()
+    }  
   })
 
   window.setBackgroundColor("#1e1e1e") // see reactotron-core-ui for background color
 
   mainWindowState.manage(window)
-
-  if (isDevelopment) {
-    window.webContents.openDevTools()
-  }
 
   if (isDevelopment) {
     window.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
