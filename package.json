@@ -63,6 +63,7 @@
     "reset": "sh ./scripts/reset.sh",
     "start": "yarn workspace reactotron-app start",
     "build": "npx nx run-many --target build",
+    "build:watch": "npx nx watch --all -- npx nx run \\$NX_PROJECT_NAME:build",
     "build:dev": "npx nx run-many --target build:dev",
     "lint": "npx nx run-many --target lint",
     "test": "npx nx run-many --target test",
