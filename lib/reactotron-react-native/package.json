@@ -41,8 +41,7 @@
   "dependencies": {
     "mitt": "3.0.0",
     "query-string": "6.10.1",
-    "reactotron-core-client": "workspace:*",
-    "rn-host-detect": "1.2.0"
+    "reactotron-core-client": "workspace:*"
   },
   "optionalDependencies": {
     "react-native-flipper": "^0.164.0"
