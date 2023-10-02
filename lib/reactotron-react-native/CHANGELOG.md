@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [5.0.4-beta.15](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.0.4-beta.14...reactotron-react-native@5.0.4-beta.15) (2023-10-02)
+
+
+### Bug Fixes
+
+* **reactotron-react-native:** remove rn-host-detect, use embedded snippet ([#1311](https://github.com/infinitered/reactotron/issues/1311)) ([61e6243](https://github.com/infinitered/reactotron/commit/61e6243acb392c9c2625e3580509af497208c466)), closes [#1305](https://github.com/infinitered/reactotron/issues/1305) [#1107](https://github.com/infinitered/reactotron/issues/1107) [#815](https://github.com/infinitered/reactotron/issues/815)
+
 ### [5.0.4-beta.14](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.0.4-beta.13...reactotron-react-native@5.0.4-beta.14) (2023-09-27)
 
 ### [5.0.4-beta.13](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.0.4-beta.12...reactotron-react-native@5.0.4-beta.13) (2023-09-22)
