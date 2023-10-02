@@ -34,14 +34,16 @@ You can run `yarn build` to build all reactotron packages, or `yarn build:watch`
 Then, to link the packages to your react-native PizzaApp, run:
 
 ```sh
-npx zx scripts/install-workspace-packages-in-target.mjs ../PizzaApp
+npx zx scripts/install-workspace-packages-in-target.mjs ~/Code/PizzaApp
 ```
 
 or if you want to watch for rebuilds and automatically link them:
 
 ```sh
-npx nx watch --all -- "npx zx scripts/install-workspace-packages-in-target.mjs ../PizzaApp"
+npx nx watch --all -- "npx zx scripts/install-workspace-packages-in-target.mjs ~/Code/PizzaApp"
 ```
+
+Make sure that the path to your `PizzaApp` is an absolute path and not a relative one (i.e. `~/Code/PizzaApp` instead of `../PizzaApp`)
 
 > *Note: you must have already run `yarn` in your `PizzaApp` folder before running this script because is copies over the built js files from each reactotron library into the app's `node_modules` folder.*
 
