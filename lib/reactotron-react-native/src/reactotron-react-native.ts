@@ -8,7 +8,6 @@ import type {
   ReactotronCore,
 } from "reactotron-core-client"
 import type { AsyncStorageStatic } from "@react-native-async-storage/async-storage"
-import getHost from "rn-host-detect"
 
 import getReactNativeVersion from "./helpers/getReactNativeVersion"
 import getReactNativeDimensions from "./helpers/getReactNativeDimensions"
@@ -25,6 +24,21 @@ const constants = NativeModules.PlatformConstants || {}
 const REACTOTRON_ASYNC_CLIENT_ID = "@REACTOTRON/clientId"
 
 let tempClientId: string | null = null
+
+/**
+ * Most of the time, host should be 'localhost'.
+ * But sometimes, it's not.  So we need to figure out what it is.
+ * @see https://github.com/infinitered/reactotron/issues/1107
+ *
+ * On an Android emulator, if you want to connect any servers of local, you will need run adb reverse on your terminal. This function gets the localhost IP of host machine directly to bypass this.
+ */
+const getHost = (defaultHost = "localhost") =>
+  typeof NativeModules?.SourceCode?.getConstants().scriptURL === "string" // type guard in case this ever breaks https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/NativeModules/specs/NativeSourceCode.js#L15-L21
+    ? NativeModules.SourceCode.scriptURL // Example: 'http://192.168.0.100:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=com.helloworld'
+        .split("://")[1] // Remove the scheme: '192.168.0.100:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=com.helloworld'
+        .split("/")[0] // Remove the path: '192.168.0.100:8081'
+        .split(":")[0] // Remove the port: '192.168.0.100'
+    : defaultHost
 
 const DEFAULTS: ClientOptions<ReactotronReactNative> = {
   createSocket: (path: string) => new WebSocket(path), // eslint-disable-line
