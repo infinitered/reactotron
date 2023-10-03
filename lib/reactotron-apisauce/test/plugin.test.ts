@@ -38,8 +38,8 @@ describe("plugin", () => {
       .get("/hey")
       .then(plugin.features.apisauce)
       .then(() => {
-        // can't seem to deep equals here... it's like we're getting a wierd Object()
-        expect(request.url).toEqual(`http://localhost:${port}/hey`)
+        // can't seem to deep equals here... it's like we're getting a weird Object()
+        expect(request.url).toEqual("/hey")
         expect(request.method).toEqual("get")
         // eslint-disable-next-line dot-notation
         expect(request.headers["Accept"]).toEqual("application/json")
