@@ -27690,7 +27690,7 @@ __metadata:
     rollup-plugin-resolve: ^0.0.1-predev.1
     trash-cli: ^5.0.0
     ts-jest: ^29.0.5
-    typescript: 4.9.5
+    typescript: ^4.9.5
   languageName: unknown
   linkType: soft
 
@@ -27751,7 +27751,7 @@ __metadata:
     source-map-support: ^0.5.21
     styled-components: ^6.0.8
     ts-jest: ^29.0.4
-    typescript: 4.9.5
+    typescript: ^4.9.5
     v8-compile-cache: ^2.4.0
   languageName: unknown
   linkType: soft
@@ -27874,7 +27874,7 @@ __metadata:
     rollup-plugin-node-resolve: 5.2.0
     rollup-plugin-resolve: 0.0.1-predev.1
     ts-jest: 29.0.5
-    typescript: 4.9.5
+    typescript: ^4.9.5
     ws: 8.12.1
   languageName: unknown
   linkType: soft
@@ -27936,7 +27936,7 @@ __metadata:
     stringify-object: 5.0.0
     styled-components: ^6.0.8
     ts-jest: 29.0.5
-    typescript: 4.9.5
+    typescript: ^4.9.5
   peerDependencies:
     react: ">=17.0.2"
     react-dom: ">=17.0.2"
@@ -27988,7 +27988,7 @@ __metadata:
     testdouble: ^3.16.8
     trash-cli: ^5.0.0
     ts-jest: ^29.0.5
-    typescript: 4.9.5
+    typescript: ^4.9.5
   peerDependencies:
     mobx: ^3.4.1 || ^4.1.0 || >6.0.0
     mobx-state-tree: ^1.4.0 || ^2.0.2 || >3.0.0
@@ -28031,7 +28031,7 @@ __metadata:
     stacktrace-js: 2.0.1
     trash-cli: 4.0.0
     ts-jest: 29.0.5
-    typescript: 4.9.5
+    typescript: ^4.9.5
   languageName: unknown
   linkType: soft
 
@@ -28072,7 +28072,7 @@ __metadata:
     testdouble: ^3.16.8
     trash-cli: ^5.0.0
     ts-jest: ^29.0.5
-    typescript: 4.9.5
+    typescript: ^4.9.5
   peerDependencies:
     react-native-mmkv: "*"
     reactotron-core-client: "*"
@@ -28122,7 +28122,7 @@ __metadata:
     rollup-plugin-resolve: 0.0.1-predev.1
     trash-cli: ^5.0.0
     ts-jest: 29.0.5
-    typescript: 4.9.5
+    typescript: ^4.9.5
   peerDependencies:
     react-native: ">=0.40.0"
   dependenciesMeta:
@@ -28162,7 +28162,7 @@ __metadata:
     rollup-plugin-resolve: 0.0.1-predev.1
     trash-cli: 5.0.0
     ts-jest: 29.0.5
-    typescript: 4.9.5
+    typescript: ^4.9.5
   peerDependencies:
     reactotron-core-client: "*"
     redux: ">=4.0.0"
@@ -32456,7 +32456,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.9.5, typescript@npm:^4.0.2, typescript@npm:^4.9.5":
+"typescript@npm:^4.0.2, typescript@npm:^4.9.5":
   version: 4.9.5
   resolution: "typescript@npm:4.9.5"
   bin:
@@ -32466,7 +32466,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.9.5#~builtin<compat/typescript>, typescript@patch:typescript@^4.0.2#~builtin<compat/typescript>, typescript@patch:typescript@^4.9.5#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.0.2#~builtin<compat/typescript>, typescript@patch:typescript@^4.9.5#~builtin<compat/typescript>":
   version: 4.9.5
   resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=289587"
   bin:
