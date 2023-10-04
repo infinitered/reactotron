@@ -10,8 +10,15 @@
   "homepage": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-core-ui",
   "repository": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-core-ui",
   "main": "dist/index.js",
+  "module": "dist/index.esm.js",
   "typings": "dist/types/index.d.ts",
   "react-native": "src/index.ts",
+  "exports": {
+    "require": "./dist/index.js",
+    "import": "./dist/index.esm.js",
+    "types": "./dist/types/index.d.ts",
+    "react-native": "./src/index.ts"
+  },
   "scripts": {
     "start": "start-storybook -p 6006",
     "prebuild": "yarn clean",

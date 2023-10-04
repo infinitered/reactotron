@@ -4,7 +4,6 @@ import filesize from "rollup-plugin-filesize"
 import minify from "rollup-plugin-babel-minify"
 import camelCase from "lodash.camelcase"
 
-// @ts-ignore
 const pkg = require("./package.json")
 
 const LIBRARY_NAME = "reactotron-mst"
@@ -16,7 +15,7 @@ export default {
     {
       file: pkg.main,
       name: camelCase(LIBRARY_NAME),
-      format: "umd",
+      format: "cjs",
       sourcemap: true,
       globals: GLOBALS,
     },

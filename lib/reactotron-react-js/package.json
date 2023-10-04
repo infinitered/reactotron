@@ -16,8 +16,15 @@
     "src"
   ],
   "main": "dist/index.js",
-  "types": "./dist/types/index.d.ts",
+  "module": "dist/index.esm.js",
+  "typings": "./dist/types/index.d.ts",
   "react-native": "src/index.ts",
+  "exports": {
+    "require": "./dist/index.js",
+    "import": "./dist/index.esm.js",
+    "types": "./dist/types/index.d.ts",
+    "react-native": "./src/index.ts"
+  },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --notify",

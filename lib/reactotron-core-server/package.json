@@ -16,8 +16,15 @@
     "src"
   ],
   "main": "dist/index.js",
+  "module": "dist/index.esm.js",
   "typings": "dist/types/src/reactotron-core-server.d.ts",
   "react-native": "src/reactotron-core-server.ts",
+  "exports": {
+    "require": "./dist/index.js",
+    "import": "./dist/index.esm.js",
+    "types": "./dist/types/src/reactotron-core-server.d.ts",
+    "react-native": "./src/reactotron-core-server.ts"
+  },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --notify",
