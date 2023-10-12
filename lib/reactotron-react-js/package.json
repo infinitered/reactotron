@@ -24,7 +24,7 @@
     "format:write": "yarn format --write",
     "build": "npm-run-all clean tsc compile",
     "build:dev": "npm-run-all clean tsc compile:dev",
-    "clean": "trash dist",
+    "clean": "rimraf ./dist",
     "lint": "eslint src --ext .ts,.tsx",
     "compile": "NODE_ENV=production rollup -c",
     "compile:dev": "NODE_ENV=development rollup -c",
@@ -65,7 +65,6 @@
     "rollup-plugin-replace": "2.2.0",
     "rollup-plugin-resolve": "0.0.1-predev.1",
     "semantic-release": "16.0.4",
-    "trash-cli": "4.0.0",
     "ts-jest": "29.0.5",
     "typescript": "^4.9.5"
   },
