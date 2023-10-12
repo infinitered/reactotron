@@ -27,17 +27,9 @@ const benchmarkReportCommand = {
 }
 
 export const Closed = () => (
-  <BenchmarkReportCommand
-    command={benchmarkReportCommand}
-    isOpen={false}
-    setIsOpen={() => {}}
-  />
+  <BenchmarkReportCommand command={benchmarkReportCommand} isOpen={false} setIsOpen={() => {}} />
 )
 
 export const Open = () => (
-  <BenchmarkReportCommand
-    command={benchmarkReportCommand}
-    isOpen
-    setIsOpen={() => {}}
-  />
+  <BenchmarkReportCommand command={benchmarkReportCommand} isOpen setIsOpen={() => {}} />
 )

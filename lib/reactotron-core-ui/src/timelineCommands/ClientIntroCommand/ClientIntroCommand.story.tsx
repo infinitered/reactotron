@@ -19,17 +19,9 @@ const clientIntroCommand = {
 }
 
 export const Closed = () => (
-  <ClientIntroCommand
-    command={clientIntroCommand}
-    isOpen={false}
-    setIsOpen={() => {}}
-  />
+  <ClientIntroCommand command={clientIntroCommand} isOpen={false} setIsOpen={() => {}} />
 )
 
 export const Open = () => (
-  <ClientIntroCommand
-    command={clientIntroCommand}
-    isOpen
-    setIsOpen={() => {}}
-  />
+  <ClientIntroCommand command={clientIntroCommand} isOpen setIsOpen={() => {}} />
 )

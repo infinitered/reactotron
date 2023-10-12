@@ -15,8 +15,7 @@ const imageCommand = {
   messageId: 0,
   type: "",
   payload: {
-    uri:
-      "https://github.com/infinitered/reactotron/raw/master/docs/images/readme/Reactotron-128.png",
+    uri: "https://github.com/infinitered/reactotron/raw/master/docs/images/readme/Reactotron-128.png",
     preview: "Test",
     caption: "Test",
     width: 10,

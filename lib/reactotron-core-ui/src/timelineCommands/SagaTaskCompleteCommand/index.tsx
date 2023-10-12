@@ -6,7 +6,7 @@ import StatelessSagaTaskCompleteCommand, { SagaTaskCompletePayload } from "./Sta
 
 interface Props extends TimelineCommandProps<SagaTaskCompletePayload> {}
 
-const SagaTaskCompleteCommand: FunctionComponent<Props> = props => {
+const SagaTaskCompleteCommand: FunctionComponent<Props> = (props) => {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false)
 
   return (

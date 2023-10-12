@@ -27,9 +27,5 @@ export const Closed = () => (
 )
 
 export const Open = () => (
-  <AsyncStorageMutationCommand
-    command={asyncStorageMutationCommand}
-    isOpen
-    setIsOpen={() => {}}
-  />
+  <AsyncStorageMutationCommand command={asyncStorageMutationCommand} isOpen setIsOpen={() => {}} />
 )

@@ -36,12 +36,8 @@ const StateContext = React.createContext<Context>({
 })
 
 const Provider: FunctionComponent<any> = ({ children }) => {
-  const {
-    subscriptions,
-    addSubscription,
-    removeSubscription,
-    clearSubscriptions,
-  } = useSubscriptions()
+  const { subscriptions, addSubscription, removeSubscription, clearSubscriptions } =
+    useSubscriptions()
 
   const {
     snapshots,
