@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useContext } from "react"
+import React, { FunctionComponent } from "react"
 import ReactModal from "react-modal"
-import styled, { ThemeContext } from "styled-components"
+import styled, { useTheme } from "styled-components"
 
 ReactModal.setAppElement(document.body)
 
@@ -44,7 +44,7 @@ const Modal: FunctionComponent<React.PropsWithChildren<Props>> = ({
   children,
   additionalKeystrokes,
 }) => {
-  const themeContext = useContext(ThemeContext)
+  const theme = useTheme()
 
   return (
     <ReactModal
@@ -53,7 +53,7 @@ const Modal: FunctionComponent<React.PropsWithChildren<Props>> = ({
       onRequestClose={onClose}
       style={{
         overlay: {
-          backgroundColor: themeContext.modalOverlay,
+          backgroundColor: theme.modalOverlay,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -64,9 +64,9 @@ const Modal: FunctionComponent<React.PropsWithChildren<Props>> = ({
           flexDirection: "column",
           borderRadius: 4,
           padding: 20,
-          backgroundColor: themeContext.background,
-          color: themeContext.foreground,
-          borderColor: themeContext.backgroundLighter,
+          backgroundColor: theme.background,
+          color: theme.foreground,
+          borderColor: theme.backgroundLighter,
           width: 500,
           position: "auto" as any, // TODO: Fix this!
           top: "auto",
