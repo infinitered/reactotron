@@ -10,7 +10,7 @@ const Title = styled.h1`
   text-align: left;
   font-weight: normal;
   font-size: 24px;
-  color: ${props => props.theme.heading};
+  color: ${(props) => props.theme.heading};
 `
 const KeystrokesContainer = styled.div`
   display: flex;
@@ -24,8 +24,8 @@ export const KeystrokeContainer = styled.div`
 export const Keystroke = styled.span`
   padding: 4px 8px;
   border-radius: 4px;
-  background-color: ${props => props.theme.backgroundHighlight};
-  color: ${props => props.theme.foreground};
+  background-color: ${(props) => props.theme.backgroundHighlight};
+  color: ${(props) => props.theme.foreground};
 `
 
 interface Props {

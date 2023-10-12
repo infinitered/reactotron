@@ -32,7 +32,7 @@ const SnapshotsContainer = styled.div`
 `
 
 const SnapshotContainer = styled.div`
-  border-bottom: 1px solid ${props => props.theme.line};
+  border-bottom: 1px solid ${(props) => props.theme.line};
 `
 const SnapshotDetailRow = styled.div`
   display: flex;
@@ -43,11 +43,11 @@ const SnapshotDetailRow = styled.div`
 `
 const SnapshotName = styled.div`
   flex: 1;
-  color: ${props => props.theme.tag};
+  color: ${(props) => props.theme.tag};
   text-align: left;
 `
 const SnapshotAction = styled.div`
-  color: ${props => props.theme.foreground};
+  color: ${(props) => props.theme.foreground};
   padding-left: 10px;
 `
 const SnapshotPreview = styled.div`
@@ -78,7 +78,7 @@ function SnapshotItem({
       >
         <SnapshotName>{snapshot.name}</SnapshotName>
         <SnapshotAction
-          onClick={e => {
+          onClick={(e) => {
             e.stopPropagation()
             clipboard.writeText(JSON.stringify(snapshot))
           }}
@@ -86,7 +86,7 @@ function SnapshotItem({
           <MdCallReceived size={24} />
         </SnapshotAction>
         <SnapshotAction
-          onClick={e => {
+          onClick={(e) => {
             e.stopPropagation()
             restoreSnapshot(snapshot)
           }}
@@ -94,7 +94,7 @@ function SnapshotItem({
           <MdFileUpload size={24} />
         </SnapshotAction>
         <SnapshotAction
-          onClick={e => {
+          onClick={(e) => {
             e.stopPropagation()
             openSnapshotRenameModal(snapshot)
           }}
@@ -102,7 +102,7 @@ function SnapshotItem({
           <MdCreate size={24} />
         </SnapshotAction>
         <SnapshotAction
-          onClick={e => {
+          onClick={(e) => {
             e.stopPropagation()
             removeSnapshot(snapshot)
           }}
@@ -178,7 +178,7 @@ function Snapshots() {
             button in the top right corner of this window.
           </EmptyState>
         ) : (
-          snapshots.map(snapshot => (
+          snapshots.map((snapshot) => (
             <SnapshotItem
               key={snapshot.id}
               snapshot={snapshot}

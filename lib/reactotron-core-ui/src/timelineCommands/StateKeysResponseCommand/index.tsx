@@ -6,16 +6,16 @@ import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 
 const PathLabel = styled.div`
   padding-bottom: 10px;
-  color: ${props => props.theme.bold};
+  color: ${(props) => props.theme.bold};
 `
 
 const KeysContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  color: ${props => props.theme.foreground};
+  color: ${(props) => props.theme.foreground};
 `
 const Key = styled.div`
-  background-color: ${props => props.theme.backgroundLighter};
+  background-color: ${(props) => props.theme.backgroundLighter};
   margin: 4px;
   padding: 4px 8px;
   border-radius: 4px;
@@ -50,7 +50,7 @@ function renderKeys(
 
   return (
     <KeysContainer>
-      {keys.map(key => {
+      {keys.map((key) => {
         return (
           <Key key={key} onClick={buildClickHandler(key, currentPath, sendCommand)}>
             {key}

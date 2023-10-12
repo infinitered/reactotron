@@ -10,7 +10,7 @@ const Contianer = styled.div`
 `
 
 const Name = styled.div`
-  color: ${props => props.theme.highlight};
+  color: ${(props) => props.theme.highlight};
 `
 
 const KeybindContainer = styled.div`
@@ -23,7 +23,7 @@ function KeybindGroup({ group }) {
     <Contianer>
       <Name>{group.name}</Name>
       <KeybindContainer>
-        {group.keybinds.map(keybind => (
+        {group.keybinds.map((keybind) => (
           <Keybind key={`${group.name}-${keybind.name}`} keybind={keybind} />
         ))}
       </KeybindContainer>
