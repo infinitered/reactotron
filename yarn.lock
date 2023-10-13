@@ -6874,7 +6874,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash.camelcase@npm:^4.3.5":
+"@types/lodash.camelcase@npm:^4.3.7":
   version: 4.3.7
   resolution: "@types/lodash.camelcase@npm:4.3.7"
   dependencies:
@@ -12798,10 +12798,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:2.29.3":
-  version: 2.29.3
-  resolution: "date-fns@npm:2.29.3"
-  checksum: e01cf5b62af04e05dfff921bb9c9933310ed0e1ae9a81eb8653452e64dc841acf7f6e01e1a5ae5644d0337e9a7f936175fd2cb6819dc122fdd9c5e86c56be484
+"date-fns@npm:2.30.0":
+  version: 2.30.0
+  resolution: "date-fns@npm:2.30.0"
+  dependencies:
+    "@babel/runtime": ^7.21.0
+  checksum: f7be01523282e9bb06c0cd2693d34f245247a29098527d4420628966a2d9aad154bd0e90a6b1cf66d37adcb769cd108cf8a7bd49d76db0fb119af5cdd13644f4
   languageName: node
   linkType: hard
 
@@ -27683,7 +27685,7 @@ __metadata:
     "@typescript-eslint/parser": 4.29.1
     babel-loader: 8.2.2
     color-interpolate: 1.0.5
-    date-fns: 2.29.3
+    date-fns: 2.30.0
     eslint: ^8.35.0
     eslint-config-prettier: ^8.6.0
     eslint-config-standard: ^17.0.0
@@ -27735,7 +27737,7 @@ __metadata:
     "@babel/preset-env": ^7.20.2
     "@babel/preset-typescript": ^7.21.0
     "@types/jest": ^29.4.0
-    "@types/lodash.camelcase": ^4.3.5
+    "@types/lodash.camelcase": ^4.3.7
     "@types/node": ^11.9.5
     "@types/ramda": ^0.25.50
     "@typescript-eslint/eslint-plugin": ^5.54.0
