@@ -1,5 +1,6 @@
 import type { ReactotronCore, Plugin } from "../reactotron-core-client"
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type AcceptableRepls = object | Function | string | number
 
 const repl = () => (reactotron: ReactotronCore) => {

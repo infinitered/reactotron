@@ -19,13 +19,13 @@ const STATUS_MAP = {
 
 const EffectTitle = styled.div`
   display: flex;
-  color: ${props => props.theme.foreground};
-  border-bottom: 1px solid ${props => props.theme.highlight};
+  color: ${(props) => props.theme.foreground};
+  border-bottom: 1px solid ${(props) => props.theme.highlight};
   padding-bottom: 4px;
   margin-bottom: 4px;
 `
 const TriggerType = styled.div`
-  color: ${props => props.theme.tag};
+  color: ${(props) => props.theme.tag};
   padding-right: 20px;
 `
 const Duration = styled.div`
@@ -33,15 +33,15 @@ const Duration = styled.div`
   flex: 1;
 `
 const DurationMs = styled.span`
-  color: ${props => props.theme.foregroundDark};
+  color: ${(props) => props.theme.foregroundDark};
 `
 
 const EffectContainer = styled.div`
   display: flex;
-  color: ${props => props.theme.foreground};
+  color: ${(props) => props.theme.foreground};
   padding-top: 4px;
   margin-top: 2px;
-  border-bottom: 1px solid ${props => props.theme.subtleLine};
+  border-bottom: 1px solid ${(props) => props.theme.subtleLine};
 `
 const EffectNameContainer = styled.div`
   width: 140px;
@@ -49,16 +49,16 @@ const EffectNameContainer = styled.div`
   margin-bottom: 4px;
 `
 interface EffectNameProps {
-  depth: number
-  isLoser: boolean
+  $depth: number
+  $isLoser: boolean
 }
-const EffectName = styled.span<EffectNameProps>`
-  color: ${props => (props.isLoser ? props.theme.foregroundDark : props.theme.constant)};
-  padding-left: ${props => props.depth * 20}px;
-  text-decoration: ${props => (props.isLoser ? "line-through" : "")};
+const EffectName = styled.span.attrs(() => ({}))<EffectNameProps>`
+  color: ${(props) => (props.$isLoser ? props.theme.foregroundDark : props.theme.constant)};
+  padding-left: ${(props) => props.$depth * 20}px;
+  text-decoration: ${(props) => (props.$isLoser ? "line-through" : "")};
 `
 const EffectStatus = styled.span`
-  color: ${props => props.theme.tag};
+  color: ${(props) => props.theme.tag};
   padding-right: 4px;
 `
 const EffectExtraContainer = styled.div`
@@ -114,7 +114,7 @@ function renderEffect(effect: SagaTaskCompleteChild, isDetailsOpen: boolean) {
   return (
     <EffectContainer key={`effect-${effect.effectId}`}>
       <EffectNameContainer>
-        <EffectName depth={depth} isLoser={loser || status === "CANCELLED"}>
+        <EffectName $depth={depth} $isLoser={loser || status === "CANCELLED"}>
           <EffectStatus>{STATUS_MAP[status]}</EffectStatus>
           {name}
         </EffectName>
@@ -166,7 +166,7 @@ const SagaTaskCompleteCommand: FunctionComponent<Props> = ({
           <DurationMs>ms</DurationMs>
         </Duration>
       </EffectTitle>
-      {payload.children.map(effect => renderEffect(effect, isDetailsOpen))}
+      {payload.children.map((effect) => renderEffect(effect, isDetailsOpen))}
     </TimelineCommand>
   )
 }

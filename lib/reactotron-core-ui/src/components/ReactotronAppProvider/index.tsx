@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react"
+import React from "react"
 import styled, { ThemeProvider } from "styled-components"
 
 import theme from "../../theme"
@@ -11,7 +11,7 @@ const ReactotronContainer = styled.div`
   user-select: none;
 `
 
-const ReactotronAppProvider: FunctionComponent<React.PropsWithChildren<{}>> = ({ children }) => {
+const ReactotronAppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <ReactotronContainer>{children}</ReactotronContainer>

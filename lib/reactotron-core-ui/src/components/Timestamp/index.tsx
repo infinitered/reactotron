@@ -8,13 +8,13 @@ const Container = styled.div`
     "Helvetica Neue", sans-serif;
 `
 const LeftDateContainer = styled.span`
-  color: ${props => props.theme.highlight};
+  color: ${(props) => props.theme.highlight};
 `
 const RightDateContainer = styled.span`
-  color: ${props => props.theme.foreground};
+  color: ${(props) => props.theme.foreground};
 `
 const DeltaContainer = styled.span`
-  color: ${props => props.theme.tag};
+  color: ${(props) => props.theme.tag};
   font-size: 0.7rem;
   position: absolute;
   top: -12px;

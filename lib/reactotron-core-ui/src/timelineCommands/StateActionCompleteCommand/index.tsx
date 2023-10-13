@@ -8,7 +8,7 @@ import ContentView from "../../components/ContentView"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 
 const NameContainer = styled.div`
-  color: ${props => props.theme.bold};
+  color: ${(props) => props.theme.bold};
   padding-bottom: 10px;
 `
 

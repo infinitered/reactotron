@@ -11,7 +11,7 @@ const IconContainer = styled.div`
   padding-right: 10px;
 `
 const Label = styled.span`
-  color: ${props => props.theme.tag};
+  color: ${(props) => props.theme.tag};
 `
 
 interface Props {

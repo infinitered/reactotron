@@ -11,7 +11,7 @@ import {
   ServerEventKey,
   Command,
 } from "reactotron-core-contract"
-import { Server as WebSocketServer, OPEN } from "ws"
+import { Server as WebSocketServer, OPEN, type RawData } from "ws"
 import validate from "./validation"
 import { repair } from "./repair-serialization"
 import { readFileSync } from "fs"
@@ -210,8 +210,8 @@ export default class Server {
       }
 
       // when we receive a command from the client
-      socket.on("message", (incoming) => {
-        const message = JSON.parse(incoming as string)
+      socket.on("message", (incoming: RawData) => {
+        const message = JSON.parse(incoming.toString())
         repair(message)
         const { type, important, payload, deltaTime = 0 } = message
         this.messageId++

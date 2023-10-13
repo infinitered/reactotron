@@ -23,39 +23,35 @@
   ],
   "homepage": "https://github.com/infinitered/reactotron#readme",
   "engines": {
-    "node": ">= 18.0.0"
+    "node": ">=18.0.0"
   },
   "devDependencies": {
     "@jscutlery/semver": "^2.30.1",
     "@nrwl/devkit": "^15.5.1",
     "@octokit/rest": "^19.0.7",
-    "@types/eslint": "^8.4.10",
-    "@typescript-eslint/eslint-plugin": "^2.12.0",
-    "@typescript-eslint/parser": "^2.12.0",
-    "eslint": "^6.7.2",
-    "eslint-config-prettier": "^6.7.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.19.1",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.17.0",
-    "eslint-plugin-react-hooks": "^2.3.0",
-    "eslint-plugin-standard": "^4.0.1",
+    "@types/eslint": "^8.44.4",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-n": "^16.2.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-standard": "^5.0.0",
     "nx": "15.5.1",
-    "prettier": "^2.8.4",
+    "prettier": "^3.0.3",
     "typescript": "^4.9.5",
-    "zx": "^7.1.1"
+    "zx": "^7.2.3"
   },
   "resolutions": {
     "@nrwl/devkit": "^15.5.3",
     "@types/react": "17.0.65",
-    "webpack@^4.41.3": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
-    "webpack@^4.44.2": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
-    "webpack@^4.33.0": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
-    "webpack@^4.38.0": "patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch",
-    "electron-webpack@2.8.2": "patch:electron-webpack@npm%3A2.8.2#./.yarn/patches/electron-webpack-npm-2.8.2-1bda600605.patch",
-    "react-hotkeys@^2.0.0": "patch:react-hotkeys@npm%3A2.0.0#./.yarn/patches/react-hotkeys-npm-2.0.0-8e6c50bd05.patch",
-    "react-hotkeys@2.0.0": "patch:react-hotkeys@npm%3A2.0.0#./.yarn/patches/react-hotkeys-npm-2.0.0-8e6c50bd05.patch"
+    "electron-webpack": "patch:electron-webpack@npm%3A2.8.2#./.yarn/patches/electron-webpack-npm-2.8.2-1bda600605.patch",
+    "react-hotkeys": "patch:react-hotkeys@npm%3A2.0.0#./.yarn/patches/react-hotkeys-npm-2.0.0-8e6c50bd05.patch",
+    "webpack": "patch:webpack@npm%3A4.47.0#./.yarn/patches/webpack-npm-4.47.0-42e477a08c.patch"
   },
   "scripts": {
     "postinstall": "sh ./scripts/postinstall.sh",

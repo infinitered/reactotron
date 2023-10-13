@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react"
+import React from "react"
 
 import useLayout from "./useLayout"
 
@@ -18,7 +18,7 @@ const LayoutContext = React.createContext<Context>({
   toggleSideBar: noop,
 })
 
-const Provider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isSideBarOpen, toggleSideBar } = useLayout()
 
   return (

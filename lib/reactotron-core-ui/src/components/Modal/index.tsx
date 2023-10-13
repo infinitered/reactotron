@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useContext } from "react"
+import React, { FunctionComponent } from "react"
 import ReactModal from "react-modal"
-import styled, { ThemeContext } from "styled-components"
+import styled, { useTheme } from "styled-components"
 
 ReactModal.setAppElement(document.body)
 
@@ -10,7 +10,7 @@ const Title = styled.h1`
   text-align: left;
   font-weight: normal;
   font-size: 24px;
-  color: ${props => props.theme.heading};
+  color: ${(props) => props.theme.heading};
 `
 const KeystrokesContainer = styled.div`
   display: flex;
@@ -24,8 +24,8 @@ export const KeystrokeContainer = styled.div`
 export const Keystroke = styled.span`
   padding: 4px 8px;
   border-radius: 4px;
-  background-color: ${props => props.theme.backgroundHighlight};
-  color: ${props => props.theme.foreground};
+  background-color: ${(props) => props.theme.backgroundHighlight};
+  color: ${(props) => props.theme.foreground};
 `
 
 interface Props {
@@ -44,7 +44,7 @@ const Modal: FunctionComponent<React.PropsWithChildren<Props>> = ({
   children,
   additionalKeystrokes,
 }) => {
-  const themeContext = useContext(ThemeContext)
+  const theme = useTheme()
 
   return (
     <ReactModal
@@ -53,7 +53,7 @@ const Modal: FunctionComponent<React.PropsWithChildren<Props>> = ({
       onRequestClose={onClose}
       style={{
         overlay: {
-          backgroundColor: themeContext.modalOverlay,
+          backgroundColor: theme.modalOverlay,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -64,9 +64,9 @@ const Modal: FunctionComponent<React.PropsWithChildren<Props>> = ({
           flexDirection: "column",
           borderRadius: 4,
           padding: 20,
-          backgroundColor: themeContext.background,
-          color: themeContext.foreground,
-          borderColor: themeContext.backgroundLighter,
+          backgroundColor: theme.background,
+          color: theme.foreground,
+          borderColor: theme.backgroundLighter,
           width: 500,
           position: "auto" as any, // TODO: Fix this!
           top: "auto",

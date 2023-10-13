@@ -1,6 +1,7 @@
 export const DEFAULT_REPLACER_TYPE = "REACTOTRON_RESTORE_STATE"
 
 export default function reactotronReducer(
+  // eslint-disable-next-line @typescript-eslint/ban-types
   rootReducer: Function,
   actionName = DEFAULT_REPLACER_TYPE
 ) {

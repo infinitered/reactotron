@@ -100,53 +100,53 @@ const asyncStorage = (options?: AsyncStorageOptions) => (reactotron: ReactotronC
   const trackAsyncStorage = () => {
     if (isSwizzled) return
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     swizzSetItem = reactotron.asyncStorageHandler.setItem
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     reactotron.asyncStorageHandler.setItem = setItem
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     swizzRemoveItem = reactotron.asyncStorageHandler.removeItem
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     reactotron.asyncStorageHandler.removeItem = removeItem
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     swizzMergeItem = reactotron.asyncStorageHandler.mergeItem
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     reactotron.asyncStorageHandler.mergeItem = mergeItem
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     swizzClear = reactotron.asyncStorageHandler.clear
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     reactotron.asyncStorageHandler.clear = clear
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     swizzMultiSet = reactotron.asyncStorageHandler.multiSet
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     reactotron.asyncStorageHandler.multiSet = multiSet
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     swizzMultiRemove = reactotron.asyncStorageHandler.multiRemove
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     reactotron.asyncStorageHandler.multiRemove = multiRemove
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     swizzMultiMerge = reactotron.asyncStorageHandler.multiMerge
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     reactotron.asyncStorageHandler.multiMerge = multiMerge
 
@@ -156,32 +156,32 @@ const asyncStorage = (options?: AsyncStorageOptions) => (reactotron: ReactotronC
   const untrackAsyncStorage = () => {
     if (!isSwizzled) return
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     reactotron.asyncStorageHandler.setItem = swizzSetItem
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     reactotron.asyncStorageHandler.removeItem = swizzRemoveItem
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     reactotron.asyncStorageHandler.mergeItem = swizzMergeItem
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     reactotron.asyncStorageHandler.clear = swizzClear
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     reactotron.asyncStorageHandler.multiSet = swizzMultiSet
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     reactotron.asyncStorageHandler.multiRemove = swizzMultiRemove
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: reactotron-apis
     reactotron.asyncStorageHandler.multiMerge = swizzMultiMerge
 
     isSwizzled = false
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore: reactotron-apis
   if (reactotron.asyncStorageHandler) {
     trackAsyncStorage()

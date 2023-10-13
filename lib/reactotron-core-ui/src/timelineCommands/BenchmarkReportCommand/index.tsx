@@ -5,14 +5,14 @@ import TimelineCommand from "../../components/TimelineCommand"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 
 const NameContainer = styled.div`
-  color: ${props => props.theme.bold};
+  color: ${(props) => props.theme.bold};
   padding-bottom: 10px;
 `
 
 const StepContainer = styled.div`
   position: relative;
   display: flex;
-  color: ${props => props.theme.foreground};
+  color: ${(props) => props.theme.foreground};
   margin: 2px 0;
   padding: 4px;
 `
@@ -27,16 +27,16 @@ const StepDuration = styled.div`
   z-index: 2;
 `
 interface StepGrapProps {
-  startPercent: number
-  endPercent: number
+  $startPercent: number
+  $endPercent: number
 }
-const StepGraph = styled.div<StepGrapProps>`
-  background-color: ${props => props.theme.backgroundLighter};
+const StepGraph = styled.div.attrs(() => ({}))<StepGrapProps>`
+  background-color: ${(props) => props.theme.backgroundLighter};
   position: absolute;
   top: 0;
   bottom: 0;
-  left: ${props => props.startPercent}%;
-  right: ${props => props.endPercent}%;
+  left: ${(props) => props.$startPercent}%;
+  right: ${(props) => props.$endPercent}%;
 `
 
 interface BenchmarkReportPayload {
@@ -73,7 +73,7 @@ const BenchmarkReportCommand: FunctionComponent<Props> = ({ command, isOpen, set
 
         return (
           <StepContainer key={idx}>
-            <StepGraph startPercent={startPercent} endPercent={endPercent} />
+            <StepGraph $startPercent={startPercent} $endPercent={endPercent} />
             <StepTitle>{step.title}</StepTitle>
             <StepDuration>{(step.delta / 1000).toFixed(3)}s</StepDuration>
           </StepContainer>

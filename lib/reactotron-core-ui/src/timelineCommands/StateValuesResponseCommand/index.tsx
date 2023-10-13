@@ -7,7 +7,7 @@ import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 
 const PathLabel = styled.div`
   padding-bottom: 10px;
-  color: ${props => props.theme.bold};
+  color: ${(props) => props.theme.bold};
 `
 
 interface StateValuesResponsePayload {

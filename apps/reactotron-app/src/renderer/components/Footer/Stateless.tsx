@@ -8,10 +8,10 @@ import { Connection } from "../../contexts/Standalone/useStandalone"
 import ConnectionSelector from "../ConnectionSelector"
 
 const Container = styled.div`
-  border-top: 1px solid ${props => props.theme.chromeLine};
-  color: ${props => props.theme.foregroundDark};
-  box-shadow: 0 0 30px ${props => props.theme.glow};
-  color: ${props => props.theme.foregroundLight};
+  border-top: 1px solid ${(props) => props.theme.chromeLine};
+  color: ${(props) => props.theme.foregroundDark};
+  box-shadow: 0 0 30px ${(props) => props.theme.glow};
+  color: ${(props) => props.theme.foregroundLight};
 `
 
 const ConnectionContainer = styled.div`
@@ -22,17 +22,17 @@ const ConnectionContainer = styled.div`
 `
 
 interface ContentContainerProps {
-  isOpen: boolean
+  $isOpen: boolean
 }
-const ContentContainer = styled.div<ContentContainerProps>`
+const ContentContainer = styled.div.attrs(() => ({}))<ContentContainerProps>`
   display: flex;
   flex-direction: row;
-  background-color: ${props => props.theme.subtleLine};
+  background-color: ${(props) => props.theme.subtleLine};
   padding: 0 10px;
   justify-content: space-between;
   align-items: center;
-  cursor: ${props => (props.isOpen ? "auto" : "pointer")};
-  height: ${props => (props.isOpen ? "85px" : "25px")};
+  cursor: ${(props) => (props.$isOpen ? "auto" : "pointer")};
+  height: ${(props) => (props.$isOpen ? "85px" : "25px")};
 `
 
 const ConnectionInfo = styled.div`
@@ -54,11 +54,11 @@ function renderExpanded(
   selectedConnection: Connection | null,
   onChangeConnection: (clientId: string | null) => void
 ) {
-  const showName = connections && connections.some(c => c.name !== connections[0].name)
+  const showName = connections && connections.some((c) => c.name !== connections[0].name)
 
   return (
     <ConnectionContainer>
-      {connections.map(c => (
+      {connections.map((c) => (
         <ConnectionSelector
           key={c.id}
           selectedConnection={selectedConnection}
@@ -98,7 +98,7 @@ function Header({ connections, selectedConnection, isOpen, setIsOpen, onChangeCo
 
   return (
     <Container>
-      <ContentContainer onClick={() => !isOpen && setIsOpen(true)} isOpen={isOpen}>
+      <ContentContainer onClick={() => !isOpen && setIsOpen(true)} $isOpen={isOpen}>
         {renderMethod(connections, selectedConnection, onChangeConnection)}
         <ExpandContainer onClick={() => setIsOpen(!isOpen)}>
           <ExpandIcon size={18} />

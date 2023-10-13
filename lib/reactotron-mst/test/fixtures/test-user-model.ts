@@ -6,7 +6,7 @@ export type __IModelType = IModelType<any, any>
 export const TestUserModel = types
   .model()
   .props({ name: "", age: 100 })
-  .actions(self => ({
+  .actions((self) => ({
     setAge(value: number) {
       self.age = value
     },

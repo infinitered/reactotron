@@ -38,20 +38,21 @@ const SourceFilename = styled.div`
   color: ${(props) => props.theme.tag};
 `
 interface SourceLineContainerProps {
-  isSelected: boolean
+  $isSelected: boolean
 }
-const SourceLineContainer = styled.div<SourceLineContainerProps>`
+const SourceLineContainer = styled.div.attrs(() => ({}))<SourceLineContainerProps>`
   display: flex;
   padding: 6px 0;
   cursor: pointer;
-  color: ${(props) => (props.isSelected ? props.theme.tag : props.theme.foregroundDark)};
-  background-color: ${(props) => (props.isSelected ? props.theme.backgroundDarker : "transparent")};
-  border-left: ${(props) => (props.isSelected ? `1px solid ${props.theme.tag}` : undefined)};
+  color: ${(props) => (props.$isSelected ? props.theme.tag : props.theme.foregroundDark)};
+  background-color: ${(props) =>
+    props.$isSelected ? props.theme.backgroundDarker : "transparent"};
+  border-left: ${(props) => (props.$isSelected ? `1px solid ${props.theme.tag}` : undefined)};
   border-right: ${(props) =>
-    props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined};
-  border-top: ${(props) => (props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined)};
+    props.$isSelected ? `1px solid ${props.theme.subtleLine}` : undefined};
+  border-top: ${(props) => (props.$isSelected ? `1px solid ${props.theme.subtleLine}` : undefined)};
   border-bottom: ${(props) =>
-    props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined};
+    props.$isSelected ? `1px solid ${props.theme.subtleLine}` : undefined};
 `
 const SourceLineNumber = styled.div`
   width: 60px;
@@ -95,25 +96,26 @@ const StackTableHeaderLineNumber = styled.div`
 `
 
 interface StackFrameContainerProps {
-  isNodeModule: boolean
-  isSelected: boolean
+  $isNodeModule: boolean
+  $isSelected: boolean
 }
-const StackFrameContainer = styled.div<StackFrameContainerProps>`
+const StackFrameContainer = styled.div.attrs(() => ({}))<StackFrameContainerProps>`
   display: flex;
   padding: 6px;
   word-break: break-all;
   /* cursor: pointer; */
-  opacity: ${(props) => (props.isNodeModule ? 0.4 : 1)};
+  opacity: ${(props) => (props.$isNodeModule ? 0.4 : 1)};
   cursor: pointer;
 
-  color: ${(props) => (props.isSelected ? props.theme.tag : props.theme.foreground)};
-  background-color: ${(props) => (props.isSelected ? props.theme.backgroundDarker : "transparent")};
-  border-left: ${(props) => (props.isSelected ? `1px solid ${props.theme.tag}` : undefined)};
+  color: ${(props) => (props.$isSelected ? props.theme.tag : props.theme.foreground)};
+  background-color: ${(props) =>
+    props.$isSelected ? props.theme.backgroundDarker : "transparent"};
+  border-left: ${(props) => (props.$isSelected ? `1px solid ${props.theme.tag}` : undefined)};
   border-right: ${(props) =>
-    props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined};
-  border-top: ${(props) => (props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined)};
+    props.$isSelected ? `1px solid ${props.theme.subtleLine}` : undefined};
+  border-top: ${(props) => (props.$isSelected ? `1px solid ${props.theme.subtleLine}` : undefined)};
   border-bottom: ${(props) =>
-    props.isSelected ? `1px solid ${props.theme.subtleLine}` : undefined};
+    props.$isSelected ? `1px solid ${props.theme.subtleLine}` : undefined};
 `
 const StackFrameFunction = styled.div`
   flex: 1;
@@ -304,8 +306,8 @@ function renderStackFrame(
   return (
     <StackFrameContainer
       key={`stack-${idx}`}
-      isNodeModule={isNodeModule}
-      isSelected={isSelected}
+      $isNodeModule={isNodeModule}
+      $isSelected={isSelected}
       onClick={() => {
         openInEditor(fileName, lineNumber)
       }}
@@ -361,7 +363,7 @@ const LogCommand: FunctionComponent<Props> = ({
                 return (
                   <SourceLineContainer
                     key={`${line.source}-${line.lineNumber}`}
-                    isSelected={line.isSelected}
+                    $isSelected={line.isSelected}
                     onClick={() => {
                       openInEditor(source.fileName, source.lineNumber)
                     }}

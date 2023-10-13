@@ -11,7 +11,7 @@ import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 
 // TODO: Consider if this is a component that should be built into the TimelineCommand...
 const NameContainer = styled.div`
-  color: ${props => props.theme.bold};
+  color: ${(props) => props.theme.bold};
   padding-bottom: 10px;
 `
 

@@ -14,7 +14,7 @@ export const TestCompanyModel = types
     employees: types.optional(types.array(TestUserModel), []),
     owner: types.maybe(TestUserModel),
   })
-  .actions(self => ({
+  .actions((self) => ({
     setName(value: string) {
       self.name = value
     },
@@ -24,5 +24,8 @@ export const createTestCompany = () =>
   TestCompanyModel.create({
     name: "Steve",
     owner: { name: "me", age: 100 },
-    employees: [{ name: "a", age: 1 }, { name: "b", age: 2 }],
+    employees: [
+      { name: "a", age: 1 },
+      { name: "b", age: 2 },
+    ],
   })

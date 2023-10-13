@@ -7,9 +7,9 @@ import SideBarButton from "../SideBarButton"
 import { reactotronLogo } from "../../images"
 
 interface SideBarContainerProps {
-  isOpen: boolean
+  $isOpen: boolean
 }
-const SideBarContainer = styled.div<SideBarContainerProps>`
+const SideBarContainer = styled.div.attrs(() => ({}))<SideBarContainerProps>`
   display: flex;
   flex-direction: column;
   padding-top: 25px;
@@ -17,7 +17,7 @@ const SideBarContainer = styled.div<SideBarContainerProps>`
   border-right: 1px solid ${(props) => props.theme.chromeLine};
   width: 115px;
   transition: margin 0.2s ease-out;
-  margin-left: ${(props) => (props.isOpen ? 0 : -115)}px;
+  margin-left: ${(props) => (props.$isOpen ? 0 : -115)}px;
 `
 
 const Spacer = styled.div`
@@ -26,7 +26,7 @@ const Spacer = styled.div`
 
 function SideBar({ isOpen }: { isOpen: boolean }) {
   return (
-    <SideBarContainer isOpen={isOpen}>
+    <SideBarContainer $isOpen={isOpen}>
       <SideBarButton image={reactotronLogo} path="/home" text="Home" hideTopBar />
       <SideBarButton icon={MdReorder} path="/" text="Timeline" />
       <SideBarButton

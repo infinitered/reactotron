@@ -10,7 +10,7 @@ const KEY_MAPS = {
 
 const InstructionText = styled.div`
   text-align: left;
-  color: ${props => props.theme.foreground};
+  color: ${(props) => props.theme.foreground};
 `
 
 const ActionContainer = styled.div`
@@ -20,13 +20,13 @@ const ActionContainer = styled.div`
 `
 const ActionLabel = styled.label`
   font-size: 13px;
-  color: ${props => props.theme.heading};
+  color: ${(props) => props.theme.heading};
 `
 const ActionInput = styled.textarea`
   border: 0;
-  border-bottom: 1px solid ${props => props.theme.line};
+  border-bottom: 1px solid ${(props) => props.theme.line};
   font-size: 25px;
-  color: ${props => props.theme.foregroundLight};
+  color: ${(props) => props.theme.foregroundLight};
   line-height: 40px;
   background-color: inherit;
   min-width: 462px;
@@ -66,7 +66,7 @@ const DispatchActionModal: FunctionComponent<Props> = ({
 
   const handleAfterOpen = () => inputRef.current && inputRef.current.focus()
 
-  const handleKeypress = e => {
+  const handleKeypress = (e) => {
     if (e.keyCode === 13 && e.metaKey) {
       // We need to take a string that is not exactly JSON and make it an object.
       const actualAction = eval(`(${action})`) // eslint-disable-line
@@ -82,7 +82,7 @@ const DispatchActionModal: FunctionComponent<Props> = ({
     onClose()
   }, [onClose])
 
-  const handleChange = useCallback(e => {
+  const handleChange = useCallback((e) => {
     setAction(e.target.value)
   }, [])
 

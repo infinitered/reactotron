@@ -5,11 +5,11 @@ import Modal, { KeystrokeContainer, Keystroke } from "../../components/Modal"
 
 const InstructionText = styled.div`
   text-align: left;
-  color: ${props => props.theme.foreground};
+  color: ${(props) => props.theme.foreground};
 `
 const ExampleText = styled.p`
   margin: 0 0 0 40px;
-  color: ${props => props.theme.bold};
+  color: ${(props) => props.theme.bold};
 `
 
 const PathContainer = styled.div`
@@ -19,13 +19,13 @@ const PathContainer = styled.div`
 `
 const PathLabel = styled.label`
   font-size: 13px;
-  color: ${props => props.theme.heading};
+  color: ${(props) => props.theme.heading};
 `
 const PathInput = styled.input`
   border: 0;
-  border-bottom: 1px solid ${props => props.theme.line};
+  border-bottom: 1px solid ${(props) => props.theme.line};
   font-size: 25px;
-  color: ${props => props.theme.foregroundLight};
+  color: ${(props) => props.theme.foregroundLight};
   line-height: 40px;
   background-color: inherit;
 `
@@ -47,12 +47,12 @@ const SubscriptionAddModal: FunctionComponent<Props> = ({ isOpen, onClose, onAdd
     onClose()
   }, [onClose])
 
-  const handleChange = useCallback(e => {
+  const handleChange = useCallback((e) => {
     setPath(e.target.value)
   }, [])
 
   const handleKeypress = useCallback(
-    e => {
+    (e) => {
       if (e.key === "Enter") {
         onAddSubscription(path)
         setPath("")

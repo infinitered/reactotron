@@ -12,10 +12,10 @@ const Container = styled.div`
 `
 
 interface ContentContainerProps {
-  isDraggable: boolean
+  $isDraggable: boolean
 }
-const ContentContainer = styled.div<ContentContainerProps>`
-  -webkit-app-region: ${(props) => (props.isDraggable ? "drag" : "")};
+const ContentContainer = styled.div.attrs(() => ({}))<ContentContainerProps>`
+  -webkit-app-region: ${(props) => (props.$isDraggable ? "drag" : "")};
   height: 70px;
   padding: 0 10px;
   display: flex;
@@ -51,7 +51,7 @@ const Title = styled.div`
   text-align: center;
 `
 
-interface Props {
+interface HeaderComponentProps {
   tabs?: {
     text: string
     icon: any
@@ -67,7 +67,7 @@ interface Props {
   isDraggable?: boolean
 }
 
-const Header: FunctionComponent<React.PropsWithChildren<Props>> = ({
+const Header: FunctionComponent<React.PropsWithChildren<HeaderComponentProps>> = ({
   tabs,
   title,
   actions,
@@ -76,7 +76,7 @@ const Header: FunctionComponent<React.PropsWithChildren<Props>> = ({
 }) => {
   return (
     <Container>
-      <ContentContainer isDraggable={isDraggable}>
+      <ContentContainer $isDraggable={isDraggable}>
         <LeftContainer>
           {tabs &&
             tabs.map((t, idx) => (

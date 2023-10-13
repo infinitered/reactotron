@@ -11,13 +11,13 @@ const Image = styled.img`
 const Caption = styled.div`
   padding: 10px 0;
   font-size: larger;
-  color: ${props => props.theme.foreground};
+  color: ${(props) => props.theme.foreground};
 `
 const Dimensions = styled.div`
-  color: ${props => props.theme.constant};
+  color: ${(props) => props.theme.constant};
 `
 const Filename = styled.div`
-  color: ${props => props.theme.highlight};
+  color: ${(props) => props.theme.highlight};
 `
 
 interface ImagePayload {

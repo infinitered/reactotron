@@ -10,14 +10,14 @@ import ActionButton from "../ActionButton"
 import Timestamp from "../Timestamp"
 
 interface ContainerProps {
-  isOpen: boolean
+  $isOpen: boolean
 }
-const Container = styled.div<ContainerProps>`
+const Container = styled.div.attrs(() => ({}))<ContainerProps>`
   display: flex;
   flex-direction: column;
   border-bottom: ${(props) => `1px solid ${props.theme.line}`};
   background-color: ${(props) =>
-    props.isOpen ? props.theme.backgroundSubtleLight : props.theme.background};
+    props.$isOpen ? props.theme.backgroundSubtleLight : props.theme.background};
 `
 
 const TopBarContainer = styled.div`
@@ -43,12 +43,12 @@ const TitleContainer = styled.div`
   width: 168px;
 `
 interface TitleTextProps {
-  isImportant: boolean
+  $isImportant: boolean
 }
-const TitleText = styled.div<TitleTextProps>`
+const TitleText = styled.div.attrs(() => ({}))<TitleTextProps>`
   display: flex;
-  color: ${(props) => (props.isImportant ? props.theme.tagComplement : props.theme.tag)};
-  background-color: ${(props) => (props.isImportant ? props.theme.tag : "transparent")};
+  color: ${(props) => (props.$isImportant ? props.theme.tagComplement : props.theme.tag)};
+  background-color: ${(props) => (props.$isImportant ? props.theme.tag : "transparent")};
   border-radius: 4px;
   padding: 4px 8px;
 `
@@ -123,13 +123,13 @@ const TimelineCommand: React.FC<React.PropsWithChildren<Props>> = ({
   const ExpandIcon = isOpen ? IconOpen : IconClosed
 
   return (
-    <Container isOpen={isOpen}>
+    <Container $isOpen={isOpen}>
       <TopBarContainer onClick={() => setIsOpen(!isOpen)}>
         <TimestampContainer>
           <Timestamp date={date} deltaTime={deltaTime} />
         </TimestampContainer>
         <TitleContainer>
-          <TitleText isImportant={isImportant}>
+          <TitleText $isImportant={isImportant}>
             {isTagged && (
               <TagContainer>
                 <TagIcon size={16} />

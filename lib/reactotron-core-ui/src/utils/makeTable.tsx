@@ -17,16 +17,16 @@ const KeyContainer = styled.div`
   cursor: text;
 `
 interface ValueContainerProps {
-  value: any
+  $value: any
 }
-const ValueContainer = styled.div<ValueContainerProps>`
+const ValueContainer = styled.div.attrs(() => ({}))<ValueContainerProps>`
   flex: 1;
   word-break: break-all;
   user-select: text;
   cursor: text;
   color: ${(props) => {
-    if (props.value === null || props.value === undefined) return props.theme.tag
-    switch (typeof props.value) {
+    if (props.$value === null || props.$value === undefined) return props.theme.tag
+    switch (typeof props.$value) {
       case "boolean":
       case "number":
         return props.theme.constant
@@ -64,7 +64,7 @@ const makeTable = (obj: unknown) => {
         return (
           <RowContainer key={key}>
             <KeyContainer>{key}</KeyContainer>
-            <ValueContainer value={value}>{textValue}</ValueContainer>
+            <ValueContainer $value={value}>{textValue}</ValueContainer>
           </RowContainer>
         )
       })}

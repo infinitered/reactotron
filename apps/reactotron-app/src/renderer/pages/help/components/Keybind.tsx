@@ -14,23 +14,23 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   margin: 10px 0;
-  color: ${props => props.theme.foreground};
+  color: ${(props) => props.theme.foreground};
 `
 
 interface KeystrokeContainerProps {
-  addWidth: boolean
+  $addWidth: boolean
 }
-const KeystrokeContainer = styled.div<KeystrokeContainerProps>`
-  width: ${props => (props.addWidth ? "180px" : "auto")};
+const KeystrokeContainer = styled.div.attrs(() => ({}))<KeystrokeContainerProps>`
+  width: ${(props) => (props.$addWidth ? "180px" : "auto")};
 `
 const Keystroke = styled.span`
   font-weight: bold;
   padding: 4px 12px;
   margin: 0 2px;
-  background-color: ${props => props.theme.foreground};
-  color: ${props => props.theme.background};
+  background-color: ${(props) => props.theme.foreground};
+  color: ${(props) => props.theme.background};
   border-radius: 4px;
-  border-bottom: 2px solid ${props => props.theme.highlight};
+  border-bottom: 2px solid ${(props) => props.theme.highlight};
 `
 const Plus = styled.span`
   margin: 0 2px;
@@ -43,7 +43,7 @@ export function KeybindKeys({ keybind, sequence, addWidth }) {
   const splitSequence = sequence.split("+")
 
   return (
-    <KeystrokeContainer addWidth={addWidth}>
+    <KeystrokeContainer $addWidth={addWidth}>
       {splitSequence.map((key, idx) => (
         <Fragment key={`${keybind.name}-${idx}`}>
           <Keystroke>{KEY_REMAPS[key.toLowerCase()] || key.toLowerCase()}</Keystroke>
@@ -60,7 +60,7 @@ export function getPlatformSequence(keybind) {
   }
 
   // If there is more then one we assume its platform specific
-  return keybind.sequences.find(s => s.sequence.indexOf(mouseTrap) > -1).sequence
+  return keybind.sequences.find((s) => s.sequence.indexOf(mouseTrap) > -1).sequence
 }
 
 function Keybind({ keybind }) {

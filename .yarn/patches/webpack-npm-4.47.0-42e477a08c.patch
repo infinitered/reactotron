@@ -51,15 +51,15 @@ index df4d216b12901b24e0fc18f96f1c6ea4dc7b57ae..03711c47e7a5c1b021a257dba9f43628
  		return this.rootModule.identifier() + " " + hash.digest("hex");
  	}
 diff --git a/lib/optimize/SplitChunksPlugin.js b/lib/optimize/SplitChunksPlugin.js
-index e7d560bf6ce0eab8c57e820f406ea77838425898..0c531294b1f7816f5610e17d5aff698ebf533f9c 100644
+index 42f23c9ed838f827ef52346b459154e6d4129c3d..690cfd86cd5049bf2d1838d162c67d007607f6d7 100644
 --- a/lib/optimize/SplitChunksPlugin.js
 +++ b/lib/optimize/SplitChunksPlugin.js
-@@ -22,7 +22,7 @@ const deterministicGroupingForModules = /** @type {function(DeterministicGroupin
+@@ -21,7 +21,7 @@ const createHash = require("../util/createHash");
+ const deterministicGroupingForModules = /** @type {function(DeterministicGroupingOptionsForModule): DeterministicGroupingGroupedItemsForModule[]} */ (deterministicGrouping);
  
  const hashFilename = name => {
- 	return crypto
--		.createHash("md4")
-+		.createHash("sha256")
+-	return createHash("md4")
++	return createHash("sha256")
  		.update(name)
  		.digest("hex")
  		.slice(0, 8);

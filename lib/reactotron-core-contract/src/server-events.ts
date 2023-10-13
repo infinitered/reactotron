@@ -1,21 +1,6 @@
 import * as WebSocket from "ws"
 import { Command } from "./command"
 
-/**
- * Configuration options for the Reactotron server.
- */
-export interface ServerOptions {
-  /**
-   * Which port to listen to.  Default: 9090.
-   */
-  port: number
-
-  /**
-   * Web Socket Secure Configuration
-   */
-  wss?: WssServerOptions
-}
-
 export interface PfxServerOptions {
   /**
    * Path to a PFX file.
@@ -43,6 +28,21 @@ export interface CertServerOptions {
 }
 
 export type WssServerOptions = PfxServerOptions | CertServerOptions
+
+/**
+ * Configuration options for the Reactotron server.
+ */
+export interface ServerOptions {
+  /**
+   * Which port to listen to.  Default: 9090.
+   */
+  port: number
+
+  /**
+   * Web Socket Secure Configuration
+   */
+  wss?: WssServerOptions
+}
 
 /**
  * A client which is in the process of connecting.

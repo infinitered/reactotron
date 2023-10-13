@@ -3,7 +3,7 @@ import { shell } from "electron"
 import { Header } from "reactotron-core-ui"
 import styled from "styled-components"
 import {
-  GoMarkGithub as RepoIcon,
+  GoRepo as RepoIcon,
   GoComment as FeedbackIcon,
   GoSquirrel as ReleaseIcon,
 } from "react-icons/go"

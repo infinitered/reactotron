@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback, PropsWithChildren } from "react"
+import React, { useRef, useEffect, useCallback } from "react"
 import Server, { createServer } from "reactotron-core-server"
 
 import ReactotronBrain from "../../ReactotronBrain"
@@ -19,7 +19,7 @@ const StandaloneContext = React.createContext<Context>({
   selectConnection: null,
 })
 
-const Provider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const reactotronServer = useRef<Server>(null)
 
   const {
@@ -37,11 +37,11 @@ const Provider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   useEffect(() => {
     reactotronServer.current = createServer({ port: config.get("serverPort") as number })
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore need to sync these types between reactotron-core-server and reactotron-app
     reactotronServer.current.on("connectionEstablished", connectionEstablished)
     reactotronServer.current.on("command", commandReceived)
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore need to sync these types between reactotron-core-server and reactotron-app
     reactotronServer.current.on("disconnect", connectionDisconnected)
 
