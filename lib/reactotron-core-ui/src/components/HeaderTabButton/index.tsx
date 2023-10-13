@@ -17,7 +17,7 @@ interface HeaderTabButtonProps {
 }
 
 const colorInterpolator = colorInterpolate([Theme.highlight, Theme.foregroundLight])
-const HeaderTabButtonContainer = styled.div.attrs((_props) => ({}))<HeaderTabButtonProps>`
+const HeaderTabButtonContainer = styled.div.attrs(() => ({}))<HeaderTabButtonProps>`
   display: flex;
   flex-direction: column;
   align-items: center;

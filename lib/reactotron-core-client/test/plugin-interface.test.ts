@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { createClient, corePlugins, ReactotronCore } from "../src/reactotron-core-client"
 import * as WebSocket from "ws"
 

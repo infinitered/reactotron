@@ -12,7 +12,7 @@ import Timestamp from "../Timestamp"
 interface ContainerProps {
   $isOpen: boolean
 }
-const Container = styled.div.attrs((_props) => ({}))<ContainerProps>`
+const Container = styled.div.attrs(() => ({}))<ContainerProps>`
   display: flex;
   flex-direction: column;
   border-bottom: ${(props) => `1px solid ${props.theme.line}`};
@@ -45,7 +45,7 @@ const TitleContainer = styled.div`
 interface TitleTextProps {
   $isImportant: boolean
 }
-const TitleText = styled.div.attrs((_props) => ({}))<TitleTextProps>`
+const TitleText = styled.div.attrs(() => ({}))<TitleTextProps>`
   display: flex;
   color: ${(props) => (props.$isImportant ? props.theme.tagComplement : props.theme.tag)};
   background-color: ${(props) => (props.$isImportant ? props.theme.tag : "transparent")};

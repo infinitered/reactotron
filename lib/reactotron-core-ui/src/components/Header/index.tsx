@@ -14,7 +14,7 @@ const Container = styled.div`
 interface ContentContainerProps {
   $isDraggable: boolean
 }
-const ContentContainer = styled.div.attrs((_props) => ({}))<ContentContainerProps>`
+const ContentContainer = styled.div.attrs(() => ({}))<ContentContainerProps>`
   -webkit-app-region: ${(props) => (props.$isDraggable ? "drag" : "")};
   height: 70px;
   padding: 0 10px;

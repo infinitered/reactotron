@@ -2,6 +2,7 @@ import { PluginConfig } from "./pluginConfig"
 
 export default function createCustomDispatch(
   reactotron: any,
+  // eslint-disable-next-line @typescript-eslint/ban-types
   store: { dispatch: Function },
   pluginConfig: PluginConfig
 ) {

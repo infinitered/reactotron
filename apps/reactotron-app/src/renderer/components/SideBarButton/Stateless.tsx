@@ -23,7 +23,7 @@ interface SideBarButtonProps {
 
 const colorInterpolator = colorInterpolate([Theme.highlight, Theme.foregroundLight])
 
-const SideBarButtonContainer = styled.div.attrs((_props) => ({}))<SideBarButtonProps>`
+const SideBarButtonContainer = styled.div.attrs(() => ({}))<SideBarButtonProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,7 +34,7 @@ const SideBarButtonContainer = styled.div.attrs((_props) => ({}))<SideBarButtonP
   color: ${(props) => colorInterpolator(props.$colorAnimation)};
 `
 
-const Image = styled.img.attrs((_props) => ({}))<SideBarButtonProps>`
+const Image = styled.img.attrs(() => ({}))<SideBarButtonProps>`
   width: 32px;
   height: 32px;
   padding-bottom: 4px;

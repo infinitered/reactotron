@@ -24,7 +24,7 @@ const ConnectionContainer = styled.div`
 interface ContentContainerProps {
   $isOpen: boolean
 }
-const ContentContainer = styled.div.attrs((_props) => ({}))<ContentContainerProps>`
+const ContentContainer = styled.div.attrs(() => ({}))<ContentContainerProps>`
   display: flex;
   flex-direction: row;
   background-color: ${(props) => props.theme.subtleLine};

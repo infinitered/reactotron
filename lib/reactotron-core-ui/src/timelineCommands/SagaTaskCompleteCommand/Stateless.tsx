@@ -52,7 +52,7 @@ interface EffectNameProps {
   $depth: number
   $isLoser: boolean
 }
-const EffectName = styled.span.attrs((_props) => ({}))<EffectNameProps>`
+const EffectName = styled.span.attrs(() => ({}))<EffectNameProps>`
   color: ${(props) => (props.$isLoser ? props.theme.foregroundDark : props.theme.constant)};
   padding-left: ${(props) => props.$depth * 20}px;
   text-decoration: ${(props) => (props.$isLoser ? "line-through" : "")};

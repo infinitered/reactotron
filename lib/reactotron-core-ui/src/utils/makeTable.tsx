@@ -19,7 +19,7 @@ const KeyContainer = styled.div`
 interface ValueContainerProps {
   $value: any
 }
-const ValueContainer = styled.div.attrs((_props) => ({}))<ValueContainerProps>`
+const ValueContainer = styled.div.attrs(() => ({}))<ValueContainerProps>`
   flex: 1;
   word-break: break-all;
   user-select: text;

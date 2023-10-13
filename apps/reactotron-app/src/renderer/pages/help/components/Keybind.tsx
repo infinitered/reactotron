@@ -20,7 +20,7 @@ const Container = styled.div`
 interface KeystrokeContainerProps {
   $addWidth: boolean
 }
-const KeystrokeContainer = styled.div.attrs((_props) => ({}))<KeystrokeContainerProps>`
+const KeystrokeContainer = styled.div.attrs(() => ({}))<KeystrokeContainerProps>`
   width: ${(props) => (props.$addWidth ? "180px" : "auto")};
 `
 const Keystroke = styled.span`

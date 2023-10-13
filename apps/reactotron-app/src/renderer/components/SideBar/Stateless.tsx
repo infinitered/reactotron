@@ -9,7 +9,7 @@ import { reactotronLogo } from "../../images"
 interface SideBarContainerProps {
   $isOpen: boolean
 }
-const SideBarContainer = styled.div.attrs((_props) => ({}))<SideBarContainerProps>`
+const SideBarContainer = styled.div.attrs(() => ({}))<SideBarContainerProps>`
   display: flex;
   flex-direction: column;
   padding-top: 25px;

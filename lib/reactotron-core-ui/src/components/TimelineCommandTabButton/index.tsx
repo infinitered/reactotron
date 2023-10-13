@@ -4,7 +4,7 @@ import styled from "styled-components"
 interface ContainerProps {
   $isActive: boolean
 }
-const Container = styled.div.attrs((_props) => ({}))<ContainerProps>`
+const Container = styled.div.attrs(() => ({}))<ContainerProps>`
   display: flex;
   padding: 4px 8px;
   margin: 4px;

@@ -40,7 +40,7 @@ const SourceFilename = styled.div`
 interface SourceLineContainerProps {
   $isSelected: boolean
 }
-const SourceLineContainer = styled.div.attrs((_props) => ({}))<SourceLineContainerProps>`
+const SourceLineContainer = styled.div.attrs(() => ({}))<SourceLineContainerProps>`
   display: flex;
   padding: 6px 0;
   cursor: pointer;
@@ -99,7 +99,7 @@ interface StackFrameContainerProps {
   $isNodeModule: boolean
   $isSelected: boolean
 }
-const StackFrameContainer = styled.div.attrs((_props) => ({}))<StackFrameContainerProps>`
+const StackFrameContainer = styled.div.attrs(() => ({}))<StackFrameContainerProps>`
   display: flex;
   padding: 6px;
   word-break: break-all;

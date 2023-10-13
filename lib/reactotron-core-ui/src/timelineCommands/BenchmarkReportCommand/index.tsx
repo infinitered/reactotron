@@ -30,7 +30,7 @@ interface StepGrapProps {
   $startPercent: number
   $endPercent: number
 }
-const StepGraph = styled.div.attrs((_props) => ({}))<StepGrapProps>`
+const StepGraph = styled.div.attrs(() => ({}))<StepGrapProps>`
   background-color: ${(props) => props.theme.backgroundLighter};
   position: absolute;
   top: 0;
