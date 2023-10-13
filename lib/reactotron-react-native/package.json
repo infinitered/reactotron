@@ -39,7 +39,7 @@
     "react-native": ">=0.40.0"
   },
   "dependencies": {
-    "mitt": "3.0.0",
+    "mitt": "^3.0.1",
     "query-string": "6.10.1",
     "reactotron-core-client": "workspace:*"
   },

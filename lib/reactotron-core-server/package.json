@@ -34,7 +34,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "mitt": "3.0.0",
+    "mitt": "^3.0.1",
     "ramda": "0.26.1",
     "reactotron-core-contract": "workspace:*",
     "ws": "8.12.1"
