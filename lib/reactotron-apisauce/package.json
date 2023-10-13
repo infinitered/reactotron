@@ -58,7 +58,7 @@
     "eslint-plugin-standard": "^5.0.0",
     "jest": "^29.4.2",
     "json-server": "^0.17.4",
-    "prettier": "^2.8.4",
+    "prettier": "^3.0.3",
     "rimraf": "5.0.5",
     "rollup": "^1.2.3",
     "rollup-plugin-babel": "^4.3.2",

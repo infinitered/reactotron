@@ -83,7 +83,7 @@ export interface CommandMap {
 
 export interface Command<
   Type extends CommandTypeKey = CommandTypeKey,
-  Payload extends Record<string, any> = CommandMap[Type]
+  Payload extends Record<string, any> = CommandMap[Type],
 > {
   type: CommandTypeKey
   connectionId: number

@@ -83,7 +83,7 @@ type PluginFeatures<Client, P extends PluginCreator<Client>> = ExtractFeatures<R
 
 export type InferFeaturesFromPlugins<
   Client,
-  Plugins extends PluginCreator<Client>[]
+  Plugins extends PluginCreator<Client>[],
 > = UnionToIntersection<PluginFeatures<Client, Plugins[number]>>
 
 type InferFeaturesFromPlugin<Client, P extends PluginCreator<Client>> = UnionToIntersection<
@@ -120,7 +120,7 @@ export interface ReactotronCore {
 
 export type InferFeatures<
   Client = ReactotronCore,
-  PC extends PluginCreator<Client> = PluginCreator<Client>
+  PC extends PluginCreator<Client> = PluginCreator<Client>,
 > = PC extends (client: Client) => { features: infer U } ? U : never
 
 export const corePlugins = [
@@ -138,7 +138,7 @@ export type InferPluginsFromCreators<Client, PC extends PluginCreator<Client>[]>
 >
   ? ReturnType<P>[]
   : never
- // #endregion
+// #endregion
 
 type CorePluginFeatures = InferFeaturesFromPlugins<ReactotronCore, typeof corePlugins>
 

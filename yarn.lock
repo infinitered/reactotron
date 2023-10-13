@@ -25238,30 +25238,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:2.8.5":
-  version: 2.8.5
-  resolution: "prettier@npm:2.8.5"
+"prettier@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "prettier@npm:3.0.3"
   bin:
-    prettier: bin-prettier.js
-  checksum: b7f8d30e14061e0478bc5a59d4d889688d804c173a0daa91b1b85dc08eef5eb6956d1b59f4037770776fda5b967f6c9ca3b7a8a43c50bedb4c7b182029f865aa
-  languageName: node
-  linkType: hard
-
-"prettier@npm:^2.8.4":
-  version: 2.8.4
-  resolution: "prettier@npm:2.8.4"
-  bin:
-    prettier: bin-prettier.js
-  checksum: c173064bf3df57b6d93d19aa98753b9b9dd7657212e33b41ada8e2e9f9884066bb9ca0b4005b89b3ab137efffdf8fbe0b462785aba20364798ff4303aadda57e
-  languageName: node
-  linkType: hard
-
-"prettier@npm:^2.8.8":
-  version: 2.8.8
-  resolution: "prettier@npm:2.8.8"
-  bin:
-    prettier: bin-prettier.js
-  checksum: b49e409431bf129dd89238d64299ba80717b57ff5a6d1c1a8b1a28b590d998a34e083fa13573bc732bb8d2305becb4c9a4407f8486c81fa7d55100eb08263cf8
+    prettier: bin/prettier.cjs
+  checksum: e10b9af02b281f6c617362ebd2571b1d7fc9fb8a3bd17e371754428cda992e5e8d8b7a046e8f7d3e2da1dcd21aa001e2e3c797402ebb6111b5cd19609dd228e0
   languageName: node
   linkType: hard
 
@@ -26691,7 +26673,7 @@ __metadata:
     eslint-plugin-standard: ^5.0.0
     jest: ^29.4.2
     json-server: ^0.17.4
-    prettier: ^2.8.4
+    prettier: ^3.0.3
     rimraf: 5.0.5
     rollup: ^1.2.3
     rollup-plugin-babel: ^4.3.2
@@ -26745,7 +26727,7 @@ __metadata:
     jest: ^29.4.3
     jest-environment-jsdom: ^29.4.3
     mime: ^3.0.0
-    prettier: ^2.8.8
+    prettier: ^3.0.3
     react: 17.0.2
     react-dom: 17.0.2
     react-hotkeys: ^2.0.0
@@ -26792,7 +26774,7 @@ __metadata:
     get-port: ^5.1.1
     jest: ^29.4.3
     jest-environment-node: ^29.4.3
-    prettier: ^2.8.4
+    prettier: ^3.0.3
     reactotron-core-contract: "workspace:*"
     rimraf: 5.0.5
     rollup: 2.56.3
@@ -26803,6 +26785,7 @@ __metadata:
     rollup-plugin-replace: 2.2.0
     rollup-plugin-resolve: 0.0.1-predev.1
     ts-jest: ^29.0.5
+    tslib: ^2.6.2
     typescript: ^4.9.5
     ws: ^8.12.1
   languageName: unknown
@@ -26832,7 +26815,7 @@ __metadata:
     eslint-plugin-standard: ^5.0.0
     jest: ^29.4.3
     jest-environment-node: ^29.4.3
-    prettier: ^2.8.4
+    prettier: ^3.0.3
     rimraf: 5.0.5
     rollup: 2.56.3
     rollup-plugin-babel: 4.4.0
@@ -26874,7 +26857,7 @@ __metadata:
     jest: ^29.4.1
     jest-environment-node: ^29.4.1
     mitt: ^3.0.1
-    prettier: ^2.8.4
+    prettier: ^3.0.3
     ramda: 0.26.1
     reactotron-core-contract: "workspace:*"
     rimraf: 5.0.5
@@ -26926,7 +26909,7 @@ __metadata:
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-standard: ^5.0.0
     jest: 29.4.2
-    prettier: ^2.8.4
+    prettier: ^3.0.3
     react: 17.0.2
     react-dom: 17.0.2
     react-icons: 4.2.0
@@ -26987,7 +26970,7 @@ __metadata:
     lodash.camelcase: ^4.3.0
     mobx: ^4.2.1
     mobx-state-tree: ^2.0.4
-    prettier: ^2.8.4
+    prettier: ^3.0.3
     ramda: ^0.25.0
     reactotron-core-client: "workspace:*"
     rollup: ^1.1.2
@@ -27028,7 +27011,7 @@ __metadata:
     eslint-plugin-standard: 5.0.0
     jest: 29.5.0
     npm-run-all: 4.1.5
-    prettier: 2.8.5
+    prettier: ^3.0.3
     reactotron-core-client: "workspace:*"
     rollup: 2.60.2
     rollup-plugin-babel: 4.4.0
@@ -27067,7 +27050,7 @@ __metadata:
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-standard: ^5.0.0
     jest: ^29.4.3
-    prettier: ^2.8.4
+    prettier: ^3.0.3
     react-native-mmkv: ^2.10.2
     reactotron-core-client: "workspace:*"
     rollup: ^1.1.2
@@ -27113,7 +27096,7 @@ __metadata:
     jest: 29.5.0
     mitt: ^3.0.1
     npm-run-all: 4.1.5
-    prettier: ^2.8.4
+    prettier: ^3.0.3
     query-string: 6.10.1
     react: ">=17.0.2"
     react-native: 0.72.1
@@ -27156,7 +27139,7 @@ __metadata:
     eslint-plugin-promise: ^6.1.1
     eslint-plugin-standard: ^5.0.0
     jest: 29.4.1
-    prettier: ^2.8.4
+    prettier: ^3.0.3
     reactotron-core-client: "workspace:*"
     redux: 4.2.1
     rollup: 1.1.2
@@ -27193,7 +27176,7 @@ __metadata:
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-standard: ^5.0.0
     nx: 15.5.1
-    prettier: ^2.8.4
+    prettier: ^3.0.3
     typescript: ^4.9.5
     zx: ^7.2.3
   languageName: unknown
@@ -31102,7 +31085,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.5.0":
+"tslib@npm:^2.5.0, tslib@npm:^2.6.2":
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: 329ea56123005922f39642318e3d1f0f8265d1e7fcb92c633e0809521da75eeaca28d2cf96d7248229deb40e5c19adf408259f4b9640afd20d13aecc1430f3ad
