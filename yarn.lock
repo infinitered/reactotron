@@ -7785,21 +7785,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ws@npm:6.0.4":
-  version: 6.0.4
-  resolution: "@types/ws@npm:6.0.4"
+"@types/ws@npm:^8.5.7":
+  version: 8.5.7
+  resolution: "@types/ws@npm:8.5.7"
   dependencies:
     "@types/node": "*"
-  checksum: b2656a76bfad0c17bb1e3fc237ba7122431c1373669977ed8edef45934c82f71c75d8c71f0a576dc6d98b0954fd94cae0166c6b4ccb40f7e0ee29cc92673519c
-  languageName: node
-  linkType: hard
-
-"@types/ws@npm:^8.5.4":
-  version: 8.5.4
-  resolution: "@types/ws@npm:8.5.4"
-  dependencies:
-    "@types/node": "*"
-  checksum: fefbad20d211929bb996285c4e6f699b12192548afedbe4930ab4384f8a94577c9cd421acaad163cacd36b88649509970a05a0b8f20615b30c501ed5269038d1
+  checksum: 4502085c0f7ae6b36d5419c0fc6ce4b9002ee5e997a8708d6ed10b393e97091e1b986e8038ec604945c194f14aac150e74d6596629a2775628d122f552009c35
   languageName: node
   linkType: hard
 
@@ -26305,7 +26296,7 @@ __metadata:
     "@babel/preset-typescript": ^7.23.2
     "@types/jest": ^29.5.5
     "@types/node": 14.17.11
-    "@types/ws": ^8.5.4
+    "@types/ws": ^8.5.7
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
     babel-eslint: ^10.1.0
@@ -26333,7 +26324,7 @@ __metadata:
     ts-jest: ^29.1.1
     tslib: ^2.6.2
     typescript: ^4.9.5
-    ws: ^8.12.1
+    ws: ^8.14.2
   languageName: unknown
   linkType: soft
 
@@ -26347,7 +26338,7 @@ __metadata:
     "@babel/preset-typescript": ^7.23.2
     "@types/jest": ^29.5.5
     "@types/node": 14.17.11
-    "@types/ws": ^8.5.4
+    "@types/ws": ^8.5.7
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
     babel-eslint: ^10.1.0
@@ -26372,7 +26363,7 @@ __metadata:
     rollup-plugin-resolve: 0.0.1-predev.1
     ts-jest: ^29.1.1
     typescript: ^4.9.5
-    ws: ^8.12.1
+    ws: ^8.14.2
   languageName: unknown
   linkType: soft
 
@@ -26387,7 +26378,7 @@ __metadata:
     "@types/jest": ^29.5.5
     "@types/node": 14.17.3
     "@types/ramda": 0.26.44
-    "@types/ws": 6.0.4
+    "@types/ws": ^8.5.7
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
     babel-eslint: ^10.1.0
@@ -26415,7 +26406,7 @@ __metadata:
     rollup-plugin-resolve: 0.0.1-predev.1
     ts-jest: ^29.1.1
     typescript: ^4.9.5
-    ws: 8.12.1
+    ws: ^8.14.2
   languageName: unknown
   linkType: soft
 
@@ -32246,21 +32237,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:8.12.1, ws@npm:^8.11.0, ws@npm:^8.12.1":
-  version: 8.12.1
-  resolution: "ws@npm:8.12.1"
-  peerDependencies:
-    bufferutil: ^4.0.1
-    utf-8-validate: ">=5.0.2"
-  peerDependenciesMeta:
-    bufferutil:
-      optional: true
-    utf-8-validate:
-      optional: true
-  checksum: 97301c1c4d838fc81bd413f370f75c12aabe44527b31323b761eab3043a9ecb7e32ffd668548382c9a6a5ad3a1c3a9249608e8338e6b939f2f9540f1e21970b5
-  languageName: node
-  linkType: hard
-
 "ws@npm:^6.2.1, ws@npm:^6.2.2":
   version: 6.2.2
   resolution: "ws@npm:6.2.2"
@@ -32282,6 +32258,36 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: c3c100a181b731f40b7f2fddf004aa023f79d64f489706a28bc23ff88e87f6a64b3c6651fbec3a84a53960b75159574d7a7385709847a62ddb7ad6af76f49138
+  languageName: node
+  linkType: hard
+
+"ws@npm:^8.11.0":
+  version: 8.12.1
+  resolution: "ws@npm:8.12.1"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ">=5.0.2"
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 97301c1c4d838fc81bd413f370f75c12aabe44527b31323b761eab3043a9ecb7e32ffd668548382c9a6a5ad3a1c3a9249608e8338e6b939f2f9540f1e21970b5
+  languageName: node
+  linkType: hard
+
+"ws@npm:^8.14.2":
+  version: 8.14.2
+  resolution: "ws@npm:8.14.2"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ">=5.0.2"
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 3ca0dad26e8cc6515ff392b622a1467430814c463b3368b0258e33696b1d4bed7510bc7030f7b72838b9fdeb8dbd8839cbf808367d6aae2e1d668ce741d4308b
   languageName: node
   linkType: hard
 
