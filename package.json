@@ -23,7 +23,7 @@
   ],
   "homepage": "https://github.com/infinitered/reactotron#readme",
   "engines": {
-    "node": ">= 18.0.0"
+    "node": ">=18.0.0"
   },
   "devDependencies": {
     "@jscutlery/semver": "^2.30.1",
