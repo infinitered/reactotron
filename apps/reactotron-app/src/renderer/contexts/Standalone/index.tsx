@@ -19,7 +19,7 @@ const StandaloneContext = React.createContext<Context>({
   selectConnection: null,
 })
 
-const Provider: React.FC<React.ReactNode> = ({ children }) => {
+const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const reactotronServer = useRef<Server>(null)
 
   const {

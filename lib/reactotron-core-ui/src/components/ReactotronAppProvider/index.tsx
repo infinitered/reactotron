@@ -11,7 +11,7 @@ const ReactotronContainer = styled.div`
   user-select: none;
 `
 
-const ReactotronAppProvider: React.FC<React.ReactNode> = ({ children }) => {
+const ReactotronAppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <ReactotronContainer>{children}</ReactotronContainer>
