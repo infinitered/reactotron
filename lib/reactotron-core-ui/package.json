@@ -74,7 +74,7 @@
     "@types/stringify-object": "3.3.1",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
-    "babel-loader": "8.2.2",
+    "babel-loader": "^8.3.0",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard": "^17.1.0",

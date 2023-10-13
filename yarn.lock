@@ -9434,21 +9434,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-loader@npm:8.2.2":
-  version: 8.2.2
-  resolution: "babel-loader@npm:8.2.2"
-  dependencies:
-    find-cache-dir: ^3.3.1
-    loader-utils: ^1.4.0
-    make-dir: ^3.1.0
-    schema-utils: ^2.6.5
-  peerDependencies:
-    "@babel/core": ^7.0.0
-    webpack: ">=2"
-  checksum: df5092ef9886bb49aacb7c58ac40ed0681ced031c8d91e49d680cedace2aa1703390a31fbe7c0e409f739836e911c5c991119133d90d9289f681c0a8ff2447a1
-  languageName: node
-  linkType: hard
-
 "babel-loader@npm:^8.0.6, babel-loader@npm:^8.1.0, babel-loader@npm:^8.3.0":
   version: 8.3.0
   resolution: "babel-loader@npm:8.3.0"
@@ -26468,7 +26453,7 @@ __metadata:
     "@types/stringify-object": 3.3.1
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
-    babel-loader: 8.2.2
+    babel-loader: ^8.3.0
     color-interpolate: 1.0.5
     date-fns: 2.30.0
     eslint: ^8.51.0
@@ -31824,9 +31809,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:4.46.0":
-  version: 4.46.0
-  resolution: "webpack@npm:4.46.0"
+"webpack@npm:4.47.0":
+  version: 4.47.0
+  resolution: "webpack@npm:4.47.0"
   dependencies:
     "@webassemblyjs/ast": 1.9.0
     "@webassemblyjs/helper-module-context": 1.9.0
@@ -31858,13 +31843,13 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 013fa24c00d4261e16ebca60353fa6f848e417b5a44bdf28c16ebebd67fa61e960420bb314c8df05cfe2dad9b90efabcf38fd6875f2361922769a0384085ef1e
+  checksum: 65fbf8144cdcdb502ddbf8622a05ab54aa3910c6bce6f0f17fadddda535a2023096a1b61e25fb02448257665bdc3ac8d93b7d3c22aa46773a7842365019e1209
   languageName: node
   linkType: hard
 
-"webpack@patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch::locator=reactotron%40workspace%3A.":
-  version: 4.46.0
-  resolution: "webpack@patch:webpack@npm%3A4.46.0#./.yarn/patches/webpack-npm-4.46.0-a8158cfa7f.patch::version=4.46.0&hash=fe9dd1&locator=reactotron%40workspace%3A."
+"webpack@patch:webpack@npm%3A4.47.0#./.yarn/patches/webpack-npm-4.47.0-42e477a08c.patch::locator=reactotron%40workspace%3A.":
+  version: 4.47.0
+  resolution: "webpack@patch:webpack@npm%3A4.47.0#./.yarn/patches/webpack-npm-4.47.0-42e477a08c.patch::version=4.47.0&hash=3ae7fd&locator=reactotron%40workspace%3A."
   dependencies:
     "@webassemblyjs/ast": 1.9.0
     "@webassemblyjs/helper-module-context": 1.9.0
@@ -31896,7 +31881,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: ebfa54f69ce8be2a7e7639da947fa1a215487f4a23aa7e15c627668bd5b2eae67096c5ac1ff4d24dc611ec44f384bd44eee38750dba8a623bbde3e3ae7208dd1
+  checksum: 41b8c0b26495f9595dcf542e73499a2d3b6c6e822da38e19e2fe1f0553fcc0b88e3db2af5e7dcdfbb512402bf1c41a0a0c1872b879175984b864fc7f06c753a1
   languageName: node
   linkType: hard
 
