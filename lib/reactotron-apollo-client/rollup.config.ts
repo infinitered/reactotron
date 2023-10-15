@@ -1,7 +1,7 @@
 import resolve from "rollup-plugin-node-resolve"
 import babel from "rollup-plugin-babel"
 import filesize from "rollup-plugin-filesize"
-import minify from "rollup-plugin-babel-minify"
+// import minify from "rollup-plugin-babel-minify"
 
 const pkg = require("./package.json")
 
@@ -28,11 +28,13 @@ export default {
   plugins: [
     resolve({ extensions: [".ts"] }),
     babel({ extensions: [".ts"], runtimeHelpers: true }),
-    process.env.NODE_ENV === "production"
-      ? minify({
-          comments: false,
-        })
-      : null,
+    // TODO fix minification via rollup-plugin-terser?
+    // rollout-plugin-babel-minify is deprecated and causing build to fail
+    // process.env.NODE_ENV === "production"
+    //   ? minify({
+    //       comments: false,
+    //     })
+    //   : null,
     filesize(),
   ],
   external: ["@apollo/client", "reactotron-core-client", "graphql"],

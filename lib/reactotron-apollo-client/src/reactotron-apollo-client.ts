@@ -46,7 +46,7 @@ type MutationData = {
   body: string | undefined
 }
 
-type Callback = () => any
+// type Callback = () => any
 
 type ArrayOfQuery = Array<QueryData>
 type ArrayOfMutations = Array<MutationData>
@@ -59,45 +59,46 @@ type ApolloClientState = {
   cache: object
 }
 
-type RawMutationBody = {
-  id: string
-  name: string | null
-  body: string
-  variables: object
-}
+// TODO utilize when we do Queries and Mutations
+// type RawMutationBody = {
+//   id: string
+//   name: string | null
+//   body: string
+//   variables: object
+// }
 
-type RawQueryBody = {
-  id: string
-  name: string | null
-  cachedData: object
-}
+// type RawQueryBody = {
+//   id: string
+//   name: string | null
+//   cachedData: object
+// }
 
-type RawData = {
-  id: string
-  lastUpdateAt: Date
-  queries: ArrayOfQuery
-  mutations: ArrayOfMutations
-  cache: Array<BlockType>
-}
+// type RawData = {
+//   id: string
+//   lastUpdateAt: Date
+//   queries: ArrayOfQuery
+//   mutations: ArrayOfMutations
+//   cache: Array<BlockType>
+// }
 
-type Data = {
-  id: string
-  lastUpdateAt: Date
-  queries: Array<BlockType>
-  mutations: Array<BlockType>
-  cache: Array<BlockType>
-}
+// type Data = {
+//   id: string
+//   lastUpdateAt: Date
+//   queries: Array<BlockType>
+//   mutations: Array<BlockType>
+//   cache: Array<BlockType>
+// }
 
-type BlockType = {
-  id?: string
-  operationType?: string
-  name?: string | null
-  blocks?: Array<{
-    blockType: string
-    blockLabel: string
-    blockValue: any
-  }>
-}
+// type BlockType = {
+//   id?: string
+//   operationType?: string
+//   name?: string | null
+//   blocks?: Array<{
+//     blockType: string
+//     blockLabel: string
+//     blockValue: any
+//   }>
+// }
 
 let tick = 0
 
@@ -119,6 +120,7 @@ function getQueries(queryMap: Map<string, RawQueryData>): ArrayOfQuery {
   const queries: ArrayOfQuery = []
 
   if (queryMap) {
+    // @ts-expect-error Type 'IterableIterator<RawQueryData>' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher
     ;[...queryMap.values()].forEach(
       ({ document, variables, observableQuery, diff, lastDiff }, queryId) => {
         if (document && observableQuery) {
@@ -194,7 +196,7 @@ async function getCurrentState(client: ApolloClientType): Promise<ApolloClientSt
 }
 
 function debounce(func: (...args: any) => any, timeout = 500): () => any {
-  let timer: NodeJS.Timeout
+  let timer
   return (...args) => {
     clearTimeout(timer)
     timer = setTimeout(() => {
