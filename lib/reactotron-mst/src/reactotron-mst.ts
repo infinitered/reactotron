@@ -238,7 +238,7 @@ export function mst(opts: MstPluginOptions = {}) {
         const path = getPath(call.context)
 
         // action related data
-        const action = { args: args, name: call.name, path }
+        const action = { args, name: call.name, path }
 
         // mst internal data
         const mstPayload = {

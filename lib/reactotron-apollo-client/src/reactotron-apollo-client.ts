@@ -179,7 +179,7 @@ async function getCurrentState(client: ApolloClientType): Promise<ApolloClientSt
 
   let currentState: ApolloClientState
 
-  return new Promise((res) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       currentState = {
         id: tick,
@@ -188,7 +188,7 @@ async function getCurrentState(client: ApolloClientType): Promise<ApolloClientSt
         mutations: getAllMutations(client),
         cache: client.cache.extract(true),
       }
-      res(currentState)
+      resolve(currentState)
     }, 0)
   }).then(() => {
     return currentState
