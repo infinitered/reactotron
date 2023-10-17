@@ -7,14 +7,19 @@ import {
   assertHasLoggerPlugin,
   InferFeatures,
   LoggerPlugin,
+  assertHasStateResponsePlugin,
+  StateResponsePlugin,
 } from "reactotron-core-client"
-
+import type { Command } from "reactotron-core-contract"
 import type { DocumentNode, NormalizedCacheObject } from "@apollo/client"
 import { getOperationName } from "@apollo/client/utilities"
 import type { QueryInfo } from "@apollo/client/core/QueryInfo"
 
 import type { ASTNode } from "graphql"
 import { print } from "graphql"
+
+import { flatten, uniq } from "ramda"
+import pathObject from "./helpers/pathObject"
 
 type ApolloClientType = ApolloClient<NormalizedCacheObject>
 
@@ -206,30 +211,122 @@ function debounce(func: (...args: any) => any, timeout = 500): () => any {
   }
 }
 
-interface ApolloPluginConfig {
+export interface ApolloPluginConfig {
   apolloClient: ApolloClient<NormalizedCacheObject>
 }
 
-const apolloPlugin =
+export const apolloPlugin =
   (options: ApolloPluginConfig) =>
   <Client extends ReactotronCore>(reactotronClient: Client) => {
     const { apolloClient } = options
     assertHasLoggerPlugin(reactotronClient)
-    const reactotron = reactotronClient as unknown as ReactotronCore &
-      InferFeatures<ReactotronCore, LoggerPlugin>
+    assertHasStateResponsePlugin(reactotronClient)
+    const reactotron = reactotronClient as Client &
+      InferFeatures<Client, LoggerPlugin> &
+      InferFeatures<Client, StateResponsePlugin>
+
+    // --- Plugin-scoped variables ---------------------------------
+
+    // hang on to the apollo state
+    let apolloData = { cache: {}, queries: {}, mutations: {} }
+
+    // a list of subscriptions the client is subscribing to
+    let subscriptions: string[] = []
+
+    function subscribe(command: Command<"state.values.subscribe">) {
+      const paths: string[] = (command && command.payload && command.payload.paths) || []
+
+      if (paths) {
+        // TODO ditch ramda
+        subscriptions = uniq(flatten(paths))
+      }
+
+      sendSubscriptions()
+    }
+
+    function getChanges() {
+      // TODO also check if cache state is empty
+      if (!reactotron) return []
+
+      const changes = []
+
+      const state = apolloData.cache
+
+      subscriptions.forEach((path) => {
+        let cleanedPath = path
+        let starredPath = false
+
+        if (path && path.endsWith("*")) {
+          // Handle the star!
+          starredPath = true
+          cleanedPath = path.substring(0, path.length - 2)
+        }
+
+        const values = pathObject(cleanedPath, state)
+
+        if (starredPath && cleanedPath && values) {
+          changes.push(
+            ...Object.entries(values).map((val) => ({
+              path: `${cleanedPath}.${val[0]}`,
+              value: val[1],
+            }))
+          )
+        } else {
+          changes.push({ path: cleanedPath, value: state[cleanedPath] })
+        }
+      })
+
+      return changes
+    }
+
+    function sendSubscriptions() {
+      const changes = getChanges()
+      reactotron.stateValuesChange(changes)
+    }
+
+    // --- Reactotron Hooks ---------------------------------
+
+    // maps inbound commands to functions to run
+    // TODO clear cache command?
+    const COMMAND_MAP = {
+      "state.values.subscribe": subscribe,
+    } satisfies { [name: string]: (command: Command) => void }
+
+    /**
+     * Fires when we receive a command from the reactotron app.
+     */
+    function onCommand(command: Command) {
+      // lookup the command and execute
+      const handler = COMMAND_MAP[command && command.type]
+      handler && handler(command)
+    }
+
+    // --- Reactotron plugin interface ---------------------------------
 
     return {
+      // Fires when we receive a command from the Reactotron app.
+      onCommand,
+
       onConnect() {
-        reactotron.log("Apollo Client Connected")
+        reactotron.display({ name: "APOLLO CLIENT", preview: "Connected" })
+
         const poll = () =>
           getCurrentState(apolloClient).then((state) => {
+            apolloData = state
+
+            sendSubscriptions()
+
             reactotron.display({
               name: "APOLLO CLIENT",
-              preview: `Apollo client updated at ${state.lastUpdateAt}`,
+              preview: `State Updated`,
               value: state,
             })
           })
         apolloClient.__actionHookForDevTools(debounce(poll))
+      },
+      onDisconnect() {
+        // Does this do anything? How do we clean up?
+        apolloClient.__actionHookForDevTools(null)
       },
     } satisfies Plugin<Client>
   }
