@@ -1,6 +1,31 @@
 import filterCommands, { filterSearch, filterHidden } from "./index"
 import { CommandType } from "reactotron-core-contract"
 
+const EXAMPLE_VALUE_OBJECT = {
+  id: 1,
+  lastUpdateAt: "13:44",
+  queries: [],
+  mutations: [],
+  cache: {
+    "Launch:5eb87cd9ffd86e000604b32aSEARCHCACHE": {
+      __typename: "Launch",
+      id: "5eb87cd9ffd86e000604b32a",
+      mission_name: "FalconSat",
+      launch_date_unix: 1143239400,
+      launch_success: null,
+      upcoming: false,
+    },
+    "Launch:5eb87cdaffd86e000604b32b": {
+      __typename: "Launch",
+      id: "5eb87cdaffd86e000604b32b",
+      mission_name: "DemoSat",
+      launch_date_unix: 1174439400,
+      launch_success: null,
+      upcoming: false,
+    },
+  },
+}
+
 const TEST_COMMANDS = [
   { type: "SEARCHTYPE" },
   { type: "ADUMMYOBJ", payload: { message: "SEARCHMESSAGE" } },
@@ -12,6 +37,7 @@ const TEST_COMMANDS = [
   { type: "ADUMMYOBJ", payload: { request: { url: "SEARCHURL" } } },
   { type: "log", payload: { debug: "LOGDEBUG" } },
   { type: "client.intro", payload: { connection: "SEARCHCONNECTION" } },
+  { type: "display", payload: { value: EXAMPLE_VALUE_OBJECT } },
 ]
 
 const TESTS = [
@@ -70,6 +96,23 @@ const TESTS = [
     name: "clientIntro => connection",
     search: "connection",
     result: [{ type: "client.intro", payload: { connection: "SEARCHCONNECTION" } }],
+  },
+  {
+    name: "display => apollo client",
+    search: "FalconSat",
+    result: [
+      {
+        type: "display",
+        payload: {
+          value: EXAMPLE_VALUE_OBJECT,
+        },
+      },
+    ],
+  },
+  {
+    name: "display => apollo client",
+    search: "Falcon 9",
+    result: [],
   },
   {
     name: "multiple results",
