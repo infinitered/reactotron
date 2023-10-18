@@ -2,7 +2,7 @@
 
 ## Installing Reactotron.app
 
-Let’s [download the desktop app](./installing.md) to start.  You can download for Linux, Windows, and Mac. 
+Let’s [download the desktop app](./installing.md) to start.  You can download for Linux, Windows, and Mac.
 
 Unzip & run.
 
