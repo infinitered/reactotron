@@ -2,11 +2,13 @@
 
 ## Installing Reactotron.app
 
-Let’s [download the desktop app](./installing.md) to start.  You can download for Linux, Windows, and Mac.
+Let’s [download the desktop app](./installing.md) to start.  You can download for Linux, Windows, and Mac. 
 
 Unzip & run.
 
 ![Installing The App](./images/quick-start-react-js/installing.jpg)
+
+If you run into an [issue](https://github.com/infinitered/reactotron/issues/1140) opening the application on Mac you can install with Homebrew instead. 
 
 ## Configure Reactotron with your project
 
