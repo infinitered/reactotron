@@ -8,6 +8,8 @@ Unzip & run.
 
 ![Installing The App](./images/quick-start-react-js/installing.jpg)
 
+If you run into an [issue](https://github.com/infinitered/reactotron/issues/1140) opening the application on Mac you can install with Homebrew instead. 
+
 ## Configure Reactotron with your project
 
 Let's install Reactotron on your project as a dev dependency. Don't have a React Native project yet? [Follow the Getting Started guide in the React Native documentation](https://facebook.github.io/react-native/docs/getting-started.html).
