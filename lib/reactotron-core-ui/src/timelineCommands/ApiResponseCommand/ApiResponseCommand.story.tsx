@@ -14,9 +14,9 @@ const apiResponseCommand = {
     request: {
       url: "https://www.google.com/",
       method: "GET",
-      data: null,
+      data: '{"operationName":"LaunchList","variables":{"testing":{"nested":"thing"}},"query":"query LaunchList {\\n  launches {\\n    id\\n    mission_name\\n    launch_date_unix\\n    launch_success\\n    upcoming\\n    __typename\\n  }\\n}\\n"}',
       headers: {},
-      params: null,
+      params: { data: { test: 1 } },
     },
     response: {
       body: " skipped ",
@@ -95,5 +95,25 @@ export const OpenRequestHeaders = () => (
     isOpen
     setIsOpen={() => {}}
     initialTab={Tab.RequestHeaders}
+  />
+)
+
+export const OpenRequestParams = () => (
+  <ApiResponseCommand
+    command={apiResponseCommand}
+    copyToClipboard={() => {}}
+    isOpen
+    setIsOpen={() => {}}
+    initialTab={Tab.RequestParams}
+  />
+)
+
+export const OpenRequestBody = () => (
+  <ApiResponseCommand
+    command={apiResponseCommand}
+    copyToClipboard={() => {}}
+    isOpen
+    setIsOpen={() => {}}
+    initialTab={Tab.RequestBody}
   />
 )

@@ -27,7 +27,14 @@ export default function ContentView({ value, treeLevel }: Props) {
   if (value === null) return <NullContainer>null</NullContainer>
   if (value === undefined) return <UndefinedContainer>undefined</UndefinedContainer>
 
-  if (typeof value === "string") {
+  let checkValue
+  try {
+    checkValue = JSON.parse(value)
+  } catch {
+    checkValue = value
+  }
+
+  if (typeof checkValue === "string") {
     return (
       <StringContainer>
         {value
@@ -43,9 +50,13 @@ export default function ContentView({ value, treeLevel }: Props) {
     )
   }
 
-  if (typeof value === "object") {
-    return isShallow(value) ? makeTable(value) : <TreeView value={value} level={treeLevel} />
+  if (typeof checkValue === "object") {
+    return isShallow(checkValue) ? (
+      makeTable(checkValue)
+    ) : (
+      <TreeView value={checkValue} level={treeLevel} />
+    )
   }
 
-  return <StringContainer>{String(value)}</StringContainer>
+  return <StringContainer>{String(checkValue)}</StringContainer>
 }
