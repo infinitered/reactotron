@@ -104,7 +104,7 @@ console.tron.display({
 
 ## Redux and Immutable data
 
-If you're using [reactotron-redux](https://github.com/infinitered/reactotron/blob/master/docs/plugin-redux.md)
+If you're using [reactotron-redux](./plugins/redux.md)
 and an immutable library such as [seamless-immutable](https://github.com/rtfeldman/seamless-immutable) you need to make sure you transform your state back into an immutable object when using State Snapshots.
 
 To do so you can use the `onRestore` callback like this:
