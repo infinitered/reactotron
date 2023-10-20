@@ -9,6 +9,7 @@ defaults: &defaults
 version: 2.1
 orbs:
   node: circleci/node@5.1.0
+  publish-docs: infinitered/publish-docs@0.4.8
 
 commands:
   install-packages:
@@ -293,6 +294,29 @@ workflows:
                 - master
                 - beta
                 - alpha
+
+  publish_to_docs_site:
+    jobs:
+      - publish-docs/publish_docs:
+          <<: *defaults
+          description: >-
+            Reactotron - A desktop app for inspecting your React JS and React Native projects.
+          git_email: ci@infinite.red
+          git_username: Infinite Red
+          label: Reactotron
+          project_name: reactotron
+          source_docs_dir: docs
+          source_repo_directory: source
+          target_docs_dir: docs
+          target_repo: git@github.com:infinitered/ir-docs.git
+          target_repo_directory: ir-docs
+          filters:
+            branches:
+              only:
+                - main
+            tags:
+              only:
+                - '*v[0-9]+\.[0-9]+\.[0-9]+'
 
   release:
     jobs:
