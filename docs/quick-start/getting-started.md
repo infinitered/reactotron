@@ -13,8 +13,8 @@ First, you'll need to install the Reactotron desktop application. You can find t
 
 Once installed, you need to add the Reactotron client to your project. Follow one of these quick start guides to get Reactotron up and running in your project:
 
-- [**React Native**](./quick-start/react-native.md#installing-reactotronapp)
-- [**React**](./quick-start/react-js.md#installing-reactotronapp)
+- [**React Native**](./react-native.md#installing-reactotronapp)
+- [**React**](./react-js.md#installing-reactotronapp)
 
 ## Where can I find more information?
 

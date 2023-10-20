@@ -1,5 +1,8 @@
 {
   "label": "Quick Start",
   "position": 3,
-  "link": null
+  "link": {
+    "type": "doc",
+    "id": "getting-started"
+  }
 }
