@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.0.2-beta.20](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2-beta.19...reactotron-core-ui@2.0.2-beta.20) (2023-10-20)
+
+
+### Bug Fixes
+
+* **content-view:** parse stringified object ([#1318](https://github.com/infinitered/reactotron/issues/1318) by [@frankcalise](https://github.com/frankcalise)) ([6f82b9b](https://github.com/infinitered/reactotron/commit/6f82b9bb7be1ce3806b41a31a48a943dd9bda845)), closes [#1317](https://github.com/infinitered/reactotron/issues/1317)
+
 ### [2.0.2-beta.19](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2-beta.18...reactotron-core-ui@2.0.2-beta.19) (2023-10-13)
 
 ### [2.0.2-beta.18](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2-beta.17...reactotron-core-ui@2.0.2-beta.18) (2023-10-02)
