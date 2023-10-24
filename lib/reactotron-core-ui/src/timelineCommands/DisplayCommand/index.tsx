@@ -68,7 +68,7 @@ const DisplayCommand: FunctionComponent<Props> = ({
       date={date}
       deltaTime={deltaTime}
       title={payload.name || "DISPLAY"}
-      preview={payload.name}
+      preview={payload.preview}
       toolbar={toolbar}
       isImportant={important}
       isTagged
