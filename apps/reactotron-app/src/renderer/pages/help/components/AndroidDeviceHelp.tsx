@@ -113,19 +113,6 @@ function AndroidDeviceHelp() {
 
     ipcRenderer.send("get-device-list")
 
-    var msg = {
-      title: "Awesome!",
-      message:
-        "Check this out!<br>Check this out!<br>Check this out!<br>Check this out!<br>Check this out!<br>Check this out!<br>",
-      detail:
-        "PI is equal to 3! - 0.0<br>PI is equal to 3! - 0.0<br>PI is equal to 3! - 0.0<br>PI is equal to 3! - 0.0<br>",
-      width: 440,
-      // height : 160, window will be autosized
-      timeout: 6000,
-      focus: true, // set focus back to main window
-    }
-    ipcRenderer.send("electron-toaster-message", msg)
-
     return () => {
       ipcRenderer.removeAllListeners("device-list")
     }
@@ -155,8 +142,9 @@ function AndroidDeviceHelp() {
         <HighlightedText>adb devices</HighlightedText> command.
       </Text>
       <Text>
-        Android devices can sometimes be tricky to connect to reactotron. Many issues can be
-        resolved by clicking "Reverse Tunnel" and then "Reload App".
+        Android devices can sometimes be tricky to connect to Reactotron. Many issues can be
+        resolved by clicking <HighlightedText>Reverse Tunnel</HighlightedText> and then{" "}
+        <HighlightedText>Reload App</HighlightedText>.
       </Text>
       <AndroidDeviceListContainer>
         {portsVisible && (

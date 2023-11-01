@@ -32,8 +32,7 @@ export const setupAndroidDeviceIPCCommands = (mainWindow: BrowserWindow) => {
       }
     )
     reactotronReverseProcess.stdout.setEncoding("utf8")
-    reactotronReverseProcess.stdout.on("data", (data) => {
-      data = data.toString()
+    reactotronReverseProcess.stdout.on("data", () => {
       console.log(`Reverse Tunneling To Reactotron Port ${reactotronPort} Complete.`)
     })
 
@@ -46,8 +45,7 @@ export const setupAndroidDeviceIPCCommands = (mainWindow: BrowserWindow) => {
       }
     )
     metroReverseProcess.stdout.setEncoding("utf8")
-    metroReverseProcess.stdout.on("data", (data) => {
-      data = data.toString()
+    metroReverseProcess.stdout.on("data", () => {
       console.log(`Reverse Tunneling To Metro Port ${metroPort} Complete.`)
     })
   })
@@ -99,18 +97,16 @@ export const setupAndroidDeviceIPCCommands = (mainWindow: BrowserWindow) => {
   })
   trackDevicesProcess.stdout.setEncoding("utf8")
   trackDevicesProcess.stdout.on("data", (data) => {
-    // Here is the output
     data = data.toString()
     console.log("Got adb track-devices output: ", data)
     ipcMain.emit("get-device-list")
   })
   trackDevicesProcess.stderr.setEncoding("utf8")
   trackDevicesProcess.stderr.on("data", (data) => {
-    // Here is the error output from the command
     console.log(data)
   })
   trackDevicesProcess.on("close", (code) => {
-    //Here you can get the exit code of the script
+    // Warn the user if the process closes.
     switch (code) {
       case 0:
         dialog.showMessageBox({
