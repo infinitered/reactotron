@@ -33,7 +33,7 @@ const Image = styled.img`
 interface Props {
   icon?: any // TODO: Type Better?
   image?: any
-  title: string
+  title?: string
 }
 
 const EmptyState: FunctionComponent<React.PropsWithChildren<Props>> = ({
@@ -46,7 +46,7 @@ const EmptyState: FunctionComponent<React.PropsWithChildren<Props>> = ({
     <Container>
       {Icon && <Icon size={100} />}
       {image && <Image src={image} />}
-      <Title>{title}</Title>
+      {title && <Title>{title}</Title>}
       <Message>{children}</Message>
     </Container>
   )
