@@ -5,8 +5,7 @@ import { GoGear as SettingsIcon } from "react-icons/go"
 import { MdCompareArrows as ReverseTunnelIcon } from "react-icons/md"
 import { CgSmartphoneShake as ShakeDeviceIcon } from "react-icons/cg"
 import { IoReloadOutline as ReloadAppIcon } from "react-icons/io5"
-import ReactTooltip from "react-tooltip"
-import { EmptyState } from "reactotron-core-ui"
+import { EmptyState, Tooltip } from "reactotron-core-ui"
 import { FaAndroid } from "react-icons/fa"
 import { ItemContainer, ItemIconContainer } from "../SharedStyles"
 
@@ -132,10 +131,11 @@ function AndroidDeviceHelp() {
       <TitleComponent />
       <PortSettingsIconContainer
         data-tip="Advanced Port Settings"
+        data-for="port-settings"
         onClick={() => setPortsVisible(!portsVisible)}
       >
         <SettingsIcon size={20} />
-        <ReactTooltip multiline place="bottom" />
+        <Tooltip id="port-settings" />
       </PortSettingsIconContainer>
       <Text>
         This shows all android devices connected to your machine via the{" "}
@@ -210,32 +210,35 @@ const AndroidDeviceList = ({
                 ipcRenderer.send("reverse-tunnel-device", device.id, reactotronPort, metroPort)
               }
               data-tip={`This will allow reactotron to connect to your device via USB<br />by running adb reverse tcp:${reactotronPort} tcp:${reactotronPort}<br /><br />Reload your React Native app after pressing this.`}
+              data-for="reverse-tunnel"
             >
               <ItemIconContainer>
                 <ReverseTunnelIcon size={40} />
               </ItemIconContainer>
               Reverse Tunnel
-              <ReactTooltip multiline place="bottom" />
+              <Tooltip id="reverse-tunnel" multiline />
             </ItemContainer>
             <ItemContainer
               onClick={() => ipcRenderer.send("reload-app", device.id)}
               data-tip="This will reload the React Native app currently running on this device.<br />If you get the React Native red screen, relaunch the app from the build process."
+              data-for="reload-app"
             >
               <ItemIconContainer>
                 <ReloadAppIcon size={40} />
               </ItemIconContainer>
               Reload App
-              <ReactTooltip multiline place="bottom" />
+              <Tooltip id="reload-app" multiline />
             </ItemContainer>
             <ItemContainer
               onClick={() => ipcRenderer.send("shake-device", device.id)}
               data-tip="This will shake the device to bring up<br /> the React Native developer menu."
+              data-for="shake-device"
             >
               <ItemIconContainer>
                 <ShakeDeviceIcon size={40} />
               </ItemIconContainer>
               Shake
-              <ReactTooltip multiline place="bottom" />
+              <Tooltip id="shake-device" multiline />
             </ItemContainer>
           </AndroidDeviceButtonsContainer>
         </div>
