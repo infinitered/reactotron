@@ -7,3 +7,5 @@
 **/package.json
 **/release
 CHANGELOG.md
+
+/.nx/cache
