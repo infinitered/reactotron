@@ -57,7 +57,7 @@
     "@babel/preset-typescript": "^7.23.2",
     "@react-native-async-storage/async-storage": "^1.19.4",
     "@types/jest": "^29.5.7",
-    "@types/node": "16.11.11",
+    "@types/node": "^18.18.8",
     "@types/react": "18.2.35",
     "@types/react-native": "0.72.5",
     "@typescript-eslint/eslint-plugin": "^6.7.5",

@@ -7389,38 +7389,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:14.17.11":
-  version: 14.17.11
-  resolution: "@types/node@npm:14.17.11"
-  checksum: 94192a5f6f5da51a10dfa959049a5cfcff440fbeeefbf98084083c1370a107872fc7f4a2df42f100989dea873cb4128f376d5e4af6be43fec21273359d9dbdb0
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:14.17.3":
-  version: 14.17.3
-  resolution: "@types/node@npm:14.17.3"
-  checksum: c24c1f222b83a4cba584ae1bce2ab262d48d9d502346d82dd261236d29ce11ad63c5a5b1bfc74e50eaae032384893d443297d4da758e1eb540d9bf2495d7814e
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:16.11.11":
-  version: 16.11.11
-  resolution: "@types/node@npm:16.11.11"
-  checksum: 1c472bd63f23ca0e4effc96e6e0c693b83b027f613a1f41b6d1bd7791f65ce171a351e0a5c92575cb59e84ad0a930875397bfbbb91a7c925ddbbb558f7461af8
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:>= 8":
   version: 18.15.3
   resolution: "@types/node@npm:18.15.3"
   checksum: 31b1d92475a82c30de29aa6c0771b18a276552d191283b4423ba2d61b3f01159bf0d02576c0b7cc834b043997893800db6bb47f246083ed85aa45e79c80875d7
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^11.9.5":
-  version: 11.15.54
-  resolution: "@types/node@npm:11.15.54"
-  checksum: d65c15001070c5df893876bb7637024a1a412d8ccfd803c61b4ee3293aafb85d69e278cd27dc28f66c8d21018d85fa50f93ade0937a187c16c8dad23fb1598d8
   languageName: node
   linkType: hard
 
@@ -7435,6 +7407,15 @@ __metadata:
   version: 18.18.4
   resolution: "@types/node@npm:18.18.4"
   checksum: 4901e91c4cc479bb58acbcd79236a97a0ad6db4a53cb1f4ba4cf32af15324c61b16faa6e31c1b09bf538a20feb5f5274239157ce5237f5741db0b9ab71e69c52
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^18.18.8":
+  version: 18.18.8
+  resolution: "@types/node@npm:18.18.8"
+  dependencies:
+    undici-types: ~5.26.4
+  checksum: d6a82bfc28bca8e4e32ffc9526798d1aea62f6993ea3a535cd3f47ac3f725a48efe3f484d68168dd154af0001c89935e4e1d77e7b1809c3824c6382bf99b86f6
   languageName: node
   linkType: hard
 
@@ -26194,7 +26175,7 @@ __metadata:
     "@babel/preset-typescript": ^7.23.2
     "@types/jest": ^29.5.7
     "@types/json-server": ^0.14.0
-    "@types/node": ^11.9.5
+    "@types/node": ^18.18.8
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
     apisauce: ^3.0.1
@@ -26293,7 +26274,7 @@ __metadata:
     "@babel/preset-env": ^7.23.2
     "@babel/preset-typescript": ^7.23.2
     "@types/jest": ^29.5.7
-    "@types/node": 14.17.11
+    "@types/node": ^18.18.8
     "@types/ws": ^8.5.8
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
@@ -26335,7 +26316,7 @@ __metadata:
     "@babel/preset-env": ^7.23.2
     "@babel/preset-typescript": ^7.23.2
     "@types/jest": ^29.5.7
-    "@types/node": 14.17.11
+    "@types/node": ^18.18.8
     "@types/ws": ^8.5.8
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
@@ -26374,7 +26355,7 @@ __metadata:
     "@babel/preset-env": ^7.23.2
     "@babel/preset-typescript": ^7.23.2
     "@types/jest": ^29.5.7
-    "@types/node": 14.17.3
+    "@types/node": ^18.18.8
     "@types/ramda": 0.26.44
     "@types/ws": ^8.5.8
     "@typescript-eslint/eslint-plugin": ^6.7.5
@@ -26486,7 +26467,7 @@ __metadata:
     "@babel/preset-typescript": ^7.23.2
     "@types/jest": ^29.5.7
     "@types/lodash.camelcase": ^4.3.7
-    "@types/node": ^11.9.5
+    "@types/node": ^18.18.8
     "@types/ramda": ^0.25.50
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
@@ -26570,7 +26551,7 @@ __metadata:
     "@babel/preset-env": ^7.23.2
     "@babel/preset-typescript": ^7.23.2
     "@types/jest": ^29.5.7
-    "@types/node": ^11.9.5
+    "@types/node": ^18.18.8
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
     babel-eslint: ^10.1.0
@@ -26614,7 +26595,7 @@ __metadata:
     "@babel/preset-typescript": ^7.23.2
     "@react-native-async-storage/async-storage": ^1.19.4
     "@types/jest": ^29.5.7
-    "@types/node": 16.11.11
+    "@types/node": ^18.18.8
     "@types/react": 18.2.35
     "@types/react-native": 0.72.5
     "@typescript-eslint/eslint-plugin": ^6.7.5
@@ -30904,6 +30885,13 @@ __metadata:
     has-symbols: ^1.0.3
     which-boxed-primitive: ^1.0.2
   checksum: b7a1cf5862b5e4b5deb091672ffa579aa274f648410009c81cca63fed3b62b610c4f3b773f912ce545bb4e31edc3138975b5bc777fc6e4817dca51affb6380e9
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~5.26.4":
+  version: 5.26.5
+  resolution: "undici-types@npm:5.26.5"
+  checksum: 3192ef6f3fd5df652f2dc1cd782b49d6ff14dc98e5dced492aa8a8c65425227da5da6aafe22523c67f035a272c599bb89cfe803c1db6311e44bed3042fc25487
   languageName: node
   linkType: hard
 
