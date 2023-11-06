@@ -51,9 +51,9 @@
     }
   },
   "dependencies": {
-    "electron-log": "^4.4.8",
+    "electron-log": "^5.0.0",
     "electron-store": "^8.1.0",
-    "electron-updater": "^6.1.5",
+    "electron-updater": "^6.1.7",
     "electron-window-state": "^5.0.3",
     "immer": "^10.0.3",
     "react": "18.2.0",
@@ -88,8 +88,8 @@
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
     "babel-loader": "^8.3.0",
-    "electron": "26.4.0",
-    "electron-builder": "^24.7.0",
+    "electron": "27.0.3",
+    "electron-builder": "^24.8.1",
     "electron-webpack": "2.8.2",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
