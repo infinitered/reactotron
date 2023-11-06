@@ -15,7 +15,8 @@
     "noUnusedLocals": true,
     "target": "es5",
     "lib": ["dom", "es2017"],
-    "types": ["react", "jest"]
+    "types": ["react", "jest"],
+    "esModuleInterop": true
   },
   "exclude": ["node_modules"],
   "include": ["src"]

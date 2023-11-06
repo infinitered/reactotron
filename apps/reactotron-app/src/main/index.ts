@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from "electron"
-import * as path from "path"
+import path from "path"
 import { format as formatUrl } from "url"
 import log from "electron-log"
 import { autoUpdater } from "electron-updater"

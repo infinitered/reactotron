@@ -1,4 +1,4 @@
-import * as WebSocket from "ws"
+import WebSocket from "ws"
 import { Command } from "./command"
 
 export interface PfxServerOptions {

@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@jscutlery/semver": "^2.30.1",
-    "@nrwl/devkit": "^15.5.1",
+    "@nx/devkit": "17.0.3",
     "@octokit/rest": "^19.0.7",
     "@types/eslint": "^8.44.4",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
@@ -41,14 +41,14 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-standard": "^5.0.0",
-    "nx": "15.5.1",
+    "nx": "17.0.3",
     "prettier": "^3.0.3",
     "typescript": "^4.9.5",
     "zx": "^7.2.3"
   },
   "resolutions": {
-    "@nrwl/devkit": "^15.5.3",
-    "@types/react": "17.0.65",
+    "@nx/devkit": "17.0.3",
+    "@types/react": "18.2.35",
     "electron-webpack": "patch:electron-webpack@npm%3A2.8.2#./.yarn/patches/electron-webpack-npm-2.8.2-1bda600605.patch",
     "react-hotkeys": "patch:react-hotkeys@npm%3A2.0.0#./.yarn/patches/react-hotkeys-npm-2.0.0-8e6c50bd05.patch",
     "webpack": "patch:webpack@npm%3A4.47.0#./.yarn/patches/webpack-npm-4.47.0-42e477a08c.patch"

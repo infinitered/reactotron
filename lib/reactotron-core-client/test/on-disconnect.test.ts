@@ -1,6 +1,6 @@
 import { createClient } from "../src/reactotron-core-client"
-import * as WebSocket from "ws"
-import * as getPort from "get-port"
+import WebSocket from "ws"
+import getPort from "get-port"
 import { createClosingServer } from "./create-closing-server"
 
 const createSocket = (path: string) => new WebSocket(path)

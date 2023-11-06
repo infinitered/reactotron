@@ -1,4 +1,4 @@
-import * as jsonServer from "json-server"
+import jsonServer from "json-server"
 import apisauce from "apisauce"
 import createPlugin from "../src/index"
 

@@ -1,4 +1,4 @@
-import * as WebSocket from "ws"
+import WebSocket from "ws"
 
 /**
  * A server which shuts down after somebody connects.

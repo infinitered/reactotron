@@ -1,5 +1,5 @@
 import type { LifeCycleMethods, PluginCreator } from "./reactotron-core-client"
-import * as NodeWebSocket from "ws"
+import NodeWebSocket from "ws"
 
 type BrowserWebSocket = WebSocket
 

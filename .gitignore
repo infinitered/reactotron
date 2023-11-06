@@ -66,3 +66,4 @@ TODO
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+.nx/cache

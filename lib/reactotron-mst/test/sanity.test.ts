@@ -1,5 +1,5 @@
 import { types } from "mobx-state-tree"
-import * as td from "testdouble"
+import td from "testdouble"
 import { TestUserModel, createMstPlugin } from "./fixtures"
 
 const UserModel = types.model().props({ name: "", age: 100 })

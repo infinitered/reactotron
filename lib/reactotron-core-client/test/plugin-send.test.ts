@@ -1,6 +1,6 @@
 import { ReactotronCore, createClient } from "../src/reactotron-core-client"
-import * as WebSocket from "ws"
-import * as getPort from "get-port"
+import WebSocket from "ws"
+import getPort from "get-port"
 import { PluginCreator } from "reactotron-core-client"
 
 const createSocket = (path) => new WebSocket(path)

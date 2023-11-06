@@ -1,5 +1,5 @@
 // TODO: Name this better...
-import React, { FunctionComponent } from "react"
+import React, { FunctionComponent, PropsWithChildren } from "react"
 import { Command } from "reactotron-core-contract"
 import {
   ReactotronProvider,
@@ -19,7 +19,7 @@ interface Props {
 }
 
 /** Wrapper for Reactotron context providers */
-const ReactotronBrain: FunctionComponent<Props> = ({
+const ReactotronBrain: FunctionComponent<PropsWithChildren<Props>> = ({
   commands,
   sendCommand,
   clearCommands,

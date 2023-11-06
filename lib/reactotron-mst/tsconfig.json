@@ -17,7 +17,8 @@
     "noUnusedLocals": true,
     "sourceMap": true,
     "target": "es5",
-    "skipLibCheck": true // Temp?
+    "skipLibCheck": true, // Temp?
+    "esModuleInterop": true
   },
   "exclude": ["node_modules"],
   "include": ["src"]

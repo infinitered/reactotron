@@ -1,4 +1,4 @@
-import * as td from "testdouble"
+import td from "testdouble"
 import { TestUserModel, createMstPlugin, commandMetadataFixture } from "./fixtures"
 import type { Command } from "reactotron-core-contract"
 
