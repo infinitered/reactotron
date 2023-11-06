@@ -7,7 +7,7 @@ const createSocket = (path: string) => new WebSocket(path)
 
 let port: number
 beforeEach(async () => {
-  port = await getPort({random: true})
+  port = await getPort({ random: true })
 })
 
 test("plugins support onDisconnect", (done) => {
