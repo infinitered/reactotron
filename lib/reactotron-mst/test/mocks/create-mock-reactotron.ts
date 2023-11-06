@@ -1,5 +1,5 @@
 import { Reactotron } from "reactotron-core-client"
-import * as td from "testdouble"
+import td from "testdouble"
 
 /**
  * Creates a mock reactotron instance with test double functions.

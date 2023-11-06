@@ -1,4 +1,4 @@
-import * as WebSocket from "ws"
+import WebSocket from "ws"
 import { Command, CommandTypeKey } from "reactotron-core-contract"
 import validate from "./validate"
 import logger from "./plugins/logger"

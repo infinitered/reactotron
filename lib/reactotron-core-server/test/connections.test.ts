@@ -1,6 +1,6 @@
-import * as getPort from "get-port"
+import getPort from "get-port"
 import { createServer } from "../src/reactotron-core-server"
-import * as WebSocket from "ws"
+import WebSocket from "ws"
 
 const mock = { type: "client.intro", payload: {} }
 let port: number

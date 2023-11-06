@@ -1,4 +1,4 @@
-import * as td from "testdouble"
+import td from "testdouble"
 import { TestUserModel, createMstPlugin } from "./fixtures"
 
 describe("actions", () => {

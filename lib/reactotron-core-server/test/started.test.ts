@@ -1,4 +1,4 @@
-import * as getPort from "get-port"
+import getPort from "get-port"
 import { createServer } from "../src/reactotron-core-server"
 
 test("sets the started flag", async () => {
