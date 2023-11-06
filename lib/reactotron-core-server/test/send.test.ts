@@ -1,4 +1,4 @@
-import getPort from "get-port"
+import { getPort } from "get-port-please"
 import { createServer } from "../src/reactotron-core-server"
 import WebSocket from "ws"
 
@@ -7,7 +7,7 @@ let port: number
 let server: ReturnType<typeof createServer>
 
 beforeEach(async () => {
-  port = await getPort()
+  port = await getPort({ random: true })
   server = createServer({ port })
 })
 

@@ -16152,10 +16152,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-port@npm:^5.1.1":
-  version: 5.1.1
-  resolution: "get-port@npm:5.1.1"
-  checksum: 0162663ffe5c09e748cd79d97b74cd70e5a5c84b760a475ce5767b357fb2a57cb821cee412d646aa8a156ed39b78aab88974eddaa9e5ee926173c036c0713787
+"get-port-please@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "get-port-please@npm:3.1.1"
+  checksum: e2b0b3822e5a5a37994a0bd1c708eb220ca47fd4b29adbc6ba076fb378d4706c07eba4d382a8283f6534e870f9081a58f923a9f873f7d1f298f5fae386470211
   languageName: node
   linkType: hard
 
@@ -26332,7 +26332,7 @@ __metadata:
     eslint-plugin-n: ^16.2.0
     eslint-plugin-promise: ^6.1.1
     eslint-plugin-standard: ^5.0.0
-    get-port: ^5.1.1
+    get-port-please: ^3.1.1
     jest: ^29.7.0
     jest-environment-node: ^29.7.0
     prettier: ^3.0.3
@@ -26414,7 +26414,7 @@ __metadata:
     eslint-plugin-n: ^16.2.0
     eslint-plugin-promise: ^6.1.1
     eslint-plugin-standard: ^5.0.0
-    get-port: ^5.1.1
+    get-port-please: ^3.1.1
     jest: ^29.7.0
     jest-environment-node: ^29.7.0
     mitt: ^3.0.1

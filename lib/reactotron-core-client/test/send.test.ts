@@ -1,6 +1,6 @@
 import { createClient } from "../src/reactotron-core-client"
 import WebSocket from "ws"
-import getPort from "get-port"
+import { getPort } from "get-port-please"
 
 const createSocket = (path) => new WebSocket(path)
 
@@ -12,7 +12,7 @@ const mock = {
 let port: number
 let server: WebSocket.Server
 beforeEach(async () => {
-  port = await getPort()
+  port = await getPort({ random: true })
   server = new WebSocket.Server({ port })
 })
 
