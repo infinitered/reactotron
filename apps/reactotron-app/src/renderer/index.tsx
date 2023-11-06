@@ -1,17 +1,17 @@
 import "v8-compile-cache"
 import React from "react"
-import { render } from "react-dom"
+import { createRoot } from "react-dom/client"
 import { ReactotronAppProvider } from "reactotron-core-ui"
 
 import "./global.css"
 
 import App from "./App"
 
-render(
+const root = createRoot(document.getElementById("app"))
+root.render(
   <ReactotronAppProvider>
     <App />
-  </ReactotronAppProvider>,
-  document.getElementById("app")
+  </ReactotronAppProvider>
 )
 
 if ((module as any).hot) {
