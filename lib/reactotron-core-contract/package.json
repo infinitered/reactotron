@@ -1,6 +1,6 @@
 {
   "name": "reactotron-core-contract",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Typescript contracts for websocket messages between server and clients",
   "author": "Infinite Red",
   "license": "MIT",
