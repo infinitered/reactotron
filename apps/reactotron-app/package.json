@@ -68,7 +68,7 @@
     "reactotron-core-server": "workspace:*",
     "reactotron-core-ui": "workspace:*",
     "source-map-support": "^0.5.21",
-    "styled-components": "^6.0.9",
+    "styled-components": "^6.1.0",
     "v8-compile-cache": "^2.4.0"
   },
   "devDependencies": {
@@ -91,10 +91,10 @@
     "electron": "27.0.3",
     "electron-builder": "^24.8.1",
     "electron-webpack": "2.8.2",
-    "eslint": "^8.51.0",
+    "eslint": "^8.53.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-n": "^16.2.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.33.2",

@@ -1,13 +1,13 @@
 import { Plugin, ReactotronCore, createClient } from "../src/reactotron-core-client"
 import WebSocket from "ws"
-import getPort from "get-port"
+import { getPort } from "get-port-please"
 import { createClosingServer } from "./create-closing-server"
 
 const createSocket = (path: string) => new WebSocket(path)
 
 let port: number
 beforeEach(async () => {
-  port = await getPort()
+  port = await getPort({ random: true })
 })
 
 test("plugins support onDisconnect", (done) => {
