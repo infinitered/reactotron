@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from "react"
-import styled from "styled-components"
+import styled from "rn-css"
 
 import ActionButton from "../ActionButton"
 import HeaderTabButton from "../HeaderTabButton"
 
-const Container = styled.div`
+const Container = styled.View`
   background-color: ${(props) => props.theme.backgroundSubtleLight};
   border-bottom: 1px solid ${(props) => props.theme.chromeLine};
   color: ${(props) => props.theme.foregroundDark};
@@ -14,7 +14,7 @@ const Container = styled.div`
 interface ContentContainerProps {
   $isDraggable: boolean
 }
-const ContentContainer = styled.div.attrs(() => ({}))<ContentContainerProps>`
+const ContentContainer = styled.View<ContentContainerProps>`
   -webkit-app-region: ${(props) => (props.$isDraggable ? "drag" : "")};
   height: 70px;
   padding: 0 10px;
@@ -23,21 +23,21 @@ const ContentContainer = styled.div.attrs(() => ({}))<ContentContainerProps>`
   justify-content: space-between;
 `
 
-const LeftContainer = styled.div`
+const LeftContainer = styled.View`
   display: flex;
   flex-direction: row;
   flex: 1;
   width: 100px;
   align-items: center;
 `
-const MiddleContainer = styled.div`
+const MiddleContainer = styled.View`
   display: flex;
   flex: 1;
   padding-left: 10px;
   justify-content: center;
   align-items: center;
 `
-const RightContainer = styled.div`
+const RightContainer = styled.View`
   display: flex;
   flex-direction: row;
   flex: 1;
@@ -46,7 +46,7 @@ const RightContainer = styled.div`
   align-items: center;
 `
 
-const Title = styled.div`
+const Title = styled.View`
   color: ${(props) => props.theme.foregroundLight};
   text-align: center;
 `

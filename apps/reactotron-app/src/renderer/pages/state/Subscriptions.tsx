@@ -1,50 +1,50 @@
 import React, { useContext } from "react"
-import {
-  ReactotronContext,
-  ContentView,
-  StateContext,
-  Header,
-  EmptyState,
-} from "reactotron-core-ui"
-import { CommandType } from "reactotron-core-contract"
-import { MdDelete, MdAdd, MdDeleteSweep, MdNotificationsNone, MdImportExport } from "react-icons/md"
-import styled from "styled-components"
 import { getApplicationKeyMap } from "react-hotkeys"
+import { MdAdd, MdDelete, MdDeleteSweep, MdImportExport, MdNotificationsNone } from "react-icons/md"
+import { CommandType } from "reactotron-core-contract"
+import {
+  ContentView,
+  EmptyState,
+  Header,
+  ReactotronContext,
+  StateContext,
+} from "reactotron-core-ui"
+import styled from "rn-css"
 
 // Move this out of this page. We are just hacking around this for now
 import { KeybindKeys, getPlatformSequence } from "../help/components/Keybind"
 
-const Container = styled.div`
+const Container = styled.View`
   display: flex;
   flex-direction: column;
   width: 100%;
 `
 
-const SubscriptionsContainer = styled.div`
+const SubscriptionsContainer = styled.View`
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 `
 
-const SubscriptionContainer = styled.div`
+const SubscriptionContainer = styled.View`
   display: flex;
   padding: 15px 20px;
   justify-content: space-between;
   border-bottom: 1px solid ${(props) => props.theme.line};
 `
-const SubscriptionPath = styled.div`
+const SubscriptionPath = styled.View`
   flex: 0.3;
   word-break: break-all;
   cursor: text;
   user-select: text;
   color: ${(props) => props.theme.tag};
 `
-const SubscriptionValue = styled.div`
+const SubscriptionValue = styled.View`
   flex: 0.7;
   word-break: break-all;
   user-select: text;
 `
-const SubscriptionRemove = styled.div`
+const SubscriptionRemove = styled.View`
   cursor: pointer;
   padding-left: 10px;
   color: ${(props) => props.theme.foreground};

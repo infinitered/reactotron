@@ -1,45 +1,45 @@
 import React, { useContext, useMemo } from "react"
 import { Header } from "reactotron-core-ui"
-import styled from "styled-components"
+import styled from "rn-css"
 
 import StandaloneContext from "../../contexts/Standalone"
-import {
-  getPlatformName,
-  getPlatformDetails,
-  getScreen,
-  getIcon,
-} from "../../util/connectionHelpers"
 import { Connection } from "../../contexts/Standalone/useStandalone"
+import {
+  getIcon,
+  getPlatformDetails,
+  getPlatformName,
+  getScreen,
+} from "../../util/connectionHelpers"
 import Welcome from "./welcome"
 
-const Container = styled.div`
+const Container = styled.View`
   display: flex;
   flex-direction: column;
   width: 100%;
 `
 
-const ConnectionContainer = styled.div`
+const ConnectionContainer = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 10px 0;
   border-bottom: 1px solid ${(props) => props.theme.line};
 `
-const IconContainer = styled.div`
+const IconContainer = styled.View`
   color: ${(props) => props.theme.foregroundLight};
 `
-const PlatformName = styled.div`
+const PlatformName = styled.View`
   padding-left: 10px;
   color: ${(props) => props.theme.tag};
   width: 25%;
 `
-const PlatformDetails = styled.div`
+const PlatformDetails = styled.View`
   border-left: 1px solid ${(props) => props.theme.subtleLine};
   color: ${(props) => props.theme.foregroundDark};
   padding-left: 10px;
   margin-left: 10px;
 `
-const Screen = styled.div`
+const Screen = styled.View`
   border-left: 1px solid ${(props) => props.theme.subtleLine};
   color: ${(props) => props.theme.backgroundHighlight};
   padding-left: 10px;

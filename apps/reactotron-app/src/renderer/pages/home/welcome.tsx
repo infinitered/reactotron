@@ -1,15 +1,15 @@
-import React from "react"
 import { shell } from "electron"
-import styled from "styled-components"
-import { reactotronLogo } from "../../images"
+import React from "react"
 import { EmptyState } from "reactotron-core-ui"
+import styled from "rn-css"
+import { reactotronLogo } from "../../images"
 
-const WelcomeText = styled.div`
+const WelcomeText = styled.View`
   font-size: 1.25em;
   margin-bottom: 5px;
 `
 
-const Container = styled.div`
+const Container = styled.View`
   display: flex;
   padding: 4px 8px;
   margin-top: 20px;

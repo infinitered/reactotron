@@ -1,11 +1,11 @@
 import React from "react"
-import styled from "styled-components"
+import styled from "rn-css"
 
-import { Row, Title, Text } from "./Shared"
+import { Row, Text, Title } from "./Shared"
 
 import type { ChangeEvent } from "react"
 
-const Input = styled.input`
+const Input = styled.TextInput`
   margin-right: 4px;
   width: 45px;
   border: 0;

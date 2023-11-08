@@ -1,6 +1,6 @@
 import React from "react"
 import { JSONTree } from "react-json-tree"
-import styled from "styled-components"
+import styled from "rn-css"
 
 import baseTheme from "../../theme"
 
@@ -26,7 +26,7 @@ const theme = {
   scheme: "twilight",
 }
 
-const MutedContainer = styled.span`
+const MutedContainer = styled.Text`
   color: ${(props) => props.theme.highlight};
 `
 

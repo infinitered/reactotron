@@ -1,9 +1,9 @@
 import React from "react"
-import styled, { ThemeProvider } from "styled-components"
+import styled, { ThemeProvider } from "rn-css"
 
 import theme from "../../theme"
 
-const ReactotronContainer = styled.div`
+const ReactotronContainer = styled.View`
   font-family: ${(props) => props.theme.fontFamily};
   font-size: 0.94em;
   width: 100%;

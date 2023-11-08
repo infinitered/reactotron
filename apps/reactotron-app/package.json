@@ -40,7 +40,7 @@
     "whiteListedModules": [
       "reactotron-core-ui",
       "react-router-dom",
-      "styled-components"
+      "rn-css"
     ],
     "renderer": {
       "webpackConfig": "webpack.config.js",
@@ -67,6 +67,7 @@
     "reactotron-core-contract": "workspace:*",
     "reactotron-core-server": "workspace:*",
     "reactotron-core-ui": "workspace:*",
+    "rn-css": "^1.11.5",
     "source-map-support": "^0.5.21",
     "styled-components": "^6.1.0",
     "v8-compile-cache": "^2.4.0"

@@ -14,9 +14,9 @@
   "scripts": {
     "start": "start-storybook -p 6006",
     "prebuild": "yarn clean",
-    "build": "yarn tsc && yarn compile",
+    "build": "yarn compile",
     "prebuild:dev": "yarn clean",
-    "build:dev": "yarn tsc && yarn compile:dev",
+    "build:dev": "yarn compile:dev",
     "build-storybook": "build-storybook",
     "clean": "rimraf ./dist",
     "lint": "eslint src --ext .ts,.tsx",
@@ -46,13 +46,14 @@
     "stringify-object": "5.0.0"
   },
   "peerDependencies": {
-    "react": ">=17.0.2",
-    "react-dom": ">=17.0.2",
+    "react": ">=18.2.0",
+    "react-dom": ">=18.2.0",
     "react-icons": ">=4.2.0",
     "react-modal": ">=3.16.1",
     "react-motion": ">=0.5.2",
+    "react-native-web": ">=0.19.9",
     "react-tooltip": ">=4.5.1",
-    "styled-components": ">=6.0.0"
+    "rn-css": ">=1.11.5"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
@@ -91,9 +92,11 @@
     "react-icons": "^4.11.0",
     "react-modal": "3.16.1",
     "react-motion": "0.5.2",
+    "react-native-web": "0.19.9",
     "react-test-renderer": "18.2.0",
     "react-tooltip": "4.5.1",
     "rimraf": "5.0.5",
+    "rn-css": "^1.11.5",
     "rollup": "2.56.2",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-babel-minify": "10.0.0",

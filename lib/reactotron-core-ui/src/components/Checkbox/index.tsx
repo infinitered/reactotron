@@ -1,16 +1,16 @@
 import React from "react"
-import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md"
-import styled from "styled-components"
+import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md"
+import styled from "rn-css"
 
-const Container = styled.div`
+const Container = styled.View`
   display: flex;
   cursor: pointer;
   padding: 5px 0;
 `
-const IconContainer = styled.div`
+const IconContainer = styled.View`
   padding-right: 10px;
 `
-const Label = styled.span`
+const Label = styled.Text`
   color: ${(props) => props.theme.tag};
 `
 

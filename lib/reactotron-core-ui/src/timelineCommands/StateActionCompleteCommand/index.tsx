@@ -1,13 +1,13 @@
 import React, { FunctionComponent } from "react"
-import styled from "styled-components"
-import { MdRepeat, MdCode } from "react-icons/md"
+import { MdCode, MdRepeat } from "react-icons/md"
+import styled from "rn-css"
 import stringifyObject from "stringify-object"
 
-import TimelineCommand from "../../components/TimelineCommand"
 import ContentView from "../../components/ContentView"
+import TimelineCommand from "../../components/TimelineCommand"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 
-const NameContainer = styled.div`
+const NameContainer = styled.View`
   color: ${(props) => props.theme.bold};
   padding-bottom: 10px;
 `

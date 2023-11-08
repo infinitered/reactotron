@@ -1,20 +1,20 @@
 import React, { FunctionComponent } from "react"
-import styled from "styled-components"
+import styled from "rn-css"
 
 import TimelineCommand from "../../components/TimelineCommand"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 
-const PathLabel = styled.div`
+const PathLabel = styled.View`
   padding-bottom: 10px;
   color: ${(props) => props.theme.bold};
 `
 
-const KeysContainer = styled.div`
+const KeysContainer = styled.View`
   display: flex;
   flex-wrap: wrap;
   color: ${(props) => props.theme.foreground};
 `
-const Key = styled.div`
+const Key = styled.View`
   background-color: ${(props) => props.theme.backgroundLighter};
   margin: 4px;
   padding: 4px 8px;

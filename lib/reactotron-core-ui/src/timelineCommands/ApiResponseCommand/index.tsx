@@ -1,21 +1,21 @@
-import React, { useState, FunctionComponent } from "react"
-import styled from "styled-components"
-import { MdCallReceived, MdCallMade, MdReceipt, MdContentCopy } from "react-icons/md"
+import React, { FunctionComponent, useState } from "react"
+import { MdCallMade, MdCallReceived, MdContentCopy, MdReceipt } from "react-icons/md"
+import styled from "rn-css"
 
+import ContentView from "../../components/ContentView"
 import TimelineCommand from "../../components/TimelineCommand"
 import TimelineCommandTabButton from "../../components/TimelineCommandTabButton"
-import ContentView from "../../components/ContentView"
-import { apiToMarkdown } from "../../utils/api-to-markdown"
 import { apiRequestToCurl } from "../../utils/api-to-curl"
+import { apiToMarkdown } from "../../utils/api-to-markdown"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 
 // TODO: Consider if this is a component that should be built into the TimelineCommand...
-const NameContainer = styled.div`
+const NameContainer = styled.View`
   color: ${(props) => props.theme.bold};
   padding-bottom: 10px;
 `
 
-const TabsContainer = styled.div`
+const TabsContainer = styled.View`
   display: flex;
   padding-top: 10px;
   padding-bottom: 10px;

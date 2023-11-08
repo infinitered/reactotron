@@ -1,28 +1,28 @@
-import React, { FunctionComponent, useRef, useState, useCallback, useEffect } from "react"
-import styled from "styled-components"
+import React, { FunctionComponent, useCallback, useEffect, useRef, useState } from "react"
+import styled from "rn-css"
 
-import Modal, { KeystrokeContainer, Keystroke } from "../../components/Modal"
+import Modal, { Keystroke, KeystrokeContainer } from "../../components/Modal"
 
 const KEY_MAPS = {
   command: "⌘",
   ctrl: "CTRL",
 }
 
-const InstructionText = styled.div`
+const InstructionText = styled.View`
   text-align: left;
   color: ${(props) => props.theme.foreground};
 `
 
-const ActionContainer = styled.div`
+const ActionContainer = styled.View`
   display: flex;
   flex-direction: column;
   padding: 15px;
 `
-const ActionLabel = styled.label`
+const ActionLabel = styled.Text`
   font-size: 13px;
   color: ${(props) => props.theme.heading};
 `
-const ActionInput = styled.textarea`
+const ActionInput = styled.TextInput`
   border: 0;
   border-bottom: 1px solid ${(props) => props.theme.line};
   font-size: 25px;

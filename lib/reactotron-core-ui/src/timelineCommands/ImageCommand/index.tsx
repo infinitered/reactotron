@@ -1,22 +1,22 @@
 import React, { FunctionComponent } from "react"
-import styled from "styled-components"
+import styled from "rn-css"
 
 import TimelineCommand from "../../components/TimelineCommand"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 
-const Image = styled.img`
+const Image = styled.Image`
   max-width: 100%;
   max-height: 100%;
 `
-const Caption = styled.div`
+const Caption = styled.View`
   padding: 10px 0;
   font-size: larger;
   color: ${(props) => props.theme.foreground};
 `
-const Dimensions = styled.div`
+const Dimensions = styled.View`
   color: ${(props) => props.theme.constant};
 `
-const Filename = styled.div`
+const Filename = styled.View`
   color: ${(props) => props.theme.highlight};
 `
 

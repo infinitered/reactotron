@@ -1,43 +1,43 @@
-import React from "react"
 import { shell } from "electron"
-import { Header } from "reactotron-core-ui"
-import styled from "styled-components"
+import React from "react"
+import { getApplicationKeyMap } from "react-hotkeys"
+import { FaTwitter as TwitterIcon } from "react-icons/fa"
 import {
-  GoRepo as RepoIcon,
   GoComment as FeedbackIcon,
   GoSquirrel as ReleaseIcon,
+  GoRepo as RepoIcon,
 } from "react-icons/go"
-import { FaTwitter as TwitterIcon } from "react-icons/fa"
-import { getApplicationKeyMap } from "react-hotkeys"
+import { Header } from "reactotron-core-ui"
+import styled from "rn-css"
 
-import KeybindGroup from "./components/KeybindGroup"
 import { reactotronLogo } from "../../images"
+import KeybindGroup from "./components/KeybindGroup"
 
 const projectJson = require("../../../../package.json")
 
-const Container = styled.div`
+const Container = styled.View`
   display: flex;
   flex-direction: column;
   width: 100%;
 `
 
-const HelpContainer = styled.div`
+const HelpContainer = styled.View`
   padding: 20px;
   overflow-y: auto;
   overflow-x: hidden;
 `
 
-const LogoContainer = styled.div`
+const LogoContainer = styled.View`
   display: flex;
   justify-content: center;
 `
 
-const LogoImage = styled.img`
+const LogoImage = styled.Image`
   height: 128px;
   margin: 20px 0;
 `
 
-const Title = styled.div`
+const Title = styled.View`
   font-size: 18px;
   margin: 10px 0;
   padding-bottom: 2px;
@@ -45,13 +45,13 @@ const Title = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.highlight};
 `
 
-const ConnectContainer = styled.div`
+const ConnectContainer = styled.View`
   display: flex;
   align-items: flex-start;
   color: ${(props) => props.theme.foreground};
   margin-bottom: 50px;
 `
-const ConnectItemContainer = styled.div`
+const ConnectItemContainer = styled.View`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,7 +65,7 @@ const ConnectItemContainer = styled.div`
   border-radius: 5px;
   border: 1px solid ${(props) => props.theme.chromeLine};
 `
-const ConnectItemIconContainer = styled.div`
+const ConnectItemIconContainer = styled.View`
   color: ${(props) => props.theme.foregroundLight};
   margin-bottom: 8px;
 `

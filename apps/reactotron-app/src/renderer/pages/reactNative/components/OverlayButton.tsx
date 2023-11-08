@@ -1,9 +1,7 @@
 import React from "react"
-import styled from "styled-components"
+import styled from "rn-css"
 
-const Button = styled.button.attrs<{ selected: boolean }>((props) => ({
-  selected: props.selected ? props.selected : false,
-}))`
+const Button = styled.TouchableOpacity<{ selected: boolean }>`
   height: 30px;
   padding: "0 15px";
   font-size: 13px;

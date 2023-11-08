@@ -1,43 +1,43 @@
-import React, { useContext } from "react"
 import { clipboard } from "electron"
 import fs from "fs"
+import React, { useContext } from "react"
+import { MdDeleteSweep, MdFilterList, MdReorder, MdSearch, MdSwapVert } from "react-icons/md"
 import {
-  Header,
-  filterCommands,
-  TimelineFilterModal,
-  timelineCommandResolver,
   EmptyState,
+  Header,
   ReactotronContext,
   TimelineContext,
+  TimelineFilterModal,
+  filterCommands,
+  timelineCommandResolver,
 } from "reactotron-core-ui"
-import { MdSearch, MdDeleteSweep, MdFilterList, MdSwapVert, MdReorder } from "react-icons/md"
-import styled from "styled-components"
+import styled from "rn-css"
 
-const Container = styled.div`
+const Container = styled.View`
   display: flex;
   flex-direction: column;
   width: 100%;
 `
 
-const TimelineContainer = styled.div`
+const TimelineContainer = styled.View`
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 `
 
-const SearchContainer = styled.div`
+const SearchContainer = styled.View`
   display: flex;
   align-items: center;
   padding-bottom: 10px;
   padding-top: 4px;
   padding-right: 10px;
 `
-const SearchLabel = styled.p`
+const SearchLabel = styled.Text`
   padding: 0 10px;
   font-size: 14px;
   color: ${(props) => props.theme.foregroundDark};
 `
-const SearchInput = styled.input`
+const SearchInput = styled.TextInput`
   border-radius: 4px;
   padding: 10px;
   flex: 1;

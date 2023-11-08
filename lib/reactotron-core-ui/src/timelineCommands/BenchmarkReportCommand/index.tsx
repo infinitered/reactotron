@@ -1,27 +1,27 @@
 import React, { FunctionComponent } from "react"
-import styled from "styled-components"
+import styled from "rn-css"
 
 import TimelineCommand from "../../components/TimelineCommand"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 
-const NameContainer = styled.div`
+const NameContainer = styled.View`
   color: ${(props) => props.theme.bold};
   padding-bottom: 10px;
 `
 
-const StepContainer = styled.div`
+const StepContainer = styled.View`
   position: relative;
   display: flex;
   color: ${(props) => props.theme.foreground};
   margin: 2px 0;
   padding: 4px;
 `
-const StepTitle = styled.div`
+const StepTitle = styled.View`
   flex: 1;
   word-break: break-all;
   z-index: 2;
 `
-const StepDuration = styled.div`
+const StepDuration = styled.View`
   text-align: right;
   width: 100px;
   z-index: 2;
@@ -30,7 +30,7 @@ interface StepGrapProps {
   $startPercent: number
   $endPercent: number
 }
-const StepGraph = styled.div.attrs(() => ({}))<StepGrapProps>`
+const StepGraph = styled.View<StepGrapProps>`
   background-color: ${(props) => props.theme.backgroundLighter};
   position: absolute;
   top: 0;

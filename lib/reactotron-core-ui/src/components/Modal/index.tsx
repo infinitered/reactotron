@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from "react"
 import ReactModal from "react-modal"
-import styled, { useTheme } from "styled-components"
+import styled, { useTheme } from "rn-css"
 
 ReactModal.setAppElement(document.body)
 
-const Title = styled.h1`
+const Title = styled.Text`
   margin: 0;
   padding: 0;
   text-align: left;
@@ -12,16 +12,16 @@ const Title = styled.h1`
   font-size: 24px;
   color: ${(props) => props.theme.heading};
 `
-const KeystrokesContainer = styled.div`
+const KeystrokesContainer = styled.View`
   display: flex;
   align-self: center;
   padding-top: 20px;
   font-size: 13px;
 `
-export const KeystrokeContainer = styled.div`
+export const KeystrokeContainer = styled.View`
   padding: 0 10px;
 `
-export const Keystroke = styled.span`
+export const Keystroke = styled.Text`
   padding: 4px 8px;
   border-radius: 4px;
   background-color: ${(props) => props.theme.backgroundHighlight};

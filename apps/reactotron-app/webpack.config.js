@@ -16,5 +16,12 @@ module.exports = function (config) {
       ...config.output,
       hashFunction: "sha256",
     },
+    resolve: {
+      ...config.resolve,
+      alias: {
+        ...config.resolve.alias,
+        "react-native$": "react-native-web",
+      },
+    },
   }
 }

@@ -1,26 +1,26 @@
-import React, { useContext } from "react"
-import styled from "styled-components"
-import fs from "fs"
 import { nativeImage } from "electron"
-import { Header, ReactNativeContext } from "reactotron-core-ui"
+import fs from "fs"
+import React, { useContext } from "react"
 import { MdBook, MdCamera } from "react-icons/md"
+import { Header, ReactNativeContext } from "reactotron-core-ui"
+import styled from "rn-css"
 
 import { OverlayAlignment } from "./components/OverlayAlignment"
 import { OverlayButton } from "./components/OverlayButton"
-import { Container, Row, Title, Text } from "./components/Shared"
-import { OverlayLayoutType, Layout } from "./components/OverlayLayoutType"
-import { OverlayScale } from "./components/OverlayScale"
-import { OverlayResizeMode } from "./components/OverlayResizeMode"
-import { OverlayOpacity } from "./components/OverlayOpacity"
+import { Layout, OverlayLayoutType } from "./components/OverlayLayoutType"
 import { OverlayMargins } from "./components/OverlayMargins"
+import { OverlayOpacity } from "./components/OverlayOpacity"
+import { OverlayResizeMode } from "./components/OverlayResizeMode"
+import { OverlayScale } from "./components/OverlayScale"
+import { Container, Row, Text, Title } from "./components/Shared"
 
 import type { DragEvent } from "react"
-import type { JustifyContent, AlignItems } from "./components/OverlayAlignment"
+import type { AlignItems, JustifyContent } from "./components/OverlayAlignment"
 import type { ResizeMode } from "./components/OverlayResizeMode"
 
 const isDevelopment = process.env.NODE_ENV !== "production"
 
-const OverlayContainer = styled.div`
+const OverlayContainer = styled.View`
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -29,7 +29,7 @@ const OverlayContainer = styled.div`
   padding-bottom: 20px;
 `
 
-const DropZone = styled.div`
+const DropZone = styled.View`
   display: flex;
   flex: 1;
   height: 200px;
@@ -42,12 +42,12 @@ const DropZone = styled.div`
   align-items: center;
 `
 
-const OverlayPreview = styled.img`
+const OverlayPreview = styled.Image`
   max-width: 100%;
   max-height: 100%;
 `
 
-const ReapplyContainer = styled.div`
+const ReapplyContainer = styled.View`
   display: flex;
   flex-direction: row;
   margin-top: 10px;

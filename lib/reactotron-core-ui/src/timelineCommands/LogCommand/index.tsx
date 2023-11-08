@@ -1,18 +1,18 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
-import styled from "styled-components"
 import { MdContentCopy } from "react-icons/md"
+import styled from "rn-css"
 import stringifyObject from "stringify-object"
 
-import TimelineCommand from "../../components/TimelineCommand"
-import ContentView from "../../components/ContentView"
-import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 import { ErrorStackFrame, LogPayload, isErrorStackFrameArray } from "reactotron-core-contract"
+import ContentView from "../../components/ContentView"
+import TimelineCommand from "../../components/TimelineCommand"
+import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 
 const SOURCE_LINES_UP = 3
 const SOURCE_LINES_DOWN = 3
 const SOURCE_FILE_PATH_COUNT = 3
 
-const ErrorMessage = styled.div`
+const ErrorMessage = styled.View`
   word-break: break-all;
   margin-bottom: 30px;
   padding: 20px 0 20px 10px;
@@ -26,13 +26,13 @@ const ErrorMessage = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.subtleLine};
 `
 
-const SourceContainer = styled.div`
+const SourceContainer = styled.View`
   display: flex;
   flex-direction: column;
   padding-bottom: 10px;
   color: ${(props) => props.theme.foreground};
 `
-const SourceFilename = styled.div`
+const SourceFilename = styled.View`
   padding: 5px 0;
   margin-bottom: 5px;
   color: ${(props) => props.theme.tag};
@@ -40,7 +40,7 @@ const SourceFilename = styled.div`
 interface SourceLineContainerProps {
   $isSelected: boolean
 }
-const SourceLineContainer = styled.div.attrs(() => ({}))<SourceLineContainerProps>`
+const SourceLineContainer = styled.View<SourceLineContainerProps>`
   display: flex;
   padding: 6px 0;
   cursor: pointer;
@@ -54,43 +54,43 @@ const SourceLineContainer = styled.div.attrs(() => ({}))<SourceLineContainerProp
   border-bottom: ${(props) =>
     props.$isSelected ? `1px solid ${props.theme.subtleLine}` : undefined};
 `
-const SourceLineNumber = styled.div`
+const SourceLineNumber = styled.View`
   width: 60px;
   padding-right: 15px;
   color: ${(props) => props.theme.constant};
   text-align: right;
 `
-const SourceLineCode = styled.div`
+const SourceLineCode = styled.View`
   flex: 1;
   white-space: pre-wrap;
 `
 
-const StackContainer = styled.div`
+const StackContainer = styled.View`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
 `
-const StackTitle = styled.div`
+const StackTitle = styled.View`
   padding-top: 5px;
   padding-bottom: 5px;
   margin-bottom: 5px;
   color: ${(props) => props.theme.tag};
   border-bottom: 1px solid ${(props) => props.theme.line};
 `
-const StackTable = styled.div`
+const StackTable = styled.View`
   display: flex;
   flex-direction: column;
 `
-const StackTableHeadRow = styled.div`
+const StackTableHeadRow = styled.View`
   display: flex;
   padding: 6px;
   color: ${(props) => props.theme.foregroundDark};
 `
-const StackTableHeaderFunction = styled.div`
+const StackTableHeaderFunction = styled.View`
   text-align: left;
   flex: 1;
 `
-const StackTableHeaderLineNumber = styled.div`
+const StackTableHeaderLineNumber = styled.View`
   text-align: right;
   width: 60px;
 `
@@ -99,7 +99,7 @@ interface StackFrameContainerProps {
   $isNodeModule: boolean
   $isSelected: boolean
 }
-const StackFrameContainer = styled.div.attrs(() => ({}))<StackFrameContainerProps>`
+const StackFrameContainer = styled.View<StackFrameContainerProps>`
   display: flex;
   padding: 6px;
   word-break: break-all;
@@ -117,14 +117,14 @@ const StackFrameContainer = styled.div.attrs(() => ({}))<StackFrameContainerProp
   border-bottom: ${(props) =>
     props.$isSelected ? `1px solid ${props.theme.subtleLine}` : undefined};
 `
-const StackFrameFunction = styled.div`
+const StackFrameFunction = styled.View`
   flex: 1;
 `
-const StackFrameFile = styled.div`
+const StackFrameFile = styled.View`
   flex: 1;
   word-break: break-all;
 `
-const StackFrameLineNumber = styled.div`
+const StackFrameLineNumber = styled.View`
   color: ${(props) => props.theme.constant};
   word-break: break-all;
   width: 50px;

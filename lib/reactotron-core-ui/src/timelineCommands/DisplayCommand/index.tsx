@@ -1,14 +1,14 @@
 import React, { FunctionComponent } from "react"
-import styled from "styled-components"
 import { MdContentCopy } from "react-icons/md"
+import styled from "rn-css"
 
-import TimelineCommand from "../../components/TimelineCommand"
 import ContentView from "../../components/ContentView"
+import TimelineCommand from "../../components/TimelineCommand"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 
-const ImageContainer = styled.div``
+const ImageContainer = styled.View``
 
-const Image = styled.img`
+const Image = styled.Image`
   max-width: 100%;
   max-height: 100%;
 `

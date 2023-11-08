@@ -1,18 +1,18 @@
-import React, { FunctionComponent, useRef, useState, useCallback } from "react"
-import styled from "styled-components"
+import React, { FunctionComponent, useCallback, useRef, useState } from "react"
+import styled from "rn-css"
 
-import Modal, { KeystrokeContainer, Keystroke } from "../../components/Modal"
+import Modal, { Keystroke, KeystrokeContainer } from "../../components/Modal"
 
-const NameContainer = styled.div`
+const NameContainer = styled.View`
   display: flex;
   flex-direction: column;
   padding: 15px;
 `
-const NameLabel = styled.label`
+const NameLabel = styled.Text`
   font-size: 13px;
   color: ${(props) => props.theme.heading};
 `
-const NameInput = styled.input`
+const NameInput = styled.TextInput`
   border: 0;
   border-bottom: 1px solid ${(props) => props.theme.line};
   font-size: 25px;

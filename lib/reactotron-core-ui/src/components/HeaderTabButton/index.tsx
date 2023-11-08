@@ -1,7 +1,7 @@
+import colorInterpolate from "color-interpolate"
 import React from "react"
 import { Motion, spring } from "react-motion"
-import colorInterpolate from "color-interpolate"
-import styled from "styled-components"
+import styled from "rn-css"
 
 const Theme = { highlight: "hsl(290, 3.2%, 47.4%)", foregroundLight: "#c3c3c3" }
 
@@ -17,7 +17,7 @@ interface HeaderTabButtonProps {
 }
 
 const colorInterpolator = colorInterpolate([Theme.highlight, Theme.foregroundLight])
-const HeaderTabButtonContainer = styled.div.attrs(() => ({}))<HeaderTabButtonProps>`
+const HeaderTabButtonContainer = styled.View<HeaderTabButtonProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,7 +28,7 @@ const HeaderTabButtonContainer = styled.div.attrs(() => ({}))<HeaderTabButtonPro
   -webkit-app-region: none;
 `
 
-const Title = styled.div`
+const Title = styled.View`
   padding-top: 2px;
   text-align: center;
   font-size: 12px;

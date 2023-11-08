@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from "react"
-import styled from "styled-components"
+import styled from "rn-css"
 
 interface ContainerProps {
   $isActive: boolean
 }
-const Container = styled.div.attrs(() => ({}))<ContainerProps>`
+const Container = styled.View<ContainerProps>`
   display: flex;
   padding: 4px 8px;
   margin: 4px;

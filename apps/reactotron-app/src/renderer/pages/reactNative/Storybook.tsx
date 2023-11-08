@@ -1,28 +1,28 @@
 import React, { useContext } from "react"
-import styled from "styled-components"
-import { Header, ReactNativeContext } from "reactotron-core-ui"
 import {
-  MdCamera,
   MdBook,
+  MdCamera,
   MdRadioButtonChecked,
   MdRadioButtonUnchecked,
   MdWarning,
 } from "react-icons/md"
+import { Header, ReactNativeContext } from "reactotron-core-ui"
+import styled from "rn-css"
 import { storybookActiveImg, storybookInactiveImg } from "../../images"
 
-const Container = styled.div`
+const Container = styled.View`
   display: flex;
   flex-direction: column;
   width: 100%;
 `
 
-const StorybookContainer = styled.div`
+const StorybookContainer = styled.View`
   display: flex;
   flex-direction: column;
   height: 100%;
 `
 
-const TopSection = styled.div`
+const TopSection = styled.View`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -30,24 +30,24 @@ const TopSection = styled.div`
   align-items: center;
 `
 
-const StorybookLogo = styled.img`
+const StorybookLogo = styled.Image`
   width: 282px;
   height: 76px;
   padding-bottom: 20;
 `
 
-const ToggleContainer = styled.div`
+const ToggleContainer = styled.View`
   display: flex;
   color: ${(props) => props.theme.foreground};
 `
-const RadioButton = styled.div`
+const RadioButton = styled.View`
   display: flex;
   align-items: center;
   cursor: pointer;
   padding: 10px;
 `
 
-const WarningContainer = styled.div`
+const WarningContainer = styled.View`
   display: flex;
   color: ${(props) => props.theme.warning};
   background-color: ${(props) => props.theme.backgroundDarker};
@@ -55,7 +55,7 @@ const WarningContainer = styled.div`
   align-items: center;
   padding: 0 20px;
 `
-const WarningDescription = styled.div`
+const WarningDescription = styled.View`
   margin-left: 20px;
 `
 

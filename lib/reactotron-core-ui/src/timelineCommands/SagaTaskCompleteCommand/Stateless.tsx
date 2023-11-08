@@ -1,14 +1,14 @@
 import React, { FunctionComponent } from "react"
-import styled from "styled-components"
 import {
-  MdList,
-  MdDone as IconStatusResolved,
   MdEject as IconStatusCancelled,
   MdError as IconStatusRejected,
+  MdDone as IconStatusResolved,
+  MdList,
 } from "react-icons/md"
+import styled from "rn-css"
 
-import TimelineCommand from "../../components/TimelineCommand"
 import ContentView from "../../components/ContentView"
+import TimelineCommand from "../../components/TimelineCommand"
 import { TimelineCommandProps } from "../BaseCommand"
 
 const STATUS_MAP = {
@@ -17,33 +17,33 @@ const STATUS_MAP = {
   CANCELLED: <IconStatusCancelled />,
 }
 
-const EffectTitle = styled.div`
+const EffectTitle = styled.View`
   display: flex;
   color: ${(props) => props.theme.foreground};
   border-bottom: 1px solid ${(props) => props.theme.highlight};
   padding-bottom: 4px;
   margin-bottom: 4px;
 `
-const TriggerType = styled.div`
+const TriggerType = styled.View`
   color: ${(props) => props.theme.tag};
   padding-right: 20px;
 `
-const Duration = styled.div`
+const Duration = styled.View`
   text-align: right;
   flex: 1;
 `
-const DurationMs = styled.span`
+const DurationMs = styled.Text`
   color: ${(props) => props.theme.foregroundDark};
 `
 
-const EffectContainer = styled.div`
+const EffectContainer = styled.View`
   display: flex;
   color: ${(props) => props.theme.foreground};
   padding-top: 4px;
   margin-top: 2px;
   border-bottom: 1px solid ${(props) => props.theme.subtleLine};
 `
-const EffectNameContainer = styled.div`
+const EffectNameContainer = styled.View`
   width: 140px;
   align-items: center;
   margin-bottom: 4px;
@@ -52,19 +52,19 @@ interface EffectNameProps {
   $depth: number
   $isLoser: boolean
 }
-const EffectName = styled.span.attrs(() => ({}))<EffectNameProps>`
+const EffectName = styled.Text<EffectNameProps>`
   color: ${(props) => (props.$isLoser ? props.theme.foregroundDark : props.theme.constant)};
   padding-left: ${(props) => props.$depth * 20}px;
   text-decoration: ${(props) => (props.$isLoser ? "line-through" : "")};
 `
-const EffectStatus = styled.span`
+const EffectStatus = styled.Text`
   color: ${(props) => props.theme.tag};
   padding-right: 4px;
 `
-const EffectExtraContainer = styled.div`
+const EffectExtraContainer = styled.View`
   flex: 1;
 `
-const EffectDescription = styled.div`
+const EffectDescription = styled.View`
   padding-bottom: 4px;
 `
 

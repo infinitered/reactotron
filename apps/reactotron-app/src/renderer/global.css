@@ -3,6 +3,10 @@ body {
   font-size: 0.94em;
 }
 
+#app {
+  height: 100vh;
+}
+
 ::-webkit-scrollbar {
   background-color: transparent;
   width: 8px;

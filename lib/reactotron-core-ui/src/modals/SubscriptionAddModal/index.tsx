@@ -1,27 +1,27 @@
-import React, { FunctionComponent, useRef, useState, useCallback } from "react"
-import styled from "styled-components"
+import React, { FunctionComponent, useCallback, useRef, useState } from "react"
+import styled from "rn-css"
 
-import Modal, { KeystrokeContainer, Keystroke } from "../../components/Modal"
+import Modal, { Keystroke, KeystrokeContainer } from "../../components/Modal"
 
-const InstructionText = styled.div`
+const InstructionText = styled.View`
   text-align: left;
   color: ${(props) => props.theme.foreground};
 `
-const ExampleText = styled.p`
+const ExampleText = styled.Text`
   margin: 0 0 0 40px;
   color: ${(props) => props.theme.bold};
 `
 
-const PathContainer = styled.div`
+const PathContainer = styled.View`
   display: flex;
   flex-direction: column;
   padding: 15px;
 `
-const PathLabel = styled.label`
+const PathLabel = styled.Text`
   font-size: 13px;
   color: ${(props) => props.theme.heading};
 `
-const PathInput = styled.input`
+const PathInput = styled.TextInput`
   border: 0;
   border-bottom: 1px solid ${(props) => props.theme.line};
   font-size: 25px;

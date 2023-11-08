@@ -1,19 +1,19 @@
-import React from "react"
-import styled from "styled-components"
 import { format } from "date-fns"
+import React from "react"
+import styled from "rn-css"
 
-const Container = styled.div`
+const Container = styled.View`
   position: relative;
   font-family: "Fira Code", "SF Mono", "Consolas", "Segoe UI", "Roboto", "-apple-system",
     "Helvetica Neue", sans-serif;
 `
-const LeftDateContainer = styled.span`
+const LeftDateContainer = styled.Text`
   color: ${(props) => props.theme.highlight};
 `
-const RightDateContainer = styled.span`
+const RightDateContainer = styled.Text`
   color: ${(props) => props.theme.foreground};
 `
-const DeltaContainer = styled.span`
+const DeltaContainer = styled.Text`
   color: ${(props) => props.theme.tag};
   font-size: 0.7rem;
   position: absolute;

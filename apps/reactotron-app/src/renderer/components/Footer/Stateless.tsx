@@ -1,20 +1,20 @@
 import React from "react"
-import styled from "styled-components"
 import { MdSwapVert as ExpandIcon } from "react-icons/md"
+import styled from "rn-css"
 
 import config from "../../config"
-import { getPlatformName, getPlatformDetails } from "../../util/connectionHelpers"
 import { Connection } from "../../contexts/Standalone/useStandalone"
+import { getPlatformDetails, getPlatformName } from "../../util/connectionHelpers"
 import ConnectionSelector from "../ConnectionSelector"
 
-const Container = styled.div`
+const Container = styled.View`
   border-top: 1px solid ${(props) => props.theme.chromeLine};
   color: ${(props) => props.theme.foregroundDark};
   box-shadow: 0 0 30px ${(props) => props.theme.glow};
   color: ${(props) => props.theme.foregroundLight};
 `
 
-const ConnectionContainer = styled.div`
+const ConnectionContainer = styled.View`
   display: flex;
   flex: 1;
   overflow-x: auto;
@@ -24,7 +24,7 @@ const ConnectionContainer = styled.div`
 interface ContentContainerProps {
   $isOpen: boolean
 }
-const ContentContainer = styled.div.attrs(() => ({}))<ContentContainerProps>`
+const ContentContainer = styled.View<ContentContainerProps>`
   display: flex;
   flex-direction: row;
   background-color: ${(props) => props.theme.subtleLine};
@@ -35,11 +35,11 @@ const ContentContainer = styled.div.attrs(() => ({}))<ContentContainerProps>`
   height: ${(props) => (props.$isOpen ? "85px" : "25px")};
 `
 
-const ConnectionInfo = styled.div`
+const ConnectionInfo = styled.View`
   text-align: center;
 `
 
-const ExpandContainer = styled.div`
+const ExpandContainer = styled.View`
   display: flex;
   align-items: center;
   cursor: pointer;

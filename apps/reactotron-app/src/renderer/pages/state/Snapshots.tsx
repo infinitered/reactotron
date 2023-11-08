@@ -1,56 +1,56 @@
+import { clipboard } from "electron"
 import React, { useContext, useState } from "react"
 import {
-  ContentView,
-  SnapshotRenameModal,
-  StateContext,
-  Snapshot,
-  Header,
-  EmptyState,
-} from "reactotron-core-ui"
-import { clipboard } from "electron"
-import styled from "styled-components"
-import {
+  MdCallReceived,
   MdCreate,
   MdDelete,
-  MdFileUpload,
-  MdNotificationsNone,
-  MdImportExport,
-  MdCallReceived,
   MdFileDownload,
+  MdFileUpload,
+  MdImportExport,
+  MdNotificationsNone,
 } from "react-icons/md"
+import {
+  ContentView,
+  EmptyState,
+  Header,
+  Snapshot,
+  SnapshotRenameModal,
+  StateContext,
+} from "reactotron-core-ui"
+import styled from "rn-css"
 
-const Container = styled.div`
+const Container = styled.View`
   display: flex;
   flex-direction: column;
   width: 100%;
 `
 
-const SnapshotsContainer = styled.div`
+const SnapshotsContainer = styled.View`
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 `
 
-const SnapshotContainer = styled.div`
+const SnapshotContainer = styled.View`
   border-bottom: 1px solid ${(props) => props.theme.line};
 `
-const SnapshotDetailRow = styled.div`
+const SnapshotDetailRow = styled.View`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
   cursor: pointer;
 `
-const SnapshotName = styled.div`
+const SnapshotName = styled.View`
   flex: 1;
   color: ${(props) => props.theme.tag};
   text-align: left;
 `
-const SnapshotAction = styled.div`
+const SnapshotAction = styled.View`
   color: ${(props) => props.theme.foreground};
   padding-left: 10px;
 `
-const SnapshotPreview = styled.div`
+const SnapshotPreview = styled.View`
   animation: fade-up 0.25s;
   will-change: transform opacity;
   padding: 0 40px 30px 40px;

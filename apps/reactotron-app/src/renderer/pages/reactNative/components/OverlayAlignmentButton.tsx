@@ -1,5 +1,5 @@
 import React, { type MouseEvent } from "react"
-import styled from "styled-components"
+import styled from "rn-css"
 
 interface OverlayAlignmentButtonProps {
   justifyContent: string
@@ -9,9 +9,7 @@ interface OverlayAlignmentButtonProps {
   onClick: (justifyContent: string, alignItems: string) => void
 }
 
-const Button = styled.button.attrs<{ selected: boolean }>((props) => ({
-  selected: props.selected ? props.selected : false,
-}))`
+const Button = styled.TouchableOpacity<{ selected: boolean }>`
   height: 32px;
   width: 32px;
   background-color: ${(props) => (props.selected ? props.theme.bold : props.theme.subtleLine)};

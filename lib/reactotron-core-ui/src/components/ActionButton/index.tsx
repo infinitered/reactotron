@@ -1,8 +1,8 @@
 import React from "react"
 import ReactTooltip from "react-tooltip"
-import styled from "styled-components"
+import styled from "rn-css"
 
-const Container = styled.div`
+const Container = styled.View`
   cursor: pointer;
   margin: 0 5px;
   -webkit-app-region: none;

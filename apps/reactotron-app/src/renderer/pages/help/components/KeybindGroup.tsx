@@ -1,19 +1,19 @@
 import React from "react"
-import styled from "styled-components"
+import styled from "rn-css"
 
 import Keybind from "./Keybind"
 
-const Contianer = styled.div`
+const Contianer = styled.View`
   display: flex;
   flex-direction: column;
   margin-bottom: 35px;
 `
 
-const Name = styled.div`
+const Name = styled.View`
   color: ${(props) => props.theme.highlight};
 `
 
-const KeybindContainer = styled.div`
+const KeybindContainer = styled.View`
   display: flex;
   flex-direction: column;
 `

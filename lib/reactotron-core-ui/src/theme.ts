@@ -1,4 +1,6 @@
-export default {
+import "rn-css"
+
+const theme = {
   fontFamily:
     '"Fira Code", "SF Mono", "Consolas", "Segoe UI", "Roboto", "-apple-system", "Helvetica Neue", sans-serif',
   background: "#1e1e1e",
@@ -28,3 +30,10 @@ export default {
   tagComplement: "hsl(13.699999999999989, 57.7%, 91.6%)",
   warning: "#9b703f",
 }
+
+declare module "rn-css" {
+  type MyTheme = typeof theme
+  export interface DefaultTheme extends MyTheme {}
+}
+
+export default theme

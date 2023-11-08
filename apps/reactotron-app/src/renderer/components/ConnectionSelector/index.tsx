@@ -1,11 +1,11 @@
 import React, { useMemo } from "react"
-import styled from "styled-components"
 import { MdCheckCircle as Checkmark } from "react-icons/md"
+import styled from "rn-css"
 
-import { getIcon, getPlatformName, getPlatformDetails } from "../../util/connectionHelpers"
 import { Connection } from "../../contexts/Standalone/useStandalone"
+import { getIcon, getPlatformDetails, getPlatformName } from "../../util/connectionHelpers"
 
-const Container = styled.div`
+const Container = styled.View`
   display: flex;
   flex-direction: row;
   flex: 0 0 auto;
@@ -14,18 +14,18 @@ const Container = styled.div`
   align-items: center;
 `
 
-const IconContainer = styled.div`
+const IconContainer = styled.View`
   position: relative;
 `
 
-const CheckmarkContainer = styled.div`
+const CheckmarkContainer = styled.View`
   position: absolute;
   bottom: -3px;
   right: -3px;
   color: green;
 `
 
-const InfoContainer = styled.div`
+const InfoContainer = styled.View`
   margin-left: 10px;
 `
 

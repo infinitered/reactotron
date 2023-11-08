@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react"
-import styled from "styled-components"
+import styled from "rn-css"
 
-const Container = styled.div`
+const Container = styled.View`
   height: 100%;
   flex: 1;
   display: flex;
@@ -11,20 +11,21 @@ const Container = styled.div`
   color: ${(props) => props.theme.foregroundLight};
 `
 
-const Title = styled.div`
+const Title = styled.Text`
+  color: ${(props) => props.theme.foreground};
   font-size: 2rem;
   padding-bottom: 50px;
   padding-top: 10px;
 `
 
-const Message = styled.div`
+const Message = styled.Text`
   color: ${(props) => props.theme.foreground};
   max-width: 400px;
   line-height: 1.4;
   text-align: center;
 `
 
-const Image = styled.img`
+const Image = styled.Image`
   width: 100px;
   height: 100px;
   padding-bottom: 4px;
@@ -45,7 +46,7 @@ const EmptyState: FunctionComponent<React.PropsWithChildren<Props>> = ({
   return (
     <Container>
       {Icon && <Icon size={100} />}
-      {image && <Image src={image} />}
+      {image && <Image source={{ uri: image }} />}
       <Title>{title}</Title>
       <Message>{children}</Message>
     </Container>

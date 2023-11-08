@@ -1,15 +1,15 @@
 import React from "react"
-import { MdReorder, MdAssignment, MdPhoneIphone, MdLiveHelp } from "react-icons/md"
 import { FaMagic } from "react-icons/fa"
-import styled from "styled-components"
+import { MdAssignment, MdLiveHelp, MdPhoneIphone, MdReorder } from "react-icons/md"
+import styled from "rn-css"
 
-import SideBarButton from "../SideBarButton"
 import { reactotronLogo } from "../../images"
+import SideBarButton from "../SideBarButton"
 
 interface SideBarContainerProps {
   $isOpen: boolean
 }
-const SideBarContainer = styled.div.attrs(() => ({}))<SideBarContainerProps>`
+const SideBarContainer = styled.View<SideBarContainerProps>`
   display: flex;
   flex-direction: column;
   padding-top: 25px;
@@ -20,7 +20,7 @@ const SideBarContainer = styled.div.attrs(() => ({}))<SideBarContainerProps>`
   margin-left: ${(props) => (props.$isOpen ? 0 : -115)}px;
 `
 
-const Spacer = styled.div`
+const Spacer = styled.View`
   flex: 1;
 `
 

@@ -1,10 +1,10 @@
 import React from "react"
-import styled from "styled-components"
 import {
-  MdLabel as TagIcon,
-  MdExpandLess as IconOpen,
   MdExpandMore as IconClosed,
+  MdExpandLess as IconOpen,
+  MdLabel as TagIcon,
 } from "react-icons/md"
+import styled from "rn-css"
 
 import ActionButton from "../ActionButton"
 import Timestamp from "../Timestamp"
@@ -12,7 +12,7 @@ import Timestamp from "../Timestamp"
 interface ContainerProps {
   $isOpen: boolean
 }
-const Container = styled.div.attrs(() => ({}))<ContainerProps>`
+const Container = styled.View<ContainerProps>`
   display: flex;
   flex-direction: column;
   border-bottom: ${(props) => `1px solid ${props.theme.line}`};
@@ -20,7 +20,7 @@ const Container = styled.div.attrs(() => ({}))<ContainerProps>`
     props.$isOpen ? props.theme.backgroundSubtleLight : props.theme.background};
 `
 
-const TopBarContainer = styled.div`
+const TopBarContainer = styled.View`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -28,16 +28,16 @@ const TopBarContainer = styled.div`
   padding: 15px 20px;
 `
 
-const TimestampContainer = styled.div`
+const TimestampContainer = styled.View`
   padding-right: 10px;
   padding-top: 4px;
 `
 
-const TagContainer = styled.div`
+const TagContainer = styled.View`
   margin-right: 4px;
 `
 
-const TitleContainer = styled.div`
+const TitleContainer = styled.View`
   display: flex;
   text-align: left;
   width: 168px;
@@ -45,7 +45,7 @@ const TitleContainer = styled.div`
 interface TitleTextProps {
   $isImportant: boolean
 }
-const TitleText = styled.div.attrs(() => ({}))<TitleTextProps>`
+const TitleText = styled.View<TitleTextProps>`
   display: flex;
   color: ${(props) => (props.$isImportant ? props.theme.tagComplement : props.theme.tag)};
   background-color: ${(props) => (props.$isImportant ? props.theme.tag : "transparent")};
@@ -53,7 +53,7 @@ const TitleText = styled.div.attrs(() => ({}))<TitleTextProps>`
   padding: 4px 8px;
 `
 
-const PreviewContainer = styled.div`
+const PreviewContainer = styled.View`
   flex: 1;
   color: ${(props) => props.theme.highlight};
   text-align: left;
@@ -62,20 +62,20 @@ const PreviewContainer = styled.div`
   padding-top: 4px;
 `
 
-const ToolbarContainer = styled.div`
+const ToolbarContainer = styled.View`
   display: flex;
   color: ${(props) => props.theme.foreground};
 `
 
-const Spacer = styled.div`
+const Spacer = styled.View`
   flex: 1;
 `
 
-const ExpandIconContainer = styled.div`
+const ExpandIconContainer = styled.View`
   color: ${(props) => props.theme.backgroundHighlight};
 `
 
-const ChildrenContainer = styled.div`
+const ChildrenContainer = styled.View`
   overflow: hidden;
   animation: fade-up 0.25s;
   will-change: transform opacity;

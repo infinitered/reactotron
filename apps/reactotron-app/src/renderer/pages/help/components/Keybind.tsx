@@ -1,5 +1,5 @@
 import React, { Fragment } from "react"
-import styled from "styled-components"
+import styled from "rn-css"
 
 const platform = window.process.platform
 const mouseTrap = platform === "darwin" ? "command" : "ctrl"
@@ -10,7 +10,7 @@ const KEY_REMAPS = {
   shift: "⬆",
 }
 
-const Container = styled.div`
+const Container = styled.View`
   display: flex;
   align-items: center;
   margin: 10px 0;
@@ -20,10 +20,10 @@ const Container = styled.div`
 interface KeystrokeContainerProps {
   $addWidth: boolean
 }
-const KeystrokeContainer = styled.div.attrs(() => ({}))<KeystrokeContainerProps>`
+const KeystrokeContainer = styled.View<KeystrokeContainerProps>`
   width: ${(props) => (props.$addWidth ? "180px" : "auto")};
 `
-const Keystroke = styled.span`
+const Keystroke = styled.Text`
   font-weight: bold;
   padding: 4px 12px;
   margin: 0 2px;
@@ -32,11 +32,11 @@ const Keystroke = styled.span`
   border-radius: 4px;
   border-bottom: 2px solid ${(props) => props.theme.highlight};
 `
-const Plus = styled.span`
+const Plus = styled.Text`
   margin: 0 2px;
 `
 
-const Description = styled.div``
+const Description = styled.View``
 
 export function KeybindKeys({ keybind, sequence, addWidth }) {
   // const modifierName = platform === "darwin" ? "⌘" : "CTRL"

@@ -1,17 +1,17 @@
-import React, { useState, useContext, useReducer } from "react"
-import { Header, EmptyState, CustomCommandsContext, CustomCommand } from "reactotron-core-ui"
-import styled from "styled-components"
-import { MdSearch } from "react-icons/md"
-import { FaMagic } from "react-icons/fa"
 import { produce } from "immer"
+import React, { useContext, useReducer, useState } from "react"
+import { FaMagic } from "react-icons/fa"
+import { MdSearch } from "react-icons/md"
+import { CustomCommand, CustomCommandsContext, EmptyState, Header } from "reactotron-core-ui"
+import styled from "rn-css"
 
-const Container = styled.div`
+const Container = styled.View`
   display: flex;
   flex-direction: column;
   width: 100%;
 `
 
-const CommandsContainer = styled.div`
+const CommandsContainer = styled.View`
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -19,19 +19,19 @@ const CommandsContainer = styled.div`
   padding-bottom: 0;
 `
 
-const SearchContainer = styled.div`
+const SearchContainer = styled.View`
   display: flex;
   align-items: center;
   padding-bottom: 10px;
   padding-top: 4px;
   padding-right: 10px;
 `
-const SearchLabel = styled.p`
+const SearchLabel = styled.Text`
   padding: 0 10px;
   font-size: 14px;
   color: ${(props) => props.theme.foregroundDark};
 `
-const SearchInput = styled.input`
+const SearchInput = styled.TextInput`
   border-radius: 4px;
   padding: 10px;
   flex: 1;
@@ -41,24 +41,24 @@ const SearchInput = styled.input`
   font-size: 14px;
 `
 
-const ButtonContianer = styled.div`
+const ButtonContianer = styled.View`
   display: flex;
   flex-direction: column;
   width: 100%;
   margin-bottom: 24px;
   color: ${(props) => props.theme.foreground};
 `
-const Title = styled.div`
+const Title = styled.View`
   font-size: 24px;
   margin-bottom: 12px;
 `
-const Description = styled.div`
+const Description = styled.View`
   margin-bottom: 12px;
 `
-const ArgsContainer = styled.div`
+const ArgsContainer = styled.View`
   margin-bottom: 24px;
 `
-const SendButton = styled.div`
+const SendButton = styled.View`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,15 +75,15 @@ const SendButton = styled.div`
     background-color: #e73435;
   }
 `
-const ArgContainer = styled.div`
+const ArgContainer = styled.View`
   &:not(:last-child) {
     margin-bottom: 12px;
   }
 `
-const ArgName = styled.div`
+const ArgName = styled.View`
   margin-bottom: 8px;
 `
-const ArgInput = styled.input`
+const ArgInput = styled.TextInput`
   padding: 10px 12px;
   outline: none;
   border-radius: 4px;

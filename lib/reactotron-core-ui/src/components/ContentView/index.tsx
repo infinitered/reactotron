@@ -1,21 +1,21 @@
 import React from "react"
-import styled from "styled-components"
-import makeTable from "../../utils/makeTable"
+import styled from "rn-css"
 import isShallow from "../../utils/isShallow"
+import makeTable from "../../utils/makeTable"
 import TreeView from "../TreeView"
 
-const NullContainer = styled.div`
+const NullContainer = styled.View`
   color: ${(props) => props.theme.tag};
 `
-const UndefinedContainer = styled.div`
+const UndefinedContainer = styled.View`
   color: ${(props) => props.theme.tag};
 `
-const StringContainer = styled.div`
+const StringContainer = styled.View`
   color: ${(props) => props.theme.foreground};
   user-select: text;
   cursor: text;
 `
-const StringLineSpan = styled.span``
+const StringLineSpan = styled.Text``
 
 interface Props {
   // value: object | string | number | boolean | null | undefined

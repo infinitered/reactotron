@@ -1,22 +1,22 @@
 import React from "react"
-import { HashRouter as Router, Route, Routes } from "react-router-dom"
-import styled from "styled-components"
+import { Route, HashRouter as Router, Routes } from "react-router-dom"
+import styled from "rn-css"
 
-import SideBar from "./components/SideBar"
-import Footer from "./components/Footer"
-import RootContextProvider from "./contexts"
 import RootModals from "./RootModals"
+import Footer from "./components/Footer"
+import SideBar from "./components/SideBar"
+import RootContextProvider from "./contexts"
 
-import Home from "./pages/home"
-import Timeline from "./pages/timeline"
-import Subscriptions from "./pages/state/Subscriptions"
-import Snapshots from "./pages/state/Snapshots"
-import Overlay from "./pages/reactNative/Overlay"
-import Storybook from "./pages/reactNative/Storybook"
 import CustomCommands from "./pages/customCommands"
 import Help from "./pages/help"
+import Home from "./pages/home"
+import Overlay from "./pages/reactNative/Overlay"
+import Storybook from "./pages/reactNative/Storybook"
+import Snapshots from "./pages/state/Snapshots"
+import Subscriptions from "./pages/state/Subscriptions"
+import Timeline from "./pages/timeline"
 
-const AppContainer = styled.div`
+const AppContainer = styled.View`
   position: absolute;
   top: 0;
   bottom: 0;
@@ -28,14 +28,14 @@ const AppContainer = styled.div`
   background-color: ${(props) => props.theme.background};
 `
 
-const TopSection = styled.div`
+const TopSection = styled.View`
   overflow: hidden;
   display: flex;
   flex-grow: 1;
   flex-direction: row;
 `
 
-const MainContainer = styled.div`
+const MainContainer = styled.View`
   display: flex;
   flex-direction: row;
   flex: 1;

@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from "react"
-import styled from "styled-components"
+import styled from "rn-css"
 
-import TimelineCommand from "../../components/TimelineCommand"
 import ContentView from "../../components/ContentView"
+import TimelineCommand from "../../components/TimelineCommand"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 
-const PathLabel = styled.div`
+const PathLabel = styled.View`
   padding-bottom: 10px;
   color: ${(props) => props.theme.bold};
 `
