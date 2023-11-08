@@ -1,7 +1,7 @@
-import "v8-compile-cache"
 import React from "react"
 import { createRoot } from "react-dom/client"
 import { ReactotronAppProvider } from "reactotron-core-ui"
+import "v8-compile-cache"
 
 import "./global.css"
 

@@ -21,7 +21,7 @@ const Title = styled.Text`
 const Message = styled.Text`
   color: ${(props) => props.theme.foreground};
   max-width: 400px;
-  line-height: 1.4;
+  line-height: 22.4px;
   text-align: center;
 `
 
