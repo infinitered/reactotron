@@ -64,7 +64,7 @@ function SideBarButton({
           <SideBarButtonContainer $hideTopBar={hideTopBar || false} $colorAnimation={color}>
             {Icon && <Icon size={iconSize || 32} />}
             {image && (
-              <Image src={image} $hideTopBar={hideTopBar || false} $colorAnimation={color} />
+              <Image source={image} $hideTopBar={hideTopBar || false} $colorAnimation={color} />
             )}
             <Title>{text}</Title>
           </SideBarButtonContainer>

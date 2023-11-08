@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react"
+import { ImageSourcePropType } from "react-native"
 import styled from "rn-css"
 
 const Container = styled.View`
@@ -29,11 +30,12 @@ const Image = styled.Image`
   width: 100px;
   height: 100px;
   padding-bottom: 4px;
+  z-index: 1;
 `
 
 interface Props {
   icon?: any // TODO: Type Better?
-  image?: any
+  image?: ImageSourcePropType
   title: string
 }
 
@@ -46,7 +48,7 @@ const EmptyState: FunctionComponent<React.PropsWithChildren<Props>> = ({
   return (
     <Container>
       {Icon && <Icon size={100} />}
-      {image && <Image source={{ uri: image }} />}
+      {image && <Image source={image} />}
       <Title>{title}</Title>
       <Message>{children}</Message>
     </Container>

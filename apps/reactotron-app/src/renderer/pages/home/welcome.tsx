@@ -9,7 +9,7 @@ const WelcomeText = styled.View`
   margin-bottom: 5px;
 `
 
-const Container = styled.View`
+const Container = styled.TouchableOpacity`
   display: flex;
   padding: 4px 8px;
   margin-top: 20px;
@@ -31,7 +31,7 @@ function Welcome() {
     <EmptyState image={reactotronLogo} title="Welcome to Reactotron!">
       <WelcomeText>Connect a device or simulator to get started.</WelcomeText>
       <WelcomeText>Need to set up your app to use Reactotron?</WelcomeText>
-      <Container onClick={openDocs}>Check out the docs here!</Container>
+      <Container onPress={openDocs}>Check out the docs here!</Container>
     </EmptyState>
   )
 }

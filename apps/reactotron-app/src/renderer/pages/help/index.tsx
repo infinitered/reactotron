@@ -113,7 +113,7 @@ function Help() {
       <Header title={`Using Reactotron ${projectJson.version}`} isDraggable />
       <HelpContainer>
         <LogoContainer>
-          <LogoImage src={reactotronLogo} />
+          <LogoImage source={reactotronLogo} />
         </LogoContainer>
         <Title>Let&apos;s Connect!</Title>
         <ConnectContainer>
