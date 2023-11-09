@@ -35,11 +35,14 @@ const DropZone = styled.View<{ onDrop: any; onDragOver: any; onDragLeave: any; o
   background-color: ${(props) => props.theme.subtleLine};
   border-radius: 2px;
   border: 1px solid ${(props) => props.theme.backgroundSubtleDark};
-  color: ${(props) => props.theme.foregroundLight};
   flex: 1;
   max-height: 200px;
   justify-content: center;
   width: 200px;
+`
+
+const DropZoneText = styled.Text`
+  color: ${(props) => props.theme.foregroundLight};
 `
 
 const OverlayPreview = styled.Image`
@@ -215,7 +218,7 @@ function Overlay() {
               <OverlayPreview source={{ uri }} />
             </Pressable>
           ) : (
-            "Drop Image Here"
+            <DropZoneText>Drop Image Here</DropZoneText>
           )}
         </DropZone>
         {uri ? (

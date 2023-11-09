@@ -8,8 +8,9 @@ const Contianer = styled.View`
   margin-bottom: 35px;
 `
 
-const Name = styled.View`
+const Name = styled.Text`
   color: ${(props) => props.theme.highlight};
+  font-family: ${(props) => props.theme.fontFamily};
 `
 
 const KeybindContainer = styled.View`

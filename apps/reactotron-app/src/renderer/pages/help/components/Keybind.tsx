@@ -21,6 +21,7 @@ interface KeystrokeContainerProps {
   $addWidth: boolean
 }
 const KeystrokeContainer = styled.View<KeystrokeContainerProps>`
+  align-items: center;
   flex-direction: row;
   width: ${(props) => (props.$addWidth ? "180px" : "auto")};
 `
@@ -34,10 +35,14 @@ const Keystroke = styled.Text`
   padding: 4px 12px;
 `
 const Plus = styled.Text`
+  color: ${(props) => props.theme.foreground};
   margin: 0 2px;
 `
 
-const Description = styled.View``
+const Description = styled.Text`
+  color: ${(props) => props.theme.foreground};
+  font-family: ${(props) => props.theme.fontFamily};
+`
 
 export function KeybindKeys({ keybind, sequence, addWidth }) {
   // const modifierName = platform === "darwin" ? "⌘" : "CTRL"
