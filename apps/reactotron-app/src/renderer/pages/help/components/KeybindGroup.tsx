@@ -4,7 +4,6 @@ import styled from "rn-css"
 import Keybind from "./Keybind"
 
 const Contianer = styled.View`
-  display: flex;
   flex-direction: column;
   margin-bottom: 35px;
 `
@@ -14,7 +13,6 @@ const Name = styled.View`
 `
 
 const KeybindContainer = styled.View`
-  display: flex;
   flex-direction: column;
 `
 

@@ -6,49 +6,47 @@ import { CustomCommand, CustomCommandsContext, EmptyState, Header } from "reacto
 import styled from "rn-css"
 
 const Container = styled.View`
-  display: flex;
+  flex: 1;
   flex-direction: column;
   width: 100%;
 `
 
 const CommandsContainer = styled.View`
   height: 100%;
-  overflow-y: auto;
   overflow-x: hidden;
-  padding: 20px 40px;
+  overflow-y: auto;
   padding-bottom: 0;
+  padding: 20px 40px;
 `
 
 const SearchContainer = styled.View`
-  display: flex;
   align-items: center;
   padding-bottom: 10px;
-  padding-top: 4px;
   padding-right: 10px;
+  padding-top: 4px;
 `
 const SearchLabel = styled.Text`
-  padding: 0 10px;
-  font-size: 14px;
   color: ${(props) => props.theme.foregroundDark};
+  font-size: 14px;
+  padding: 0 10px;
 `
 const SearchInput = styled.TextInput`
-  border-radius: 4px;
-  padding: 10px;
-  flex: 1;
   background-color: ${(props) => props.theme.backgroundSubtleDark};
+  border-radius: 4px;
   border: none;
   color: ${(props) => props.theme.foregroundDark};
+  flex: 1;
   font-size: 14px;
+  padding: 10px;
 `
 
 const ButtonContianer = styled.View`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-bottom: 24px;
   color: ${(props) => props.theme.foreground};
+  flex-direction: column;
+  margin-bottom: 24px;
+  width: 100%;
 `
-const Title = styled.View`
+const Title = styled.Text`
   font-size: 24px;
   margin-bottom: 12px;
 `
@@ -59,17 +57,16 @@ const ArgsContainer = styled.View`
   margin-bottom: 24px;
 `
 const SendButton = styled.View`
-  display: flex;
   align-items: center;
-  justify-content: center;
   background-color: ${(props) => props.theme.backgroundLighter};
   border-radius: 4px;
-  width: 200px;
-  min-height: 50px;
-  margin-bottom: 24px;
-  cursor: pointer;
   color: white;
+  cursor: pointer;
+  justify-content: center;
+  margin-bottom: 24px;
+  min-height: 50px;
   transition: background-color 0.25s ease-in-out;
+  width: 200px;
 
   &:hover {
     background-color: #e73435;
@@ -84,12 +81,12 @@ const ArgName = styled.View`
   margin-bottom: 8px;
 `
 const ArgInput = styled.TextInput`
-  padding: 10px 12px;
-  outline: none;
   border-radius: 4px;
-  width: 90%;
   border: none;
   font-size: 16px;
+  outline: none;
+  padding: 10px 12px;
+  width: 90%;
 `
 
 // TODO: This item thing is getting complicated, move it out!

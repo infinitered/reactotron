@@ -16,7 +16,6 @@ import KeybindGroup from "./components/KeybindGroup"
 const projectJson = require("../../../../package.json")
 
 const Container = styled.View`
-  display: flex;
   flex-direction: column;
   width: 100%;
 `
@@ -28,46 +27,53 @@ const HelpContainer = styled.View`
 `
 
 const LogoContainer = styled.View`
-  display: flex;
   justify-content: center;
 `
 
 const LogoImage = styled.Image`
+  align-self: center;
   height: 128px;
   margin: 20px 0;
+  width: 128px;
+  z-index: 1;
 `
 
-const Title = styled.View`
+const Title = styled.Text`
+  border-bottom: 1px solid ${(props) => props.theme.highlight};
+  color: ${(props) => props.theme.foregroundLight};
   font-size: 18px;
   margin: 10px 0;
   padding-bottom: 2px;
-  color: ${(props) => props.theme.foregroundLight};
-  border-bottom: 1px solid ${(props) => props.theme.highlight};
 `
 
 const ConnectContainer = styled.View`
-  display: flex;
   align-items: flex-start;
-  color: ${(props) => props.theme.foreground};
+  flex-direction: row;
   margin-bottom: 50px;
 `
 const ConnectItemContainer = styled.View`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 10px;
-  margin: 5px;
-  flex: 1;
   /* width: 90px; */
+  align-items: center;
   background-color: ${(props) => props.theme.chrome};
   border-radius: 5px;
   border: 1px solid ${(props) => props.theme.chromeLine};
+  cursor: pointer;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  margin: 5px;
+  padding: 10px;
 `
 const ConnectItemIconContainer = styled.View`
+  align-items: center;
   color: ${(props) => props.theme.foregroundLight};
+  justify-content: center;
   margin-bottom: 8px;
+`
+
+const ConnectItemText = styled.Text`
+  color: ${(props) => props.theme.foreground};
+  text-align: center;
 `
 
 function openRepo() {
@@ -121,25 +127,25 @@ function Help() {
             <ConnectItemIconContainer>
               <RepoIcon size={40} />
             </ConnectItemIconContainer>
-            Repo
+            <ConnectItemText>Repo</ConnectItemText>
           </ConnectItemContainer>
           <ConnectItemContainer onClick={openFeedback}>
             <ConnectItemIconContainer>
               <FeedbackIcon size={40} />
             </ConnectItemIconContainer>
-            Feedback
+            <ConnectItemText>Feedback</ConnectItemText>
           </ConnectItemContainer>
           <ConnectItemContainer onClick={openUpdates}>
             <ConnectItemIconContainer>
               <ReleaseIcon size={40} />
             </ConnectItemIconContainer>
-            Updates
+            <ConnectItemText>Updates</ConnectItemText>
           </ConnectItemContainer>
           <ConnectItemContainer onClick={openTwitter}>
             <ConnectItemIconContainer>
               <TwitterIcon size={40} />
             </ConnectItemIconContainer>
-            @reactotron
+            <ConnectItemText>@reactotron</ConnectItemText>
           </ConnectItemContainer>
         </ConnectContainer>
         <Title>Keystrokes</Title>

@@ -2,6 +2,7 @@ import { nativeImage } from "electron"
 import fs from "fs"
 import React, { useContext } from "react"
 import { MdBook, MdCamera } from "react-icons/md"
+import { Pressable } from "react-native"
 import { Header, ReactNativeContext } from "reactotron-core-ui"
 import styled from "rn-css"
 
@@ -22,33 +23,31 @@ const isDevelopment = process.env.NODE_ENV !== "production"
 
 const OverlayContainer = styled.View`
   height: 100%;
-  overflow-y: auto;
   overflow-x: hidden;
+  overflow-y: auto;
+  padding-bottom: 20px;
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 20px;
 `
 
-const DropZone = styled.View`
-  display: flex;
-  flex: 1;
-  height: 200px;
-  width: 200px;
+const DropZone = styled.View<{ onDrop: any; onDragOver: any; onDragLeave: any; onDragEnd: any }>`
+  align-items: center;
   background-color: ${(props) => props.theme.subtleLine};
   border-radius: 2px;
   border: 1px solid ${(props) => props.theme.backgroundSubtleDark};
   color: ${(props) => props.theme.foregroundLight};
+  flex: 1;
+  max-height: 200px;
   justify-content: center;
-  align-items: center;
+  width: 200px;
 `
 
 const OverlayPreview = styled.Image`
-  max-width: 100%;
   max-height: 100%;
+  max-width: 100%;
 `
 
 const ReapplyContainer = styled.View`
-  display: flex;
   flex-direction: row;
   margin-top: 10px;
 `
@@ -211,7 +210,13 @@ function Overlay() {
           onDragLeave={handlePreventDefault}
           onDragEnd={handlePreventDefault}
         >
-          {uri ? <OverlayPreview src={uri} onClick={removeImage} /> : "Drop Image Here"}
+          {uri ? (
+            <Pressable onPress={removeImage}>
+              <OverlayPreview source={{ uri }} />
+            </Pressable>
+          ) : (
+            "Drop Image Here"
+          )}
         </DropZone>
         {uri ? (
           <ReapplyContainer>

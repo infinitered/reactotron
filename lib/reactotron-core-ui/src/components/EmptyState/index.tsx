@@ -1,35 +1,37 @@
 import React, { FunctionComponent } from "react"
 import { ImageSourcePropType } from "react-native"
 import styled from "rn-css"
+import theme from "../../theme"
 
 const Container = styled.View`
-  height: 100%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  color: ${(props) => props.theme.foregroundLight};
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  justify-content: center;
 `
 
 const Title = styled.Text`
-  color: ${(props) => props.theme.foreground};
-  font-size: 2rem;
+  color: ${(props) => props.theme.foregroundLight};
+  font-family: ${(props) => props.theme.fontFamily};
+  font-size: 32px;
   padding-bottom: 50px;
   padding-top: 10px;
 `
 
 const Message = styled.Text`
-  color: ${(props) => props.theme.foreground};
+  color: ${(props) => props.theme.foregroundLight};
+  font-family: ${(props) => props.theme.fontFamily};
+  font-size: 15px;
+  line-height: 21px;
   max-width: 400px;
-  line-height: 22.4px;
   text-align: center;
 `
 
 const Image = styled.Image`
-  width: 100px;
   height: 100px;
   padding-bottom: 4px;
+  width: 100px;
   z-index: 1;
 `
 
@@ -47,7 +49,7 @@ const EmptyState: FunctionComponent<React.PropsWithChildren<Props>> = ({
 }) => {
   return (
     <Container>
-      {Icon && <Icon size={100} />}
+      {Icon && <Icon color={theme.foregroundLight} size={100} />}
       {image && <Image source={image} />}
       <Title>{title}</Title>
       <Message>{children}</Message>

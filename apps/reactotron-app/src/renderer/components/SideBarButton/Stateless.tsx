@@ -24,14 +24,13 @@ interface SideBarButtonProps {
 const colorInterpolator = colorInterpolate([Theme.highlight, Theme.foregroundLight])
 
 const SideBarButtonContainer = styled.View<SideBarButtonProps>`
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 15px 0;
-  margin: 0 10px;
-  cursor: pointer;
   border-top: ${(props) => (props.$hideTopBar ? "none" : `1px solid ${props.theme.line}`)};
   color: ${(props) => colorInterpolator(props.$colorAnimation)};
+  cursor: pointer;
+  flex-direction: column;
+  margin: 0 10px;
+  padding: 15px 0;
 `
 
 const Image = styled.Image<SideBarButtonProps>`
@@ -42,10 +41,12 @@ const Image = styled.Image<SideBarButtonProps>`
     brightness(${(props) => 70 + 30 * props.$colorAnimation}%);
 `
 
-const Title = styled.View`
+const Title = styled.Text<{ $colorAnimation: number }>`
+  color: ${(props) => colorInterpolator(props.$colorAnimation)};
+  font-family: ${(props) => props.theme.fontFamily};
+  font-size: 12px;
   padding-top: 2px;
   text-align: center;
-  font-size: 12px;
 `
 
 function SideBarButton({
@@ -66,7 +67,7 @@ function SideBarButton({
             {image && (
               <Image source={image} $hideTopBar={hideTopBar || false} $colorAnimation={color} />
             )}
-            <Title>{text}</Title>
+            <Title $colorAnimation={color}>{text}</Title>
           </SideBarButtonContainer>
         </Link>
       )}

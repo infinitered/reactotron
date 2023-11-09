@@ -11,26 +11,27 @@ const KEY_REMAPS = {
 }
 
 const Container = styled.View`
-  display: flex;
   align-items: center;
-  margin: 10px 0;
   color: ${(props) => props.theme.foreground};
+  flex-direction: row;
+  margin: 10px 0;
 `
 
 interface KeystrokeContainerProps {
   $addWidth: boolean
 }
 const KeystrokeContainer = styled.View<KeystrokeContainerProps>`
+  flex-direction: row;
   width: ${(props) => (props.$addWidth ? "180px" : "auto")};
 `
 const Keystroke = styled.Text`
-  font-weight: bold;
-  padding: 4px 12px;
-  margin: 0 2px;
   background-color: ${(props) => props.theme.foreground};
-  color: ${(props) => props.theme.background};
-  border-radius: 4px;
   border-bottom: 2px solid ${(props) => props.theme.highlight};
+  border-radius: 4px;
+  color: ${(props) => props.theme.background};
+  font-weight: bold;
+  margin: 0 2px;
+  padding: 4px 12px;
 `
 const Plus = styled.Text`
   margin: 0 2px;

@@ -6,56 +6,56 @@ import {
   MdRadioButtonUnchecked,
   MdWarning,
 } from "react-icons/md"
-import { Header, ReactNativeContext } from "reactotron-core-ui"
+import { Header, ReactNativeContext, theme } from "reactotron-core-ui"
 import styled from "rn-css"
 import { storybookActiveImg, storybookInactiveImg } from "../../images"
 
 const Container = styled.View`
-  display: flex;
+  flex: 1;
   flex-direction: column;
   width: 100%;
 `
 
 const StorybookContainer = styled.View`
-  display: flex;
+  flex: 1;
   flex-direction: column;
   height: 100%;
 `
 
 const TopSection = styled.View`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
 `
 
 const StorybookLogo = styled.Image`
-  width: 282px;
   height: 76px;
   padding-bottom: 20;
+  width: 282px;
+  z-index: 1;
 `
 
 const ToggleContainer = styled.View`
-  display: flex;
   color: ${(props) => props.theme.foreground};
+  flex-direction: row;
 `
 const RadioButton = styled.View`
-  display: flex;
   align-items: center;
   cursor: pointer;
+  flex-direction: row;
   padding: 10px;
 `
 
 const WarningContainer = styled.View`
-  display: flex;
-  color: ${(props) => props.theme.warning};
+  align-items: center;
   background-color: ${(props) => props.theme.backgroundDarker};
   border-top: 1px solid ${(props) => props.theme.chromeLine};
-  align-items: center;
+  flex-direction: row;
   padding: 0 20px;
 `
-const WarningDescription = styled.View`
+const WarningDescription = styled.Text`
+  color: ${(props) => props.theme.warning};
   margin-left: 20px;
 `
 
@@ -118,7 +118,7 @@ function Storybook() {
       />
       <StorybookContainer>
         <TopSection>
-          <StorybookLogo src={isStorybookOn ? storybookActiveImg : storybookInactiveImg} />
+          <StorybookLogo source={isStorybookOn ? storybookActiveImg : storybookInactiveImg} />
 
           <ToggleContainer>
             <RadioButton onClick={() => turnOnStorybook()}>
@@ -140,7 +140,7 @@ function Storybook() {
           </ToggleContainer>
         </TopSection>
         <WarningContainer>
-          <MdWarning size={60} />
+          <MdWarning color={theme.warning} size={60} />
           <WarningDescription>
             This is preview feature. It requires a specific setup of Storybook within React Native.
           </WarningDescription>
