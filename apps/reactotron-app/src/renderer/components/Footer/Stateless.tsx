@@ -1,5 +1,6 @@
 import React from "react"
 import { MdSwapVert as ExpandIcon } from "react-icons/md"
+import { Pressable } from "react-native"
 import styled from "rn-css"
 
 import config from "../../config"
@@ -9,39 +10,36 @@ import ConnectionSelector from "../ConnectionSelector"
 
 const Container = styled.View`
   border-top: 1px solid ${(props) => props.theme.chromeLine};
-  color: ${(props) => props.theme.foregroundDark};
   box-shadow: 0 0 30px ${(props) => props.theme.glow};
-  color: ${(props) => props.theme.foregroundLight};
 `
 
 const ConnectionContainer = styled.View`
-  display: flex;
   flex: 1;
-  overflow-x: auto;
   height: 85px;
+  overflow-x: auto;
 `
 
 interface ContentContainerProps {
   $isOpen: boolean
 }
-const ContentContainer = styled.View<ContentContainerProps>`
-  display: flex;
-  flex-direction: row;
-  background-color: ${(props) => props.theme.subtleLine};
-  padding: 0 10px;
-  justify-content: space-between;
+const ContentContainer = styled(Pressable)<ContentContainerProps>`
   align-items: center;
+  background-color: ${(props) => props.theme.subtleLine};
   cursor: ${(props) => (props.$isOpen ? "auto" : "pointer")};
+  flex-direction: row;
   height: ${(props) => (props.$isOpen ? "85px" : "25px")};
+  justify-content: space-between;
+  padding: 0 10px;
 `
 
-const ConnectionInfo = styled.View`
+const ConnectionInfo = styled.Text`
+  color: ${(props) => props.theme.foregroundLight};
   text-align: center;
 `
 
-const ExpandContainer = styled.View`
-  display: flex;
+const ExpandContainer = styled(Pressable)`
   align-items: center;
+  color: ${(props) => props.theme.foregroundLight};
   cursor: pointer;
 `
 
@@ -98,9 +96,9 @@ function Header({ connections, selectedConnection, isOpen, setIsOpen, onChangeCo
 
   return (
     <Container>
-      <ContentContainer onClick={() => !isOpen && setIsOpen(true)} $isOpen={isOpen}>
+      <ContentContainer onPress={() => !isOpen && setIsOpen(true)} $isOpen={isOpen}>
         {renderMethod(connections, selectedConnection, onChangeConnection)}
-        <ExpandContainer onClick={() => setIsOpen(!isOpen)}>
+        <ExpandContainer onPress={() => setIsOpen(!isOpen)}>
           <ExpandIcon size={18} />
         </ExpandContainer>
       </ContentContainer>

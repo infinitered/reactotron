@@ -1,25 +1,26 @@
 import { shell } from "electron"
 import React from "react"
+import { Pressable, Text } from "react-native"
 import { EmptyState } from "reactotron-core-ui"
 import styled from "rn-css"
 import { reactotronLogo } from "../../images"
 
-const WelcomeText = styled.View`
+const WelcomeText = styled.Text`
   font-size: 1.25em;
-  margin-bottom: 5px;
+  line-height: 32px;
 `
 
-const Container = styled.TouchableOpacity`
-  display: flex;
-  padding: 4px 8px;
-  margin-top: 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: ${(props) => props.theme.backgroundLighter};
-  color: ${(props) => props.theme.foreground};
+const Container = styled(Pressable)`
   align-items: center;
+  background-color: ${(props) => props.theme.backgroundLighter};
+  border-radius: 4px;
+  color: ${(props) => props.theme.foreground};
+  cursor: pointer;
   justify-content: center;
+  margin-top: 20px;
+  padding: 4px 8px;
   text-align: center;
+  width: 100%;
 `
 
 function openDocs() {
@@ -29,9 +30,11 @@ function openDocs() {
 function Welcome() {
   return (
     <EmptyState image={reactotronLogo} title="Welcome to Reactotron!">
-      <WelcomeText>Connect a device or simulator to get started.</WelcomeText>
+      <WelcomeText>Connect a device or simulator to get started.{"\n"}</WelcomeText>
       <WelcomeText>Need to set up your app to use Reactotron?</WelcomeText>
-      <Container onPress={openDocs}>Check out the docs here!</Container>
+      <Container onPress={openDocs}>
+        <Text>Check out the docs here!</Text>
+      </Container>
     </EmptyState>
   )
 }

@@ -46,7 +46,7 @@ const RightContainer = styled.View`
   align-items: center;
 `
 
-const Title = styled.View`
+const Title = styled.Text`
   color: ${(props) => props.theme.foregroundLight};
   text-align: center;
 `
