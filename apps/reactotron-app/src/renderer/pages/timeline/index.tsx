@@ -14,7 +14,6 @@ import {
 import styled from "rn-css"
 
 const Container = styled.View`
-  display: flex;
   flex-direction: column;
   width: 100%;
 `
@@ -26,25 +25,25 @@ const TimelineContainer = styled.View`
 `
 
 const SearchContainer = styled.View`
-  display: flex;
   align-items: center;
+  flex-direction: row;
   padding-bottom: 10px;
-  padding-top: 4px;
   padding-right: 10px;
+  padding-top: 4px;
 `
 const SearchLabel = styled.Text`
-  padding: 0 10px;
-  font-size: 14px;
   color: ${(props) => props.theme.foregroundDark};
+  font-size: 14px;
+  padding: 0 10px;
 `
 const SearchInput = styled.TextInput`
-  border-radius: 4px;
-  padding: 10px;
-  flex: 1;
   background-color: ${(props) => props.theme.backgroundSubtleDark};
+  border-radius: 4px;
   border: none;
   color: ${(props) => props.theme.foregroundDark};
+  flex: 1;
   font-size: 14px;
+  padding: 10px;
 `
 
 function Timeline() {
