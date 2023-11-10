@@ -27417,7 +27417,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-macos@npm:^0.72.7":
+"react-native-macos@npm:0.72.7":
   version: 0.72.7
   resolution: "react-native-macos@npm:0.72.7"
   dependencies:
@@ -27494,7 +27494,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-windows@npm:^0.72.19":
+"react-native-windows@npm:0.72.19":
   version: 0.72.19
   resolution: "react-native-windows@npm:0.72.19"
   dependencies:
@@ -28220,8 +28220,8 @@ __metadata:
     prettier: ^2.4.1
     react: 18.2.0
     react-native: 0.72.6
-    react-native-macos: ^0.72.7
-    react-native-windows: ^0.72.19
+    react-native-macos: 0.72.7
+    react-native-windows: 0.72.19
     react-test-renderer: 18.2.0
     typescript: 4.8.4
   languageName: unknown

@@ -1,0 +1,10 @@
+#include "NamespaceRedirect.h"
+
+namespace reactotron-native
+{
+    [default_interface]
+    runtimeclass MainPage : XAML_NAMESPACE.Controls.Page
+    {
+        MainPage();
+    }
+}

@@ -8,13 +8,14 @@
     "lint": "eslint .",
     "macos": "react-native run-macos",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "windows": "react-native run-windows"
   },
   "dependencies": {
     "react": "18.2.0",
     "react-native": "0.72.6",
-    "react-native-macos": "^0.72.7",
-    "react-native-windows": "^0.72.19"
+    "react-native-macos": "0.72.7",
+    "react-native-windows": "0.72.19"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -31,7 +32,8 @@
     "metro-react-native-babel-preset": "0.76.8",
     "prettier": "^2.4.1",
     "react-test-renderer": "18.2.0",
-    "typescript": "4.8.4"
+    "typescript": "4.8.4",
+    "metro-config": "^0.76.8"
   },
   "engines": {
     "node": ">=16"
