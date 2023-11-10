@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react"
+import { View } from "react-native"
 import styled from "rn-css"
 
 import { CommandType, CommandTypeKey } from "reactotron-core-contract"
@@ -37,19 +38,25 @@ const GROUPS = [
 ]
 
 const BulkActionContainer = styled.View`
+  flex-direction: row;
   margin-bottom: 20px;
 `
 const BulkAction = styled.Text`
-  cursor: pointer;
   color: ${(props) => props.theme.tag};
+  cursor: pointer;
 `
 
-const GroupName = styled.View`
+const Slash = styled.Text`
+  color: ${(props) => props.theme.foregroundLight};
+`
+
+const GroupName = styled.Text`
+  border-bottom: 1px solid ${(props) => props.theme.highlight};
+  color: ${(props) => props.theme.foregroundLight};
+  font-family: ${(props) => props.theme.fontFamily};
   font-size: 18px;
   margin: 10px 0;
   padding-bottom: 2px;
-  border-bottom: 1px solid ${(props) => props.theme.highlight};
-  color: ${(props) => props.theme.foregroundLight};
 `
 
 interface Props {
@@ -94,11 +101,11 @@ const TimelineFilterModal: FunctionComponent<Props> = ({
   return (
     <Modal title="Timeline Filter" isOpen={isOpen} onClose={onClose}>
       <BulkActionContainer>
-        <BulkAction onClick={toggleAllOn}>Check all</BulkAction>
-        <span> / </span>
-        <BulkAction onClick={toggleAllOff}>Uncheck all</BulkAction>
+        <BulkAction onPress={toggleAllOn}>Check all</BulkAction>
+        <Slash> / </Slash>
+        <BulkAction onPress={toggleAllOff}>Uncheck all</BulkAction>
       </BulkActionContainer>
-      <div>
+      <View>
         {GROUPS.map((section, sectionIdx) => {
           const options = section.items.map((item, itemIdx) => {
             const isChecked = hiddenCommands.indexOf(item.value) === -1
@@ -110,13 +117,13 @@ const TimelineFilterModal: FunctionComponent<Props> = ({
           })
 
           return (
-            <div key={sectionIdx}>
+            <View key={sectionIdx}>
               <GroupName>{section.name}</GroupName>
               {options}
-            </div>
+            </View>
           )
         })}
-      </div>
+      </View>
     </Modal>
   )
 }

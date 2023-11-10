@@ -1,31 +1,38 @@
 import React, { FunctionComponent } from "react"
-import ReactModal from "react-modal"
+import { Pressable, Modal as RNModal } from "react-native"
 import styled, { useTheme } from "rn-css"
 
-ReactModal.setAppElement(document.body)
-
 const Title = styled.Text`
+  color: ${(props) => props.theme.heading};
+  font-family: ${(props) => props.theme.fontFamily};
+  font-size: 24px;
+  font-weight: normal;
   margin: 0;
   padding: 0;
   text-align: left;
-  font-weight: normal;
-  font-size: 24px;
-  color: ${(props) => props.theme.heading};
 `
 const KeystrokesContainer = styled.View`
-  display: flex;
+  align-items: center;
   align-self: center;
+  flex-direction: row;
+  justify-content: center;
   padding-top: 20px;
-  font-size: 13px;
 `
 export const KeystrokeContainer = styled.View`
+  flex-direction: row;
   padding: 0 10px;
 `
 export const Keystroke = styled.Text`
-  padding: 4px 8px;
-  border-radius: 4px;
   background-color: ${(props) => props.theme.backgroundHighlight};
+  border-radius: 4px;
   color: ${(props) => props.theme.foreground};
+  font-family: ${(props) => props.theme.fontFamily};
+  padding: 4px 8px;
+`
+const Close = styled.Text`
+  color: ${(props) => props.theme.foreground};
+  font-family: ${(props) => props.theme.fontFamily};
+  font-size: 13px;
 `
 
 interface Props {
@@ -47,44 +54,42 @@ const Modal: FunctionComponent<React.PropsWithChildren<Props>> = ({
   const theme = useTheme()
 
   return (
-    <ReactModal
-      isOpen={isOpen}
-      onAfterOpen={onAfterOpen}
-      onRequestClose={onClose}
-      style={{
-        overlay: {
-          backgroundColor: theme.modalOverlay,
-          display: "flex",
-          justifyContent: "center",
+    <RNModal onDismiss={onClose} onShow={onAfterOpen} transparent visible={isOpen}>
+      <Pressable
+        onPress={onClose}
+        style={{
           alignItems: "center",
+          backgroundColor: theme.modalOverlay,
+          flex: 1,
+          justifyContent: "center",
           padding: 40,
-        },
-        content: {
-          display: "flex",
-          flexDirection: "column",
-          borderRadius: 4,
-          padding: 20,
-          backgroundColor: theme.background,
-          color: theme.foreground,
-          borderColor: theme.backgroundLighter,
-          width: 500,
-          position: "auto" as any, // TODO: Fix this!
-          top: "auto",
-          bottom: "auto",
-        },
-      }}
-    >
-      <div>
-        <Title>{title}</Title>
-      </div>
-      <div>{children}</div>
-      <KeystrokesContainer>
-        <KeystrokeContainer>
-          <Keystroke>ESC</Keystroke> Close
-        </KeystrokeContainer>
-        {additionalKeystrokes}
-      </KeystrokesContainer>
-    </ReactModal>
+        }}
+      >
+        <Pressable
+          style={{
+            backgroundColor: theme.background,
+            borderColor: theme.backgroundLighter,
+            borderRadius: 4,
+            bottom: "auto",
+            color: theme.foreground,
+            flexDirection: "column",
+            padding: 20,
+            position: "auto" as any, // TODO: Fix this!
+            top: "auto",
+            width: 500,
+          }}
+        >
+          <Title>{title}</Title>
+          {children}
+          <KeystrokesContainer>
+            <KeystrokeContainer>
+              <Keystroke>ESC</Keystroke> <Close>Close</Close>
+            </KeystrokeContainer>
+            {additionalKeystrokes}
+          </KeystrokesContainer>
+        </Pressable>
+      </Pressable>
+    </RNModal>
   )
 }
 

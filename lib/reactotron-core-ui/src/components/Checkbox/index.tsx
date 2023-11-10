@@ -1,10 +1,11 @@
 import React from "react"
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md"
+import { Pressable } from "react-native"
 import styled from "rn-css"
 
-const Container = styled.View`
-  display: flex;
+const Container = styled(Pressable)`
   cursor: pointer;
+  flex-direction: row;
   padding: 5px 0;
 `
 const IconContainer = styled.View`
@@ -12,6 +13,7 @@ const IconContainer = styled.View`
 `
 const Label = styled.Text`
   color: ${(props) => props.theme.tag};
+  font-family: ${(props) => props.theme.fontFamily};
 `
 
 interface Props {
@@ -24,7 +26,7 @@ function Checkbox({ isChecked, label, onToggle }: Props) {
   const Icon = isChecked ? MdCheckBox : MdCheckBoxOutlineBlank
 
   return (
-    <Container onClick={onToggle}>
+    <Container onPress={onToggle}>
       <IconContainer>
         <Icon />
       </IconContainer>
