@@ -7336,15 +7336,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-modal@npm:3.13.1":
-  version: 3.13.1
-  resolution: "@types/react-modal@npm:3.13.1"
-  dependencies:
-    "@types/react": "*"
-  checksum: b0ad403e0051a2882e9086c6006cc342901b1c90caf760893b31717a5cbc04f86cc1ea7b5ce12a2c8350c9c09e9b344de3783404e70b7c7ea6a037d0ffd70e99
-  languageName: node
-  linkType: hard
-
 "@types/react-motion@npm:0.0.31":
   version: 0.0.31
   resolution: "@types/react-motion@npm:0.0.31"
@@ -14693,13 +14684,6 @@ __metadata:
     signal-exit: ^3.0.3
     strip-final-newline: ^2.0.0
   checksum: fba9022c8c8c15ed862847e94c252b3d946036d7547af310e344a527e59021fd8b6bb0723883ea87044dc4f0201f949046993124a42ccb0855cae5bf8c786343
-  languageName: node
-  linkType: hard
-
-"exenv@npm:^1.2.0":
-  version: 1.2.2
-  resolution: "exenv@npm:1.2.2"
-  checksum: a894f3b60ab8419e0b6eec99c690a009c8276b4c90655ccaf7d28faba2de3a6b93b3d92210f9dc5efd36058d44f04098f6bbccef99859151104bfd49939904dc
   languageName: node
   linkType: hard
 
@@ -25769,25 +25753,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-lifecycles-compat@npm:^3.0.0, react-lifecycles-compat@npm:^3.0.4":
+"react-lifecycles-compat@npm:^3.0.4":
   version: 3.0.4
   resolution: "react-lifecycles-compat@npm:3.0.4"
   checksum: a904b0fc0a8eeb15a148c9feb7bc17cec7ef96e71188280061fc340043fd6d8ee3ff233381f0e8f95c1cf926210b2c4a31f38182c8f35ac55057e453d6df204f
-  languageName: node
-  linkType: hard
-
-"react-modal@npm:3.16.1":
-  version: 3.16.1
-  resolution: "react-modal@npm:3.16.1"
-  dependencies:
-    exenv: ^1.2.0
-    prop-types: ^15.7.2
-    react-lifecycles-compat: ^3.0.0
-    warning: ^4.0.3
-  peerDependencies:
-    react: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18
-    react-dom: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18
-  checksum: 978936e9320fad839c039b9ee4de55d40888156cb40e093615d6fbc2ff07139d5db06f14782cb7767f780bd5fb57956778669426c535ebc0068a7a03882c7e75
   languageName: node
   linkType: hard
 
@@ -26242,7 +26211,6 @@ __metadata:
     react-dom: 18.2.0
     react-hotkeys: ^2.0.0
     react-icons: ^4.11.0
-    react-modal: 3.16.1
     react-motion: 0.5.2
     react-router-dom: ^6.18.0
     react-test-renderer: 18.2.0
@@ -26402,7 +26370,6 @@ __metadata:
     "@types/jest": ^29.5.7
     "@types/react": 18.2.35
     "@types/react-dom": 18.2.14
-    "@types/react-modal": 3.13.1
     "@types/react-motion": 0.0.31
     "@types/stringify-object": 3.3.1
     "@typescript-eslint/eslint-plugin": ^6.7.5
@@ -26425,7 +26392,6 @@ __metadata:
     react-dom: 18.2.0
     react-icons: ^4.11.0
     react-json-tree: 0.18.0
-    react-modal: 3.16.1
     react-motion: 0.5.2
     react-native-web: 0.19.9
     react-test-renderer: 18.2.0
@@ -26448,7 +26414,6 @@ __metadata:
     react: ">=18.2.0"
     react-dom: ">=18.2.0"
     react-icons: ">=4.2.0"
-    react-modal: ">=3.16.1"
     react-motion: ">=0.5.2"
     react-native-web: ">=0.19.9"
     react-tooltip: ">=4.5.1"
