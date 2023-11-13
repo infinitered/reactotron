@@ -1,5 +1,5 @@
-require_relative '../node_modules/react-native-macos/scripts/react_native_pods'
-require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+require_relative '../../../node_modules/react-native-macos/scripts/react_native_pods'
+require_relative '../../../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 prepare_react_native_project!
 
@@ -11,7 +11,7 @@ target 'reactotron-macOS' do
   flags = get_default_flags()
 
   use_react_native!(
-    :path => '../node_modules/react-native-macos',
+    :path => '../../../node_modules/react-native-macos',
     :hermes_enabled => false,
     :fabric_enabled => ENV['RCT_NEW_ARCH_ENABLED'] == '1',
     # Flipper is not compatible w/ macOS
