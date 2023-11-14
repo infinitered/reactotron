@@ -13,7 +13,10 @@ import React from "react"
 import { useColorScheme } from "react-native"
 import { Button, H1, Text, XStack, YStack } from "tamagui"
 import { SideBar } from "./components/SideBar"
+import { CommandsScreen } from "./screens/CommandsScreen"
 import { HomeScreen } from "./screens/HomeScreen"
+import { SubscriptionScreen } from "./screens/SubscriptionScreen"
+import { TimelineScreen } from "./screens/TimelineScreen"
 
 type RootStackParamList = {
   Home: undefined
@@ -72,16 +75,16 @@ export function Navigation() {
   return (
     <ThemeProvider value={scheme === "dark" ? DarkTheme : DefaultTheme}>
       <NavigationContainer linking={linking} ref={navigationRef}>
-        <XStack f={1}>
+        <XStack bg="$background" f={1}>
           <SideBar />
           <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Timeline" component={TempScreen} />
-            <Stack.Screen name="Subscriptions" component={TempScreen} />
+            <Stack.Screen name="Timeline" component={TimelineScreen} />
+            <Stack.Screen name="Subscriptions" component={SubscriptionScreen} />
             <Stack.Screen name="Snapshots" component={TempScreen} />
             <Stack.Screen name="Overlay" component={TempScreen} />
             <Stack.Screen name="Storybook" component={TempScreen} />
-            <Stack.Screen name="CustomCommands" component={TempScreen} />
+            <Stack.Screen name="CustomCommands" component={CommandsScreen} />
             <Stack.Screen name="Help" component={TempScreen} />
           </Stack.Navigator>
         </XStack>

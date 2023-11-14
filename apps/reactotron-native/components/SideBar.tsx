@@ -9,7 +9,7 @@ export function SideBar() {
   return (
     <YStack bg="$gray2">
       <Button
-        icon={<Image h={16} w={16} source={reactotronLogo} />}
+        icon={() => <Image h={16} w={16} source={reactotronLogo} />}
         jc="flex-start"
         m="$2"
         onPress={goTo("Home")}
