@@ -25,7 +25,7 @@ type RootStackParamList = {
   Snapshots: undefined
   Overlay: undefined
   Storybook: undefined
-  CustomCommands: undefined
+  Commands: undefined
   Help: undefined
 }
 
@@ -46,7 +46,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       Snapshots: "state/snapshots",
       Overlay: "native/overlay",
       Storybook: "native/storybook",
-      CustomCommands: "customCommands",
+      Commands: "Commands",
       Help: "help",
     },
   },
@@ -84,7 +84,7 @@ export function Navigation() {
             <Stack.Screen name="Snapshots" component={TempScreen} />
             <Stack.Screen name="Overlay" component={TempScreen} />
             <Stack.Screen name="Storybook" component={TempScreen} />
-            <Stack.Screen name="CustomCommands" component={CommandsScreen} />
+            <Stack.Screen name="Commands" component={CommandsScreen} />
             <Stack.Screen name="Help" component={TempScreen} />
           </Stack.Navigator>
         </XStack>
