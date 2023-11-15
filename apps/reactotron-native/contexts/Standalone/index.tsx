@@ -1,9 +1,11 @@
-import React from "react"
+import React, { useCallback, useEffect, useRef } from "react"
 // import Server, { createServer } from "reactotron-core-server"
 
 import { ReactotronBrain } from "../ReactotronBrain"
 
 import useStandalone, { Connection } from "./useStandalone"
+import MacOSServer, { createMacOSServer } from "../../server/macos-server"
+import { config } from "../../config"
 
 // TODO: Move up to better places like core somewhere!
 interface Context {
@@ -19,7 +21,7 @@ const StandaloneContext = React.createContext<Context>({
 })
 
 const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // const reactotronServer = useRef<Server>(null)
+  const reactotronServer = useRef<MacOSServer>()
 
   const {
     connections,
@@ -33,33 +35,33 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     addCommandListener,
   } = useStandalone()
 
-  // useEffect(() => {
-  //   reactotronServer.current = createServer({ port: config.get("serverPort") as number })
+  useEffect(() => {
+    reactotronServer.current = createMacOSServer({ port: config.serverPort })
 
-  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //   // @ts-ignore need to sync these types between reactotron-core-server and reactotron-app
-  //   reactotronServer.current.on("connectionEstablished", connectionEstablished)
-  //   reactotronServer.current.on("command", commandReceived)
-  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //   // @ts-ignore need to sync these types between reactotron-core-server and reactotron-app
-  //   reactotronServer.current.on("disconnect", connectionDisconnected)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore need to sync these types between reactotron-core-server and reactotron-app
+    reactotronServer.current.on("connectionEstablished", connectionEstablished)
+    reactotronServer.current.on("command", commandReceived)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore need to sync these types between reactotron-core-server and reactotron-app
+    reactotronServer.current.on("disconnect", connectionDisconnected)
 
-  //   reactotronServer.current.start()
+    reactotronServer.current.start()
 
-  //   return () => {
-  //     reactotronServer.current.stop()
-  //   }
-  // }, [connectionEstablished, commandReceived, connectionDisconnected])
+    return () => {
+      reactotronServer.current?.stop()
+    }
+  }, [connectionEstablished, commandReceived, connectionDisconnected])
 
-  // const sendCommand = useCallback(
-  //   (type: string, payload: any, clientId?: string) => {
-  //     // TODO: Do better then just throwing these away...
-  //     if (!reactotronServer.current) return
+  const sendCommand = useCallback(
+    (type: string, payload: any, clientId?: string) => {
+      // TODO: Do better then just throwing these away...
+      if (!reactotronServer.current) return
 
-  //     reactotronServer.current.send(type, payload, clientId || selectedClientId)
-  //   },
-  //   [reactotronServer, selectedClientId]
-  // )
+      reactotronServer.current.send(type, payload, clientId || selectedClientId || "UNKNOWN")
+    },
+    [reactotronServer, selectedClientId]
+  )
 
   return (
     <StandaloneContext.Provider
