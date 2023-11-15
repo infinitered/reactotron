@@ -1,20 +1,19 @@
-import { merge, find, propEq, without, contains, forEach, pluck, reject, equals } from "ramda"
-import { createServer as createHttpsServer, ServerOptions as HttpsServerOptions } from "https"
+import { find, propEq, without, contains, forEach, pluck, reject, equals } from "ramda"
+
+import { createReactotronServer } from "./reactotron-server"
+
 import {
   ServerEventMap,
   ServerOptions,
   PartialConnection,
   CommandEvent,
   WebSocketEvent,
-  PfxServerOptions,
-  WssServerOptions,
   ServerEventKey,
   Command,
 } from "reactotron-core-contract"
-import { Server as WebSocketServer, OPEN, type RawData } from "ws"
 import validate from "./validation"
 import { repair } from "./repair-serialization"
-import { readFileSync } from "fs"
+import { ReactotronServerInterface } from "./reactotron-server-interface"
 
 type Mitt = typeof import("mitt").default // I'm so sorry, Jest made me do this :'(
 const mitt: Mitt = require("mitt")
@@ -35,30 +34,6 @@ function createGuid() {
   return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4()
 }
 
-function isPfxServerOptions(wssOptions: WssServerOptions): wssOptions is PfxServerOptions {
-  return !!(wssOptions as PfxServerOptions).pathToPfx
-}
-
-function buildHttpsServerOptions(wssOptions: WssServerOptions): HttpsServerOptions {
-  if (!wssOptions) {
-    return undefined
-  }
-  if (isPfxServerOptions(wssOptions)) {
-    return {
-      pfx: readFileSync(wssOptions.pathToPfx),
-      passphrase: wssOptions.passphrase,
-    }
-  }
-  if (!wssOptions.pathToCert) {
-    return undefined
-  }
-  return {
-    cert: readFileSync(wssOptions.pathToCert),
-    key: wssOptions.pathToKey ? readFileSync(wssOptions.pathToKey) : undefined,
-    passphrase: wssOptions.passphrase,
-  }
-}
-
 /**
  * The Reactotron server.
  */
@@ -71,7 +46,7 @@ export default class Server {
   /**
    * Additional server configuration.
    */
-  options: ServerOptions = merge({}, DEFAULTS)
+  options: ServerOptions = { ...DEFAULTS }
 
   /**
    * A unique id which is assigned to each inbound message.
@@ -94,9 +69,9 @@ export default class Server {
   partialConnections: PartialConnection[] = []
 
   /**
-   * The web socket.
+   * The web socket server.
    */
-  wss: WebSocketServer
+  server: ReactotronServerInterface
 
   /**
    * Holds the currently connected clients.
@@ -118,7 +93,7 @@ export default class Server {
    */
   configure(options: ServerOptions = DEFAULTS) {
     // options get merged & validated before getting set
-    const newOptions = merge(this.options, options)
+    const newOptions = { ...this.options, ...options }
     validate(newOptions)
     this.options = newOptions
     return this
@@ -142,39 +117,21 @@ export default class Server {
    * Starts the server
    */
   start = () => {
-    const { port } = this.options
-    const httpsServerOptions = buildHttpsServerOptions(this.options.wss)
-    if (!httpsServerOptions) {
-      this.wss = new WebSocketServer({ port })
-    } else {
-      const server = createHttpsServer(httpsServerOptions)
-      this.wss = new WebSocketServer({ server })
-      server.listen(port)
-    }
+    this.server = createReactotronServer(this.options)
 
     if (this.keepAlive) {
       clearInterval(this.keepAlive)
     }
 
     // In the future we should bake this in more and use it to clean up dropped connections
-    this.keepAlive = setInterval(() => {
-      this.wss.clients.forEach((ws) => {
-        ws.ping(() => {
-          // noop
-        })
-      })
-    }, 30000)
+    this.keepAlive = setInterval(() => this.server.ping(), 30000)
 
     // register events
-    this.wss.on("connection", (socket, request) => {
+    this.server.onConnection((socket, address: string) => {
       const thisConnectionId = this.connectionId++
 
       // a wild client appears
-      const partialConnection = {
-        id: thisConnectionId,
-        address: request.socket.remoteAddress,
-        socket,
-      } as PartialConnection
+      const partialConnection = { id: thisConnectionId, address, socket } as PartialConnection
 
       // tuck them away in a "almost connected status"
       this.partialConnections.push(partialConnection)
@@ -210,8 +167,8 @@ export default class Server {
       }
 
       // when we receive a command from the client
-      socket.on("message", (incoming: RawData) => {
-        const message = JSON.parse(incoming.toString())
+      const onMessage = (incoming: string) => {
+        const message = JSON.parse(incoming)
         repair(message)
         const { type, important, payload, deltaTime = 0 } = message
         this.messageId++
@@ -254,7 +211,7 @@ export default class Server {
             )
           } else {
             // Check if we already have this connection
-            const currentWssConnections = Array.from(this.wss.clients)
+            const currentWssConnections = Array.from(this.server.clients)
             const currentClientConnections = currentWssConnections.filter(
               (c) => (c as any).clientId === connectionClientId
             )
@@ -262,15 +219,11 @@ export default class Server {
             for (let i = 0; i < currentClientConnections.length; i++) {
               setTimeout(currentClientConnections[i].close, 500) // Defer this for a small amount of time because reasons.
 
-              const severingConnection = find(
-                propEq("clientId", connectionClientId),
-                this.connections
+              const severingConnection = this.connections.find(
+                (c) => c.clientId === connectionClientId
               )
               if (severingConnection) {
-                this.connections = reject(
-                  propEq("clientId", severingConnection.clientId),
-                  this.connections
-                )
+                this.connections = this.connections.filter((c) => c.clientId !== connectionClientId)
               }
             }
           }
@@ -279,11 +232,12 @@ export default class Server {
           fullCommand.clientId = connectionClientId
 
           // bestow the payload onto the connection
-          const connection = merge(payload, {
+          const connection = {
+            ...payload,
             id: thisConnectionId,
             address: partConn.address,
             clientId: fullCommand.clientId,
-          })
+          }
 
           // then trigger the connection
           this.connections.push(connection)
@@ -302,7 +256,10 @@ export default class Server {
         }
 
         this.emitter.emit("command", fullCommand)
-      })
+      }
+      // message is Node, data is React Native macOS
+      socket.on("message", (data) => onMessage(data.toString()))
+      socket.on("data", (data) => onMessage(data.toString()))
 
       // resend the subscriptions to the client upon connecting
       this.stateValuesSendSubscriptions()
@@ -329,7 +286,7 @@ export default class Server {
       clearInterval(this.keepAlive)
     }
 
-    this.wss.close()
+    this.server.close()
 
     // trigger the stop message
     this.emitter.emit("stop")
@@ -341,12 +298,8 @@ export default class Server {
   /**
    * Sends a command to the client
    */
-  send = (type, payload, clientId?) => {
-    this.wss.clients.forEach((client) => {
-      if (client.readyState === OPEN && (!clientId || (client as any).clientId === clientId)) {
-        client.send(JSON.stringify({ type, payload }))
-      }
-    })
+  send = (type: any, payload: any, clientId?: string) => {
+    this.server.sendAll(type, JSON.stringify({ type, payload, clientId }))
   }
 
   /**
@@ -359,7 +312,7 @@ export default class Server {
   /**
    * Subscribe to a path in the client's state.
    */
-  stateValuesSubscribe(path) {
+  stateValuesSubscribe(path: string) {
     // prevent duplicates
     if (contains(path, this.subscriptions)) {
       return
@@ -379,7 +332,7 @@ export default class Server {
   /**
    * Unsubscribe from this path.
    */
-  stateValuesUnsubscribe(path) {
+  stateValuesUnsubscribe(path: string) {
     // if it doesn't exist, jet
     if (!contains(path, this.subscriptions)) {
       return
@@ -402,7 +355,7 @@ export default class Server {
    *
    * @param {string} value The string to send
    */
-  sendCustomMessage(value, clientId?) {
+  sendCustomMessage(value: string, clientId?: string) {
     this.send("custom", value, clientId)
   }
 }

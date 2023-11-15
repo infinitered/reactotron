@@ -13028,7 +13028,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"buffer@npm:^5.1.0, buffer@npm:^5.5.0":
+"buffer@npm:^5.1.0, buffer@npm:^5.4.3, buffer@npm:^5.5.0":
   version: 5.7.1
   resolution: "buffer@npm:5.7.1"
   dependencies:
@@ -17459,7 +17459,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eventemitter3@npm:^4.0.0":
+"eventemitter3@npm:^4.0.0, eventemitter3@npm:^4.0.7":
   version: 4.0.7
   resolution: "eventemitter3@npm:4.0.7"
   checksum: 1875311c42fcfe9c707b2712c32664a245629b42bb0a5a84439762dd0fd637fc54d078155ea83c2af9e0323c9ac13687e03cfba79b03af9f40c89b4960099374
@@ -29051,6 +29051,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-tcp-socket@npm:^6.0.6":
+  version: 6.0.6
+  resolution: "react-native-tcp-socket@npm:6.0.6"
+  dependencies:
+    buffer: ^5.4.3
+    eventemitter3: ^4.0.7
+  peerDependencies:
+    react-native: ">=0.60.0"
+  checksum: 83053f7ce93e977b5a8a59860bb3506b0307303d6fcc4b96266c45cd6421a42601518db257d9419188308382e849ee79d05ed880fead79ddf85f4a227fbacfcf
+  languageName: node
+  linkType: hard
+
 "react-native-web@npm:0.19.9":
   version: 0.19.9
   resolution: "react-native-web@npm:0.19.9"
@@ -29859,6 +29871,7 @@ __metadata:
     react-native-safe-area-context: ^4.7.4
     react-native-screens: ^3.27.0
     react-native-svg: ^13.14.0
+    react-native-tcp-socket: ^6.0.6
     react-native-windows: 0.72.19
     react-test-renderer: 18.2.0
     reactotron-core-contract: "workspace:*"
