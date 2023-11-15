@@ -15,6 +15,7 @@ import { Button, H1, Text, XStack, YStack } from "tamagui"
 import { Footer } from "./components/Footer"
 import { SideBar } from "./components/SideBar"
 import { CommandsScreen } from "./screens/CommandsScreen"
+import { HelpScreen } from "./screens/HelpScreen"
 import { HomeScreen } from "./screens/HomeScreen"
 import { SubscriptionScreen } from "./screens/SubscriptionScreen"
 import { TimelineScreen } from "./screens/TimelineScreen"
@@ -86,7 +87,7 @@ export function Navigation() {
             <Stack.Screen name="Overlay" component={TempScreen} />
             <Stack.Screen name="Storybook" component={TempScreen} />
             <Stack.Screen name="Commands" component={CommandsScreen} />
-            <Stack.Screen name="Help" component={TempScreen} />
+            <Stack.Screen name="Help" component={HelpScreen} />
           </Stack.Navigator>
         </XStack>
         <Footer />
