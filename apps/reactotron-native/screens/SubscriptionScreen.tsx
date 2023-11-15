@@ -1,6 +1,8 @@
 import { Database } from "@tamagui/lucide-icons"
 import { EmptyState } from "../components/EmptyState"
 
+// TODO: actually implement all of subscriptions
+
 export function SubscriptionScreen() {
   return (
     <EmptyState icon={Database} title="No Subscriptions">

@@ -16,6 +16,7 @@
     "@react-navigation/stack": "^6.3.20",
     "@tamagui/config": "^1.76.0",
     "@tamagui/lucide-icons": "^1.76.0",
+    "immer": "^10.0.3",
     "react": "18.2.0",
     "react-native": "0.72.6",
     "react-native-macos": "0.72.7",
@@ -23,6 +24,9 @@
     "react-native-screens": "^3.27.0",
     "react-native-svg": "^13.14.0",
     "react-native-windows": "0.72.19",
+    "reactotron-core-contract": "workspace:*",
+    "reactotron-core-server": "workspace:*",
+    "reactotron-core-ui": "workspace:*",
     "tamagui": "^1.76.0"
   },
   "devDependencies": {
@@ -31,6 +35,7 @@
     "@babel/runtime": "^7.20.0",
     "@react-native/eslint-config": "^0.72.2",
     "@react-native/metro-config": "^0.72.11",
+    "@testing-library/react-hooks": "^8.0.1",
     "@tsconfig/react-native": "^3.0.0",
     "@types/react": "^18.0.24",
     "@types/react-test-renderer": "^18.0.0",

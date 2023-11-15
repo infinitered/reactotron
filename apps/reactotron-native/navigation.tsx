@@ -12,6 +12,7 @@ import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
 import { useColorScheme } from "react-native"
 import { Button, H1, Text, XStack, YStack } from "tamagui"
+import { Footer } from "./components/Footer"
 import { SideBar } from "./components/SideBar"
 import { CommandsScreen } from "./screens/CommandsScreen"
 import { HomeScreen } from "./screens/HomeScreen"
@@ -88,6 +89,7 @@ export function Navigation() {
             <Stack.Screen name="Help" component={TempScreen} />
           </Stack.Navigator>
         </XStack>
+        <Footer />
       </NavigationContainer>
     </ThemeProvider>
   )
