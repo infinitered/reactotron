@@ -57,7 +57,7 @@ import {configureStore} from '@reduxjs/toolkit';
 + import Reactotron from './ReactotronConfig'
 const store = configureStore({
    ... (reducers, middlewares etc),
- + enhancers: __DEV__ ? [Reactotron.createEnhancer!()] : [],
++  enhancers: __DEV__ ? [Reactotron.createEnhancer!()] : [],
 });
 ```
 
