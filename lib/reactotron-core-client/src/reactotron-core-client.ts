@@ -1,5 +1,5 @@
 import WebSocket from "ws"
-import { Command, CommandTypeKey } from "reactotron-core-contract"
+import type { Command, CommandTypeKey } from "reactotron-core-contract"
 import validate from "./validate"
 import logger from "./plugins/logger"
 import image from "./plugins/image"

@@ -3,10 +3,10 @@ import {
   ContentView,
   SnapshotRenameModal,
   StateContext,
-  Snapshot,
   Header,
   EmptyState,
 } from "reactotron-core-ui"
+import type { Snapshot } from "reactotron-core-ui"
 import { clipboard } from "electron"
 import styled from "styled-components"
 import {

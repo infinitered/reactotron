@@ -1,5 +1,6 @@
 import React, { useState, useContext, useReducer } from "react"
-import { Header, EmptyState, CustomCommandsContext, CustomCommand } from "reactotron-core-ui"
+import { Header, EmptyState, CustomCommandsContext } from "reactotron-core-ui"
+import type { CustomCommand } from "reactotron-core-ui"
 import styled from "styled-components"
 import { MdSearch } from "react-icons/md"
 import { FaMagic } from "react-icons/fa"
