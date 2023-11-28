@@ -49,8 +49,9 @@ ReactotronConfig, you'll need to add `reactotron-redux` as plugin
   
 + export default reactotron
 ```
-## Using Redux-toolkit
-Then, add enhancer from `Reactotron.createEnhancer()` to `enhancers` in `configureStore`
+## Using Redux Toolkit (RTK)
+
+If you're using RTK, add the enhancer from `Reactotron.createEnhancer()` to `enhancers` in `configureStore`
 
 ```diff
 import {configureStore} from '@reduxjs/toolkit';
@@ -59,10 +60,6 @@ const store = configureStore({
    ... (reducers, middlewares etc),
 +  enhancers: __DEV__ ? [Reactotron.createEnhancer!()] : [],
 });
-```
-
-## Using Classic Redux
-Then, add enhancer from `Reactotron.createEnhancer()` to `createStore` as last parameter
 
 ```diff
 import { createStore } from 'redux'
