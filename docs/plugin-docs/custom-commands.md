@@ -32,6 +32,3 @@ const selfRemoving = Reactotron.onCustomCommand({
 })
 ```
 
-```
-
-```
