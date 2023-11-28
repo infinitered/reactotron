@@ -49,8 +49,17 @@ ReactotronConfig, you'll need to add `reactotron-redux` as plugin
   
 + export default reactotron
 ```
+## Using Redux Toolkit (RTK)
 
-Then, add enhancer from `Reactotron.createEnhancer()` to `createStore` as last parameter
+If you're using RTK, add the enhancer from `Reactotron.createEnhancer()` to `enhancers` in `configureStore`
+
+```diff
+import {configureStore} from '@reduxjs/toolkit';
++ import Reactotron from './ReactotronConfig'
+const store = configureStore({
+   ... (reducers, middlewares etc),
++  enhancers: __DEV__ ? [Reactotron.createEnhancer!()] : [],
+});
 
 ```diff
 import { createStore } from 'redux'
@@ -63,7 +72,7 @@ import { createStore } from 'redux'
 
 Note: passing enhancer as last argument requires redux@>=3.1.0
 
-## If you have middleware
+### If you have middleware
 
 ```diff
 import { createStore } from 'redux'
