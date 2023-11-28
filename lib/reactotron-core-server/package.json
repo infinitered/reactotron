@@ -7,23 +7,21 @@
   "bugs": {
     "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-core-server",
-  "repository": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-core-server",
+  "homepage": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-core-server",
+  "repository": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-core-server",
   "files": [
     "dist",
-    "LICENSE",
-    "README.md",
     "src"
   ],
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
-  "typings": "dist/types/src/reactotron-core-server.d.ts",
-  "react-native": "src/reactotron-core-server.ts",
+  "types": "dist/types/src/index.d.ts",
+  "react-native": "src/index.ts",
   "exports": {
-    "require": "./dist/index.js",
+    "default": "./dist/index.js",
     "import": "./dist/index.esm.js",
-    "types": "./dist/types/src/reactotron-core-server.d.ts",
-    "react-native": "./src/reactotron-core-server.ts"
+    "types": "./dist/types/src/index.d.ts",
+    "react-native": "./src/index.ts"
   },
   "scripts": {
     "test": "jest",

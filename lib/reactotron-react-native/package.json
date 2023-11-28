@@ -7,24 +7,21 @@
   "bugs": {
     "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-react-native",
-  "repository": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-react-native",
+  "homepage": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-react-native",
+  "repository": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-react-native",
   "files": [
     "dist",
-    "LICENSE",
-    "README.md",
-    "reactotron-react-native.d.ts",
     "src"
   ],
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
-  "types": "dist/types/src/reactotron-react-native.d.ts",
-  "react-native": "src/reactotron-react-native.ts",
+  "types": "dist/types/src/index.d.ts",
+  "react-native": "src/index.ts",
   "exports": {
-    "require": "./dist/index.js",
+    "default": "./dist/index.js",
     "import": "./dist/index.esm.js",
-    "types": "./dist/types/src/reactotron-react-native.d.ts",
-    "react-native": "./src/reactotron-react-native.ts"
+    "types": "./dist/types/src/index.d.ts",
+    "react-native": "./src/index.ts"
   },
   "scripts": {
     "test": "jest",

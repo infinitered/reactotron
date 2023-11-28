@@ -11,11 +11,18 @@
   "repository": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-react-native-mmkv",
   "files": [
     "dist",
-    "LICENSE"
+    "src"
   ],
-  "main": "dist/reactotron-react-native-mmkv.umd.js",
-  "module": "dist/reactotron-react-native-mmkv.es5.js",
-  "typings": "dist/types/reactotron-react-native-mmkv.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/src/index.d.ts",
+  "react-native": "src/index.ts",
+  "exports": {
+    "default": "./dist/index.js",
+    "import": "./dist/index.esm.js",
+    "types": "./dist/types/src/index.d.ts",
+    "react-native": "./src/index.ts"
+  },
   "scripts": {
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch --notify",

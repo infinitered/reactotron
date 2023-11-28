@@ -4,7 +4,7 @@
     "allowJs": false,
     "declaration": true,
     "declarationDir": "dist/types",
-    "rootDir": "src",
+    "rootDir": ".",
     "emitDeclarationOnly": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,

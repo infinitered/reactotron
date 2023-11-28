@@ -11,11 +11,18 @@
   "repository": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-core-contract",
   "files": [
     "dist",
-    "LICENSE",
-    "README.md"
+    "src"
   ],
   "main": "dist/index.js",
-  "typings": "dist/types/src/reactotron-core-contract.d.ts",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/src/index.d.ts",
+  "react-native": "src/index.ts",
+  "exports": {
+    "default": "./dist/index.js",
+    "import": "./dist/index.esm.js",
+    "types": "./dist/types/src/index.d.ts",
+    "react-native": "./src/index.ts"
+  },
   "scripts": {
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch --notify",
