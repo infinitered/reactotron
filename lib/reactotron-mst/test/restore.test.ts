@@ -1,6 +1,6 @@
 import { getSnapshot } from "mobx-state-tree"
 import { TestUserModel, commandMetadataFixture, createMstPlugin } from "./fixtures"
-import { Command } from "reactotron-core-contract"
+import type { Command } from "reactotron-core-contract"
 
 const STATE = { age: 1, name: "i" }
 const INBOUND = {

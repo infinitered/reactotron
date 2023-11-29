@@ -1,6 +1,6 @@
 import td from "testdouble"
 import { TestUserModel, commandMetadataFixture, createMstPlugin } from "./fixtures"
-import { Command } from "reactotron-core-contract"
+import type { Command } from "reactotron-core-contract"
 
 const INBOUND = {
   ...commandMetadataFixture,

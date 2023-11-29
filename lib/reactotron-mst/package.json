@@ -7,15 +7,22 @@
   "bugs": {
     "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-mst",
-  "repository": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-mst",
+  "homepage": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-mst",
+  "repository": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-mst",
   "files": [
     "dist",
-    "LICENSE"
+    "src"
   ],
-  "main": "dist/reactotron-mst.umd.js",
-  "module": "dist/reactotron-mst.es5.js",
-  "typings": "dist/types/reactotron-mst.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/src/index.d.ts",
+  "react-native": "src/index.ts",
+  "exports": {
+    "import": "./dist/index.esm.js",
+    "default": "./dist/index.js",
+    "react-native": "./src/index.ts",
+    "types": "./dist/types/src/index.d.ts"
+  },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --notify",

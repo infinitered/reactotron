@@ -7,15 +7,22 @@
   "bugs": {
     "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-core-client",
-  "repository": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-core-client",
+  "homepage": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-core-client",
+  "repository": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-core-client",
   "files": [
     "dist",
-    "LICENSE",
-    "README.md"
+    "src"
   ],
   "main": "dist/index.js",
-  "typings": "dist/types/src/reactotron-core-client.d.ts",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/src/index.d.ts",
+  "react-native": "src/index.ts",
+  "exports": {
+    "default": "./dist/index.js",
+    "import": "./dist/index.esm.js",
+    "react-native": "./src/index.ts",
+    "types": "./dist/types/src/index.d.ts"
+  },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --notify",

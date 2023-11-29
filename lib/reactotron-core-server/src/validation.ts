@@ -1,5 +1,5 @@
 import { allPass, complement, isNil, is } from "ramda"
-import { ServerOptions } from "reactotron-core-contract"
+import type { ServerOptions } from "reactotron-core-contract"
 
 /**
  * Is this a valid port?

@@ -7,10 +7,18 @@
   "bugs": {
     "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-core-ui",
-  "repository": "https://github.com/infinitered/reactotron/tree/alpha/lib/reactotron-core-ui",
+  "homepage": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-core-ui",
+  "repository": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-core-ui",
   "main": "dist/index.js",
-  "typings": "dist/types/index.d.ts",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/src/index.d.ts",
+  "react-native": "src/index.ts",
+  "exports": {
+    "default": "./dist/index.js",
+    "import": "./dist/index.esm.js",
+    "types": "./dist/types/src/index.d.ts",
+    "react-native": "./src/index.ts"
+  },
   "scripts": {
     "start": "start-storybook -p 6006",
     "prebuild": "yarn clean",
@@ -32,7 +40,8 @@
     "format:write": "yarn format --write"
   },
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
