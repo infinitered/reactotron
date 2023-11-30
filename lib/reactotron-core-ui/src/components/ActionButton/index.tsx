@@ -1,6 +1,7 @@
 import React from "react"
-import ReactTooltip from "react-tooltip"
 import styled from "styled-components"
+import Tooltip from "../Tooltip"
+import { type TooltipProps } from "react-tooltip"
 
 const Container = styled.div`
   cursor: pointer;
@@ -10,15 +11,16 @@ const Container = styled.div`
 
 interface Props {
   tip: string
+  tipProps?: TooltipProps
   icon: any
   onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
-function ActionButton({ icon: Icon, tip, onClick }: Props) {
+function ActionButton({ icon: Icon, tip, tipProps = {}, onClick }: Props) {
   return (
     <Container data-tip={tip} onClick={onClick}>
       <Icon size={24} />
-      <ReactTooltip place="bottom" />
+      <Tooltip {...tipProps} />
     </Container>
   )
 }

@@ -6,6 +6,7 @@ import { autoUpdater } from "electron-updater"
 import windowStateKeeper from "electron-window-state"
 
 import createMenu from "./menu"
+import { setupAndroidDeviceIPCCommands } from "./utils"
 
 const isDevelopment = process.env.NODE_ENV !== "production"
 
@@ -32,8 +33,8 @@ function createMainWindow() {
     width: mainWindowState.width,
     height: mainWindowState.height,
     titleBarStyle: "hiddenInset",
-    webPreferences: { 
-      nodeIntegration: true, 
+    webPreferences: {
+      nodeIntegration: true,
       contextIsolation: false,
       webgl: false, // Disable webGL for performance reasons
       spellcheck: false, // Disable spellcheck for performance reasons
@@ -47,7 +48,7 @@ function createMainWindow() {
 
     if (isDevelopment) {
       window.webContents.openDevTools()
-    }  
+    }
   })
 
   window.setBackgroundColor("#1e1e1e") // see reactotron-core-ui for background color
@@ -97,4 +98,7 @@ app.on("activate", () => {
 // create main BrowserWindow when electron is ready
 app.on("ready", () => {
   mainWindow = createMainWindow()
+
+  // Sets up the electron IPC commands for android functionality on the Help screen.
+  setupAndroidDeviceIPCCommands(mainWindow)
 })

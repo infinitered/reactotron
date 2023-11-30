@@ -9,8 +9,9 @@ import {
 } from "react-icons/go"
 import { FaTwitter as TwitterIcon } from "react-icons/fa"
 import { getApplicationKeyMap } from "react-hotkeys"
-
+import { ItemContainer, ItemIconContainer } from "./SharedStyles"
 import KeybindGroup from "./components/KeybindGroup"
+import AndroidDeviceHelp from "./components/AndroidDeviceHelp"
 import { reactotronLogo } from "../../images"
 
 const projectJson = require("../../../../package.json")
@@ -20,23 +21,19 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
 `
-
 const HelpContainer = styled.div`
   padding: 20px;
   overflow-y: auto;
   overflow-x: hidden;
 `
-
 const LogoContainer = styled.div`
   display: flex;
   justify-content: center;
 `
-
 const LogoImage = styled.img`
   height: 128px;
   margin: 20px 0;
 `
-
 const Title = styled.div`
   font-size: 18px;
   margin: 10px 0;
@@ -44,30 +41,11 @@ const Title = styled.div`
   color: ${(props) => props.theme.foregroundLight};
   border-bottom: 1px solid ${(props) => props.theme.highlight};
 `
-
 const ConnectContainer = styled.div`
   display: flex;
   align-items: flex-start;
   color: ${(props) => props.theme.foreground};
   margin-bottom: 50px;
-`
-const ConnectItemContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 10px;
-  margin: 5px;
-  flex: 1;
-  /* width: 90px; */
-  background-color: ${(props) => props.theme.chrome};
-  border-radius: 5px;
-  border: 1px solid ${(props) => props.theme.chromeLine};
-`
-const ConnectItemIconContainer = styled.div`
-  color: ${(props) => props.theme.foregroundLight};
-  margin-bottom: 8px;
 `
 
 function openRepo() {
@@ -117,31 +95,34 @@ function Help() {
         </LogoContainer>
         <Title>Let&apos;s Connect!</Title>
         <ConnectContainer>
-          <ConnectItemContainer onClick={openRepo}>
-            <ConnectItemIconContainer>
+          <ItemContainer onClick={openRepo}>
+            <ItemIconContainer>
               <RepoIcon size={40} />
-            </ConnectItemIconContainer>
+            </ItemIconContainer>
             Repo
-          </ConnectItemContainer>
-          <ConnectItemContainer onClick={openFeedback}>
-            <ConnectItemIconContainer>
+          </ItemContainer>
+          <ItemContainer onClick={openFeedback}>
+            <ItemIconContainer>
               <FeedbackIcon size={40} />
-            </ConnectItemIconContainer>
+            </ItemIconContainer>
             Feedback
-          </ConnectItemContainer>
-          <ConnectItemContainer onClick={openUpdates}>
-            <ConnectItemIconContainer>
+          </ItemContainer>
+          <ItemContainer onClick={openUpdates}>
+            <ItemIconContainer>
               <ReleaseIcon size={40} />
-            </ConnectItemIconContainer>
+            </ItemIconContainer>
             Updates
-          </ConnectItemContainer>
-          <ConnectItemContainer onClick={openTwitter}>
-            <ConnectItemIconContainer>
+          </ItemContainer>
+          <ItemContainer onClick={openTwitter}>
+            <ItemIconContainer>
               <TwitterIcon size={40} />
-            </ConnectItemIconContainer>
+            </ItemIconContainer>
             @reactotron
-          </ConnectItemContainer>
+          </ItemContainer>
         </ConnectContainer>
+
+        <AndroidDeviceHelp />
+
         <Title>Keystrokes</Title>
         {Keybinds()}
       </HelpContainer>

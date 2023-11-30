@@ -95,7 +95,15 @@ const Header: FunctionComponent<React.PropsWithChildren<HeaderComponentProps>> =
         <RightContainer>
           {actions &&
             actions.map((a, idx) => (
-              <ActionButton tip={a.tip} icon={a.icon} onClick={a.onClick} key={idx} />
+              <ActionButton
+                tip={a.tip}
+                tipProps={{
+                  effect: "float",
+                }}
+                icon={a.icon}
+                onClick={a.onClick}
+                key={idx}
+              />
             ))}
         </RightContainer>
       </ContentContainer>
