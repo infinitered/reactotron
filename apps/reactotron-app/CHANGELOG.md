@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0-beta.35](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.34...reactotron-app@3.0.0-beta.35) (2023-11-30)
+
+
+### Features
+
+* **reactotron:** Add Android `adb` command interface to the Help page. ([#1320](https://github.com/infinitered/reactotron/issues/1320)) ([60c985e](https://github.com/infinitered/reactotron/commit/60c985ec0c3ef4e2d00c0a67fbc467f4903558b7))
+
 ## [3.0.0-beta.34](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.33...reactotron-app@3.0.0-beta.34) (2023-11-06)
 
 ## [3.0.0-beta.33](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.32...reactotron-app@3.0.0-beta.33) (2023-10-24)
