@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0-beta.36](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.35...reactotron-app@3.0.0-beta.36) (2023-12-01)
+
+
+### Features
+
+* validate workspace package.json, add export condition ([#1326](https://github.com/infinitered/reactotron/issues/1326)) ([ae95cd5](https://github.com/infinitered/reactotron/commit/ae95cd536de187ede034e5183ceeb812f356d273))
+
 ## [3.0.0-beta.35](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.34...reactotron-app@3.0.0-beta.35) (2023-11-30)
 
 
