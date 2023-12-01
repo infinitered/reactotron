@@ -18,6 +18,7 @@ import trackGlobalErrors, { TrackGlobalErrorsOptions } from "./plugins/trackGlob
 import networking, { NetworkingOptions } from "./plugins/networking"
 import storybook from "./plugins/storybook"
 import devTools from "./plugins/devTools"
+import trackGlobalLogs from "./plugins/trackGlobalLogs"
 
 const constants = NativeModules.PlatformConstants || {}
 
@@ -83,6 +84,7 @@ const DEFAULTS: ClientOptions<ReactotronReactNative> = {
 
 export interface UseReactNativeOptions {
   errors?: TrackGlobalErrorsOptions | boolean
+  log?: boolean
   editor?: OpenInEditorOptions | boolean
   overlay?: boolean
   asyncStorage?: AsyncStorageOptions | boolean
@@ -94,6 +96,7 @@ export interface UseReactNativeOptions {
 export const reactNativeCorePlugins = [
   asyncStorage(),
   trackGlobalErrors(),
+  trackGlobalLogs(),
   openInEditor(),
   overlay(),
   networking(),
@@ -121,6 +124,10 @@ function getPluginOptions<T>(options?: T | boolean): T {
 reactotron.useReactNative = (options: UseReactNativeOptions = {}) => {
   if (options.errors !== false) {
     reactotron.use(trackGlobalErrors(getPluginOptions(options.errors)))
+  }
+
+  if (options.log !== false) {
+    reactotron.use(trackGlobalLogs())
   }
 
   if (options.editor !== false) {
@@ -156,8 +163,16 @@ reactotron.setAsyncStorageHandler = (asyncStorage: AsyncStorageStatic) => {
   return reactotron
 }
 
-export { asyncStorage, trackGlobalErrors, openInEditor, overlay, networking, storybook, devTools }
-export { default as trackGlobalLogs } from "./plugins/trackGlobalLogs"
+export {
+  asyncStorage,
+  trackGlobalErrors,
+  trackGlobalLogs,
+  openInEditor,
+  overlay,
+  networking,
+  storybook,
+  devTools,
+}
 
 export type { ClientOptions }
 
