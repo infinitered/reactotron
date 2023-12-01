@@ -1,4 +1,5 @@
-import { CommandType, CommandTypeKey } from "reactotron-core-contract"
+import { CommandType } from "reactotron-core-contract"
+import type { CommandTypeKey } from "reactotron-core-contract"
 
 function path(...searchPath) {
   return (obj) => {

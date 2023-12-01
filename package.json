@@ -73,7 +73,8 @@
     "release:tags:push": "zx scripts/release.tags.push.mjs",
     "copy-prettier-ignore": "zx scripts/copy-prettier-ignore.mjs",
     "remove-local-tags": "git tag -l | xargs git tag -d && git fetch -t",
-    "build-and-test:local": "yarn build && yarn lint && yarn format:check && yarn test && yarn typecheck"
+    "build-and-test:local": "yarn build && yarn package:validate && yarn lint && yarn format:check && yarn test && yarn typecheck",
+    "package:validate": "zx scripts/package.validate.mjs"
   },
   "packageManager": "yarn@3.6.3"
 }

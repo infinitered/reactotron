@@ -1,6 +1,6 @@
 import { merge, find, propEq, without, contains, forEach, pluck, reject, equals } from "ramda"
 import { createServer as createHttpsServer, ServerOptions as HttpsServerOptions } from "https"
-import {
+import type {
   ServerEventMap,
   ServerOptions,
   PartialConnection,

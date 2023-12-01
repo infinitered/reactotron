@@ -6,7 +6,8 @@ import stringifyObject from "stringify-object"
 import TimelineCommand from "../../components/TimelineCommand"
 import ContentView from "../../components/ContentView"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
-import { ErrorStackFrame, LogPayload, isErrorStackFrameArray } from "reactotron-core-contract"
+import { isErrorStackFrameArray } from "reactotron-core-contract"
+import type { ErrorStackFrame, LogPayload } from "reactotron-core-contract"
 
 const SOURCE_LINES_UP = 3
 const SOURCE_LINES_DOWN = 3

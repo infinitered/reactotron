@@ -4,6 +4,7 @@
     "jsx": "react",
     "declaration": true,
     "declarationDir": "dist/types",
+    "rootDir": ".",
     "emitDeclarationOnly": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,

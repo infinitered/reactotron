@@ -1,6 +1,6 @@
 // TODO: Name this better...
 import React, { FunctionComponent, PropsWithChildren } from "react"
-import { Command } from "reactotron-core-contract"
+import type { Command } from "reactotron-core-contract"
 import {
   ReactotronProvider,
   CustomCommandsProvider,
