@@ -29,6 +29,7 @@ You plug it into your app as a dev dependency so it adds nothing to your product
 ### Desktop
 
 Reactotron on the left, demo React Native app on the right.
+
 ![Desktop](./docs/plugin-docs/images/readme/reactotron-demo-app.gif)
 
 ## Installation
@@ -46,14 +47,13 @@ On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotro
 
 ## How to use Reactotron's features/plugins
 
-- [**Reactotron Functions**](./docs/plugin-docs/reactotron-functions.md)
-- [**Track Global Logs**]
 - [**Track Global Errors**](./docs/plugin-docs/plugin-track-global-errors.md)
+- [**Track Global Logs**](./docs/plugin-docs/plugin-track-global-logs.md)
+- [**Networking**](./docs/plugin-docs/plugin-networking.md)
 - [**Async Storage**](./docs/plugin-docs/plugin-async-storage.md)
 - [**React Native MMKV**](./docs/plugin-docs/plugin-react-native-mmkv.md)
 - [**Benchmark**](./docs/plugin-docs/plugin-benchmark.md)
 - [**apisauce**](./docs/plugin-docs/plugin-apisauce.md)
-- [**Networking**](./docs/plugin-docs/plugin-networking.md)
 - [**Overlay**](./docs/plugin-docs/plugin-overlay.md)
 - [**MST**](./docs/plugin-docs/plugin-mst.md)
 - [**Redux**](./docs/plugin-docs/plugin-redux.md)
