@@ -29,18 +29,16 @@ You plug it into your app as a dev dependency so it adds nothing to your product
 ### Desktop
 
 Reactotron on the left, demo React Native app on the right.
+
 ![Desktop](./docs/plugin-docs/images/readme/reactotron-demo-app.gif)
 
 ## Installation
 
-On the [Releases](https://github.com/infinitered/reactotron/releases/tag/v2.17.1) page, you can find the latest version of:
+On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotron-app&expanded=true) page, you can find the latest version of:
 
 - macOS
 - Linux (32-bit & 64-bit)
 - Windows (32-bit & 64-bit)
-
-<!-- ### Auto Updates
-Once you have the application installed it should download and alert you that a new version is available and that new version should be installed on next launch. -->
 
 ## How to setup Reactotron in our app
 
@@ -49,13 +47,13 @@ Once you have the application installed it should download and alert you that a 
 
 ## How to use Reactotron's features/plugins
 
-- [**Reactotron Functions**](./docs/plugin-docs/reactotron-functions.md)
 - [**Track Global Errors**](./docs/plugin-docs/plugin-track-global-errors.md)
+- [**Track Global Logs**](./docs/plugin-docs/plugin-track-global-logs.md)
+- [**Networking**](./docs/plugin-docs/plugin-networking.md)
 - [**Async Storage**](./docs/plugin-docs/plugin-async-storage.md)
 - [**React Native MMKV**](./docs/plugin-docs/plugin-react-native-mmkv.md)
 - [**Benchmark**](./docs/plugin-docs/plugin-benchmark.md)
 - [**apisauce**](./docs/plugin-docs/plugin-apisauce.md)
-- [**Networking**](./docs/plugin-docs/plugin-networking.md)
 - [**Overlay**](./docs/plugin-docs/plugin-overlay.md)
 - [**MST**](./docs/plugin-docs/plugin-mst.md)
 - [**Redux**](./docs/plugin-docs/plugin-redux.md)
@@ -69,11 +67,22 @@ Once you have the application installed it should download and alert you that a 
 
 [Some tips that will elevate your Reactotron experience.](./docs/plugin-docs/tips.md)
 
+## Want to contribute? Here are some helpful reading materials:
+
+- [**Contributing**](./docs/contributing.md)
+- [**Architecture**](./docs/architecture.md)
+- [**Monorepo**](./docs/monorepo.md)
+- [**Release**](./docs/release.md)
+
 ## Troubleshooting
 
 - [**React Native iOS**](./docs/plugin-docs/troubleshooting.md#react-native-ios)
 - [**React Native Android**](./docs/plugin-docs/troubleshooting.md#react-native-android)
 
-## [Contributing ](./docs/plugin-docs/contributing.md)
+# Credits
 
-We welcome contributions from the community!
+Reactotron is developed by [Infinite Red](https://infinite.red), [@rmevans9](https://github.com/rmevans9), and 70+ amazing contributors! Special thanks to [@skellock](https://github.com/skellock) for originally creating Reactotron while at Infinite Red.
+
+# Premium Support
+
+[Reactotron](https://infinite.red/reactotron), as an open source project, is free to use and always will be. [Infinite Red](https://infinite.red/) offers premium React and [React Native](https://infinite.red/react-native) mobile app design/development services. Email us at [hello@infinite.red](mailto:hello@infinite.red) to get in touch for more details.
