@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0-beta.37](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.36...reactotron-app@3.0.0-beta.37) (2023-12-05)
+
+
+### Bug Fixes
+
+* **reactotron-app:** fix notarize settings ([08320b4](https://github.com/infinitered/reactotron/commit/08320b4360bba07155deb70573a0048786477a13))
+
 ## [3.0.0-beta.36](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.35...reactotron-app@3.0.0-beta.36) (2023-12-01)
 
 
