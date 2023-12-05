@@ -32,7 +32,7 @@ if (isCi) {
 // #endregion
 
 /** @type {Record<typeof BUILD_TARGET, string>} @see https://electron.build/cli.html */
-const targetFlags = { macos: "--macos", windows: "--windows", linux: "--linux" }
+const targetFlags = { macos: "--macos --arm64 --x64", windows: "--windows", linux: "--linux" }
 let flags = `${targetFlags[BUILD_TARGET]} --publish never`
 
 if (skipSigning) {
