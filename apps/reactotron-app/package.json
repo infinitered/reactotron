@@ -112,7 +112,6 @@
   "build": {
     "productName": "Reactotron",
     "appId": "com.reactotron.app",
-    "afterSign": "scripts/notarize.js",
     "files": [
       "src/dist/",
       "src/app.html",
@@ -139,7 +138,10 @@
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
       "entitlements": "entitlements.mac.plist",
-      "entitlementsInherit": "entitlements.mac.plist"
+      "entitlementsInherit": "entitlements.mac.plist",
+      "notarize": {
+        "teamId": "L7YNDPLSEB"
+      }
     },
     "win": {
       "icon": "./icon.png",
