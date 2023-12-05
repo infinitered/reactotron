@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.0.6](https://github.com/infinitered/reactotron/compare/reactotron-core-server@3.0.6-beta.16...reactotron-core-server@3.0.6) (2023-12-05)
+
 ### [3.0.6-beta.16](https://github.com/infinitered/reactotron/compare/reactotron-core-server@3.0.6-beta.15...reactotron-core-server@3.0.6-beta.16) (2023-12-01)
 
 
