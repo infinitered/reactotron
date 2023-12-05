@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0-beta.38](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.37...reactotron-app@3.0.0-beta.38) (2023-12-05)
+
+
+### Features
+
+* **reactotron-app:** add build_app_macos_arm64 build job ([46409cf](https://github.com/infinitered/reactotron/commit/46409cf33217351562f3a342a882435c19a83ff5))
+
+
+### Bug Fixes
+
+* validate package.json lol ([3ac8b9c](https://github.com/infinitered/reactotron/commit/3ac8b9c6656b8999293bec01209bfa5dc6e839d5))
+
 ## [3.0.0-beta.37](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.36...reactotron-app@3.0.0-beta.37) (2023-12-05)
 
 
