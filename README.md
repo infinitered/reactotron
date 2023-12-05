@@ -36,7 +36,7 @@ Reactotron on the left, demo React Native app on the right.
 
 On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotron-app&expanded=true) page, you can find the latest version of:
 
-- macOS
+- macOS (x64 & arm64)
 - Linux (32-bit & 64-bit)
 - Windows (32-bit & 64-bit)
 

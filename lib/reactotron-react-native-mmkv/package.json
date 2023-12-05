@@ -7,8 +7,8 @@
   "bugs": {
     "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-react-native-mmkv",
-  "repository": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-react-native-mmkv",
+  "homepage": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-react-native-mmkv",
+  "repository": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-react-native-mmkv",
   "files": [
     "dist",
     "src"

@@ -73,9 +73,9 @@ for (const workspacePath of workspacePaths) {
     process.exit(1);
   }
 
-  // assert "homepage" field is `https://github.com/infinitered/reactotron/tree/beta/lib/${workspaceName}`
+  // assert "homepage" field is `https://github.com/infinitered/reactotron/tree/master/lib/${workspaceName}`
   const workspaceName = path.basename(workspacePath);
-  const expectedHomepage = `https://github.com/infinitered/reactotron/tree/beta/lib/${workspaceName}`;
+  const expectedHomepage = `https://github.com/infinitered/reactotron/tree/master/lib/${workspaceName}`;
 
   if (packageJson.homepage !== expectedHomepage) {
     console.error(
@@ -84,10 +84,10 @@ for (const workspacePath of workspacePaths) {
     process.exit(1);
   }
 
-  // assert "repository" field is `https://github.com/infinitered/reactotron/tree/beta/lib/${workspaceName}`
+  // assert "repository" field is `https://github.com/infinitered/reactotron/tree/master/lib/${workspaceName}`
   if (
     packageJson.repository !==
-    `https://github.com/infinitered/reactotron/tree/beta/lib/${workspaceName}`
+    `https://github.com/infinitered/reactotron/tree/master/lib/${workspaceName}`
   ) {
     console.error(
       `Invalid ${packageJsonPath} repository field: ${packageJson.repository}`

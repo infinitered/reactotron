@@ -7,8 +7,8 @@
   "bugs": {
     "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-apisauce",
-  "repository": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-apisauce",
+  "homepage": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-apisauce",
+  "repository": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-apisauce",
   "files": [
     "dist",
     "src"
