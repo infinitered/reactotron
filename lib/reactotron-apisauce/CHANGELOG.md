@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.0.1](https://github.com/infinitered/reactotron/compare/reactotron-apisauce@3.0.1-beta.14...reactotron-apisauce@3.0.1) (2023-12-05)
+
 ### [3.0.1-beta.14](https://github.com/infinitered/reactotron/compare/reactotron-apisauce@3.0.1-beta.13...reactotron-apisauce@3.0.1-beta.14) (2023-12-01)
 
 
