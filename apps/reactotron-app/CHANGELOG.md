@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0-beta.39](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.38...reactotron-app@3.0.0-beta.39) (2023-12-05)
+
+
+### Bug Fixes
+
+* **reactotron-app:** add --arm64 --x64 flags ([5015808](https://github.com/infinitered/reactotron/commit/5015808fce7c4f3eab5d087d3fb21c3dc3c0f5f0))
+
+
+### Reverts
+
+* Revert "feat(reactotron-app): add build_app_macos_arm64 build job" ([7be8f7f](https://github.com/infinitered/reactotron/commit/7be8f7f701728b1a77e57d4a7a5c11bc70554d27))
+
 ## [3.0.0-beta.38](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.37...reactotron-app@3.0.0-beta.38) (2023-12-05)
 
 
