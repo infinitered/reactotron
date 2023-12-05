@@ -271,6 +271,35 @@ jobs:
       - release-reactotron-app:
           os: MacOS
 
+  build_app_macos_arm64:
+    <<: *defaults
+    macos:
+      xcode: "13.4.1"
+    resource_class: macos.m1.medium.gen1
+    environment:
+      BUILD_TARGET: macos
+    steps:
+      - checkout
+      - install-packages
+      - run:
+          name: Decode Certificates
+          command: echo "$ReactotronCerts" | base64 --decode > ~/repo/apps/reactotron-app/Certificates.p12
+      - run:
+          name: Install Bundler
+          command: gem install bundler:1.16.1
+      - run:
+          name: Install Gems
+          command: |
+            cd apps/reactotron-app
+            bundle install
+      - run:
+          name: Install Cert
+          command: |
+            cd apps/reactotron-app
+            bundle exec fastlane setup
+      - release-reactotron-app:
+          os: MacOS
+
   release_app:
     <<: *defaults
     executor: *node_executor
@@ -333,6 +362,14 @@ workflows:
             branches: *release_branch_filter
             tags:
               only: *release_app_filter
+      - build_app_macos_arm64:
+          context:
+            - ReactotronCerts
+            - infinitered-npm-package
+          filters:
+            branches: *release_branch_filter
+            tags:
+              only: *release_app_filter
       - build_app_linux:
           context:
             - infinitered-npm-package
@@ -350,5 +387,6 @@ workflows:
           requires:
             - build_app_windows
             - build_app_macos
+            - build_app_macos_arm64
             - build_app_linux
 # VS Code Extension Version: 1.5.1

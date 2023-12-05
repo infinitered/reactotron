@@ -172,6 +172,7 @@
       "**/*.test.tsx"
     ]
   },
+  "sideEffects": false,
   "eslintConfig": {
     "root": false,
     "extends": [
@@ -200,5 +201,4 @@
       "react/prop-types": 0
     }
   },
-  "sideEffects": false
 }
