@@ -172,7 +172,6 @@
       "**/*.test.tsx"
     ]
   },
-  "sideEffects": false,
   "eslintConfig": {
     "root": false,
     "extends": [
