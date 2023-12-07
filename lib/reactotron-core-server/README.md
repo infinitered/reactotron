@@ -27,7 +27,7 @@ server.on("disconnect", (conn) => console.log("Disconnected", conn))
 // The server has stopped.
 server.on("stop", () => console.log("Reactotron stopped"))
 // Port is already in use
-server.on("portInUse", () => console.log("Port 9090 already in use"))
+server.on("portUnavailable", () => console.log("Port 9090 unavailable"))
 
 // start the server
 server.start()

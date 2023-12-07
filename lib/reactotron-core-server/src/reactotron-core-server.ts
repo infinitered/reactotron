@@ -149,7 +149,7 @@ export default class Server {
       this.wss = new WebSocketServer({ port })
       this.wss.on("error", (error) => {
         if (error.message.includes("EADDRINUSE")) {
-          this.emitter.emit("portInUse", port)
+          this.emitter.emit("portUnavailable", port)
         } else {
           console.error(error)
         }

@@ -42,14 +42,14 @@ function SideBar({ isOpen, serverStatus }: { isOpen: boolean; serverStatus: Serv
     serverIcon = MdOutlineMobileFriendly
     serverText = "Running"
   }
-  if (serverStatus === "portInUse") {
+  if (serverStatus === "portUnavailable") {
     serverIcon = MdWarning
     iconColor = "yellow"
     serverText = "Port 9090 unavailable"
   }
 
   const retryConnection = () => {
-    if (serverStatus === "portInUse") {
+    if (serverStatus === "portUnavailable") {
       // TODO: Reconnect more elegantly than forcing a reload
       window.location.reload()
     }

@@ -37,7 +37,7 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     commandReceived,
     connectionDisconnected,
     addCommandListener,
-    portInUse,
+    portUnavailable,
   } = useStandalone()
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     reactotronServer.current.on("command", commandReceived)
     // @ts-expect-error need to sync these types between reactotron-core-server and reactotron-app
     reactotronServer.current.on("disconnect", connectionDisconnected)
-    reactotronServer.current.on("portInUse", portInUse)
+    reactotronServer.current.on("portUnavailable", portUnavailable)
 
     reactotronServer.current.start()
 

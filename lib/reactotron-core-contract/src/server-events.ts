@@ -95,7 +95,7 @@ export const ServerEvent = {
   /**
    * Port is already in use
    */
-  portInUse: "portInUse",
+  portUnavailable: "portUnavailable",
 } as const
 
 export type ServerEventKey = keyof typeof ServerEvent
@@ -105,7 +105,7 @@ type StopPayload = any
 type ConnectPayload = PartialConnection
 type ConnectionEstablishedPayload = any
 type DisconnectPayload = any
-type PortInUsePayload = any
+type PortUnavailablePayload = any
 
 export type ServerEventMap = {
   [ServerEvent.command]: Command
@@ -114,7 +114,7 @@ export type ServerEventMap = {
   [ServerEvent.connect]: ConnectPayload
   [ServerEvent.connectionEstablished]: ConnectionEstablishedPayload
   [ServerEvent.disconnect]: DisconnectPayload
-  [ServerEvent.portInUse]: PortInUsePayload
+  [ServerEvent.portUnavailable]: PortUnavailablePayload
 }
 
 export type WebSocketEvent = (socket: WebSocket) => void

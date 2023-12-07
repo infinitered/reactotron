@@ -10,10 +10,10 @@ export enum ActionTypes {
   CommandReceived = "COMMAND_RECEIVED",
   ChangeSelectedClientId = "CHANGE_SELECTED_CLIENT_ID",
   AddCommandHandler = "ADD_COMMAND_HANDLER",
-  PortInUse = "PORT_IN_USE",
+  PortUnavailable = "PORT_UNAVAILABLE",
 }
 
-export type ServerStatus = "stopped" | "portInUse" | "started"
+export type ServerStatus = "stopped" | "portUnavailable" | "started"
 
 export interface ReactotronConnection {
   // Stuff shipped from core-server
@@ -53,7 +53,7 @@ type Action =
   | { type: ActionTypes.CommandReceived; payload: any } // TODO: Type this better!
   | { type: ActionTypes.ClearConnectionCommands }
   | { type: ActionTypes.AddCommandHandler; payload: (command: any) => void }
-  | { type: ActionTypes.PortInUse; payload: undefined }
+  | { type: ActionTypes.PortUnavailable; payload: undefined }
 
 export function reducer(state: State, action: Action) {
   switch (action.type) {
@@ -167,10 +167,10 @@ export function reducer(state: State, action: Action) {
       return produce(state, (draftState) => {
         draftState.commandListeners.push(action.payload)
       })
-    case ActionTypes.PortInUse:
+    case ActionTypes.PortUnavailable:
       return produce(state, (draftState) => {
-        console.error("Port in use!")
-        draftState.serverStatus = "portInUse"
+        console.error("Port unavailable!")
+        draftState.serverStatus = "portUnavailable"
       })
     default:
       return state
@@ -226,8 +226,8 @@ function useStandalone() {
     dispatch({ type: ActionTypes.AddCommandHandler, payload: callback })
   }, [])
 
-  const portInUse = useCallback(() => {
-    dispatch({ type: ActionTypes.PortInUse, payload: undefined })
+  const portUnavailable = useCallback(() => {
+    dispatch({ type: ActionTypes.PortUnavailable, payload: undefined })
   }, [])
 
   return {
@@ -241,7 +241,7 @@ function useStandalone() {
     commandReceived,
     clearSelectedConnectionCommands,
     addCommandListener,
-    portInUse,
+    portUnavailable,
   }
 }
 
