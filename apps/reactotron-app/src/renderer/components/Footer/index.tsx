@@ -5,11 +5,13 @@ import StandaloneContext from "../../contexts/Standalone"
 import Footer from "./Stateless"
 
 export default function ConnectedFooter() {
-  const { connections, selectedConnection, selectConnection } = useContext(StandaloneContext)
+  const { serverStatus, connections, selectedConnection, selectConnection } =
+    useContext(StandaloneContext)
   const [isOpen, setIsOpen] = useState(false)
 
   return (
     <Footer
+      serverStatus={serverStatus}
       connections={connections}
       selectedConnection={selectedConnection}
       onChangeConnection={selectConnection}
