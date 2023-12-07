@@ -5,6 +5,7 @@ import styled from "styled-components"
 
 import SideBarButton from "../SideBarButton"
 import { reactotronLogo } from "../../images"
+import { ServerStatus } from "../../contexts/Standalone/useStandalone"
 
 interface SideBarContainerProps {
   $isOpen: boolean
@@ -24,7 +25,7 @@ const Spacer = styled.div`
   flex: 1;
 `
 
-function SideBar({ isOpen }: { isOpen: boolean }) {
+function SideBar({ isOpen, serverStatus }: { isOpen: boolean; serverStatus: ServerStatus }) {
   return (
     <SideBarContainer $isOpen={isOpen}>
       <SideBarButton image={reactotronLogo} path="/home" text="Home" hideTopBar />
@@ -43,6 +44,8 @@ function SideBar({ isOpen }: { isOpen: boolean }) {
       />
       <SideBarButton icon={FaMagic} path="/customCommands" text="Custom Commands" iconSize={25} />
       <Spacer />
+      <SideBarButton icon={MdLiveHelp} path="/help/portInUse" text={serverStatus} hideTopBar />
+
       <SideBarButton icon={MdLiveHelp} path="/help" text="Help" hideTopBar />
     </SideBarContainer>
   )

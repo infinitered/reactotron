@@ -92,6 +92,10 @@ export const ServerEvent = {
    * A client has disconnected.
    */
   disconnect: "disconnect",
+  /**
+   * Port is already in use
+   */
+  portInUse: "portInUse",
 } as const
 
 export type ServerEventKey = keyof typeof ServerEvent
@@ -101,6 +105,7 @@ type StopPayload = any
 type ConnectPayload = PartialConnection
 type ConnectionEstablishedPayload = any
 type DisconnectPayload = any
+type PortInUsePayload = any
 
 export type ServerEventMap = {
   [ServerEvent.command]: Command
@@ -109,6 +114,7 @@ export type ServerEventMap = {
   [ServerEvent.connect]: ConnectPayload
   [ServerEvent.connectionEstablished]: ConnectionEstablishedPayload
   [ServerEvent.disconnect]: DisconnectPayload
+  [ServerEvent.portInUse]: PortInUsePayload
 }
 
 export type WebSocketEvent = (socket: WebSocket) => void
