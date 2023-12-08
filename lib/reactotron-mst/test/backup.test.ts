@@ -5,12 +5,12 @@ const INBOUND = {
   ...commandMetadataFixture,
   type: "state.backup.request",
   payload: { state: { age: 100, name: "" } },
-} as Command<"state.backup.request">
+} satisfies Command<"state.backup.request">
 const OUTBOUND = {
   ...commandMetadataFixture,
   type: "state.backup.response",
   payload: { state: { age: 100, name: "" } },
-} as Command<"state.backup.response">
+} satisfies Command<"state.backup.response">
 
 describe("backup", () => {
   it("responds with current state", () => {

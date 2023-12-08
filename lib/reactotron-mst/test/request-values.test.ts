@@ -6,7 +6,7 @@ function createAction(path: string) {
     ...commandMetadataFixture,
     type: "state.values.request",
     payload: { path },
-  } as Command<"state.values.request">
+  } satisfies Command<"state.values.request">
 }
 
 describe("request-values", () => {
