@@ -57,7 +57,14 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return () => {
       reactotronServer.current.stop()
     }
-  }, [connectionEstablished, commandReceived, connectionDisconnected])
+  }, [
+    serverStarted,
+    serverStopped,
+    connectionEstablished,
+    commandReceived,
+    connectionDisconnected,
+    portUnavailable,
+  ])
 
   const sendCommand = useCallback(
     (type: string, payload: any, clientId?: string) => {

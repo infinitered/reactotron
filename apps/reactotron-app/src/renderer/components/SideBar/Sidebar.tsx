@@ -14,7 +14,6 @@ import styled from "styled-components"
 import SideBarButton from "../SideBarButton"
 import { reactotronLogo } from "../../images"
 import { ServerStatus } from "../../contexts/Standalone/useStandalone"
-import { SideBarButtonContainer } from "../SideBarButton/Stateless"
 
 interface SideBarContainerProps {
   $isOpen: boolean
@@ -36,7 +35,7 @@ const Spacer = styled.div`
 
 function SideBar({ isOpen, serverStatus }: { isOpen: boolean; serverStatus: ServerStatus }) {
   let serverIcon = MdMobiledataOff
-  let iconColor = undefined
+  let iconColor
   let serverText = "Stopped"
   if (serverStatus === "started") {
     serverIcon = MdOutlineMobileFriendly
