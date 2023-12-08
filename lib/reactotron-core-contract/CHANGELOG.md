@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.0](https://github.com/infinitered/reactotron/compare/reactotron-core-contract@0.1.1...reactotron-core-contract@0.2.0) (2023-12-08)
+
+
+### Features
+
+* **ui:** Display error if port is already in use ([#1335](https://github.com/infinitered/reactotron/issues/1335) by [@jamonholmgren](https://github.com/jamonholmgren)) ([e205e37](https://github.com/infinitered/reactotron/commit/e205e3704b5378b1807d781f7ba5ba3338dc7ff7))
+
 ### [0.1.1](https://github.com/infinitered/reactotron/compare/reactotron-core-contract@0.1.0...reactotron-core-contract@0.1.1) (2023-12-05)
 
 ## [0.1.0](https://github.com/infinitered/reactotron/compare/reactotron-core-contract@0.0.6...reactotron-core-contract@0.1.0) (2023-12-01)
