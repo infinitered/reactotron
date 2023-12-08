@@ -1,4 +1,3 @@
-import td from "testdouble"
 import { TestUserModel, commandMetadataFixture, createMstPlugin } from "./fixtures"
 import type { Command } from "reactotron-core-contract"
 
@@ -15,7 +14,7 @@ describe("request-values", () => {
     const { reactotron, plugin } = createMstPlugin()
     plugin.onCommand(createAction(""))
 
-    expect(td.explain(reactotron.stateValuesResponse).callCount).toEqual(0)
+    expect(reactotron.stateValuesResponse).toHaveBeenCalledTimes(0)
   })
 
   it("valid values", () => {
@@ -24,10 +23,10 @@ describe("request-values", () => {
     track(user)
     plugin.onCommand(createAction(""))
 
-    const stateValuesResponse = td.explain(reactotron.stateValuesResponse)
-    expect(stateValuesResponse.callCount).toEqual(1)
-    const [atPath, keyList] = stateValuesResponse.calls[0].args
-    expect(atPath).toEqual(null)
+    const stateValuesResponse = reactotron.stateValuesResponse
+    expect(stateValuesResponse).toHaveBeenCalled()
+    const [atPath, keyList] = stateValuesResponse.mock.calls[0]
+    expect(atPath).toBeNull()
     expect(keyList).toEqual({ name: "", age: 100 })
   })
 
@@ -37,10 +36,10 @@ describe("request-values", () => {
     track(user)
     plugin.onCommand(createAction("does.not.exist"))
 
-    const stateValuesResponse = td.explain(reactotron.stateValuesResponse)
-    expect(stateValuesResponse.callCount).toEqual(1)
-    const [atPath, values] = stateValuesResponse.calls[0].args
+    const stateValuesResponse = reactotron.stateValuesResponse
+    expect(stateValuesResponse).toHaveBeenCalled()
+    const [atPath, values] = stateValuesResponse.mock.calls[0]
     expect(atPath).toEqual("does.not.exist")
-    expect(values).toEqual(undefined)
+    expect(values).toBeUndefined()
   })
 })

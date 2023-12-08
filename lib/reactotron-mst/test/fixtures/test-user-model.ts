@@ -1,4 +1,4 @@
-import { types, IModelType } from "mobx-state-tree"
+import { types, type IModelType } from "mobx-state-tree"
 
 // lol - https://github.com/Microsoft/TypeScript/issues/5938
 export type __IModelType = IModelType<any, any>

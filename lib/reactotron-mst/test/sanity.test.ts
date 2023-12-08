@@ -1,5 +1,4 @@
 import { types } from "mobx-state-tree"
-import td from "testdouble"
 import { TestUserModel, createMstPlugin } from "./fixtures"
 
 const UserModel = types.model().props({ name: "", age: 100 })
@@ -26,8 +25,8 @@ describe("sanity", () => {
     const { reactotron, track } = createMstPlugin()
     const user = TestUserModel.create()
     track(user)
-    expect(td.explain(reactotron.send).callCount).toEqual(0)
-    expect(td.explain(reactotron.stateValuesChange).callCount).toEqual(0)
-    expect(td.explain(reactotron.startTimer).callCount).toEqual(0)
+    expect(reactotron.send).toHaveBeenCalledTimes(0)
+    expect(reactotron.stateValuesChange).toHaveBeenCalledTimes(0)
+    expect(reactotron.startTimer).toHaveBeenCalledTimes(0)
   })
 })
