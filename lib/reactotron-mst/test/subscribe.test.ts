@@ -1,4 +1,3 @@
-import td from "testdouble"
 import {
   TestUserModel,
   commandMetadataFixture,
@@ -29,9 +28,8 @@ describe("subscribe", () => {
     track(user)
     plugin.onCommand(action)
 
-    const stateValuesChange = td.explain(reactotron.stateValuesChange)
-    expect(stateValuesChange.callCount).toEqual(1)
-    expect(stateValuesChange.calls[0].args[0]).toEqual([{ path: "age", value: 100 }])
+    expect(reactotron.stateValuesChange).toHaveBeenCalledTimes(1)
+    expect(reactotron.stateValuesChange.mock.calls[0][0]).toEqual([{ path: "age", value: 100 }])
   })
 
   it("accepts 2 paths", () => {
@@ -41,9 +39,8 @@ describe("subscribe", () => {
     track(user)
     plugin.onCommand(action)
 
-    const stateValuesChange = td.explain(reactotron.stateValuesChange)
-    expect(stateValuesChange.callCount).toEqual(1)
-    expect(stateValuesChange.calls[0].args[0]).toEqual([
+    expect(reactotron.stateValuesChange).toHaveBeenCalledTimes(1)
+    expect(reactotron.stateValuesChange.mock.calls[0][0]).toEqual([
       { path: "age", value: 100 },
       { path: "name", value: "" },
     ])
@@ -57,9 +54,8 @@ describe("subscribe", () => {
 
     plugin.onCommand(action)
 
-    const stateValuesChange = td.explain(reactotron.stateValuesChange)
-    expect(stateValuesChange.callCount).toEqual(1)
-    expect(stateValuesChange.calls[0].args[0]).toEqual([{ path: "age", value: 100 }])
+    expect(reactotron.stateValuesChange).toHaveBeenCalledTimes(1)
+    expect(reactotron.stateValuesChange.mock.calls[0][0]).toEqual([{ path: "age", value: 100 }])
   })
 
   it("handles missing keys", () => {
@@ -69,9 +65,10 @@ describe("subscribe", () => {
     track(user)
     plugin.onCommand(action)
 
-    const stateValuesChange = td.explain(reactotron.stateValuesChange)
-    expect(stateValuesChange.callCount).toEqual(1)
-    expect(stateValuesChange.calls[0].args[0]).toEqual([{ path: "lol", value: undefined }])
+    expect(reactotron.stateValuesChange).toHaveBeenCalledTimes(1)
+    expect(reactotron.stateValuesChange.mock.calls[0][0]).toEqual([
+      { path: "lol", value: undefined },
+    ])
   })
 
   it("nested objects", () => {
@@ -80,9 +77,10 @@ describe("subscribe", () => {
     track(createTestCompany())
     plugin.onCommand(action)
 
-    const stateValuesChange = td.explain(reactotron.stateValuesChange)
-    expect(stateValuesChange.callCount).toEqual(1)
-    expect(stateValuesChange.calls[0].args[0]).toEqual([{ path: "owner.age", value: 100 }])
+    expect(reactotron.stateValuesChange).toHaveBeenCalledTimes(1)
+    expect(reactotron.stateValuesChange.mock.calls[0][0]).toEqual([
+      { path: "owner.age", value: 100 },
+    ])
   })
 
   it("nested arrays", () => {
@@ -91,8 +89,9 @@ describe("subscribe", () => {
     track(createTestCompany())
     plugin.onCommand(action)
 
-    const stateValuesChange = td.explain(reactotron.stateValuesChange)
-    expect(stateValuesChange.callCount).toEqual(1)
-    expect(stateValuesChange.calls[0].args[0]).toEqual([{ path: "employees.1.age", value: 2 }])
+    expect(reactotron.stateValuesChange).toHaveBeenCalledTimes(1)
+    expect(reactotron.stateValuesChange.mock.calls[0][0]).toEqual([
+      { path: "employees.1.age", value: 2 },
+    ])
   })
 })

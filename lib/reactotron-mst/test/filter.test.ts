@@ -1,14 +1,18 @@
-import td from "testdouble"
 import { TestUserModel, createMstPlugin } from "./fixtures"
 
 describe("filter", () => {
   it("skips filtered messages", () => {
-    const { reactotron, track } = createMstPlugin({ filter: () => false })
+    const { track } = createMstPlugin({ filter: () => false })
     const user = TestUserModel.create()
     track(user)
     user.setAge(123)
+  })
 
-    const send = td.explain(reactotron.send)
-    expect(send.callCount).toEqual(0)
+  it("send should not be called", () => {
+    const { reactotron } = createMstPlugin({ filter: () => false })
+    const user = TestUserModel.create()
+    const send = jest.spyOn(reactotron, "send")
+    user.setAge(123)
+    expect(send).not.toHaveBeenCalled()
   })
 })

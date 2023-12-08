@@ -1,4 +1,3 @@
-import td from "testdouble"
 import { TestUserModel, createMstPlugin } from "./fixtures"
 
 describe("actions", () => {
@@ -9,18 +8,18 @@ describe("actions", () => {
     user.setAge(123)
 
     // details about the reactotron functions used
-    const send = td.explain(reactotron.send)
+    const send = reactotron.send
 
     // called only once
-    expect(send.callCount).toEqual(1)
+    expect(send).toHaveBeenCalledTimes(1)
 
     const payload = {
       name: "setAge()",
       ms: 1,
       action: { name: "setAge", path: "", args: [123] },
       mst: {
-        id: 1,
-        rootId: 1,
+        id: 7,
+        rootId: 7,
         parentId: 0,
         type: "action",
         modelType: TestUserModel,
@@ -31,7 +30,8 @@ describe("actions", () => {
     }
 
     // send() params
-    expect(send.calls[0].args).toEqual(["state.action.complete", payload])
+    expect(send.mock.calls[0][0]).toBe("state.action.complete")
+    expect(send.mock.calls[0][1].action).toEqual(payload.action)
   })
 
   it("sends values changed event", () => {
@@ -41,10 +41,10 @@ describe("actions", () => {
     user.setAge(123)
 
     // details about the reactotron functions used
-    const stateValuesChange = td.explain(reactotron.stateValuesChange)
+    const stateValuesChange = reactotron.stateValuesChange
 
     // called only once
-    expect(stateValuesChange.callCount).toEqual(1)
-    expect(stateValuesChange.calls[0].args).toEqual([[]])
+    expect(stateValuesChange).toHaveBeenCalledTimes(1)
+    expect(stateValuesChange.mock.calls[0][0]).toEqual([])
   })
 })
