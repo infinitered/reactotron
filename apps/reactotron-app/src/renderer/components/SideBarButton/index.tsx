@@ -5,12 +5,14 @@ import StatelessSideBarButton from "./Stateless"
 
 type Props = {
   icon?: any
+  iconColor?: string
   image?: any
   path: string
   matchPath?: string
   text: string
   hideTopBar?: boolean
   iconSize?: number
+  onPress?: () => void
 }
 
 function SideBarButton({ path, matchPath, ...rest }: Props) {

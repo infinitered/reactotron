@@ -4,16 +4,18 @@ import Server, { createServer } from "reactotron-core-server"
 import ReactotronBrain from "../../ReactotronBrain"
 import config from "../../config"
 
-import useStandalone, { Connection } from "./useStandalone"
+import useStandalone, { Connection, ServerStatus } from "./useStandalone"
 
 // TODO: Move up to better places like core somewhere!
 interface Context {
+  serverStatus: ServerStatus
   connections: Connection[]
   selectedConnection: Connection
   selectConnection: (clientId: string) => void
 }
 
 const StandaloneContext = React.createContext<Context>({
+  serverStatus: "stopped",
   connections: [],
   selectedConnection: null,
   selectConnection: null,
@@ -23,34 +25,46 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const reactotronServer = useRef<Server>(null)
 
   const {
+    serverStatus,
     connections,
     selectedClientId,
     selectedConnection,
     selectConnection,
     clearSelectedConnectionCommands,
+    serverStarted,
+    serverStopped,
     connectionEstablished,
     commandReceived,
     connectionDisconnected,
     addCommandListener,
+    portUnavailable,
   } = useStandalone()
 
   useEffect(() => {
     reactotronServer.current = createServer({ port: config.get("serverPort") as number })
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore need to sync these types between reactotron-core-server and reactotron-app
+    reactotronServer.current.on("start", serverStarted)
+    reactotronServer.current.on("stop", serverStopped)
+    // @ts-expect-error need to sync these types between reactotron-core-server and reactotron-app
     reactotronServer.current.on("connectionEstablished", connectionEstablished)
     reactotronServer.current.on("command", commandReceived)
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore need to sync these types between reactotron-core-server and reactotron-app
+    // @ts-expect-error need to sync these types between reactotron-core-server and reactotron-app
     reactotronServer.current.on("disconnect", connectionDisconnected)
+    reactotronServer.current.on("portUnavailable", portUnavailable)
 
     reactotronServer.current.start()
 
     return () => {
       reactotronServer.current.stop()
     }
-  }, [connectionEstablished, commandReceived, connectionDisconnected])
+  }, [
+    serverStarted,
+    serverStopped,
+    connectionEstablished,
+    commandReceived,
+    connectionDisconnected,
+    portUnavailable,
+  ])
 
   const sendCommand = useCallback(
     (type: string, payload: any, clientId?: string) => {
@@ -65,6 +79,7 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <StandaloneContext.Provider
       value={{
+        serverStatus,
         connections,
         selectedConnection,
         selectConnection,

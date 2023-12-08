@@ -144,8 +144,16 @@ export default class Server {
   start = () => {
     const { port } = this.options
     const httpsServerOptions = buildHttpsServerOptions(this.options.wss)
+
     if (!httpsServerOptions) {
       this.wss = new WebSocketServer({ port })
+      this.wss.on("error", (error) => {
+        if (error.message.includes("EADDRINUSE")) {
+          this.emitter.emit("portUnavailable", port)
+        } else {
+          console.error(error)
+        }
+      })
     } else {
       const server = createHttpsServer(httpsServerOptions)
       this.wss = new WebSocketServer({ server })

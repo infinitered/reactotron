@@ -7,16 +7,57 @@ import { Connection } from "../../contexts/Standalone/useStandalone"
 import Footer from "./Stateless"
 
 const testConnections: Connection[] = [
-  { id: 0, clientId: "1", name: "Test 1", commands: [], platform: "ios", platformVersion: "12", connected: true },
-  { id: 0, clientId: "1", name: "Test 2", commands: [], platform: "ios", platformVersion: "12", connected: true },
-  { id: 0, clientId: "1", name: "Test 3", commands: [], platform: "ios", platformVersion: "12", connected: true },
-  { id: 0, clientId: "1", name: "Test 4", commands: [], platform: "ios", platformVersion: "12", connected: true },
-  { id: 0, clientId: "1", name: "Test 5", commands: [], platform: "ios", platformVersion: "12", connected: true },
+  {
+    id: 0,
+    clientId: "1",
+    name: "Test 1",
+    commands: [],
+    platform: "ios",
+    platformVersion: "12",
+    connected: true,
+  },
+  {
+    id: 0,
+    clientId: "1",
+    name: "Test 2",
+    commands: [],
+    platform: "ios",
+    platformVersion: "12",
+    connected: true,
+  },
+  {
+    id: 0,
+    clientId: "1",
+    name: "Test 3",
+    commands: [],
+    platform: "ios",
+    platformVersion: "12",
+    connected: true,
+  },
+  {
+    id: 0,
+    clientId: "1",
+    name: "Test 4",
+    commands: [],
+    platform: "ios",
+    platformVersion: "12",
+    connected: true,
+  },
+  {
+    id: 0,
+    clientId: "1",
+    name: "Test 5",
+    commands: [],
+    platform: "ios",
+    platformVersion: "12",
+    connected: true,
+  },
 ]
 
 storiesOf("components/Footer", module)
   .add("Collpased", () => (
     <Footer
+      serverStatus="started"
       connections={[]}
       selectedConnection={null}
       isOpen={false}
@@ -26,6 +67,7 @@ storiesOf("components/Footer", module)
   ))
   .add("Collpased w/ connections", () => (
     <Footer
+      serverStatus="started"
       connections={testConnections}
       selectedConnection={null}
       isOpen={false}
@@ -35,6 +77,7 @@ storiesOf("components/Footer", module)
   ))
   .add("Expanded", () => (
     <Footer
+      serverStatus="started"
       connections={[]}
       selectedConnection={null}
       isOpen
@@ -44,6 +87,7 @@ storiesOf("components/Footer", module)
   ))
   .add("Expanded w/ connections", () => (
     <Footer
+      serverStatus="started"
       connections={testConnections}
       selectedConnection={null}
       isOpen
@@ -53,6 +97,7 @@ storiesOf("components/Footer", module)
   ))
   .add("Expanded w/ lots connections", () => (
     <Footer
+      serverStatus="started"
       connections={[...testConnections, ...testConnections, ...testConnections]}
       selectedConnection={null}
       isOpen

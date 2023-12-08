@@ -4,7 +4,7 @@ import { MdSwapVert as ExpandIcon } from "react-icons/md"
 
 import config from "../../config"
 import { getPlatformName, getPlatformDetails } from "../../util/connectionHelpers"
-import { Connection } from "../../contexts/Standalone/useStandalone"
+import { Connection, ServerStatus } from "../../contexts/Standalone/useStandalone"
 import ConnectionSelector from "../ConnectionSelector"
 
 const Container = styled.div`
@@ -50,6 +50,7 @@ function renderDeviceName(connection: Connection) {
 }
 
 function renderExpanded(
+  serverStatus: ServerStatus,
   connections: Connection[],
   selectedConnection: Connection | null,
   onChangeConnection: (clientId: string | null) => void
@@ -71,21 +72,32 @@ function renderExpanded(
   )
 }
 
-function renderCollapsed(connections: Connection[], selectedConnection: Connection | null) {
+function renderCollapsed(
+  serverStatus: ServerStatus,
+  connections: Connection[],
+  selectedConnection: Connection | null
+) {
   return (
     <>
       <ConnectionInfo>
         port {config.get("serverPort") as string} | {connections.length} connections
       </ConnectionInfo>
-      <ConnectionInfo>
-        device:{" "}
-        {selectedConnection ? renderDeviceName(selectedConnection) : "Waiting for connection"}
-      </ConnectionInfo>
+      {serverStatus === "portUnavailable" && (
+        <ConnectionInfo>Port 9090 unavailable.</ConnectionInfo>
+      )}
+      {serverStatus === "started" && (
+        <ConnectionInfo>
+          device:{" "}
+          {selectedConnection ? renderDeviceName(selectedConnection) : "Waiting for connection"}
+        </ConnectionInfo>
+      )}
+      {serverStatus === "stopped" && <ConnectionInfo>Waiting for server to start</ConnectionInfo>}
     </>
   )
 }
 
 interface Props {
+  serverStatus: ServerStatus
   connections: Connection[]
   selectedConnection: Connection | null
   isOpen: boolean
@@ -93,13 +105,20 @@ interface Props {
   onChangeConnection: (clientId: string | null) => void
 }
 
-function Header({ connections, selectedConnection, isOpen, setIsOpen, onChangeConnection }: Props) {
+function Header({
+  serverStatus,
+  connections,
+  selectedConnection,
+  isOpen,
+  setIsOpen,
+  onChangeConnection,
+}: Props) {
   const renderMethod = isOpen ? renderExpanded : renderCollapsed
 
   return (
     <Container>
       <ContentContainer onClick={() => !isOpen && setIsOpen(true)} $isOpen={isOpen}>
-        {renderMethod(connections, selectedConnection, onChangeConnection)}
+        {renderMethod(serverStatus, connections, selectedConnection, onChangeConnection)}
         <ExpandContainer onClick={() => setIsOpen(!isOpen)}>
           <ExpandIcon size={18} />
         </ExpandContainer>

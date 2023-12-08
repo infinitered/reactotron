@@ -8,12 +8,14 @@ const Theme = { highlight: "hsl(290, 3.2%, 47.4%)", foregroundLight: "#c3c3c3" }
 
 interface SideBarButtonComponentProps {
   icon?: any
+  iconColor?: string
   image?: any
   path: string
   text: string
   isActive: boolean
   hideTopBar?: boolean
   iconSize?: number
+  onPress?: () => void
 }
 
 interface SideBarButtonProps {
@@ -23,7 +25,7 @@ interface SideBarButtonProps {
 
 const colorInterpolator = colorInterpolate([Theme.highlight, Theme.foregroundLight])
 
-const SideBarButtonContainer = styled.div.attrs(() => ({}))<SideBarButtonProps>`
+export const SideBarButtonContainer = styled.div.attrs(() => ({}))<SideBarButtonProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,19 +52,21 @@ const Title = styled.div`
 
 function SideBarButton({
   icon: Icon,
+  iconColor,
   image,
   path,
   text,
   isActive,
   hideTopBar,
   iconSize,
+  onPress,
 }: SideBarButtonComponentProps) {
   return (
     <Motion style={{ color: spring(isActive ? 1 : 0) }}>
       {({ color }) => (
-        <Link to={path} style={{ textDecoration: "none" }}>
+        <Link to={path} style={{ textDecoration: "none" }} onClick={onPress}>
           <SideBarButtonContainer $hideTopBar={hideTopBar || false} $colorAnimation={color}>
-            {Icon && <Icon size={iconSize || 32} />}
+            {Icon && <Icon size={iconSize || 32} color={iconColor} />}
             {image && (
               <Image src={image} $hideTopBar={hideTopBar || false} $colorAnimation={color} />
             )}
