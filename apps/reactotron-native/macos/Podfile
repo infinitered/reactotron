@@ -1,3 +1,5 @@
+ENV['RCT_NEW_ARCH_ENABLED'] = "1"
+
 require_relative '../../../node_modules/react-native-macos/scripts/react_native_pods'
 require_relative '../../../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
@@ -19,6 +21,8 @@ target 'reactotron-macOS' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+
+  pod 'AppTurboModules', :path => "./../tm"
 
   post_install do |installer|
     react_native_post_install(installer)

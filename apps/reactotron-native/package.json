@@ -1,7 +1,13 @@
 {
   "name": "reactotron-native",
   "version": "0.0.1",
-  "private": true,
+  "license": "MIT",
+  "description": "Reactotron native desktop mode engage!",
+  "author": {
+    "name": "Infinite Red",
+    "email": "hello@infinite.red",
+    "url": "https://github.com/infinitered/reactotron"
+  },
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -18,12 +24,12 @@
     "@tamagui/lucide-icons": "^1.76.0",
     "immer": "^10.0.3",
     "react": "18.2.0",
-    "react-native": "0.72.6",
-    "react-native-macos": "0.72.7",
+    "react-native": "^0.72.7",
+    "react-native-macos": "^0.72.11",
     "react-native-safe-area-context": "^4.7.4",
     "react-native-screens": "^3.27.0",
-    "react-native-svg": "^13.14.0",
-    "react-native-windows": "0.72.19",
+    "react-native-svg": "^14.1.0",
+    "react-native-windows": "^0.72.19",
     "reactotron-core-contract": "workspace:*",
     "reactotron-core-server": "workspace:*",
     "reactotron-core-ui": "workspace:*",
@@ -50,5 +56,13 @@
   },
   "engines": {
     "node": ">=16"
+  },
+  "codegenConfig": {
+    "name": "AppSpecs",
+    "type": "all",
+    "jsSrcsDir": "tm",
+    "android": {
+      "javaPackageName": "com.facebook.fbreact.specs"
+    }
   }
 }

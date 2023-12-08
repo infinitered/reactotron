@@ -1,6 +1,7 @@
 import { Linking } from "react-native"
 import { Button, H1, Image, Text, YStack } from "tamagui"
 import { reactotronLogo } from "../assets/images"
+import NativeSampleModule from "../tm/NativeSampleModule"
 
 // TODO: add connections here?
 
@@ -16,6 +17,10 @@ export function HomeScreen() {
         Need to set up your app to use Reactotron?
       </Text>
       <Button onPress={openDocs}>Check out the docs here!</Button>
+      <Text>
+        NativeSampleModule.reverseString(...) ={" "}
+        {NativeSampleModule.reverseString("the quick brown fox jumps over the lazy dog")}
+      </Text>
     </YStack>
   )
 }
