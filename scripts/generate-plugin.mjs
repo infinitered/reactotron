@@ -70,6 +70,11 @@ fs.writeFileSync(
   createTemplatePlugin({ pluginName })
 );
 
+console.log(`Voila! Start building: cd ${targetDir} && yarn`);
+console.log(
+  "FYI you may have to update .circleci/config.yml to include your new plugin when ready."
+);
+
 /**
  * Converts a string to camel case.
  * @param {string} str - The string to be converted.
