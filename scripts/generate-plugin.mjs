@@ -32,18 +32,23 @@ fs.copyFileSync(
 );
 
 fs.copyFileSync(
-  path.join(templateDir, "project.json"),
-  path.join(targetDir, "project.json")
-);
-
-fs.copyFileSync(
   path.join(templateDir, "LICENSE"),
   path.join(targetDir, "LICENSE")
 );
 
 fs.writeFileSync(
+  path.join(targetDir, "project.json"),
+  createProjectJson({ pluginName })
+);
+
+fs.writeFileSync(
   path.join(targetDir, `README.md`),
   createTemplateREADME({ pluginName })
+);
+
+fs.writeFileSync(
+  path.join(targetDir, `rollup.config.ts`),
+  createTemplateRollupConfig({ pluginName })
 );
 
 const srcFolder = path.join(targetDir, "src");
@@ -103,6 +108,23 @@ function createTemplateIndex({ pluginName }) {
     /templatePlugin/g,
     `${camelize(pluginName.replace("reactotron-", ""))}Plugin`
   );
+  template = template.replace(/reactotron-template/g, pluginName);
+
+  return template;
+}
+
+/**
+ * Creates a project.json index for a plugin.
+ * @param {Object} options - The options for creating the template index.
+ * @param {string} options.pluginName - The name of the plugin.
+ * @returns {string}
+ */
+function createProjectJson({ pluginName }) {
+  let template = fs.readFileSync(
+    path.join(templateDir, "project.json"),
+    "utf8"
+  );
+
   template = template.replace(/reactotron-template/g, pluginName);
 
   return template;
