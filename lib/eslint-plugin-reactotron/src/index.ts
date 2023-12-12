@@ -1,8 +1,7 @@
-"use strict"
-const noProdTron = require("./rules/no-prod-tron")
+import { noTronInProduction } from "./rules/no-tron-in-production"
 
 export default {
   rules: {
-    "node-prod-tron": noProdTron,
+    "no-tron-in-production": noTronInProduction,
   },
 }

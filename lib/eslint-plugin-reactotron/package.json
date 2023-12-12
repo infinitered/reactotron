@@ -52,6 +52,7 @@
     "@types/node": "^18.18.8",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
+    "@typescript-eslint/utils": "^6.14.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^29.7.0",
     "eslint": "^8.53.0",
@@ -78,5 +79,9 @@
   },
   "eslintConfig": {
     "root": false
+    ,
+    "rules": {
+      "import/no-unresolved": "off"
+    }
   }
 }

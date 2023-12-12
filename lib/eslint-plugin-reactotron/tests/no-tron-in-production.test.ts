@@ -1,18 +1,18 @@
-const { RuleTester } = require("eslint");
-const noProdTronRule = require("./no-prod-tron");
+import { noTronInProduction } from "../src/rules/no-tron-in-production"
+import { RuleTester } from "eslint"
 
 const ruleTester = new RuleTester({
   // Must use at least ecmaVersion 2015 because
   // that's when `const` variables were introduced.
   parserOptions: { ecmaVersion: 2015 },
-});
+})
 
-const RULE_NAME = "no-prod-tron";
+const RULE_NAME = "no-tron-in-production"
 
 // Throws error if the tests in ruleTester.run() do not pass
 ruleTester.run(
   RULE_NAME, // rule name
-  noProdTronRule, // rule code
+  noTronInProduction, // rule code
   {
     // checks
     // 'valid' checks cases that should pass
@@ -31,11 +31,11 @@ ruleTester.run(
       },
     ],
   }
-);
+)
 
 ruleTester.run(
   RULE_NAME, // rule name
-  noProdTronRule, // rule code
+  noTronInProduction, // rule code
   {
     // checks
     // 'valid' checks cases that should pass
@@ -52,6 +52,6 @@ ruleTester.run(
       },
     ],
   }
-);
+)
 
-console.log("All tests passed!");
+console.log("All tests passed!")
