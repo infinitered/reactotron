@@ -57,6 +57,8 @@ yarn generate:plugin my-plugin
 
 This will create the necessary directory in `./lib` and get you started with a template. You'll want to implement your configuration and plugin in `./lib/reactotron-my-plugin/reactotron-my-plugin.ts`.
 
+Keep in mind this won't add the workspace to `.circleci/config.yml`, that must still be done manually when ready.
+
 ### Prepare for a pull request
 
 Before you open a pull request, please ensure that the following command runs without errors:
