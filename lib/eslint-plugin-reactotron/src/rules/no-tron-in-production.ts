@@ -36,7 +36,6 @@ export const noTronInProduction = createRule({
             : context.getAncestors()
 
           const parent = ancestors.pop().parent.parent
-          // const parent = context.sourceCode.getAncestors(node).pop().parent.parent
 
           if (
             !parent ||
