@@ -21,7 +21,7 @@ You should see the reactotron electron app open on your machine with the develop
 
 ### Step 3: Making changes to `reactotron-app`
 
-Any changes you make to the main reactotron electron app that lives in `./apps/reactotron-app` will be reflected in the reactotron app that you started in step 1. You may need to kill the app and restart it to see your changes. 
+Any changes you make to the main reactotron electron app that lives in `./apps/reactotron-app` will be reflected in the reactotron app that you started in step 1. You may need to kill the app and restart it to see your changes.
 
 Remember to reload your Ignited react-native PizzaApp created in step 2 to reconnect the app to reactotron.
 
@@ -45,7 +45,19 @@ npx nx watch --all -- "npx zx scripts/install-workspace-packages-in-target.mjs ~
 
 Make sure that the path to your `PizzaApp` is an absolute path and not a relative one (i.e. `~/Code/PizzaApp` instead of `../PizzaApp`)
 
-> *Note: you must have already run `yarn` in your `PizzaApp` folder before running this script because is copies over the built js files from each reactotron library into the app's `node_modules` folder.*
+> _Note: you must have already run `yarn` in your `PizzaApp` folder before running this script because is copies over the built js files from each reactotron library into the app's `node_modules` folder._
+
+### Adding a new Reactotron plugin to `./lib`
+
+If you have a new plugin to contribute to the Reactotron ecosystem, you can start a new workspace by running the generate plugin script:
+
+```sh
+yarn generate:plugin my-plugin
+```
+
+This will create the necessary directory in `./lib` and get you started with a template. You'll want to implement your configuration and plugin in `./lib/reactotron-my-plugin/reactotron-my-plugin.ts`.
+
+Keep in mind this won't add the workspace to `.circleci/config.yml`, that must still be done manually when ready.
 
 ### Prepare for a pull request
 
