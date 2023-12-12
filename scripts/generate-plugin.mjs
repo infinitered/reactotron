@@ -12,7 +12,7 @@ const pluginName = _pluginName.includes("reactotron")
   : `reactotron-${_pluginName}`;
 const targetDir = path.join(libDir, pluginName);
 
-console.log(`Module name: ${pluginName}`);
+console.log(`Plugin name: ${pluginName}`);
 // validate that the target directory exists
 if (fs.existsSync(targetDir)) {
   console.error(`Plugin already exists "${targetDir}" does not exist`);
@@ -21,19 +21,25 @@ if (fs.existsSync(targetDir)) {
 
 fs.mkdirSync(targetDir, { recursive: true });
 
+// static files that need to string replacements
+const filesToCopy = [
+  "tsconfig.json",
+  "LICENSE",
+  ".babelrc",
+  ".prettierignore",
+  ".prettierrc",
+  ".gitignore",
+];
+
+for (const file of filesToCopy) {
+  fs.copyFileSync(path.join(templateDir, file), path.join(targetDir, file));
+}
+
+// dynamic files where we need to update the plugin name
+// or camel case version of it, etc
 fs.writeFileSync(
   path.join(targetDir, "package.json"),
   JSON.stringify(getPackageJson({ pluginName }), null, 2)
-);
-
-fs.copyFileSync(
-  path.join(templateDir, "tsconfig.json"),
-  path.join(targetDir, "tsconfig.json")
-);
-
-fs.copyFileSync(
-  path.join(templateDir, "LICENSE"),
-  path.join(targetDir, "LICENSE")
 );
 
 fs.writeFileSync(
