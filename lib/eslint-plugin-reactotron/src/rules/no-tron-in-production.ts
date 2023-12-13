@@ -7,10 +7,10 @@ export const noTronInProduction = createRule({
   meta: {
     type: "problem",
     messages: {
-      noTronInProduction: "Use if (__DEV__) { } around console.log.x method calls.",
+      noTronInProduction: "Use if (__DEV__) { } around `console.tron.{{ fnName }}` method calls.",
     },
     docs: {
-      description: "Enforce using `if (__DEV__)` around `console.log.x` method calls.",
+      description: "Enforce using `if (__DEV__)` around `console.tron` calls.",
       recommended: "strict",
     },
     schema: [],
@@ -31,11 +31,11 @@ export const noTronInProduction = createRule({
           callee.object.property.name === "tron"
         ) {
           // https://eslint.org/blog/2023/09/preparing-custom-rules-eslint-v9/#main
-          const ancestors = sourceCode.getAncestors
+          const ancestors = sourceCode?.getAncestors
             ? sourceCode.getAncestors(node)
             : context.getAncestors()
 
-          const parent = ancestors.pop().parent.parent
+          const parent = ancestors?.pop().parent.parent
 
           if (
             !parent ||
@@ -47,6 +47,10 @@ export const noTronInProduction = createRule({
             context.report({
               node: callee,
               messageId: "noTronInProduction",
+              data: {
+                // @ts-expect-error need to cast as AST_NODE_TYPES.MemberExpression
+                fnName: callee.property.name,
+              },
             })
           }
         }
