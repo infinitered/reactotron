@@ -1,3 +1,7 @@
+---
+title: Image Overlay
+---
+
 # Overlay
 
 Overlay is a plugin for `reactotron-react-native` which allows you to have an image uploaded

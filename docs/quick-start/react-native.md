@@ -1,12 +1,17 @@
+---
+id: react-native
+title: react-native
+---
+
 # Quick Start for React Native
 
 ## Installing Reactotron.app
 
-Let’s [download the desktop app](../../README.md#installation) to start. You can download for Linux, Windows, and Mac.
+Let’s [download the desktop app](https://github.com/infinitered/reactotron/releases?q=reactotron-app&expanded=true) to start. You can download for Linux, Windows, and Mac.
 
 Unzip & run.
 
-![Installing The App](./images/quick-start-react-js/installing.jpg)
+![Installing The App](./images/react-js/installing.jpg)
 
 ## Configure Reactotron with your project
 
@@ -22,7 +27,7 @@ npm i --save-dev reactotron-react-native
 yarn add reactotron-react-native -D
 ```
 
-#### **Step 2 - Initialisation**
+#### **Step 2 - Initialization**
 
 Create a file in your root folder `ReactotronConfig.js` and paste this:
 
@@ -114,13 +119,11 @@ At this point, Reactotron is hooked up. **HOUSTON, WE HAVE A CONNECTION!**
 
 Refresh your app (or start it up `react-native start`) and have a look at Reactotron now. Do you see the `CONNECTION` line? Click that to expand.
 
-![We Have Contact](./images/quick-start-react-native/first-connect.jpg)
+![We Have Contact](./images/react-native/first-connect.jpg)
 
 Go back to your app and refresh it 5 or 6 times. Now look.
 
-![Chatty](./images/quick-start-react-native/spammy.jpg)
-
-[Checkout all the amazing things you can do with Reactotron.](./examples.md)
+![Chatty](./images/react-native/spammy.jpg)
 
 ## Troubleshooting
 

@@ -1,3 +1,7 @@
+---
+title: Benchmarking
+---
+
 # Benchmarking
 
 If you have a function that you believe is slow, you can benchmark it to find any bottlenecks like this:

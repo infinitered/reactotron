@@ -1,4 +1,4 @@
-# Monorepo
+# Monorepo Structure
 
 ## Yarn 3
 

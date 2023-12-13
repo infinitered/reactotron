@@ -1,3 +1,7 @@
+---
+title: MMKV
+---
+
 # React Native MMKV
 
 The `react-native-mmkv` plugin allows you to track [MMKV](https://github.com/mrousavy/react-native-mmkv) updates.

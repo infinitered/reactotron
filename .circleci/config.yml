@@ -1,14 +1,49 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
-
-defaults: &defaults
-  working_directory: ~/repo
+---
+# Reactotron CircleCI Config
 
 version: 2.1
+
+# used to force publish to ir-docs
+parameters:
+  force-publish-docs:
+    type: boolean
+    default: false
+
+# Anchors define reusable sections of YAML
+# See: https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/
+anchors:
+  # Defaults passed to all jobs
+  defaults: &defaults
+    working_directory: ~/repo
+  # Branch names used to trigger releases
+  release_branch_names: &release_branch_names
+    - master
+    - beta
+    - alpha
+  # All branches  
+  release_branch_filter: &release_branch_filter
+    ignore: /.*/ 
+  # Filter to identify tags of releases
+  release_app_filter: &release_app_filter
+    - /^reactotron-app@.*/
+  # Shared ir-docs config
+  ir_docs_config: &ir_docs_config
+    description: >-
+      Reactotron - A desktop app for inspecting your React JS and React Native projects.
+    git_email: ci@infinite.red
+    git_username: Infinite Red
+    label: Reactotron
+    project_name: reactotron
+    source_docs_dir: docs
+    source_repo_directory: source
+    target_docs_dir: docs
+    target_repo: git@github.com:infinitered/ir-docs.git
+    target_repo_directory: ir-docs
+
+
 orbs:
   node: circleci/node@5.1.0
+  publish-docs: infinitered/publish-docs@0.4
 
 commands:
   install-packages:
@@ -294,21 +329,42 @@ jobs:
 
 workflows:
   pull_request:
+    # prevents the workflow from running when `force-publish-docs` is true
+    when:
+      and:
+        - not: << pipeline.parameters.force-publish-docs >>
+        - true  # Placeholder for correct YAML structure
     jobs:
       - build_and_test:
           filters:
             branches:
-              ignore: &release_branch_names
-                - master
-                - beta
-                - alpha
+              ignore: *release_branch_names
+      - publish-docs/build_docs:
+          <<: *ir_docs_config
+          filters:
+            branches:
+              ignore: *release_branch_names
 
+      
+  # Allows for manual publishing of docs independent of deployment
+  # Use the 'trigger pipeline' button in circle ci and set 'force-publish-docs' to 'true' 
+  force_publish_docs:
+    when: << pipeline.parameters.force-publish-docs >>
+    jobs:
+      - publish-docs/publish_docs:
+          <<: *ir_docs_config
+  
   release:
+    # prevents the workflow from running when `force-publish-docs` is true
+    when:
+      and:
+        - not: << pipeline.parameters.force-publish-docs >>
+        - true  # Placeholder for correct YAML structure  
     jobs:
       - build_and_test:
           filters:
             branches:
-              only: *release_branch_names
+              only: *release_branch_names    
       - release_tags:
           context:
             - infinitered-npm-package
@@ -316,13 +372,12 @@ workflows:
             branches:
               only: *release_branch_names
           requires:
-            - build_and_test
+            - build_and_test    
       - release_package:
           context:
             - infinitered-npm-package
           filters:
-            branches: &release_branch_filter
-              ignore: /.*/ # ignore all branches
+            branches: *release_branch_filter
             tags:
               only:
                 - /^(?!reactotron-app)reactotron-.*@.*/ # matches 'reactotron-core-ui@2.0.1' but not 'reactotron-app@3.0.0'
@@ -332,8 +387,7 @@ workflows:
           filters:
             branches: *release_branch_filter
             tags:
-              only: &release_app_filter
-                - /^reactotron-app@.*/
+              only: *release_app_filter
       - build_app_macos:
           context:
             - ReactotronCerts
@@ -360,4 +414,11 @@ workflows:
             - build_app_windows
             - build_app_macos
             - build_app_linux
+      - publish-docs/publish_docs:
+          <<: *ir_docs_config
+          filters:
+            branches: *release_branch_filter
+            tags:
+              only: *release_app_filter
+      
 # VS Code Extension Version: 1.5.1
