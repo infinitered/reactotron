@@ -67,6 +67,10 @@ commands:
           name: Restore lib/reactotron-react-native-mmkv/dist/
           keys:
             - lib/reactotron-react-native-mmkv/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-react-native-mmkv/package.json" }}
+      - restore_cache:
+          name: Restore lib/eslint-plugin-reactotron/dist/
+          keys:
+            - lib/eslint-plugin-reactotron/dist/-<<parameters.cache-key>>-{{ checksum "lib/eslint-plugin-reactotron/package.json" }}
       - run:
           name: Install packages
           command: yarn install --immutable
@@ -134,6 +138,11 @@ commands:
           paths:
             - lib/reactotron-react-native-mmkv/dist/
           key: lib/reactotron-react-native-mmkv/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-react-native-mmkv/package.json" }}
+      - save_cache:
+          name: Saving eslint-plugin-reactotron/dist/
+          paths:
+            - lib/eslint-plugin-reactotron/dist/
+          key: lib/eslint-plugin-reactotron/dist/-<<parameters.cache-key>>-{{ checksum "lib/eslint-plugin-reactotron/package.json" }}
   release-reactotron-app:
     description: Create release build of Reactotron app, upload to workspace
     parameters:
