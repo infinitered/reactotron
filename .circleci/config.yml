@@ -9,7 +9,7 @@ defaults: &defaults
 version: 2.1
 orbs:
   node: circleci/node@5.1.0
-  publish-docs: infinitered/publish-docs@0.4.8
+  publish-docs: infinitered/publish-docs@0.4.9
 
 commands:
   install-packages:
