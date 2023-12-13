@@ -5,7 +5,7 @@ version: 2.1
 
 # used to force publish to ir-docs
 parameters:
-  "force-publish-docs":
+  force-publish-docs:
     type: boolean
     default: false
 
@@ -338,7 +338,7 @@ workflows:
 
       
   # Allows for manual publishing of docs independent of deployment
-  # Use the 'trigger pipeline' button in circle ci and set 'force-releae-docs' to 'true' 
+  # Use the 'trigger pipeline' button in circle ci and set 'force-publish-docs' to 'true' 
   force_publish_docs:
     when: << pipeline.parameters.force-publish-docs >>
     jobs:
