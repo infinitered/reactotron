@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-reactotron",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "An ESLint plugin for Reactotron.",
   "author": "Infinite Red",
   "license": "MIT",
@@ -78,8 +78,7 @@
     "typescript": "^4.9.5"
   },
   "eslintConfig": {
-    "root": false
-    ,
+    "root": false,
     "rules": {
       "import/no-unresolved": "off"
     }
