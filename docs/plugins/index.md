@@ -17,3 +17,11 @@ Reactotron.configure()
   .use(somePlugin())
   .connect()
 ```
+
+# Community-made plugins
+
+Anyone can make a Reactotron plugin! If you've made a plugin, please open a PR to add it to this list.
+
+> Note that Infinite Red does not maintain these plugins and can not guarantee compatibility or effectiveness. If you have questions about a plugin, please contact the plugin author.
+
+- [reactotron-react-query](https://github.com/hsndmr/reactotron-react-query)
