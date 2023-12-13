@@ -22,7 +22,6 @@ Use it to:
 - track global errors with source-mapped stack traces including saga stack traces!
 - dispatch actions like a government-run mind control experiment
 - hot swap your app's state using Redux or mobx-state-tree
-- track your sagas
 - show image overlay in React Native
 - track your Async Storage in React Native
 
