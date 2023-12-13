@@ -1,3 +1,7 @@
+---
+title: Redux
+---
+
 # reactotron-redux
 
 [Redux](http://redux.js.org/) is a library for managing global state. It's pretty damn awesome.

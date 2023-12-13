@@ -1,8 +1,12 @@
+---
+title: Storybook
+---
+
 # Storybook (React Native Only)
 
 `reactotron-react-native` ships with a plugin called `storybook`.
 
-This plugin, when configured properly, allows the switching to Storybook from the reactotron interface
+This plugin, when configured properly, allows the switching to Storybook from the Reactotron interface
 
 ## Configuration
 

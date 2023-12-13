@@ -1,3 +1,7 @@
+---
+title: Mobx State Tree
+---
+
 # reactotron-mst
 
 Behold! A plugin for Reactotron for working with mobx-state-tree.
@@ -24,7 +28,7 @@ npm i reactotron-mst --save-dev
 
 # Configuration
 
-To make Reactotron aware of this plugin, go to the file you are configuring reactotron currently and add this:
+To make Reactotron aware of this plugin, go to the file you are configuring Reactotron currently and add this:
 
 ```ts
 // import the plugin

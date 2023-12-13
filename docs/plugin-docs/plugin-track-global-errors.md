@@ -1,3 +1,7 @@
+---
+title: Global Errors
+---
+
 # Track Global Errors
 
 The goal of this plugin is to ensure all errors are thrown over to Reactotron for display.

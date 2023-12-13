@@ -1,12 +1,16 @@
+---
+title: react
+---
+
 # Quick Start for React JS
 
 ## Installing Reactotron.app
 
-Let’s [download the desktop app](https://github.com/reactotron/reactotron/releases) to start. You can download for Linux, Windows, and Mac.
+Let’s [download the desktop app](https://github.com/infinitered/reactotron/releases?q=reactotron-app&expanded=true) to start. You can download for Linux, Windows, and Mac.
 
 Unzip & run.
 
-![Installing The App](./images/quick-start-react-js/installing.jpg)
+![Installing The App](./images/react-js/installing.jpg)
 
 ## Humble Beginnings
 
@@ -54,11 +58,11 @@ At this point, Reactotron is hooked up.
 
 Refresh your web page (or start it up `npm start`) and have a look at Reactotron now. Do you see the `CONNECTION` line? Click that to expand.
 
-![We Have Contact](./images/quick-start-react-js/first-connect.jpg)
+![We Have Contact](./images/react-js/first-connect.jpg)
 
 Go back to your web page and refresh the web page 5 or 6 times. Now look.
 
-![Chatty](./images/quick-start-react-js/spammy.jpg)
+![Chatty](./images/react-js/spammy.jpg)
 
 Pretty underwhelming huh?
 
@@ -84,11 +88,11 @@ Save that file and refresh your web page if you don't have live reloading.
 
 Now Reactotron looks like this:
 
-![Hello 1](./images/quick-start-react-js/hello-1.jpg)
+![Hello 1](./images/react-js/hello-1.jpg)
 
 While collapsed, the grey area to the right shows a preview. Click to open.
 
-![Hello 2](./images/quick-start-react-js/hello-2.jpg)
+![Hello 2](./images/react-js/hello-2.jpg)
 
 Let's change our log statement to:
 
@@ -141,6 +145,6 @@ Where Reactotron starts to shine is when you start plugging into [Redux](https:/
 
 Check out our [Demo](../packages/demo-react-js) for more goodies.
 
-![Demo Web App](./images/quick-start-react-js/react-demo-js.jpg)
+![Demo Web App](./images/react-js/react-demo-js.jpg)
 
-![Demo Reactotron](./images/quick-start-react-js/react-demo-js-reactotron.jpg)
+![Demo Reactotron](./images/react-js/react-demo-js-reactotron.jpg)

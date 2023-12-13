@@ -1,5 +1,7 @@
 # Releasing
 
+> Note: this is a document primarily intended for maintainers at Infinite Red.
+
 ## High Level Overview
 
 ### Git Tags

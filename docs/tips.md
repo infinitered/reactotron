@@ -1,3 +1,7 @@
+---
+sidebar_position: 888
+---
+
 # Tips and Tricks
 
 ### Clearing Reactotron

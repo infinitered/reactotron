@@ -1,3 +1,7 @@
+---
+sidebar_position: 999
+---
+
 # Troubleshooting
 
 Here are some notes about common things that go off the rails.
