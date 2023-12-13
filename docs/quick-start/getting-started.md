@@ -16,6 +16,12 @@ Once installed, you need to add the Reactotron client to your project. Follow on
 - [**React Native**](./react-native.md#installing-reactotronapp)
 - [**React**](./react-js.md#installing-reactotronapp)
 
+If you run into an [issue](https://github.com/infinitered/reactotron/issues/1140) opening the application on Mac you can install with Homebrew instead. 
+
+```
+brew cask install reactotron
+```
+
 ## Where can I find more information?
 
 We recommend that you watch [Darin Wilson's](https://github.com/darinwilson) talk at [Chain React](https://chainreactconf.com/): [Chain React 2018: Debugging and Beyond with Reactotron](https://www.youtube.com/watch?v=UiPo9A9k7xc)!
