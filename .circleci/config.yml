@@ -320,6 +320,11 @@ jobs:
 
 workflows:
   pull_request:
+    # prevents the workflow from running when `force-publish-docs` is true
+    when:
+      and:
+        - not: << pipeline.parameters.force-release-docs >>
+        - true  # Placeholder for correct YAML structure
     jobs:
       - build_and_test:
           filters:
@@ -340,7 +345,12 @@ workflows:
       - publish-docs/publish_docs:
           <<: *ir_docs_config
   
-  release:  
+  release:
+    # prevents the workflow from running when `force-publish-docs` is true
+    when:
+      and:
+        - not: << pipeline.parameters.force-release-docs >>
+        - true  # Placeholder for correct YAML structure  
     jobs:
       - build_and_test:
           filters:
