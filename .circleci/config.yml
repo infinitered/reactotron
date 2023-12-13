@@ -43,7 +43,7 @@ anchors:
 
 orbs:
   node: circleci/node@5.1.0
-  publish-docs: infinitered/publish-docs@0.4.9
+  publish-docs: infinitered/publish-docs@0.4
 
 commands:
   install-packages:
