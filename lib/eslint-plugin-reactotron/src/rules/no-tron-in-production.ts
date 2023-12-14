@@ -2,6 +2,9 @@ import { ESLintUtils } from "@typescript-eslint/utils"
 
 const createRule = ESLintUtils.RuleCreator(() => `reactotron/no-tron-in-production`)
 
+/**
+ * Enforces `if (__DEV__)` around `console.tron` calls so they are not included in production.
+ */
 export const noTronInProduction = createRule({
   name: "no-tron-in-production",
   meta: {
