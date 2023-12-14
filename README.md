@@ -46,18 +46,18 @@ On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotro
 
 ## How to use Reactotron's features/plugins
 
-- [**Track Global Errors**](./docs/plugin/track-global-errors.md)
-- [**Track Global Logs**](./docs/plugin/plugin-track-global-logs.md)
-- [**Networking**](./docs/plugin/networking.md)
-- [**Async Storage**](./docs/plugin/async-storage.md)
-- [**React Native MMKV**](./docs/plugin/react-native-mmkv.md)
-- [**Benchmark**](./docs/plugin/benchmark.md)
-- [**apisauce**](./docs/plugin/apisauce.md)
-- [**Overlay**](./docs/plugin/overlay.md)
-- [**MST**](./docs/plugin/mst.md)
-- [**Redux**](./docs/plugin/redux.md)
-- [**Open in Editor**](./docs/plugin/open-in-editor.md)
-- [**Storybook (only for React Native)**](./docs/plugin/storybook.md) \
+- [**Track Global Errors**](./docs/plugins/track-global-errors.md)
+- [**Track Global Logs**](./docs/plugins/plugin-track-global-logs.md)
+- [**Networking**](./docs/plugins/networking.md)
+- [**Async Storage**](./docs/plugins/async-storage.md)
+- [**React Native MMKV**](./docs/plugins/react-native-mmkv.md)
+- [**Benchmark**](./docs/plugins/benchmark.md)
+- [**apisauce**](./docs/plugins/apisauce.md)
+- [**Overlay**](./docs/plugins/overlay.md)
+- [**MST**](./docs/plugins/mst.md)
+- [**Redux**](./docs/plugins/redux.md)
+- [**Open in Editor**](./docs/plugins/open-in-editor.md)
+- [**Storybook (only for React Native)**](./docs/plugins/storybook.md) \
    `reactotron-react-native` ships with [Storybook](https://storybook.js.org/).
   This enables you to switch to Storybook from the Reactotron app.
 - [**Custom Commands**](./docs/quick-start/custom-commands.md)
