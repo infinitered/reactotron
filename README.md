@@ -1,4 +1,4 @@
-# ![Reactotron Logo](./docs/plugin-docs/images/readme/Reactotron-128.png)
+# ![Reactotron Logo](./docs/plugins/images/readme/Reactotron-128.png)
 
 [Join our Community Slack](http://community.infinite.red/)
 
@@ -29,7 +29,7 @@ You plug it into your app as a dev dependency so it adds nothing to your product
 
 Reactotron on the left, demo React Native app on the right.
 
-![Desktop](./docs/plugin-docs/images/readme/reactotron-demo-app.gif)
+![Desktop](./docs/plugins/images/readme/reactotron-demo-app.gif)
 
 ## Installation
 
