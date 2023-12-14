@@ -20,9 +20,9 @@ anchors:
     - master
     - beta
     - alpha
-  # All branches  
+  # All branches
   release_branch_filter: &release_branch_filter
-    ignore: /.*/ 
+    ignore: /.*/
   # Filter to identify tags of releases
   release_app_filter: &release_app_filter
     - /^reactotron-app@.*/
@@ -345,26 +345,26 @@ workflows:
             branches:
               ignore: *release_branch_names
 
-      
+
   # Allows for manual publishing of docs independent of deployment
-  # Use the 'trigger pipeline' button in circle ci and set 'force-publish-docs' to 'true' 
+  # Use the 'trigger pipeline' button in circle ci and set 'force-publish-docs' to 'true'
   force_publish_docs:
     when: << pipeline.parameters.force-publish-docs >>
     jobs:
       - publish-docs/publish_docs:
           <<: *ir_docs_config
-  
+
   release:
     # prevents the workflow from running when `force-publish-docs` is true
     when:
       and:
         - not: << pipeline.parameters.force-publish-docs >>
-        - true  # Placeholder for correct YAML structure  
+        - true  # Placeholder for correct YAML structure
     jobs:
       - build_and_test:
           filters:
             branches:
-              only: *release_branch_names    
+              only: *release_branch_names
       - release_tags:
           context:
             - infinitered-npm-package
@@ -372,7 +372,12 @@ workflows:
             branches:
               only: *release_branch_names
           requires:
-            - build_and_test    
+            - build_and_test
+      - publish-docs/publish_docs:
+          <<: *ir_docs_config
+          filters:
+            branches:
+              only: *release_branch_names
       - release_package:
           context:
             - infinitered-npm-package
@@ -414,11 +419,4 @@ workflows:
             - build_app_windows
             - build_app_macos
             - build_app_linux
-      - publish-docs/publish_docs:
-          <<: *ir_docs_config
-          filters:
-            branches: *release_branch_filter
-            tags:
-              only: *release_app_filter
-      
 # VS Code Extension Version: 1.5.1
