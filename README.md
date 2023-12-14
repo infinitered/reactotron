@@ -41,26 +41,26 @@ On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotro
 
 ## How to setup Reactotron in our app
 
-- [**React Native**](./docs/plugin-docs/quick-start-react-native.md#installing-reactotronapp)
-- [**React**](./docs/plugin-docs/quick-start-react-js.md#installing-reactotronapp)
+- [**React Native**](./docs/quick-start/react-native.md#installing-reactotronapp)
+- [**React**](./docs/quick-start/react-js.md#installing-reactotronapp)
 
 ## How to use Reactotron's features/plugins
 
-- [**Track Global Errors**](./docs/plugin-docs/plugin-track-global-errors.md)
-- [**Track Global Logs**](./docs/plugin-docs/plugin-track-global-logs.md)
-- [**Networking**](./docs/plugin-docs/plugin-networking.md)
-- [**Async Storage**](./docs/plugin-docs/plugin-async-storage.md)
-- [**React Native MMKV**](./docs/plugin-docs/plugin-react-native-mmkv.md)
-- [**Benchmark**](./docs/plugin-docs/plugin-benchmark.md)
-- [**apisauce**](./docs/plugin-docs/plugin-apisauce.md)
-- [**Overlay**](./docs/plugin-docs/plugin-overlay.md)
-- [**MST**](./docs/plugin-docs/plugin-mst.md)
-- [**Redux**](./docs/plugin-docs/plugin-redux.md)
-- [**Open in Editor**](./docs/plugin-docs/plugin-open-in-editor.md)
-- [**Storybook (only for React Native)**](./docs/plugin-docs/plugin-storybook.md) \
+- [**Track Global Errors**](./docs/plugin/track-global-errors.md)
+- [**Track Global Logs**](./docs/plugin/plugin-track-global-logs.md)
+- [**Networking**](./docs/plugin/networking.md)
+- [**Async Storage**](./docs/plugin/async-storage.md)
+- [**React Native MMKV**](./docs/plugin/react-native-mmkv.md)
+- [**Benchmark**](./docs/plugin/benchmark.md)
+- [**apisauce**](./docs/plugin/apisauce.md)
+- [**Overlay**](./docs/plugin/overlay.md)
+- [**MST**](./docs/plugin/mst.md)
+- [**Redux**](./docs/plugin/redux.md)
+- [**Open in Editor**](./docs/plugin/open-in-editor.md)
+- [**Storybook (only for React Native)**](./docs/plugin/storybook.md) \
    `reactotron-react-native` ships with [Storybook](https://storybook.js.org/).
   This enables you to switch to Storybook from the Reactotron app.
-- [**Custom Commands**](./docs/plugin-docs/custom-commands.md)
+- [**Custom Commands**](./docs/quick-start/custom-commands.md)
 
 ## Tips and Tricks
 
@@ -75,8 +75,8 @@ On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotro
 
 ## Troubleshooting
 
-- [**React Native iOS**](./docs/plugin-docs/troubleshooting.md#react-native-ios)
-- [**React Native Android**](./docs/plugin-docs/troubleshooting.md#react-native-android)
+- [**React Native iOS**](./docs/quick-start/troubleshooting.md#react-native-ios)
+- [**React Native Android**](./docs/quick-start/troubleshooting.md#react-native-android)
 
 # Credits
 
