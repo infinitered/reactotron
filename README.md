@@ -1,4 +1,4 @@
-# ![Reactotron Logo](./docs/plugin-docs/images/readme/Reactotron-128.png)
+# ![Reactotron Logo](./docs/plugins/images/readme/Reactotron-128.png)
 
 [Join our Community Slack](http://community.infinite.red/)
 
@@ -29,7 +29,7 @@ You plug it into your app as a dev dependency so it adds nothing to your product
 
 Reactotron on the left, demo React Native app on the right.
 
-![Desktop](./docs/plugin-docs/images/readme/reactotron-demo-app.gif)
+![Desktop](./docs/plugins/images/readme/reactotron-demo-app.gif)
 
 ## Installation
 
@@ -60,23 +60,23 @@ On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotro
 - [**Storybook (only for React Native)**](./docs/plugins/storybook.md) \
    `reactotron-react-native` ships with [Storybook](https://storybook.js.org/).
   This enables you to switch to Storybook from the Reactotron app.
-- [**Custom Commands**](./docs/quick-start/custom-commands.md)
+- [**Custom Commands**](./docs/custom-commands.md)
 
 ## Tips and Tricks
 
-[Some tips that will elevate your Reactotron experience.](./docs/plugin-docs/tips.md)
+[Some tips that will elevate your Reactotron experience.](./docs/tips.md)
 
 ## Want to contribute? Here are some helpful reading materials:
 
-- [**Contributing**](./docs/contributing.md)
-- [**Architecture**](./docs/architecture.md)
-- [**Monorepo**](./docs/monorepo.md)
-- [**Release**](./docs/release.md)
+- [**Contributing**](./docs/contributing/index.md)
+- [**Architecture**](./docs/contributing/architecture.md)
+- [**Monorepo**](./docs/contributing/monorepo.md)
+- [**Release**](./docs/contributing/releasing.md)
 
 ## Troubleshooting
 
-- [**React Native iOS**](./docs/quick-start/troubleshooting.md#react-native-ios)
-- [**React Native Android**](./docs/quick-start/troubleshooting.md#react-native-android)
+- [**React Native iOS**](./docs/troubleshooting.md#react-native-ios)
+- [**React Native Android**](./docs/troubleshooting.md#react-native-android)
 
 # Credits
 
