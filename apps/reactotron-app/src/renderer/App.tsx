@@ -15,6 +15,7 @@ import Overlay from "./pages/reactNative/Overlay"
 import Storybook from "./pages/reactNative/Storybook"
 import CustomCommands from "./pages/customCommands"
 import Help from "./pages/help"
+import Preferences from "./pages/preferences"
 
 const AppContainer = styled.div`
   position: absolute;
@@ -67,6 +68,9 @@ function App() {
 
                 {/* Custom Commands */}
                 <Route path="/customCommands" element={<CustomCommands />} />
+
+                {/* Preferences */}
+                <Route path="/preferences" element={<Preferences />} />
 
                 {/* Help */}
                 <Route path="/help" element={<Help />} />

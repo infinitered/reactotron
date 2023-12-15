@@ -1,6 +1,6 @@
 import Store from "electron-store"
 
-const schema = {
+export const schema = {
   serverPort: {
     type: "number",
     default: 9090,
@@ -9,9 +9,9 @@ const schema = {
     type: "number",
     default: 500,
   },
-}
+} as const
 
-const configStore = new Store({ schema } as any)
+const configStore = new Store({ schema })
 
 // Setup defaults
 if (!configStore.has("serverPort")) {
