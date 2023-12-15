@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useEffect } from "react"
+import { ipcRenderer } from "electron"
 import { HashRouter as Router, Route, Routes } from "react-router-dom"
 import styled from "styled-components"
 
@@ -42,7 +43,21 @@ const MainContainer = styled.div`
   flex: 1;
 `
 
+function useOpenPreferences() {
+  useEffect(() => {
+    ipcRenderer.on("open-preferences", () => {
+      window.location.hash = "#/preferences"
+    })
+
+    return () => {
+      ipcRenderer.removeAllListeners("open-preferences")
+    }
+  }, [])
+}
+
 function App() {
+  useOpenPreferences()
+
   return (
     <Router>
       <RootContextProvider>

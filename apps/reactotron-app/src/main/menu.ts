@@ -1,11 +1,11 @@
 import { Menu, app, shell } from "electron"
-import Store from "electron-store"
-
-const configStore = new Store()
+import ElectronStore from "electron-store"
 
 const isDarwin = process.platform === "darwin"
 
-function buildFileMenu() {
+ElectronStore.initRenderer()
+
+function buildFileMenu(window: Electron.BrowserWindow) {
   const fileMenu = {
     label: isDarwin ? "Reactotron" : "&File",
     submenu: [],
@@ -36,8 +36,10 @@ function buildFileMenu() {
   fileMenu.submenu.push(
     {
       label: "Preferences",
+      // Is there a Windows shortcut for this?
+      accelerator: isDarwin ? "Command+," : undefined,
       click: () => {
-        configStore.openInEditor()
+        window.webContents.send("open-preferences")
       },
     },
     { type: "separator" },
@@ -152,13 +154,13 @@ function buildHelpMenu() {
 
 export default function createMenu(window: Electron.BrowserWindow, isDevelopment: boolean) {
   const template = [
-    buildFileMenu(),
+    buildFileMenu(window),
     buildEditMenu(),
     buildViewMenu(window, isDevelopment),
     buildWindowMenu(window),
     buildHelpMenu(),
   ]
 
-  const menu = Menu.buildFromTemplate(template.filter(t => !!t) as any)
+  const menu = Menu.buildFromTemplate(template.filter((t) => !!t) as any)
   Menu.setApplicationMenu(menu)
 }
