@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import {
   MdReorder,
   MdAssignment,
@@ -14,6 +14,7 @@ import styled from "styled-components"
 import SideBarButton from "../SideBarButton"
 import { reactotronLogo } from "../../images"
 import { ServerStatus } from "../../contexts/Standalone/useStandalone"
+import { ReactotronContext } from "reactotron-core-ui"
 
 interface SideBarContainerProps {
   $isOpen: boolean
@@ -33,26 +34,27 @@ const Spacer = styled.div`
   flex: 1;
 `
 
-function SideBar({ isOpen, serverStatus }: { isOpen: boolean; serverStatus: ServerStatus }) {
-  let serverIcon = MdMobiledataOff
-  let iconColor
-  let serverText = "Stopped"
+export function getServerStatusData(serverStatus: ServerStatus) {
+  let serverStatusIcon = MdMobiledataOff
+  let serverStatusColor
+  let serverStatusText = "Stopped"
   if (serverStatus === "started") {
-    serverIcon = MdOutlineMobileFriendly
-    serverText = "Running"
+    serverStatusIcon = MdOutlineMobileFriendly
+    serverStatusText = "Running"
   }
   if (serverStatus === "portUnavailable") {
-    serverIcon = MdWarning
-    iconColor = "yellow"
-    serverText = "Port 9090 unavailable"
+    serverStatusIcon = MdWarning
+    serverStatusColor = "yellow"
+    serverStatusText = "Port 9090 unavailable"
   }
 
-  const retryConnection = () => {
-    if (serverStatus === "portUnavailable") {
-      // TODO: Reconnect more elegantly than forcing a reload
-      window.location.reload()
-    }
-  }
+  return { serverStatusIcon,  serverStatusText,serverStatusColor }
+}
+
+function SideBar({ isOpen, serverStatus }: { isOpen: boolean; serverStatus: ServerStatus }) {
+  const {openDiagnosticModal} =  useContext(ReactotronContext)
+
+  const { serverStatusColor, serverStatusIcon, serverStatusText } = getServerStatusData(serverStatus)
 
   return (
     <SideBarContainer $isOpen={isOpen}>
@@ -75,11 +77,11 @@ function SideBar({ isOpen, serverStatus }: { isOpen: boolean; serverStatus: Serv
       <Spacer />
 
       <SideBarButton
-        icon={serverIcon}
+        icon={serverStatusIcon}
         path="#"
-        onPress={retryConnection}
-        text={serverText}
-        iconColor={iconColor}
+        onPress={openDiagnosticModal}
+        text={serverStatusText}
+        iconColor={serverStatusColor}
       />
 
       <SideBarButton icon={MdLiveHelp} path="/help" text="Help" hideTopBar />

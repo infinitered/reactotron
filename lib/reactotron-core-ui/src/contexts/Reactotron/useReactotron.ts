@@ -4,6 +4,7 @@ interface ReactotronState {
   isDispatchModalOpen: boolean
   dispatchModalInitialAction: string
   isSubscriptionModalOpen: boolean
+  isDiagnosticModalOpen: boolean
 }
 
 enum ReactotronActionType {
@@ -11,6 +12,8 @@ enum ReactotronActionType {
   DispatchModalClose = "DISPATCH_CLOSE",
   SubscriptionModalOpen = "SUBSCRIPTION_OPEN",
   SubscriptionModalClose = "SUBSCRIPTION_CLOSE",
+  DiagnosticModalOpen = "DIAGNOSTIC_OPEN",
+  DiagnosticModalClose = "DIAGNOSTIC_CLOSE",
 }
 
 interface ReactotronAction {
@@ -41,6 +44,16 @@ function reactotronReducer(state: ReactotronState, action: ReactotronAction) {
         ...state,
         isSubscriptionModalOpen: false,
       }
+      case ReactotronActionType.DiagnosticModalOpen:
+        return {
+          ...state,
+          isDiagnosticModalOpen: true,
+        }
+      case ReactotronActionType.DiagnosticModalClose:
+        return {
+          ...state,
+          isDiagnosticModalOpen: false,
+        }
     default:
       return state
   }
@@ -51,6 +64,7 @@ function useReactotron() {
     isDispatchModalOpen: false,
     dispatchModalInitialAction: "",
     isSubscriptionModalOpen: false,
+    isDiagnosticModalOpen: false,
   })
 
   const openDispatchModal = useCallback((intiialAction: string) => {
@@ -78,14 +92,29 @@ function useReactotron() {
     })
   }, [])
 
+  const openDiagnosticModal = useCallback(() => {
+    dispatch({
+      type: ReactotronActionType.DiagnosticModalOpen,
+    })
+  }, [])
+
+  const closeDiagnosticModal = useCallback(() => {
+    dispatch({
+      type: ReactotronActionType.DiagnosticModalClose,
+    })
+  }, [])
+
   return {
     isDispatchModalOpen: state.isDispatchModalOpen,
+    isDiagnosticModalOpen: state.isDiagnosticModalOpen,
     dispatchModalInitialAction: state.dispatchModalInitialAction,
     openDispatchModal,
     closeDispatchModal,
     isSubscriptionModalOpen: state.isSubscriptionModalOpen,
     openSubscriptionModal,
     closeSubscriptionModal,
+    openDiagnosticModal,
+    closeDiagnosticModal
   }
 }
 

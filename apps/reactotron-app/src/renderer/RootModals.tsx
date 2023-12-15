@@ -4,7 +4,11 @@ import {
   SubscriptionAddModal,
   ReactotronContext,
   StateContext,
+  DiagnosticModal,
 } from "reactotron-core-ui"
+import configStore from "./config"
+import StandaloneContext from "./contexts/Standalone"
+import { getServerStatusData } from "./components/SideBar/Sidebar"
 
 function RootModals() {
   const {
@@ -17,8 +21,14 @@ function RootModals() {
     // Subscription Modal
     isSubscriptionModalOpen,
     closeSubscriptionModal,
+    // Diagnostic Modal
+    isDiagnosticModalOpen,
+    closeDiagnosticModal,
   } = useContext(ReactotronContext)
   const { addSubscription } = useContext(StateContext)
+  const { serverStatus } = useContext(StandaloneContext)
+  const { serverStatusText } = getServerStatusData(serverStatus)
+
 
   const dispatchAction = (action: any) => {
     sendCommand("state.action.dispatch", { action })
@@ -44,6 +54,17 @@ function RootModals() {
           // TODO: Get this out of here.
           closeSubscriptionModal()
           addSubscription(path)
+        }}
+      />
+      <DiagnosticModal
+        isOpen={isDiagnosticModalOpen}
+        onClose={() => {
+          closeDiagnosticModal()
+        }}
+        port={configStore.get("serverPort") as string}
+        serverStatusText={serverStatusText}
+        onRefresh={() => {
+          window.location.reload()
         }}
       />
     </>
