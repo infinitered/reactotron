@@ -20,8 +20,8 @@ Add it as a plugin to Reactotron.
 ```js
 Reactotron.configure()
   .useReactNative({
-    overlay: true,
-  }) // <--- here we go!
+    overlay: true, // <--- here we go!
+  })
   .connect()
 ```
 
