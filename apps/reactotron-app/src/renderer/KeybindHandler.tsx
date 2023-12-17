@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import { GlobalHotKeys, KeyEventName } from "react-hotkeys"
 import { ReactotronContext, StateContext } from "reactotron-core-ui"
-import LayoutContext from "./contexts/Layout"
+import { useStore } from "./models/RootStore"
 
 const keyMap = {
   // Application wide
@@ -84,7 +84,7 @@ const keyMap = {
 }
 
 function KeybindHandler({ children }) {
-  const { toggleSideBar } = useContext(LayoutContext)
+  const store = useStore()
   const { openDispatchModal, openSubscriptionModal, clearCommands } = useContext(ReactotronContext)
   const { createSnapshot } = useContext(StateContext)
 
@@ -125,7 +125,7 @@ function KeybindHandler({ children }) {
 
     // Miscellaneous
     ToggleSidebar: () => {
-      toggleSideBar()
+      store.toggleSidebar()
     },
     ClearTimeline: () => {
       clearCommands()

@@ -1,14 +1,15 @@
 import React, { useContext } from "react"
-import LayoutContext from "../../contexts/Layout"
 import StandaloneContext from "../../contexts/Standalone"
 
 import SidebarStateless from "./Sidebar"
+import { useStore } from "../../models/RootStore"
+import { observer } from "mobx-react-lite"
 
 function SideBar() {
-  const { isSideBarOpen } = useContext(LayoutContext)
-  const { serverStatus } = useContext(StandaloneContext)
+  // const store = useStore()
+  // const { serverStatus } = useContext(StandaloneContext)
 
-  return <SidebarStateless isOpen={isSideBarOpen} serverStatus={serverStatus} />
+  return <SidebarStateless isOpen={true} serverStatus={"started"} />
 }
 
-export default SideBar
+export default observer(SideBar)

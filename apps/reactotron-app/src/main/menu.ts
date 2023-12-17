@@ -97,6 +97,8 @@ function buildViewMenu(window: Electron.BrowserWindow, isDevelopment: boolean) {
     }
   )
 
+  // add Toggle Sidebar
+
   if (isDevelopment) {
     viewMenu.submenu.push({
       label: isDarwin ? "Reload" : "&Reload",
@@ -159,6 +161,6 @@ export default function createMenu(window: Electron.BrowserWindow, isDevelopment
     buildHelpMenu(),
   ]
 
-  const menu = Menu.buildFromTemplate(template.filter(t => !!t) as any)
+  const menu = Menu.buildFromTemplate(template.filter((t) => !!t) as any)
   Menu.setApplicationMenu(menu)
 }

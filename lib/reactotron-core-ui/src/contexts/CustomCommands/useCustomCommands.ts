@@ -20,30 +20,21 @@ interface CustomCommandState {
   customCommands: CustomCommand[]
 }
 
-enum CustomCommandsActionType {
-  CommandAdd = "COMMAND_ADD",
-  CommandRemove = "COMMAND_REMOVE",
-  CommandClear = "COMMAND_CLEAR",
-}
-
 type Action =
-  | {
-      type: CustomCommandsActionType.CommandAdd
-      payload: Command
-    }
-  | { type: CustomCommandsActionType.CommandRemove; payload: Command }
-  | { type: CustomCommandsActionType.CommandClear; payload: string }
+  | { type: "COMMAND_ADD"; payload: Command }
+  | { type: "COMMAND_REMOVE"; payload: Command }
+  | { type: "COMMAND_CLEAR"; payload: string }
 
 function customCommandsReducer(state: CustomCommandState, action: Action) {
   switch (action.type) {
-    case CustomCommandsActionType.CommandAdd:
+    case "COMMAND_ADD":
       return produce(state, (draftState) => {
         draftState.customCommands.push({
           clientId: action.payload.clientId,
           ...action.payload.payload,
         })
       })
-    case CustomCommandsActionType.CommandRemove:
+    case "COMMAND_REMOVE":
       return produce(state, (draftState) => {
         const commandIndex = draftState.customCommands.findIndex(
           (cc) => cc.clientId === action.payload.clientId && cc.id === action.payload.payload.id
@@ -56,7 +47,7 @@ function customCommandsReducer(state: CustomCommandState, action: Action) {
           ...draftState.customCommands.slice(commandIndex + 1),
         ]
       })
-    case CustomCommandsActionType.CommandClear:
+    case "COMMAND_CLEAR":
       return produce(state, (draftState) => {
         draftState.customCommands = draftState.customCommands.filter(
           (cc) => cc.clientId !== action.payload
@@ -74,20 +65,11 @@ function useCustomCommands() {
   useEffect(() => {
     addCommandListener((command) => {
       if (command.type === CommandType.ClientIntro) {
-        dispatch({
-          type: CustomCommandsActionType.CommandClear,
-          payload: command.clientId,
-        })
+        dispatch({ type: "COMMAND_CLEAR", payload: command.clientId })
       } else if (command.type === CommandType.CustomCommandRegister) {
-        dispatch({
-          type: CustomCommandsActionType.CommandAdd,
-          payload: command,
-        })
+        dispatch({ type: "COMMAND_ADD", payload: command })
       } else if (command.type === CommandType.CustomCommandUnregister) {
-        dispatch({
-          type: CustomCommandsActionType.CommandRemove,
-          payload: command,
-        })
+        dispatch({ type: "COMMAND_REMOVE", payload: command })
       }
     })
   }, [addCommandListener])
