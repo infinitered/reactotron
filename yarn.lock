@@ -21513,6 +21513,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mobx-react-lite@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "mobx-react-lite@npm:4.0.5"
+  dependencies:
+    use-sync-external-store: ^1.2.0
+  peerDependencies:
+    mobx: ^6.9.0
+    react: ^16.8.0 || ^17 || ^18
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: b0a3e4345c1449eee7c0a6aa2369475024a0c8227e11305cc965229527e3ddede4ca7b8337912a7fe396e24bd83986f2a88a21813c51cabdc18330fa484023b5
+  languageName: node
+  linkType: hard
+
 "mobx-state-tree@npm:^2.0.4":
   version: 2.2.0
   resolution: "mobx-state-tree@npm:2.2.0"
@@ -21522,10 +21539,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mobx-state-tree@npm:^5.4.0":
+  version: 5.4.0
+  resolution: "mobx-state-tree@npm:5.4.0"
+  peerDependencies:
+    mobx: ^6.3.0
+  checksum: e625c7eac52b81f61e0810a6db326aeeeae3f959d4f0d88c94c86bfedc25e66d1033f3b4f6564d62c3578ad48b96ae877cf58953cd8a52b72400215491c7ffdf
+  languageName: node
+  linkType: hard
+
 "mobx@npm:^4.2.1":
   version: 4.15.7
   resolution: "mobx@npm:4.15.7"
   checksum: 9ddda3a7fbb92f02cc9da7d6551e4914611dfa90d5cd6509b5abcdddc872f4bbb3cf6bb0537abd716738e0021d632de21013876a9f334a72cb7a1c7fd9664441
+  languageName: node
+  linkType: hard
+
+"mobx@npm:^6.12.0":
+  version: 6.12.0
+  resolution: "mobx@npm:6.12.0"
+  checksum: 482914d39199cadc8808907a2b9dbc634c74534d6c6d6cb34984c199aa94665ce07e7d183c0e97d54f4b06c8e42fec0a48c79484f4bbeac04a4dfd0f160290c6
   languageName: node
   linkType: hard
 
@@ -25056,6 +25089,9 @@ __metadata:
     jest: ^29.7.0
     jest-environment-jsdom: ^29.7.0
     mime: ^3.0.0
+    mobx: ^6.12.0
+    mobx-react-lite: ^4.0.5
+    mobx-state-tree: ^5.4.0
     prettier: ^3.0.3
     react: 18.2.0
     react-dom: 18.2.0
@@ -30014,7 +30050,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.0.0":
+"use-sync-external-store@npm:^1.0.0, use-sync-external-store@npm:^1.2.0":
   version: 1.2.0
   resolution: "use-sync-external-store@npm:1.2.0"
   peerDependencies:
