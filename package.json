@@ -77,5 +77,10 @@
     "build-and-test:local": "yarn build && yarn package:validate && yarn lint && yarn format:check && yarn test && yarn typecheck",
     "package:validate": "zx scripts/package.validate.mjs"
   },
-  "packageManager": "yarn@3.6.3"
+  "packageManager": "yarn@3.6.3",
+  "dependencies": {
+    "mobx": "^6.12.0",
+    "mobx-react-lite": "^4.0.5",
+    "mobx-state-tree": "^5.4.0"
+  }
 }

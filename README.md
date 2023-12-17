@@ -85,3 +85,12 @@ Reactotron is developed by [Infinite Red](https://infinite.red), [@rmevans9](htt
 # Premium Support
 
 [Reactotron](https://infinite.red/reactotron), as an open source project, is free to use and always will be. [Infinite Red](https://infinite.red/) offers premium React and [React Native](https://infinite.red/react-native) mobile app design/development services. Email us at [hello@infinite.red](mailto:hello@infinite.red) to get in touch for more details.
+
+1. Forked the repo
+2. Cloned the repo
+3. `yarn`
+4. `yarn build`
+5. `yarn start` - worked
+6. `yarn add mobx mobx-react-lite mobx-state-tree`
+7. Killed server
+8. `yarn start` - worked

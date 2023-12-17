@@ -15,6 +15,8 @@ import Overlay from "./pages/reactNative/Overlay"
 import Storybook from "./pages/reactNative/Storybook"
 import CustomCommands from "./pages/customCommands"
 import Help from "./pages/help"
+import { observer } from "mobx-react-lite"
+import { t } from "mobx-state-tree"
 
 const AppContainer = styled.div`
   position: absolute;
@@ -41,12 +43,32 @@ const MainContainer = styled.div`
   flex: 1;
 `
 
+const RootStore = t.model({
+  name: t.string,
+  price: t.number,
+})
+
+const rootStore = RootStore.create({
+  name: "Test",
+  price: 1,
+})
+
+const LittleComponent = observer(() => {
+  return (
+    <div>
+      <div>{rootStore.name}</div>
+      <div>{rootStore.price}</div>
+    </div>
+  )
+})
+
 function App() {
   return (
     <Router>
       <RootContextProvider>
         <AppContainer>
           <TopSection>
+            <LittleComponent />
             <SideBar />
 
             <MainContainer>
