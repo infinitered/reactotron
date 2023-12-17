@@ -51,7 +51,8 @@
     "@types/react": "18.2.35",
     "electron-webpack": "patch:electron-webpack@npm%3A2.8.2#./.yarn/patches/electron-webpack-npm-2.8.2-1bda600605.patch",
     "react-hotkeys": "patch:react-hotkeys@npm%3A2.0.0#./.yarn/patches/react-hotkeys-npm-2.0.0-8e6c50bd05.patch",
-    "webpack": "patch:webpack@npm%3A4.47.0#./.yarn/patches/webpack-npm-4.47.0-42e477a08c.patch"
+    "webpack": "patch:webpack@npm%3A4.47.0#./.yarn/patches/webpack-npm-4.47.0-42e477a08c.patch",
+    "babel-plugin-minify-mangle-names@^0.5.1": "patch:babel-plugin-minify-mangle-names@npm%3A0.5.1#./.yarn/patches/babel-plugin-minify-mangle-names-npm-0.5.1-fec77ddad5.patch"
   },
   "scripts": {
     "postinstall": "sh ./scripts/postinstall.sh",
