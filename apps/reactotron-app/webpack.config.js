@@ -9,12 +9,21 @@
 // If this breaks again, you search webpack in node_modules for `createHash\(('|")md4('|")\)`,
 // replace it with `createHash("sha256")`, then run patch-package again.
 
+const path = require("path")
+
 module.exports = function (config) {
   return {
     ...config,
     output: {
       ...config.output,
       hashFunction: "sha256",
+    },
+    resolve: {
+      ...config.resolve,
+      alias: {
+        ...config.resolve.alias,
+        react: path.resolve("../../node_modules/react"),
+      },
     },
   }
 }

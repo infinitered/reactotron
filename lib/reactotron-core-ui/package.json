@@ -55,8 +55,8 @@
     "stringify-object": "5.0.0"
   },
   "peerDependencies": {
-    "react": ">=18.2.0",
-    "react-dom": ">=17.0.2",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
     "react-icons": ">=4.2.0",
     "react-modal": ">=3.16.1",
     "react-motion": ">=0.5.2",
@@ -110,7 +110,7 @@
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-peer-deps-external": "2.2.4",
     "storybook-chromatic": "^4.0.2",
-    "styled-components": "^6.1.0",
+    "styled-components": "^6.1.1",
     "ts-jest": "^29.1.1",
     "typescript": "^4.9.5"
   },
