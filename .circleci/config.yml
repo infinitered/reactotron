@@ -314,7 +314,6 @@ jobs:
             bundle exec fastlane setup
       - release-reactotron-app:
           os: MacOS
-
   release_app:
     <<: *defaults
     executor: *node_executor
@@ -339,8 +338,13 @@ workflows:
           filters:
             branches:
               ignore: *release_branch_names
-      - publish-docs/build_docs:
+      - hold:
+          type: approval
+          requires:
+            - build_and_test
+      - publish-docs/build_docs_with_approval:
           <<: *ir_docs_config
+          manual_approval_granted: "yes"
           filters:
             branches:
               ignore: *release_branch_names
