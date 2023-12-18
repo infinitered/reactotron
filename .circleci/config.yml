@@ -345,6 +345,8 @@ workflows:
       - publish-docs/build_docs_with_approval:
           <<: *ir_docs_config
           manual_approval_granted: "yes"
+          requires:
+            - hold
           filters:
             branches:
               ignore: *release_branch_names
