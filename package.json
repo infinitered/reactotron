@@ -49,6 +49,8 @@
   "resolutions": {
     "@nx/devkit": "17.0.3",
     "@types/react": "18.2.35",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "electron-webpack": "patch:electron-webpack@npm%3A2.8.2#./.yarn/patches/electron-webpack-npm-2.8.2-1bda600605.patch",
     "react-hotkeys": "patch:react-hotkeys@npm%3A2.0.0#./.yarn/patches/react-hotkeys-npm-2.0.0-8e6c50bd05.patch",
     "webpack": "patch:webpack@npm%3A4.47.0#./.yarn/patches/webpack-npm-4.47.0-42e477a08c.patch",
@@ -78,5 +80,11 @@
     "build-and-test:local": "yarn build && yarn package:validate && yarn lint && yarn format:check && yarn test && yarn typecheck",
     "package:validate": "zx scripts/package.validate.mjs"
   },
-  "packageManager": "yarn@3.6.3"
+  "packageManager": "yarn@3.6.3",
+  "//1": "Below is a workaround for a hooks error ... need to figure out why this is happening",
+  "//2": "and move this into reactotron-app's deps instead of root.",
+  "//3": "Some sort of bundler, webpack, rollup, nx, yarn issue",
+  "dependencies": {
+    "mobx-react-lite": "^4.0.5"
+  }
 }

@@ -24661,18 +24661,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.0.0":
-  version: 18.0.0
-  resolution: "react-dom@npm:18.0.0"
-  dependencies:
-    loose-envify: ^1.1.0
-    scheduler: ^0.21.0
-  peerDependencies:
-    react: ^18.0.0
-  checksum: dd0ba9f2f31dd728076c892a95b2f5a8dfe79136431b0289afb46eec39d0ca6b6f0f40a60fd8aa6ef702c98ce7c26100d3d4dbc35c7c9e87429cd04f84cb58bd
-  languageName: node
-  linkType: hard
-
 "react-dom@npm:18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
@@ -25013,24 +25001,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.0.0":
-  version: 18.0.0
-  resolution: "react@npm:18.0.0"
-  dependencies:
-    loose-envify: ^1.1.0
-  checksum: 293020b96536b3c7113ee57ca5c990a3f25649d1751b1c7a3aabd16dff0691fe9f1eed1206616d0906d05933536052037340a0c8d0941ff870b0eb469a2f975b
-  languageName: node
-  linkType: hard
-
-"react@npm:18.1.0":
-  version: 18.1.0
-  resolution: "react@npm:18.1.0"
-  dependencies:
-    loose-envify: ^1.1.0
-  checksum: 5bb296b561b43ef2220395da4faac86c14a087c8c80e1a7598a5740f01ee605c11eaf249985c1e2000971c4cd32ccb46d40f00479bbd9fb6b1c7cf857393b7d4
-  languageName: node
-  linkType: hard
-
 "react@npm:18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
@@ -25120,7 +25090,6 @@ __metadata:
     jest-environment-jsdom: ^29.7.0
     mime: ^3.0.0
     mobx: ^6.12.0
-    mobx-react-lite: ^4.0.5
     mobx-state-tree: ^5.4.0
     prettier: ^3.0.3
     react: 18.2.0
@@ -25305,8 +25274,8 @@ __metadata:
     eslint-plugin-standard: ^5.0.0
     jest: ^29.7.0
     prettier: ^3.0.3
-    react: 18.0.0
-    react-dom: 18.0.0
+    react: 18.2.0
+    react-dom: 18.2.0
     react-icons: ^4.11.0
     react-json-tree: 0.18.0
     react-modal: 3.16.1
@@ -25327,8 +25296,8 @@ __metadata:
     ts-jest: ^29.1.1
     typescript: ^4.9.5
   peerDependencies:
-    react: 18.0.0
-    react-dom: 18.0.0
+    react: ">=18.0.0"
+    react-dom: ">=18.0.0"
     react-icons: ">=4.2.0"
     react-modal: ">=3.16.1"
     react-motion: ">=0.5.2"
@@ -25492,7 +25461,7 @@ __metadata:
     npm-run-all: 4.1.5
     prettier: ^3.0.3
     query-string: 6.14.1
-    react: 18.1.0
+    react: 18.2.0
     react-native: 0.72.6
     react-native-flipper: 0.164.0
     reactotron-core-client: "workspace:*"
@@ -25569,6 +25538,7 @@ __metadata:
     eslint-plugin-react: ^7.33.2
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-standard: ^5.0.0
+    mobx-react-lite: ^4.0.5
     nx: 17.0.3
     prettier: ^3.0.3
     typescript: ^4.9.5
@@ -26930,15 +26900,6 @@ __metadata:
   dependencies:
     loose-envify: ^1.1.0
   checksum: 232149125c10f10193b1340ec4bbf14a8e6a845152790d6fd6f58207642db801abdb5a21227561a0a93871b98ba47539a6233b4e6155aae72d6db6db9f9f09b3
-  languageName: node
-  linkType: hard
-
-"scheduler@npm:^0.21.0":
-  version: 0.21.0
-  resolution: "scheduler@npm:0.21.0"
-  dependencies:
-    loose-envify: ^1.1.0
-  checksum: 4f8285076041ed2c81acdd1faa987f1655fdbd30554bc667c1ea64743fc74fb3a04ca7d27454b3d678735df5a230137a3b84756061b43dc5796e80701b66d124
   languageName: node
   linkType: hard
 

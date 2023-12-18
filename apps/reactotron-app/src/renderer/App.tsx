@@ -15,7 +15,6 @@ import Overlay from "./pages/reactNative/Overlay"
 import Storybook from "./pages/reactNative/Storybook"
 import CustomCommands from "./pages/customCommands"
 import Help from "./pages/help"
-import { observer } from "mobx-react-lite"
 
 const AppContainer = styled.div`
   position: absolute;
@@ -42,14 +41,6 @@ const MainContainer = styled.div`
   flex: 1;
 `
 
-window.React2 = React
-console.log(window.React1 === window.React2)
-console.log(window.React1?.version, window.React2?.version)
-
-const Ez = observer(() => {
-  return <div>ez</div>
-})
-
 function App() {
   return (
     <Router>
@@ -57,7 +48,6 @@ function App() {
         <AppContainer>
           <TopSection>
             <SideBar />
-            <Ez />
             <MainContainer>
               <Routes>
                 {/* Home */}

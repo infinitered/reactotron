@@ -18,12 +18,5 @@ module.exports = function (config) {
       ...config.output,
       hashFunction: "sha256",
     },
-    resolve: {
-      ...config.resolve,
-      alias: {
-        ...config.resolve.alias,
-        react: path.resolve("../../node_modules/react"),
-      },
-    },
   }
 }
