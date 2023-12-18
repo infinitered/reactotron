@@ -20,6 +20,10 @@ anchors:
     - master
     - beta
     - alpha
+  fork_prs_and_releases_filter: &fork_prs_and_releases_filter
+    - /^(master|beta|alpha|pull\/\d+)$/
+  pull_requests: &pull_request_branch_filter
+    - /^pull\/\d+/
   # All branches
   release_branch_filter: &release_branch_filter
     ignore: /.*/
@@ -314,7 +318,6 @@ jobs:
             bundle exec fastlane setup
       - release-reactotron-app:
           os: MacOS
-
   release_app:
     <<: *defaults
     executor: *node_executor
@@ -341,9 +344,53 @@ workflows:
               ignore: *release_branch_names
       - publish-docs/build_docs:
           <<: *ir_docs_config
+          requires:
+            - build_and_test
           filters:
             branches:
-              ignore: *release_branch_names
+              ignore: *fork_prs_and_releases_filter
+      - approve_building_code_from_fork:
+          type: approval
+          requires:
+            - build_and_test
+          filters:
+            branches:
+              only: *pull_request_branch_filter
+      - publish-docs/build_docs_include_forks:
+          <<: *ir_docs_config
+          confirm_manual_approval_in_place: "yes"
+          requires:
+            - approve_building_code_from_fork
+          filters:
+            branches:
+              only: *pull_request_branch_filter
+
+  #  pull_request_from_fork:
+  #    # prevents the workflow from running when `force-publish-docs` is true
+  #    when:
+  #      and:
+  #        - not: << pipeline.parameters.force-publish-docs >>
+  #        - true  # Placeholder for correct YAML structure
+  #    jobs:
+  #      - build_and_test:
+  #          filters:
+  #            branches:
+  #              only: *pull_request_branch_filter
+  #      - approve_building_code_from_fork:
+  #          type: approval
+  #          requires:
+  #            - build_and_test
+  #          filters:
+  #            branches:
+  #              only: *pull_request_branch_filter
+  #      - publish-docs/build_docs_include_forks:
+  #          <<: *ir_docs_config
+  #          confirm_manual_approval_in_place: "yes"
+  #          requires:
+  #            - approve_building_code_from_fork
+  #          filters:
+  #            branches:
+  #              only: *pull_request_branch_filter
 
 
   # Allows for manual publishing of docs independent of deployment
