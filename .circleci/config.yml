@@ -338,15 +338,15 @@ workflows:
           filters:
             branches:
               ignore: *release_branch_names
-      - hold:
+      - approve_building_code_from_fork:
           type: approval
           requires:
             - build_and_test
-      - publish-docs/build_docs_with_approval:
+      - publish-docs/build_docs_include_forks:
           <<: *ir_docs_config
           manual_approval_granted: "yes"
           requires:
-            - hold
+            - approve_building_code_from_fork
           filters:
             branches:
               ignore: *release_branch_names
