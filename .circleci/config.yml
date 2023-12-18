@@ -344,7 +344,7 @@ workflows:
             - build_and_test
       - publish-docs/build_docs_include_forks:
           <<: *ir_docs_config
-          manual_approval_granted: "yes"
+          confirm_manual_approval_in_place: "yes"
           requires:
             - approve_building_code_from_fork
           filters:
