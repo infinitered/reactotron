@@ -41,7 +41,7 @@ On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotro
 
 ## How to setup Reactotron in our app
 
-- [**React Native**](./docs/plugin-docs/quick-start-react-native.md#installing-reactotronapp)
+- [**React Native**](./docs/quick-start/react-native.md)
 - [**React**](./docs/plugin-docs/quick-start-react-js.md#installing-reactotronapp)
 
 ## How to use Reactotron's features/plugins
