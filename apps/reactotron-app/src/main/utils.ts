@@ -14,7 +14,7 @@ export const setupAndroidDeviceIPCCommands = (mainWindow: BrowserWindow) => {
     devicesProcess.stdout.setEncoding("utf8")
     devicesProcess.stdout.on("data", (data) => {
       data = data.toString()
-      console.log("Got asb device list", data)
+      console.log("Got adb device list", data)
       mainWindow.webContents.send("device-list", data)
     })
   })

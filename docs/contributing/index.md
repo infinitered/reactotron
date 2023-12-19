@@ -14,7 +14,7 @@ You should see the reactotron electron app open on your machine with the develop
 
 ### Step 2: Create an Ignite react-native app to test your changes
 
-1. Initialize a new [ignite app](https://github.com/infinitered/ignite) in the same folder where you cloned the reactotron repo (the two projects should live side-by-side): `npx ignite-cli new PizzaApp --yes`. This new app will already be set up to use reactotron.
+1. Initialize a new [ignite app](https://github.com/infinitered/ignite) onto your machine. `npx ignite-cli new PizzaApp --yes`. This new app will already be set up to use reactotron.
 2. Once this app is done initializing, start it: `cd PizzaApp && yarn start`.
 3. Launch the app in the simulator of your choice.
 4. You should see output in the reactotron app.
@@ -31,7 +31,7 @@ If you make changes to the non-electron app packages in this monorepo like `reac
 
 You can run `yarn build` to build all reactotron packages, or `yarn build:watch` to watch and rebuild changes automatically.
 
-Then, to link the packages to your react-native PizzaApp, run:
+Then, to link the packages to your react-native `PizzaApp`, run:
 
 ```sh
 npx zx scripts/install-workspace-packages-in-target.mjs ~/Code/PizzaApp
@@ -40,7 +40,7 @@ npx zx scripts/install-workspace-packages-in-target.mjs ~/Code/PizzaApp
 or if you want to watch for rebuilds and automatically link them:
 
 ```sh
-npx nx watch --all -- "npx zx scripts/install-workspace-packages-in-target.mjs ~/Code/PizzaApp"
+npx nx watch --all -- "npx zx scripts/install-workspace-packages-in-target.mjs ~/Code/PizzaApp
 ```
 
 Make sure that the path to your `PizzaApp` is an absolute path and not a relative one (i.e. `~/Code/PizzaApp` instead of `../PizzaApp`)
