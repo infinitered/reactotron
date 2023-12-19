@@ -8,6 +8,7 @@ import {
   getPlatformDetails,
   getScreen,
   getIcon,
+  getConnectionName,
 } from "../../util/connectionHelpers"
 import { Connection } from "../../contexts/Standalone/useStandalone"
 import Welcome from "./welcome"
@@ -28,7 +29,7 @@ const ConnectionContainer = styled.div`
 const IconContainer = styled.div`
   color: ${(props) => props.theme.foregroundLight};
 `
-const PlatformName = styled.div`
+const AppName = styled.div`
   padding-left: 10px;
   color: ${(props) => props.theme.tag};
   width: 25%;
@@ -47,11 +48,12 @@ const Screen = styled.div`
 `
 
 function ConnectionCell({ connection }: { connection: Connection }) {
-  const [ConnectionIcon, platformName, platformDetails, screen] = useMemo(() => {
+  const [ConnectionIcon, platformName, platformDetails, connectionName, screen] = useMemo(() => {
     return [
       getIcon(connection),
       getPlatformName(connection),
       getPlatformDetails(connection),
+      getConnectionName(connection),
       getScreen(connection),
     ]
   }, [connection])
@@ -61,8 +63,10 @@ function ConnectionCell({ connection }: { connection: Connection }) {
       <IconContainer>
         <ConnectionIcon size={32} />
       </IconContainer>
-      <PlatformName>{platformName}</PlatformName>
-      <PlatformDetails>{platformDetails}</PlatformDetails>
+      <AppName>{connectionName}</AppName>
+      <PlatformDetails>
+        {platformName} {platformDetails}
+      </PlatformDetails>
       <Screen>{screen}</Screen>
     </ConnectionContainer>
   )
