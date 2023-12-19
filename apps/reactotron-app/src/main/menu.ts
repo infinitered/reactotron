@@ -94,7 +94,13 @@ function buildViewMenu(window: Electron.BrowserWindow, isDevelopment: boolean) {
       click: () => {
         ;(window as any).toggleDevTools()
       },
-    }
+    },
+    { role: "separator" },
+    { role: "togglefullscreen" },
+    { role: "resetZoom" },
+    { role: "zoomIn" },
+    { role: "zoomOut" },
+    { role: "separator" }
   )
 
   // add Toggle Sidebar
