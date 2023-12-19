@@ -1,4 +1,4 @@
-import { Instance, t } from "mobx-state-tree"
+import { type Instance, t } from "mobx-state-tree"
 
 export const ConnectionModel = t.model({
   clientId: t.string,
