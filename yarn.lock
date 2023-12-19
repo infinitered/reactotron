@@ -25090,6 +25090,7 @@ __metadata:
     jest-environment-jsdom: ^29.7.0
     mime: ^3.0.0
     mobx: ^6.12.0
+    mobx-react-lite: ^4.0.5
     mobx-state-tree: ^5.4.0
     prettier: ^3.0.3
     react: 18.2.0
@@ -25538,7 +25539,6 @@ __metadata:
     eslint-plugin-react: ^7.33.2
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-standard: ^5.0.0
-    mobx-react-lite: ^4.0.5
     nx: 17.0.3
     prettier: ^3.0.3
     typescript: ^4.9.5

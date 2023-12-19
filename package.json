@@ -80,11 +80,5 @@
     "build-and-test:local": "yarn build && yarn package:validate && yarn lint && yarn format:check && yarn test && yarn typecheck",
     "package:validate": "zx scripts/package.validate.mjs"
   },
-  "packageManager": "yarn@3.6.3",
-  "//1": "Below is a workaround for a hooks error ... need to figure out why this is happening",
-  "//2": "and move this into reactotron-app's deps instead of root.",
-  "//3": "Some sort of bundler, webpack, rollup, nx, yarn issue",
-  "dependencies": {
-    "mobx-react-lite": "^4.0.5"
-  }
+  "packageManager": "yarn@3.6.3"
 }
