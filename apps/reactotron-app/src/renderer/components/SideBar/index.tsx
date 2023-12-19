@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from "react"
-import StandaloneContext from "../../contexts/Standalone"
+import React, { useEffect } from "react"
 
 import SidebarStateless from "./Sidebar"
 import { useStore } from "../../models/RootStore"
@@ -8,7 +7,6 @@ import { ipcRenderer } from "electron"
 
 function SideBar() {
   const store = useStore()
-  const { serverStatus } = useContext(StandaloneContext)
 
   useEffect(() => {
     ipcRenderer.on("sidebar:toggle", () => {
@@ -20,7 +18,7 @@ function SideBar() {
     }
   }, [store])
 
-  return <SidebarStateless isOpen={store.sidebarOpen} serverStatus={serverStatus} />
+  return <SidebarStateless isOpen={store.sidebarOpen} serverStatus={store.serverStatus} />
 }
 
 export default observer(SideBar)

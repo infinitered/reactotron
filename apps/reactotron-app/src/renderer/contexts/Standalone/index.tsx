@@ -3,6 +3,7 @@ import Server, { createServer } from "reactotron-core-server"
 
 import ReactotronBrain from "../../ReactotronBrain"
 import config from "../../config"
+import { useStore } from "../../models/RootStore"
 
 import useStandalone, { Connection, ServerStatus } from "./useStandalone"
 
@@ -23,6 +24,7 @@ const StandaloneContext = React.createContext<Context>({
 
 const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const reactotronServer = useRef<Server>(null)
+  const store = useStore()
 
   const {
     serverStatus,
@@ -43,14 +45,20 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
     reactotronServer.current = createServer({ port: config.get("serverPort") as number })
 
-    reactotronServer.current.on("start", serverStarted)
-    reactotronServer.current.on("stop", serverStopped)
+    reactotronServer.current.on("start", () => {
+      store.setServerStatus("started")
+    })
+    reactotronServer.current.on("stop", () => {
+      store.setServerStatus("stopped")
+    })
     // @ts-expect-error need to sync these types between reactotron-core-server and reactotron-app
     reactotronServer.current.on("connectionEstablished", connectionEstablished)
     reactotronServer.current.on("command", commandReceived)
     // @ts-expect-error need to sync these types between reactotron-core-server and reactotron-app
     reactotronServer.current.on("disconnect", connectionDisconnected)
-    reactotronServer.current.on("portUnavailable", portUnavailable)
+    reactotronServer.current.on("portUnavailable", () => {
+      store.setServerStatus("portUnavailable")
+    })
 
     reactotronServer.current.start()
 
