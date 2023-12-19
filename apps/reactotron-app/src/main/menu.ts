@@ -1,7 +1,7 @@
 import { Menu, app, shell } from "electron"
-import Store from "electron-store"
+import ElectronStore from "electron-store"
 
-const configStore = new Store()
+const configStore = new ElectronStore()
 
 const isDarwin = process.platform === "darwin"
 
@@ -89,6 +89,13 @@ function buildViewMenu(window: Electron.BrowserWindow, isDevelopment: boolean) {
       },
     },
     {
+      label: "Toggle Sidebar",
+      accelerator: "Shift+Ctrl+S",
+      click: () => {
+        window.webContents.send("sidebar:toggle")
+      },
+    },
+    {
       label: "Toggle Developer Tools",
       accelerator: "Alt+Command+I",
       click: () => {
@@ -96,7 +103,6 @@ function buildViewMenu(window: Electron.BrowserWindow, isDevelopment: boolean) {
       },
     },
     { role: "separator" },
-    { role: "togglefullscreen" },
     { role: "resetZoom" },
     { role: "zoomIn" },
     { role: "zoomOut" },

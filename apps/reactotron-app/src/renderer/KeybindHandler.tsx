@@ -5,12 +5,12 @@ import { useStore } from "./models/RootStore"
 
 const keyMap = {
   // Application wide
-  ToggleSidebar: {
-    name: "Toggle Sidebar",
-    group: "Application",
-    sequences: ["command+shift+s", "ctrl+shift+s"],
-    action: "keyup" as KeyEventName,
-  },
+  // ToggleSidebar: {
+  //   name: "Toggle Sidebar",
+  //   group: "Application",
+  //   sequences: ["command+shift+s", "ctrl+shift+s"],
+  //   action: "keyup" as KeyEventName,
+  // },
   // Tab Navigation
   OpenHomeTab: {
     name: "Home tab",
