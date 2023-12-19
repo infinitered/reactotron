@@ -1,4 +1,5 @@
 import { type Instance, t } from "mobx-state-tree"
+import { withSetPropAction } from "./helpers/withSetPropAction"
 
 export const RootStoreModel = t
   .model({
@@ -10,12 +11,10 @@ export const RootStoreModel = t
       return store.sidebar === "open"
     },
   }))
+  .actions(withSetPropAction)
   .actions((store) => ({
     toggleSidebar() {
       store.sidebar = store.sidebarOpen ? "closed" : "open"
-    },
-    setServerStatus(status: typeof store.serverStatus) {
-      store.serverStatus = status
     },
   }))
 

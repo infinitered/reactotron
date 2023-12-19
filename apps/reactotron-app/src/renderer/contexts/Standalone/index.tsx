@@ -46,10 +46,10 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     reactotronServer.current = createServer({ port: config.get("serverPort") as number })
 
     reactotronServer.current.on("start", () => {
-      store.setServerStatus("started")
+      store.setProp("serverStatus", "started")
     })
     reactotronServer.current.on("stop", () => {
-      store.setServerStatus("stopped")
+      store.setProp("serverStatus", "stopped")
     })
     // @ts-expect-error need to sync these types between reactotron-core-server and reactotron-app
     reactotronServer.current.on("connectionEstablished", connectionEstablished)
@@ -57,7 +57,7 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     // @ts-expect-error need to sync these types between reactotron-core-server and reactotron-app
     reactotronServer.current.on("disconnect", connectionDisconnected)
     reactotronServer.current.on("portUnavailable", () => {
-      store.setServerStatus("portUnavailable")
+      store.setProp("serverStatus", "portUnavailable")
     })
 
     reactotronServer.current.start()
