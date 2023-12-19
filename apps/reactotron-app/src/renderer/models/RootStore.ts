@@ -19,6 +19,7 @@ export const RootStoreModel = t
   }))
 
 export type RootStore = Instance<typeof RootStoreModel>
+export type ServerStatus = RootStore["serverStatus"]
 
 // Singleton
 let _rootStore = null

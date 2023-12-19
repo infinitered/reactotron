@@ -4,8 +4,9 @@ import { MdSwapVert as ExpandIcon } from "react-icons/md"
 
 import config from "../../config"
 import { getPlatformName, getPlatformDetails } from "../../util/connectionHelpers"
-import { Connection, ServerStatus } from "../../contexts/Standalone/useStandalone"
+import { Connection } from "../../contexts/Standalone/useStandalone"
 import ConnectionSelector from "../ConnectionSelector"
+import { type ServerStatus } from "../../models/RootStore"
 
 const Container = styled.div`
   border-top: 1px solid ${(props) => props.theme.chromeLine};

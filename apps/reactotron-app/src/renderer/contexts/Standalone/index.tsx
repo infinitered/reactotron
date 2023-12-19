@@ -5,18 +5,16 @@ import ReactotronBrain from "../../ReactotronBrain"
 import config from "../../config"
 import { useStore } from "../../models/RootStore"
 
-import useStandalone, { Connection, ServerStatus } from "./useStandalone"
+import useStandalone, { Connection } from "./useStandalone"
 
 // TODO: Move up to better places like core somewhere!
 interface Context {
-  serverStatus: ServerStatus
   connections: Connection[]
   selectedConnection: Connection
   selectConnection: (clientId: string) => void
 }
 
 const StandaloneContext = React.createContext<Context>({
-  serverStatus: "stopped",
   connections: [],
   selectedConnection: null,
   selectConnection: null,
@@ -27,19 +25,15 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const store = useStore()
 
   const {
-    serverStatus,
     connections,
     selectedClientId,
     selectedConnection,
     selectConnection,
     clearSelectedConnectionCommands,
-    serverStarted,
-    serverStopped,
     connectionEstablished,
     commandReceived,
     connectionDisconnected,
     addCommandListener,
-    portUnavailable,
   } = useStandalone()
 
   useEffect(() => {
@@ -65,14 +59,7 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return () => {
       reactotronServer.current.stop()
     }
-  }, [
-    serverStarted,
-    serverStopped,
-    connectionEstablished,
-    commandReceived,
-    connectionDisconnected,
-    portUnavailable,
-  ])
+  }, [store, connectionEstablished, commandReceived, connectionDisconnected])
 
   const sendCommand = useCallback(
     (type: string, payload: any, clientId?: string) => {
@@ -87,7 +74,6 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <StandaloneContext.Provider
       value={{
-        serverStatus,
         connections,
         selectedConnection,
         selectConnection,
