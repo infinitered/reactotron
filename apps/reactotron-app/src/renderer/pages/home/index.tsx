@@ -1,16 +1,17 @@
-import React, { useContext, useMemo } from "react"
+import React, { useMemo } from "react"
 import { Header } from "reactotron-core-ui"
 import styled from "styled-components"
 
-import StandaloneContext from "../../contexts/Standalone"
 import {
   getPlatformName,
   getPlatformDetails,
   getScreen,
   getIcon,
 } from "../../util/connectionHelpers"
-import { Connection } from "../../contexts/Standalone/useStandalone"
 import Welcome from "./welcome"
+import { Connection } from "../../models/Connection"
+import { useStore } from "../../models/RootStore"
+import { observer } from "mobx-react-lite"
 
 const Container = styled.div`
   display: flex;
@@ -69,7 +70,7 @@ function ConnectionCell({ connection }: { connection: Connection }) {
 }
 
 function Connections() {
-  const { connections } = useContext(StandaloneContext)
+  const { connections } = useStore()
 
   return (
     <Container>
@@ -85,4 +86,4 @@ function Connections() {
   )
 }
 
-export default Connections
+export default observer(Connections)

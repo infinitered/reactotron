@@ -12,6 +12,8 @@ import {
 } from "reactotron-core-ui"
 import { MdSearch, MdDeleteSweep, MdFilterList, MdSwapVert, MdReorder } from "react-icons/md"
 import styled from "styled-components"
+import { useStore } from "../../models/RootStore"
+import { observer } from "mobx-react-lite"
 
 const Container = styled.div`
   display: flex;
@@ -48,7 +50,8 @@ const SearchInput = styled.input`
 `
 
 function Timeline() {
-  const { sendCommand, clearCommands, commands, openDispatchModal } = useContext(ReactotronContext)
+  const store = useStore()
+  const { sendCommand, openDispatchModal } = useContext(ReactotronContext)
   const {
     isSearchOpen,
     toggleSearch,
@@ -63,7 +66,7 @@ function Timeline() {
     setHiddenCommands,
   } = useContext(TimelineContext)
 
-  let filteredCommands = filterCommands(commands, search, hiddenCommands)
+  let filteredCommands = filterCommands(store.currentCommands, search, hiddenCommands)
 
   if (isReversed) {
     filteredCommands = filteredCommands.reverse()
@@ -104,7 +107,7 @@ function Timeline() {
             tip: "Clear",
             icon: MdDeleteSweep,
             onClick: () => {
-              clearCommands()
+              store.clearCommands()
             },
           },
         ]}
@@ -162,4 +165,4 @@ function Timeline() {
   )
 }
 
-export default Timeline
+export default observer(Timeline)

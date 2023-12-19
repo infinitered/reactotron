@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { MdCheckCircle as Checkmark } from "react-icons/md"
 
 import { getIcon, getPlatformName, getPlatformDetails } from "../../util/connectionHelpers"
-import { Connection } from "../../contexts/Standalone/useStandalone"
+import { type Connection } from "../../models/Connection"
 
 const Container = styled.div`
   display: flex;

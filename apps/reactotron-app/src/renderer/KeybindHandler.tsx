@@ -81,6 +81,12 @@ const keyMap = {
     sequences: ["command+s", "ctrl+s"],
     action: "keyup" as KeyEventName,
   },
+  LogDiagnostic: {
+    name: "Log Reactotron diagnostic info",
+    group: "Application",
+    sequences: ["command+shift+i", "ctrl+shift+i"],
+    action: "keyup" as KeyEventName,
+  },
 }
 
 function KeybindHandler({ children }) {
@@ -129,6 +135,9 @@ function KeybindHandler({ children }) {
     },
     ClearTimeline: () => {
       clearCommands()
+    },
+    LogDiagnostic: () => {
+      store.logDiagnostic()
     },
   }
 
