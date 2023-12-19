@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.1.2](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.1...reactotron-app@3.1.2) (2023-12-19)
+
+
+### Bug Fixes
+
+* **app:** docs link ([#1372](https://github.com/infinitered/reactotron/issues/1372) by [@frankcalise](https://github.com/frankcalise)) ([f3c75a6](https://github.com/infinitered/reactotron/commit/f3c75a6d6e7d5b8098987c09a28e5f0d9720b352))
+
 ### [3.1.1](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.0...reactotron-app@3.1.1) (2023-12-13)
 
 ## [3.1.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0...reactotron-app@3.1.0) (2023-12-08)
