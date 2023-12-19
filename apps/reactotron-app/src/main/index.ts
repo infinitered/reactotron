@@ -102,3 +102,18 @@ app.on("ready", () => {
   // Sets up the electron IPC commands for android functionality on the Help screen.
   setupAndroidDeviceIPCCommands(mainWindow)
 })
+
+// // Add the React DevTools if in development mode.
+// // This doesn't seem to work; here's the issue: https://github.com/electron/electron/issues/32133
+// if (isDevelopment) {
+//   const reactDevToolsPath = path.join(
+//     os.homedir(),
+//     "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/5.0.0_0"
+//   )
+
+//   console.error("LOADING REACT DEV TOOLS FROM", reactDevToolsPath)
+
+//   app.whenReady().then(async () => {
+//     await session.defaultSession.loadExtension(reactDevToolsPath)
+//   })
+// }

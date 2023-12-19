@@ -13,7 +13,7 @@ import styled from "styled-components"
 
 import SideBarButton from "../SideBarButton"
 import { reactotronLogo } from "../../images"
-import { ServerStatus } from "../../contexts/Standalone/useStandalone"
+import { type ServerStatus } from "../../models/RootStore"
 
 interface SideBarContainerProps {
   $isOpen: boolean

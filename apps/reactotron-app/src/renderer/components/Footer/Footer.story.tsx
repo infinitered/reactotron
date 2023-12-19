@@ -2,12 +2,11 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
 
-import { Connection } from "../../contexts/Standalone/useStandalone"
-
 import Footer from "./Stateless"
+import { Connection, ConnectionModel } from "../../models/Connection"
 
 const testConnections: Connection[] = [
-  {
+  ConnectionModel.create({
     id: 0,
     clientId: "1",
     name: "Test 1",
@@ -15,8 +14,8 @@ const testConnections: Connection[] = [
     platform: "ios",
     platformVersion: "12",
     connected: true,
-  },
-  {
+  }),
+  ConnectionModel.create({
     id: 0,
     clientId: "1",
     name: "Test 2",
@@ -24,8 +23,8 @@ const testConnections: Connection[] = [
     platform: "ios",
     platformVersion: "12",
     connected: true,
-  },
-  {
+  }),
+  ConnectionModel.create({
     id: 0,
     clientId: "1",
     name: "Test 3",
@@ -33,8 +32,8 @@ const testConnections: Connection[] = [
     platform: "ios",
     platformVersion: "12",
     connected: true,
-  },
-  {
+  }),
+  ConnectionModel.create({
     id: 0,
     clientId: "1",
     name: "Test 4",
@@ -42,8 +41,8 @@ const testConnections: Connection[] = [
     platform: "ios",
     platformVersion: "12",
     connected: true,
-  },
-  {
+  }),
+  ConnectionModel.create({
     id: 0,
     clientId: "1",
     name: "Test 5",
@@ -51,7 +50,7 @@ const testConnections: Connection[] = [
     platform: "ios",
     platformVersion: "12",
     connected: true,
-  },
+  }),
 ]
 
 storiesOf("components/Footer", module)

@@ -7,8 +7,7 @@ import {
   FaEdge as IconBrowserEdge,
   FaChrome as IconBrowserChrome,
 } from "react-icons/fa"
-
-import { Connection } from "../contexts/Standalone/useStandalone"
+import { Connection } from "../models/Connection"
 
 const RX_FIREFOX = /Firefox\//
 const RX_SAFARI = /Safari\//

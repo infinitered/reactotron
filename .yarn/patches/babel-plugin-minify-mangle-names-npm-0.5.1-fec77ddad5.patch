@@ -1,0 +1,241 @@
+diff --git a/lib/scope-tracker.js b/lib/scope-tracker.js
+index ac51afdf1e1adbd3ece02dfeba43aba0651667ab..c85383ed65e140e50d2c6039cfd61f1d6008d818 100644
+--- a/lib/scope-tracker.js
++++ b/lib/scope-tracker.js
+@@ -21,7 +21,6 @@ module.exports = class ScopeTracker {
+    * @param {Scope} scope
+    */
+ 
+-
+   addScope(scope) {
+     if (!this.references.has(scope)) {
+       this.references.set(scope, new CountedSet());
+@@ -39,19 +38,23 @@ module.exports = class ScopeTracker {
+    * @param {String} name
+    */
+ 
+-
+   addReference(scope, binding, name) {
+     let parent = scope;
+ 
+     do {
+-      this.references.get(parent).add(name);
++      (this.references.get(parent) || this.references.get(parent.parent)).add(
++        name
++      );
+ 
+       if (!binding) {
+-        throw new Error(`Binding Not Found for ${name} during scopeTracker.addRefernce. ` + `Please report at ${newIssueUrl}`);
++        throw new Error(
++          `Binding Not Found for ${name} during scopeTracker.addRefernce. ` +
++            `Please report at ${newIssueUrl}`
++        );
+       }
+ 
+       if (binding.scope === parent) break;
+-    } while (parent = parent.parent);
++    } while ((parent = parent.parent));
+   }
+   /**
+    * has a Reference in the given {Scope} or a child Scope
+@@ -63,9 +66,10 @@ module.exports = class ScopeTracker {
+    * @param {String} name
+    */
+ 
+-
+   hasReference(scope, name) {
+-    return this.references.get(scope).has(name);
++    return (
++      this.references.get(scope) || this.references.get(scope.parent)
++    ).has(name);
+   }
+   /**
+    * Update reference count in all scopes between and including the
+@@ -77,22 +81,26 @@ module.exports = class ScopeTracker {
+    * @param {String} newName
+    */
+ 
+-
+   updateReference(scope, binding, oldName, newName) {
+     let parent = scope;
+ 
+     do {
+-      const ref = this.references.get(parent);
++      const ref =
++        this.references.get(parent) || this.references.get(parent.parent);
+       ref.delete(oldName);
+       ref.add(newName);
+ 
+       if (!binding) {
+         // Something went wrong - panic
+-        throw new Error("Binding Not Found during scopeTracker.updateRefernce " + `while updating "${oldName}" to "${newName}". ` + `Please report at ${newIssueUrl}`);
++        throw new Error(
++          "Binding Not Found during scopeTracker.updateRefernce " +
++            `while updating "${oldName}" to "${newName}". ` +
++            `Please report at ${newIssueUrl}`
++        );
+       }
+ 
+       if (binding.scope === parent) break;
+-    } while (parent = parent.parent);
++    } while ((parent = parent.parent));
+   }
+   /**
+    * has either a Binding or a Reference
+@@ -101,7 +109,6 @@ module.exports = class ScopeTracker {
+    * @param {String} name
+    */
+ 
+-
+   hasBindingOrReference(scope, binding, name) {
+     return this.hasReference(scope, name) || this.hasBinding(scope, name);
+   }
+@@ -117,7 +124,6 @@ module.exports = class ScopeTracker {
+    * @param {String} next
+    */
+ 
+-
+   canUseInReferencedScopes(binding, next) {
+     const tracker = this;
+ 
+@@ -129,32 +135,40 @@ module.exports = class ScopeTracker {
+     // https://bugs.webkit.org/show_bug.cgi?id=171041
+     // https://trac.webkit.org/changeset/217200/webkit/trunk/Source
+ 
+-
+     const maybeDecl = binding.path.parentPath;
+-    const isBlockScoped = maybeDecl.isVariableDeclaration({
+-      kind: "let"
+-    }) || maybeDecl.isVariableDeclaration({
+-      kind: "const"
+-    });
++    const isBlockScoped =
++      maybeDecl.isVariableDeclaration({
++        kind: "let",
++      }) ||
++      maybeDecl.isVariableDeclaration({
++        kind: "const",
++      });
+ 
+     if (isBlockScoped) {
+       const maybeFor = maybeDecl.parentPath;
+-      const isForLoopBinding = maybeFor.isForStatement({
+-        init: maybeDecl.node
+-      }) || maybeFor.isForXStatement({
+-        left: maybeDecl.node
+-      });
++      const isForLoopBinding =
++        maybeFor.isForStatement({
++          init: maybeDecl.node,
++        }) ||
++        maybeFor.isForXStatement({
++          left: maybeDecl.node,
++        });
+ 
+       if (isForLoopBinding) {
+         const fnParent = getFunctionParent(maybeFor);
+ 
+-        if (fnParent.isFunction({
+-          body: maybeFor.parent
+-        })) {
+-          const parentFunctionBinding = this.bindings.get(fnParent.scope).get(next);
++        if (
++          fnParent.isFunction({
++            body: maybeFor.parent,
++          })
++        ) {
++          const parentFunctionBinding = this.bindings
++            .get(fnParent.scope)
++            .get(next);
+ 
+           if (parentFunctionBinding) {
+-            const parentFunctionHasParamBinding = parentFunctionBinding.kind === "param";
++            const parentFunctionHasParamBinding =
++              parentFunctionBinding.kind === "param";
+ 
+             if (parentFunctionHasParamBinding) {
+               return false;
+@@ -184,8 +198,7 @@ module.exports = class ScopeTracker {
+             if (tracker.hasBindingOrReference(path.scope, binding, next)) {
+               canUse = false;
+             }
+-          }
+-
++          },
+         });
+ 
+         if (!canUse) {
+@@ -205,17 +218,22 @@ module.exports = class ScopeTracker {
+    * @param {Binding} binding
+    */
+ 
+-
+   addBinding(binding) {
+     if (!binding) {
+       return;
+     }
+ 
+-    const bindings = this.bindings.get(binding.scope);
++    const bindings =
++      this.bindings.get(binding.scope) ||
++      this.bindings.get(binding.scope.parent);
+     const existingBinding = bindings.get(binding.identifier.name);
+ 
+     if (existingBinding && existingBinding !== binding) {
+-      throw new Error(`scopeTracker.addBinding: ` + `Binding "${existingBinding.identifier.name}" already exists. ` + `Trying to add "${binding.identifier.name}" again.`);
++      throw new Error(
++        `scopeTracker.addBinding: ` +
++          `Binding "${existingBinding.identifier.name}" already exists. ` +
++          `Trying to add "${binding.identifier.name}" again.`
++      );
+     }
+ 
+     bindings.set(binding.identifier.name, binding);
+@@ -229,10 +247,15 @@ module.exports = class ScopeTracker {
+    * @param {Scope} toScope
+    */
+ 
+-
+   moveBinding(binding, toScope) {
+-    this.bindings.get(binding.scope).delete(binding.identifier.name);
+-    this.bindings.get(toScope).set(binding.identifier.name, binding);
++    (
++      this.bindings.get(binding.scope) ||
++      this.bindings.get(binding.scope.parent)
++    ).delete(binding.identifier.name);
++    (this.bindings.get(toScope) || this.bindings.get(toScope.parent)).set(
++      binding.identifier.name,
++      binding
++    );
+   }
+   /**
+    * has a Binding in the current {Scope}
+@@ -240,9 +263,10 @@ module.exports = class ScopeTracker {
+    * @param {String} name
+    */
+ 
+-
+   hasBinding(scope, name) {
+-    return this.bindings.get(scope).has(name);
++    return (this.bindings.get(scope) || this.bindings.get(scope.parent)).has(
++      name
++    );
+   }
+   /**
+    * Update the ScopeTracker on rename
+@@ -251,13 +275,12 @@ module.exports = class ScopeTracker {
+    * @param {String} newName
+    */
+ 
+-
+   renameBinding(scope, oldName, newName) {
+-    const bindings = this.bindings.get(scope);
++    const bindings =
++      this.bindings.get(scope) || this.bindings.get(scope.parent);
+     bindings.set(newName, bindings.get(oldName));
+     bindings.delete(oldName);
+   }
+-
+ };
+ /**
+  * Babel-7 returns null if there is no function parent

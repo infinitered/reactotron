@@ -1,16 +1,16 @@
 import React, { useContext } from "react"
 import { GlobalHotKeys, KeyEventName } from "react-hotkeys"
 import { ReactotronContext, StateContext } from "reactotron-core-ui"
-import LayoutContext from "./contexts/Layout"
+import { useStore } from "./models/RootStore"
 
 const keyMap = {
   // Application wide
-  ToggleSidebar: {
-    name: "Toggle Sidebar",
-    group: "Application",
-    sequences: ["command+shift+s", "ctrl+shift+s"],
-    action: "keyup" as KeyEventName,
-  },
+  // ToggleSidebar: {
+  //   name: "Toggle Sidebar",
+  //   group: "Application",
+  //   sequences: ["command+shift+s", "ctrl+shift+s"],
+  //   action: "keyup" as KeyEventName,
+  // },
   // Tab Navigation
   OpenHomeTab: {
     name: "Home tab",
@@ -81,10 +81,16 @@ const keyMap = {
     sequences: ["command+s", "ctrl+s"],
     action: "keyup" as KeyEventName,
   },
+  LogDiagnostic: {
+    name: "Log Reactotron diagnostic info",
+    group: "Application",
+    sequences: ["command+shift+i", "ctrl+shift+i"],
+    action: "keyup" as KeyEventName,
+  },
 }
 
 function KeybindHandler({ children }) {
-  const { toggleSideBar } = useContext(LayoutContext)
+  const store = useStore()
   const { openDispatchModal, openSubscriptionModal, clearCommands } = useContext(ReactotronContext)
   const { createSnapshot } = useContext(StateContext)
 
@@ -125,10 +131,13 @@ function KeybindHandler({ children }) {
 
     // Miscellaneous
     ToggleSidebar: () => {
-      toggleSideBar()
+      store.toggleSidebar()
     },
     ClearTimeline: () => {
       clearCommands()
+    },
+    LogDiagnostic: () => {
+      store.logDiagnostic()
     },
   }
 

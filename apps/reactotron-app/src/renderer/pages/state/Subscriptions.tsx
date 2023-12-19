@@ -13,6 +13,8 @@ import { getApplicationKeyMap } from "react-hotkeys"
 
 // Move this out of this page. We are just hacking around this for now
 import { KeybindKeys, getPlatformSequence } from "../help/components/Keybind"
+import { useStore } from "../../models/RootStore"
+import { observer } from "mobx-react-lite"
 
 const Container = styled.div`
   display: flex;
@@ -57,7 +59,8 @@ function getLatestChanges(commands: any[]) {
 }
 
 function Subscriptions() {
-  const { commands, openSubscriptionModal } = useContext(ReactotronContext)
+  const store = useStore()
+  const { openSubscriptionModal } = useContext(ReactotronContext)
   const { removeSubscription, clearSubscriptions } = useContext(StateContext)
 
   // Get setup to show the right keybind!
@@ -66,7 +69,7 @@ function Subscriptions() {
     ? getPlatformSequence(subscriptionModalKeybind)
     : null
 
-  const subscriptionValues = getLatestChanges(commands)
+  const subscriptionValues = getLatestChanges(store.currentCommands)
 
   return (
     <Container>
@@ -149,4 +152,4 @@ function Subscriptions() {
   )
 }
 
-export default Subscriptions
+export default observer(Subscriptions)
