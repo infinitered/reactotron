@@ -41,7 +41,9 @@
       "reactotron-core-ui",
       "react-router-dom",
       "styled-components",
-      "mobx-react-lite"
+      "mobx-react-lite",
+      "mobx-state-tree",
+      "mobx"
     ],
     "renderer": {
       "webpackConfig": "webpack.config.js",
