@@ -16168,6 +16168,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"github-url-to-object@npm:^4.0.4":
+  version: 4.0.6
+  resolution: "github-url-to-object@npm:4.0.6"
+  dependencies:
+    is-url: ^1.1.0
+  checksum: 5056c1197cd496e2246217bc2626ab0d10a8dd293c834cb5301181db86282c312dc91831e331933c0b02e75716c87b1c13d8d202dc314d0d23cca0c38f1afb6f
+  languageName: node
+  linkType: hard
+
 "glob-base@npm:^0.3.0":
   version: 0.3.0
   resolution: "glob-base@npm:0.3.0"
@@ -18479,7 +18488,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-url@npm:^1.2.4":
+"is-url@npm:^1.1.0, is-url@npm:^1.2.4":
   version: 1.2.4
   resolution: "is-url@npm:1.2.4"
   checksum: 100e74b3b1feab87a43ef7653736e88d997eb7bd32e71fd3ebc413e58c1cbe56269699c776aaea84244b0567f2a7d68dfaa512a062293ed2f9fdecb394148432
@@ -26228,6 +26237,7 @@ __metadata:
     styled-components: ^6.1.0
     ts-jest: ^29.1.1
     typescript: ^4.9.5
+    update-electron-app: ^3.0.0
     v8-compile-cache: ^2.4.0
   languageName: unknown
   linkType: soft
@@ -31042,6 +31052,17 @@ __metadata:
   bin:
     update-browserslist-db: cli.js
   checksum: 1e47d80182ab6e4ad35396ad8b61008ae2a1330221175d0abd37689658bdb61af9b705bfc41057fd16682474d79944fb2d86767c5ed5ae34b6276b9bed353322
+  languageName: node
+  linkType: hard
+
+"update-electron-app@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "update-electron-app@npm:3.0.0"
+  dependencies:
+    github-url-to-object: ^4.0.4
+    is-url: ^1.2.4
+    ms: ^2.1.1
+  checksum: 17b8250a3d8e9b31318d715fd2033e044b3755a257cc941a04c4d3df895f36fe94eca3381e716a89abb0ebf38f51243819fdaa517f66c89094f0eca86141aa67
   languageName: node
   linkType: hard
 
