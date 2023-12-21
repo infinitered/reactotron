@@ -3,7 +3,11 @@ import styled from "styled-components"
 import { MdSwapVert as ExpandIcon } from "react-icons/md"
 
 import config from "../../config"
-import { getPlatformName, getPlatformDetails } from "../../util/connectionHelpers"
+import {
+  getPlatformName,
+  getPlatformDetails,
+  getConnectionName,
+} from "../../util/connectionHelpers"
 import { Connection, ServerStatus } from "../../contexts/Standalone/useStandalone"
 import ConnectionSelector from "../ConnectionSelector"
 
@@ -45,18 +49,12 @@ const ExpandContainer = styled.div`
   cursor: pointer;
 `
 
-function renderDeviceName(connection: Connection) {
-  return `${getPlatformName(connection)} ${getPlatformDetails(connection)}`
-}
-
 function renderExpanded(
   serverStatus: ServerStatus,
   connections: Connection[],
   selectedConnection: Connection | null,
   onChangeConnection: (clientId: string | null) => void
 ) {
-  const showName = connections && connections.some((c) => c.name !== connections[0].name)
-
   return (
     <ConnectionContainer>
       {connections.map((c) => (
@@ -64,12 +62,19 @@ function renderExpanded(
           key={c.id}
           selectedConnection={selectedConnection}
           connection={c}
-          showName={showName}
           onClick={() => onChangeConnection(c.clientId)}
         />
       ))}
     </ConnectionContainer>
   )
+}
+
+function renderConnectionInfo(selectedConnection) {
+  return selectedConnection
+    ? `${getConnectionName(selectedConnection)} | ${getPlatformName(
+        selectedConnection
+      )} ${getPlatformDetails(selectedConnection)}`
+    : "Waiting for connection"
 }
 
 function renderCollapsed(
@@ -86,10 +91,7 @@ function renderCollapsed(
         <ConnectionInfo>Port 9090 unavailable.</ConnectionInfo>
       )}
       {serverStatus === "started" && (
-        <ConnectionInfo>
-          device:{" "}
-          {selectedConnection ? renderDeviceName(selectedConnection) : "Waiting for connection"}
-        </ConnectionInfo>
+        <ConnectionInfo>{renderConnectionInfo(selectedConnection)}</ConnectionInfo>
       )}
       {serverStatus === "stopped" && <ConnectionInfo>Waiting for server to start</ConnectionInfo>}
     </>
