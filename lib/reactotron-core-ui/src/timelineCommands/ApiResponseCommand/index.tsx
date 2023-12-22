@@ -13,6 +13,8 @@ import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 const NameContainer = styled.div`
   color: ${(props) => props.theme.bold};
   padding-bottom: 10px;
+  user-select: text;
+  cursor: text;
 `
 
 const TabsContainer = styled.div`
