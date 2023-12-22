@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useEffect } from "react"
+import { ipcRenderer } from "electron"
 import { HashRouter as Router, Route, Routes } from "react-router-dom"
 import styled from "styled-components"
 
@@ -15,6 +16,7 @@ import Overlay from "./pages/reactNative/Overlay"
 import Storybook from "./pages/reactNative/Storybook"
 import CustomCommands from "./pages/customCommands"
 import Help from "./pages/help"
+import Preferences from "./pages/preferences"
 
 const AppContainer = styled.div`
   position: absolute;
@@ -41,7 +43,21 @@ const MainContainer = styled.div`
   flex: 1;
 `
 
+function useOpenPreferences() {
+  useEffect(() => {
+    ipcRenderer.on("open-preferences", () => {
+      window.location.hash = "#/preferences"
+    })
+
+    return () => {
+      ipcRenderer.removeAllListeners("open-preferences")
+    }
+  }, [])
+}
+
 function App() {
+  useOpenPreferences()
+
   return (
     <Router>
       <RootContextProvider>
@@ -67,6 +83,9 @@ function App() {
 
                 {/* Custom Commands */}
                 <Route path="/customCommands" element={<CustomCommands />} />
+
+                {/* Preferences */}
+                <Route path="/preferences" element={<Preferences />} />
 
                 {/* Help */}
                 <Route path="/help" element={<Help />} />

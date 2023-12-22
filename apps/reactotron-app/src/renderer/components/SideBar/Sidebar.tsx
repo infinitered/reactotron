@@ -9,6 +9,7 @@ import {
   MdMobiledataOff,
 } from "react-icons/md"
 import { FaMagic } from "react-icons/fa"
+import { FaGear } from "react-icons/fa6"
 import styled from "styled-components"
 
 import SideBarButton from "../SideBarButton"
@@ -82,6 +83,7 @@ function SideBar({ isOpen, serverStatus }: { isOpen: boolean; serverStatus: Serv
         iconColor={iconColor}
       />
 
+      <SideBarButton icon={FaGear} path="/preferences" text="Preferences" hideTopBar />
       <SideBarButton icon={MdLiveHelp} path="/help" text="Help" hideTopBar />
     </SideBarContainer>
   )
