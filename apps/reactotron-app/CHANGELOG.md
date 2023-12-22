@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.1.4](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.3...reactotron-app@3.1.4) (2023-12-22)
+
+
+### Features
+
+* Zoom font size with cmd+ and cmd- ([#1361](https://github.com/infinitered/reactotron/issues/1361)) ([51658ac](https://github.com/infinitered/reactotron/commit/51658ac8447acb56b7bbb0f64f14ebc59c21bae4))
+
 ### [3.1.3](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.2...reactotron-app@3.1.3) (2023-12-19)
 
 ### [3.1.2](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.1...reactotron-app@3.1.2) (2023-12-19)
