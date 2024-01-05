@@ -9,6 +9,7 @@ import {
   EmptyState,
   ReactotronContext,
   TimelineContext,
+  RandomJoke,
 } from "reactotron-core-ui"
 import { MdSearch, MdDeleteSweep, MdFilterList, MdSwapVert, MdReorder } from "react-icons/md"
 import styled from "styled-components"
@@ -119,7 +120,7 @@ function Timeline() {
       <TimelineContainer>
         {filteredCommands.length === 0 ? (
           <EmptyState icon={MdReorder} title="No Activity">
-            Once your app connects and starts sending events, they will appear here.
+            <RandomJoke />
           </EmptyState>
         ) : (
           filteredCommands.map((command) => {
