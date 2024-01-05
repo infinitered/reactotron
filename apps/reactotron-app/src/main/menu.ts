@@ -94,7 +94,13 @@ function buildViewMenu(window: Electron.BrowserWindow, isDevelopment: boolean) {
       click: () => {
         ;(window as any).toggleDevTools()
       },
-    }
+    },
+    { role: "separator" },
+    { role: "togglefullscreen" },
+    { role: "resetZoom" },
+    { role: "zoomIn" },
+    { role: "zoomOut" },
+    { role: "separator" }
   )
 
   if (isDevelopment) {
@@ -159,6 +165,6 @@ export default function createMenu(window: Electron.BrowserWindow, isDevelopment
     buildHelpMenu(),
   ]
 
-  const menu = Menu.buildFromTemplate(template.filter(t => !!t) as any)
+  const menu = Menu.buildFromTemplate(template.filter((t) => !!t) as any)
   Menu.setApplicationMenu(menu)
 }
