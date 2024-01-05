@@ -52,10 +52,10 @@ function App() {
             <MainContainer>
               <Routes>
                 {/* Home */}
-                <Route path="/home" element={<Home />} />
+                <Route path="/" element={<Home />} />
 
                 {/* Timeline */}
-                <Route path="/" element={<Timeline />} />
+                <Route path="/timeline" element={<Timeline />} />
 
                 {/* State */}
                 <Route path="/state/subscriptions" element={<Subscriptions />} />
