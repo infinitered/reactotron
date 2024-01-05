@@ -62,7 +62,7 @@ export function RandomJoke() {
   useEffect(() => {
     const ref = Math.floor(Math.random() * jokes.length)
     jokeRef.current = ref
-  })
+  }, [])
 
   return (
     <>
