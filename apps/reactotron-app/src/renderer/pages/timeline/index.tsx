@@ -116,7 +116,7 @@ function Timeline() {
         {isSearchOpen && (
           <SearchContainer>
             <SearchLabel>Search</SearchLabel>
-            <SearchInput value={search} onChange={(e) => setSearch(e.target.value)} />
+            <SearchInput autoFocus value={search} onChange={(e) => setSearch(e.target.value)} />
             <ButtonContainer onClick={() => setSearch("")}>
               <FaTimes size={24} />
             </ButtonContainer>
