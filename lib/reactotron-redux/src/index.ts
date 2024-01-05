@@ -1,5 +1,4 @@
-import type { StoreEnhancer } from "redux"
-import { Plugin, Reactotron } from "reactotron-core-client"
+import type { Plugin, Reactotron, ReactotronCore } from "reactotron-core-client"
 
 import createCommandHander from "./commandHandler"
 import createSendAction from "./sendAction"
@@ -7,13 +6,15 @@ import createEnhancer from "./enhancer"
 import { DEFAULT_REPLACER_TYPE } from "./reducer"
 import { PluginConfig } from "./pluginConfig"
 
-function reactotronRedux(pluginConfig: PluginConfig = {}) {
+function reactotronRedux<Client extends ReactotronCore = ReactotronCore>(
+  pluginConfig: PluginConfig = {}
+) {
   const mergedPluginConfig: PluginConfig = {
     ...pluginConfig,
     restoreActionType: pluginConfig.restoreActionType || DEFAULT_REPLACER_TYPE,
   }
 
-  const storeCreationHandlers = []
+  const storeCreationHandlers: (() => void)[] = []
   const onReduxStoreCreation = (func: () => void) => {
     storeCreationHandlers.push(func)
   }
@@ -23,12 +24,14 @@ function reactotronRedux(pluginConfig: PluginConfig = {}) {
     })
   }
 
-  return (reactotron: Reactotron) => {
+  return (reactotron: Client) => {
     return {
       onCommand: createCommandHander(reactotron, mergedPluginConfig, onReduxStoreCreation),
       features: {
         createEnhancer: createEnhancer(reactotron, mergedPluginConfig, handleStoreCreation),
         setReduxStore: (store) => {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore shhhhhh -- this is a private API
           reactotron.reduxStore = store
           handleStoreCreation()
         },
@@ -38,21 +41,8 @@ function reactotronRedux(pluginConfig: PluginConfig = {}) {
   }
 }
 
+export type ReactotronReduxPlugin<Client extends ReactotronCore = ReactotronCore> = ReturnType<
+  typeof reactotronRedux<Client>
+>
+
 export { reactotronRedux }
-
-declare module "reactotron-core-client" {
-  // eslint-disable-next-line import/export
-  export interface Reactotron {
-    reduxStore?: any
-
-    /**
-     * Enhancer creator
-     */
-    createEnhancer?: (skipSettingStore?: boolean) => StoreEnhancer
-
-    /**
-     * Store setter
-     */
-    setReduxStore?: (store: any) => void
-  }
-}
