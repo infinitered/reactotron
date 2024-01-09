@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.1.5](https://github.com/infinitered/reactotron/compare/reactotron-redux@3.1.4...reactotron-redux@3.1.5) (2024-01-09)
+
+
+### Bug Fixes
+
+* update client types in reactotron-react-native-mmkv and reactotron-redux ([#1397](https://github.com/infinitered/reactotron/issues/1397)) ([1478ea1](https://github.com/infinitered/reactotron/commit/1478ea176552b9e0e6606a41f4cc2cd3a33fe587)), closes [#1391](https://github.com/infinitered/reactotron/issues/1391)
+
 ### [3.1.4](https://github.com/infinitered/reactotron/compare/reactotron-redux@3.1.4-beta.17...reactotron-redux@3.1.4) (2023-12-05)
 
 ### [3.1.4-beta.17](https://github.com/infinitered/reactotron/compare/reactotron-redux@3.1.4-beta.16...reactotron-redux@3.1.4-beta.17) (2023-12-01)
