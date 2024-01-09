@@ -1,6 +1,8 @@
-import type { Reactotron } from "reactotron-core-client"
+import type { InferFeatures, Reactotron } from "reactotron-core-client"
+import type { ReactotronReduxPlugin } from "."
 
-export const defaultReactotronMock: Reactotron = {
+export const defaultReactotronMock: Reactotron &
+  InferFeatures<Reactotron, ReactotronReduxPlugin<Reactotron>> = {
   startTimer: jest.fn(),
   configure: jest.fn(),
   close: jest.fn(),
@@ -27,6 +29,8 @@ export const defaultReactotronMock: Reactotron = {
   stateValuesResponse: jest.fn(),
   warn: jest.fn(),
   createEnhancer: jest.fn(),
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore shhhhhh -- this is a private API
   reduxStore: jest.fn(),
   setReduxStore: jest.fn(),
 }
