@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "mitt": "^3.0.1",
-    "query-string": "6.14.1",
+    "query-string": "8.1.0",
     "reactotron-core-client": "workspace:*"
   },
   "optionalDependencies": {
