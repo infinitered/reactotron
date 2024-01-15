@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.2.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.4...reactotron-app@3.2.0) (2024-01-15)
+
+
+### Features
+
+* **reactotron-app:** Move android devices from Help to Home ([#1396](https://github.com/infinitered/reactotron/issues/1396)) ([e7547c6](https://github.com/infinitered/reactotron/commit/e7547c6f36789e089bc2cfe1964e413268be2d05))
+
 ### [3.1.4](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.3...reactotron-app@3.1.4) (2023-12-22)
 
 
