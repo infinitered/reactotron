@@ -23,9 +23,13 @@ function reactotronRedux(pluginConfig: PluginConfig = {}) {
     })
   }
 
-  return (reactotron: Reactotron) => {
+  function plugin<Client extends Reactotron = Reactotron>(reactotron: Client) {
     return {
+      // Fires when we receive a command from the Reactotron app.
       onCommand: createCommandHander(reactotron, mergedPluginConfig, onReduxStoreCreation),
+
+      // All keys in this object will be attached to the main Reactotron instance
+      // and available to be called directly.
       features: {
         createEnhancer: createEnhancer(reactotron, mergedPluginConfig, handleStoreCreation),
         setReduxStore: (store) => {
@@ -34,8 +38,10 @@ function reactotronRedux(pluginConfig: PluginConfig = {}) {
         },
         reportReduxAction: createSendAction(reactotron),
       },
-    } satisfies Plugin<Reactotron>
+    } satisfies Plugin<Client>
   }
+
+  return plugin
 }
 
 export { reactotronRedux }
