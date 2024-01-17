@@ -98,10 +98,10 @@ function KeybindHandler({ children }) {
   const handlers = {
     // Tab Navigation
     OpenHomeTab: () => {
-      window.location.hash = "/home"
+      window.location.hash = "/"
     },
     OpenTimelineTab: () => {
-      window.location.hash = "/"
+      window.location.hash = "/timeline"
     },
     OpenStateTab: () => {
       window.location.hash = "/state/subscriptions"

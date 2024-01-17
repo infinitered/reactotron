@@ -98,7 +98,7 @@ function Help() {
             <ItemIconContainer>
               <RepoIcon size={40} />
             </ItemIconContainer>
-            Repo
+            GitHub Docs
           </ItemContainer>
           <ItemContainer onClick={openFeedback}>
             <ItemIconContainer>

@@ -68,10 +68,10 @@ On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotro
 
 ## Want to contribute? Here are some helpful reading materials:
 
-- [**Contributing**](./docs/contributing.md)
-- [**Architecture**](./docs/architecture.md)
-- [**Monorepo**](./docs/monorepo.md)
-- [**Release**](./docs/release.md)
+- [**Contributing**](./docs/contributing/index.md)
+- [**Architecture**](./docs/contributing/architecture.md)
+- [**Monorepo**](./docs/contributing/monorepo.md)
+- [**Release**](./docs/contributing/releasing.md)
 
 ## Troubleshooting
 
