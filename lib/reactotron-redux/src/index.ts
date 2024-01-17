@@ -1,4 +1,4 @@
-import type { Plugin, Reactotron, ReactotronCore } from "reactotron-core-client"
+import type { Plugin, ReactotronCore } from "reactotron-core-client"
 
 import createCommandHander from "./commandHandler"
 import createSendAction from "./sendAction"
@@ -6,9 +6,7 @@ import createEnhancer from "./enhancer"
 import { DEFAULT_REPLACER_TYPE } from "./reducer"
 import { PluginConfig } from "./pluginConfig"
 
-function reactotronRedux<Client extends ReactotronCore = ReactotronCore>(
-  pluginConfig: PluginConfig = {}
-) {
+function reactotronRedux(pluginConfig: PluginConfig = {}) {
   const mergedPluginConfig: PluginConfig = {
     ...pluginConfig,
     restoreActionType: pluginConfig.restoreActionType || DEFAULT_REPLACER_TYPE,
@@ -24,9 +22,13 @@ function reactotronRedux<Client extends ReactotronCore = ReactotronCore>(
     })
   }
 
-  return (reactotron: Client) => {
+  function plugin<Client extends ReactotronCore = ReactotronCore>(reactotron: Client) {
     return {
+      // Fires when we receive a command from the Reactotron app.
       onCommand: createCommandHander(reactotron, mergedPluginConfig, onReduxStoreCreation),
+
+      // All keys in this object will be attached to the main Reactotron instance
+      // and available to be called directly.
       features: {
         createEnhancer: createEnhancer(reactotron, mergedPluginConfig, handleStoreCreation),
         setReduxStore: (store) => {
@@ -37,12 +39,12 @@ function reactotronRedux<Client extends ReactotronCore = ReactotronCore>(
         },
         reportReduxAction: createSendAction(reactotron),
       },
-    } satisfies Plugin<Reactotron>
+    } satisfies Plugin<Client>
   }
+
+  return plugin
 }
 
-export type ReactotronReduxPlugin<Client extends ReactotronCore = ReactotronCore> = ReturnType<
-  typeof reactotronRedux<Client>
->
+export type ReactotronReduxPlugin = ReturnType<typeof reactotronRedux>
 
 export { reactotronRedux }
