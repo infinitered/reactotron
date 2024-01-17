@@ -2,6 +2,7 @@ import React, { useContext } from "react"
 import { GlobalHotKeys, KeyEventName } from "react-hotkeys"
 import { ReactotronContext, StateContext, TimelineContext } from "reactotron-core-ui"
 import LayoutContext from "./contexts/Layout"
+import { useAnalytics } from "./util/analyticsHelpers"
 
 const keyMap = {
   // Application wide
@@ -94,26 +95,34 @@ function KeybindHandler({ children }) {
   const { openDispatchModal, openSubscriptionModal, clearCommands } = useContext(ReactotronContext)
   const { openSearch, toggleSearch } = useContext(TimelineContext)
   const { createSnapshot } = useContext(StateContext)
+  const { sendKeyboardShortcut } = useAnalytics()
 
   const handlers = {
     // Tab Navigation
     OpenHomeTab: () => {
       window.location.hash = "/"
+
+      sendKeyboardShortcut("OpenHomeTab")
     },
     OpenTimelineTab: () => {
       window.location.hash = "/timeline"
+      sendKeyboardShortcut("OpenTimelineTab")
     },
     OpenStateTab: () => {
       window.location.hash = "/state/subscriptions"
+      sendKeyboardShortcut("OpenStateTab")
     },
     OpenReactNativeTab: () => {
       window.location.hash = "/native/overlay"
+      sendKeyboardShortcut("OpenReactNativeTab")
     },
     OpenCustomCommandsTab: () => {
       window.location.hash = "/customCommands"
+      sendKeyboardShortcut("OpenCustomCommandsTab")
     },
     OpenHelpTab: () => {
       window.location.hash = "/help"
+      sendKeyboardShortcut("OpenHelpTab")
     },
 
     // Modals
@@ -133,6 +142,7 @@ function KeybindHandler({ children }) {
     // Miscellaneous
     ToggleSidebar: () => {
       toggleSideBar()
+      sendKeyboardShortcut("ToggleSidebar")
     },
     ToggleSearch: () => {
       // If we're on the timeline page, toggle the search, otherwise switch to the timeline tab and open search
@@ -145,6 +155,7 @@ function KeybindHandler({ children }) {
     },
     ClearTimeline: () => {
       clearCommands()
+      sendKeyboardShortcut("ClearTimeline")
     },
   }
 
