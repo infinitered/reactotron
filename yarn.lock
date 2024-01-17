@@ -751,18 +751,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-syntax-flow@npm:^7.0.0":
-  version: 7.24.1
-  resolution: "@babel/plugin-syntax-flow@npm:7.24.1"
-  dependencies:
-    "@babel/helper-plugin-utils": "npm:^7.24.0"
-  peerDependencies:
-    "@babel/core": ^7.0.0-0
-  checksum: 10/87dfe32f3a3ea77941034fb2a39fdfc9ea18a994b8df40c3659a11c8787b2bc5adea029259c4eafc03cd35f11628f6533aa2a06381db7fcbe3b2cc3c2a2bb54f
-  languageName: node
-  linkType: hard
-
-"@babel/plugin-syntax-flow@npm:^7.12.1, @babel/plugin-syntax-flow@npm:^7.18.0, @babel/plugin-syntax-flow@npm:^7.23.3":
+"@babel/plugin-syntax-flow@npm:^7.0.0, @babel/plugin-syntax-flow@npm:^7.12.1, @babel/plugin-syntax-flow@npm:^7.18.0, @babel/plugin-syntax-flow@npm:^7.23.3":
   version: 7.23.3
   resolution: "@babel/plugin-syntax-flow@npm:7.23.3"
   dependencies:
@@ -22697,6 +22686,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-confirm-alert@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "react-confirm-alert@npm:3.0.6"
+  peerDependencies:
+    react: ">=18.0.0"
+    react-dom: ">=10.0.0"
+  checksum: 10/0d9c4f8f0b72da4ffee9ce60bd120fb71e9ca4b63370467e1900bcab4ab18c08aafb03ec7d6cf0872348b73235e6aef8e5b69933be2f8abfd375bd720eb2235a
+  languageName: node
+  linkType: hard
+
 "react-dev-utils@npm:^11.0.3":
   version: 11.0.4
   resolution: "react-dev-utils@npm:11.0.4"
@@ -23591,6 +23590,7 @@ __metadata:
     mime: "npm:^3.0.0"
     prettier: "npm:^3.0.3"
     react: "npm:18.2.0"
+    react-confirm-alert: "npm:^3.0.6"
     react-dom: "npm:18.2.0"
     react-ga4: "npm:^2.1.0"
     react-hotkeys: "npm:^2.0.0"

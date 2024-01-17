@@ -101,7 +101,6 @@ function KeybindHandler({ children }) {
     // Tab Navigation
     OpenHomeTab: () => {
       window.location.hash = "/"
-
       sendKeyboardShortcutAnalyticsEvent("OpenHomeTab")
     },
     OpenTimelineTab: () => {
@@ -137,6 +136,7 @@ function KeybindHandler({ children }) {
     },
     TakeSnapshot: () => {
       createSnapshot()
+      sendKeyboardShortcutAnalyticsEvent("TakeSnapshot")
     },
 
     // Miscellaneous

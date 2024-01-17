@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { HashRouter as Router, Route, Routes } from "react-router-dom"
 import styled from "styled-components"
 
@@ -15,7 +15,7 @@ import Overlay from "./pages/reactNative/Overlay"
 import Storybook from "./pages/reactNative/Storybook"
 import CustomCommands from "./pages/customCommands"
 import Help from "./pages/help"
-import { usePageTracking } from "./util/analyticsHelpers"
+import { useAnalytics, usePageTracking } from "./util/analyticsHelpers"
 
 const AppContainerComponent = styled.div`
   position: absolute;
@@ -28,8 +28,20 @@ const AppContainerComponent = styled.div`
   flex-direction: column;
   background-color: ${(props) => props.theme.background};
 `
+
+// This wrapper container is used to track page views within the app automatically using react-router-dom
+// as well as to initialize analytics on app load.
 const AppContainer: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   usePageTracking()
+  const { initializeAnalytics } = useAnalytics()
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      initializeAnalytics()
+    }, 250)
+    return () => clearTimeout(timer)
+  }, [])
+
   return <AppContainerComponent>{children}</AppContainerComponent>
 }
 
