@@ -95,34 +95,34 @@ function KeybindHandler({ children }) {
   const { openDispatchModal, openSubscriptionModal, clearCommands } = useContext(ReactotronContext)
   const { openSearch, toggleSearch } = useContext(TimelineContext)
   const { createSnapshot } = useContext(StateContext)
-  const { sendKeyboardShortcut } = useAnalytics()
+  const { sendKeyboardShortcutAnalyticsEvent } = useAnalytics()
 
   const handlers = {
     // Tab Navigation
     OpenHomeTab: () => {
       window.location.hash = "/"
 
-      sendKeyboardShortcut("OpenHomeTab")
+      sendKeyboardShortcutAnalyticsEvent("OpenHomeTab")
     },
     OpenTimelineTab: () => {
       window.location.hash = "/timeline"
-      sendKeyboardShortcut("OpenTimelineTab")
+      sendKeyboardShortcutAnalyticsEvent("OpenTimelineTab")
     },
     OpenStateTab: () => {
       window.location.hash = "/state/subscriptions"
-      sendKeyboardShortcut("OpenStateTab")
+      sendKeyboardShortcutAnalyticsEvent("OpenStateTab")
     },
     OpenReactNativeTab: () => {
       window.location.hash = "/native/overlay"
-      sendKeyboardShortcut("OpenReactNativeTab")
+      sendKeyboardShortcutAnalyticsEvent("OpenReactNativeTab")
     },
     OpenCustomCommandsTab: () => {
       window.location.hash = "/customCommands"
-      sendKeyboardShortcut("OpenCustomCommandsTab")
+      sendKeyboardShortcutAnalyticsEvent("OpenCustomCommandsTab")
     },
     OpenHelpTab: () => {
       window.location.hash = "/help"
-      sendKeyboardShortcut("OpenHelpTab")
+      sendKeyboardShortcutAnalyticsEvent("OpenHelpTab")
     },
 
     // Modals
@@ -142,7 +142,7 @@ function KeybindHandler({ children }) {
     // Miscellaneous
     ToggleSidebar: () => {
       toggleSideBar()
-      sendKeyboardShortcut("ToggleSidebar")
+      sendKeyboardShortcutAnalyticsEvent("ToggleSidebar")
     },
     ToggleSearch: () => {
       // If we're on the timeline page, toggle the search, otherwise switch to the timeline tab and open search
@@ -155,7 +155,7 @@ function KeybindHandler({ children }) {
     },
     ClearTimeline: () => {
       clearCommands()
-      sendKeyboardShortcut("ClearTimeline")
+      sendKeyboardShortcutAnalyticsEvent("ClearTimeline")
     },
   }
 

@@ -15,8 +15,9 @@ import Overlay from "./pages/reactNative/Overlay"
 import Storybook from "./pages/reactNative/Storybook"
 import CustomCommands from "./pages/customCommands"
 import Help from "./pages/help"
+import { usePageTracking } from "./util/analyticsHelpers"
 
-const AppContainer = styled.div`
+const AppContainerComponent = styled.div`
   position: absolute;
   top: 0;
   bottom: 0;
@@ -27,6 +28,10 @@ const AppContainer = styled.div`
   flex-direction: column;
   background-color: ${(props) => props.theme.background};
 `
+const AppContainer: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  usePageTracking()
+  return <AppContainerComponent>{children}</AppContainerComponent>
+}
 
 const TopSection = styled.div`
   overflow: hidden;
