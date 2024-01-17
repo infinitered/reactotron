@@ -60,6 +60,17 @@ ReactotronConfig, you'll need to add `reactotron-redux` as plugin
 
 Then, add enhancer from `Reactotron.createEnhancer()`
 
+## Using Redux-Toolkit configureStore
+
+Using (Redux-Toolkit's `configureStore`)[https://redux-toolkit.js.org/api/configureStore], add as an `enhancer`.
+
+```
+export const store = configureStore({
+  reducer: persistedReducer,
+  enhancers: __DEV__ ? [Reactotron.createEnhancer!()] : [],
+})
+```
+
 ## Using Redux createStore
 
 ```diff
@@ -81,18 +92,6 @@ import { createStore } from 'redux'
 
 - const store = createStore(rootReducer, compose(middleware))
 + const store = createStore(rootReducer, compose(middleware, Reactotron.createEnhancer()))
-```
-
-## Using Redux-Toolkit configureStore
-
-Using (Redux-Toolkit's `configureStore`)[https://redux-toolkit.js.org/api/configureStore], add as an `enhancer`.
-
-```
-export const store = configureStore({
-  reducer: persistedReducer,
-  enhancers: (getDefaultEnhancers) => getDefaultEnhancers().concat(Reactotron.createEnhancer()),
-})
-
 ```
 
 # Options
