@@ -9,6 +9,7 @@ import {
   MdWarning,
 } from "react-icons/md"
 import { storybookActiveImg, storybookInactiveImg } from "../../images"
+import { useAnalytics } from "../../util/analyticsHelpers"
 
 const Container = styled.div`
   display: flex;
@@ -60,6 +61,7 @@ const WarningDescription = styled.div`
 `
 
 function Storybook() {
+  const { sendAnalyticsEvent } = useAnalytics()
   const { isStorybookOn, turnOffStorybook, turnOnStorybook } = useContext(ReactNativeContext)
 
   return (
@@ -121,7 +123,16 @@ function Storybook() {
           <StorybookLogo src={isStorybookOn ? storybookActiveImg : storybookInactiveImg} />
 
           <ToggleContainer>
-            <RadioButton onClick={() => turnOnStorybook()}>
+            <RadioButton
+              onClick={() => {
+                turnOnStorybook()
+                sendAnalyticsEvent({
+                  category: "storybook",
+                  action: "ToggleStorybook",
+                  label: "On",
+                })
+              }}
+            >
               {isStorybookOn ? (
                 <MdRadioButtonChecked size={32} />
               ) : (
@@ -129,7 +140,16 @@ function Storybook() {
               )}
               <div>On</div>
             </RadioButton>
-            <RadioButton onClick={() => turnOffStorybook()}>
+            <RadioButton
+              onClick={() => {
+                turnOffStorybook()
+                sendAnalyticsEvent({
+                  category: "storybook",
+                  action: "ToggleStorybook",
+                  label: "Off",
+                })
+              }}
+            >
               {isStorybookOn ? (
                 <MdRadioButtonUnchecked size={32} />
               ) : (

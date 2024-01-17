@@ -77,11 +77,24 @@ export const useAnalytics = () => {
     [sendAnalyticsEvent]
   )
 
+  const sendExternalLinkAnalyticsEvent = useCallback(
+    (label: string) => {
+      sendAnalyticsEvent({
+        category: "external_link",
+        action: "click",
+        nonInteraction: false,
+        label,
+      })
+    },
+    [sendAnalyticsEvent]
+  )
+
   return {
     sendAnalyticsEvent,
     sendPageViewAnalyticsEvent,
     sendKeyboardShortcutAnalyticsEvent,
     sendCustomCommandAnalyticsEvent,
+    sendExternalLinkAnalyticsEvent,
   }
 }
 

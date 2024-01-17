@@ -19,6 +19,7 @@ import {
   MdCallReceived,
   MdFileDownload,
 } from "react-icons/md"
+import { useAnalytics } from "../../util/analyticsHelpers"
 
 const Container = styled.div`
   display: flex;
@@ -68,6 +69,7 @@ function SnapshotItem({
   removeSnapshot: (snapshot: Snapshot) => void
   openSnapshotRenameModal: (snapshot: Snapshot) => void
 }) {
+  const { sendAnalyticsEvent } = useAnalytics()
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -84,6 +86,10 @@ function SnapshotItem({
           onClick={(e) => {
             e.stopPropagation()
             clipboard.writeText(JSON.stringify(snapshot))
+            sendAnalyticsEvent({
+              category: "snapshot",
+              action: "copy",
+            })
           }}
         >
           <MdCallReceived size={24} />
@@ -95,6 +101,10 @@ function SnapshotItem({
           onClick={(e) => {
             e.stopPropagation()
             restoreSnapshot(snapshot)
+            sendAnalyticsEvent({
+              category: "snapshot",
+              action: "restore",
+            })
           }}
         >
           <MdFileUpload size={24} />
@@ -117,6 +127,10 @@ function SnapshotItem({
           onClick={(e) => {
             e.stopPropagation()
             removeSnapshot(snapshot)
+            sendAnalyticsEvent({
+              category: "snapshot",
+              action: "remove",
+            })
           }}
         >
           <MdDelete size={24} />
@@ -133,6 +147,7 @@ function SnapshotItem({
 }
 
 function Snapshots() {
+  const { sendAnalyticsEvent } = useAnalytics()
   const {
     snapshots,
     createSnapshot,
@@ -173,6 +188,10 @@ function Snapshots() {
             icon: MdCallReceived,
             onClick: () => {
               clipboard.writeText(JSON.stringify(snapshots))
+              sendAnalyticsEvent({
+                category: "snapshot",
+                action: "copy",
+              })
             },
           },
           {
@@ -180,6 +199,10 @@ function Snapshots() {
             icon: MdFileDownload,
             onClick: () => {
               createSnapshot()
+              sendAnalyticsEvent({
+                category: "snapshot",
+                action: "add",
+              })
             },
           },
         ]}
