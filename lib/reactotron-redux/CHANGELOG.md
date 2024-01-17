@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.1.6](https://github.com/infinitered/reactotron/compare/reactotron-redux@3.1.5...reactotron-redux@3.1.6) (2024-01-17)
+
+
+### Bug Fixes
+
+* **reactotron-redux:** Typescript fixes for reactotron-redux interface ([#1404](https://github.com/infinitered/reactotron/issues/1404) by @Jpoliachik) ([5dacbd9](https://github.com/infinitered/reactotron/commit/5dacbd9525bae74a70ce6b0ab9e9cc6b8778f708))
+
 ### [3.1.5](https://github.com/infinitered/reactotron/compare/reactotron-redux@3.1.4...reactotron-redux@3.1.5) (2024-01-09)
 
 
