@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.3.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.2.0...reactotron-app@3.3.0) (2024-01-17)
+
+
+### Features
+
+* make home screen default route when app starts up ([#1393](https://github.com/infinitered/reactotron/issues/1393)) ([b78afb8](https://github.com/infinitered/reactotron/commit/b78afb89ba8e5e4805f07c7bc4dd6d9e3dd9e989))
+
 ## [3.2.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.4...reactotron-app@3.2.0) (2024-01-15)
 
 
