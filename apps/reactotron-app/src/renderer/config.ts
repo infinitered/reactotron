@@ -10,7 +10,7 @@ const schema = {
     default: 500,
   },
   analyticsOptOut: {
-    type: "string",
+    type: ["string", "boolean"],
     default: "unknown",
   },
 }

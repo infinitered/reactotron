@@ -23,7 +23,7 @@ type UaEventOptions = {
 
 // Our user's opt-out status can be one of these three values.
 // Analytics will never be initialized if the user has opted out or if the status is unknown.
-type IOptOutStatus = "unknown" | "true" | "false"
+type IOptOutStatus = "unknown" | true | false
 
 // This is the main analytics hook that we use throughout the app.
 // It handles initializing analytics, sending events, and tracking page views.
@@ -45,7 +45,7 @@ export const useAnalytics = () => {
 
   // Get the user's opt-out status from the config store
   const initializeAnalytics = () => {
-    const status = configStore.get("analyticsOptOut")
+    const status = configStore.get("analyticsOptOut") as IOptOutStatus
 
     if (status === "unknown") {
       console.log(`[analytics] user has not opted in or out`)
@@ -56,9 +56,9 @@ export const useAnalytics = () => {
       })
     } else {
       // If the user has opted out, we'll disable analytics
-      setOptedOut(status as IOptOutStatus)
+      setOptedOut(status)
       setInitialized(false)
-      console.log(`[analytics] user has opted ${status === "true" ? "out" : "in"}`)
+      console.log(`[analytics] user has opted ${status ? "out" : "in"}`)
     }
   }
 
@@ -69,8 +69,8 @@ export const useAnalytics = () => {
   useEffect(() => {
     const initialize = () => {
       const testMode = process.env.NODE_ENV === "test" // we don't want to send analytics events during tests
-      ReactGA.initialize(GA4_KEY, { testMode: testMode || optedOut === "true" })
-      optedOut === "false" &&
+      ReactGA.initialize(GA4_KEY, { testMode: testMode || optedOut === true })
+      !optedOut &&
         ReactGA.set({
           app_version: packageJson.version,
           app_platform: process.platform,
@@ -91,12 +91,10 @@ export const useAnalytics = () => {
   // https://github.com/codler/react-ga4
   const sendAnalyticsEvent = useCallback(
     (event: UaEventOptions) => {
-      if (optedOut === "true") {
-        // console.log("[analytics] Disabled. Not sending event")
-        return
+      if (!optedOut) {
+        console.log("[analytics] Sending event", event)
+        ReactGA.event(event)
       }
-      console.log("[analytics] Sending event", event)
-      ReactGA.event(event)
     },
     [optedOut]
   )
@@ -104,12 +102,10 @@ export const useAnalytics = () => {
   // Send a page view event
   const sendPageViewAnalyticsEvent = useCallback(
     (page: string) => {
-      if (optedOut === "true") {
-        // console.log("[analytics] Disabled. Not sending page view event")
-        return
+      if (!optedOut) {
+        console.log("[analytics] Sending page view event", page)
+        ReactGA.send({ hitType: "pageview", page })
       }
-      console.log("[analytics] Sending page view event", page)
-      ReactGA.send({ hitType: "pageview", page })
     },
     [optedOut]
   )
@@ -232,7 +228,7 @@ const CustomAlert = ({ onClose }) => {
         >
           <button
             onClick={() => {
-              configStore.set("analyticsOptOut", "true")
+              configStore.set("analyticsOptOut", true)
               onClose()
             }}
             style={{
@@ -245,7 +241,7 @@ const CustomAlert = ({ onClose }) => {
           </button>
           <button
             onClick={() => {
-              configStore.set("analyticsOptOut", "false")
+              configStore.set("analyticsOptOut", false)
               onClose()
             }}
             style={{
