@@ -71,6 +71,7 @@ const Modal: FunctionComponent<React.PropsWithChildren<Props>> = ({
           position: "auto" as any, // TODO: Fix this!
           top: "auto",
           bottom: "auto",
+          fontFamily: theme.fontFamily,
         },
       }}
     >
