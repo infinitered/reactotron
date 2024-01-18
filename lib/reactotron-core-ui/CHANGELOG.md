@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.0.4](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.3...reactotron-core-ui@2.0.4) (2024-01-18)
+
+
+### Bug Fixes
+
+* **reactotron-app:** added fontFamily from useTheme to Modal component ([#1401](https://github.com/infinitered/reactotron/issues/1401)) ([af9a78c](https://github.com/infinitered/reactotron/commit/af9a78cb62feae9cdb455a92826eee5908bb99a1))
+
 ### [2.0.3](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2...reactotron-core-ui@2.0.3) (2023-12-22)
 
 
