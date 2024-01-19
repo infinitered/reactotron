@@ -8,6 +8,8 @@ import windowStateKeeper from "electron-window-state"
 import createMenu from "./menu"
 import { setupAndroidDeviceIPCCommands } from "./utils"
 
+require("update-electron-app")()
+
 const isDevelopment = process.env.NODE_ENV !== "production"
 
 class AppUpdater {
