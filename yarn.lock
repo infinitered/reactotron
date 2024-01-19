@@ -22496,13 +22496,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mobx@npm:^4.2.1":
-  version: 4.15.7
-  resolution: "mobx@npm:4.15.7"
-  checksum: 9ddda3a7fbb92f02cc9da7d6551e4914611dfa90d5cd6509b5abcdddc872f4bbb3cf6bb0537abd716738e0021d632de21013876a9f334a72cb7a1c7fd9664441
-  languageName: node
-  linkType: hard
-
 "modify-values@npm:^1.0.0":
   version: 1.0.1
   resolution: "modify-values@npm:1.0.1"
@@ -26882,7 +26875,7 @@ __metadata:
     eslint-plugin-standard: ^5.0.0
     jest: ^29.7.0
     lodash.camelcase: ^4.3.0
-    mobx: ^4.2.1
+    mobx: 6.10.2
     mobx-state-tree: ^2.0.4
     prettier: ^3.0.3
     ramda: ^0.25.0
