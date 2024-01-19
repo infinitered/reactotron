@@ -81,7 +81,7 @@
     "@storybook/addon-links": "^5.2.8",
     "@storybook/addons": "^5.2.8",
     "@storybook/react": "^5.2.8",
-    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/react": "^14.1.2",
     "@types/jest": "^29.5.7",
     "@types/react": "18.2.35",
     "@types/react-dom": "18.2.14",

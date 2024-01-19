@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React from "react"
-import { act, renderHook } from "@testing-library/react-hooks"
+import { act, renderHook } from "@testing-library/react"
 
 import { CommandType } from "reactotron-core-contract"
 import ReactotronContext from "../Reactotron"
