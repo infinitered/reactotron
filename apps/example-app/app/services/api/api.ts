@@ -5,14 +5,9 @@
  * See the [Backend API Integration](https://github.com/infinitered/ignite/blob/master/docs/Backend-API-Integration.md)
  * documentation for more details.
  */
-import {
-  ApisauceInstance,
-  create,
-} from "apisauce"
+import { ApisauceInstance, create } from "apisauce"
 import Config from "../../config"
-import type {
-  ApiConfig,
-} from "./api.types"
+import type { ApiConfig } from "./api.types"
 
 /**
  * Configuring the apisauce instance.
@@ -43,7 +38,6 @@ export class Api {
       },
     })
   }
-
 }
 
 // Singleton instance of the API for convenience
