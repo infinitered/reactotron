@@ -6495,19 +6495,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ramda@npm:0.26.44":
-  version: 0.26.44
-  resolution: "@types/ramda@npm:0.26.44"
+"@types/ramda@npm:^0.28.0":
+  version: 0.28.25
+  resolution: "@types/ramda@npm:0.28.25"
   dependencies:
-    ts-toolbelt: ^6.3.3
-  checksum: 5dbb5dfb0311d4c777ee4d65df4c553a5af4bde06148c149d70fffdfe2498fe3709d892e681f4bdba907662e74ed7d7a09359d13b489f0797edc20719de45a10
-  languageName: node
-  linkType: hard
-
-"@types/ramda@npm:^0.25.50":
-  version: 0.25.51
-  resolution: "@types/ramda@npm:0.25.51"
-  checksum: 11e9f7941620fd9af4b62674edb906f1012ea90a9e51553bcacd05741d8719976fbbc4f29085bce670dd9fcb964103a8536d16aff4bbe702b3ea7d9051cfc31f
+    ts-toolbelt: ^6.15.1
+  checksum: c72c4e4ce05429621aec244b0d9a0cc579c3bc6b4568c8ec619208980adfca2eacc58562f1d95573cff0f8654d61daaf904c06b59c7226aa777e8a7d5d0ba9f6
   languageName: node
   linkType: hard
 
@@ -22480,6 +22473,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mobx-state-tree@npm:^5.3.0":
+  version: 5.4.0
+  resolution: "mobx-state-tree@npm:5.4.0"
+  peerDependencies:
+    mobx: ^6.3.0
+  checksum: e625c7eac52b81f61e0810a6db326aeeeae3f959d4f0d88c94c86bfedc25e66d1033f3b4f6564d62c3578ad48b96ae877cf58953cd8a52b72400215491c7ffdf
+  languageName: node
+  linkType: hard
+
 "mobx@npm:6.10.2":
   version: 6.10.2
   resolution: "mobx@npm:6.10.2"
@@ -25615,21 +25617,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ramda@npm:0.29.1":
-  version: 0.29.1
-  resolution: "ramda@npm:0.29.1"
-  checksum: df7c627597a66d5f317f6ba77ad17d7ba818efc9c2c4a638440bc23f2c651e823970ea05b05a28895738c0e4b738fadbdc17b2c97b3ad922826febc09c859c44
-  languageName: node
-  linkType: hard
-
-"ramda@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "ramda@npm:0.25.0"
-  checksum: 008abbcc69aefd89a2a4a0c9f4cf9f8da2ec490a0e1e261b4c88de8540ef0c383d469bfdf71b758b559377c71bfa8efea164fdb1779169359a86b46f7cb23cb1
-  languageName: node
-  linkType: hard
-
-"ramda@npm:^0.28.0":
+"ramda@npm:0.28.0, ramda@npm:^0.28.0":
   version: 0.28.0
   resolution: "ramda@npm:0.28.0"
   checksum: 44ea6e5010bba70151b6a92d8114a91915e8b5a16105cce65fae58c9d7386b812c429645e35f21141d7087568550ce383bc10ee1a65cdec951f4b69ea457e6a4
@@ -26738,7 +26726,7 @@ __metadata:
     "@babel/preset-typescript": ^7.23.2
     "@types/jest": ^29.5.7
     "@types/node": ^18.18.8
-    "@types/ramda": 0.26.44
+    "@types/ramda": ^0.28.0
     "@types/ws": ^8.5.8
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
@@ -26756,7 +26744,7 @@ __metadata:
     jest-environment-node: ^29.7.0
     mitt: ^3.0.1
     prettier: ^3.0.3
-    ramda: 0.29.1
+    ramda: 0.28.0
     reactotron-core-contract: "workspace:*"
     rimraf: 5.0.5
     rollup: 2.52.1
@@ -26850,7 +26838,7 @@ __metadata:
     "@types/jest": ^29.5.7
     "@types/lodash.camelcase": ^4.3.7
     "@types/node": ^18.18.8
-    "@types/ramda": ^0.25.50
+    "@types/ramda": ^0.28.0
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
     babel-eslint: ^10.1.0
@@ -26867,9 +26855,9 @@ __metadata:
     jest: ^29.7.0
     lodash.camelcase: ^4.3.0
     mobx: 6.10.2
-    mobx-state-tree: 5.3.0
+    mobx-state-tree: ^5.3.0
     prettier: ^3.0.3
-    ramda: ^0.25.0
+    ramda: ^0.28.0
     reactotron-core-client: "workspace:*"
     rollup: ^1.1.2
     rollup-plugin-babel: ^4.4.0
@@ -31131,7 +31119,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-toolbelt@npm:^6.3.3":
+"ts-toolbelt@npm:^6.15.1":
   version: 6.15.5
   resolution: "ts-toolbelt@npm:6.15.5"
   checksum: 24ad00cfd9ce735c76c873a9b1347eac475b94e39ebbdf100c9019dce88dd5f4babed52884cf82bb456a38c28edd0099ab6f704b84b2e5e034852b618472c1f3
