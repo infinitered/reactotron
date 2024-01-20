@@ -22480,15 +22480,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mobx-state-tree@npm:^2.0.4":
-  version: 2.2.0
-  resolution: "mobx-state-tree@npm:2.2.0"
-  peerDependencies:
-    mobx: ^4.3.1 || ^5.0.3
-  checksum: 34770c597dbfb768b7700e1fe6a6e766c1d2deb6e1ccb92bb35293ced5dd0360735849aefd08ea290ec554df36daeec34c99a5deae5290c31134c48901919e29
-  languageName: node
-  linkType: hard
-
 "mobx@npm:6.10.2":
   version: 6.10.2
   resolution: "mobx@npm:6.10.2"
@@ -25624,10 +25615,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ramda@npm:0.26.1":
-  version: 0.26.1
-  resolution: "ramda@npm:0.26.1"
-  checksum: 19c2730e44c129538151ae034c89be9b2c6a4ccc7c65cff57497418bc532ce09282f98cd927c39b0b03c6bc3f1d1a12d822b7b07f96a1634f4958a6c05b7b384
+"ramda@npm:0.29.1":
+  version: 0.29.1
+  resolution: "ramda@npm:0.29.1"
+  checksum: df7c627597a66d5f317f6ba77ad17d7ba818efc9c2c4a638440bc23f2c651e823970ea05b05a28895738c0e4b738fadbdc17b2c97b3ad922826febc09c859c44
   languageName: node
   linkType: hard
 
@@ -26765,7 +26756,7 @@ __metadata:
     jest-environment-node: ^29.7.0
     mitt: ^3.0.1
     prettier: ^3.0.3
-    ramda: 0.26.1
+    ramda: 0.29.1
     reactotron-core-contract: "workspace:*"
     rimraf: 5.0.5
     rollup: 2.52.1
@@ -26876,7 +26867,7 @@ __metadata:
     jest: ^29.7.0
     lodash.camelcase: ^4.3.0
     mobx: 6.10.2
-    mobx-state-tree: ^2.0.4
+    mobx-state-tree: 5.3.0
     prettier: ^3.0.3
     ramda: ^0.25.0
     reactotron-core-client: "workspace:*"

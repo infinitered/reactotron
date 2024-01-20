@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "mitt": "^3.0.1",
-    "ramda": "0.26.1",
+    "ramda": "0.29.1",
     "reactotron-core-contract": "workspace:*",
     "ws": "^8.14.2"
   },

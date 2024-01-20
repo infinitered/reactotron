@@ -1,4 +1,4 @@
-import { merge, find, propEq, without, contains, forEach, pluck, reject, equals } from "ramda"
+import { find, propEq, without, forEach, pluck, reject, equals, mergeLeft, includes } from "ramda"
 import { createServer as createHttpsServer, ServerOptions as HttpsServerOptions } from "https"
 import type {
   ServerEventMap,
@@ -71,7 +71,7 @@ export default class Server {
   /**
    * Additional server configuration.
    */
-  options: ServerOptions = merge({}, DEFAULTS)
+  options: ServerOptions = mergeLeft({}, DEFAULTS)
 
   /**
    * A unique id which is assigned to each inbound message.
@@ -118,7 +118,7 @@ export default class Server {
    */
   configure(options: ServerOptions = DEFAULTS) {
     // options get merged & validated before getting set
-    const newOptions = merge(this.options, options)
+    const newOptions = mergeLeft(this.options, options)
     validate(newOptions)
     this.options = newOptions
     return this
@@ -287,7 +287,7 @@ export default class Server {
           fullCommand.clientId = connectionClientId
 
           // bestow the payload onto the connection
-          const connection = merge(payload, {
+          const connection = mergeLeft(payload, {
             id: thisConnectionId,
             address: partConn.address,
             clientId: fullCommand.clientId,
@@ -369,7 +369,7 @@ export default class Server {
    */
   stateValuesSubscribe(path) {
     // prevent duplicates
-    if (contains(path, this.subscriptions)) {
+    if (includes(path, this.subscriptions)) {
       return
     }
 
@@ -389,7 +389,7 @@ export default class Server {
    */
   stateValuesUnsubscribe(path) {
     // if it doesn't exist, jet
-    if (!contains(path, this.subscriptions)) {
+    if (!includes(path, this.subscriptions)) {
       return
     }
 
