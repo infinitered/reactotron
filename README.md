@@ -2,7 +2,7 @@
 
 [Join our Community Slack](http://community.infinite.red/)
 
-# Introduction
+## Introduction
 
 Reactotron is a powerful debugger for React and React Native applications. It provides an easy-to-use interface for developers to monitor their application's **state, network requests, and performance metrics** and can be used for any size of project, from small personal apps to large-scale enterprise applications. The OG debugger at [Infinite Red](https://infinite.red) that we use on a day-to-day basis to build client apps. Additionally, Reactotron is completely open source and free to use, making it an invaluable tool for developers at all levels of experience.
 
@@ -66,7 +66,11 @@ On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotro
 
 [Some tips that will elevate your Reactotron experience.](./docs/plugins/tips.md)
 
-## Want to contribute? Here are some helpful reading materials:
+## Bug Reports
+
+When reporting problems with Reactotron, use the provided example app located in `app/example-app` to replicate the issue. This approach enables us to isolate and expedite the resolution of the problem.
+
+## Want to contribute? Here are some helpful reading materials
 
 - [**Contributing**](./docs/contributing/index.md)
 - [**Architecture**](./docs/contributing/architecture.md)
@@ -78,10 +82,10 @@ On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotro
 - [**React Native iOS**](./docs/plugins/troubleshooting.md#react-native-ios)
 - [**React Native Android**](./docs/plugins/troubleshooting.md#react-native-android)
 
-# Credits
+## Credits
 
 Reactotron is developed by [Infinite Red](https://infinite.red), [@rmevans9](https://github.com/rmevans9), and 70+ amazing contributors! Special thanks to [@skellock](https://github.com/skellock) for originally creating Reactotron while at Infinite Red.
 
-# Premium Support
+## Premium Support
 
 [Reactotron](https://infinite.red/reactotron), as an open source project, is free to use and always will be. [Infinite Red](https://infinite.red/) offers premium React and [React Native](https://infinite.red/react-native) mobile app design/development services. Email us at [hello@infinite.red](mailto:hello@infinite.red) to get in touch for more details.
