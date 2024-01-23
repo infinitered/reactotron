@@ -1,6 +1,6 @@
 {
   "name": "reactotron-core-ui",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Core UI components for Reactotron",
   "author": "Infinite Red",
   "license": "MIT",
@@ -32,7 +32,6 @@
     "tsc": "tsc",
     "compile": "NODE_ENV=production rollup -c",
     "compile:dev": "NODE_ENV=development rollup -c",
-    "chromatic": "chromatic",
     "typecheck": "tsc",
     "ci:test": "yarn test --runInBand",
     "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
@@ -109,7 +108,6 @@
     "rollup-plugin-filesize": "9.1.1",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-peer-deps-external": "2.2.4",
-    "storybook-chromatic": "^4.0.2",
     "styled-components": "^6.1.0",
     "ts-jest": "^29.1.1",
     "typescript": "^4.9.5"

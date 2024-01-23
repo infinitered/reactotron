@@ -1,3 +1,7 @@
+---
+title: Global Logs
+---
+
 # Documentation: `trackGlobalLogs`
 
 ## Overview

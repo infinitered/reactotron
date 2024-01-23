@@ -19,7 +19,9 @@ Add it as a plugin to Reactotron.
 
 ```js
 Reactotron.configure()
-  .use(overlay()) // <--- here we go!
+  .useReactNative({
+    overlay: true, // <--- here we go!
+  })
   .connect()
 ```
 
