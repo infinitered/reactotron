@@ -99,6 +99,18 @@ function useTimeline() {
     })
   }
 
+  const openSearch = () => {
+    dispatch({
+      type: TimelineActionType.SearchOpen,
+    })
+  }
+
+  const closeSearch = () => {
+    dispatch({
+      type: TimelineActionType.SearchClose,
+    })
+  }
+
   const setSearch = (search: string) => {
     dispatch({
       type: TimelineActionType.SearchSet,
@@ -140,6 +152,8 @@ function useTimeline() {
   return {
     isSearchOpen: state.isSearchOpen,
     toggleSearch,
+    openSearch,
+    closeSearch,
     search: state.search,
     setSearch,
     isFilterOpen: state.isFilterOpen,

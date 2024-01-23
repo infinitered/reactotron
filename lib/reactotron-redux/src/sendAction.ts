@@ -1,6 +1,8 @@
-import { Reactotron } from "reactotron-core-client"
+import type { ReactotronCore } from "reactotron-core-client"
 
-export default function createSendAction(reactotron: Reactotron) {
+export default function createSendAction<Client extends ReactotronCore = ReactotronCore>(
+  reactotron: Client
+) {
   return (action: { type: any }, ms: number, important = false) => {
     // let's call the type, name because that's "generic" name in Reactotron
     let { type: name } = action

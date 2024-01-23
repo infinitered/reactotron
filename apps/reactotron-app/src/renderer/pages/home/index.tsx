@@ -8,27 +8,35 @@ import {
   getPlatformDetails,
   getScreen,
   getIcon,
+  getConnectionName,
 } from "../../util/connectionHelpers"
 import { Connection } from "../../contexts/Standalone/useStandalone"
 import Welcome from "./welcome"
+import AndroidDeviceHelp from "../help/components/AndroidDeviceHelp"
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
 `
+const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow-y: scroll;
+`
 
 const ConnectionContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 10px 0;
+  padding: 10px 20px;
   border-bottom: 1px solid ${(props) => props.theme.line};
 `
 const IconContainer = styled.div`
   color: ${(props) => props.theme.foregroundLight};
 `
-const PlatformName = styled.div`
+const AppName = styled.div`
   padding-left: 10px;
   color: ${(props) => props.theme.tag};
   width: 25%;
@@ -47,11 +55,12 @@ const Screen = styled.div`
 `
 
 function ConnectionCell({ connection }: { connection: Connection }) {
-  const [ConnectionIcon, platformName, platformDetails, screen] = useMemo(() => {
+  const [ConnectionIcon, platformName, platformDetails, connectionName, screen] = useMemo(() => {
     return [
       getIcon(connection),
       getPlatformName(connection),
       getPlatformDetails(connection),
+      getConnectionName(connection),
       getScreen(connection),
     ]
   }, [connection])
@@ -61,8 +70,10 @@ function ConnectionCell({ connection }: { connection: Connection }) {
       <IconContainer>
         <ConnectionIcon size={32} />
       </IconContainer>
-      <PlatformName>{platformName}</PlatformName>
-      <PlatformDetails>{platformDetails}</PlatformDetails>
+      <AppName>{connectionName}</AppName>
+      <PlatformDetails>
+        {platformName} {platformDetails}
+      </PlatformDetails>
       <Screen>{screen}</Screen>
     </ConnectionContainer>
   )
@@ -74,13 +85,16 @@ function Connections() {
   return (
     <Container>
       <Header title="Connections" isDraggable />
-      {connections.length > 0 ? (
-        connections.map((connection) => (
-          <ConnectionCell key={connection.clientId} connection={connection} />
-        ))
-      ) : (
-        <Welcome />
-      )}
+      <ContentContainer>
+        {connections.length > 0 ? (
+          connections.map((connection) => (
+            <ConnectionCell key={connection.clientId} connection={connection} />
+          ))
+        ) : (
+          <Welcome />
+        )}
+        <AndroidDeviceHelp />
+      </ContentContainer>
     </Container>
   )
 }

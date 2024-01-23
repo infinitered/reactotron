@@ -6,13 +6,12 @@ import { EmptyState } from "reactotron-core-ui"
 
 const WelcomeText = styled.div`
   font-size: 1.25em;
-  margin-bottom: 5px;
 `
 
 const Container = styled.div`
   display: flex;
   padding: 4px 8px;
-  margin-top: 20px;
+  margin: 20px 0px 50px;
   border-radius: 4px;
   cursor: pointer;
   background-color: ${(props) => props.theme.backgroundLighter};
@@ -23,7 +22,7 @@ const Container = styled.div`
 `
 
 function openDocs() {
-  shell.openExternal("https://github.com/infinitered/reactotron")
+  shell.openExternal("https://docs.infinite.red/reactotron/")
 }
 
 function Welcome() {

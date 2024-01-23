@@ -9,12 +9,23 @@ import { EmptyState, Tooltip } from "reactotron-core-ui"
 import { FaAndroid } from "react-icons/fa"
 import { ItemContainer, ItemIconContainer } from "../SharedStyles"
 
+const Container = styled.div`
+  margin: 50px 0px;
+`
+
+const TitleContainer = styled.div`
+  display: flex;
+  margin: 10px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid ${(props) => props.theme.highlight};
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+`
+
 const Title = styled.div`
   font-size: 18px;
-  margin: 10px 0;
-  padding-bottom: 2px;
   color: ${(props) => props.theme.foregroundLight};
-  border-bottom: 1px solid ${(props) => props.theme.highlight};
 `
 const AndroidDeviceListContainer = styled.div`
   display: flex;
@@ -86,9 +97,7 @@ const ArgInput = styled.input`
   font-size: 16px;
 `
 const PortSettingsIconContainer = styled.div`
-  float: right;
   color: ${(props) => props.theme.foregroundLight};
-  margin-left: 10px;
 `
 
 function AndroidDeviceHelp() {
@@ -127,16 +136,18 @@ function AndroidDeviceHelp() {
   }, [androidDevices.length])
 
   return (
-    <>
-      <TitleComponent />
-      <PortSettingsIconContainer
-        data-tip="Advanced Port Settings"
-        data-for="port-settings"
-        onClick={() => setPortsVisible(!portsVisible)}
-      >
-        <SettingsIcon size={20} />
-        <Tooltip id="port-settings" />
-      </PortSettingsIconContainer>
+    <Container>
+      <TitleContainer>
+        <TitleComponent />
+        <PortSettingsIconContainer
+          data-tip="Advanced Port Settings"
+          data-for="port-settings"
+          onClick={() => setPortsVisible(!portsVisible)}
+        >
+          <SettingsIcon size={20} />
+          <Tooltip id="port-settings" />
+        </PortSettingsIconContainer>
+      </TitleContainer>
       <Text>
         This shows all android devices connected to your machine via the{" "}
         <HighlightedText>adb devices</HighlightedText> command.
@@ -186,7 +197,7 @@ function AndroidDeviceHelp() {
           />
         )}
       </AndroidDeviceListContainer>
-    </>
+    </Container>
   )
 }
 

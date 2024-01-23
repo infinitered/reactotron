@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.0.4](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.3...reactotron-core-ui@2.0.4) (2024-01-18)
+
+
+### Bug Fixes
+
+* **reactotron-app:** added fontFamily from useTheme to Modal component ([#1401](https://github.com/infinitered/reactotron/issues/1401)) ([af9a78c](https://github.com/infinitered/reactotron/commit/af9a78cb62feae9cdb455a92826eee5908bb99a1))
+
+### [2.0.3](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2...reactotron-core-ui@2.0.3) (2023-12-22)
+
+
+### Bug Fixes
+
+* **timeline:** selectable api response url ([#1388](https://github.com/infinitered/reactotron/issues/1388) by [@frankcalise](https://github.com/frankcalise)) ([2de4b84](https://github.com/infinitered/reactotron/commit/2de4b84dda4bfd0ca792e4c68248017b8a93222d)), closes [#1375](https://github.com/infinitered/reactotron/issues/1375)
+
 ### [2.0.2](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2-beta.24...reactotron-core-ui@2.0.2) (2023-12-05)
 
 ### [2.0.2-beta.24](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2-beta.23...reactotron-core-ui@2.0.2-beta.24) (2023-12-01)

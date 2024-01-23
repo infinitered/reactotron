@@ -17,7 +17,6 @@ storiesOf("components/ConnectionSelector", module)
         commands: [],
         connected: true,
       }}
-      showName={false}
       onClick={() => {}}
     />
   ))
@@ -33,7 +32,6 @@ storiesOf("components/ConnectionSelector", module)
         commands: [],
         connected: true,
       }}
-      showName={false}
       onClick={() => {}}
     />
   ))
@@ -57,7 +55,6 @@ storiesOf("components/ConnectionSelector", module)
         commands: [],
         connected: true,
       }}
-      showName={false}
       onClick={() => {}}
     />
   ))
@@ -83,7 +80,6 @@ storiesOf("components/ConnectionSelector", module)
         commands: [],
         connected: true,
       }}
-      showName
       onClick={() => {}}
     />
   ))

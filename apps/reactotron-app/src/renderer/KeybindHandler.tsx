@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { GlobalHotKeys, KeyEventName } from "react-hotkeys"
-import { ReactotronContext, StateContext } from "reactotron-core-ui"
+import { ReactotronContext, StateContext, TimelineContext } from "reactotron-core-ui"
 import LayoutContext from "./contexts/Layout"
 
 const keyMap = {
@@ -9,6 +9,12 @@ const keyMap = {
     name: "Toggle Sidebar",
     group: "Application",
     sequences: ["command+shift+s", "ctrl+shift+s"],
+    action: "keyup" as KeyEventName,
+  },
+  ToggleSearch: {
+    name: "Toggle Timeline Search",
+    group: "Application",
+    sequences: ["command+shift+l", "ctrl+shift+l"],
     action: "keyup" as KeyEventName,
   },
   // Tab Navigation
@@ -86,15 +92,16 @@ const keyMap = {
 function KeybindHandler({ children }) {
   const { toggleSideBar } = useContext(LayoutContext)
   const { openDispatchModal, openSubscriptionModal, clearCommands } = useContext(ReactotronContext)
+  const { openSearch, toggleSearch } = useContext(TimelineContext)
   const { createSnapshot } = useContext(StateContext)
 
   const handlers = {
     // Tab Navigation
     OpenHomeTab: () => {
-      window.location.hash = "/home"
+      window.location.hash = "/"
     },
     OpenTimelineTab: () => {
-      window.location.hash = "/"
+      window.location.hash = "/timeline"
     },
     OpenStateTab: () => {
       window.location.hash = "/state/subscriptions"
@@ -127,13 +134,22 @@ function KeybindHandler({ children }) {
     ToggleSidebar: () => {
       toggleSideBar()
     },
+    ToggleSearch: () => {
+      // If we're on the timeline page, toggle the search, otherwise switch to the timeline tab and open search
+      if (window.location.hash === "#/") {
+        toggleSearch()
+      } else {
+        openSearch()
+        handlers.OpenTimelineTab()
+      }
+    },
     ClearTimeline: () => {
       clearCommands()
     },
   }
 
   return (
-    <GlobalHotKeys keyMap={keyMap as any} handlers={handlers}>
+    <GlobalHotKeys keyMap={keyMap as any} handlers={handlers} allowChanges>
       {children}
     </GlobalHotKeys>
   )
