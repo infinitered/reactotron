@@ -41,42 +41,42 @@ On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotro
 
 ## How to setup Reactotron in our app
 
-- [**React Native**](./docs/quick-start/react-native.md#installing-reactotronapp)
-- [**React**](./docs/quick-start/react-js.md#installing-reactotronapp)
+- [**React Native**](https://docs.infinite.red/reactotron/quick-start/react-native/)
+- [**React**](https://docs.infinite.red/reactotron/quick-start/react-js/)
 
 ## How to use Reactotron's features/plugins
 
-- [**Track Global Errors**](./docs/plugins/track-global-errors.md)
-- [**Track Global Logs**](./docs/plugins/plugin-track-global-logs.md)
-- [**Networking**](./docs/plugins/networking.md)
-- [**Async Storage**](./docs/plugins/async-storage.md)
-- [**React Native MMKV**](./docs/plugins/react-native-mmkv.md)
-- [**Benchmark**](./docs/plugins/benchmark.md)
-- [**apisauce**](./docs/plugins/apisauce.md)
-- [**Overlay**](./docs/plugins/overlay.md)
-- [**MST**](./docs/plugins/mst.md)
-- [**Redux**](./docs/plugins/redux.md)
-- [**Open in Editor**](./docs/plugins/open-in-editor.md)
-- [**Storybook (only for React Native)**](./docs/plugins/storybook.md) \
+- [**Track Global Errors**](https://docs.infinite.red/reactotron/plugins/track-global-errors/)
+- [**Track Global Logs**](https://docs.infinite.red/reactotron/plugins/track-global-logs/)
+- [**Networking**](https://docs.infinite.red/reactotron/plugins/networking/)
+- [**Async Storage**](https://docs.infinite.red/reactotron/plugins/async-storage/)
+- [**React Native MMKV**](https://docs.infinite.red/reactotron/plugins/react-native-mmkv/)
+- [**Benchmark**](https://docs.infinite.red/reactotron/plugins/benchmark/)
+- [**apisauce**](https://docs.infinite.red/reactotron/plugins/apisauce/)
+- [**Overlay**](https://docs.infinite.red/reactotron/plugins/overlay/)
+- [**MST**](https://docs.infinite.red/reactotron/plugins/mst/)
+- [**Redux**](https://docs.infinite.red/reactotron/plugins/redux/)
+- [**Open in Editor**](https://docs.infinite.red/reactotron/plugins/open-in-editor/)
+- [**Storybook (only for React Native)**](https://docs.infinite.red/reactotron/plugins/storybook/) \
    `reactotron-react-native` ships with [Storybook](https://storybook.js.org/).
   This enables you to switch to Storybook from the Reactotron app.
-- [**Custom Commands**](./docs/custom-commands.md)
+- [**Custom Commands**](https://docs.infinite.red/reactotron/custom-commands/)
 
 ## Tips and Tricks
 
-[Some tips that will elevate your Reactotron experience.](./docs/plugins/tips.md)
+[Some tips that will elevate your Reactotron experience.](https://docs.infinite.red/reactotron/tips/)
 
 ## Want to contribute? Here are some helpful reading materials:
 
-- [**Contributing**](./docs/contributing/index.md)
-- [**Architecture**](./docs/contributing/architecture.md)
-- [**Monorepo**](./docs/contributing/monorepo.md)
-- [**Release**](./docs/contributing/releasing.md)
+- [**Contributing**](https://docs.infinite.red/reactotron/contributing/)
+- [**Architecture**](https://docs.infinite.red/reactotron/contributing/architecture/)
+- [**Monorepo**](https://docs.infinite.red/reactotron/contributing/monorepo/)
+- [**Release**](https://docs.infinite.red/reactotron/contributing/releasing/)
 
 ## Troubleshooting
 
-- [**React Native iOS**](./docs/plugins/troubleshooting.md#react-native-ios)
-- [**React Native Android**](./docs/plugins/troubleshooting.md#react-native-android)
+- [**React Native iOS**](https://docs.infinite.red/reactotron/troubleshooting/#react-native-ios)
+- [**React Native Android**](https://docs.infinite.red/reactotron/troubleshooting/#react-native-android)
 
 # Credits
 
