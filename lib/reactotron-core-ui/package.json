@@ -1,6 +1,6 @@
 {
   "name": "reactotron-core-ui",
-  "version": "2.0.2",
+  "version": "2.0.5",
   "description": "Core UI components for Reactotron",
   "author": "Infinite Red",
   "license": "MIT",
@@ -32,7 +32,6 @@
     "tsc": "tsc",
     "compile": "NODE_ENV=production rollup -c",
     "compile:dev": "NODE_ENV=development rollup -c",
-    "chromatic": "chromatic",
     "typecheck": "tsc",
     "ci:test": "yarn test --runInBand",
     "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
@@ -55,8 +54,8 @@
     "stringify-object": "5.0.0"
   },
   "peerDependencies": {
-    "react": ">=17.0.2",
-    "react-dom": ">=17.0.2",
+    "react": ">=18.2.0",
+    "react-dom": ">=18.2.0",
     "react-icons": ">=4.2.0",
     "react-modal": ">=3.16.1",
     "react-motion": ">=0.5.2",
@@ -74,7 +73,7 @@
     "@storybook/addon-links": "6.1.21",
     "@storybook/addons": "6.1.21",
     "@storybook/react": "6.1.21",
-    "@testing-library/react-hooks": "8.0.1",
+    "@testing-library/react": "^14.1.2",
     "@types/jest": "^29.5.7",
     "@types/react": "18.2.35",
     "@types/react-dom": "18.2.14",
@@ -109,7 +108,6 @@
     "rollup-plugin-filesize": "9.1.1",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-peer-deps-external": "2.2.4",
-    "storybook-chromatic": "^4.0.2",
     "styled-components": "^6.1.0",
     "ts-jest": "^29.1.1",
     "typescript": "^4.9.5"

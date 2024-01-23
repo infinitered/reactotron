@@ -11,6 +11,7 @@ import {
   TimelineContext,
 } from "reactotron-core-ui"
 import { MdSearch, MdDeleteSweep, MdFilterList, MdSwapVert, MdReorder } from "react-icons/md"
+import { FaTimes } from "react-icons/fa"
 import styled from "styled-components"
 
 const Container = styled.div`
@@ -45,6 +46,9 @@ const SearchInput = styled.input`
   border: none;
   color: ${(props) => props.theme.foregroundDark};
   font-size: 14px;
+`
+export const ButtonContainer = styled.div`
+  padding: 10px;
 `
 
 function Timeline() {
@@ -112,7 +116,10 @@ function Timeline() {
         {isSearchOpen && (
           <SearchContainer>
             <SearchLabel>Search</SearchLabel>
-            <SearchInput value={search} onChange={(e) => setSearch(e.target.value)} />
+            <SearchInput autoFocus value={search} onChange={(e) => setSearch(e.target.value)} />
+            <ButtonContainer onClick={() => setSearch("")}>
+              <FaTimes size={24} />
+            </ButtonContainer>
           </SearchContainer>
         )}
       </Header>

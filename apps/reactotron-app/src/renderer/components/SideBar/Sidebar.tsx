@@ -56,8 +56,8 @@ function SideBar({ isOpen, serverStatus }: { isOpen: boolean; serverStatus: Serv
 
   return (
     <SideBarContainer $isOpen={isOpen}>
-      <SideBarButton image={reactotronLogo} path="/home" text="Home" hideTopBar />
-      <SideBarButton icon={MdReorder} path="/" text="Timeline" />
+      <SideBarButton image={reactotronLogo} path="/" text="Home" hideTopBar />
+      <SideBarButton icon={MdReorder} path="/timeline" text="Timeline" />
       <SideBarButton
         icon={MdAssignment}
         path="/state/subscriptions"

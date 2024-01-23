@@ -2,6 +2,29 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.3.1](https://github.com/infinitered/reactotron/compare/reactotron-app@3.3.0...reactotron-app@3.3.1) (2024-01-23)
+
+## [3.3.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.2.0...reactotron-app@3.3.0) (2024-01-17)
+
+
+### Features
+
+* make home screen default route when app starts up ([#1393](https://github.com/infinitered/reactotron/issues/1393)) ([b78afb8](https://github.com/infinitered/reactotron/commit/b78afb89ba8e5e4805f07c7bc4dd6d9e3dd9e989))
+
+## [3.2.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.4...reactotron-app@3.2.0) (2024-01-15)
+
+
+### Features
+
+* **reactotron-app:** Move android devices from Help to Home ([#1396](https://github.com/infinitered/reactotron/issues/1396)) ([e7547c6](https://github.com/infinitered/reactotron/commit/e7547c6f36789e089bc2cfe1964e413268be2d05))
+
+### [3.1.4](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.3...reactotron-app@3.1.4) (2023-12-22)
+
+
+### Features
+
+* Zoom font size with cmd+ and cmd- ([#1361](https://github.com/infinitered/reactotron/issues/1361)) ([51658ac](https://github.com/infinitered/reactotron/commit/51658ac8447acb56b7bbb0f64f14ebc59c21bae4))
+
 ### [3.1.3](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.2...reactotron-app@3.1.3) (2023-12-19)
 
 ### [3.1.2](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.1...reactotron-app@3.1.2) (2023-12-19)
