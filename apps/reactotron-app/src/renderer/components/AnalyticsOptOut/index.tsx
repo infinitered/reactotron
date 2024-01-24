@@ -3,6 +3,7 @@ import styled, { useTheme } from "styled-components"
 import FadeIn from "react-fade-in"
 import { reactotronAnalytics } from "../../images"
 import configStore from "../../config"
+import { useAnalytics } from "../../util/analyticsHelpers"
 
 const Overlay = styled.div`
   position: absolute;
@@ -62,6 +63,7 @@ const Button = styled.button`
 // We use this instead of the default alert because we want to style it to match our app.
 const AnalyticsOptOut = ({ onClose }) => {
   const theme = useTheme()
+  const { sendOptOutAnalyticsEvent } = useAnalytics()
 
   return (
     <FadeIn wrapperTag={Overlay}>
@@ -85,6 +87,7 @@ const AnalyticsOptOut = ({ onClose }) => {
           <Button
             onClick={() => {
               configStore.set("analyticsOptOut", true)
+              sendOptOutAnalyticsEvent()
               onClose()
             }}
             style={{
