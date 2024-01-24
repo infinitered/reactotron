@@ -4,6 +4,7 @@ import styled from "styled-components"
 
 import SideBar from "./components/SideBar"
 import Footer from "./components/Footer"
+import AnalyticsOptOut from "./components/AnalyticsOptOut"
 import RootContextProvider from "./contexts"
 import RootModals from "./RootModals"
 
@@ -35,14 +36,27 @@ const AppContainer: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   usePageTracking()
   const { initializeAnalytics } = useAnalytics()
 
+  const [showsAnalyticsInterface, setShowsAnalyticsInterface] = React.useState(false)
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      initializeAnalytics()
+      const status = initializeAnalytics()
+      if (status === "unknown" && showsAnalyticsInterface === false) {
+        // Show the user the interface to enable/disable analytics
+        setShowsAnalyticsInterface(true)
+      }
     }, 250)
     return () => clearTimeout(timer)
-  }, [])
+  }, [showsAnalyticsInterface])
 
-  return <AppContainerComponent>{children}</AppContainerComponent>
+  return (
+    <AppContainerComponent>
+      {children}
+      {showsAnalyticsInterface && (
+        <AnalyticsOptOut onClose={() => setShowsAnalyticsInterface(false)} />
+      )}
+    </AppContainerComponent>
+  )
 }
 
 const TopSection = styled.div`

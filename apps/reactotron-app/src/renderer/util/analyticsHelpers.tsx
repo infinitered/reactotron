@@ -1,17 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React from "react"
 import ReactGA from "react-ga4"
 import packageJson from "../../../package.json"
 import { useLocation } from "react-router"
 import configStore from "../config"
-import { confirmAlert } from "react-confirm-alert" // Import
-import { reactotronAnalytics } from "../images"
-import "react-confirm-alert/src/react-confirm-alert.css" // Import css
 
 // This is the Google Analytics 4 key for Reactotron
 // TODO: Change this to the correct key for production.
 const GA4_KEY = "G-WZE3E5XCQ7"
 
 type IAnalyticsEventCategory =
+  | { category: "opt-out"; actions: ["opt-out"] }
   | { category: "android"; actions: ["settings", "reverse-tunnel", "reload-app", "shake-device"] }
   | { category: "navigation"; actions: ["keyboard_shortcut"] }
   | { category: "external_link"; actions: ["click"] }
@@ -43,10 +41,10 @@ type IOptOutStatus = "unknown" | true | false
 // It also handles the user's opt-out status.
 // We use a custom alert to ask the user if they want to opt-in to analytics.
 export const useAnalytics = () => {
-  const [initialized, setInitialized] = useState(false)
-  const [optedOut, setOptedOut] = useState<IOptOutStatus>("unknown")
+  const [initialized, setInitialized] = React.useState(false)
+  const [optedOut, setOptedOut] = React.useState<IOptOutStatus>("unknown")
 
-  useEffect(() => {
+  React.useEffect(() => {
     const storeWatcher = configStore.onDidChange("analyticsOptOut", (newValue) => {
       console.log("[analytics] user has changed opt-out status", newValue)
       setOptedOut(newValue as IOptOutStatus)
@@ -62,24 +60,21 @@ export const useAnalytics = () => {
 
     if (status === "unknown") {
       console.log(`[analytics] user has not opted in or out`)
-      confirmAlert({
-        closeOnEscape: false,
-        closeOnClickOutside: false,
-        customUI: CustomAlert,
-      })
     } else {
       // If the user has opted out, we'll disable analytics
       setOptedOut(status)
       setInitialized(false)
       console.log(`[analytics] user has opted ${status ? "out" : "in"}`)
     }
+
+    return status
   }
 
   // Initialize analytics and set some system data like the app version and platform
   // as well as the mode we are running in. We don't want to send analytics events
   // during tests, so we disable them if we are running in test mode.
   // We also disable analytics if the user has opted out.
-  useEffect(() => {
+  React.useEffect(() => {
     const initialize = () => {
       const testMode = process.env.NODE_ENV === "test" // we don't want to send analytics events during tests
       ReactGA.initialize(GA4_KEY, { testMode: testMode || optedOut === true })
@@ -102,7 +97,7 @@ export const useAnalytics = () => {
   // This is the main function we use to send events throughout the app.
   // See documentation here for how to use react-ga4:
   // https://github.com/codler/react-ga4
-  const sendAnalyticsEvent = useCallback(
+  const sendAnalyticsEvent = React.useCallback(
     (event: UaEventOptions) => {
       if (!optedOut) {
         console.log("[analytics] Sending event", event)
@@ -113,7 +108,7 @@ export const useAnalytics = () => {
   )
 
   // Send a page view event
-  const sendPageViewAnalyticsEvent = useCallback(
+  const sendPageViewAnalyticsEvent = React.useCallback(
     (page: string) => {
       if (!optedOut) {
         console.log("[analytics] Sending page view event", page)
@@ -124,7 +119,7 @@ export const useAnalytics = () => {
   )
 
   // Send a keyboard shortcut event
-  const sendKeyboardShortcutAnalyticsEvent = useCallback(
+  const sendKeyboardShortcutAnalyticsEvent = React.useCallback(
     (label: string) => {
       sendAnalyticsEvent({
         category: "navigation",
@@ -137,7 +132,7 @@ export const useAnalytics = () => {
   )
 
   // Send a custom command event
-  const sendCustomCommandAnalyticsEvent = useCallback(
+  const sendCustomCommandAnalyticsEvent = React.useCallback(
     (command: string) => {
       sendAnalyticsEvent({
         category: "custom_command",
@@ -150,7 +145,7 @@ export const useAnalytics = () => {
   )
 
   // Send an external link event
-  const sendExternalLinkAnalyticsEvent = useCallback(
+  const sendExternalLinkAnalyticsEvent = React.useCallback(
     (label: string) => {
       sendAnalyticsEvent({
         category: "external_link",
@@ -162,6 +157,16 @@ export const useAnalytics = () => {
     [sendAnalyticsEvent]
   )
 
+  const sendOptOutAnalyticsEvent = React.useCallback(() => {
+    const event = {
+      category: "opt-out",
+      action: "opt-out",
+      nonInteraction: false,
+    }
+    console.log("[analytics] Sending opt-out event", event)
+    ReactGA.event(event) // this is the only time we send an event without checking the optedOut status
+  }, [])
+
   return {
     initializeAnalytics,
     sendAnalyticsEvent,
@@ -169,6 +174,7 @@ export const useAnalytics = () => {
     sendKeyboardShortcutAnalyticsEvent,
     sendCustomCommandAnalyticsEvent,
     sendExternalLinkAnalyticsEvent,
+    sendOptOutAnalyticsEvent,
   }
 }
 
@@ -179,96 +185,7 @@ export const usePageTracking = () => {
   const location = useLocation()
   const { sendPageViewAnalyticsEvent } = useAnalytics()
 
-  useEffect(() => {
+  React.useEffect(() => {
     sendPageViewAnalyticsEvent(location.pathname)
   }, [location, sendPageViewAnalyticsEvent])
-}
-
-// This is a custom alert that we use to ask the user if they want to opt-in to analytics
-// We use this instead of the default alert because we want to style it to match our app.
-// We inherit the styles from react-confirm-alert and override them as needed.
-// Unfortunately, we can't use styled-components here because react-confirm-alert doesn't support it.
-// This also means we have to hard-code the colors here instead of using our theme, which is not ideal.
-const CustomAlert = ({ onClose }) => {
-  return (
-    <div
-      className="react-confirm-alert-overlay"
-      style={{
-        background: "#1e1e1e",
-      }}
-    >
-      <div
-        className="react-confirm-alert-body"
-        style={{
-          background: "#1e1e1e",
-          color: "#c3c3c3",
-          boxShadow: "0 20px 75px rgba(255, 255, 255, 0.13)",
-          width: "80%",
-          maxWidth: "500px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginBottom: 20,
-          }}
-        >
-          <img
-            src={reactotronAnalytics}
-            style={{
-              height: 128,
-            }}
-          />
-        </div>
-        <h1>Opt in to Reactotron analytics?</h1>
-        <p>Help us improve Reactotron!</p>
-        <p>
-          We&apos;d like to collect anonymous usage data to enhance Reactotron&apos;s performance
-          and features. This data includes general usage patterns and interactions. No personal
-          information will be collected.
-        </p>
-        <p>
-          You can change this setting at any time and by opting in, you can contribute to making
-          Reactotron better for everyone!
-        </p>
-        <p>Would you like to participate?</p>
-        <div
-          className="react-confirm-alert-button-group"
-          style={{
-            flexDirection: "column",
-          }}
-        >
-          <button
-            onClick={() => {
-              configStore.set("analyticsOptOut", true)
-              onClose()
-            }}
-            style={{
-              fontSize: 16,
-              backgroundColor: "#cf6a4c",
-              color: "#1e1e1e",
-            }}
-          >
-            No, don&apos;t collect any data
-          </button>
-          <button
-            onClick={() => {
-              configStore.set("analyticsOptOut", false)
-              onClose()
-            }}
-            style={{
-              fontSize: 16,
-              marginTop: 20,
-              backgroundColor: "#8f9d6a",
-              color: "#1e1e1e",
-              fontWeight: "bold",
-            }}
-          >
-            Yes, I understand no personal information will be collected
-          </button>
-        </div>
-      </div>
-    </div>
-  )
 }
