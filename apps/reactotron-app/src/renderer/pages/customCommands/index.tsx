@@ -159,7 +159,7 @@ function CustomCommandItem({
       <SendButton
         onClick={() => {
           sendCustomCommand(customCommand.command, state)
-          sendCustomCommandAnalyticsEvent(customCommand.command, customCommand.title || "")
+          sendCustomCommandAnalyticsEvent(customCommand.command)
         }}
       >
         Send Command

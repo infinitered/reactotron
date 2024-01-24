@@ -11,10 +11,23 @@ import "react-confirm-alert/src/react-confirm-alert.css" // Import css
 // TODO: Change this to the correct key for production.
 const GA4_KEY = "G-WZE3E5XCQ7"
 
+type IAnalyticsEventCategory =
+  | { category: "android"; actions: ["settings", "reverse-tunnel", "reload-app", "shake-device"] }
+  | { category: "navigation"; actions: ["keyboard_shortcut"] }
+  | { category: "external_link"; actions: ["click"] }
+  | { category: "timeline"; actions: ["search", "filter", "reverse", "clear"] }
+  | { category: "error"; actions: ["OverlayDropImage"] }
+  | { category: "overlay"; actions: ["OverlayDropImage", "OverlayRemoveImage", "OverlayShowDebug"] }
+  | { category: "dispatch"; actions: ["dispatchAbort", "dispatchConfirm"] }
+  | { category: "subscription"; actions: ["addAbort", "addConfirm", "add", "clear"] }
+  | { category: "snapshot"; actions: ["copy", "restore", "remove", "copy", "add"] }
+  | { category: "storybook"; actions: ["ToggleStorybook"] }
+  | { category: "custom_command"; actions: ["sendCommand"] }
+
 // I had trouble importing this type from the react-ga4 package, so I'm defining it here.
 type UaEventOptions = {
-  action: string
-  category: string
+  category: IAnalyticsEventCategory["category"]
+  action: IAnalyticsEventCategory["actions"][number]
   label?: string
   value?: number
   nonInteraction?: boolean
@@ -125,12 +138,12 @@ export const useAnalytics = () => {
 
   // Send a custom command event
   const sendCustomCommandAnalyticsEvent = useCallback(
-    (command: string, title: string) => {
+    (command: string) => {
       sendAnalyticsEvent({
         category: "custom_command",
-        action: command,
+        action: "sendCommand",
         nonInteraction: false,
-        label: title,
+        label: command,
       })
     },
     [sendAnalyticsEvent]
