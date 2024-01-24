@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.4.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.3.1...reactotron-app@3.4.0) (2024-01-24)
+
+
+### Features
+
+* **reactotron-app:** Adds tooltips to state snapshot item commands. ([#1386](https://github.com/infinitered/reactotron/issues/1386)) ([96891ac](https://github.com/infinitered/reactotron/commit/96891ac1ef94b63e0e5b292da3b5ddaa0e87e363))
+
 ### [3.3.1](https://github.com/infinitered/reactotron/compare/reactotron-app@3.3.0...reactotron-app@3.3.1) (2024-01-23)
 
 ## [3.3.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.2.0...reactotron-app@3.3.0) (2024-01-17)
