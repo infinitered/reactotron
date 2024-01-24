@@ -21,7 +21,6 @@ export function* request(api, action) {
 
     // are we good?
     if (ok) {
-      console.log(data)
       const entry = data["0"]
       const { commit, author, committer, html_url: url } = entry
       const { message, tree } = commit
