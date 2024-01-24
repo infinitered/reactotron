@@ -6,8 +6,9 @@ The example app was generated with [Ignite](https://github.com/infinitered/ignit
 
 ## Quick Start
 
-[!IMPORTANT]
+:::info
 Before you start, run `yarn` in the root directory of the repo to make sure all of the dependencies have been installed successfully.
+:::
 
 1. From the parent directory, run `yarn build && yarn start` This will build the latest version of Reactotron and open it.
 2. From the parent directory, run `yarn start:example` or inside of example app directory `yarn start`. (Check the example app's `package.json` for additional options.)

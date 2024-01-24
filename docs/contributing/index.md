@@ -2,8 +2,9 @@
 
 Thank you for investing your time in contributing to our project!
 
-[!TIP]
+:::tip
 Please start by reading the other docs in this folder to understand how the monorepo folder structure and plugin architecture work.
+:::
 
 ## Making changes to the Reactotron App
 
@@ -25,8 +26,9 @@ You should see the reactotron electron app open on your machine with the develop
 
 Changes made to the main reactotron electron app in `./apps/reactotron-app` will be reflected in the reactotron app that you started in step 1. You may need to kill the app and restart it to see your changes.
 
-[!IMPORTANT]
+:::info
 Remember to reload the example app from step 2 or other connected application(s) to reconnect the app to reactotron.
+:::
 
 Changes made to the client packages will be reflected in the example application immediately.
 
@@ -48,11 +50,13 @@ or if you want to watch for rebuilds and automatically link them:
 npx nx watch --all -- "npx zx scripts/install-workspace-packages-in-target.mjs ~/Code/PizzaApp
 ```
 
-[!IMPORTANT]
+:::info
 Make sure that the path to your app is an absolute path and not a relative one (i.e. `~/Code/PizzaApp` instead of `../PizzaApp`)
+:::
 
-[!NOTE]
+:::note
 You must have already run `yarn` in your app folder (e.g. `~/Code/PizzaApp`) before running this script because is copies over the built js files from each reactotron library into the app's `node_modules` folder.
+:::
 
 ## Adding a new Reactotron plugin to `./lib`
 
