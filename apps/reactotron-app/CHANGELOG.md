@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.5.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.4.0...reactotron-app@3.5.0) (2024-01-24)
+
+
+### Features
+
+* **reactotron-app:** Close the timeline search on 2nd “X” press ([#1418](https://github.com/infinitered/reactotron/issues/1418)) ([8e97074](https://github.com/infinitered/reactotron/commit/8e970743f50a54c6d3b411024e929b9a33dbcbe2)), closes [#1394](https://github.com/infinitered/reactotron/issues/1394)
+
 ## [3.4.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.3.1...reactotron-app@3.4.0) (2024-01-24)
 
 
