@@ -1,6 +1,12 @@
-import Store from "electron-store"
+import Store, { type Schema } from "electron-store"
 
-const schema = {
+type StoreType = {
+  serverPort: number,
+  commandHistory: number,
+  analyticsOptOut: string | boolean,
+}
+
+const schema:Schema<StoreType> = {
   serverPort: {
     type: "number",
     default: 9090,
@@ -15,7 +21,7 @@ const schema = {
   },
 }
 
-const configStore = new Store({
+const configStore = new Store<StoreType>({
   schema,
   defaults: {
     serverPort: schema.serverPort.default,
@@ -33,7 +39,7 @@ const configStore = new Store({
       store.set("analyticsOptOut", "unknown")
     },
   },
-} as any)
+})
 
 // Setup defaults
 if (!configStore.has("serverPort")) {
