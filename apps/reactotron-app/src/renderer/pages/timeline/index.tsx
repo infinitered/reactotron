@@ -49,6 +49,7 @@ const SearchInput = styled.input`
 `
 export const ButtonContainer = styled.div`
   padding: 10px;
+  cursor: pointer;
 `
 
 function Timeline() {
@@ -56,6 +57,7 @@ function Timeline() {
   const {
     isSearchOpen,
     toggleSearch,
+    closeSearch,
     setSearch,
     search,
     isReversed,
@@ -117,7 +119,15 @@ function Timeline() {
           <SearchContainer>
             <SearchLabel>Search</SearchLabel>
             <SearchInput autoFocus value={search} onChange={(e) => setSearch(e.target.value)} />
-            <ButtonContainer onClick={() => setSearch("")}>
+            <ButtonContainer
+              onClick={() => {
+                if (search === "") {
+                  closeSearch()
+                } else {
+                  setSearch("")
+                }
+              }}
+            >
               <FaTimes size={24} />
             </ButtonContainer>
           </SearchContainer>
