@@ -30,10 +30,12 @@ const AsyncStorageMutationCommand: FunctionComponent<Props> = ({ command, isOpen
       isOpen={isOpen}
       setIsOpen={setIsOpen}
     >
-      <RowContainer key={"action"}>
-        <KeyContainer>action</KeyContainer>
-        <ValueContainer $value={payload.action}>{payload.action}</ValueContainer>
-      </RowContainer>
+      {payload.action && (
+        <RowContainer key={"action"}>
+          <KeyContainer>action</KeyContainer>
+          <ValueContainer $value={payload.action}>{payload.action}</ValueContainer>
+        </RowContainer>
+      )}
       {makeTableWithContentView(payload.data)}
     </TimelineCommand>
   )
