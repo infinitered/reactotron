@@ -21,8 +21,8 @@
     "lib": ["dom"],
     "skipLibCheck": true,
     "types": ["node", "react", "react-native", "jest"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
   },
   "exclude": ["node_modules"],
-  "include": ["src"]
+  "include": ["src"],
 }

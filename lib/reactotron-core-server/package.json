@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "mitt": "^3.0.1",
-    "ramda": "0.26.1",
+    "ramda": "0.28.0",
     "reactotron-core-contract": "workspace:*",
     "ws": "^8.14.2"
   },
@@ -53,7 +53,7 @@
     "@babel/preset-typescript": "^7.23.2",
     "@types/jest": "^29.5.7",
     "@types/node": "^18.18.8",
-    "@types/ramda": "0.26.44",
+    "@types/ramda": "^0.28.0",
     "@types/ws": "^8.5.8",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",

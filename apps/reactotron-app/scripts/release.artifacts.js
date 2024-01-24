@@ -91,8 +91,8 @@ const repo = "reactotron"
       target_commitish: gitTag.includes("beta")
         ? "beta"
         : gitTag.includes("alpha")
-        ? "alpha"
-        : "master",
+          ? "alpha"
+          : "master",
     })
     .then(({ data: release }) => {
       Promise.allSettled(

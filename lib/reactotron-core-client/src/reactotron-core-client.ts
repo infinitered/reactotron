@@ -133,11 +133,8 @@ export const corePlugins = [
   repl(),
 ] satisfies PluginCreator<ReactotronCore>[]
 
-export type InferPluginsFromCreators<Client, PC extends PluginCreator<Client>[]> = PC extends Array<
-  infer P extends PluginCreator<Client>
->
-  ? ReturnType<P>[]
-  : never
+export type InferPluginsFromCreators<Client, PC extends PluginCreator<Client>[]> =
+  PC extends Array<infer P extends PluginCreator<Client>> ? ReturnType<P>[] : never
 // #endregion
 
 type CorePluginFeatures = InferFeaturesFromPlugins<ReactotronCore, typeof corePlugins>
