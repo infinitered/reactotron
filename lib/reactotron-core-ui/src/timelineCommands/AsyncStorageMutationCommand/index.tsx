@@ -1,8 +1,9 @@
 import React, { FunctionComponent } from "react"
 
 import TimelineCommand from "../../components/TimelineCommand"
-import makeTable from "../../utils/makeTable"
+import { KeyContainer, RowContainer, ValueContainer } from "../../utils/makeTable"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
+import { makeTableWithContentView } from "../../components/ContentView"
 
 interface AsyncStorageMutationPayload {
   action: string
@@ -29,7 +30,11 @@ const AsyncStorageMutationCommand: FunctionComponent<Props> = ({ command, isOpen
       isOpen={isOpen}
       setIsOpen={setIsOpen}
     >
-      {makeTable(payload.data)}
+      <RowContainer key={"action"}>
+        <KeyContainer>action</KeyContainer>
+        <ValueContainer $value={payload.action}>{payload.action}</ValueContainer>
+      </RowContainer>
+      {makeTableWithContentView(payload.data)}
     </TimelineCommand>
   )
 }

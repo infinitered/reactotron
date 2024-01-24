@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import makeTable from "../../utils/makeTable"
+import makeTable, { RowContainer, KeyContainer, ValueContainer } from "../../utils/makeTable"
 import isShallow from "../../utils/isShallow"
 import TreeView from "../TreeView"
 
@@ -59,4 +59,26 @@ export default function ContentView({ value, treeLevel }: Props) {
   }
 
   return <StringContainer>{String(checkValue)}</StringContainer>
+}
+
+export const makeTableWithContentView = (obj: unknown) => {
+  const input = obj !== null && typeof obj === "object" ? obj : {}
+  const keys = Object.keys(input) ?? []
+
+  return (
+    <div>
+      {keys.map((key) => {
+        const value = input[key]
+
+        return (
+          <RowContainer key={key}>
+            <KeyContainer>{key}</KeyContainer>
+            <ValueContainer $value={value}>
+              <ContentView value={value} />
+            </ValueContainer>
+          </RowContainer>
+        )
+      })}
+    </div>
+  )
 }

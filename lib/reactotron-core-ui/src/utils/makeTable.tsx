@@ -1,13 +1,13 @@
 import React from "react"
 import styled from "styled-components"
 
-const RowContainer = styled.div`
+export const RowContainer = styled.div`
   display: flex;
   justify-content: space-between;
   user-select: all;
   padding: 2px 0;
 `
-const KeyContainer = styled.div`
+export const KeyContainer = styled.div`
   width: 210px;
   padding-right: 10px;
   word-break: break-all;
@@ -19,7 +19,7 @@ const KeyContainer = styled.div`
 interface ValueContainerProps {
   $value: any
 }
-const ValueContainer = styled.div.attrs(() => ({}))<ValueContainerProps>`
+export const ValueContainer = styled.div.attrs(() => ({}))<ValueContainerProps>`
   flex: 1;
   word-break: break-all;
   user-select: text;
