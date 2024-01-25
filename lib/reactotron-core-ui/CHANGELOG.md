@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.1.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.5...reactotron-core-ui@2.1.0) (2024-01-25)
+
+
+### Features
+
+* **reactotron-app:** JSON view of `AsyncStorage` values ([#1419](https://github.com/infinitered/reactotron/issues/1419)) [skip ci] ([9bfdee4](https://github.com/infinitered/reactotron/commit/9bfdee4bf47c35ec73bf5b2a7bf18b05a18ac7d5)), closes [#947](https://github.com/infinitered/reactotron/issues/947)
+
+
+### Bug Fixes
+
+* **architecture:** Attempt to mitigate compiler error: `Error: Default condition should be last one` ([#1423](https://github.com/infinitered/reactotron/issues/1423)) ([2c7e678](https://github.com/infinitered/reactotron/commit/2c7e678e5afaea79cd01f4ab6e90bd67339fc80a))
+
 ### [2.0.5](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.4...reactotron-core-ui@2.0.5) (2024-01-23)
 
 ### [2.0.4](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.3...reactotron-core-ui@2.0.4) (2024-01-18)
