@@ -8,7 +8,7 @@ const palette = {
   neutral500: "#978F8A",
   neutral600: "#564E4A",
   neutral700: "#3C3836",
-  neutral800: "#191015",
+  neutral800: "#1E1B1A",
   neutral900: "#000000",
 
   primary100: "#F4E0D9",
@@ -33,6 +33,8 @@ const palette = {
   angry100: "#F2D6CD",
   angry500: "#C03403",
 
+  reactotronRed: "#D21103",
+
   overlay20: "rgba(25, 16, 21, 0.2)",
   overlay50: "rgba(25, 16, 21, 0.5)",
 } as const
@@ -51,7 +53,7 @@ export const colors = {
   /**
    * The default text color in many components.
    */
-  text: palette.neutral800,
+  text: palette.neutral200,
   /**
    * Secondary text information.
    */
@@ -59,7 +61,7 @@ export const colors = {
   /**
    * The default color of the screen background.
    */
-  background: palette.neutral200,
+  background: palette.neutral800,
   /**
    * The default border color.
    */
@@ -81,4 +83,6 @@ export const colors = {
    *
    */
   errorBackground: palette.angry100,
+
+  reactotronRed: palette.reactotronRed,
 }

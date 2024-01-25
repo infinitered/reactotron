@@ -8,11 +8,12 @@ import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
 import { observer } from "mobx-react-lite"
 import React from "react"
-import { useColorScheme } from "react-native"
+import { useColorScheme, StyleSheet } from "react-native"
 import * as Screens from "app/screens"
 import Config from "../config"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
+import { LinearGradient } from "expo-linear-gradient"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -29,6 +30,10 @@ import { colors } from "app/theme"
  */
 export type AppStackParamList = {
   Welcome: undefined
+  Logging: undefined
+  Networking: undefined
+  ErrorGenerator: undefined
+  Benchmarking: undefined
   // 🔥 Your screens go here
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
@@ -49,8 +54,40 @@ const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = observer(function AppStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false, navigationBarColor: colors.background }}>
+    <Stack.Navigator
+      screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
+      initialRouteName="Welcome"
+    >
       <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
+      <Stack.Group
+        screenOptions={{
+          headerShown: true,
+          // headerTransparent: true,
+          headerBackground: () => (
+            <LinearGradient
+              colors={["#d3261f", "#ed6d19"]}
+              style={StyleSheet.absoluteFill}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              locations={[0.2, 1]}
+            />
+          ),
+          headerTintColor: colors.text,
+          headerTitleStyle: {
+            fontWeight: "bold",
+            color: colors.text,
+          },
+        }}
+      >
+        <Stack.Screen name="Logging" component={Screens.LoggingScreen} />
+        <Stack.Screen name="Networking" component={Screens.NetworkingScreen} />
+        <Stack.Screen
+          name="ErrorGenerator"
+          component={Screens.ErrorGeneratorScreen}
+          options={{ title: "Error Generators" }}
+        />
+        <Stack.Screen name="Benchmarking" component={Screens.BenchmarkingScreen} />
+      </Stack.Group>
       {/** 🔥 Your screens go here */}
       {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
