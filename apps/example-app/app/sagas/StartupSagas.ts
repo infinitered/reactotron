@@ -12,18 +12,24 @@ function testRecursion() {
     me: object,
     listOfMe: [object, object],
   }
-  console.tron.display({ name: "RECURSIVE SAFETY", value: object })
+  if (__DEV__) {
+    console.tron.display({ name: "RECURSIVE SAFETY", value: object })
+  }
 }
 
 function testFunctionNames() {
   if (!__DEV__) {
     return
   }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   const babelNamesThis = () => {}
-  console.tron.display({
-    name: "FUNCTION NAMES",
-    value: [babelNamesThis, () => true, function namedFunction() {}],
-  })
+  if (__DEV__) {
+    console.tron.display({
+      name: "FUNCTION NAMES",
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      value: [babelNamesThis, () => true, function namedFunction() {}],
+    })
+  }
 }
 
 function testFalsyThings() {
@@ -32,38 +38,42 @@ function testFalsyThings() {
   }
 
   // a flat version
-  console.tron.display({
-    name: "FALSY THINGS",
-    value: {
-      false: false,
-      zero: 0,
-      emptyString: "",
-      undefined,
-      null: null,
-    },
-  })
+  if (__DEV__) {
+    console.tron.display({
+      name: "FALSY THINGS",
+      value: {
+        false: false,
+        zero: 0,
+        emptyString: "",
+        undefined,
+        null: null,
+      },
+    })
+  }
 
   // a nested version
-  console.tron.display({
-    name: "FALSY THINGS",
-    value: {
-      false: false,
-      zero: 0,
-      emptyString: "",
-      undefined,
-      null: null,
-      nested: {
-        deeply: {
-          false: false,
-          zero: 0,
-          emptyString: "",
-          undefined,
-          null: null,
-          list: [false, 0, "", undefined, null],
+  if (__DEV__) {
+    console.tron.display({
+      name: "FALSY THINGS",
+      value: {
+        false: false,
+        zero: 0,
+        emptyString: "",
+        undefined,
+        null: null,
+        nested: {
+          deeply: {
+            false: false,
+            zero: 0,
+            emptyString: "",
+            undefined,
+            null: null,
+            list: [false, 0, "", undefined, null],
+          },
         },
       },
-    },
-  })
+    })
+  }
 }
 
 async function addStuffToAsyncStorage() {

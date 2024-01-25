@@ -103,6 +103,7 @@ class Repo extends Component<RepoProps> {
 }
 
 const Styles = StyleSheet.create({
+  // eslint-disable-next-line react-native/no-color-literals
   avatar: {
     backgroundColor: "#3d3d3d",
     borderColor: "#ffffff",
@@ -124,6 +125,7 @@ const Styles = StyleSheet.create({
     justifyContent: "flex-end",
     paddingRight: 10,
   },
+  // eslint-disable-next-line react-native/no-color-literals
   message: {
     color: "#BBD1EA",
     fontSize: 12,
@@ -136,9 +138,11 @@ const Styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
   },
+  // eslint-disable-next-line react-native/no-color-literals
   name: {
     color: "#ffffff",
   },
+  // eslint-disable-next-line react-native/no-color-literals
   repo: {
     color: "#ffffff",
     fontWeight: "bold",

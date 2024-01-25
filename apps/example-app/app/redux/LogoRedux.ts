@@ -17,7 +17,7 @@ export const INITIAL_STATE = {
 
 const changeSpeed = (state, { speed }) => ({ ...state, speed })
 const changeSize = (state, { size }) => ({ ...state, size })
-const reset = (state, action) => INITIAL_STATE
+const reset = (_state, _action) => INITIAL_STATE
 
 // actions ->
 const reducerMap = {

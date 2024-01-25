@@ -116,7 +116,13 @@ function App(props: AppProps) {
   )
 }
 
-const AppWithOverlay = __DEV__ ? console.tron.overlay(App) : App
+let AppWithOverlay
+if (__DEV__) {
+  // eslint-disable-next-line reactotron/no-tron-in-production
+  AppWithOverlay = console.tron.overlay(App)
+} else {
+  AppWithOverlay = App
+}
 export default AppWithOverlay
 
 const $container: ViewStyle = {

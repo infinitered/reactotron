@@ -53,31 +53,36 @@ export const WelcomeScreen = () => {
     startup()
   }, [])
 
-  const handlePress = () => {
-    console.log("A touchable was pressed.🔥🦄")
-  }
+  // const handlePress = () => {
+  //   console.log("A touchable was pressed.🔥🦄")
+  // }
 
   const handleSendCatPicture = () => {
     ignore()
-    console.tron.image({
-      uri: "https://placekitten.com/g/400/400",
-      preview: "placekitten.com",
-      filename: "cat.jpg",
-      width: 400,
-      height: 400,
-      caption: "D'awwwwwww",
-    })
+    if (__DEV__) {
+      console.tron.image({
+        uri: "https://placekitten.com/g/400/400",
+        preview: "placekitten.com",
+        filename: "cat.jpg",
+        width: 400,
+        height: 400,
+        caption: "D'awwwwwww",
+      })
+    }
   }
 
   const handleScreenshot = () => {
     captureRef(screenRef, { result: "data-uri" }).then(
-      (uri) =>
-        console.tron.display({
-          name: "Screenshot",
-          preview: "App screenshot",
-          image: { uri },
-        }),
-      (error) => console.tron.error("Oops, snapshot failed", error),
+      (uri) => {
+        if (__DEV__) {
+          console.tron.display({
+            name: "Screenshot",
+            preview: "App screenshot",
+            image: { uri },
+          })
+        }
+      },
+      (error) => console.error("Oops, snapshot failed", error),
     )
   }
 
@@ -97,16 +102,19 @@ export const WelcomeScreen = () => {
 
   const handleBenchmark = async () => {
     setDisableBenchmarkButton(true)
-    const benchy = console.tron.benchmark("welcome to slow town")
-    const delay = (ms: number) => new Promise((go) => setTimeout(() => go(), ms))
-    await delay(1000)
-    benchy.step("time to do something")
-    await delay(500)
-    benchy.step("time to do another thing")
-    await delay(250)
-    benchy.step("time to do a 3rd thing")
-    await delay(169)
-    benchy.stop("finally the last thing")
+    if (__DEV__) {
+      // eslint-disable-next-line reactotron/no-tron-in-production
+      const benchy = console.tron.benchmark("welcome to slow town")
+      const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(() => resolve(), ms))
+      await delay(1000)
+      benchy.step("time to do something")
+      await delay(500)
+      benchy.step("time to do another thing")
+      await delay(250)
+      benchy.step("time to do a 3rd thing")
+      await delay(169)
+      benchy.stop("finally the last thing")
+    }
     setDisableBenchmarkButton(false)
   }
 
@@ -141,6 +149,18 @@ export const WelcomeScreen = () => {
           <Button text="Screenshot" onPress={handleScreenshot} />
           <Button text="Cats!" onPress={handleSendCatPicture} />
           <Button text="Benchmark" onPress={handleBenchmark} disabled={disableBenchmarkButton} />
+        </View>
+
+        <View style={$buttons}>
+          <Button
+            text="Make An API Call"
+            onPress={() => {
+              fetch("https://jsonplaceholder.typicode.com/todos/1")
+                .then((response) => response.json())
+                .then((json) => console.log(json))
+            }}
+            style={$width200}
+          />
         </View>
 
         <View style={$buttons}>
