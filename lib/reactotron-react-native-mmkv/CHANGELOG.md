@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.2.3](https://github.com/infinitered/reactotron/compare/reactotron-react-native-mmkv@0.2.2...reactotron-react-native-mmkv@0.2.3) (2024-01-25)
+
+
+### Bug Fixes
+
+* **architecture:** Attempt to mitigate compiler error: `Error: Default condition should be last one` ([#1423](https://github.com/infinitered/reactotron/issues/1423)) ([2c7e678](https://github.com/infinitered/reactotron/commit/2c7e678e5afaea79cd01f4ab6e90bd67339fc80a))
+
 ### [0.2.2](https://github.com/infinitered/reactotron/compare/reactotron-react-native-mmkv@0.2.1...reactotron-react-native-mmkv@0.2.2) (2024-01-09)
 
 
