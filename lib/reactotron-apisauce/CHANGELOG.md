@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.0.2](https://github.com/infinitered/reactotron/compare/reactotron-apisauce@3.0.1...reactotron-apisauce@3.0.2) (2024-01-25)
+
+
+### Bug Fixes
+
+* **architecture:** Attempt to mitigate compiler error: `Error: Default condition should be last one` ([#1423](https://github.com/infinitered/reactotron/issues/1423)) ([2c7e678](https://github.com/infinitered/reactotron/commit/2c7e678e5afaea79cd01f4ab6e90bd67339fc80a))
+
 ### [3.0.1](https://github.com/infinitered/reactotron/compare/reactotron-apisauce@3.0.1-beta.14...reactotron-apisauce@3.0.1) (2023-12-05)
 
 ### [3.0.1-beta.14](https://github.com/infinitered/reactotron/compare/reactotron-apisauce@3.0.1-beta.13...reactotron-apisauce@3.0.1-beta.14) (2023-12-01)
