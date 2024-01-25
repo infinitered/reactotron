@@ -116,7 +116,8 @@ function App(props: AppProps) {
   )
 }
 
-export default App
+const AppWithOverlay = __DEV__ ? console.tron.overlay(App) : App
+export default AppWithOverlay
 
 const $container: ViewStyle = {
   flex: 1,

@@ -10,6 +10,7 @@ import { ArgType } from "reactotron-core-client"
 import { mst } from "reactotron-mst"
 import apisaucePlugin from "reactotron-apisauce"
 import { reactotronRedux } from "reactotron-redux"
+import sagaPlugin from "reactotron-redux-saga"
 
 import { clear } from "app/utils/storage"
 import { goBack, resetRoot, navigate } from "app/navigators/navigationUtilities"
@@ -23,14 +24,15 @@ const reactotron = Reactotron.configure({
     Reactotron.clear()
   },
 })
+  .use(apisaucePlugin({ ignoreContentTypes: /^(image)\/.*$/i }))
+  .use(sagaPlugin({}))
+  .use(reactotronRedux())
   .use(
     mst({
       /** ignore some chatty `mobx-state-tree` actions  */
       filter: (event) => /postProcessSnapshot|@APPLY_SNAPSHOT/.test(event.name) === false,
     }),
   )
-  .use(apisaucePlugin({ ignoreContentTypes: /^(image)\/.*$/i }))
-  .use(reactotronRedux())
 
 if (Platform.OS !== "web") {
   reactotron.setAsyncStorageHandler?.(AsyncStorage)
@@ -38,6 +40,7 @@ if (Platform.OS !== "web") {
     networking: {
       ignoreUrls: /symbolicate/,
     },
+    overlay: true,
   })
 }
 
