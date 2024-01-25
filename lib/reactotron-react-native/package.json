@@ -18,10 +18,10 @@
   "types": "dist/types/src/index.d.ts",
   "react-native": "src/index.ts",
   "exports": {
-    "default": "./dist/index.js",
     "import": "./dist/index.esm.js",
     "types": "./dist/types/src/index.d.ts",
-    "react-native": "./src/index.ts"
+    "react-native": "./src/index.ts",
+    "default": "./dist/index.js"
   },
   "scripts": {
     "test": "jest",

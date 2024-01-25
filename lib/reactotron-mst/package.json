@@ -19,9 +19,9 @@
   "react-native": "src/index.ts",
   "exports": {
     "import": "./dist/index.esm.js",
-    "default": "./dist/index.js",
     "react-native": "./src/index.ts",
-    "types": "./dist/types/src/index.d.ts"
+    "types": "./dist/types/src/index.d.ts",
+    "default": "./dist/index.js"
   },
   "scripts": {
     "test": "jest",
