@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.8.13](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.8.12...reactotron-core-client@2.8.13) (2024-01-25)
+
+
+### Bug Fixes
+
+* **architecture:** Attempt to mitigate compiler error: `Error: Default condition should be last one` ([#1423](https://github.com/infinitered/reactotron/issues/1423)) ([2c7e678](https://github.com/infinitered/reactotron/commit/2c7e678e5afaea79cd01f4ab6e90bd67339fc80a))
+
 ### [2.8.12](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.8.11...reactotron-core-client@2.8.12) (2024-01-23)
 
 ### [2.8.11](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.8.11-beta.17...reactotron-core-client@2.8.11) (2023-12-05)
