@@ -6,10 +6,14 @@ import {
   View,
   Text,
   Image,
-  StyleSheet,
+  ViewStyle,
+  ImageStyle,
+  TextStyle,
+  ImageSourcePropType,
 } from "react-native"
 import { Button } from "./Button"
 import { mergeRight } from "ramda"
+import { colors } from "app/theme"
 
 interface RepoProps {
   repo?: string
@@ -71,87 +75,90 @@ class Repo extends Component<RepoProps> {
     const { repo, name, avatar, message, size } = this.props
     const avatarSource = avatar && { uri: avatar }
 
-    const avatarStyles = mergeRight(Styles.avatar, {
+    const avatarStyles: ImageStyle = mergeRight($avatar, {
       width: size,
       height: size,
       borderRadius: size ? size * 0.5 : undefined,
     })
-    const centerStyles = mergeRight(Styles.center, this.getAnimationStyle())
+
+    const centerStyles = mergeRight($center, this.getAnimationStyle())
+
     return (
-      <View style={Styles.container}>
-        <Text style={Styles.repo}>{repo || " "}</Text>
-        <View style={Styles.middle}>
-          <View style={Styles.left}>
-            <Button text="Bigger" onPress={this.props.bigger} />
-            <Button text="Small" onPress={this.props.smaller} />
+      <View style={$container}>
+        <Text style={$repo}>{repo || " "}</Text>
+        <View style={$middle}>
+          <View style={$left}>
+            <Button textStyle={$darkText} tx="imageActions.bigger" onPress={this.props.bigger} />
+            <Button textStyle={$darkText} tx="imageActions.smaller" onPress={this.props.smaller} />
           </View>
           <Animated.View style={centerStyles}>
             <TouchableWithoutFeedback onPress={this.props.reset}>
-              <Image style={avatarStyles} source={avatarSource} />
+              <Image style={avatarStyles} source={avatarSource as ImageSourcePropType} />
             </TouchableWithoutFeedback>
           </Animated.View>
-          <View style={Styles.right}>
-            <Button text="Faster" onPress={this.props.faster} />
-            <Button text="Slower" onPress={this.props.slower} />
+          <View style={$right}>
+            <Button textStyle={$darkText} tx="imageActions.faster" onPress={this.props.faster} />
+            <Button textStyle={$darkText} tx="imageActions.slower" onPress={this.props.slower} />
           </View>
         </View>
-        <Text style={Styles.name}>{name || " "}</Text>
-        <Text style={Styles.message}>{message}</Text>
+        <Text style={$name}>{name || " "}</Text>
+        <Text style={$message}>{message}</Text>
       </View>
     )
   }
 }
 
-const Styles = StyleSheet.create({
-  // eslint-disable-next-line react-native/no-color-literals
-  avatar: {
-    backgroundColor: "#3d3d3d",
-    borderColor: "#ffffff",
-    borderRadius: 40,
-    borderWidth: 4,
-    height: 80,
-    marginVertical: 15,
-    width: 80,
-  },
-  center: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  container: {
-    alignItems: "center",
-  },
-  left: {
-    alignItems: "flex-end",
-    justifyContent: "flex-end",
-    paddingRight: 10,
-  },
-  // eslint-disable-next-line react-native/no-color-literals
-  message: {
-    color: "#BBD1EA",
-    fontSize: 12,
-    height: 100,
-    marginTop: 20,
-    overflow: "hidden",
-    paddingHorizontal: 50,
-  },
-  middle: {
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  // eslint-disable-next-line react-native/no-color-literals
-  name: {
-    color: "#ffffff",
-  },
-  // eslint-disable-next-line react-native/no-color-literals
-  repo: {
-    color: "#ffffff",
-    fontWeight: "bold",
-  },
-  right: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingLeft: 10,
-  },
-})
+const $avatar: ImageStyle = {
+  borderColor: colors.white,
+  borderRadius: 40,
+  borderWidth: 4,
+  height: 80,
+  marginVertical: 15,
+  width: 80,
+}
+const $center: ViewStyle = {
+  alignItems: "center",
+  justifyContent: "center",
+}
+const $container: ViewStyle = {
+  alignItems: "center",
+}
+const $left: ViewStyle = {
+  alignItems: "flex-end",
+  justifyContent: "flex-end",
+  paddingRight: 10,
+}
+const $message: TextStyle = {
+  color: colors.repoText,
+  fontSize: 12,
+  height: 100,
+  marginTop: 20,
+  overflow: "hidden",
+  paddingHorizontal: 50,
+}
+const $middle: ViewStyle = {
+  alignItems: "center",
+  flexDirection: "row",
+}
+const $name: TextStyle = {
+  color: colors.text,
+}
+const $repo: TextStyle = {
+  color: colors.text,
+  fontWeight: "bold",
+}
+const $right: ViewStyle = {
+  alignItems: "center",
+  justifyContent: "center",
+  paddingLeft: 10,
+}
 
-export default Repo
+const $darkText: TextStyle = {
+  color: colors.textDim,
+}
+
+// const ObservedRepo = observer(Repo)
+export {
+  Repo,
+  // ObservedRepo
+}

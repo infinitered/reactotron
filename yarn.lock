@@ -3570,7 +3570,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-async-storage/async-storage@npm:^1.19.4, @react-native-async-storage/async-storage@npm:^1.21.0":
+"@react-native-async-storage/async-storage@npm:1.18.2":
+  version: 1.18.2
+  resolution: "@react-native-async-storage/async-storage@npm:1.18.2"
+  dependencies:
+    merge-options: ^3.0.4
+  peerDependencies:
+    react-native: ^0.0.0-0 || 0.60 - 0.72 || 1000.0.0
+  checksum: bdbcd2e4785a1348657302fa48f4073d980d3b3626fc2ea1e8ec3013825d0013a49d0805a3fd1e98c0b8b12eb1273ef03fb842686ce740d25331398deb2691c4
+  languageName: node
+  linkType: hard
+
+"@react-native-async-storage/async-storage@npm:^1.19.4":
   version: 1.21.0
   resolution: "@react-native-async-storage/async-storage@npm:1.21.0"
   dependencies:
@@ -13357,7 +13368,7 @@ __metadata:
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
     "@expo-google-fonts/space-grotesk": ^0.2.2
-    "@react-native-async-storage/async-storage": ^1.21.0
+    "@react-native-async-storage/async-storage": 1.18.2
     "@react-navigation/native": ^6.0.2
     "@react-navigation/native-stack": ^6.0.2
     "@reduxjs/toolkit": ^2.1.0
@@ -13405,7 +13416,7 @@ __metadata:
     react-native-reanimated: ~3.3.0
     react-native-safe-area-context: 4.6.3
     react-native-screens: ~3.22.0
-    react-native-view-shot: ^3.8.0
+    react-native-view-shot: 3.7.0
     react-native-web: ~0.19.6
     react-redux: ^9.1.0
     react-test-renderer: 18.2.0
@@ -23063,15 +23074,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-view-shot@npm:^3.8.0":
-  version: 3.8.0
-  resolution: "react-native-view-shot@npm:3.8.0"
+"react-native-view-shot@npm:3.7.0":
+  version: 3.7.0
+  resolution: "react-native-view-shot@npm:3.7.0"
   dependencies:
     html2canvas: ^1.4.1
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 9e3044da325b44c90238d1eac54ab0a0a9bdab9b7b93f05409e402890c982ee854ae93ff3b6f0d7befe8f2c53df7cf0c708782c007c4c3c4a007a4844b658fde
+  checksum: e7fd583c98f17e8911cfe8a208df4f4798bf70edf500dd71ee405552e64387fd48374abdf16a965a4a768a308f6a0e2e5b75ae710fdeaa975baef146f8cec6dc
   languageName: node
   linkType: hard
 

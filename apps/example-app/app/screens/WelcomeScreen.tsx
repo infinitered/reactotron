@@ -1,29 +1,18 @@
-import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
 import { Image, ImageStyle, ScrollView, TextStyle, View, ViewStyle } from "react-native"
-import { ListItem, ListItemProps, Text } from "app/components"
-import { AppStackScreenProps } from "../navigators"
+import { ListItem as ListItemParent, ListItemProps, Text } from "app/components"
+import { AppStackParamList, AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { useNavigation } from "@react-navigation/native"
+import { NavigationProp, useNavigation } from "@react-navigation/native"
 
 const welcomeLogo = require("../../assets/images/logo.png")
 
-const ListItemAlt = (props: ListItemProps) => (
-  <ListItem
-    textStyle={$text}
-    containerStyle={{ marginHorizontal: spacing.lg }}
-    rightIcon="caretRight"
-    rightIconColor={colors.text}
-    topSeparator
-    {...props}
-  />
-)
-
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
+type WelcomeScreenNavigationProp = NavigationProp<AppStackParamList, "Welcome">
 
-export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen() {
-  const navigation = useNavigation()
+export const WelcomeScreen: FC<WelcomeScreenProps> = function WelcomeScreen() {
+  const navigation = useNavigation<WelcomeScreenNavigationProp>()
 
   return (
     <SafeAreaView style={$container}>
@@ -43,47 +32,66 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
           </Text>
         </View>
         <View style={{ marginTop: spacing.lg }}>
-          <ListItemAlt
+          <ListItem
             text="Logging"
             onPress={() => {
               navigation.navigate("Logging")
             }}
           />
-          <ListItemAlt
+          <ListItem
             text="Networking"
             onPress={() => {
               navigation.navigate("Networking")
             }}
           />
-          <ListItemAlt
+          <ListItem
+            text="Custom Commands"
+            onPress={() => {
+              navigation.navigate("CustomCommands")
+            }}
+          />
+          <ListItem
             text="Error Generators"
             onPress={() => {
               navigation.navigate("ErrorGenerator")
             }}
           />
-          <ListItemAlt
+          <ListItem
             text="Benchmarking"
             onPress={() => {
               navigation.navigate("Benchmarking")
+            }}
+          />
+          <ListItem
+            text="Async Storage"
+            onPress={() => {
+              navigation.navigate("AsyncStorage")
+            }}
+          />
+          <ListItem
+            text="State Management: MST"
+            onPress={() => {
+              navigation.navigate("MobxStateTree")
+            }}
+          />
+          <ListItem
+            text="State Management: Redux"
+            onPress={() => {
+              navigation.navigate("Redux")
             }}
           />
         </View>
       </ScrollView>
     </SafeAreaView>
   )
-})
+}
 
 const $container: ViewStyle = {
   flex: 1,
   backgroundColor: colors.background,
 }
 const $topContainer: ViewStyle = {
-  flexShrink: 1,
-  flexGrow: 1,
-  flexBasis: "57%",
-  justifyContent: "flex-start",
   paddingHorizontal: spacing.lg,
-  backgroundColor: colors.background,
 }
 const $welcomeLogo: ImageStyle = {
   height: 88,
@@ -98,3 +106,14 @@ const $welcomeSubheading: TextStyle = {
   ...$text,
   marginBottom: spacing.sm,
 }
+
+const ListItem = (props: ListItemProps) => (
+  <ListItemParent
+    textStyle={$text}
+    containerStyle={{ marginHorizontal: spacing.lg }}
+    rightIcon="caretRight"
+    rightIconColor={colors.text}
+    topSeparator
+    {...props}
+  />
+)

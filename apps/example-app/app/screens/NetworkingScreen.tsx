@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
 import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Text } from "app/components"
@@ -7,15 +6,15 @@ import { colors, spacing } from "../theme"
 
 interface NetworkingScreenProps extends AppStackScreenProps<"Networking"> {}
 
-export const NetworkingScreen: FC<NetworkingScreenProps> = observer(function NetworkingScreen() {
+export const NetworkingScreen: FC<NetworkingScreenProps> = function NetworkingScreen() {
   return (
     <ScrollView style={$container}>
       <View style={$topContainer}>
-        <Text style={$text}>Reactotron automatically intercepts and logs network requests!</Text>
+        <Text style={$text} tx="networkingScreen.title" />
       </View>
       <View style={{ marginTop: spacing.lg }}>
         <Button
-          text="Make An API Call"
+          tx="networkingScreen.makeApiCall"
           textStyle={$darkText}
           style={$button}
           onPress={() => {
@@ -27,19 +26,14 @@ export const NetworkingScreen: FC<NetworkingScreenProps> = observer(function Net
       </View>
     </ScrollView>
   )
-})
+}
 
 const $container: ViewStyle = {
   flex: 1,
   backgroundColor: colors.background,
 }
 const $topContainer: ViewStyle = {
-  flexShrink: 1,
-  flexGrow: 1,
-  flexBasis: "57%",
-  justifyContent: "flex-start",
   paddingHorizontal: spacing.lg,
-  backgroundColor: colors.background,
   paddingTop: spacing.xl,
 }
 const $text: TextStyle = {

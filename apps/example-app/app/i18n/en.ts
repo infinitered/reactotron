@@ -23,6 +23,54 @@ const en = {
       button: "Let's try this again",
     },
   },
+  asyncStorageScreen: {
+    title: "Reactotron will tell you when AsyncStorage values change!",
+    set: "Async Storage SET",
+    remove: "Async Storage REMOVE",
+    clear: "Async Storage CLEAR",
+  },
+  benchmarkingScreen: {
+    title: "Benchmarks",
+    slow: "Slow Benchmarks",
+    fast: "Fast Benchmarks",
+  },
+  customCommandsScreen: {
+    title:
+      "You can create lots of custom commands to make your app do things! It's like having react-native super powers!",
+  },
+  errorGeneratorScreen: {
+    title: "Reactotron can log all different kinds of errors!",
+    componentError: "Component Error",
+    tryCatchError: "Try/Catch Error",
+    asyncSagaError: "Saga Error in PUT (async)",
+    syncSagaError: "Saga Error in PUT (sync)",
+  },
+  loggingsScreen: {
+    title: "Reactotron works with regular console.log statements! You can log, debug, and warn.",
+    subtitle:
+      "Reactotron has special commands that invoke even more power to display logs the way you want.",
+  },
+  mobxStateTreeScreen: {
+    title: "MobX State Tree works great with Reactotron!",
+  },
+  networkingScreen: {
+    title: "Reactotron automatically intercepts and logs network requests!",
+    makeApiCall: "Make an API Call",
+  },
+
+  repos: {
+    reactotron: "Reactotron",
+    reactNative: "React Native",
+    redux: "Redux",
+    mobx: "MobX",
+  },
+  imageActions: {
+    bigger: "Bigger",
+    smaller: "Smaller",
+    faster: "Faster",
+    slower: "Slower",
+    reset: "Reset",
+  },
 }
 
 export default en
