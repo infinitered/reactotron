@@ -2,18 +2,23 @@ import React from "react"
 import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { useDispatch } from "react-redux"
 import { Button, Text } from "app/components"
-import { AppStackScreenProps } from "app/navigators"
+import type { AppStackScreenProps } from "app/navigators"
 import { colors, spacing } from "app/theme"
-import { Actions as ErrorActions } from "app/redux/ErrorRedux"
+import type { AppDispatch } from "app/redux"
+import { throwAnError, throwErrorAsync } from "app/redux/errorSlice"
 
 interface ErrorGeneratorScreenProps extends AppStackScreenProps<"ErrorGenerator"> {}
 
 export const ErrorGeneratorScreen: React.FC<ErrorGeneratorScreenProps> =
   function ErrorGeneratorScreen() {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
 
-    const bombPutSync = () => dispatch(ErrorActions.throwPutError(true))
-    const bombPut = () => dispatch(ErrorActions.throwPutError(false))
+    const bomb = () => {
+      console.log("wait for it...")
+      setTimeout(() => {
+        throw new Error("Boom goes the error message.")
+      }, 500)
+    }
     const silentBomb = () => {
       // you may have try/catch blocks in your code
       try {
@@ -25,13 +30,8 @@ export const ErrorGeneratorScreen: React.FC<ErrorGeneratorScreenProps> =
         console.error(e)
       }
     }
-    const bomb = () => {
-      console.log("wait for it...")
-      setTimeout(() => {
-        throw new Error("Boom goes the error message.")
-      }, 500)
-    }
-    const bombSaga = () => dispatch(ErrorActions.throwSagaError())
+    const bombRedux = () => dispatch(throwAnError())
+    const bombReduxAsync = () => dispatch(throwErrorAsync())
 
     return (
       <ScrollView style={$container}>
@@ -51,17 +51,16 @@ export const ErrorGeneratorScreen: React.FC<ErrorGeneratorScreenProps> =
             onPress={silentBomb}
             style={$button}
           />
-          <Button textStyle={$darkText} text="Saga Error" onPress={bombSaga} style={$button} />
           <Button
             textStyle={$darkText}
-            tx="errorGeneratorScreen.asyncSagaError"
-            onPress={bombPut}
+            tx="errorGeneratorScreen.reduxError"
+            onPress={bombRedux}
             style={$button}
           />
           <Button
             textStyle={$darkText}
-            tx="errorGeneratorScreen.syncSagaError"
-            onPress={bombPutSync}
+            tx="errorGeneratorScreen.reduxAsyncError"
+            onPress={bombReduxAsync}
             style={$button}
           />
         </View>

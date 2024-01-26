@@ -7,7 +7,7 @@
  * it very often. But take some time to look through and understand
  * what is going on here.
  *
- * The app navigation resides in ./app/navigators, so head over there
+ * The app navigation resides in app/app/navigators, so head over there
  * if you're interested in adding screens and navigators.
  */
 if (__DEV__) {
@@ -16,28 +16,26 @@ if (__DEV__) {
   // to only execute this in development.
   require("./devtools/ReactotronConfig.ts")
 }
-import "./i18n"
-import "./utils/ignoreWarnings"
+import "app/i18n"
+import "app/utils/ignoreWarnings"
 import { useFonts } from "expo-font"
 import React from "react"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 import * as Linking from "expo-linking"
-import { useInitialRootStore } from "./models"
-import { AppNavigator, useNavigationPersistence } from "./navigators"
-import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary"
-import * as storage from "./utils/storage"
-import { customFontsToLoad } from "./theme"
-import Config from "./config"
+import { useInitialRootStore } from "app/mobxStateTree"
+import { AppNavigator, useNavigationPersistence } from "app/navigators"
+import { ErrorBoundary } from "app/screens/ErrorScreen/ErrorBoundary"
+import * as storage from "app/utils/storage"
+import { customFontsToLoad } from "app/theme"
+import Config from "app/config"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { StatusBar, ViewStyle } from "react-native"
-import configureStore from "./redux"
+import { store } from "app/redux"
 import { Provider as ReduxProvider } from "react-redux"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
 StatusBar.setBarStyle("light-content")
-
-const reduxStore = configureStore()
 
 // Web linking configuration
 const prefix = Linking.createURL("/")
@@ -102,7 +100,7 @@ function App(props: AppProps) {
 
   // otherwise, we're ready to render the app
   return (
-    <ReduxProvider store={reduxStore}>
+    <ReduxProvider store={store}>
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
         <ErrorBoundary catchErrors={Config.catchErrors}>
           <GestureHandlerRootView style={$container}>

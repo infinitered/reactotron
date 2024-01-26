@@ -6,8 +6,8 @@ import { RepoStoreModel } from "./RepoStore"
  * A RootStore model.
  */
 export const RootStoreModel = types.model("RootStore").props({
-  repoStore: types.optional(RepoStoreModel, {}),
-  logoStore: types.optional(LogoStoreModel, {}),
+  repo: types.optional(RepoStoreModel, {}),
+  logo: types.optional(LogoStoreModel, {}),
 })
 
 /**

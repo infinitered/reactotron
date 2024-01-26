@@ -1,40 +1,26 @@
-import { combineReducers } from "redux"
-import { reducer as repoReducer } from "./RepoRedux"
-import { reducer as logoReducer } from "./LogoRedux"
-import { reducer as errorReducer } from "./ErrorRedux"
-import { not, includes } from "ramda"
-import { createLogger } from "redux-logger"
-import createSagaMiddleware from "redux-saga"
 import { configureStore } from "@reduxjs/toolkit"
-import rootSaga from "../sagas"
+import type { GetDefaultEnhancers } from "@reduxjs/toolkit/dist/getDefaultEnhancers"
+import logoReducer from "../redux/logoSlice"
+import repoReducer from "../redux/repoSlice"
+import errorReducer from "../redux/errorSlice"
 
-// make our root reducer
-const rootReducer = combineReducers({
-  repo: repoReducer,
-  logo: logoReducer,
-  error: errorReducer,
-})
-
-// the logger master switch
-const USE_LOGGING = false
-
-// silence these saga-based messages
-const SAGA_LOGGING_BLACKLIST = ["EFFECT_TRIGGERED", "EFFECT_RESOLVED", "EFFECT_REJECTED"]
-
-// create the logger
-const logger = createLogger({
-  predicate: (getState, { type }) => USE_LOGGING && not(includes(type, SAGA_LOGGING_BLACKLIST)),
-})
-
-// a function which can create our store and auto-persist the data
-export default () => {
-  const sagaMiddleware = createSagaMiddleware()
-  const store = configureStore({
-    reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), logger, sagaMiddleware],
-    // enhancers: () => (__DEV__ ? [console.tron.createEnhancer!()] : []),
-  })
-
-  sagaMiddleware.run(rootSaga)
-  return store
+const createEnhancers = (getDefaultEnhancers: GetDefaultEnhancers<any>) => {
+  if (__DEV__) {
+    const reactotron = require("../devtools/ReactotronConfig").default
+    return getDefaultEnhancers().concat(reactotron.createEnhancer())
+  } else {
+    return getDefaultEnhancers()
+  }
 }
+
+export const store = configureStore({
+  reducer: {
+    logo: logoReducer,
+    repo: repoReducer,
+    error: errorReducer,
+  },
+  enhancers: createEnhancers,
+})
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch

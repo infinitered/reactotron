@@ -27,5 +27,3 @@ export const LogoStoreModel = types
 
 export interface LogoStore extends Instance<typeof LogoStoreModel> {}
 export interface LogoStoreSnapshot extends SnapshotOut<typeof LogoStoreModel> {}
-
-// @demo remove-file

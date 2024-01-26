@@ -10,7 +10,6 @@ import { ArgType } from "reactotron-core-client"
 import { mst } from "reactotron-mst"
 import apisaucePlugin from "reactotron-apisauce"
 import { reactotronRedux } from "reactotron-redux"
-import sagaPlugin from "reactotron-redux-saga"
 
 import { clear } from "app/utils/storage"
 import { goBack, resetRoot, navigate } from "app/navigators/navigationUtilities"
@@ -25,7 +24,6 @@ const reactotron = Reactotron.configure({
   },
 })
   .use(apisaucePlugin({ ignoreContentTypes: /^(image)\/.*$/i }))
-  .use(sagaPlugin({}))
   .use(reactotronRedux())
   .use(
     mst({
@@ -38,7 +36,7 @@ if (Platform.OS !== "web") {
   reactotron.setAsyncStorageHandler?.(AsyncStorage)
   reactotron.useReactNative({
     networking: {
-      ignoreUrls: /symbolicate/,
+      ignoreUrls: /(logs|symbolicate)$/,
     },
     overlay: true,
   })

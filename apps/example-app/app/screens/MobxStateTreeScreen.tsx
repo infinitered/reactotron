@@ -4,17 +4,17 @@ import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Text } from "app/components"
 import { AppStackScreenProps } from "app/navigators"
 import { colors, spacing } from "app/theme"
-import { useStores } from "app/models"
+import { useStores } from "app/mobxStateTree"
 import { Repo } from "app/components/Repo"
 
 interface MobxStateTreeScreenProps extends AppStackScreenProps<"MobxStateTree"> {}
 
 export const MobxStateTreeScreen: React.FC<MobxStateTreeScreenProps> = observer(
   function MobxStateTreeScreen() {
-    const { logoStore, repoStore } = useStores()
+    const { logo, repo } = useStores()
 
-    const { avatar, name, message, repo, fetchRepo } = repoStore
-    const { size, speed, faster, slower, bigger, smaller, reset } = logoStore
+    const { avatar, name, message, repoName, fetchRepo, reset: repoReset } = repo
+    const { size, speed, faster, slower, bigger, smaller, reset: logoReset } = logo
 
     const requestReactotron = () => fetchRepo("infinitered/reactotron")
     const requestReactNative = () => fetchRepo("facebook/react-native")
@@ -28,24 +28,14 @@ export const MobxStateTreeScreen: React.FC<MobxStateTreeScreenProps> = observer(
         </View>
         <View style={{ marginTop: spacing.lg }}>
           <View style={$buttons}>
-            <Button
-              textStyle={$darkText}
-              style={$button}
-              tx="repos.reactotron"
-              onPress={requestReactotron}
-            />
-            <Button textStyle={$darkText} style={$button} tx="repos.redux" onPress={requestRedux} />
-            <Button textStyle={$darkText} style={$button} tx="repos.mobx" onPress={requestMobx} />
-            <Button
-              textStyle={$darkText}
-              style={$button}
-              tx="repos.reactNative"
-              onPress={requestReactNative}
-            />
+            <Button textStyle={$darkText} tx="repos.reactotron" onPress={requestReactotron} />
+            <Button textStyle={$darkText} tx="repos.redux" onPress={requestRedux} />
+            <Button textStyle={$darkText} tx="repos.mobx" onPress={requestMobx} />
+            <Button textStyle={$darkText} tx="repos.reactNative" onPress={requestReactNative} />
           </View>
           <Repo
             avatar={avatar}
-            repo={repo}
+            repo={repoName}
             name={name}
             message={message}
             size={size}
@@ -54,7 +44,10 @@ export const MobxStateTreeScreen: React.FC<MobxStateTreeScreenProps> = observer(
             smaller={smaller}
             faster={faster}
             slower={slower}
-            reset={reset}
+            reset={() => {
+              logoReset()
+              repoReset()
+            }}
           />
         </View>
       </ScrollView>
@@ -81,8 +74,4 @@ const $text: TextStyle = {
 }
 const $darkText: TextStyle = {
   color: colors.textDim,
-}
-const $button: ViewStyle = {
-  // marginHorizontal: spacing.xxxl,
-  // marginVertical: spacing.sm,
 }

@@ -30,8 +30,8 @@ const en = {
     title: "Reactotron can log all different kinds of errors!",
     componentError: "Component Error",
     tryCatchError: "Try/Catch Error",
-    asyncSagaError: "Saga Error in PUT (async)",
-    syncSagaError: "Saga Error in PUT (sync)",
+    reduxError: "Redux Error (sync)",
+    reduxAsyncError: "Redux Error (async)",
   },
   loggingsScreen: {
     title: "Reactotron works with regular console.log statements! You can log, debug, and warn.",

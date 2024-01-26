@@ -1,34 +1,33 @@
 import React from "react"
 import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
-import { Actions as RepoActions } from "app/redux/RepoRedux"
-import { Actions as LogoActions } from "app/redux/LogoRedux"
-import { Actions as StartupActions } from "app/redux/StartupRedux"
 import { Button, Text } from "app/components"
 import { Repo } from "app/components/Repo"
 import { AppStackScreenProps } from "app/navigators"
 import { colors, spacing } from "app/theme"
+import type { AppDispatch, RootState } from "app/redux"
+import { fetchAsync, reset as repoReset } from "app/redux/repoSlice"
+import { changeSize, changeSpeed, reset as logoReset } from "app/redux/logoSlice"
 
 interface ReduxScreenProps extends AppStackScreenProps<"Redux"> {}
 
 export const ReduxScreen: React.FC<ReduxScreenProps> = function ReduxScreen() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
-  const { avatar, name, message, repo } = useSelector((state) => state.repo)
-  const { size, speed } = useSelector((state) => state.logo)
+  const { avatar, name, message, repoName } = useSelector((state: RootState) => state.repo)
+  const { size, speed } = useSelector((state: RootState) => state.logo)
 
-  const requestReactotron = () => dispatch(RepoActions.request("reactotron/reactotron"))
-  const requestReactNative = () => dispatch(RepoActions.request("facebook/react-native"))
-  const requestMobx = () => dispatch(RepoActions.request("mobxjs/mobx"))
-  const requestRedux = () => dispatch(RepoActions.request("reactjs/redux"))
-  const faster = () => dispatch(LogoActions.changeSpeed(10))
-  const slower = () => dispatch(LogoActions.changeSpeed(50))
-  const bigger = () => dispatch(LogoActions.changeSize(140))
-  const smaller = () => dispatch(LogoActions.changeSize(40))
-  const reset = () => dispatch(LogoActions.reset())
+  const requestReactotron = () => dispatch(fetchAsync("reactotron/reactotron"))
+  const requestReactNative = () => dispatch(fetchAsync("facebook/react-native"))
+  const requestMobx = () => dispatch(fetchAsync("mobxjs/mobx"))
+  const requestRedux = () => dispatch(fetchAsync("reactjs/redux"))
+  const faster = () => dispatch(changeSpeed(10))
+  const slower = () => dispatch(changeSpeed(50))
+  const bigger = () => dispatch(changeSize(140))
+  const smaller = () => dispatch(changeSize(40))
 
   React.useEffect(() => {
-    dispatch(StartupActions.startup())
+    // dispatch(StartupActions.startup())
   }, [])
 
   return (
@@ -41,24 +40,14 @@ export const ReduxScreen: React.FC<ReduxScreenProps> = function ReduxScreen() {
       </View>
       <View style={{ marginTop: spacing.lg }}>
         <View style={$buttons}>
-          <Button
-            textStyle={$darkText}
-            style={$button}
-            tx="repos.reactotron"
-            onPress={requestReactotron}
-          />
-          <Button textStyle={$darkText} style={$button} tx="repos.redux" onPress={requestRedux} />
-          <Button textStyle={$darkText} style={$button} tx="repos.mobx" onPress={requestMobx} />
-          <Button
-            textStyle={$darkText}
-            style={$button}
-            tx="repos.reactNative"
-            onPress={requestReactNative}
-          />
+          <Button textStyle={$darkText} tx="repos.reactotron" onPress={requestReactotron} />
+          <Button textStyle={$darkText} tx="repos.redux" onPress={requestRedux} />
+          <Button textStyle={$darkText} tx="repos.mobx" onPress={requestMobx} />
+          <Button textStyle={$darkText} tx="repos.reactNative" onPress={requestReactNative} />
         </View>
         <Repo
           avatar={avatar}
-          repo={repo}
+          repo={repoName}
           name={name}
           message={message}
           size={size}
@@ -67,7 +56,10 @@ export const ReduxScreen: React.FC<ReduxScreenProps> = function ReduxScreen() {
           smaller={smaller}
           faster={faster}
           slower={slower}
-          reset={reset}
+          reset={() => {
+            dispatch(logoReset())
+            dispatch(repoReset())
+          }}
         />
       </View>
     </ScrollView>
@@ -93,8 +85,4 @@ const $text: TextStyle = {
 }
 const $darkText: TextStyle = {
   color: colors.textDim,
-}
-const $button: ViewStyle = {
-  // marginHorizontal: spacing.xxxl,
-  // marginVertical: spacing.sm,
 }

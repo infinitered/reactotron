@@ -46,6 +46,13 @@ class Repo extends Component<RepoProps> {
       }
       setTimeout(this.animate, 10)
     }
+
+    if (newProps.avatar === undefined) {
+      if (this.animation) {
+        this.animation.stop()
+        this.animation = null
+      }
+    }
   }
 
   animate = () => {
@@ -73,7 +80,7 @@ class Repo extends Component<RepoProps> {
 
   render() {
     const { repo, name, avatar, message, size } = this.props
-    const avatarSource = avatar && { uri: avatar }
+    const avatarSource = avatar !== undefined ? { uri: avatar } : false
 
     const avatarStyles: ImageStyle = mergeRight($avatar, {
       width: size,
@@ -88,21 +95,53 @@ class Repo extends Component<RepoProps> {
         <Text style={$repo}>{repo || " "}</Text>
         <View style={$middle}>
           <View style={$left}>
-            <Button textStyle={$darkText} tx="imageActions.bigger" onPress={this.props.bigger} />
-            <Button textStyle={$darkText} tx="imageActions.smaller" onPress={this.props.smaller} />
+            <Button
+              style={$button}
+              textStyle={$darkText}
+              tx="imageActions.bigger"
+              onPress={this.props.bigger}
+            />
+            <Button
+              style={$button}
+              textStyle={$darkText}
+              tx="imageActions.smaller"
+              onPress={this.props.smaller}
+            />
           </View>
           <Animated.View style={centerStyles}>
             <TouchableWithoutFeedback onPress={this.props.reset}>
-              <Image style={avatarStyles} source={avatarSource as ImageSourcePropType} />
+              {avatarSource ? (
+                <Image style={avatarStyles} source={avatarSource as ImageSourcePropType} />
+              ) : (
+                <View style={avatarStyles} />
+              )}
             </TouchableWithoutFeedback>
           </Animated.View>
           <View style={$right}>
-            <Button textStyle={$darkText} tx="imageActions.faster" onPress={this.props.faster} />
-            <Button textStyle={$darkText} tx="imageActions.slower" onPress={this.props.slower} />
+            <Button
+              style={$button}
+              textStyle={$darkText}
+              tx="imageActions.faster"
+              onPress={this.props.faster}
+            />
+            <Button
+              style={$button}
+              textStyle={$darkText}
+              tx="imageActions.slower"
+              onPress={this.props.slower}
+            />
           </View>
         </View>
         <Text style={$name}>{name || " "}</Text>
         <Text style={$message}>{message}</Text>
+        {this.props.reset && (
+          <Button
+            style={$button}
+            textStyle={$darkText}
+            tx="imageActions.reset"
+            onPress={this.props.reset}
+          />
+        )}
       </View>
     )
   }
@@ -156,9 +195,8 @@ const $right: ViewStyle = {
 const $darkText: TextStyle = {
   color: colors.textDim,
 }
-
-// const ObservedRepo = observer(Repo)
-export {
-  Repo,
-  // ObservedRepo
+const $button: ViewStyle = {
+  minWidth: 100,
 }
+
+export { Repo }
