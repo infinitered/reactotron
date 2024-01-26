@@ -18,7 +18,7 @@ const en = {
     clear: "Async Storage CLEAR",
   },
   benchmarkingScreen: {
-    title: "Benchmarks",
+    title: "Did you know Reactotron can benchmark your code? Check it out!",
     slow: "Slow Benchmarks",
     fast: "Fast Benchmarks",
   },
