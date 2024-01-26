@@ -4,10 +4,9 @@ This file was generated using [@jscutlery/semver](https://github.com/jscutlery/s
 
 ### [5.0.5](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.0.4...reactotron-react-native@5.0.5) (2024-01-25)
 
-
 ### Bug Fixes
 
-* **architecture:** Attempt to mitigate compiler error: `Error: Default condition should be last one` ([#1423](https://github.com/infinitered/reactotron/issues/1423)) ([2c7e678](https://github.com/infinitered/reactotron/commit/2c7e678e5afaea79cd01f4ab6e90bd67339fc80a))
+- **architecture:** Attempt to mitigate compiler error: `Error: Default condition should be last one` ([#1423](https://github.com/infinitered/reactotron/issues/1423)) ([2c7e678](https://github.com/infinitered/reactotron/commit/2c7e678e5afaea79cd01f4ab6e90bd67339fc80a))
 
 ### [5.0.4](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.0.4-beta.19...reactotron-react-native@5.0.4) (2023-12-05)
 
