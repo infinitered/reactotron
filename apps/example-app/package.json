@@ -30,8 +30,7 @@
     "bundle:web": "npx expo export --platform web",
     "serve:web": "npx server dist",
     "prebuild:clean": "npx expo prebuild --clean",
-    "prebuild": "npx expo prebuild",
-    "typecheck": "tsc --noEmit"
+    "prebuild": "npx expo prebuild"
   },
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
