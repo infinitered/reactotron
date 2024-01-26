@@ -6,7 +6,6 @@ import { not, includes } from "ramda"
 import { createLogger } from "redux-logger"
 import createSagaMiddleware from "redux-saga"
 import { configureStore } from "@reduxjs/toolkit"
-import { Reactotron } from "../devtools/ReactotronClient"
 import rootSaga from "../sagas"
 
 // make our root reducer
@@ -33,10 +32,7 @@ export default () => {
   const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), logger, sagaMiddleware],
-    enhancers: (getDefaultEnhancers) =>
-      __DEV__
-        ? [...getDefaultEnhancers(), Reactotron.createEnhancer()]
-        : [...getDefaultEnhancers()],
+    // enhancers: () => (__DEV__ ? [console.tron.createEnhancer!()] : []),
   })
 
   sagaMiddleware.run(rootSaga)

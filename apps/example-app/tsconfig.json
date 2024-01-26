@@ -1,4 +1,5 @@
 {
+  "extends": ["../../tsconfig.base.json", "expo/tsconfig.base"],
   "compilerOptions": {
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
@@ -22,7 +23,6 @@
       "assets/*": ["./assets/*"]
     }
   },
-  "extends": "expo/tsconfig.base",
   "ts-node": {
     "compilerOptions": {
       // compilerOptions specified here will override those declared above,

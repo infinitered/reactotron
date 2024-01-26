@@ -118,14 +118,8 @@ function App(props: AppProps) {
   )
 }
 
-let AppWithOverlay
-if (__DEV__) {
-  // eslint-disable-next-line reactotron/no-tron-in-production
-  AppWithOverlay = console.tron.overlay(App)
-} else {
-  AppWithOverlay = App
-}
-export default AppWithOverlay
+// eslint-disable-next-line reactotron/no-tron-in-production
+export default __DEV__ ? console.tron.overlay(App) : App
 
 const $container: ViewStyle = {
   flex: 1,

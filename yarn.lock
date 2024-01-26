@@ -6236,6 +6236,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/redux-logger@npm:^3.0.13":
+  version: 3.0.13
+  resolution: "@types/redux-logger@npm:3.0.13"
+  dependencies:
+    redux: ^5.0.0
+  checksum: fb8386c6a0940a3b3864039b5ceb420c5f75186e9ad2b166820e27201b3b0ca6a387bcb766d778343f69b1af768c624911e62e6bca19392e9d5b89c524ef176c
+  languageName: node
+  linkType: hard
+
 "@types/resolve@npm:0.0.8":
   version: 0.0.8
   resolution: "@types/resolve@npm:0.0.8"
@@ -13377,6 +13386,7 @@ __metadata:
     "@types/jest": ^29.2.1
     "@types/react": ~18.2.14
     "@types/react-test-renderer": ^18.0.0
+    "@types/redux-logger": ^3.0.13
     "@typescript-eslint/eslint-plugin": ^5.59.0
     "@typescript-eslint/parser": ^5.59.0
     apisauce: 3.0.1
@@ -24212,7 +24222,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux@npm:^5.0.1":
+"redux@npm:^5.0.0, redux@npm:^5.0.1":
   version: 5.0.1
   resolution: "redux@npm:5.0.1"
   checksum: e74affa9009dd5d994878b9a1ce30d6569d986117175056edb003de2651c05b10fe7819d6fa94aea1a94de9a82f252f986547f007a2fbeb35c317a2e5f5ecf2c

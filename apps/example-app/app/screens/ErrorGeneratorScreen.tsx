@@ -17,6 +17,8 @@ export const ErrorGeneratorScreen: React.FC<ErrorGeneratorScreenProps> =
     const silentBomb = () => {
       // you may have try/catch blocks in your code
       try {
+        // ignore this, we want to generate the error
+        // @ts-ignore
         console.foo()
       } catch (e) {
         // now you can log those errors

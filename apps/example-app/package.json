@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "compile": "tsc --noEmit -p . --pretty",
-    "format": "prettier --write \"app/**/*.{js,jsx,json,md,ts,tsx}\"",
+    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "format:check": "yarn format --check",
+    "format:write": "yarn format --write",
     "lint": "eslint App.tsx app test --fix --ext .js,.ts,.tsx && npm run format",
     "patch": "patch-package",
     "test": "jest",
@@ -28,7 +30,8 @@
     "bundle:web": "npx expo export --platform web",
     "serve:web": "npx server dist",
     "prebuild:clean": "npx expo prebuild --clean",
-    "prebuild": "npx expo prebuild"
+    "prebuild": "npx expo prebuild",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
@@ -78,6 +81,7 @@
     "@types/jest": "^29.2.1",
     "@types/react": "~18.2.14",
     "@types/react-test-renderer": "^18.0.0",
+    "@types/redux-logger": "^3.0.13",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
     "babel-jest": "^29.2.1",
@@ -116,12 +120,6 @@
   },
   "engines": {
     "node": ">=16"
-  },
-  "prettier": {
-    "printWidth": 100,
-    "semi": false,
-    "singleQuote": false,
-    "trailingComma": "all"
   },
   "eslintConfig": {
     "root": true,
