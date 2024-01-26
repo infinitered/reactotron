@@ -1,5 +1,5 @@
 import { race, call, put, delay } from "redux-saga/effects"
-import * as Repo from "../redux/RepoRedux"
+import * as Repo from "app/redux/RepoRedux"
 
 function* sampleNestedGenerator() {
   yield delay(49)

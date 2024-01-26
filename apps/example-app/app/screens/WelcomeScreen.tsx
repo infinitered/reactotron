@@ -1,17 +1,17 @@
-import React, { FC } from "react"
-import { Image, ImageStyle, ScrollView, TextStyle, View, ViewStyle } from "react-native"
-import { ListItem as ListItemParent, ListItemProps, Text } from "app/components"
-import { AppStackParamList, AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
+import React from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
+import { Image, ImageStyle, ScrollView, TextStyle, View, ViewStyle } from "react-native"
+import { ListItem as ListItemParent, ListItemProps, Text } from "app/components"
+import { AppStackParamList, AppStackScreenProps } from "app/navigators"
+import { colors, spacing } from "app/theme"
 
 const welcomeLogo = require("../../assets/images/logo.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 type WelcomeScreenNavigationProp = NavigationProp<AppStackParamList, "Welcome">
 
-export const WelcomeScreen: FC<WelcomeScreenProps> = function WelcomeScreen() {
+export const WelcomeScreen: React.FC<WelcomeScreenProps> = function WelcomeScreen() {
   const navigation = useNavigation<WelcomeScreenNavigationProp>()
 
   return (
@@ -19,17 +19,9 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = function WelcomeScreen() {
       <ScrollView style={$container}>
         <View style={$topContainer}>
           <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
-          <Text
-            testID="welcome-heading"
-            style={$text}
-            tx="welcomeScreen.readyForLaunch"
-            preset="heading"
-          />
-          <Text tx="welcomeScreen.exciting" style={$welcomeSubheading} preset="subheading" />
-          <Text style={$text}>
-            This demo app showcases what Reactotron can do... from networking to logging to plugins
-            and more.
-          </Text>
+          <Text testID="welcome-heading" style={$text} tx="welcomeScreen.title" preset="heading" />
+          <Text tx="welcomeScreen.subtitle" style={$welcomeSubheading} preset="subheading" />
+          <Text style={$text} tx="welcomeScreen.message" />
         </View>
         <View style={{ marginTop: spacing.lg }}>
           <ListItem

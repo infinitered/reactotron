@@ -1,8 +1,8 @@
 import React from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 import { Button, Text, Screen } from "app/components"
-import { AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
+import { AppStackScreenProps } from "app/navigators"
+import { colors, spacing } from "app/theme"
 import ViewShot, { captureRef } from "react-native-view-shot"
 
 interface LoggingScreenProps extends AppStackScreenProps<"Logging"> {}

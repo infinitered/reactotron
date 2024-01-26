@@ -1,15 +1,15 @@
 import { observer } from "mobx-react-lite"
-import React, { FC } from "react"
+import React from "react"
 import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Text } from "app/components"
-import { AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
+import { AppStackScreenProps } from "app/navigators"
+import { colors, spacing } from "app/theme"
 import { useStores } from "app/models"
 import { Repo } from "app/components/Repo"
 
 interface MobxStateTreeScreenProps extends AppStackScreenProps<"MobxStateTree"> {}
 
-export const MobxStateTreeScreen: FC<MobxStateTreeScreenProps> = observer(
+export const MobxStateTreeScreen: React.FC<MobxStateTreeScreenProps> = observer(
   function MobxStateTreeScreen() {
     const { logoStore, repoStore } = useStores()
 

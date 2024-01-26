@@ -1,12 +1,12 @@
-import React, { FC } from "react"
+import React from "react"
 import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Text } from "app/components"
-import { AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
+import { AppStackScreenProps } from "app/navigators"
+import { colors, spacing } from "app/theme"
 
 interface BenchmarkingScreenProps extends AppStackScreenProps<"Benchmarking"> {}
 
-export const BenchmarkingScreen: FC<BenchmarkingScreenProps> = function BenchmarkingScreen() {
+export const BenchmarkingScreen: React.FC<BenchmarkingScreenProps> = function BenchmarkingScreen() {
   const [disableBenchmarkButton, setDisableBenchmarkButton] = React.useState(false)
 
   const handleBenchmark = async (multiplier = 10) => {

@@ -1,5 +1,5 @@
 import { call, put } from "redux-saga/effects"
-import * as Error from "../redux/ErrorRedux"
+import * as Error from "app/redux/ErrorRedux"
 
 function dismantleBomb(cutTheRedWire) {
   if (cutTheRedWire) {

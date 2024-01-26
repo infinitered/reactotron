@@ -1,13 +1,13 @@
+import React from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import React, { FC } from "react"
 import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Text } from "app/components"
-import { AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
+import { AppStackScreenProps } from "app/navigators"
+import { colors, spacing } from "app/theme"
 
 interface AsyncStorageScreenProps extends AppStackScreenProps<"AsyncStorage"> {}
 
-export const AsyncStorageScreen: FC<AsyncStorageScreenProps> = function AsyncStorageScreen() {
+export const AsyncStorageScreen: React.FC<AsyncStorageScreenProps> = function AsyncStorageScreen() {
   const handleAsyncSet = () => {
     AsyncStorage.setItem("singleSet", new Date().toISOString(), () =>
       console.log("After setting async storage."),

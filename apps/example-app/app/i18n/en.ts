@@ -5,10 +5,10 @@ const en = {
     back: "Back",
   },
   welcomeScreen: {
-    postscript:
-      "psst  — This probably isn't what your app looks like. (Unless your designer handed you these screens, and in that case, ship it!)",
-    readyForLaunch: "Reactotron",
-    exciting: "Kitchen Sink Demo App",
+    title: "Reactotron",
+    subtitle: "Kitchen Sink Demo App",
+    message:
+      "This demo app showcases what Reactotron can do... from networking to logging to plugins and more.",
   },
   errorScreen: {
     title: "Something went wrong!",

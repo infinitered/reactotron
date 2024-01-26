@@ -1,17 +1,17 @@
-import React, { FC } from "react"
+import React from "react"
 import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
-import { Actions as RepoActions } from "../redux/RepoRedux"
-import { Actions as LogoActions } from "../redux/LogoRedux"
-import { Actions as StartupActions } from "../redux/StartupRedux"
+import { Actions as RepoActions } from "app/redux/RepoRedux"
+import { Actions as LogoActions } from "app/redux/LogoRedux"
+import { Actions as StartupActions } from "app/redux/StartupRedux"
 import { Button, Text } from "app/components"
 import { Repo } from "app/components/Repo"
-import { AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
+import { AppStackScreenProps } from "app/navigators"
+import { colors, spacing } from "app/theme"
 
 interface ReduxScreenProps extends AppStackScreenProps<"Redux"> {}
 
-export const ReduxScreen: FC<ReduxScreenProps> = function ReduxScreen() {
+export const ReduxScreen: React.FC<ReduxScreenProps> = function ReduxScreen() {
   const dispatch = useDispatch()
 
   const { avatar, name, message, repo } = useSelector((state) => state.repo)

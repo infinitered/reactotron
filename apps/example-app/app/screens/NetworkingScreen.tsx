@@ -1,12 +1,12 @@
-import React, { FC } from "react"
+import React from "react"
 import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Text } from "app/components"
-import { AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
+import { AppStackScreenProps } from "app/navigators"
+import { colors, spacing } from "app/theme"
 
 interface NetworkingScreenProps extends AppStackScreenProps<"Networking"> {}
 
-export const NetworkingScreen: FC<NetworkingScreenProps> = function NetworkingScreen() {
+export const NetworkingScreen: React.FC<NetworkingScreenProps> = function NetworkingScreen() {
   return (
     <ScrollView style={$container}>
       <View style={$topContainer}>
