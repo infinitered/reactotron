@@ -28,6 +28,7 @@ function createMainWindow() {
   })
 
   const window = new BrowserWindow({
+    title: "Reactotron",
     x: mainWindowState.x,
     y: mainWindowState.y,
     width: mainWindowState.width,
