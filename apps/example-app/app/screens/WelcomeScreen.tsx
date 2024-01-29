@@ -1,87 +1,111 @@
-import { observer } from "mobx-react-lite"
-import React, { FC } from "react"
-import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { Button, Text } from "app/components"
-import { isRTL } from "../i18n"
-import { AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
-import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
+import React from "react"
+import { SafeAreaView } from "react-native-safe-area-context"
+import { NavigationProp, useNavigation } from "@react-navigation/native"
+import { Image, ImageStyle, ScrollView, TextStyle, View, ViewStyle } from "react-native"
+import { ListItem as ListItemParent, ListItemProps, Text } from "app/components"
+import { AppStackParamList, AppStackScreenProps } from "app/navigators"
+import { colors, spacing } from "app/theme"
 
 const welcomeLogo = require("../../assets/images/logo.png")
-const welcomeFace = require("../../assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
+type WelcomeScreenNavigationProp = NavigationProp<AppStackParamList, "Welcome">
 
-export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen() {
-  const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
+export const WelcomeScreen: React.FC<WelcomeScreenProps> = function WelcomeScreen() {
+  const navigation = useNavigation<WelcomeScreenNavigationProp>()
 
   return (
-    <View style={$container}>
-      <View style={$topContainer}>
-        <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
-        <Text
-          testID="welcome-heading"
-          style={$welcomeHeading}
-          tx="welcomeScreen.readyForLaunch"
-          preset="heading"
-        />
-        <Text tx="welcomeScreen.exciting" preset="subheading" />
-        <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
-      </View>
-
-      <View style={[$bottomContainer, $bottomContainerInsets]}>
-        <Button
-          text="Make An API Call"
-          onPress={() => {
-            fetch("https://jsonplaceholder.typicode.com/todos/1")
-              .then((response) => response.json())
-              .then((json) => console.log(json))
-          }}
-        />
-        <Text tx="welcomeScreen.postscript" size="md" />
-      </View>
-    </View>
+    <SafeAreaView style={$container}>
+      <ScrollView style={$container}>
+        <View style={$topContainer}>
+          <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
+          <Text testID="welcome-heading" style={$text} tx="welcomeScreen.title" preset="heading" />
+          <Text tx="welcomeScreen.subtitle" style={$welcomeSubheading} preset="subheading" />
+          <Text style={$text} tx="welcomeScreen.message" />
+        </View>
+        <View style={{ marginTop: spacing.lg }}>
+          <ListItem
+            text="Logging"
+            onPress={() => {
+              navigation.navigate("Logging")
+            }}
+          />
+          <ListItem
+            text="Networking"
+            onPress={() => {
+              navigation.navigate("Networking")
+            }}
+          />
+          <ListItem
+            text="Custom Commands"
+            onPress={() => {
+              navigation.navigate("CustomCommands")
+            }}
+          />
+          <ListItem
+            text="Error Generators"
+            onPress={() => {
+              navigation.navigate("ErrorGenerator")
+            }}
+          />
+          <ListItem
+            text="Benchmarking"
+            onPress={() => {
+              navigation.navigate("Benchmarking")
+            }}
+          />
+          <ListItem
+            text="Async Storage"
+            onPress={() => {
+              navigation.navigate("AsyncStorage")
+            }}
+          />
+          <ListItem
+            text="State Management: MST"
+            onPress={() => {
+              navigation.navigate("MobxStateTree")
+            }}
+          />
+          <ListItem
+            text="State Management: Redux"
+            onPress={() => {
+              navigation.navigate("Redux")
+            }}
+          />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   )
-})
+}
 
 const $container: ViewStyle = {
   flex: 1,
   backgroundColor: colors.background,
 }
-
 const $topContainer: ViewStyle = {
-  flexShrink: 1,
-  flexGrow: 1,
-  flexBasis: "57%",
-  justifyContent: "center",
   paddingHorizontal: spacing.lg,
-}
-
-const $bottomContainer: ViewStyle = {
-  flexShrink: 1,
-  flexGrow: 0,
-  flexBasis: "35%",
-  backgroundColor: colors.palette.neutral100,
-  borderTopLeftRadius: 16,
-  borderTopRightRadius: 16,
-  paddingHorizontal: spacing.lg,
-  justifyContent: "space-around",
 }
 const $welcomeLogo: ImageStyle = {
   height: 88,
-  width: "100%",
-  marginBottom: spacing.xxl,
+  width: 88,
+  marginBottom: spacing.sm,
+  marginTop: spacing.xl,
+}
+const $text: TextStyle = {
+  color: colors.text,
+}
+const $welcomeSubheading: TextStyle = {
+  ...$text,
+  marginBottom: spacing.sm,
 }
 
-const $welcomeFace: ImageStyle = {
-  height: 169,
-  width: 269,
-  position: "absolute",
-  bottom: -47,
-  right: -80,
-  transform: [{ scaleX: isRTL ? -1 : 1 }],
-}
-
-const $welcomeHeading: TextStyle = {
-  marginBottom: spacing.md,
-}
+const ListItem = (props: ListItemProps) => (
+  <ListItemParent
+    textStyle={$text}
+    containerStyle={{ marginHorizontal: spacing.lg }}
+    rightIcon="caretRight"
+    rightIconColor={colors.text}
+    topSeparator
+    {...props}
+  />
+)

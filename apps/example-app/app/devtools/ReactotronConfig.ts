@@ -8,6 +8,8 @@ import { Platform, NativeModules } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { ArgType } from "reactotron-core-client"
 import { mst } from "reactotron-mst"
+import apisaucePlugin from "reactotron-apisauce"
+import { reactotronRedux } from "reactotron-redux"
 
 import { clear } from "app/utils/storage"
 import { goBack, resetRoot, navigate } from "app/navigators/navigationUtilities"
@@ -20,19 +22,23 @@ const reactotron = Reactotron.configure({
     /** since this file gets hot reloaded, let's clear the past logs every time we connect */
     Reactotron.clear()
   },
-}).use(
-  mst({
-    /** ignore some chatty `mobx-state-tree` actions  */
-    filter: (event) => /postProcessSnapshot|@APPLY_SNAPSHOT/.test(event.name) === false,
-  }),
-)
+})
+  .use(apisaucePlugin({ ignoreContentTypes: /^(image)\/.*$/i }))
+  .use(reactotronRedux())
+  .use(
+    mst({
+      /** ignore some chatty `mobx-state-tree` actions  */
+      filter: (event) => /postProcessSnapshot|@APPLY_SNAPSHOT/.test(event.name) === false,
+    }),
+  )
 
 if (Platform.OS !== "web") {
   reactotron.setAsyncStorageHandler?.(AsyncStorage)
   reactotron.useReactNative({
     networking: {
-      ignoreUrls: /symbolicate/,
+      ignoreUrls: /(logs|symbolicate)$/,
     },
+    overlay: true,
   })
 }
 
@@ -153,3 +159,5 @@ declare global {
  * Now that we've setup all our Reactotron configuration, let's connect!
  */
 reactotron.connect()
+
+export default reactotron
