@@ -25,13 +25,13 @@ export const LoggingScreen: React.FC<LoggingScreenProps> = function LoggingScree
           })
         }
       },
-      (error) => console.error("Oops, snapshot failed", error),
+      (error) => console.error("Oops, snapshot failed", error)
     )
   }
 
   return (
     <Screen style={$container} preset="scroll">
-      <ViewShot ref={ref}>
+      <ViewShot ref={ref} style={$background}>
         <View style={$topContainer}>
           <Text style={$text} tx="loggingsScreen.title" />
         </View>
@@ -151,9 +151,12 @@ export const LoggingScreen: React.FC<LoggingScreenProps> = function LoggingScree
   )
 }
 
+const $background: ViewStyle = {
+  backgroundColor: colors.background,
+}
 const $container: ViewStyle = {
   flex: 1,
-  backgroundColor: colors.background,
+  ...$background,
 }
 const $topContainer: ViewStyle = {
   paddingHorizontal: spacing.lg,
