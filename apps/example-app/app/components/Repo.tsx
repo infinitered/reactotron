@@ -61,7 +61,6 @@ class Repo extends Component<RepoProps> {
     this.state.spinny.setValue(0)
     this.animation = Animated.sequence([
       Animated.timing(this.state.spinny, { toValue: 1, duration, easing, useNativeDriver: false }),
-      // Animated.timing(this.state.spinny, { toValue: 0, duration: 0, useNativeDriver: false })
     ])
     this.animation.start(({ finished }) => {
       if (finished) {

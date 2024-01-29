@@ -37,8 +37,6 @@ export type AppStackParamList = {
   MobxStateTree: undefined
   AsyncStorage: undefined
   Redux: undefined
-  // 🔥 Your screens go here
-  // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
 
 /**
@@ -65,7 +63,6 @@ const AppStack = function AppStack() {
       <Stack.Group
         screenOptions={{
           headerShown: true,
-          // headerTransparent: true,
           headerBackground: () => (
             <LinearGradient
               colors={["#d3261f", "#ed6d19"]}
@@ -107,8 +104,6 @@ const AppStack = function AppStack() {
         />
         <Stack.Screen name="Redux" component={Screens.ReduxScreen} />
       </Stack.Group>
-      {/** 🔥 Your screens go here */}
-      {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
 }
