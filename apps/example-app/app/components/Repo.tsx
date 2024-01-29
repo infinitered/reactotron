@@ -25,8 +25,8 @@ interface RepoProps {
   faster?: () => void
   slower?: () => void
   reset?: () => void
-  size?: number
-  speed?: number
+  size: number
+  speed: number
 }
 
 const ROTATION = { inputRange: [0, 1], outputRange: ["0deg", "360deg"] }
@@ -97,14 +97,18 @@ class Repo extends Component<RepoProps> {
             <Button
               style={$button}
               textStyle={$darkText}
+              disabledTextStyle={$disabledText}
               tx="imageActions.bigger"
               onPress={this.props.bigger}
+              disabled={this.props.size >= 140}
             />
             <Button
               style={$button}
               textStyle={$darkText}
+              disabledTextStyle={$disabledText}
               tx="imageActions.smaller"
               onPress={this.props.smaller}
+              disabled={this.props.size <= 40}
             />
           </View>
           <Animated.View style={centerStyles}>
@@ -120,14 +124,18 @@ class Repo extends Component<RepoProps> {
             <Button
               style={$button}
               textStyle={$darkText}
+              disabledTextStyle={$disabledText}
               tx="imageActions.faster"
               onPress={this.props.faster}
+              disabled={this.props.speed <= 10}
             />
             <Button
               style={$button}
               textStyle={$darkText}
+              disabledTextStyle={$disabledText}
               tx="imageActions.slower"
               onPress={this.props.slower}
+              disabled={this.props.speed >= 50}
             />
           </View>
         </View>
@@ -137,6 +145,7 @@ class Repo extends Component<RepoProps> {
           <Button
             style={$button}
             textStyle={$darkText}
+            disabledTextStyle={$disabledText}
             tx="imageActions.reset"
             onPress={this.props.reset}
           />
@@ -193,6 +202,9 @@ const $right: ViewStyle = {
 
 const $darkText: TextStyle = {
   color: colors.textDim,
+}
+const $disabledText: TextStyle = {
+  color: colors.palette.neutral400,
 }
 const $button: ViewStyle = {
   minWidth: 100,

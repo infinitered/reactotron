@@ -69,6 +69,7 @@ const $buttons: ViewStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   marginBottom: 20,
+  justifyContent: "center",
 }
 
 const $container: ViewStyle = {
