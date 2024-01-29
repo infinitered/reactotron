@@ -43,7 +43,7 @@ const withCustomStringsXml: ConfigPlugin = (config) =>
           },
         },
       ],
-      modConfig.modResults,
+      modConfig.modResults
     )
     return modConfig
   })
