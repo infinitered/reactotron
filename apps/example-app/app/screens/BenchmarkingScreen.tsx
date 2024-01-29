@@ -3,6 +3,7 @@ import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Text } from "app/components"
 import { AppStackScreenProps } from "app/navigators"
 import { colors, spacing } from "app/theme"
+import { useSafeAreaInsetsStyle } from "app/utils/useSafeAreaInsetsStyle"
 
 interface BenchmarkingScreenProps extends AppStackScreenProps<"Benchmarking"> {}
 
@@ -14,7 +15,7 @@ export const BenchmarkingScreen: React.FC<BenchmarkingScreenProps> = function Be
     if (__DEV__) {
       // eslint-disable-next-line reactotron/no-tron-in-production
       const benchy = console.tron.benchmark(
-        `welcome to ${multiplier >= 10 ? "slow" : "fast"} town, population YOU!`,
+        `welcome to ${multiplier >= 10 ? "slow" : "fast"} town, population YOU!`
       )
       const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(() => resolve(), ms))
       await delay(100 * multiplier)
@@ -29,8 +30,10 @@ export const BenchmarkingScreen: React.FC<BenchmarkingScreenProps> = function Be
     setDisableBenchmarkButton(false)
   }
 
+  const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
+
   return (
-    <ScrollView style={$container}>
+    <ScrollView style={$container} contentContainerStyle={$bottomContainerInsets}>
       <View style={$topContainer}>
         <Text style={$text} tx="benchmarkingScreen.title" />
       </View>

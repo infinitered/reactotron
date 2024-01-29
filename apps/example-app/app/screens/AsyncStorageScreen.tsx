@@ -4,13 +4,14 @@ import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Text } from "app/components"
 import { AppStackScreenProps } from "app/navigators"
 import { colors, spacing } from "app/theme"
+import { useSafeAreaInsetsStyle } from "app/utils/useSafeAreaInsetsStyle"
 
 interface AsyncStorageScreenProps extends AppStackScreenProps<"AsyncStorage"> {}
 
 export const AsyncStorageScreen: React.FC<AsyncStorageScreenProps> = function AsyncStorageScreen() {
   const handleAsyncSet = () => {
     AsyncStorage.setItem("singleSet", new Date().toISOString(), () =>
-      console.log("After setting async storage."),
+      console.log("After setting async storage.")
     )
   }
 
@@ -22,8 +23,10 @@ export const AsyncStorageScreen: React.FC<AsyncStorageScreenProps> = function As
     AsyncStorage.clear()
   }
 
+  const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
+
   return (
-    <ScrollView style={$container}>
+    <ScrollView style={$container} contentContainerStyle={$bottomContainerInsets}>
       <View style={$topContainer}>
         <Text style={$text} tx="asyncStorageScreen.title" />
       </View>

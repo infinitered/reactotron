@@ -6,6 +6,7 @@ import type { AppStackScreenProps } from "app/navigators"
 import { colors, spacing } from "app/theme"
 import type { AppDispatch } from "app/redux"
 import { throwAnError, throwErrorAsync } from "app/redux/errorSlice"
+import { useSafeAreaInsetsStyle } from "app/utils/useSafeAreaInsetsStyle"
 
 interface ErrorGeneratorScreenProps extends AppStackScreenProps<"ErrorGenerator"> {}
 
@@ -31,10 +32,13 @@ export const ErrorGeneratorScreen: React.FC<ErrorGeneratorScreenProps> =
       }
     }
     const bombRedux = () => dispatch(throwAnError())
+    // @ts-ignore
     const bombReduxAsync = () => dispatch(throwErrorAsync())
 
+    const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
+
     return (
-      <ScrollView style={$container}>
+      <ScrollView style={$container} contentContainerStyle={$bottomContainerInsets}>
         <View style={$topContainer}>
           <Text style={$text} tx="errorGeneratorScreen.title" />
         </View>

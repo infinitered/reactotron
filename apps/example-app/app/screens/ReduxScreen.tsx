@@ -8,6 +8,7 @@ import { colors, spacing } from "app/theme"
 import type { AppDispatch, RootState } from "app/redux"
 import { fetchAsync, reset as repoReset } from "app/redux/repoSlice"
 import { changeSize, changeSpeed, reset as logoReset } from "app/redux/logoSlice"
+import { useSafeAreaInsetsStyle } from "app/utils/useSafeAreaInsetsStyle"
 
 interface ReduxScreenProps extends AppStackScreenProps<"Redux"> {}
 
@@ -26,12 +27,10 @@ export const ReduxScreen: React.FC<ReduxScreenProps> = function ReduxScreen() {
   const bigger = () => dispatch(changeSize(140))
   const smaller = () => dispatch(changeSize(40))
 
-  React.useEffect(() => {
-    // dispatch(StartupActions.startup())
-  }, [])
+  const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
 
   return (
-    <ScrollView style={$container}>
+    <ScrollView style={$container} contentContainerStyle={$bottomContainerInsets}>
       <View style={$topContainer}>
         <Text style={$text}>Redux works great with Reactotron!</Text>
         <Text style={$text}>Tap each project to see the latest commit and author!</Text>

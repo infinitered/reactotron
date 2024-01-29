@@ -3,12 +3,14 @@ import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Text } from "app/components"
 import { AppStackScreenProps } from "app/navigators"
 import { colors, spacing } from "app/theme"
+import { useSafeAreaInsetsStyle } from "app/utils/useSafeAreaInsetsStyle"
 
 interface NetworkingScreenProps extends AppStackScreenProps<"Networking"> {}
 
 export const NetworkingScreen: React.FC<NetworkingScreenProps> = function NetworkingScreen() {
+  const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
   return (
-    <ScrollView style={$container}>
+    <ScrollView style={$container} contentContainerStyle={$bottomContainerInsets}>
       <View style={$topContainer}>
         <Text style={$text} tx="networkingScreen.title" />
       </View>

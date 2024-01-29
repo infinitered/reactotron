@@ -3,13 +3,15 @@ import { TextStyle, View, ViewStyle } from "react-native"
 import { Screen, Text } from "app/components"
 import { AppStackScreenProps } from "app/navigators"
 import { colors, spacing } from "app/theme"
+import { useSafeAreaInsetsStyle } from "app/utils/useSafeAreaInsetsStyle"
 
 interface CustomCommandsScreenProps extends AppStackScreenProps<"CustomCommands"> {}
 
 export const CustomCommandsScreen: React.FC<CustomCommandsScreenProps> =
   function CustomCommandsScreen() {
+    const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
     return (
-      <Screen style={$container} preset="scroll">
+      <Screen style={$container} preset="scroll" contentContainerStyle={$bottomContainerInsets}>
         <View style={$topContainer}>
           <Text style={$text} tx="customCommandsScreen.title" />
         </View>

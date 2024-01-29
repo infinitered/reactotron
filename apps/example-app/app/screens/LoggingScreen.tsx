@@ -4,6 +4,7 @@ import { Button, Text, Screen } from "app/components"
 import { AppStackScreenProps } from "app/navigators"
 import { colors, spacing } from "app/theme"
 import ViewShot, { captureRef } from "react-native-view-shot"
+import { useSafeAreaInsetsStyle } from "app/utils/useSafeAreaInsetsStyle"
 
 interface LoggingScreenProps extends AppStackScreenProps<"Logging"> {}
 
@@ -29,8 +30,10 @@ export const LoggingScreen: React.FC<LoggingScreenProps> = function LoggingScree
     )
   }
 
+  const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
+
   return (
-    <Screen style={$container} preset="scroll">
+    <Screen style={$container} preset="scroll" contentContainerStyle={$bottomContainerInsets}>
       <ViewShot ref={ref} style={$background}>
         <View style={$topContainer}>
           <Text style={$text} tx="loggingsScreen.title" />

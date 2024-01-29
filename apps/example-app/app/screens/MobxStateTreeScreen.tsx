@@ -6,6 +6,7 @@ import { AppStackScreenProps } from "app/navigators"
 import { colors, spacing } from "app/theme"
 import { useStores } from "app/mobxStateTree"
 import { Repo } from "app/components/Repo"
+import { useSafeAreaInsetsStyle } from "app/utils/useSafeAreaInsetsStyle"
 
 interface MobxStateTreeScreenProps extends AppStackScreenProps<"MobxStateTree"> {}
 
@@ -21,8 +22,10 @@ export const MobxStateTreeScreen: React.FC<MobxStateTreeScreenProps> = observer(
     const requestMobx = () => fetchRepo("mobxjs/mobx")
     const requestRedux = () => fetchRepo("reactjs/redux")
 
+    const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
+
     return (
-      <ScrollView style={$container}>
+      <ScrollView style={$container} contentContainerStyle={$bottomContainerInsets}>
         <View style={$topContainer}>
           <Text style={$text} tx="mobxStateTreeScreen.title" />
         </View>
@@ -52,7 +55,7 @@ export const MobxStateTreeScreen: React.FC<MobxStateTreeScreenProps> = observer(
         </View>
       </ScrollView>
     )
-  },
+  }
 )
 
 const $buttons: ViewStyle = {
