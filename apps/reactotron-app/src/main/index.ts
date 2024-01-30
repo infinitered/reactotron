@@ -33,6 +33,8 @@ function createMainWindow() {
     y: mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
+    minWidth: 800,
+    minHeight: 700,
     titleBarStyle: "hiddenInset",
     webPreferences: {
       nodeIntegration: true,
