@@ -26,7 +26,7 @@
     "node": ">=18.0.0"
   },
   "devDependencies": {
-    "@jscutlery/semver": "^2.30.1",
+    "@jscutlery/semver": "^5.0.0",
     "@nx/devkit": "18.0.2",
     "@octokit/rest": "^19.0.7",
     "@types/eslint": "^8.44.4",
@@ -47,7 +47,6 @@
     "zx": "^7.2.3"
   },
   "resolutions": {
-    "@nx/devkit": "17.0.3",
     "@types/react": "18.2.35",
     "electron-webpack": "patch:electron-webpack@npm%3A2.8.2#./.yarn/patches/electron-webpack-npm-2.8.2-1bda600605.patch",
     "react-hotkeys": "patch:react-hotkeys@npm%3A2.0.0#./.yarn/patches/react-hotkeys-npm-2.0.0-8e6c50bd05.patch",
