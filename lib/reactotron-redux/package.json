@@ -65,6 +65,7 @@
     "prettier": "^3.0.3",
     "reactotron-core-client": "workspace:*",
     "redux": "4.2.1",
+    "rimraf": "5.0.5",
     "rollup": "1.1.2",
     "rollup-plugin-babel": "4.3.2",
     "rollup-plugin-babel-minify": "7.0.0",

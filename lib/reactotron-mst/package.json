@@ -76,6 +76,7 @@
     "mobx-state-tree": "^5.3.0",
     "prettier": "^3.0.3",
     "reactotron-core-client": "workspace:*",
+    "rimraf": "5.0.5",
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-babel-minify": "^7.0.0",
