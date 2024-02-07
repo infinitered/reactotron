@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [5.1.0](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.0.5...reactotron-react-native@5.1.0) (2024-02-07)
+
+
+### Features
+
+* **example-app:** Add a LOT of functionality to the demo app ([#1424](https://github.com/infinitered/reactotron/issues/1424)) [skip ci] ([41a539c](https://github.com/infinitered/reactotron/commit/41a539c7e56e968a83ca61b100468f5267865ddd))
+
 ### [5.0.5](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.0.4...reactotron-react-native@5.0.5) (2024-01-25)
 
 ### Bug Fixes
