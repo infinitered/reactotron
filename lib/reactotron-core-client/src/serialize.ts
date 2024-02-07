@@ -16,6 +16,21 @@ const NEGATIVE_INFINITY = "~~~ -Infinity ~~~"
 // const NAN = '~~~ NaN ~~~'
 
 /**
+ * Fix BigInt serialization
+ * BigInts are not supported by JSON.stringify.  This is a workaround.
+ * https://github.com/GoogleChromeLabs/jsbi/issues/30#issuecomment-953187833
+ */
+declare global {
+  interface BigInt {
+    toJSON(): string
+  }
+}
+// eslint-disable-next-line no-extend-native
+BigInt.prototype.toJSON = function () {
+  return this.toString()
+}
+
+/**
  * Attempts to give a name to a function.
  *
  * @param {Function} fn - The function to name.
@@ -98,7 +113,6 @@ function serialize(source, proxyHack = false) {
       return replacer == null ? value : replacer.call(this, key, value)
     }
   }
-
   return JSON.stringify(source, serializer(null))
 }
 
