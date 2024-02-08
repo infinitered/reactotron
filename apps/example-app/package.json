@@ -11,7 +11,6 @@
     "lint": "eslint App.tsx app test --fix --ext .js,.ts,.tsx && npm run format",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:maestro": "maestro test .maestro/FavoritePodcast.yaml",
     "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081",
     "bundle:visualize": "npx react-native-bundle-visualizer",
     "bundle:visualize:dev": "npx react-native-bundle-visualizer --dev",
