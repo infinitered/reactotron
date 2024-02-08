@@ -1,9 +1,8 @@
-import resolve from "rollup-plugin-node-resolve";
-import babel from "rollup-plugin-babel";
-import filesize from "rollup-plugin-filesize";
-import minify from "rollup-plugin-babel-minify";
+import filesize from "rollup-plugin-filesize"
+import { terser } from "rollup-plugin-terser"
+import typescript from "@rollup/plugin-typescript"
 
-const pkg = require("./package.json");
+const pkg = require("./package.json")
 
 export default {
   input: "src/reactotron-template.ts",
@@ -17,16 +16,7 @@ export default {
       format: "esm",
     },
   ],
-  plugins: [
-    resolve({ extensions: [".ts"] }),
-    babel({ extensions: [".ts"], runtimeHelpers: true }),
-    process.env.NODE_ENV === "production"
-      ? minify({
-          comments: false,
-        })
-      : null,
-    filesize(),
-  ],
+  plugins: [typescript(), process.env.NODE_ENV === "production" ? terser() : null, filesize()],
   // put any external react-native- deps here
   external: ["reactotron-core-client"],
-};
+}
