@@ -26,7 +26,7 @@
     "node": ">=18.0.0"
   },
   "devDependencies": {
-    "@jscutlery/semver": "^5.0.0",
+    "@jscutlery/semver": "^5.1.0",
     "@nx/devkit": "18.0.3",
     "@octokit/rest": "^20.0.2",
     "@types/eslint": "^8.56.2",

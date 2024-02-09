@@ -3027,9 +3027,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jscutlery/semver@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "@jscutlery/semver@npm:5.0.0"
+"@jscutlery/semver@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "@jscutlery/semver@npm:5.1.0"
   dependencies:
     chalk: "npm:4.1.2"
     conventional-changelog: "npm:^5.1.0"
@@ -3050,7 +3050,7 @@ __metadata:
     rxjs: "npm:7.8.1"
   peerDependencies:
     "@nx/devkit": ^18.0.0
-  checksum: 10/19ed109afd64ffcdae13a6f5d88c82b0f9cce7a0bc45c49c68434c49fa5229ca654b4295b437d1c6dce530eadbc3f1f0d1ba87847048bf26f36f2b6a9ed67722
+  checksum: 10/067951fd51855e86c192c9e4be5096d075178295b9ebf5dd29655f4569ea64fab86fac5049fad96366e15b02e1d2875073fc4bb4cae5f810033b1fcee3518d90
   languageName: node
   linkType: hard
 
@@ -12374,16 +12374,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:27.3.2":
-  version: 27.3.2
-  resolution: "electron@npm:27.3.2"
+"electron@npm:28.2.2":
+  version: 28.2.2
+  resolution: "electron@npm:28.2.2"
   dependencies:
     "@electron/get": "npm:^2.0.0"
     "@types/node": "npm:^18.11.18"
     extract-zip: "npm:^2.0.1"
   bin:
     electron: cli.js
-  checksum: 10/594f193145a4bf037d3060bbea7ab65a76bddd5f26129e7987b0c71bbfa62c9ff91253ec1817c864272648a02d2c73a10078b836b9244489fa664a1c8d83bd98
+  checksum: 10/fe031cbc18a6e3eb8049aed6b7d6abf32bba1022742f03114379f926809b68ee5ee79026a88424247f987db7e9c9bb8f50af37a7312403c9601dc4151c605575
   languageName: node
   linkType: hard
 
@@ -23373,7 +23373,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^6.7.5"
     "@typescript-eslint/parser": "npm:^6.7.5"
     babel-loader: "npm:^8.3.0"
-    electron: "npm:27.3.2"
+    electron: "npm:28.2.2"
     electron-builder: "npm:^24.12.0"
     electron-log: "npm:^5.1.1"
     electron-store: "npm:^8.1.0"
@@ -23812,7 +23812,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "reactotron@workspace:."
   dependencies:
-    "@jscutlery/semver": "npm:^5.0.0"
+    "@jscutlery/semver": "npm:^5.1.0"
     "@nx/devkit": "npm:18.0.3"
     "@octokit/rest": "npm:^20.0.2"
     "@types/eslint": "npm:^8.56.2"
