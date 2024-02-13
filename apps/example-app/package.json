@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "compile": "tsc --noEmit -p . --pretty",
-    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}' --config ../../.prettierrc --ignore-path ../../.prettierignore",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",
     "lint": "eslint App.tsx app test --fix --ext .js,.ts,.tsx && npm run format",
