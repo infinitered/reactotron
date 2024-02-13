@@ -34,7 +34,7 @@
     "compile:dev": "NODE_ENV=development rollup -c",
     "typecheck": "tsc",
     "ci:test": "yarn test --runInBand",
-    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}' --config ../../.prettierrc --ignore-path ../../.prettierignore",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write"
   },
