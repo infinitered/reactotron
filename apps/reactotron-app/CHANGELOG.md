@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.6.1](https://github.com/infinitered/reactotron/compare/reactotron-app@3.6.0...reactotron-app@3.6.1) (2024-02-14)
+
+
+### Bug Fixes
+
+* **reactotron-app:** added min width and height of electron window ([#1429](https://github.com/infinitered/reactotron/issues/1429)) ([a4467a2](https://github.com/infinitered/reactotron/commit/a4467a2d42a0532627d946578101379fe827436c))
+
 ## [3.6.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.5.1...reactotron-app@3.6.0) (2024-02-14)
 
 
