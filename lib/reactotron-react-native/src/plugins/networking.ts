@@ -1,5 +1,4 @@
 import XHRInterceptor from "react-native/Libraries/Network/XHRInterceptor"
-import queryString from "query-string"
 import type { ReactotronCore, Plugin } from "reactotron-core-client"
 
 /**
@@ -48,7 +47,7 @@ const networking =
 
       // cache
       requestCache[reactotronCounter] = {
-        data: data,
+        data,
         xhr,
         stopTimer: reactotron.startTimer(),
       }
@@ -71,9 +70,17 @@ const networking =
 
       let params = null
       const queryParamIdx = url ? url.indexOf("?") : -1
-
       if (queryParamIdx > -1) {
-        params = queryString.parse(url.substr(queryParamIdx))
+        params = {}
+        url
+          .substr(queryParamIdx + 1)
+          .split("&")
+          .forEach((pair) => {
+            const [key, value] = pair.split("=")
+            if (key && value !== undefined) {
+              params[key] = decodeURIComponent(value.replace(/\+/g, " "))
+            }
+          })
       }
 
       // fetch and clear the request data from the cache
