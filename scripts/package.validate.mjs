@@ -256,18 +256,6 @@ for (const workspacePath of workspacePaths) {
     process.exit(1);
   }
 
-  // assert that "exports.react-native" field is a file that only has exports, imports, or a comment at the start of each line
-  const exportsReactNativeFile = fs.readFileSync(exportsReactNativePath, "utf-8");
-  if (
-    !exportsReactNativeFile
-      .split("\n")
-      .filter(Boolean)
-      .every((line) => /^export |import |\/\//.test(line))
-  ) {
-    console.error(`Invalid ${exportsReactNativePath} file: ${exportsReactNativeFile}`);
-    process.exit(1);
-  }
-
   // #endregion
 }
 

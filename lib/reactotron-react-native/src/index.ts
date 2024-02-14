@@ -1,3 +1,3 @@
-import reactotronReactNative from "./reactotron-react-native"
+import reactotron from "./reactotron-react-native"
 export * from "./reactotron-react-native"
-export default reactotronReactNative
+export default reactotron
