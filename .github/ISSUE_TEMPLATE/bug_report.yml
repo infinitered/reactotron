@@ -1,0 +1,28 @@
+name: Bug report
+description: For issues with running reactotron on your computer
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: >
+        Before creating a **bug report**, please check the following:
+          * Ensure you're running the latest version release of both the Reactotron app and any Reactotron npm packages you are using.
+          * Ensure there isn't an existing issue for your bug. If there is, leave a comment on the existing issue.
+
+        If you're unsure whether you've hit a bug, check out the #react-native and #reactotron channels in our [Slack Community](https://community.infinite.red).
+
+  - type: textarea
+    attributes:
+      label: Describe the bug
+      description: Also include a description of how to reproduce the bug
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Reactotron version
+      description: If you're not on release, provide the commit hash
+      placeholder: 3.5.1
+    validations:
+      required: true
