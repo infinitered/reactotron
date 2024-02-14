@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.2.5](https://github.com/infinitered/reactotron/compare/reactotron-react-native-mmkv@0.2.4...reactotron-react-native-mmkv@0.2.5) (2024-02-14)
+
 ## [0.2.4](https://github.com/infinitered/reactotron/compare/reactotron-react-native-mmkv@0.2.3...reactotron-react-native-mmkv@0.2.4) (2024-02-14)
 
 ### [0.2.3](https://github.com/infinitered/reactotron/compare/reactotron-react-native-mmkv@0.2.2...reactotron-react-native-mmkv@0.2.3) (2024-01-25)
