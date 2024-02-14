@@ -304,6 +304,7 @@ export const apolloPlugin =
     // --- Reactotron plugin interface ---------------------------------
 
     return {
+      name: "apollo-client",
       // Fires when we receive a command from the Reactotron app.
       onCommand,
 

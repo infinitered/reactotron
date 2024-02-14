@@ -238,7 +238,7 @@ export function mst(opts: MstPluginOptions = {}) {
         const path = getPath(call.context)
 
         // action related data
-        const action = { args, name: call.name, path }
+        const action = { args: args, name: call.name, path }
 
         // mst internal data
         const mstPayload = {
@@ -484,6 +484,7 @@ export function mst(opts: MstPluginOptions = {}) {
     // --- Reactotron plugin interface ---------------------------------
 
     return {
+      name: "mst",
       // Fires when we receive a command from the Reactotron app.
       onCommand,
 

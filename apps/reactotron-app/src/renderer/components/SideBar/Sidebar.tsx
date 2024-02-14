@@ -15,6 +15,12 @@ import styled from "styled-components"
 import SideBarButton from "../SideBarButton"
 import { reactotronLogo } from "../../images"
 import { ServerStatus } from "../../contexts/Standalone/useStandalone"
+import {
+  Transition,
+  CSSTransition,
+  SwitchTransition,
+  TransitionGroup,
+} from "react-transition-group"
 
 interface SideBarContainerProps {
   $isOpen: boolean
@@ -34,7 +40,20 @@ const Spacer = styled.div`
   flex: 1;
 `
 
-function SideBar({ isOpen, serverStatus }: { isOpen: boolean; serverStatus: ServerStatus }) {
+const transitionStyles = {
+  entering: { opacity: 0 },
+  entered: { opacity: 1 },
+  exiting: { opacity: 1 },
+  exited: { opacity: 0 },
+}
+
+interface SideBarProps {
+  isOpen: boolean
+  serverStatus: ServerStatus
+  plugins: string[]
+}
+
+function SideBar({ isOpen, serverStatus, plugins }: SideBarProps) {
   let serverIcon = MdMobiledataOff
   let iconColor
   let serverText = "Stopped"
@@ -55,6 +74,11 @@ function SideBar({ isOpen, serverStatus }: { isOpen: boolean; serverStatus: Serv
     }
   }
 
+  const hasApolloClient = React.useMemo(
+    () => plugins.find((plugin) => plugin === "apollo-client"),
+    [plugins]
+  )
+
   return (
     <SideBarContainer $isOpen={isOpen}>
       <SideBarButton image={reactotronLogo} path="/" text="Home" hideTopBar />
@@ -73,12 +97,24 @@ function SideBar({ isOpen, serverStatus }: { isOpen: boolean; serverStatus: Serv
       />
       <SideBarButton icon={FaMagic} path="/customCommands" text="Custom Commands" iconSize={25} />
 
-      <SideBarButton
-        icon={SiApollographql}
-        path="/apolloClient/cache"
-        matchPath="/apolloClient"
-        text="Apollo Client"
-      />
+      <Transition in={hasApolloClient} timeout={300}>
+        {(state) => (
+          <div
+            style={{
+              transition: `opacity 300ms ease-in-out`,
+              opacity: 0,
+              ...transitionStyles[state],
+            }}
+          >
+            <SideBarButton
+              icon={SiApollographql}
+              path="/apolloClient/queries"
+              matchPath="/apolloClient"
+              text="Apollo Client"
+            />
+          </div>
+        )}
+      </Transition>
 
       <Spacer />
 

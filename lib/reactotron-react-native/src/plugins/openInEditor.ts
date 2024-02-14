@@ -14,6 +14,7 @@ const openInEditor =
     const options = Object.assign({}, DEFAULTS, pluginConfig)
 
     return {
+      name: "open-in-editor",
       onCommand: (command) => {
         if (command.type !== "editor.open") return
         const { payload } = command

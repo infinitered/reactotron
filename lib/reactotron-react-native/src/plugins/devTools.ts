@@ -3,6 +3,7 @@ import { NativeModules } from "react-native"
 
 const devTools = () => () => {
   return {
+    name: "dev-tools",
     onCommand: (command) => {
       if (command.type !== "devtools.open" && command.type !== "devtools.reload") return
 
