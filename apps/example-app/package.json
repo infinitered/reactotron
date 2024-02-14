@@ -33,6 +33,7 @@
     "prebuild": "npx expo prebuild"
   },
   "dependencies": {
+    "@apollo/client": "^3.9.4",
     "@expo-google-fonts/space-grotesk": "^0.2.2",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-navigation/native": "^6.0.2",
@@ -49,6 +50,7 @@
     "expo-localization": "~14.3.0",
     "expo-splash-screen": "~0.20.4",
     "expo-status-bar": "~1.6.0",
+    "graphql": "^16.8.1",
     "i18n-js": "3.9.2",
     "mobx": "6.10.2",
     "mobx-react-lite": "4.0.5",
@@ -98,6 +100,7 @@
     "postinstall-prepare": "1.0.1",
     "prettier": "2.8.8",
     "react-test-renderer": "18.2.0",
+    "reactotron-apollo-client": "workspace:*",
     "reactotron-core-client": "workspace:*",
     "reactotron-mst": "workspace:*",
     "reactotron-react-js": "workspace:*",

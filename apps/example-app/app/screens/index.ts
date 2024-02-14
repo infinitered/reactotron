@@ -7,6 +7,7 @@ export * from "./MobxStateTreeScreen"
 export * from "./ReduxScreen"
 export * from "./ErrorGeneratorScreen"
 export * from "./AsyncStorageScreen"
+export * from "./ApolloScreen"
 
 export * from "./ErrorScreen/ErrorBoundary"
 // export other screens here

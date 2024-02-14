@@ -37,6 +37,7 @@ export type AppStackParamList = {
   MobxStateTree: undefined
   AsyncStorage: undefined
   Redux: undefined
+  Apollo: undefined
 }
 
 /**
@@ -103,6 +104,7 @@ const AppStack = function AppStack() {
           options={{ title: "Async Storage" }}
         />
         <Stack.Screen name="Redux" component={Screens.ReduxScreen} />
+        <Stack.Screen name="Apollo" component={Screens.ApolloScreen} />
       </Stack.Group>
     </Stack.Navigator>
   )
