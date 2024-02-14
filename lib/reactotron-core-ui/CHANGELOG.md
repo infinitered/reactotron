@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.2.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.1.1...reactotron-core-ui@2.2.0) (2024-02-14)
+
+
+### Features
+
+* **timeline:** Show network request response code in timeline ([#1434](https://github.com/infinitered/reactotron/issues/1434)) ([ff32aa5](https://github.com/infinitered/reactotron/commit/ff32aa5d65dd14d880b3835e5ad3df6fd9647638)), closes [#1282](https://github.com/infinitered/reactotron/issues/1282)
+
 ## [2.1.1](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.1.0...reactotron-core-ui@2.1.1) (2024-02-14)
 
 ## [2.1.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.5...reactotron-core-ui@2.1.0) (2024-01-25)
