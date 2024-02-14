@@ -25,6 +25,20 @@ export const NetworkingScreen: React.FC<NetworkingScreenProps> = function Networ
               .then((json) => console.log(json))
           }}
         />
+        <Button
+          tx="networkingScreen.makeFailingApiCall"
+          textStyle={$darkText}
+          style={$button}
+          onPress={() => {
+            try {
+              fetch("https://google.com/404")
+                .then((response) => response.json())
+                .then((json) => console.log(json))
+            } catch (error) {
+              console.log(error)
+            }
+          }}
+        />
       </View>
     </ScrollView>
   )
