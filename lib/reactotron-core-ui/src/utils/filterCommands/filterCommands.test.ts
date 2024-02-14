@@ -84,6 +84,49 @@ const TESTS = [
       { type: "ADUMMYOBJ", payload: { request: { url: "SEARCHURL" } } },
     ],
   },
+  {
+    name: "deep search results",
+    search: "SEARCH",
+    result: [
+      { type: "SEARCHTYPE" },
+      { type: "ADUMMYOBJ", payload: { message: "SEARCHMESSAGE" } },
+      { type: "ADUMMYOBJ", payload: { preview: "SEARCHPREVIEW" } },
+      { type: "ADUMMYOBJ", payload: { name: "SEARCHNAME" } },
+      { type: "ADUMMYOBJ", payload: { path: "SEARCHPATH" } },
+      { type: "ADUMMYOBJ", payload: { triggerType: "SEARCHTRIGGERTYPE" } },
+      { type: "ADUMMYOBJ", payload: { description: "SEARCHDESCRIPTION" } },
+      { type: "ADUMMYOBJ", payload: { request: { url: "SEARCHURL" } } },
+    ],
+  },
+  {
+    name: "deep search results - even deeper",
+    search: "ME",
+    result: [
+      { type: "ADUMMYOBJ", payload: { message: "SEARCHMESSAGE" } },
+      { type: "ADUMMYOBJ", payload: { name: "SEARCHNAME" } },
+    ],
+  },
+  {
+    name: "deep search results - case insensitive",
+    search: "me",
+    result: [
+      { type: "ADUMMYOBJ", payload: { message: "SEARCHMESSAGE" } },
+      { type: "ADUMMYOBJ", payload: { name: "SEARCHNAME" } },
+    ],
+  },
+  {
+    name: "deep search results - type case insensitive",
+    search: "myobj",
+    result: [
+      { type: "ADUMMYOBJ", payload: { message: "SEARCHMESSAGE" } },
+      { type: "ADUMMYOBJ", payload: { preview: "SEARCHPREVIEW" } },
+      { type: "ADUMMYOBJ", payload: { name: "SEARCHNAME" } },
+      { type: "ADUMMYOBJ", payload: { path: "SEARCHPATH" } },
+      { type: "ADUMMYOBJ", payload: { triggerType: "SEARCHTRIGGERTYPE" } },
+      { type: "ADUMMYOBJ", payload: { description: "SEARCHDESCRIPTION" } },
+      { type: "ADUMMYOBJ", payload: { request: { url: "SEARCHURL" } } },
+    ],
+  },
 ]
 
 describe("utils/filterCommands", () => {
