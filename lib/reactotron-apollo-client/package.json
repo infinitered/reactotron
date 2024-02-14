@@ -7,19 +7,26 @@
   "bugs": {
     "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-apollo-client",
-  "repository": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-apollo-client",
+  "homepage": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-apollo-client",
+  "repository": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-apollo-client",
   "files": [
     "dist",
-    "LICENSE"
+    "src"
   ],
-  "main": "dist/reactotron-apollo-client.umd.js",
-  "module": "dist/reactotron-apollo-client.es5.js",
-  "typings": "dist/types/reactotron-apollo-client.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/src/index.d.ts",
+  "react-native": "src/index.ts",
+  "exports": {
+    "import": "./dist/index.esm.js",
+    "types": "./dist/types/src/index.d.ts",
+    "react-native": "./src/index.ts",
+    "default": "./dist/index.js"
+  },
   "scripts": {
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch --notify",
-    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}' --config ../../.prettierrc --ignore-path ../../.prettierignore",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",
     "prebuild": "yarn clean",
