@@ -2,6 +2,14 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.6.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.5.1...reactotron-app@3.6.0) (2024-02-14)
+
+
+### Features
+
+* **example-app:** Add a LOT of functionality to the demo app ([#1424](https://github.com/infinitered/reactotron/issues/1424)) [skip ci] ([41a539c](https://github.com/infinitered/reactotron/commit/41a539c7e56e968a83ca61b100468f5267865ddd))
+* **reactotron-app:** Added Electron BrowserWindow title for Linux users ([#1425](https://github.com/infinitered/reactotron/issues/1425)) ([726f255](https://github.com/infinitered/reactotron/commit/726f255412322598717f59f10d73ea7b4279f467))
+
 ### [3.5.1](https://github.com/infinitered/reactotron/compare/reactotron-app@3.5.0...reactotron-app@3.5.1) (2024-01-25)
 
 ## [3.5.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.4.0...reactotron-app@3.5.0) (2024-01-24)
