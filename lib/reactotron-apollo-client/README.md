@@ -12,34 +12,29 @@ yarn add -D reactotron-apollo-client
 
 ## Usage
 
-Import your mmkv storage instance:
+Create your Apollo Client as you normally would, and then add the `reactotron-apollo-client` plugin::
 
 ```js
-import { MMKV } from "@apollo/client"
-export const storage = new MMKV()
+import { ApolloClient, InMemoryCache } from "@apollo/client"
+
+const cache = new InMemoryCache()
+export const client = new ApolloClient({
+  uri: "https://api.graphql.guide/graphql",
+  cache,
+  defaultOptions: { watchQuery: { fetchPolicy: "cache-and-network" } },
+})
 ```
 
-To use the `mmkvPlugin`, add the additional plugin on the `import` line.
+To use the `apolloPlugin`, add the additional plugin on the `import` line.
 
 ```js
 import Reactotron from "reactotron-react-native"
-import mmkvPlugin from "reactotron-apollo-client"
-import { storage } from "./mmkv/storage/instance/location" // <--- update this location
+import apolloPlugin from "reactotron-apollo-client"
+import { client } from "./apolloClient/location" // <--- update this location
 ...
 Reactotron.configure()
-  .use(mmkvPlugin({ storage })) // <--- here we go!
+  .use(apolloPlugin({ apolloClient: client })) // <--- here we go!
   .connect()
 ```
 
-And you're done! Now you can see your MMKV in Reactotron.
-
-## Advanced Usage
-
-`mmkvPlugin()` accepts an object with an `ignore` key. The value is an array of strings you would like to prevent sending to Reactotron.
-
-```js
-mmkvPlugin({
-  storage,
-  ignore: ["secret"],
-})
-```
+And you're done! Now you can see your Apollo caches, queries, and mutations in Reactotron.
