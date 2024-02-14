@@ -188,7 +188,7 @@ function createTemplateREADME({ pluginName }) {
  */
 function createTemplateRollupConfig({ pluginName }) {
   let template = fs.readFileSync(
-    path.join(templateDir, "rollup.config.cjs"),
+    path.join(templateDir, "rollup.config.ts"),
     "utf8"
   );
 
