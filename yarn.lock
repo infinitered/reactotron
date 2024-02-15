@@ -22332,18 +22332,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"query-string@npm:6.14.1":
-  version: 6.14.1
-  resolution: "query-string@npm:6.14.1"
-  dependencies:
-    decode-uri-component: ^0.2.0
-    filter-obj: ^1.1.0
-    split-on-first: ^1.0.0
-    strict-uri-encode: ^2.0.0
-  checksum: f2c7347578fa0f3fd4eaace506470cb4e9dc52d409a7ddbd613f614b9a594d750877e193b5d5e843c7477b3b295b857ec328903c943957adc41a3efb6c929449
-  languageName: node
-  linkType: hard
-
 "query-string@npm:^4.1.0":
   version: 4.3.4
   resolution: "query-string@npm:4.3.4"
@@ -23833,7 +23821,6 @@ __metadata:
     mitt: ^3.0.1
     npm-run-all: 4.1.5
     prettier: ^3.0.3
-    query-string: 6.14.1
     react: ^18.2.0
     react-native: 0.72.6
     react-native-flipper: 0.164.0
