@@ -19,6 +19,9 @@ function buildContextValues({ addCommandListener = null } = {}) {
     isSubscriptionModalOpen: false,
     openSubscriptionModal: jest.fn(),
     closeSubscriptionModal: jest.fn(),
+    isDiagnosticModalOpen: false,
+    openDiagnosticModal: jest.fn(),
+    closeDiagnosticModal: jest.fn(),
   }
 }
 
