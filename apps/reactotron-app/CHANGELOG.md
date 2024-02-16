@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.7.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.6.2...reactotron-app@3.7.0) (2024-02-16)
+
+
+### Features
+
+* **reactotron-app:** Timeline deep-search ([#1417](https://github.com/infinitered/reactotron/issues/1417)) ([8d0e952](https://github.com/infinitered/reactotron/commit/8d0e9525ac30e895f38a0c2f99eeda155c14527f)), closes [#1181](https://github.com/infinitered/reactotron/issues/1181)
+
 ### [3.6.2](https://github.com/infinitered/reactotron/compare/reactotron-app@3.6.1...reactotron-app@3.6.2) (2024-02-14)
 
 ## [3.6.1](https://github.com/infinitered/reactotron/compare/reactotron-app@3.6.0...reactotron-app@3.6.1) (2024-02-14)
