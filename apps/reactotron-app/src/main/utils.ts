@@ -20,7 +20,7 @@ export const setupActiveConnectionsMenuIpcCommands = (
       //menuTemplate[2] => view menu
       //menuTemplate[2].submenu[1] => connections menu
       if (menuTemplate[2]?.submenu[1]?.submenu && activeConnectionsMenu) {
-        //remove the disconnected connection from connections menu
+        //remove the disconnected connection from active connections menu
         menuTemplate[2].submenu[1].submenu = activeConnectionsMenu.submenu.items.filter(
           (item) => item.id !== connection.clientId
         )

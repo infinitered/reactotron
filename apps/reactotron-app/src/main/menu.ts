@@ -174,7 +174,7 @@ export default function createMenu(window: Electron.BrowserWindow, isDevelopment
 
   const menu = Menu.buildFromTemplate(template.filter((t) => !!t) as any)
 
-  //ipc for adding and removing connection from connections menu as they connect/drop
+  //ipc for adding and removing connection from active connections menu as they connect/drop
   setupActiveConnectionsMenuIpcCommands(window, template)
 
   Menu.setApplicationMenu(menu)
