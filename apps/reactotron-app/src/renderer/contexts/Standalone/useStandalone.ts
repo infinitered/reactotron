@@ -1,5 +1,6 @@
-import { useCallback, useReducer } from "react"
+import { useCallback, useEffect, useReducer } from "react"
 import { produce } from "immer"
+import { ipcRenderer } from "electron"
 
 export enum ActionTypes {
   ServerStarted = "SERVER_STARTED",
@@ -186,6 +187,13 @@ function useStandalone() {
     commandListeners: [],
   })
 
+  useEffect(() => {
+    //change active connection when connection is selected from connection menu
+    ipcRenderer.on("select-connection-from-menu", (_event, connectionClientId) => {
+      selectConnection(connectionClientId)
+    })
+  }, [])
+
   // Called when the server successfully starts
   const serverStarted = useCallback(() => {
     dispatch({ type: ActionTypes.ServerStarted, payload: undefined })
@@ -198,6 +206,8 @@ function useStandalone() {
 
   // Called when we have client details. NOTE: Commands can start flying in before this gets called!
   const connectionEstablished = useCallback((connection: ReactotronConnection) => {
+    ipcRenderer.send("add-connection-to-connection-menu", connection)
+
     dispatch({
       type: ActionTypes.AddConnection,
       payload: connection,
@@ -211,6 +221,8 @@ function useStandalone() {
 
   // Called when a client disconnects. NOTE: They could be coming back. This could happen with a reload of the simulator!
   const connectionDisconnected = useCallback((connection: ReactotronConnection) => {
+    ipcRenderer.send("remove-connection-from-connection-menu", connection)
+
     dispatch({ type: ActionTypes.RemoveConnection, payload: connection })
   }, [])
 
