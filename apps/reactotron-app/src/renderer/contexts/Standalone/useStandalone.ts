@@ -188,7 +188,7 @@ function useStandalone() {
   })
 
   useEffect(() => {
-    //change active connection when connection is selected from connection menu
+    //change active connection when connection is selected from active connection menu
     ipcRenderer.on("select-connection-from-menu", (_event, connectionClientId) => {
       selectConnection(connectionClientId)
     })
