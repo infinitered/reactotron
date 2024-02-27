@@ -55,5 +55,6 @@ module.exports = {
     "**/build/**/*",
     "examples",
     "scripts",
+    "**/CHANGELOG.md",
   ],
 };

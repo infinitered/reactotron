@@ -2,6 +2,30 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.7.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.6.2...reactotron-app@3.7.0) (2024-02-16)
+
+
+### Features
+
+* **reactotron-app:** Timeline deep-search ([#1417](https://github.com/infinitered/reactotron/issues/1417)) ([8d0e952](https://github.com/infinitered/reactotron/commit/8d0e9525ac30e895f38a0c2f99eeda155c14527f)), closes [#1181](https://github.com/infinitered/reactotron/issues/1181)
+
+### [3.6.2](https://github.com/infinitered/reactotron/compare/reactotron-app@3.6.1...reactotron-app@3.6.2) (2024-02-14)
+
+## [3.6.1](https://github.com/infinitered/reactotron/compare/reactotron-app@3.6.0...reactotron-app@3.6.1) (2024-02-14)
+
+
+### Bug Fixes
+
+* **reactotron-app:** added min width and height of electron window ([#1429](https://github.com/infinitered/reactotron/issues/1429)) ([a4467a2](https://github.com/infinitered/reactotron/commit/a4467a2d42a0532627d946578101379fe827436c))
+
+## [3.6.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.5.1...reactotron-app@3.6.0) (2024-02-14)
+
+
+### Features
+
+* **example-app:** Add a LOT of functionality to the demo app ([#1424](https://github.com/infinitered/reactotron/issues/1424)) [skip ci] ([41a539c](https://github.com/infinitered/reactotron/commit/41a539c7e56e968a83ca61b100468f5267865ddd))
+* **reactotron-app:** Added Electron BrowserWindow title for Linux users ([#1425](https://github.com/infinitered/reactotron/issues/1425)) ([726f255](https://github.com/infinitered/reactotron/commit/726f255412322598717f59f10d73ea7b4279f467))
+
 ### [3.5.1](https://github.com/infinitered/reactotron/compare/reactotron-app@3.5.0...reactotron-app@3.5.1) (2024-01-25)
 
 ## [3.5.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.4.0...reactotron-app@3.5.0) (2024-01-24)

@@ -48,7 +48,7 @@ interface DisplayConfig {
   name: string
   value?: object | string | number | boolean | null | undefined
   preview?: string
-  image?: string
+  image?: string | { uri: string }
   important?: boolean
 }
 

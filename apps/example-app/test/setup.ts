@@ -14,17 +14,17 @@ jest.doMock("react-native", () => {
           (
             uri: string, // eslint-disable-line @typescript-eslint/no-unused-vars
             success: (width: number, height: number) => void,
-            failure?: (_error: any) => void, // eslint-disable-line @typescript-eslint/no-unused-vars
-          ) => success(100, 100),
+            failure?: (_error: any) => void // eslint-disable-line @typescript-eslint/no-unused-vars
+          ) => success(100, 100)
         ),
       },
     },
-    ReactNative,
+    ReactNative
   )
 })
 
 jest.mock("@react-native-async-storage/async-storage", () =>
-  require("@react-native-async-storage/async-storage/jest/async-storage-mock"),
+  require("@react-native-async-storage/async-storage/jest/async-storage-mock")
 )
 
 jest.mock("i18n-js", () => ({

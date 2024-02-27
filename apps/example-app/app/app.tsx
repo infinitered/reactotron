@@ -7,7 +7,7 @@
  * it very often. But take some time to look through and understand
  * what is going on here.
  *
- * The app navigation resides in ./app/navigators, so head over there
+ * The app navigation resides in app/app/navigators, so head over there
  * if you're interested in adding screens and navigators.
  */
 if (__DEV__) {
@@ -16,22 +16,26 @@ if (__DEV__) {
   // to only execute this in development.
   require("./devtools/ReactotronConfig.ts")
 }
-import "./i18n"
-import "./utils/ignoreWarnings"
+import "app/i18n"
+import "app/utils/ignoreWarnings"
 import { useFonts } from "expo-font"
 import React from "react"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 import * as Linking from "expo-linking"
-import { useInitialRootStore } from "./models"
-import { AppNavigator, useNavigationPersistence } from "./navigators"
-import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary"
-import * as storage from "./utils/storage"
-import { customFontsToLoad } from "./theme"
-import Config from "./config"
+import { useInitialRootStore } from "app/mobxStateTree"
+import { AppNavigator, useNavigationPersistence } from "app/navigators"
+import { ErrorBoundary } from "app/screens/ErrorScreen/ErrorBoundary"
+import * as storage from "app/utils/storage"
+import { customFontsToLoad } from "app/theme"
+import Config from "app/config"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
-import { ViewStyle } from "react-native"
+import { StatusBar, ViewStyle } from "react-native"
+import { store } from "app/redux"
+import { Provider as ReduxProvider } from "react-redux"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
+
+StatusBar.setBarStyle("light-content")
 
 // Web linking configuration
 const prefix = Linking.createURL("/")
@@ -96,21 +100,24 @@ function App(props: AppProps) {
 
   // otherwise, we're ready to render the app
   return (
-    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <ErrorBoundary catchErrors={Config.catchErrors}>
-        <GestureHandlerRootView style={$container}>
-          <AppNavigator
-            linking={linking}
-            initialState={initialNavigationState}
-            onStateChange={onNavigationStateChange}
-          />
-        </GestureHandlerRootView>
-      </ErrorBoundary>
-    </SafeAreaProvider>
+    <ReduxProvider store={store}>
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+        <ErrorBoundary catchErrors={Config.catchErrors}>
+          <GestureHandlerRootView style={$container}>
+            <AppNavigator
+              linking={linking}
+              initialState={initialNavigationState}
+              onStateChange={onNavigationStateChange}
+            />
+          </GestureHandlerRootView>
+        </ErrorBoundary>
+      </SafeAreaProvider>
+    </ReduxProvider>
   )
 }
 
-export default App
+// eslint-disable-next-line reactotron/no-tron-in-production
+export default __DEV__ ? console.tron.overlay(App) : App
 
 const $container: ViewStyle = {
   flex: 1,

@@ -2,6 +2,24 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.3.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.2.1...reactotron-core-ui@2.3.0) (2024-02-16)
+
+
+### Features
+
+* **reactotron-app:** Timeline deep-search ([#1417](https://github.com/infinitered/reactotron/issues/1417)) ([8d0e952](https://github.com/infinitered/reactotron/commit/8d0e9525ac30e895f38a0c2f99eeda155c14527f)), closes [#1181](https://github.com/infinitered/reactotron/issues/1181)
+
+### [2.2.1](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.2.0...reactotron-core-ui@2.2.1) (2024-02-14)
+
+## [2.2.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.1.1...reactotron-core-ui@2.2.0) (2024-02-14)
+
+
+### Features
+
+* **timeline:** Show network request response code in timeline ([#1434](https://github.com/infinitered/reactotron/issues/1434)) ([ff32aa5](https://github.com/infinitered/reactotron/commit/ff32aa5d65dd14d880b3835e5ad3df6fd9647638)), closes [#1282](https://github.com/infinitered/reactotron/issues/1282)
+
+## [2.1.1](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.1.0...reactotron-core-ui@2.1.1) (2024-02-14)
+
 ## [2.1.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.5...reactotron-core-ui@2.1.0) (2024-01-25)
 
 

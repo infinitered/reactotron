@@ -6,13 +6,13 @@
  */
 import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
-import { observer } from "mobx-react-lite"
 import React from "react"
-import { useColorScheme } from "react-native"
+import { useColorScheme, StyleSheet } from "react-native"
 import * as Screens from "app/screens"
 import Config from "../config"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
+import { LinearGradient } from "expo-linear-gradient"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -29,8 +29,14 @@ import { colors } from "app/theme"
  */
 export type AppStackParamList = {
   Welcome: undefined
-  // 🔥 Your screens go here
-  // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
+  Logging: undefined
+  Networking: undefined
+  ErrorGenerator: undefined
+  Benchmarking: undefined
+  CustomCommands: undefined
+  MobxStateTree: undefined
+  AsyncStorage: undefined
+  Redux: undefined
 }
 
 /**
@@ -47,20 +53,65 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
-const AppStack = observer(function AppStack() {
+const AppStack = function AppStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false, navigationBarColor: colors.background }}>
+    <Stack.Navigator
+      screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
+      initialRouteName="Welcome"
+    >
       <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
-      {/** 🔥 Your screens go here */}
-      {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
+      <Stack.Group
+        screenOptions={{
+          headerShown: true,
+          headerBackground: () => (
+            <LinearGradient
+              colors={["#d3261f", "#ed6d19"]}
+              style={StyleSheet.absoluteFill}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              locations={[0.2, 1]}
+            />
+          ),
+          headerTintColor: colors.text,
+          headerTitleStyle: {
+            fontWeight: "bold",
+            color: colors.text,
+          },
+        }}
+      >
+        <Stack.Screen name="Logging" component={Screens.LoggingScreen} />
+        <Stack.Screen name="Networking" component={Screens.NetworkingScreen} />
+        <Stack.Screen
+          name="MobxStateTree"
+          component={Screens.MobxStateTreeScreen}
+          options={{ title: "MobX State Tree" }}
+        />
+        <Stack.Screen
+          name="CustomCommands"
+          component={Screens.CustomCommandsScreen}
+          options={{ title: "Custom Commands" }}
+        />
+        <Stack.Screen
+          name="ErrorGenerator"
+          component={Screens.ErrorGeneratorScreen}
+          options={{ title: "Error Generators" }}
+        />
+        <Stack.Screen name="Benchmarking" component={Screens.BenchmarkingScreen} />
+        <Stack.Screen
+          name="AsyncStorage"
+          component={Screens.AsyncStorageScreen}
+          options={{ title: "Async Storage" }}
+        />
+        <Stack.Screen name="Redux" component={Screens.ReduxScreen} />
+      </Stack.Group>
     </Stack.Navigator>
   )
-})
+}
 
 export interface NavigationProps
   extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
 
-export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
+export const AppNavigator = function AppNavigator(props: NavigationProps) {
   const colorScheme = useColorScheme()
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
@@ -74,4 +125,4 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
       <AppStack />
     </NavigationContainer>
   )
-})
+}

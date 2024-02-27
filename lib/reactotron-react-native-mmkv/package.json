@@ -1,6 +1,6 @@
 {
   "name": "reactotron-react-native-mmkv",
-  "version": "0.2.3",
+  "version": "0.2.5",
   "description": "A Reactotron plugin for react-native-mmkv.",
   "author": "Infinite Red",
   "license": "MIT",
@@ -26,7 +26,7 @@
   "scripts": {
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch --notify",
-    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}' --config ../../.prettierrc --ignore-path ../../.prettierignore",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",
     "prebuild": "yarn clean",

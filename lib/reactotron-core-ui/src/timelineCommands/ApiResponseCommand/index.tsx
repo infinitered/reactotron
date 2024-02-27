@@ -158,6 +158,7 @@ const ApiResponseCommand: FunctionComponent<Props> = ({
       toolbar={toolbar}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
+      responseStatusCode={payload.response?.status}
     >
       <NameContainer>{payload.request.url}</NameContainer>
       <ContentView value={summary} />

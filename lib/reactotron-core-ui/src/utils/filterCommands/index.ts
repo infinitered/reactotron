@@ -33,7 +33,23 @@ export function filterSearch(commands: any[], search: string) {
 
   const searchRegex = new RegExp(trimmedSearch.replace(/\s/, "."), "i")
 
-  const matching = (value: string) => value && typeof value === "string" && searchRegex.test(value)
+  const matching = (value: string) => {
+    if(!value) {
+      return false
+    }
+
+    if (typeof value === "string") {
+      return searchRegex.test(value)
+    } else {
+      try {
+        const stringifiedValue = JSON.stringify(value)
+        return searchRegex.test(stringifiedValue)
+      } catch (error) {
+        // console.log("Error stringifying value", value, error)
+        return false
+      }
+    }
+  }
 
   return commands.filter(
     (command) =>
