@@ -22,11 +22,12 @@ interface Listener {
  *
  * @example
  * import { MMKV } from 'react-native-mmkv'
+ * import type { ReactotronReactNative } from 'reactotron-react-native'
  * // create your storage instance
  * const storage = new MMKV()
  *
  * // pass your instance to the plugin
- * Reactotron.use(mmkvPlugin({ storage }))
+ * Reactotron.use(mmkvPlugin<ReactotronReactNative>({ storage }))
  */
 export default function mmkvPlugin<Client extends ReactotronCore = ReactotronCore>(
   config: MmkvPluginConfig
