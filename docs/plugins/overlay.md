@@ -5,7 +5,7 @@ title: Image Overlay
 # Overlay
 
 Overlay is a plugin for `reactotron-react-native` which allows you to have an image uploaded
-to your simulator to stay on top of your app. This helps you to create those pixel perfect screens by helping ypu compare your app to the design.
+to your simulator to stay on top of your app. This helps you to create those pixel perfect screens by helping you compare your app to the design.
 
 ## Configuration
 
