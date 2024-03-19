@@ -23,7 +23,7 @@ Use Reactotron to:
 - show image overlay in React Native
 - track your Async Storage in React Native
 
-You plug it into your app as a dev dependency so it adds nothing to your product builds.
+You plug it into your app as a dev dependency so it adds nothing to your production builds.
 
 ### Desktop
 
