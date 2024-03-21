@@ -22737,6 +22737,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-fade-in@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "react-fade-in@npm:2.0.1"
+  peerDependencies:
+    react: ^16.8 || 17
+  checksum: 34e6ddf1641417e170a268b07b514d3207603b14a56bc9836372828b72782df16e51d3bd066a271e6f6c7e2bf2916b100b72b06dd20a5447d965b16f78160cd5
+  languageName: node
+  linkType: hard
+
 "react-fast-compare@npm:^3.0.1, react-fast-compare@npm:^3.2.0":
   version: 3.2.2
   resolution: "react-fast-compare@npm:3.2.2"
@@ -22770,6 +22779,13 @@ __metadata:
   peerDependencies:
     react: ">=17.0.0"
   checksum: 4258eabdbbf74aaebc38ad1fd7cfdc1984d2a844a2247b39a341c55c1beb02d5e855e6473ec5683205a52b2251d0f7dffa07cd8100f402dd2698af88b932d946
+  languageName: node
+  linkType: hard
+
+"react-ga4@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "react-ga4@npm:2.1.0"
+  checksum: f7fb41141418d4ad14756f1126a1e9958db37d4d84ae6cd798043dc03a390b6dba74d69311af0349f0b9580a43bda8930138194ccc29c4100efe446e2d6eb057
   languageName: node
   linkType: hard
 
@@ -23458,6 +23474,8 @@ __metadata:
     prettier: ^3.0.3
     react: 18.2.0
     react-dom: 18.2.0
+    react-fade-in: ^2.0.1
+    react-ga4: ^2.1.0
     react-hotkeys: ^2.0.0
     react-icons: ^4.11.0
     react-modal: 3.16.1

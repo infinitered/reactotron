@@ -1,9 +1,10 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { HashRouter as Router, Route, Routes } from "react-router-dom"
 import styled from "styled-components"
 
 import SideBar from "./components/SideBar"
 import Footer from "./components/Footer"
+import AnalyticsOptOut from "./components/AnalyticsOptOut"
 import RootContextProvider from "./contexts"
 import RootModals from "./RootModals"
 
@@ -15,8 +16,9 @@ import Overlay from "./pages/reactNative/Overlay"
 import Storybook from "./pages/reactNative/Storybook"
 import CustomCommands from "./pages/customCommands"
 import Help from "./pages/help"
+import { useAnalytics, usePageTracking } from "./util/analyticsHelpers"
 
-const AppContainer = styled.div`
+const AppContainerComponent = styled.div`
   position: absolute;
   top: 0;
   bottom: 0;
@@ -27,6 +29,35 @@ const AppContainer = styled.div`
   flex-direction: column;
   background-color: ${(props) => props.theme.background};
 `
+
+// This wrapper container is used to track page views within the app automatically using react-router-dom
+// as well as to initialize analytics on app load.
+const AppContainer: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  usePageTracking()
+  const { initializeAnalytics } = useAnalytics()
+
+  const [showsAnalyticsInterface, setShowsAnalyticsInterface] = React.useState(false)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const status = initializeAnalytics()
+      if (status === "unknown" && showsAnalyticsInterface === false) {
+        // Show the user the interface to enable/disable analytics
+        setShowsAnalyticsInterface(true)
+      }
+    }, 250)
+    return () => clearTimeout(timer)
+  }, [showsAnalyticsInterface])
+
+  return (
+    <AppContainerComponent>
+      {children}
+      {showsAnalyticsInterface && (
+        <AnalyticsOptOut onClose={() => setShowsAnalyticsInterface(false)} />
+      )}
+    </AppContainerComponent>
+  )
+}
 
 const TopSection = styled.div`
   overflow: hidden;

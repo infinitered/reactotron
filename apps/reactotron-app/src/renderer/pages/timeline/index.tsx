@@ -14,6 +14,7 @@ import {
 import { MdSearch, MdDeleteSweep, MdFilterList, MdSwapVert, MdReorder } from "react-icons/md"
 import { FaTimes } from "react-icons/fa"
 import styled from "styled-components"
+import { useAnalytics } from "../../util/analyticsHelpers"
 
 const Container = styled.div`
   display: flex;
@@ -54,6 +55,7 @@ export const ButtonContainer = styled.div`
 `
 
 function Timeline() {
+  const { sendAnalyticsEvent } = useAnalytics()
   const { sendCommand, clearCommands, commands, openDispatchModal } = useContext(ReactotronContext)
   const {
     isSearchOpen,
@@ -93,6 +95,11 @@ function Timeline() {
             icon: MdSearch,
             onClick: () => {
               toggleSearch()
+              sendAnalyticsEvent({
+                category: "timeline",
+                action: "search",
+                label: isSearchOpen ? "open" : "close",
+              })
             },
           },
           {
@@ -100,6 +107,11 @@ function Timeline() {
             icon: MdFilterList,
             onClick: () => {
               openFilter()
+              sendAnalyticsEvent({
+                category: "timeline",
+                action: "filter",
+                label: isFilterOpen ? "open" : "close",
+              })
             },
           },
           {
@@ -107,6 +119,11 @@ function Timeline() {
             icon: MdSwapVert,
             onClick: () => {
               toggleReverse()
+              sendAnalyticsEvent({
+                category: "timeline",
+                action: "reverse",
+                label: isReversed ? "on" : "off",
+              })
             },
           },
           {
@@ -114,6 +131,10 @@ function Timeline() {
             icon: MdDeleteSweep,
             onClick: () => {
               clearCommands()
+              sendAnalyticsEvent({
+                category: "timeline",
+                action: "clear",
+              })
             },
           },
         ]}
@@ -174,6 +195,11 @@ function Timeline() {
         isOpen={isFilterOpen}
         onClose={() => {
           closeFilter()
+          sendAnalyticsEvent({
+            category: "timeline",
+            action: "filter",
+            label: "close",
+          })
         }}
         hiddenCommands={hiddenCommands}
         setHiddenCommands={setHiddenCommands}

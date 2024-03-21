@@ -3,6 +3,7 @@ import { shell } from "electron"
 import styled from "styled-components"
 import { reactotronLogo } from "../../images"
 import { EmptyState } from "reactotron-core-ui"
+import { useAnalytics } from "../../util/analyticsHelpers"
 
 const WelcomeText = styled.div`
   font-size: 1.25em;
@@ -26,11 +27,15 @@ function openDocs() {
 }
 
 function Welcome() {
+  const { sendExternalLinkAnalyticsEvent } = useAnalytics()
+
   return (
     <EmptyState image={reactotronLogo} title="Welcome to Reactotron!">
       <WelcomeText>Connect a device or simulator to get started.</WelcomeText>
       <WelcomeText>Need to set up your app to use Reactotron?</WelcomeText>
-      <Container onClick={openDocs}>Check out the docs here!</Container>
+      <Container onClick={()=>{
+        sendExternalLinkAnalyticsEvent("docs")
+        openDocs()}}>Check out the docs here!</Container>
     </EmptyState>
   )
 }
