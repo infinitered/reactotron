@@ -311,7 +311,13 @@ export const apolloPlugin =
       onConnect() {
         reactotron.display({ name: "APOLLO CLIENT", preview: "Connected" })
 
-        const poll = () =>
+        const poll = () => {
+          // TODO remove
+          reactotron.display({
+            name: "APOLLO CLIENT",
+            preview: `Poll`,
+          })
+
           getCurrentState(apolloClient).then((state) => {
             apolloData = state
 
@@ -323,6 +329,7 @@ export const apolloPlugin =
               value: state,
             })
           })
+        }
         apolloClient.__actionHookForDevTools(debounce(poll))
       },
       onDisconnect() {
