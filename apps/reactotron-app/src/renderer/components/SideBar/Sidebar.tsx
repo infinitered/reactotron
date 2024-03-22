@@ -15,12 +15,7 @@ import styled from "styled-components"
 import SideBarButton from "../SideBarButton"
 import { reactotronLogo } from "../../images"
 import { ServerStatus } from "../../contexts/Standalone/useStandalone"
-import {
-  Transition,
-  CSSTransition,
-  SwitchTransition,
-  TransitionGroup,
-} from "react-transition-group"
+import { Transition } from "react-transition-group"
 
 interface SideBarContainerProps {
   $isOpen: boolean
@@ -108,7 +103,7 @@ function SideBar({ isOpen, serverStatus, plugins }: SideBarProps) {
           >
             <SideBarButton
               icon={SiApollographql}
-              path="/apolloClient/queries"
+              path="/apolloClient/cache"
               matchPath="/apolloClient"
               text="Apollo Client"
             />

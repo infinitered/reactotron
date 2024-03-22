@@ -38,6 +38,14 @@ export type AppStackParamList = {
   AsyncStorage: undefined
   Redux: undefined
   Apollo: undefined
+  ApolloDetail: {
+    item: {
+      __typename: string
+      id: number
+      number: number | null
+      title: string
+    }
+  }
 }
 
 /**
@@ -105,6 +113,7 @@ const AppStack = function AppStack() {
         />
         <Stack.Screen name="Redux" component={Screens.ReduxScreen} />
         <Stack.Screen name="Apollo" component={Screens.ApolloScreen} />
+        <Stack.Screen name="ApolloDetail" component={Screens.ApolloDetailScreen} />
       </Stack.Group>
     </Stack.Navigator>
   )

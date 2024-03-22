@@ -5,50 +5,52 @@ import { AppStackScreenProps } from "app/navigators"
 import { colors, spacing } from "app/theme"
 import { useSafeAreaInsetsStyle } from "app/utils/useSafeAreaInsetsStyle"
 import { gql, useQuery } from "@apollo/client"
-import { useNavigation } from "@react-navigation/native"
 
-const CHAPTERS_QUERY = gql`
-  query Chapters {
-    chapters {
-      id
-      number
-      title
+const SECTIONS_QUERY = gql`
+  query Sections($id: Int!) {
+    chapter(id: $id) {
+      sections {
+        number
+        title
+      }
     }
   }
 `
 
-const ChapterItem = ({
-  chapter,
-  onPress,
-}: {
-  chapter: { id: number; number: number; title: string }
-  onPress?: () => void
-}) => {
-  const { number, title } = chapter
-  let header, subheader
-
-  if (number) {
-    header = `Chapter ${number}`
-    subheader = ` - ${title}`
-  } else {
-    header = title
-    subheader = ""
-  }
-
-  return (
-    <ListItem
-      text={`${header}${subheader}`}
-      onPress={onPress}
-      containerStyle={{ paddingHorizontal: spacing.sm }}
-    />
-  )
+interface Section {
+  number: number
+  title: string
 }
 
-interface ApolloScreenProps extends AppStackScreenProps<"Apollo"> {}
+interface SectionItemProps {
+  chapter: {
+    __typename: string
+    id: number
+    number: number | null
+    title: string
+  }
+  section: Section
+  onPress?: () => void
+}
 
-export const ApolloScreen: React.FC<ApolloScreenProps> = function ApolloScreen() {
-  const { data, loading } = useQuery(CHAPTERS_QUERY)
-  const navigation = useNavigation()
+const SectionItem: React.FC<SectionItemProps> = ({ chapter, section, onPress }) => (
+  <ListItem
+    text={`${chapter.number}.${section.number}: ${section.title}`}
+    onPress={onPress}
+    containerStyle={{ paddingHorizontal: spacing.sm }}
+  />
+)
+
+interface ApolloDetailScreenProps extends AppStackScreenProps<"ApolloDetail"> {}
+
+export const ApolloDetailScreen: React.FC<ApolloDetailScreenProps> = function ApolloScreen({
+  route,
+}) {
+  const id = route.params.item.id
+
+  const { data, loading } = useQuery(SECTIONS_QUERY, {
+    variables: { id },
+  })
 
   const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
 
@@ -56,10 +58,8 @@ export const ApolloScreen: React.FC<ApolloScreenProps> = function ApolloScreen()
     <FlatList
       style={$container}
       contentContainerStyle={$bottomContainerInsets}
-      data={loading ? [] : data.chapters}
-      renderItem={({ item }) => (
-        <ChapterItem chapter={item} onPress={() => navigation.navigate("ApolloDetail", { item })} />
-      )}
+      data={loading ? [] : data.chapter.sections}
+      renderItem={({ item }) => <SectionItem section={item} chapter={route.params.item} />}
       ListHeaderComponent={() => {
         return (
           <View>
@@ -73,7 +73,7 @@ export const ApolloScreen: React.FC<ApolloScreenProps> = function ApolloScreen()
           </View>
         )
       }}
-      keyExtractor={(chapter) => chapter.id.toString()}
+      keyExtractor={(section) => section.number.toString()}
     />
   )
 }
