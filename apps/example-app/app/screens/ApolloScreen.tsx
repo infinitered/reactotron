@@ -6,6 +6,7 @@ import { colors, spacing } from "app/theme"
 import { useSafeAreaInsetsStyle } from "app/utils/useSafeAreaInsetsStyle"
 import { gql, useQuery } from "@apollo/client"
 import { useNavigation } from "@react-navigation/native"
+import { observer } from "mobx-react-lite"
 
 const CHAPTERS_QUERY = gql`
   query Chapters {
@@ -46,7 +47,7 @@ const ChapterItem = ({
 
 interface ApolloScreenProps extends AppStackScreenProps<"Apollo"> {}
 
-export const ApolloScreen: React.FC<ApolloScreenProps> = function ApolloScreen() {
+export const ApolloScreen: React.FC<ApolloScreenProps> = observer(function ApolloScreen() {
   const { data, loading } = useQuery(CHAPTERS_QUERY)
   const navigation = useNavigation()
 
@@ -76,7 +77,7 @@ export const ApolloScreen: React.FC<ApolloScreenProps> = function ApolloScreen()
       keyExtractor={(chapter) => chapter.id.toString()}
     />
   )
-}
+})
 
 const $container: ViewStyle = {
   flex: 1,
