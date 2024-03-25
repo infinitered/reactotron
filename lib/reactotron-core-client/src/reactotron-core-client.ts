@@ -36,6 +36,7 @@ export interface LifeCycleMethods {
 
 type AnyFunction = (...args: any[]) => any
 export interface Plugin<Client> extends LifeCycleMethods {
+  name: string
   features?: {
     [key: string]: AnyFunction
   }
@@ -291,6 +292,7 @@ export class ReactotronImpl implements ReactotronCore {
           name,
           clientId,
           reactotronCoreClientVersion: "REACTOTRON_CORE_CLIENT_VERSION",
+          plugins: this.plugins.map((f) => f.name).filter((s) => Boolean(s)),
         })
 
         // flush the send queue

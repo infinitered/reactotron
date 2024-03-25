@@ -5,6 +5,7 @@ import type { ReactotronCore, Plugin } from "../reactotron-core-client"
  */
 const apiResponse = () => (reactotron: ReactotronCore) => {
   return {
+    name: "api-response",
     features: {
       apiResponse: (request: { status: number }, response: any, duration: number) => {
         const ok =

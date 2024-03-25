@@ -7,6 +7,7 @@ const repl = () => (reactotron: ReactotronCore) => {
   const myRepls: { [key: string]: AcceptableRepls } = {}
   // let currentContext = null
   return {
+    name: "repl",
     onCommand: ({ type, payload }) => {
       if (type.substr(0, 5) !== "repl.") return
 

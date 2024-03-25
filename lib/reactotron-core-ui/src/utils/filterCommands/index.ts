@@ -34,7 +34,7 @@ export function filterSearch(commands: any[], search: string) {
   const searchRegex = new RegExp(trimmedSearch.replace(/\s/, "."), "i")
 
   const matching = (value: string) => {
-    if(!value) {
+    if (!value) {
       return false
     }
 

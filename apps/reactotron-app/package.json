@@ -65,6 +65,7 @@
     "react-motion": "0.5.2",
     "react-router-dom": "^6.18.0",
     "react-tooltip": "4.5.1",
+    "react-transition-group": "^4.4.5",
     "reactotron-core-contract": "workspace:*",
     "reactotron-core-server": "workspace:*",
     "reactotron-core-ui": "workspace:*",

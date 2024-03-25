@@ -11,6 +11,7 @@ export default () => () => {
   const emitter = mitt()
 
   return {
+    name: "storybook",
     onCommand: (command) => {
       if (command.type !== "storybook") return
       // relay this payload on to the emitter
