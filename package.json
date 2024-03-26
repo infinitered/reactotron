@@ -78,5 +78,5 @@
     "build-and-test:local": "yarn build && yarn package:validate && yarn lint && yarn format:check && yarn test && yarn typecheck",
     "package:validate": "zx scripts/package.validate.mjs"
   },
-  "packageManager": "yarn@3.6.3"
+  "packageManager": "yarn@4.1.1"
 }
