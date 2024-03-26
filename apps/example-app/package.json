@@ -76,6 +76,7 @@
     "@babel/runtime": "^7.20.0",
     "@types/i18n-js": "3.8.2",
     "@types/jest": "^29.2.1",
+    "@types/node": "^20.11.30",
     "@types/react": "~18.2.45",
     "@types/react-test-renderer": "^18.0.0",
     "@types/redux-logger": "^3.0.13",
