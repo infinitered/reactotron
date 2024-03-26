@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.3.2](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.1...reactotron-core-ui@2.3.2) (2024-03-26)
+
+
+### Bug Fixes
+
+* **reactotron-core-ui:** Overlapping timeline layout ([#1457](https://github.com/infinitered/reactotron/issues/1457)) ([12a0215](https://github.com/infinitered/reactotron/commit/12a02152c7beca5518298dff82af24559e0dfb91))
+
 ### [2.3.1](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.0...reactotron-core-ui@2.3.1) (2024-03-26)
 
 ## [2.3.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.2.1...reactotron-core-ui@2.3.0) (2024-02-16)
