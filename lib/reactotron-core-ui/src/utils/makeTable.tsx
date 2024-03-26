@@ -8,7 +8,7 @@ export const RowContainer = styled.div`
   padding: 2px 0;
 `
 export const KeyContainer = styled.div`
-  width: 210px;
+  width: 120px;
   padding-right: 10px;
   word-break: break-all;
   text-align: left;
