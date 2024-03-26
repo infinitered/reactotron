@@ -6519,14 +6519,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.35":
-  version: 18.2.35
-  resolution: "@types/react@npm:18.2.35"
+"@types/react@npm:18.2.45":
+  version: 18.2.45
+  resolution: "@types/react@npm:18.2.45"
   dependencies:
     "@types/prop-types": "npm:*"
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 10/3c8c752d21856f74ddb96b9dd13cdd70c0ce1522808f20511f0220f392ea727fae9388db4da3ebe317d9bac98a0d930566d4277b22e92c1cad414429739e1d76
+  checksum: 10/bd27fd8a959fa776965997af89cb04e43e7868416850fdff421b5539f389efa35acae3d55915c9f32d7b00fb388550302bf8a7f06010abf9ad431e5bf58cb774
   languageName: node
   linkType: hard
 
