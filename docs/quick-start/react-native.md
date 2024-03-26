@@ -33,7 +33,7 @@ Create a file in your root folder `ReactotronConfig.js` and paste this:
 
 ```js
 import Reactotron from "reactotron-react-native";
-import { AsyncStorage } from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 Reactotron.setAsyncStorageHandler(AsyncStorage)
   .configure() // controls connection & communication settings
@@ -45,7 +45,7 @@ Or using a more advanced way to customize which plugins to include:
 
 ```js
 import Reactotron from "reactotron-react-native";
-import { AsyncStorage } from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 Reactotron.setAsyncStorageHandler(AsyncStorage)
   .configure({

@@ -10,6 +10,9 @@ const plugins = [
 module.exports = function (api) {
   api.cache(true)
   return {
+    assumptions: {
+      "setPublicClassFields": true,
+    },
     presets: ["babel-preset-expo"],
     env: {
       production: {},
