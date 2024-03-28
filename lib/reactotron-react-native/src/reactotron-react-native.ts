@@ -65,10 +65,24 @@ const DEFAULTS: ClientOptions<ReactotronReactNative> = {
     ...getReactNativeDimensions(),
   },
   /* eslint-disable @typescript-eslint/no-use-before-define */
-  getClientId: async () => {
+  getClientId: async (name: string = "") => {
     if (reactotron.asyncStorageHandler) {
       return reactotron.asyncStorageHandler.getItem(REACTOTRON_ASYNC_CLIENT_ID)
     }
+
+    // Generate clientId based on the device info
+    const dimensions = getReactNativeDimensions()
+    tempClientId = [
+      name,
+      Platform.OS,
+      Platform.Version,
+      constants.Model,
+      dimensions.screenWidth,
+      dimensions.screenWidth,
+      dimensions.screenScale,
+    ]
+      .filter(Boolean)
+      .join("-")
 
     return tempClientId
   },
