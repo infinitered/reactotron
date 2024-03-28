@@ -282,7 +282,7 @@ export class ReactotronImpl implements ReactotronCore {
 
       const getClientIdPromise = getClientId || emptyPromise
 
-      getClientIdPromise().then((clientId) => {
+      getClientIdPromise(name).then((clientId) => {
         this.isReady = true
         // introduce ourselves
         this.send("client.intro", {
