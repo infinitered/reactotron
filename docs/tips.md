@@ -38,7 +38,7 @@ if (__DEV__) {
 
 This means you'll need to be careful to use `require()` instead of `import` as `import` in ES6 are hoisted!
 
-**Flip Flop Alert!** Technically it's possible just to NPM `--save`. Maybe you want to do some debugging on a production build on a local device? That's cool. Just please, don't ship without conditionally shutting off `Reactotron.connect()`. <3
+**Flip Flop Alert!** Technically it's possible just to NPM `--save`. Maybe you want to do some debugging on a production build on a local device? That's cool. Just please, don't ship without conditionally shutting off `Reactotron.connect()`. \<3
 
 #### React JS
 
