@@ -71,15 +71,19 @@ const DEFAULTS: ClientOptions<ReactotronReactNative> = {
     }
 
     // Generate clientId based on the device info
-    const dimensions = getReactNativeDimensions()
+    const { screenWidth, screenHeight, screenScale } = getReactNativeDimensions()
+
+    // Accounting for screen rotation
+    const dimensions = [screenWidth, screenHeight].sort().join("-")
+
     tempClientId = [
       name,
       Platform.OS,
       Platform.Version,
+      constants.systemName,
       constants.Model,
-      dimensions.screenWidth,
-      dimensions.screenWidth,
-      dimensions.screenScale,
+      dimensions,
+      screenScale,
     ]
       .filter(Boolean)
       .join("-")
