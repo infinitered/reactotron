@@ -85,7 +85,7 @@ export interface ClientOptions<Client> extends LifeCycleMethods {
   /**
    * Get the client id provided by the server
    */
-  getClientId?: () => Promise<string>
+  getClientId?: (name: string) => Promise<string>
 
   proxyHack?: boolean
 }
