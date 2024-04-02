@@ -16,7 +16,6 @@ import StateKeysResponseCommand from "./StateKeysResponseCommand"
 import StateValuesChangeCommand from "./StateValuesChangeCommand"
 import StateValuesResponseCommand from "./StateValuesResponseCommand"
 import { TimelineCommandPropsEx } from "./BaseCommand"
-
 function timelineCommandResolver(
   type: CommandTypeKey
 ): FunctionComponent<TimelineCommandPropsEx<any>> {
