@@ -9,48 +9,48 @@ import {
   MdImportExport,
   MdNotificationsNone,
 } from "react-icons/md"
+import type { Snapshot } from "reactotron-core-ui"
 import {
   ContentView,
   EmptyState,
   Header,
-  Snapshot,
   SnapshotRenameModal,
   StateContext,
 } from "reactotron-core-ui"
-import styled from "rn-css"
+import styled from "styled-components"
 
-const Container = styled.View`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
 `
 
-const SnapshotsContainer = styled.View`
+const SnapshotsContainer = styled.div`
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 `
 
-const SnapshotContainer = styled.View`
+const SnapshotContainer = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.line};
 `
-const SnapshotDetailRow = styled.View`
+const SnapshotDetailRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
   cursor: pointer;
 `
-const SnapshotName = styled.View`
+const SnapshotName = styled.div`
   flex: 1;
   color: ${(props) => props.theme.tag};
   text-align: left;
 `
-const SnapshotAction = styled.View`
+const SnapshotAction = styled.div`
   color: ${(props) => props.theme.foreground};
   padding-left: 10px;
 `
-const SnapshotPreview = styled.View`
+const SnapshotPreview = styled.div`
   animation: fade-up 0.25s;
   will-change: transform opacity;
   padding: 0 40px 30px 40px;

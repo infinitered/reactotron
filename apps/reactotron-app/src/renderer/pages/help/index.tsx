@@ -8,72 +8,44 @@ import {
   GoRepo as RepoIcon,
 } from "react-icons/go"
 import { Header } from "reactotron-core-ui"
-import styled from "rn-css"
-
+import styled from "styled-components"
 import { reactotronLogo } from "../../images"
+import { ItemContainer, ItemIconContainer } from "./SharedStyles"
+import AndroidDeviceHelp from "./components/AndroidDeviceHelp"
 import KeybindGroup from "./components/KeybindGroup"
 
 const projectJson = require("../../../../package.json")
 
-const Container = styled.View`
+const Container = styled.div`
+  display: flex;
   flex-direction: column;
   width: 100%;
 `
-
-const HelpContainer = styled.View`
+const HelpContainer = styled.div`
   padding: 20px;
   overflow-y: auto;
   overflow-x: hidden;
 `
-
-const LogoContainer = styled.View`
+const LogoContainer = styled.div`
+  display: flex;
   justify-content: center;
 `
-
-const LogoImage = styled.Image`
-  align-self: center;
+const LogoImage = styled.img`
   height: 128px;
   margin: 20px 0;
-  width: 128px;
-  z-index: 1;
 `
-
-const Title = styled.Text`
-  border-bottom: 1px solid ${(props) => props.theme.highlight};
-  color: ${(props) => props.theme.foregroundLight};
+const Title = styled.div`
   font-size: 18px;
   margin: 10px 0;
   padding-bottom: 2px;
-`
-
-const ConnectContainer = styled.View`
-  align-items: flex-start;
-  flex-direction: row;
-  margin-bottom: 50px;
-`
-const ConnectItemContainer = styled.View`
-  /* width: 90px; */
-  align-items: center;
-  background-color: ${(props) => props.theme.chrome};
-  border-radius: 5px;
-  border: 1px solid ${(props) => props.theme.chromeLine};
-  cursor: pointer;
-  flex-direction: column;
-  flex: 1;
-  justify-content: center;
-  margin: 5px;
-  padding: 10px;
-`
-const ConnectItemIconContainer = styled.View`
-  align-items: center;
   color: ${(props) => props.theme.foregroundLight};
-  justify-content: center;
-  margin-bottom: 8px;
+  border-bottom: 1px solid ${(props) => props.theme.highlight};
 `
-
-const ConnectItemText = styled.Text`
+const ConnectContainer = styled.div`
+  display: flex;
+  align-items: flex-start;
   color: ${(props) => props.theme.foreground};
-  text-align: center;
+  margin-bottom: 50px;
 `
 
 function openRepo() {
@@ -119,35 +91,38 @@ function Help() {
       <Header title={`Using Reactotron ${projectJson.version}`} isDraggable />
       <HelpContainer>
         <LogoContainer>
-          <LogoImage source={reactotronLogo} />
+          <LogoImage src={reactotronLogo} />
         </LogoContainer>
         <Title>Let&apos;s Connect!</Title>
         <ConnectContainer>
-          <ConnectItemContainer onClick={openRepo}>
-            <ConnectItemIconContainer>
+          <ItemContainer onClick={openRepo}>
+            <ItemIconContainer>
               <RepoIcon size={40} />
-            </ConnectItemIconContainer>
-            <ConnectItemText>Repo</ConnectItemText>
-          </ConnectItemContainer>
-          <ConnectItemContainer onClick={openFeedback}>
-            <ConnectItemIconContainer>
+            </ItemIconContainer>
+            Repo
+          </ItemContainer>
+          <ItemContainer onClick={openFeedback}>
+            <ItemIconContainer>
               <FeedbackIcon size={40} />
-            </ConnectItemIconContainer>
-            <ConnectItemText>Feedback</ConnectItemText>
-          </ConnectItemContainer>
-          <ConnectItemContainer onClick={openUpdates}>
-            <ConnectItemIconContainer>
+            </ItemIconContainer>
+            Feedback
+          </ItemContainer>
+          <ItemContainer onClick={openUpdates}>
+            <ItemIconContainer>
               <ReleaseIcon size={40} />
-            </ConnectItemIconContainer>
-            <ConnectItemText>Updates</ConnectItemText>
-          </ConnectItemContainer>
-          <ConnectItemContainer onClick={openTwitter}>
-            <ConnectItemIconContainer>
+            </ItemIconContainer>
+            Updates
+          </ItemContainer>
+          <ItemContainer onClick={openTwitter}>
+            <ItemIconContainer>
               <TwitterIcon size={40} />
-            </ConnectItemIconContainer>
-            <ConnectItemText>@reactotron</ConnectItemText>
-          </ConnectItemContainer>
+            </ItemIconContainer>
+            @reactotron
+          </ItemContainer>
         </ConnectContainer>
+
+        <AndroidDeviceHelp />
+
         <Title>Keystrokes</Title>
         {Keybinds()}
       </HelpContainer>

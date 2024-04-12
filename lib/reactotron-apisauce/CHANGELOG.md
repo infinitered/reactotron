@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.0.1-beta.14](https://github.com/infinitered/reactotron/compare/reactotron-apisauce@3.0.1-beta.13...reactotron-apisauce@3.0.1-beta.14) (2023-12-01)
+
+
+### Features
+
+* validate workspace package.json, add export condition ([#1326](https://github.com/infinitered/reactotron/issues/1326)) ([ae95cd5](https://github.com/infinitered/reactotron/commit/ae95cd536de187ede034e5183ceeb812f356d273))
+
 ### [3.0.1-beta.13](https://github.com/infinitered/reactotron/compare/reactotron-apisauce@3.0.1-beta.12...reactotron-apisauce@3.0.1-beta.13) (2023-11-06)
 
 ### [3.0.1-beta.12](https://github.com/infinitered/reactotron/compare/reactotron-apisauce@3.0.1-beta.11...reactotron-apisauce@3.0.1-beta.12) (2023-10-13)

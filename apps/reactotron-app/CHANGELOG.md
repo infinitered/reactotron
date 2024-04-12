@@ -2,6 +2,51 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0-beta.39](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.38...reactotron-app@3.0.0-beta.39) (2023-12-05)
+
+
+### Bug Fixes
+
+* **reactotron-app:** add --arm64 --x64 flags ([5015808](https://github.com/infinitered/reactotron/commit/5015808fce7c4f3eab5d087d3fb21c3dc3c0f5f0))
+
+
+### Reverts
+
+* Revert "feat(reactotron-app): add build_app_macos_arm64 build job" ([7be8f7f](https://github.com/infinitered/reactotron/commit/7be8f7f701728b1a77e57d4a7a5c11bc70554d27))
+
+## [3.0.0-beta.38](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.37...reactotron-app@3.0.0-beta.38) (2023-12-05)
+
+
+### Features
+
+* **reactotron-app:** add build_app_macos_arm64 build job ([46409cf](https://github.com/infinitered/reactotron/commit/46409cf33217351562f3a342a882435c19a83ff5))
+
+
+### Bug Fixes
+
+* validate package.json lol ([3ac8b9c](https://github.com/infinitered/reactotron/commit/3ac8b9c6656b8999293bec01209bfa5dc6e839d5))
+
+## [3.0.0-beta.37](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.36...reactotron-app@3.0.0-beta.37) (2023-12-05)
+
+
+### Bug Fixes
+
+* **reactotron-app:** fix notarize settings ([08320b4](https://github.com/infinitered/reactotron/commit/08320b4360bba07155deb70573a0048786477a13))
+
+## [3.0.0-beta.36](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.35...reactotron-app@3.0.0-beta.36) (2023-12-01)
+
+
+### Features
+
+* validate workspace package.json, add export condition ([#1326](https://github.com/infinitered/reactotron/issues/1326)) ([ae95cd5](https://github.com/infinitered/reactotron/commit/ae95cd536de187ede034e5183ceeb812f356d273))
+
+## [3.0.0-beta.35](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.34...reactotron-app@3.0.0-beta.35) (2023-11-30)
+
+
+### Features
+
+* **reactotron:** Add Android `adb` command interface to the Help page. ([#1320](https://github.com/infinitered/reactotron/issues/1320)) ([60c985e](https://github.com/infinitered/reactotron/commit/60c985ec0c3ef4e2d00c0a67fbc467f4903558b7))
+
 ## [3.0.0-beta.34](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.33...reactotron-app@3.0.0-beta.34) (2023-11-06)
 
 ## [3.0.0-beta.33](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.32...reactotron-app@3.0.0-beta.33) (2023-10-24)

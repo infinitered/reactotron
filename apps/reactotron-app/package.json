@@ -1,7 +1,7 @@
 {
   "name": "reactotron-app",
   "productName": "Reactotron",
-  "version": "3.0.0-beta.34",
+  "version": "3.0.0-beta.39",
   "description": "Reactotron desktop mode engage!",
   "author": {
     "name": "Infinite Red",
@@ -112,7 +112,6 @@
   "build": {
     "productName": "Reactotron",
     "appId": "com.reactotron.app",
-    "afterSign": "scripts/notarize.js",
     "files": [
       "src/dist/",
       "src/app.html",
@@ -139,7 +138,10 @@
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
       "entitlements": "entitlements.mac.plist",
-      "entitlementsInherit": "entitlements.mac.plist"
+      "entitlementsInherit": "entitlements.mac.plist",
+      "notarize": {
+        "teamId": "L7YNDPLSEB"
+      }
     },
     "win": {
       "icon": "./icon.png",
@@ -197,6 +199,5 @@
       "react-hooks/exhaustive-deps": "warn",
       "react/prop-types": 0
     }
-  },
-  "sideEffects": false
+  }
 }

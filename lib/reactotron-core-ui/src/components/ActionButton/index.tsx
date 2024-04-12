@@ -1,8 +1,9 @@
 import React from "react"
-import ReactTooltip from "react-tooltip"
-import styled from "rn-css"
+import { type TooltipProps } from "react-tooltip"
+import styled from "styled-components"
+import Tooltip from "../Tooltip"
 
-const Container = styled.View`
+const Container = styled.div`
   cursor: pointer;
   margin: 0 5px;
   -webkit-app-region: none;
@@ -10,15 +11,16 @@ const Container = styled.View`
 
 interface Props {
   tip: string
+  tipProps?: TooltipProps
   icon: any
   onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
-function ActionButton({ icon: Icon, tip, onClick }: Props) {
+function ActionButton({ icon: Icon, tip, tipProps = {}, onClick }: Props) {
   return (
     <Container data-tip={tip} onClick={onClick}>
       <Icon size={24} />
-      <ReactTooltip place="bottom" />
+      <Tooltip {...tipProps} />
     </Container>
   )
 }

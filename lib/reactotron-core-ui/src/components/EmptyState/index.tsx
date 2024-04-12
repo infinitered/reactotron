@@ -1,44 +1,39 @@
 import React, { FunctionComponent } from "react"
-import { ImageSourcePropType } from "react-native"
-import styled from "rn-css"
-import theme from "../../theme"
+import styled from "styled-components"
 
-const Container = styled.View`
-  align-items: center;
-  flex-direction: column;
-  flex: 1;
+const Container = styled.div`
   height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.foregroundLight};
 `
 
-const Title = styled.Text`
-  color: ${(props) => props.theme.foregroundLight};
-  font-family: ${(props) => props.theme.fontFamily};
-  font-size: 32px;
+const Title = styled.div`
+  font-size: 2rem;
   padding-bottom: 50px;
   padding-top: 10px;
 `
 
-const Message = styled.Text`
-  color: ${(props) => props.theme.foregroundLight};
-  font-family: ${(props) => props.theme.fontFamily};
-  font-size: 15px;
-  line-height: 21px;
+const Message = styled.div`
+  color: ${(props) => props.theme.foreground};
   max-width: 400px;
+  line-height: 1.4;
   text-align: center;
 `
 
-const Image = styled.Image`
+const Image = styled.img`
+  width: 100px;
   height: 100px;
   padding-bottom: 4px;
-  width: 100px;
-  z-index: 1;
 `
 
 interface Props {
   icon?: any // TODO: Type Better?
-  image?: ImageSourcePropType
-  title: string
+  image?: any
+  title?: string
 }
 
 const EmptyState: FunctionComponent<React.PropsWithChildren<Props>> = ({
@@ -49,9 +44,9 @@ const EmptyState: FunctionComponent<React.PropsWithChildren<Props>> = ({
 }) => {
   return (
     <Container>
-      {Icon && <Icon color={theme.foregroundLight} size={100} />}
-      {image && <Image source={image} />}
-      <Title>{title}</Title>
+      {Icon && <Icon size={100} />}
+      {image && <Image src={image} />}
+      {title && <Title>{title}</Title>}
       <Message>{children}</Message>
     </Container>
   )

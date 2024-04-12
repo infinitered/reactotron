@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from "react"
-import { View } from "react-native"
-import styled from "rn-css"
+import styled from "styled-components"
 
-import { CommandType, CommandTypeKey } from "reactotron-core-contract"
+import type { CommandTypeKey } from "reactotron-core-contract"
+import { CommandType } from "reactotron-core-contract"
 import Checkbox from "../../components/Checkbox"
 import Modal from "../../components/Modal"
 
@@ -37,26 +37,20 @@ const GROUPS = [
   },
 ]
 
-const BulkActionContainer = styled.View`
-  flex-direction: row;
+const BulkActionContainer = styled.div`
   margin-bottom: 20px;
 `
-const BulkAction = styled.Text`
-  color: ${(props) => props.theme.tag};
+const BulkAction = styled.span`
   cursor: pointer;
+  color: ${(props) => props.theme.tag};
 `
 
-const Slash = styled.Text`
-  color: ${(props) => props.theme.foregroundLight};
-`
-
-const GroupName = styled.Text`
-  border-bottom: 1px solid ${(props) => props.theme.highlight};
-  color: ${(props) => props.theme.foregroundLight};
-  font-family: ${(props) => props.theme.fontFamily};
+const GroupName = styled.div`
   font-size: 18px;
   margin: 10px 0;
   padding-bottom: 2px;
+  border-bottom: 1px solid ${(props) => props.theme.highlight};
+  color: ${(props) => props.theme.foregroundLight};
 `
 
 interface Props {
@@ -101,11 +95,11 @@ const TimelineFilterModal: FunctionComponent<Props> = ({
   return (
     <Modal title="Timeline Filter" isOpen={isOpen} onClose={onClose}>
       <BulkActionContainer>
-        <BulkAction onPress={toggleAllOn}>Check all</BulkAction>
-        <Slash> / </Slash>
-        <BulkAction onPress={toggleAllOff}>Uncheck all</BulkAction>
+        <BulkAction onClick={toggleAllOn}>Check all</BulkAction>
+        <span> / </span>
+        <BulkAction onClick={toggleAllOff}>Uncheck all</BulkAction>
       </BulkActionContainer>
-      <View>
+      <div>
         {GROUPS.map((section, sectionIdx) => {
           const options = section.items.map((item, itemIdx) => {
             const isChecked = hiddenCommands.indexOf(item.value) === -1
@@ -117,13 +111,13 @@ const TimelineFilterModal: FunctionComponent<Props> = ({
           })
 
           return (
-            <View key={sectionIdx}>
+            <div key={sectionIdx}>
               <GroupName>{section.name}</GroupName>
               {options}
-            </View>
+            </div>
           )
         })}
-      </View>
+      </div>
     </Modal>
   )
 }

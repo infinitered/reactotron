@@ -1,6 +1,6 @@
 {
   "name": "reactotron-core-contract",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "Typescript contracts for websocket messages between server and clients",
   "author": "Infinite Red",
   "license": "MIT",
@@ -11,11 +11,18 @@
   "repository": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-core-contract",
   "files": [
     "dist",
-    "LICENSE",
-    "README.md"
+    "src"
   ],
   "main": "dist/index.js",
-  "typings": "dist/types/src/reactotron-core-contract.d.ts",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/src/index.d.ts",
+  "react-native": "src/index.ts",
+  "exports": {
+    "default": "./dist/index.js",
+    "import": "./dist/index.esm.js",
+    "types": "./dist/types/src/index.d.ts",
+    "react-native": "./src/index.ts"
+  },
   "scripts": {
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch --notify",

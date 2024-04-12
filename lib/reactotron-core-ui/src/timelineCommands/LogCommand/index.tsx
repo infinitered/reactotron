@@ -1,9 +1,10 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { MdContentCopy } from "react-icons/md"
-import styled from "rn-css"
 import stringifyObject from "stringify-object"
+import styled from "styled-components"
 
-import { ErrorStackFrame, LogPayload, isErrorStackFrameArray } from "reactotron-core-contract"
+import type { ErrorStackFrame, LogPayload } from "reactotron-core-contract"
+import { isErrorStackFrameArray } from "reactotron-core-contract"
 import ContentView from "../../components/ContentView"
 import TimelineCommand from "../../components/TimelineCommand"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
@@ -12,7 +13,7 @@ const SOURCE_LINES_UP = 3
 const SOURCE_LINES_DOWN = 3
 const SOURCE_FILE_PATH_COUNT = 3
 
-const ErrorMessage = styled.View`
+const ErrorMessage = styled.div`
   word-break: break-all;
   margin-bottom: 30px;
   padding: 20px 0 20px 10px;
@@ -26,13 +27,13 @@ const ErrorMessage = styled.View`
   border-bottom: 1px solid ${(props) => props.theme.subtleLine};
 `
 
-const SourceContainer = styled.View`
+const SourceContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 10px;
   color: ${(props) => props.theme.foreground};
 `
-const SourceFilename = styled.View`
+const SourceFilename = styled.div`
   padding: 5px 0;
   margin-bottom: 5px;
   color: ${(props) => props.theme.tag};
@@ -40,7 +41,7 @@ const SourceFilename = styled.View`
 interface SourceLineContainerProps {
   $isSelected: boolean
 }
-const SourceLineContainer = styled.View<SourceLineContainerProps>`
+const SourceLineContainer = styled.div.attrs(() => ({}))<SourceLineContainerProps>`
   display: flex;
   padding: 6px 0;
   cursor: pointer;
@@ -54,43 +55,43 @@ const SourceLineContainer = styled.View<SourceLineContainerProps>`
   border-bottom: ${(props) =>
     props.$isSelected ? `1px solid ${props.theme.subtleLine}` : undefined};
 `
-const SourceLineNumber = styled.View`
+const SourceLineNumber = styled.div`
   width: 60px;
   padding-right: 15px;
   color: ${(props) => props.theme.constant};
   text-align: right;
 `
-const SourceLineCode = styled.View`
+const SourceLineCode = styled.div`
   flex: 1;
   white-space: pre-wrap;
 `
 
-const StackContainer = styled.View`
+const StackContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
 `
-const StackTitle = styled.View`
+const StackTitle = styled.div`
   padding-top: 5px;
   padding-bottom: 5px;
   margin-bottom: 5px;
   color: ${(props) => props.theme.tag};
   border-bottom: 1px solid ${(props) => props.theme.line};
 `
-const StackTable = styled.View`
+const StackTable = styled.div`
   display: flex;
   flex-direction: column;
 `
-const StackTableHeadRow = styled.View`
+const StackTableHeadRow = styled.div`
   display: flex;
   padding: 6px;
   color: ${(props) => props.theme.foregroundDark};
 `
-const StackTableHeaderFunction = styled.View`
+const StackTableHeaderFunction = styled.div`
   text-align: left;
   flex: 1;
 `
-const StackTableHeaderLineNumber = styled.View`
+const StackTableHeaderLineNumber = styled.div`
   text-align: right;
   width: 60px;
 `
@@ -99,7 +100,7 @@ interface StackFrameContainerProps {
   $isNodeModule: boolean
   $isSelected: boolean
 }
-const StackFrameContainer = styled.View<StackFrameContainerProps>`
+const StackFrameContainer = styled.div.attrs(() => ({}))<StackFrameContainerProps>`
   display: flex;
   padding: 6px;
   word-break: break-all;
@@ -117,14 +118,14 @@ const StackFrameContainer = styled.View<StackFrameContainerProps>`
   border-bottom: ${(props) =>
     props.$isSelected ? `1px solid ${props.theme.subtleLine}` : undefined};
 `
-const StackFrameFunction = styled.View`
+const StackFrameFunction = styled.div`
   flex: 1;
 `
-const StackFrameFile = styled.View`
+const StackFrameFile = styled.div`
   flex: 1;
   word-break: break-all;
 `
-const StackFrameLineNumber = styled.View`
+const StackFrameLineNumber = styled.div`
   color: ${(props) => props.theme.constant};
   word-break: break-all;
   width: 50px;

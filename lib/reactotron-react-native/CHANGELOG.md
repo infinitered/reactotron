@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [5.0.4-beta.19](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.0.4-beta.18...reactotron-react-native@5.0.4-beta.19) (2023-12-02)
+
+
+### Features
+
+* **reactotron-react-native:** enable trackGlobalLogs in useReactNative by default ([#1327](https://github.com/infinitered/reactotron/issues/1327)) ([cee53c8](https://github.com/infinitered/reactotron/commit/cee53c884121fdfaee81ec5bd5c697df676839f0)), closes [/github.com/infinitered/ignite/blob/v9.0.4/boilerplate/app/devtools/ReactotronConfig.ts#L149-L178](https://github.com/infinitered//github.com/infinitered/ignite/blob/v9.0.4/boilerplate/app/devtools/ReactotronConfig.ts/issues/L149-L178)
+
+### [5.0.4-beta.18](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.0.4-beta.17...reactotron-react-native@5.0.4-beta.18) (2023-12-01)
+
+
+### Features
+
+* validate workspace package.json, add export condition ([#1326](https://github.com/infinitered/reactotron/issues/1326)) ([ae95cd5](https://github.com/infinitered/reactotron/commit/ae95cd536de187ede034e5183ceeb812f356d273))
+
 ### [5.0.4-beta.17](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.0.4-beta.16...reactotron-react-native@5.0.4-beta.17) (2023-11-06)
 
 ### [5.0.4-beta.16](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.0.4-beta.15...reactotron-react-native@5.0.4-beta.16) (2023-10-13)

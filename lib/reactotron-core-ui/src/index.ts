@@ -8,6 +8,7 @@ import Header from "./components/Header"
 import Modal from "./components/Modal"
 import ReactotronAppProvider from "./components/ReactotronAppProvider"
 import ActionButton from "./components/ActionButton"
+import Tooltip from "./components/Tooltip"
 import TimelineCommand from "./components/TimelineCommand"
 import TimelineCommandTabButton from "./components/TimelineCommandTabButton"
 import Timestamp from "./components/Timestamp"
@@ -41,6 +42,7 @@ export {
   Modal,
   ReactotronAppProvider,
   ActionButton,
+  Tooltip,
   TimelineCommand,
   timelineCommandResolver,
   TimelineCommandTabButton,

@@ -1,7 +1,7 @@
 import { type MMKV } from "react-native-mmkv"
 import type { Reactotron } from "reactotron-core-client"
 
-interface MmkvPluginConfig {
+export interface MmkvPluginConfig {
   /**
    * MMKV storage instance
    * @example

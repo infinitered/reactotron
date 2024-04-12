@@ -164,6 +164,9 @@ jobs:
           name: Build
           command: yarn build
       - run:
+          name: Package Validation
+          command: yarn package:validate
+      - run:
           name: Lint
           command: yarn lint
       - run:
