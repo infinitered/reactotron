@@ -1,6 +1,6 @@
 import React from "react"
 import ReactTooltip, { type TooltipProps } from "react-tooltip"
-import { useTheme } from "styled-components"
+import { useTheme } from "rn-css"
 
 // This component provides some sane defaults for react-tooltip.
 // Use this component instead of react-tooltip directly.

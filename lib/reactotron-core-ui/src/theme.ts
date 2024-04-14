@@ -32,8 +32,8 @@ const theme = {
 }
 
 declare module "rn-css" {
-  type MyTheme = typeof theme
-  export interface DefaultTheme extends MyTheme {}
+  type ReactotronTheme = typeof theme
+  export interface DefaultTheme extends ReactotronTheme {}
 }
 
 export default theme

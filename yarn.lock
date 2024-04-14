@@ -29864,6 +29864,7 @@ __metadata:
     reactotron-core-contract: "workspace:*"
     reactotron-core-server: "workspace:*"
     reactotron-core-ui: "workspace:*"
+    rn-css: ^1.11.5
     tamagui: ^1.76.0
     typescript: ^5.2.2
   languageName: unknown

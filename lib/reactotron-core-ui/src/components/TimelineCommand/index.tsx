@@ -124,7 +124,7 @@ const TimelineCommand: React.FC<React.PropsWithChildren<Props>> = ({
 
   return (
     <Container $isOpen={isOpen}>
-      <TopBarContainer onClick={() => setIsOpen(!isOpen)}>
+      <TopBarContainer onPressIn={() => setIsOpen(!isOpen)}>
         <TimestampContainer>
           <Timestamp date={date} deltaTime={deltaTime} />
         </TimestampContainer>

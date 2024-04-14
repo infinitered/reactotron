@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react"
-import styled from "styled-components"
+import styled from "rn-css"
 
 import type { CommandTypeKey } from "reactotron-core-contract"
 import { CommandType } from "reactotron-core-contract"
@@ -37,15 +37,15 @@ const GROUPS = [
   },
 ]
 
-const BulkActionContainer = styled.div`
+const BulkActionContainer = styled.View`
   margin-bottom: 20px;
 `
-const BulkAction = styled.span`
+const BulkAction = styled.View`
   cursor: pointer;
   color: ${(props) => props.theme.tag};
 `
 
-const GroupName = styled.div`
+const GroupName = styled.View`
   font-size: 18px;
   margin: 10px 0;
   padding-bottom: 2px;
