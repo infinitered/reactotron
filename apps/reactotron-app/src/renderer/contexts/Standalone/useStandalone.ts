@@ -1,5 +1,6 @@
 import { useCallback, useReducer } from "react"
 import { produce } from "immer"
+import { CommandType } from "reactotron-core-contract"
 
 export enum ActionTypes {
   ServerStarted = "SERVER_STARTED",
@@ -7,6 +8,7 @@ export enum ActionTypes {
   AddConnection = "ADD_CONNECTION",
   RemoveConnection = "REMOVE_CONNECTION",
   ClearConnectionCommands = "CLEAR_CONNECTION_COMMANDS",
+  ClearNetworkCommands = "CLEAR_NETWORK_COMMANDS",
   CommandReceived = "COMMAND_RECEIVED",
   ChangeSelectedClientId = "CHANGE_SELECTED_CLIENT_ID",
   AddCommandHandler = "ADD_COMMAND_HANDLER",
@@ -52,6 +54,7 @@ type Action =
   | { type: ActionTypes.ChangeSelectedClientId; payload: string }
   | { type: ActionTypes.CommandReceived; payload: any } // TODO: Type this better!
   | { type: ActionTypes.ClearConnectionCommands }
+  | { type: ActionTypes.ClearNetworkCommands }
   | { type: ActionTypes.AddCommandHandler; payload: (command: any) => void }
   | { type: ActionTypes.PortUnavailable; payload: undefined }
 
@@ -153,7 +156,25 @@ export function reducer(state: State, action: Action) {
 
         if (!selectedConnection) return
 
-        selectedConnection.commands = []
+        // for now we are keeping the api responses until we separate them out
+        // into their own list
+        selectedConnection.commands = selectedConnection.commands.filter(
+          (c) => c.type === CommandType.ApiResponse
+        )
+      })
+    case ActionTypes.ClearNetworkCommands:
+      return produce(state, (draftState) => {
+        if (!draftState.selectedClientId) return
+
+        const selectedConnection = draftState.connections.find(
+          (c) => c.clientId === draftState.selectedClientId
+        )
+
+        if (!selectedConnection) return
+
+        selectedConnection.commands = selectedConnection.commands.filter(
+          (c) => c.type !== CommandType.ApiResponse
+        )
       })
     case ActionTypes.ChangeSelectedClientId:
       return produce(state, (draftState) => {
@@ -218,6 +239,10 @@ function useStandalone() {
     dispatch({ type: ActionTypes.ClearConnectionCommands })
   }, [])
 
+  const clearNetworkCommands = useCallback(() => {
+    dispatch({ type: ActionTypes.ClearNetworkCommands })
+  }, [])
+
   const selectConnection = useCallback((clientId: string) => {
     dispatch({ type: ActionTypes.ChangeSelectedClientId, payload: clientId })
   }, [])
@@ -240,6 +265,7 @@ function useStandalone() {
     connectionDisconnected,
     commandReceived,
     clearSelectedConnectionCommands,
+    clearNetworkCommands,
     addCommandListener,
     portUnavailable,
   }
