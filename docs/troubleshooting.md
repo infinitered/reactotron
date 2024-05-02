@@ -20,7 +20,7 @@ The configuration should look something like this:
 if (__DEV__) {
   Reactotron
     .configure({
-      host: '<machine host ip>', // default is localhost (on android don't forget to `adb reverse tcp:9090 tcp:9090`)
+      host: '<machine host ip>', // default is localhost (on android don't forget to `adb reverse tcp:9090 tcp:9090`) or you can get help from babel-plugin-local-ip
       name: 'Ignite App' // would you like to see your app's name?
     })
 ```
