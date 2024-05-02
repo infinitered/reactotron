@@ -33,13 +33,14 @@ let tempClientId: string | null = null
  *
  * On an Android emulator, if you want to connect any servers of local, you will need run adb reverse on your terminal. This function gets the localhost IP of host machine directly to bypass this.
  */
-const getHost = (defaultHost = "localhost") =>
-  typeof NativeModules?.SourceCode?.getConstants().scriptURL === "string" // type guard in case this ever breaks https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/NativeModules/specs/NativeSourceCode.js#L15-L21
-    ? NativeModules.SourceCode.scriptURL // Example: 'http://192.168.0.100:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=com.helloworld'
-        .split("://")[1] // Remove the scheme: '192.168.0.100:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=com.helloworld'
-        .split("/")[0] // Remove the path: '192.168.0.100:8081'
-        .split(":")[0] // Remove the port: '192.168.0.100'
-    : defaultHost
+const getHost = (defaultHost = "localhost") => {
+  try {
+    return new URL(NativeModules?.SourceCode?.getConstants().scriptURL).hostname
+  } catch (error) {
+    console.warn(`getHost: "${error.message}" for scriptURL - Falling back to ${defaultHost}`)
+    return defaultHost
+  }
+}
 
 const DEFAULTS: ClientOptions<ReactotronReactNative> = {
   createSocket: (path: string) => new WebSocket(path), // eslint-disable-line
