@@ -35,6 +35,7 @@ let tempClientId: string | null = null
  */
 const getHost = (defaultHost = "localhost") => {
   try {
+    // RN Reference: https://github.com/facebook/react-native/blob/main/packages/react-native/src/private/specs/modules/NativeSourceCode.js
     return new URL(NativeModules?.SourceCode?.getConstants().scriptURL).hostname
   } catch (error) {
     console.warn(`getHost: "${error.message}" for scriptURL - Falling back to ${defaultHost}`)
