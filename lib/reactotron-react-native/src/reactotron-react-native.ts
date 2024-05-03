@@ -36,7 +36,15 @@ let tempClientId: string | null = null
 const getHost = (defaultHost = "localhost") => {
   try {
     // RN Reference: https://github.com/facebook/react-native/blob/main/packages/react-native/src/private/specs/modules/NativeSourceCode.js
-    return new URL(NativeModules?.SourceCode?.getConstants().scriptURL).hostname
+    const scriptURL = NativeModules?.SourceCode?.getConstants().scriptURL
+    if (typeof scriptURL !== "string") throw new Error("Invalid non-string URL")
+
+    // Using a capture group to extract the hostname from a URL
+    const host = scriptURL.match(/^(?:https?:\/\/)?([^/:\s]+)(?::\d+)?(?:[/?#]|$)/)?.[1]
+
+    if (typeof host !== "string") throw new Error("Invalid URL - host not found")
+
+    return host
   } catch (error) {
     console.warn(`getHost: "${error.message}" for scriptURL - Falling back to ${defaultHost}`)
     return defaultHost
