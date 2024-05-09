@@ -19,6 +19,7 @@ import networking, { NetworkingOptions } from "./plugins/networking"
 import storybook from "./plugins/storybook"
 import devTools from "./plugins/devTools"
 import trackGlobalLogs from "./plugins/trackGlobalLogs"
+import { getHostFromUrl } from "./helpers/parseURL"
 
 const constants = NativeModules.PlatformConstants || {}
 
@@ -39,12 +40,7 @@ const getHost = (defaultHost = "localhost") => {
     const scriptURL = NativeModules?.SourceCode?.getConstants().scriptURL
     if (typeof scriptURL !== "string") throw new Error("Invalid non-string URL")
 
-    // Using a capture group to extract the hostname from a URL
-    const host = scriptURL.match(/^(?:https?:\/\/)?([^/:\s]+)(?::\d+)?(?:[/?#]|$)/)?.[1]
-
-    if (typeof host !== "string") throw new Error("Invalid URL - host not found")
-
-    return host
+    return getHostFromUrl(scriptURL)
   } catch (error) {
     console.warn(`getHost: "${error.message}" for scriptURL - Falling back to ${defaultHost}`)
     return defaultHost
