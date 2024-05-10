@@ -24128,7 +24128,7 @@ __metadata:
     react-native-flipper: "npm:0.164.0"
     reactotron-core-client: "workspace:*"
     rimraf: "npm:5.0.5"
-    rollup: "npm:2.60.2"
+    rollup: "npm:2.79.1"
     rollup-plugin-babel: "npm:4.4.0"
     rollup-plugin-babel-minify: "npm:10.0.0"
     rollup-plugin-filesize: "npm:9.1.1"
@@ -25182,6 +25182,20 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: 10/375833f30439bed62627318c9169fa62a99e179bd218eb8183bc1bee419951a2eb5e9debd6dfb12c4c1b6e27dd84e5b30b4c359b38d0925db1706a920ac341ea
+  languageName: node
+  linkType: hard
+
+"rollup@npm:2.79.1":
+  version: 2.79.1
+  resolution: "rollup@npm:2.79.1"
+  dependencies:
+    fsevents: "npm:~2.3.2"
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: 10/df087b701304432f30922bbee5f534ab189aa6938bd383b5686c03147e0d00cd1789ea10a462361326ce6b6ebe448ce272ad3f3cc40b82eeb3157df12f33663c
   languageName: node
   linkType: hard
 

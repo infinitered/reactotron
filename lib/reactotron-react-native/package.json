@@ -83,7 +83,7 @@
     "react-native": "0.73.6",
     "react-native-flipper": "0.164.0",
     "rimraf": "5.0.5",
-    "rollup": "2.60.2",
+    "rollup": "2.79.1",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-babel-minify": "10.0.0",
     "rollup-plugin-filesize": "9.1.1",
