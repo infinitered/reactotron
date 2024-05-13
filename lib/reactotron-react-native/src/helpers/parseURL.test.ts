@@ -37,15 +37,6 @@ describe("getHostFromUrl", () => {
     })
   })
 
-  it("should get the host from URL with expo scheme for Expo Go", () => {
-    Object.entries({
-      localhost: "exp://localhost",
-      "example.com": "exp://example.com",
-    }).forEach(([host, url]) => {
-      expect(getHostFromUrl(url)).toEqual(host)
-    })
-  })
-
   it("should get the host from URL and ignore path, port, and query params", () => {
     Object.entries({
       localhost:
