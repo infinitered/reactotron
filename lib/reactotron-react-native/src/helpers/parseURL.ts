@@ -11,7 +11,7 @@ export function getHostFromUrl(url: string) {
   // Group 2: host
   // Group 3: port
   // Group 4: rest
-  const host = url.match(/^(?:https?:\/\/)?([^/:\s]+)(?::\d+)?(?:[/?#]|$)/)?.[1]
+  const host = url.match(/^(?:(?:https?|exp):\/\/)?([^/:\s]+)(?::\d+)?(?:[/?#]|$)/)?.[1]
 
   if (typeof host !== "string") throw new Error("Invalid URL - host not found")
 
