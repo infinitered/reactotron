@@ -11,6 +11,7 @@ describe("getHostFromUrl", () => {
     Object.entries({
       localhost: "localhost",
       "127.0.0.1": "127.0.0.1",
+      "[::1]": "[::1]",
     }).forEach(([host, url]) => {
       expect(getHostFromUrl(url)).toEqual(host)
     })
@@ -51,6 +52,17 @@ describe("getHostFromUrl", () => {
         "http://localhost:8081/.expo/.virtual-metro-entry.bundle?platform=ios&dev=true&lazy=true&minify=false&inlineSourceMap=false&modulesOnly=false&runModule=true&app=com.reactotronapp",
       "192.168.1.141":
         "https://192.168.1.141:8081/.expo/.virtual-metro-entry.bundle?platform=ios&dev=true&lazy=true&minify=false&inlineSourceMap=false&modulesOnly=false&runModule=true&app=com.reactotronapp",
+    }).forEach(([host, url]) => {
+      expect(getHostFromUrl(url)).toEqual(host)
+    })
+  })
+
+  it("should get the host from an IPv6 URL and ignore path, port, and query params", () => {
+    Object.entries({
+      "[::1]":
+        "http://[::1]:8081/.expo/.virtual-metro-entry.bundle?platform=ios&dev=true&lazy=true&minify=false&inlineSourceMap=false&modulesOnly=false&runModule=true&app=com.reactotronapp",
+      "[2001:0db8:85a3:0000:0000:8a2e:0370:7334]":
+        "https://[2001:0db8:85a3:0000:0000:8a2e:0370:7334]:8081/.expo/.virtual-metro-entry.bundle?platform=ios&dev=true&lazy=true&minify=false&inlineSourceMap=false&modulesOnly=false&runModule=true&app=com.reactotronapp",
     }).forEach(([host, url]) => {
       expect(getHostFromUrl(url)).toEqual(host)
     })
