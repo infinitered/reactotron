@@ -8,6 +8,7 @@ interface Props {
   commands: Command[]
   sendCommand: (type: string, payload: any, clientId?: string) => void
   clearCommands: () => void
+  clearNetworkCommands: () => void
   addCommandListener: (callback: (command: Command) => void) => void
 }
 
@@ -31,6 +32,7 @@ const ReactotronContext = React.createContext<ContextProps>({
   commands: [],
   sendCommand: null,
   clearCommands: null,
+  clearNetworkCommands: null,
   addCommandListener: null,
   isDispatchModalOpen: false,
   dispatchModalInitialAction: "",
@@ -45,6 +47,7 @@ const Provider: FunctionComponent<React.PropsWithChildren<Props>> = ({
   commands,
   sendCommand,
   clearCommands,
+  clearNetworkCommands,
   addCommandListener,
   children,
 }) => {
@@ -64,6 +67,7 @@ const Provider: FunctionComponent<React.PropsWithChildren<Props>> = ({
         commands,
         sendCommand,
         clearCommands,
+        clearNetworkCommands,
         addCommandListener,
         isDispatchModalOpen,
         dispatchModalInitialAction,

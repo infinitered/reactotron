@@ -31,6 +31,7 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     selectedConnection,
     selectConnection,
     clearSelectedConnectionCommands,
+    clearNetworkCommands,
     serverStarted,
     serverStopped,
     connectionEstablished,
@@ -89,6 +90,7 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         commands={(selectedConnection || { commands: [] }).commands}
         sendCommand={sendCommand}
         clearCommands={clearSelectedConnectionCommands}
+        clearNetworkCommands={clearNetworkCommands}
         addCommandListener={addCommandListener}
       >
         {children}

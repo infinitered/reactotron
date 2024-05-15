@@ -12,6 +12,7 @@ function buildContextValues({ addCommandListener = null } = {}) {
     commands: [],
     sendCommand: jest.fn(),
     clearCommands: jest.fn(),
+    clearNetworkCommands: jest.fn(),
     addCommandListener: addCommandListener || jest.fn(),
     isDispatchModalOpen: false,
     dispatchModalInitialAction: "",

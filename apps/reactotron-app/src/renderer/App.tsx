@@ -15,6 +15,7 @@ import Overlay from "./pages/reactNative/Overlay"
 import Storybook from "./pages/reactNative/Storybook"
 import CustomCommands from "./pages/customCommands"
 import Help from "./pages/help"
+import NetworkPage from "./pages/network"
 
 const AppContainer = styled.div`
   position: absolute;
@@ -56,6 +57,8 @@ function App() {
 
                 {/* Timeline */}
                 <Route path="/timeline" element={<Timeline />} />
+                {/* Network */}
+                <Route path="/network" element={<NetworkPage />} />
 
                 {/* State */}
                 <Route path="/state/subscriptions" element={<Subscriptions />} />

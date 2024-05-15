@@ -6,6 +6,7 @@ import {
   CustomCommandsProvider,
   ReactNativeProvider,
   TimelineProvider,
+  NetworkProvider,
   StateProvider,
 } from "reactotron-core-ui"
 
@@ -15,6 +16,7 @@ interface Props {
   commands: Command[]
   sendCommand: (type: string, payload: any, clientId?: string) => void
   clearCommands: () => void
+  clearNetworkCommands: () => void
   addCommandListener: (callback: (command: Command) => void) => void
 }
 
@@ -23,6 +25,7 @@ const ReactotronBrain: FunctionComponent<PropsWithChildren<Props>> = ({
   commands,
   sendCommand,
   clearCommands,
+  clearNetworkCommands,
   addCommandListener,
   children,
 }) => {
@@ -31,17 +34,20 @@ const ReactotronBrain: FunctionComponent<PropsWithChildren<Props>> = ({
       commands={commands}
       sendCommand={sendCommand}
       clearCommands={clearCommands}
+      clearNetworkCommands={clearNetworkCommands}
       addCommandListener={addCommandListener}
     >
-      <TimelineProvider>
-        <StateProvider>
-          <CustomCommandsProvider>
-            <ReactNativeProvider>
-              <KeybindHandler>{children}</KeybindHandler>
-            </ReactNativeProvider>
-          </CustomCommandsProvider>
-        </StateProvider>
-      </TimelineProvider>
+      <NetworkProvider>
+        <TimelineProvider>
+          <StateProvider>
+            <CustomCommandsProvider>
+              <ReactNativeProvider>
+                <KeybindHandler>{children}</KeybindHandler>
+              </ReactNativeProvider>
+            </CustomCommandsProvider>
+          </StateProvider>
+        </TimelineProvider>
+      </NetworkProvider>
     </ReactotronProvider>
   )
 }
