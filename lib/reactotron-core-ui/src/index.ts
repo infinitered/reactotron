@@ -26,6 +26,7 @@ import DispatchActionModal from "./modals/DispatchActionModal"
 import SnapshotRenameModal from "./modals/SnapshotRenameModal"
 import SubscriptionAddModal from "./modals/SubscriptionAddModal"
 import TimelineFilterModal from "./modals/TimelineFilterModal"
+import DiagnosticModal from "./modals/DiagnosticModal"
 
 // Timeline Commands
 import timelineCommandResolver from "./timelineCommands"
@@ -50,6 +51,7 @@ export {
   SnapshotRenameModal,
   SubscriptionAddModal,
   TimelineFilterModal,
+  DiagnosticModal,
   Timestamp,
   TreeView,
   repairSerialization,
