@@ -1,7 +1,5 @@
 import { Menu, app, shell } from "electron"
-import Store from "electron-store"
-
-const configStore = new Store()
+import configStore from "../renderer/config"
 
 const isDarwin = process.platform === "darwin"
 

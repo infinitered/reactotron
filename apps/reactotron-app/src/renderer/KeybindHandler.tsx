@@ -2,6 +2,7 @@ import React, { useContext } from "react"
 import { GlobalHotKeys, KeyEventName } from "react-hotkeys"
 import { ReactotronContext, StateContext, TimelineContext } from "reactotron-core-ui"
 import LayoutContext from "./contexts/Layout"
+import { useAnalytics } from "./util/analyticsHelpers"
 
 const keyMap = {
   // Application wide
@@ -94,26 +95,33 @@ function KeybindHandler({ children }) {
   const { openDispatchModal, openSubscriptionModal, clearCommands } = useContext(ReactotronContext)
   const { openSearch, toggleSearch } = useContext(TimelineContext)
   const { createSnapshot } = useContext(StateContext)
+  const { sendKeyboardShortcutAnalyticsEvent } = useAnalytics()
 
   const handlers = {
     // Tab Navigation
     OpenHomeTab: () => {
       window.location.hash = "/"
+      sendKeyboardShortcutAnalyticsEvent("OpenHomeTab")
     },
     OpenTimelineTab: () => {
       window.location.hash = "/timeline"
+      sendKeyboardShortcutAnalyticsEvent("OpenTimelineTab")
     },
     OpenStateTab: () => {
       window.location.hash = "/state/subscriptions"
+      sendKeyboardShortcutAnalyticsEvent("OpenStateTab")
     },
     OpenReactNativeTab: () => {
       window.location.hash = "/native/overlay"
+      sendKeyboardShortcutAnalyticsEvent("OpenReactNativeTab")
     },
     OpenCustomCommandsTab: () => {
       window.location.hash = "/customCommands"
+      sendKeyboardShortcutAnalyticsEvent("OpenCustomCommandsTab")
     },
     OpenHelpTab: () => {
       window.location.hash = "/help"
+      sendKeyboardShortcutAnalyticsEvent("OpenHelpTab")
     },
 
     // Modals
@@ -128,11 +136,13 @@ function KeybindHandler({ children }) {
     },
     TakeSnapshot: () => {
       createSnapshot()
+      sendKeyboardShortcutAnalyticsEvent("TakeSnapshot")
     },
 
     // Miscellaneous
     ToggleSidebar: () => {
       toggleSideBar()
+      sendKeyboardShortcutAnalyticsEvent("ToggleSidebar")
     },
     ToggleSearch: () => {
       // If we're on the timeline page, toggle the search, otherwise switch to the timeline tab and open search
@@ -145,6 +155,7 @@ function KeybindHandler({ children }) {
     },
     ClearTimeline: () => {
       clearCommands()
+      sendKeyboardShortcutAnalyticsEvent("ClearTimeline")
     },
   }
 
