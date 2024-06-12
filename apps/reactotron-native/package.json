@@ -1,5 +1,9 @@
 {
   "name": "reactotron-native",
+  "description": "Reactotron Native",
+  "author": "Infinite Red <hello@infinite.red> (https://github.com/infinitered)",
+  "license": "MIT",
+  "homepage": "https://github.com/infinitered/reactotron#README.md",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -52,5 +56,13 @@
   },
   "engines": {
     "node": ">=16"
+  },
+  "codegenConfig": {
+    "name": "AppSpecs",
+    "type": "all",
+    "jsSrcsDir": "tm",
+    "android": {
+      "javaPackageName": "com.facebook.fbreact.specs"
+    }
   }
 }
