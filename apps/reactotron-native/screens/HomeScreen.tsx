@@ -21,7 +21,7 @@ export function HomeScreen() {
       {/* TODO: remove temp code testing websockets */}
       <XStack m="$4">
         <Button onPress={NativeSampleModule.createServer}>Start Server</Button>
-        <Button onPress={NativeSampleModule.createServer}>Stop Server</Button>
+        <Button onPress={NativeSampleModule.stopServer}>Stop Server</Button>
       </XStack>
     </YStack>
   )

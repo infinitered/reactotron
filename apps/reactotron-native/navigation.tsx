@@ -10,7 +10,7 @@ import {
 } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
-import { useColorScheme } from "react-native"
+import { Platform, useColorScheme } from "react-native"
 import { Button, H1, Text, XStack, YStack } from "tamagui"
 import { Footer } from "./components/Footer"
 import { SideBar } from "./components/SideBar"
@@ -77,9 +77,12 @@ export function Navigation() {
   return (
     <ThemeProvider value={scheme === "dark" ? DarkTheme : DefaultTheme}>
       <NavigationContainer linking={linking} ref={navigationRef}>
-        <XStack bg="$background" f={1}>
+        <XStack bg="$background" f={1} mt={Platform.select({ ios: "$5" })}>
           <SideBar />
-          <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={{ animationEnabled: false, headerShown: false }}
+          >
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Timeline" component={TimelineScreen} />
             <Stack.Screen name="Subscriptions" component={SubscriptionScreen} />
