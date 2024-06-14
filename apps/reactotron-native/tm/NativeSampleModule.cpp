@@ -146,12 +146,13 @@ class listener : public std::enable_shared_from_this<listener>
 {
 	net::io_context &ioc_;
 	tcp::acceptor acceptor_;
+	bool is_running_;
 
 public:
 	listener(
 			net::io_context &ioc,
 			tcp::endpoint endpoint)
-			: ioc_(ioc), acceptor_(ioc)
+			: ioc_(ioc), acceptor_(ioc), is_running_(false)
 	{
 		boost::beast::error_code ec;
 
@@ -191,6 +192,7 @@ public:
 	// Start accepting incoming connections
 	void run()
 	{
+		is_running_ = true;
 		do_accept();
 	}
 
@@ -198,7 +200,10 @@ public:
 	{
 		acceptor_.close();
 		ioc_.stop();
+		is_running_ = false;
 	}
+
+	bool is_running() const { return is_running_; }
 
 private:
 	void do_accept()
@@ -241,58 +246,81 @@ namespace facebook::react
 
   std::shared_ptr<listener> server;
 	net::io_context ioc;
+	std::vector<std::thread> v;
+	std::thread s_th;
 
 	void NativeSampleModule::createServer(jsi::Runtime &rt)
 	{
+		if (server && ioc.stopped())
+		{
+			ioc.restart();
+		}
+		else if (server && !ioc.stopped())
+		{
+			// server is already running.
+			return;
+		}
+
 		auto const address = net::ip::make_address("0.0.0.0");
 		auto const port = static_cast<unsigned short>(9999);
 		auto const threads = 1;
-		// The io_context is required for all I/O
-		// net::io_context ioc{threads};
-		// Create and launch a listening port
-		// std::make_shared<listener>(ioc, tcp::endpoint{address, port})->run();
 
 		server = std::make_shared<listener>(ioc, tcp::endpoint{address, port});
 		server->run();
 
-		// Run the I/O service on the requested number of threads
-		// std::vector<std::thread> v;
-		// v.reserve(threads - 1);
-		// for (auto i = threads - 1; i > 0; --i)
-		// 	v.emplace_back(
-		// 			[&ioc]
-		// 			{
-		// 				ioc.run();
-		// 			});
-		// ioc.run();
-
-		// Run the I/O service on the requested number of threads
-		std::vector<std::thread> v;
-		v.reserve(threads - 1);
-		for (unsigned i = 0; i < threads - 1; ++i)
+		s_th = std::thread([&]()
 		{
-			v.emplace_back([]
-										 { ioc.run(); });
-		}
+			for (unsigned i = 0; i < threads - 1; ++i)
+			{
+				v.emplace_back([] {
+					ioc.run();
+				});
+			}
 
-		ioc.run();
+			ioc.run();
 
-		// Join all threads
-		for (auto &t : v)
-		{
-			if (t.joinable())
-				t.join();
-		}
-
-		server.reset();
+			for (auto &t : v)
+			{
+				if (t.joinable()) {
+					t.join();
+				}
+			}
+		});
 	}
 
 	void NativeSampleModule::stopServer(jsi::Runtime &rt)
 	{
-		if (server != nullptr)
+		if (server != nullptr && server->is_running())
 		{
 			server->stop();
+
+			if (s_th.joinable())
+			{
+				s_th.join();
+			}
+
+			for (auto &t : v)
+			{
+				if (t.joinable()) {
+					t.join();
+				}
+			}
+
+			v.clear();
 		}
+	}
+
+	void NativeSampleModule::doSomething(jsi::Runtime &rt)
+	{
+		const std::string eventName = "something";
+		emitDeviceEvent(
+				rt,
+				eventName,
+			[jsInvoker = jsInvoker_](
+				jsi::Runtime& rt, std::vector<jsi::Value>& args) {
+			args.emplace_back(jsi::Value(1337));
+			args.emplace_back(jsi::String::createFromAscii(rt, "stringArgs"));
+			});
 	}
 
 } // namespace facebook::react

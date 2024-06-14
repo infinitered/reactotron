@@ -18,6 +18,7 @@ class NativeSampleModule : public NativeSampleModuleCxxSpec<NativeSampleModule> 
 
   void createServer(jsi::Runtime& rt);
   void stopServer(jsi::Runtime& rt);
+  void doSomething(jsi::Runtime& rt);
 };
 
 } // namespace facebook::react
