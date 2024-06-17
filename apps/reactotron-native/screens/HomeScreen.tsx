@@ -1,4 +1,5 @@
-import { Linking } from "react-native"
+import React from "react";
+import { Linking, DeviceEventEmitter } from "react-native"
 import { Button, H1, Image, Text, XStack, YStack } from "tamagui"
 import { reactotronLogo } from "../assets/images"
 import NativeSampleModule from "../tm/NativeSampleModule"
@@ -7,6 +8,16 @@ import NativeSampleModule from "../tm/NativeSampleModule"
 
 export function HomeScreen() {
   const openDocs = () => Linking.openURL("https://github.com/infinitered/reactotron")
+
+  React.useEffect(() => {
+    DeviceEventEmitter.removeAllListeners("something")
+    DeviceEventEmitter.addListener("something", (...args) => {
+      console.log({args})
+    })
+
+    return () => {
+    }
+  }, [])
 
   return (
     <YStack bg="$background" f={1} ai="center" jc="center">
@@ -21,7 +32,8 @@ export function HomeScreen() {
       {/* TODO: remove temp code testing websockets */}
       <XStack m="$4">
         <Button onPress={NativeSampleModule.createServer}>Start Server</Button>
-        <Button onPress={NativeSampleModule.createServer}>Stop Server</Button>
+        <Button onPress={NativeSampleModule.stopServer}>Stop Server</Button>
+        <Button onPress={NativeSampleModule.doSomething}>Do Something</Button>
       </XStack>
     </YStack>
   )
