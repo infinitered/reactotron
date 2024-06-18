@@ -928,7 +928,7 @@ PODS:
     - React-jsi (= 0.72.7)
     - React-logger (= 0.72.7)
     - React-perflogger (= 0.72.7)
-  - RNSVG (13.14.0):
+  - RNSVG (15.3.0):
     - RCT-Folly (= 2021.07.22.00)
     - RCTRequired
     - RCTTypeSafety
@@ -943,9 +943,9 @@ PODS:
     - React-utils
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNSVG/common (= 13.14.0)
+    - RNSVG/common (= 15.3.0)
     - Yoga
-  - RNSVG/common (13.14.0):
+  - RNSVG/common (15.3.0):
     - RCT-Folly (= 2021.07.22.00)
     - RCTRequired
     - RCTTypeSafety
@@ -1113,7 +1113,7 @@ SPEC CHECKSUMS:
   RCTTypeSafety: ddd5a095f035fd71a3ce304818453564e78b5477
   React: 437cf61741178cbc2b70f46ae3dfe4661c1bd6e5
   React-callinvoker: 33ecec664abaeee64ea52c9ad01eafdd77dbf2ad
-  React-Codegen: 9c881e4909fdcad11dc7d20a4fbf03b78733f01d
+  React-Codegen: 8efe9cf222e470007040a6978c1cb2413ec87db7
   React-Core: c24112047766addbf2ff520af3f48b0bf226ebef
   React-CoreModules: 7c2b8670db47a5f700810a125186b8d957eb9777
   React-cxxreact: 1b71364f03a1c24c289997153d48f0130c2c78bf
@@ -1144,7 +1144,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 771ec5d7d87f2ab12018fa03ef3dbfe324039332
   React-utils: 1737869e751b73c81d9380fb00735a50c941a97b
   ReactCommon: 9dfe5ae9b932d46ad8a47f27fae73307b94c7130
-  RNSVG: c67498fac461224d99955687217ca840cba83fd8
+  RNSVG: c713e2b53cb5522956ddc658bc6a5cd60629fd96
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Yoga: df33cd6b7928005dd2b18d9b0a9ccf962e806ce7
 
