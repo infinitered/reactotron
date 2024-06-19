@@ -6,4 +6,4 @@ export interface Spec extends TurboModule {
   doSomething: () => void
 }
 
-export default TurboModuleRegistry.getEnforcing<Spec>("NativeSampleModule")
+export default TurboModuleRegistry.getEnforcing<Spec>("NativeWebsocketModule")

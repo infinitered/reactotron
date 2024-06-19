@@ -3,7 +3,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/CoreModulesPlugins.h>
 #import <ReactCommon/RCTTurboModuleManager.h>
-#import <NativeSampleModule.h>
+#import <NativeWebsocketModule.h>
 
 @interface AppDelegate () <RCTTurboModuleManagerDelegate> {}
 @end
@@ -33,8 +33,8 @@
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:(const std::string &)name
                                                       jsInvoker:(std::shared_ptr<facebook::react::CallInvoker>)jsInvoker
 {
-  if (name == "NativeSampleModule") {
-    return std::make_shared<facebook::react::NativeSampleModule>(jsInvoker);
+  if (name == "NativeWebsocketModule") {
+    return std::make_shared<facebook::react::NativeWebsocketModule>(jsInvoker);
   }
   return nullptr;
 }

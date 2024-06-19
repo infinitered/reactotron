@@ -1,4 +1,4 @@
-#include "NativeSampleModule.h"
+#include "NativeWebsocketModule.h"
 #include <boost/beast/core.hpp>
 #include <boost/beast/websocket.hpp>
 #include <boost/asio/dispatch.hpp>
@@ -236,15 +236,15 @@ private:
 namespace facebook::react
 {
 
-  NativeSampleModule::NativeSampleModule(std::shared_ptr<CallInvoker> jsInvoker)
-      : NativeSampleModuleCxxSpec(std::move(jsInvoker)) {}
+	NativeWebsocketModule::NativeWebsocketModule(std::shared_ptr<CallInvoker> jsInvoker)
+			: NativeWebsocketModuleCxxSpec(std::move(jsInvoker)) {}
 
-  std::shared_ptr<listener> server;
+	std::shared_ptr<listener> server;
 	net::io_context ioc;
 	std::vector<std::thread> v;
 	std::thread s_th;
 
-	void NativeSampleModule::createServer(jsi::Runtime &rt)
+	void NativeWebsocketModule::createServer(jsi::Runtime &rt)
 	{
 		if (server && ioc.stopped())
 		{
@@ -264,7 +264,7 @@ namespace facebook::react
 		server->run();
 
 		s_th = std::thread([&]()
-		{
+											 {
 			for (unsigned i = 0; i < threads - 1; ++i)
 			{
 				v.emplace_back([] {
@@ -279,11 +279,10 @@ namespace facebook::react
 				if (t.joinable()) {
 					t.join();
 				}
-			}
-		});
+			} });
 	}
 
-	void NativeSampleModule::stopServer(jsi::Runtime &rt)
+	void NativeWebsocketModule::stopServer(jsi::Runtime &rt)
 	{
 		if (server != nullptr && server->is_running())
 		{
@@ -296,7 +295,8 @@ namespace facebook::react
 
 			for (auto &t : v)
 			{
-				if (t.joinable()) {
+				if (t.joinable())
+				{
 					t.join();
 				}
 			}
@@ -305,17 +305,18 @@ namespace facebook::react
 		}
 	}
 
-	void NativeSampleModule::doSomething(jsi::Runtime &rt)
+	void NativeWebsocketModule::doSomething(jsi::Runtime &rt)
 	{
 		const std::string eventName = "something";
 		emitDeviceEvent(
 				rt,
 				eventName,
-			[jsInvoker = jsInvoker_](
-				jsi::Runtime& rt, std::vector<jsi::Value>& args) {
-			args.emplace_back(jsi::Value(1337));
-			args.emplace_back(jsi::String::createFromAscii(rt, "stringArgs"));
-			});
+				[jsInvoker = jsInvoker_](
+						jsi::Runtime &rt, std::vector<jsi::Value> &args)
+				{
+					args.emplace_back(jsi::Value(1337));
+					args.emplace_back(jsi::String::createFromAscii(rt, "stringArgs"));
+				});
 	}
 
 } // namespace facebook::react
