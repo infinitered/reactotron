@@ -1,4 +1,4 @@
-#include "NativeSampleModule.h"
+#include "NativeWebsocketModule.h"
 #include <boost/beast/core.hpp>
 #include <boost/beast/websocket.hpp>
 #include <boost/asio/dispatch.hpp>
@@ -236,20 +236,15 @@ private:
 namespace facebook::react
 {
 
-  NativeSampleModule::NativeSampleModule(std::shared_ptr<CallInvoker> jsInvoker)
-      : NativeSampleModuleCxxSpec(std::move(jsInvoker)) {}
+	NativeWebsocketModule::NativeWebsocketModule(std::shared_ptr<CallInvoker> jsInvoker)
+			: NativeWebsocketModuleCxxSpec(std::move(jsInvoker)) {}
 
-  std::string NativeSampleModule::reverseString(jsi::Runtime &rt, std::string input)
-  {
-    return std::string(input.rbegin(), input.rend());
-  }
-
-  std::shared_ptr<listener> server;
+	std::shared_ptr<listener> server;
 	net::io_context ioc;
 	std::vector<std::thread> v;
 	std::thread s_th;
 
-	void NativeSampleModule::createServer(jsi::Runtime &rt)
+	void NativeWebsocketModule::createServer(jsi::Runtime &rt, ServerOptions const &options)
 	{
 		if (server && ioc.stopped())
 		{
@@ -261,15 +256,15 @@ namespace facebook::react
 			return;
 		}
 
-		auto const address = net::ip::make_address("0.0.0.0");
-		auto const port = static_cast<unsigned short>(9999);
-		auto const threads = 1;
+		auto const address = net::ip::make_address(options.host.value_or("0.0.0.0"));
+		auto const port = static_cast<unsigned short>(options.port.value_or(9090));
+		auto const threads = options.threads.value_or(1);
 
 		server = std::make_shared<listener>(ioc, tcp::endpoint{address, port});
 		server->run();
 
 		s_th = std::thread([&]()
-		{
+											 {
 			for (unsigned i = 0; i < threads - 1; ++i)
 			{
 				v.emplace_back([] {
@@ -284,11 +279,10 @@ namespace facebook::react
 				if (t.joinable()) {
 					t.join();
 				}
-			}
-		});
+			} });
 	}
 
-	void NativeSampleModule::stopServer(jsi::Runtime &rt)
+	void NativeWebsocketModule::stopServer(jsi::Runtime &rt)
 	{
 		if (server != nullptr && server->is_running())
 		{
@@ -301,7 +295,8 @@ namespace facebook::react
 
 			for (auto &t : v)
 			{
-				if (t.joinable()) {
+				if (t.joinable())
+				{
 					t.join();
 				}
 			}
@@ -310,17 +305,18 @@ namespace facebook::react
 		}
 	}
 
-	void NativeSampleModule::doSomething(jsi::Runtime &rt)
+	void NativeWebsocketModule::doSomething(jsi::Runtime &rt)
 	{
 		const std::string eventName = "something";
 		emitDeviceEvent(
 				rt,
 				eventName,
-			[jsInvoker = jsInvoker_](
-				jsi::Runtime& rt, std::vector<jsi::Value>& args) {
-			args.emplace_back(jsi::Value(1337));
-			args.emplace_back(jsi::String::createFromAscii(rt, "stringArgs"));
-			});
+				[jsInvoker = jsInvoker_](
+						jsi::Runtime &rt, std::vector<jsi::Value> &args)
+				{
+					args.emplace_back(jsi::Value(1337));
+					args.emplace_back(jsi::String::createFromAscii(rt, "stringArgs"));
+				});
 	}
 
 } // namespace facebook::react
