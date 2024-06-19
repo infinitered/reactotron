@@ -30,7 +30,9 @@ export function HomeScreen() {
 
       {/* TODO: remove temp code testing websockets */}
       <XStack m="$4">
-        <Button onPress={NativeWebsocketModule.createServer}>Start Server</Button>
+        <Button onPress={() => NativeWebsocketModule.createServer({ port: 9999 })}>
+          Start Server
+        </Button>
         <Button onPress={NativeWebsocketModule.stopServer}>Stop Server</Button>
         <Button onPress={NativeWebsocketModule.doSomething}>Do Something</Button>
       </XStack>

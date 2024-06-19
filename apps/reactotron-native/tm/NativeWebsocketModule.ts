@@ -1,7 +1,13 @@
 import { TurboModule, TurboModuleRegistry } from "react-native"
 
+export type ServerOptions = {
+  host?: string
+  port?: number
+  threads?: number
+}
+
 export interface Spec extends TurboModule {
-  createServer: () => void
+  createServer: (options: ServerOptions) => void
   stopServer: () => void
   doSomething: () => void
 }

@@ -11,12 +11,24 @@
 namespace facebook::react
 {
 
+  using ServerOptions = NativeWebsocketModuleBaseServerOptions<
+    std::optional<std::string>,
+    std::optional<int32_t>,
+    std::optional<int32_t>>;
+
+  template <>
+  struct Bridging<ServerOptions>
+      : NativeWebsocketModuleBaseServerOptionsBridging<
+            std::optional<std::string>,
+            std::optional<int32_t>,
+            std::optional<int32_t>> {};
+
   class NativeWebsocketModule : public NativeWebsocketModuleCxxSpec<NativeWebsocketModule>
   {
   public:
     NativeWebsocketModule(std::shared_ptr<CallInvoker> jsInvoker);
 
-    void createServer(jsi::Runtime &rt);
+    void createServer(jsi::Runtime &rt, const ServerOptions &options);
     void stopServer(jsi::Runtime &rt);
     void doSomething(jsi::Runtime &rt);
   };

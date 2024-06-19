@@ -244,7 +244,7 @@ namespace facebook::react
 	std::vector<std::thread> v;
 	std::thread s_th;
 
-	void NativeWebsocketModule::createServer(jsi::Runtime &rt)
+	void NativeWebsocketModule::createServer(jsi::Runtime &rt, ServerOptions const &options)
 	{
 		if (server && ioc.stopped())
 		{
@@ -256,9 +256,9 @@ namespace facebook::react
 			return;
 		}
 
-		auto const address = net::ip::make_address("0.0.0.0");
-		auto const port = static_cast<unsigned short>(9999);
-		auto const threads = 1;
+		auto const address = net::ip::make_address(options.host.value_or("0.0.0.0"));
+		auto const port = static_cast<unsigned short>(options.port.value_or(9090));
+		auto const threads = options.threads.value_or(1);
 
 		server = std::make_shared<listener>(ioc, tcp::endpoint{address, port});
 		server->run();
