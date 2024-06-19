@@ -14,8 +14,6 @@ class NativeSampleModule : public NativeSampleModuleCxxSpec<NativeSampleModule> 
  public:
   NativeSampleModule(std::shared_ptr<CallInvoker> jsInvoker);
 
-  std::string reverseString(jsi::Runtime& rt, std::string input);
-
   void createServer(jsi::Runtime& rt);
   void stopServer(jsi::Runtime& rt);
   void doSomething(jsi::Runtime& rt);
