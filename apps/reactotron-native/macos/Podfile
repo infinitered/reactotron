@@ -7,9 +7,6 @@ target 'reactotron-macOS' do
   platform :macos, '10.15'
   use_native_modules!
 
-  # Flags change depending on the env values.
-  flags = get_default_flags()
-
   use_react_native!(
     :path => '../../../node_modules/react-native-macos',
     :hermes_enabled => false,
@@ -20,8 +17,11 @@ target 'reactotron-macOS' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  if ENV['RCT_NEW_ARCH_ENABLED'] == '1'
+    pod 'AppTurboModules', :path => "./../tm"
+  end
+
   post_install do |installer|
     react_native_post_install(installer)
-    __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
 end

@@ -1,0 +1,114 @@
+diff --git a/apple/Elements/RNSVGSvgView.h b/apple/Elements/RNSVGSvgView.h
+index e589dad316576084e54d80b2b7962e85dde75487..4c0e6a3d99885dab58c33f31b69fbe1da13a7667 100644
+--- a/apple/Elements/RNSVGSvgView.h
++++ b/apple/Elements/RNSVGSvgView.h
+@@ -12,18 +12,9 @@
+ #import "RNSVGPainter.h"
+ #import "RNSVGVBMOS.h"
+ 
+-#ifdef RCT_NEW_ARCH_ENABLED
+-#import <React/RCTViewComponentView.h>
+-#endif // RCT_NEW_ARCH_ENABLED
+-
+ @class RNSVGNode;
+ 
+-@interface RNSVGSvgView :
+-#ifdef RCT_NEW_ARCH_ENABLED
+-    RCTViewComponentView <RNSVGContainer>
+-#else
+-    RNSVGView <RNSVGContainer>
+-#endif // RCT_NEW_ARCH_ENABLED
++@interface RNSVGSvgView : RNSVGView <RNSVGContainer>
+ 
+ @property (nonatomic, strong) RNSVGLength *bbWidth;
+ @property (nonatomic, strong) RNSVGLength *bbHeight;
+diff --git a/apple/RNSVGNode.h b/apple/RNSVGNode.h
+index 3c65e102edf38a7cf5badf160e1e530b5c6f934d..1e6ab43841b4613f44b0b8789e712cdec386259b 100644
+--- a/apple/RNSVGNode.h
++++ b/apple/RNSVGNode.h
+@@ -12,10 +12,6 @@
+ #import <React/RCTPointerEvents.h>
+ #import <React/UIView+React.h>
+ 
+-#ifdef RCT_NEW_ARCH_ENABLED
+-#import <React/RCTViewComponentView.h>
+-#endif // RCT_NEW_ARCH_ENABLED
+-
+ @class RNSVGGroup;
+ 
+ /**
+@@ -23,12 +19,7 @@
+  ＊interfaces for all non-definition nodes.
+  */
+ 
+-@interface RNSVGNode :
+-#ifdef RCT_NEW_ARCH_ENABLED
+-    RCTViewComponentView
+-#else
+-    RNSVGView
+-#endif // RCT_NEW_ARCH_ENABLED
++@interface RNSVGNode : RNSVGView
+ /*
+  N[1/Sqrt[2], 36]
+  The inverse of the square root of 2.
+diff --git a/apple/RNSVGUIKit.h b/apple/RNSVGUIKit.h
+index 3562fe468d95bbdbf4de3d9be4099430500aac0e..7fa2fd543d34186ef9cf2724041bd9abeb2aabe7 100644
+--- a/apple/RNSVGUIKit.h
++++ b/apple/RNSVGUIKit.h
+@@ -1,6 +1,10 @@
+ // Most (if not all) of this file could probably go away once react-native-macos's version of RCTUIKit.h makes its way
+ // upstream. https://github.com/microsoft/react-native-macos/issues/242
+ 
++#ifdef RCT_NEW_ARCH_ENABLED
++#import <React/RCTViewComponentView.h>
++#endif // RCT_NEW_ARCH_ENABLED
++
+ #if !TARGET_OS_OSX
+ 
+ #import <UIKit/UIKit.h>
+@@ -8,7 +12,11 @@
+ #define RNSVGColor UIColor
+ #define RNSVGPlatformView UIView
+ #define RNSVGTextView UILabel
++#ifdef RCT_NEW_ARCH_ENABLED
++#define RNSVGView RCTViewComponentView
++#else
+ #define RNSVGView UIView
++#endif // RCT_NEW_ARCH_ENABLED
+ 
+ #else // TARGET_OS_OSX [
+ 
+@@ -29,7 +37,16 @@ extern "C" {
+ #define RNSVGPlatformView NSView
+ #define RNSVGTextView NSTextView
+ 
+-@interface RNSVGView : RCTUIView
++@interface RNSVGColor (CGColor)
++- (NSColor *)CGColor;
++@end
++
++@interface RNSVGView : 
++#ifdef RCT_NEW_ARCH_ENABLED
++    RCTViewComponentView
++#else
++    RCTUIView
++#endif // RCT_NEW_ARCH_ENABLED
+ 
+ @property CGPoint center;
+ @property (nonatomic, strong) RNSVGColor *tintColor;
+diff --git a/apple/Utils/RNSVGFabricConversions.h b/apple/Utils/RNSVGFabricConversions.h
+index 0e0f521a3c9ad84a952fa72d0fa8dfeeeb9ea522..1b16154c9fe485fb1507519fbd8ae36165641fb9 100644
+--- a/apple/Utils/RNSVGFabricConversions.h
++++ b/apple/Utils/RNSVGFabricConversions.h
+@@ -127,7 +127,11 @@ void setCommonNodeProps(const T &nodeProps, RNSVGNode *node)
+     node.pointerEvents = RCTPointerEventsUnspecified;
+   }
+   node.accessibilityIdentifier = RCTNSStringFromStringNilIfEmpty(nodeProps.testId);
++#if !TARGET_OS_OSX
+   node.isAccessibilityElement = nodeProps.accessible;
++#else
++  node.accessibilityElement = nodeProps.accessible;
++#endif // !TARGET_OS_OSX
+   node.accessibilityLabel = RCTNSStringFromStringNilIfEmpty(nodeProps.accessibilityLabel);
+ }
+ 
