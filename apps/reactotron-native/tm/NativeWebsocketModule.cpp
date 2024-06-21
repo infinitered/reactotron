@@ -31,9 +31,15 @@ class session : public std::enable_shared_from_this<session>
 {
 	websocket::stream<boost::beast::tcp_stream> ws_;
 	boost::beast::flat_buffer buffer_;
+	// std::function<void(const std::string &)> emit_;
 
 public:
 	// Take ownership of the socket
+	// explicit session(tcp::socket &&socket,
+	// 								 std::function<void(const std::string &)> emit)
+	// 		: ws_(std::move(socket), emit_(emit))
+	// {
+	// }
 	explicit session(tcp::socket &&socket)
 			: ws_(std::move(socket))
 	{
@@ -119,6 +125,9 @@ public:
 				boost::beast::bind_front_handler(
 						&session::on_write,
 						shared_from_this()));
+
+		// emit_("message", [&buffer = buffer_](jsi::Runtime &rt, std::vector<jsi::Value> &args)
+		// 			{ args.emplace_back(jsi::String::createFromUtf8(rt, boost::beast::buffers_to_string(buffer.data()))); });
 	}
 
 	void
@@ -147,12 +156,14 @@ class listener : public std::enable_shared_from_this<listener>
 	net::io_context &ioc_;
 	tcp::acceptor acceptor_;
 	bool is_running_;
+	std::function<void(const std::string &)> emit_;
 
 public:
 	listener(
 			net::io_context &ioc,
-			tcp::endpoint endpoint)
-			: ioc_(ioc), acceptor_(ioc), is_running_(false)
+			tcp::endpoint endpoint,
+			std::function<void(const std::string &)> emit)
+			: ioc_(ioc), acceptor_(ioc), emit_(emit), is_running_(false)
 	{
 		boost::beast::error_code ec;
 
@@ -161,6 +172,7 @@ public:
 		if (ec)
 		{
 			fail(ec, "open");
+			emit_("error");
 			return;
 		}
 
@@ -169,6 +181,7 @@ public:
 		if (ec)
 		{
 			fail(ec, "set_option");
+			emit_("error");
 			return;
 		}
 
@@ -177,6 +190,7 @@ public:
 		if (ec)
 		{
 			fail(ec, "bind");
+			emit_("error");
 			return;
 		}
 
@@ -185,6 +199,7 @@ public:
 		if (ec)
 		{
 			fail(ec, "listen");
+			emit_("error");
 			return;
 		}
 	}
@@ -201,6 +216,7 @@ public:
 		acceptor_.close();
 		ioc_.stop();
 		is_running_ = false;
+		emit_("close");
 	}
 
 	bool is_running() const { return is_running_; }
@@ -221,11 +237,13 @@ private:
 		if (ec)
 		{
 			fail(ec, "accept");
+			emit_("error");
 		}
 		else
 		{
 			// Create the session and run it
 			std::make_shared<session>(std::move(socket))->run();
+			emit_("connection");
 		}
 
 		// Accept another connection
@@ -264,7 +282,12 @@ namespace facebook::react
 		auto const port = static_cast<unsigned short>(9090);
 		auto const threads = 1;
 
-		server = std::make_shared<listener>(ioc, tcp::endpoint{address, port});
+		auto emitEvent = [&](const std::string &eventName, TurboModule::ArgFactory argFactory = nullptr)
+		{
+			emitDeviceEvent(rt, eventName, argFactory);
+		};
+
+		server = std::make_shared<listener>(ioc, tcp::endpoint{address, port}, emitEvent);
 		server->run();
 
 		s_th = std::thread([&]()

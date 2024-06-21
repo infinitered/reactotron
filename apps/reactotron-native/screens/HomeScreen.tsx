@@ -10,12 +10,21 @@ export function HomeScreen() {
   const openDocs = () => Linking.openURL("https://github.com/infinitered/reactotron")
 
   React.useEffect(() => {
-    DeviceEventEmitter.removeAllListeners("something")
     DeviceEventEmitter.addListener("something", (...args) => {
-      console.log({ args })
+      console.log("something", { args })
+    })
+    DeviceEventEmitter.addListener("connection", (...args) => {
+      console.log("connection", { args })
+    })
+    DeviceEventEmitter.addListener("close", (...args) => {
+      console.log("close", { args })
     })
 
-    return () => {}
+    return () => {
+      DeviceEventEmitter.removeAllListeners("something")
+      DeviceEventEmitter.removeAllListeners("connection")
+      DeviceEventEmitter.removeAllListeners("close")
+    }
   }, [])
 
   return (
