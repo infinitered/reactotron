@@ -52,7 +52,8 @@
     "electron-webpack": "patch:electron-webpack@npm%3A2.8.2#./.yarn/patches/electron-webpack-npm-2.8.2-1bda600605.patch",
     "react-hotkeys": "patch:react-hotkeys@npm%3A2.0.0#./.yarn/patches/react-hotkeys-npm-2.0.0-8e6c50bd05.patch",
     "webpack": "patch:webpack@npm%3A4.47.0#./.yarn/patches/webpack-npm-4.47.0-42e477a08c.patch",
-    "react-native-svg@^15.3.0": "patch:react-native-svg@npm%3A15.3.0#./.yarn/patches/react-native-svg-npm-15.3.0-4e9ff92620.patch"
+    "react-native-svg@^15.3.0": "patch:react-native-svg@npm%3A15.3.0#./.yarn/patches/react-native-svg-npm-15.3.0-4e9ff92620.patch",
+    "react-native-gesture-handler@2.16.0": "patch:react-native-gesture-handler@npm%3A2.16.0#./.yarn/patches/react-native-gesture-handler-npm-2.16.0-d209f0f08f.patch"
   },
   "scripts": {
     "postinstall": "sh ./scripts/postinstall.sh",

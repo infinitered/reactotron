@@ -23,6 +23,7 @@
     "immer": "^10.1.1",
     "react": "18.2.0",
     "react-native": "0.73.8",
+    "react-native-gesture-handler": "2.16.0",
     "react-native-macos": "0.73.32",
     "react-native-svg": "^15.3.0",
     "react-native-windows": "0.73.15",

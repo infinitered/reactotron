@@ -4045,6 +4045,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@egjs/hammerjs@npm:^2.0.17":
+  version: 2.0.17
+  resolution: "@egjs/hammerjs@npm:2.0.17"
+  dependencies:
+    "@types/hammerjs": ^2.0.36
+  checksum: 8945137cec5837edd70af3f2e0ea621543eb0aa3b667e6269ec6485350f4d120c2434b37c7c30b1cf42a65275dd61c1f24626749c616696d3956ac0c008c4766
+  languageName: node
+  linkType: hard
+
 "@electron/asar@npm:^3.2.1":
   version: 3.2.5
   resolution: "@electron/asar@npm:3.2.5"
@@ -9745,6 +9754,13 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: c3070ccdc9ca0f40df747bced1c96c71a61992d6f7c767e8fd24bb6a3c2de26e8b84135ede000b7e79db530a23e7e88dcd9db60eee6395d0f4ce1dae91369dd4
+  languageName: node
+  linkType: hard
+
+"@types/hammerjs@npm:^2.0.36":
+  version: 2.0.45
+  resolution: "@types/hammerjs@npm:2.0.45"
+  checksum: 40a29067c485a2a1f4345718104218fcf769adb1dbe091cdb6f679b3293dfa0798b207eb498ee7fd79ae8664c999117738fa0c01753f7465a639128f38c3ff5b
   languageName: node
   linkType: hard
 
@@ -29590,6 +29606,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-gesture-handler@npm:2.16.0":
+  version: 2.16.0
+  resolution: "react-native-gesture-handler@npm:2.16.0"
+  dependencies:
+    "@egjs/hammerjs": ^2.0.17
+    hoist-non-react-statics: ^3.3.0
+    invariant: ^2.2.4
+    lodash: ^4.17.21
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 44338af64e4bd2ec2ad7e7f417c24258bcca4885dc70935735aa481c3689ca89bf99562c379d0f0ccab1c6e31621ffcdfe170c92c76f0a0860730b892363d0c1
+  languageName: node
+  linkType: hard
+
+"react-native-gesture-handler@patch:react-native-gesture-handler@npm%3A2.16.0#./.yarn/patches/react-native-gesture-handler-npm-2.16.0-d209f0f08f.patch::locator=reactotron%40workspace%3A.":
+  version: 2.16.0
+  resolution: "react-native-gesture-handler@patch:react-native-gesture-handler@npm%3A2.16.0#./.yarn/patches/react-native-gesture-handler-npm-2.16.0-d209f0f08f.patch::version=2.16.0&hash=1e452b&locator=reactotron%40workspace%3A."
+  dependencies:
+    "@egjs/hammerjs": ^2.0.17
+    hoist-non-react-statics: ^3.3.0
+    invariant: ^2.2.4
+    lodash: ^4.17.21
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 913772589bf4abb318815f035b5b88a1202d6e38bc1a169c59fab5eeb124cf51ecd5ba667036a557e79cc21070f45267bd4f8648875156187140cf5ffbb518e7
+  languageName: node
+  linkType: hard
+
 "react-native-macos@npm:0.73.32":
   version: 0.73.32
   resolution: "react-native-macos@npm:0.73.32"
@@ -30537,6 +30585,7 @@ __metadata:
     prettier: 2.8.8
     react: 18.2.0
     react-native: 0.73.8
+    react-native-gesture-handler: 2.16.0
     react-native-macos: 0.73.32
     react-native-svg: ^15.3.0
     react-native-windows: 0.73.15

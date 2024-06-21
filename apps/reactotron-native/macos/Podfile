@@ -1,3 +1,5 @@
+ENV['RCT_NEW_ARCH_ENABLED'] = '1'
+
 node_modules_path = "../../../node_modules"
 react_native_path = "#{node_modules_path}/react-native-macos"
 
@@ -16,7 +18,7 @@ target 'reactotron-native-macOS' do
   use_react_native!(
     :path => react_native_path,
     :hermes_enabled => false,
-    :fabric_enabled => ENV['RCT_NEW_ARCH_ENABLED'] == '1',
+    :fabric_enabled => ENV['RCT_NEW_ARCH_ENABLED'] = '1',
     # Flipper is not compatible w/ macOS
     :flipper_configuration => FlipperConfiguration.disabled,
     # An absolute path to your application root.

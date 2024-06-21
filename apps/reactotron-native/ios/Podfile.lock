@@ -1114,6 +1114,25 @@ PODS:
     - React-jsi (= 0.73.8)
     - React-logger (= 0.73.8)
     - React-perflogger (= 0.73.8)
+  - RNGestureHandler (2.17.1):
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2022.05.16.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNSVG (15.3.0):
     - glog
     - hermes-engine
@@ -1211,6 +1230,7 @@ DEPENDENCIES:
   - React-runtimescheduler (from `../../../node_modules/react-native/ReactCommon/react/renderer/runtimescheduler`)
   - React-utils (from `../../../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../../../node_modules/react-native/ReactCommon`)
+  - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler`)
   - RNSVG (from `../../../node_modules/react-native-svg`)
   - Yoga (from `../../../node_modules/react-native/ReactCommon/yoga`)
 
@@ -1324,6 +1344,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native/ReactCommon/react/utils"
   ReactCommon:
     :path: "../../../node_modules/react-native/ReactCommon"
+  RNGestureHandler:
+    :path: "../../../node_modules/react-native-gesture-handler"
   RNSVG:
     :path: "../../../node_modules/react-native-svg"
   Yoga:
@@ -1383,6 +1405,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 1c40cfe98dcc7b06354d96a1cd8ee10cbc4cc797
   React-utils: 4cc2ba652f5df1c8f0461d4ae9e3ee474c1354ea
   ReactCommon: 1da3fc14d904883c46327b3322325eebf60a720a
+  RNGestureHandler: d1fe7ed46973f0003dd403336dde5d8d7b5f2d48
   RNSVG: b2da8e139fed7593317b3cde7c3fb7cb1756265b
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: e5b887426cee15d2a326bdd34afc0282fc0486ad

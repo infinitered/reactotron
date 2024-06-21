@@ -1,3 +1,5 @@
+ENV['RCT_NEW_ARCH_ENABLED'] = '1'
+
 # Resolve react_native_pods.rb with node to allow for hoisting
 require Pod::Executable.execute_command('node', ['-p',
   'require.resolve(

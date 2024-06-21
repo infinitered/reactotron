@@ -23,6 +23,13 @@ const config = {
       new RegExp(`${rnwPath}/target/.*`),
       /.*\.ProjectImports\.zip/,
     ]),
+    extraNodeModules: {
+      // This is needed for navigation but not suppported on macOS and also useless on macOS so we'll just stub it out
+      "react-native-safe-area-context": path.resolve(
+        __dirname,
+        "stubs/react-native-safe-area-context"
+      ),
+    },
   },
   transformer: {
     getTransformOptions: async () => ({

@@ -1066,6 +1066,25 @@ PODS:
     - React-jsi (= 0.73.32)
     - React-logger (= 0.73.32)
     - React-perflogger (= 0.73.32)
+  - RNGestureHandler (2.16.0):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNSVG (15.3.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
@@ -1162,6 +1181,7 @@ DEPENDENCIES:
   - React-runtimescheduler (from `../../../node_modules/react-native-macos/ReactCommon/react/renderer/runtimescheduler`)
   - React-utils (from `../../../node_modules/react-native-macos/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../../../node_modules/react-native-macos/ReactCommon`)
+  - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler`)
   - RNSVG (from `../../../node_modules/react-native-svg`)
   - SocketRocket (from `../../../node_modules/react-native-macos/third-party-podspecs/SocketRocket.podspec`)
   - Yoga (from `../../../node_modules/react-native-macos/ReactCommon/yoga`)
@@ -1267,6 +1287,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-macos/ReactCommon/react/utils"
   ReactCommon:
     :path: "../../../node_modules/react-native-macos/ReactCommon"
+  RNGestureHandler:
+    :path: "../../../node_modules/react-native-gesture-handler"
   RNSVG:
     :path: "../../../node_modules/react-native-svg"
   SocketRocket:
@@ -1325,6 +1347,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 508ec4adf3a3a5ffb7b3d10d1f236a2a9022ce5a
   React-utils: 52afeb88f90c5a40fa42a145df7877595302f6cf
   ReactCommon: ddcf7d2e41fbb7d047c169f7c56364e69f5036a8
+  RNGestureHandler: afb07c82c4f50a993dfd2fb92b76f5e6354fd445
   RNSVG: 769c1aa16710e0727290d70825eeb9d5dfcf04a7
   SocketRocket: f6c6249082c011e6de2de60ed641ef8bbe0cfac9
   Yoga: cb2862549a9ebfea848ca356ad5e9b72ea57387a
