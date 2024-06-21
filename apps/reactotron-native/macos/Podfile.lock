@@ -1,4 +1,23 @@
 PODS:
+  - AppTurboModules (0.0.1):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - boost (1.83.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.73.32)
@@ -1090,6 +1109,7 @@ PODS:
   - Yoga (1.14.0)
 
 DEPENDENCIES:
+  - AppTurboModules (from `./../tm`)
   - boost (from `../../../node_modules/react-native-macos/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../../../node_modules/react-native-macos/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../../../node_modules/react-native-macos/Libraries/FBLazyVector`)
@@ -1147,6 +1167,8 @@ DEPENDENCIES:
   - Yoga (from `../../../node_modules/react-native-macos/ReactCommon/yoga`)
 
 EXTERNAL SOURCES:
+  AppTurboModules:
+    :path: "./../tm"
   boost:
     :podspec: "../../../node_modules/react-native-macos/third-party-podspecs/boost.podspec"
   DoubleConversion:
@@ -1253,6 +1275,7 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-macos/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  AppTurboModules: a89fb1d16d50298e8003335142f7bebd57ff2cf8
   boost: 0686b6af8cbd638c784fea5afb789be66699823c
   DoubleConversion: ca54355f8932558971f6643521d62b9bc8231cee
   FBLazyVector: ec230eb0579ecfb1f0e0315a1f97161c21098b0e
@@ -1306,6 +1329,6 @@ SPEC CHECKSUMS:
   SocketRocket: f6c6249082c011e6de2de60ed641ef8bbe0cfac9
   Yoga: cb2862549a9ebfea848ca356ad5e9b72ea57387a
 
-PODFILE CHECKSUM: 39e509616cf5cdcc75645d9f392d7cccad01760b
+PODFILE CHECKSUM: 9157235f91d28001c3cf55949d9ecb3c0fb4140e
 
 COCOAPODS: 1.14.3

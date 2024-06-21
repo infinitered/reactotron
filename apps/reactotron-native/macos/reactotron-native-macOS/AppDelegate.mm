@@ -1,6 +1,12 @@
 #import "AppDelegate.h"
 
 #import <React/RCTBundleURLProvider.h>
+#import <React/CoreModulesPlugins.h>
+#import <ReactCommon/RCTTurboModuleManager.h>
+#import <NativeWebsocketModule.h>
+
+@interface AppDelegate () <RCTTurboModuleManagerDelegate> {}
+@end
 
 @implementation AppDelegate
 
@@ -15,6 +21,11 @@
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
+{
+  return [self getBundleURL];
+}
+
+- (NSURL *)getBundleURL
 {
 #if DEBUG
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
@@ -35,6 +46,16 @@
 #else
   return false;
 #endif
+}
+
+#pragma mark RCTTurboModuleManagerDelegate
+- (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:(const std::string &)name
+                                                      jsInvoker:(std::shared_ptr<facebook::react::CallInvoker>)jsInvoker
+{
+  if (name == "NativeWebsocketModule") {
+    return std::make_shared<facebook::react::NativeWebsocketModule>(jsInvoker);
+  }
+  return nullptr;
 }
 
 @end

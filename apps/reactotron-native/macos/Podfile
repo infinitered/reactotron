@@ -23,6 +23,10 @@ target 'reactotron-native-macOS' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  if ENV['RCT_NEW_ARCH_ENABLED'] == '1'
+    pod 'AppTurboModules', :path => "./../tm"
+  end
+
   post_install do |installer|
     react_native_post_install(installer, react_native_path)
   end
