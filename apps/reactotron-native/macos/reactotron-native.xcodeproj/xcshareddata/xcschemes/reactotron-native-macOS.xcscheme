@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "514201482437B4B30078DB4F"
-               BuildableName = "reactotron.app"
-               BlueprintName = "reactotron-macOS"
-               ReferencedContainer = "container:reactotron.xcodeproj">
+               BuildableName = "reactotron-native.app"
+               BlueprintName = "reactotron-native-macOS"
+               ReferencedContainer = "container:reactotron-native.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "514201482437B4B30078DB4F"
-            BuildableName = "reactotron.app"
-            BlueprintName = "reactotron-macOS"
-            ReferencedContainer = "container:reactotron.xcodeproj">
+            BuildableName = "reactotron-native.app"
+            BlueprintName = "reactotron-native-macOS"
+            ReferencedContainer = "container:reactotron-native.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "514201482437B4B30078DB4F"
-            BuildableName = "reactotron.app"
-            BlueprintName = "reactotron-macOS"
-            ReferencedContainer = "container:reactotron.xcodeproj">
+            BuildableName = "reactotron-native.app"
+            BlueprintName = "reactotron-native-macOS"
+            ReferencedContainer = "container:reactotron-native.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

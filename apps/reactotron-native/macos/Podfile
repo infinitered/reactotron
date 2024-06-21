@@ -1,14 +1,20 @@
-require_relative '../../../node_modules/react-native-macos/scripts/react_native_pods'
-require_relative '../../../node_modules/@react-native-community/cli-platform-ios/native_modules'
+node_modules_path = "../../../node_modules"
+react_native_path = "#{node_modules_path}/react-native-macos"
+
+require_relative "#{node_modules_path}/react-native-macos/scripts/react_native_pods"
+require_relative "#{node_modules_path}/@react-native-community/cli-platform-ios/native_modules"
 
 prepare_react_native_project!
 
-target 'reactotron-macOS' do
+target 'reactotron-native-macOS' do
   platform :macos, '10.15'
   use_native_modules!
 
+  # Flags change depending on the env values.
+  flags = get_default_flags()
+
   use_react_native!(
-    :path => '../../../node_modules/react-native-macos',
+    :path => react_native_path,
     :hermes_enabled => false,
     :fabric_enabled => ENV['RCT_NEW_ARCH_ENABLED'] == '1',
     # Flipper is not compatible w/ macOS
@@ -17,11 +23,7 @@ target 'reactotron-macOS' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  if ENV['RCT_NEW_ARCH_ENABLED'] == '1'
-    pod 'AppTurboModules', :path => "./../tm"
-  end
-
   post_install do |installer|
-    react_native_post_install(installer)
+    react_native_post_install(installer, react_native_path)
   end
 end

@@ -2,12 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:reactotron.xcodeproj">
+      location = "group:reactotron-native.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Reactotron.xcodeproj">
    </FileRef>
 </Workspace>

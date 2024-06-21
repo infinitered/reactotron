@@ -4045,15 +4045,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@egjs/hammerjs@npm:^2.0.17":
-  version: 2.0.17
-  resolution: "@egjs/hammerjs@npm:2.0.17"
-  dependencies:
-    "@types/hammerjs": ^2.0.36
-  checksum: 8945137cec5837edd70af3f2e0ea621543eb0aa3b667e6269ec6485350f4d120c2434b37c7c30b1cf42a65275dd61c1f24626749c616696d3956ac0c008c4766
-  languageName: node
-  linkType: hard
-
 "@electron/asar@npm:^3.2.1":
   version: 3.2.5
   resolution: "@electron/asar@npm:3.2.5"
@@ -9754,13 +9745,6 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: c3070ccdc9ca0f40df747bced1c96c71a61992d6f7c767e8fd24bb6a3c2de26e8b84135ede000b7e79db530a23e7e88dcd9db60eee6395d0f4ce1dae91369dd4
-  languageName: node
-  linkType: hard
-
-"@types/hammerjs@npm:^2.0.36":
-  version: 2.0.45
-  resolution: "@types/hammerjs@npm:2.0.45"
-  checksum: 40a29067c485a2a1f4345718104218fcf769adb1dbe091cdb6f679b3293dfa0798b207eb498ee7fd79ae8664c999117738fa0c01753f7465a639128f38c3ff5b
   languageName: node
   linkType: hard
 
@@ -29448,7 +29432,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-freeze@npm:^1.0.0, react-freeze@npm:^1.0.3":
+"react-freeze@npm:^1.0.3":
   version: 1.0.3
   resolution: "react-freeze@npm:1.0.3"
   peerDependencies:
@@ -29606,25 +29590,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-gesture-handler@npm:2.15.0":
-  version: 2.15.0
-  resolution: "react-native-gesture-handler@npm:2.15.0"
-  dependencies:
-    "@egjs/hammerjs": ^2.0.17
-    hoist-non-react-statics: ^3.3.0
-    invariant: ^2.2.4
-    lodash: ^4.17.21
-    prop-types: ^15.7.2
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 4db52e7b38b047bad677ed570a0ef4c2ddfc413bbbce5ed21f487c9d86c60588ee6b2c9f74bb842e5654284b0d1e6a8af81f68000e737d8a7f1e030b6d3fe6b6
-  languageName: node
-  linkType: hard
-
-"react-native-macos@npm:0.73.30":
-  version: 0.73.30
-  resolution: "react-native-macos@npm:0.73.30"
+"react-native-macos@npm:0.73.32":
+  version: 0.73.32
+  resolution: "react-native-macos@npm:0.73.32"
   dependencies:
     "@jest/create-cache-key-function": ^29.6.3
     "@react-native-community/cli": 12.3.6
@@ -29668,7 +29636,7 @@ __metadata:
     react: 18.2.0
   bin:
     react-native-macos: cli.js
-  checksum: fe6fe9d91dc8d1d01c69cbca71d47f593d150a1067172c533737dc36047c25c8b80302ced14aa4e5a29ef7c3afc7ffb8a0cfd3d02f87c3ebbbcfe6bedc597b92
+  checksum: 0f6b7d5b7bb265a4bd94ee63fd31758b8fad8af122bde3c8eb04be772fce58a8203c785238f184f5ba6005487fc23a2a28f44e652cb1ce5b555fc7520941ecd5
   languageName: node
   linkType: hard
 
@@ -29679,29 +29647,6 @@ __metadata:
     react: "*"
     react-native: ">=0.71.0"
   checksum: ba1759c6898293db9db2ab1b9bb239840f4902d5a8f53672e02eeb23a81e15cb7f6b32d716bc46747868d8c241d3daad6b15af60a5d5cc7716af1d2c1597c17e
-  languageName: node
-  linkType: hard
-
-"react-native-safe-area-context@npm:4.9.0":
-  version: 4.9.0
-  resolution: "react-native-safe-area-context@npm:4.9.0"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 120aefb77766a37e81c5a844d7e1493afea35461c30df5ca903c6b6e2fc6694e2496d433550a2eda872ef8384a36ecf8529a617cb19acbeebd37d78d7aa7b17e
-  languageName: node
-  linkType: hard
-
-"react-native-screens@npm:^3.32.0":
-  version: 3.32.0
-  resolution: "react-native-screens@npm:3.32.0"
-  dependencies:
-    react-freeze: ^1.0.0
-    warn-once: ^0.1.0
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: afcb93e9cd48d5071278213bbc4ddc18112dbdbd16c11e3c7129368614396d8aae13fd70bb299f3c84f52a28e34af06ccdc514de1e97a99f4197069301dab136
   languageName: node
   linkType: hard
 
@@ -30592,10 +30537,7 @@ __metadata:
     prettier: 2.8.8
     react: 18.2.0
     react-native: 0.73.8
-    react-native-gesture-handler: 2.15.0
-    react-native-macos: 0.73.30
-    react-native-safe-area-context: 4.9.0
-    react-native-screens: ^3.32.0
+    react-native-macos: 0.73.32
     react-native-svg: ^15.3.0
     react-native-windows: 0.73.15
     react-test-renderer: 18.2.0
