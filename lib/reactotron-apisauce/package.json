@@ -25,7 +25,7 @@
   },
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch --notify",
+    "test:watch": "jest --watch",
     "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}' --config ../../.prettierrc --ignore-path ../../.prettierignore",
     "format:write": "yarn format --write",
     "format:check": "yarn format --check",
