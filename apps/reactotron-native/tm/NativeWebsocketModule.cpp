@@ -156,13 +156,13 @@ class listener : public std::enable_shared_from_this<listener>
 	net::io_context &ioc_;
 	tcp::acceptor acceptor_;
 	bool is_running_;
-	std::function<void(const std::string &)> emit_;
+	std::function<void(const std::string &, std::function<void(facebook::jsi::Runtime &, std::vector<facebook::jsi::Value> &)>)> emit_;
 
 public:
 	listener(
 			net::io_context &ioc,
 			tcp::endpoint endpoint,
-			std::function<void(const std::string &)> emit)
+			std::function<void(const std::string &, std::function<void(facebook::jsi::Runtime &, std::vector<facebook::jsi::Value> &)>)> emit)
 			: ioc_(ioc), acceptor_(ioc), emit_(emit), is_running_(false)
 	{
 		boost::beast::error_code ec;
@@ -172,7 +172,7 @@ public:
 		if (ec)
 		{
 			fail(ec, "open");
-			emit_("error");
+			emit_("error", nullptr);
 			return;
 		}
 
@@ -181,7 +181,7 @@ public:
 		if (ec)
 		{
 			fail(ec, "set_option");
-			emit_("error");
+			emit_("error", nullptr);
 			return;
 		}
 
@@ -190,7 +190,7 @@ public:
 		if (ec)
 		{
 			fail(ec, "bind");
-			emit_("error");
+			emit_("error", nullptr);
 			return;
 		}
 
@@ -199,7 +199,7 @@ public:
 		if (ec)
 		{
 			fail(ec, "listen");
-			emit_("error");
+			emit_("error", nullptr);
 			return;
 		}
 	}
@@ -216,7 +216,7 @@ public:
 		acceptor_.close();
 		ioc_.stop();
 		is_running_ = false;
-		emit_("close");
+		emit_("close", nullptr);
 	}
 
 	bool is_running() const { return is_running_; }
@@ -237,13 +237,20 @@ private:
 		if (ec)
 		{
 			fail(ec, "accept");
-			emit_("error");
+			emit_("error", nullptr);
 		}
 		else
 		{
 			// Create the session and run it
 			std::make_shared<session>(std::move(socket))->run();
-			emit_("connection");
+			emit_("connection", nullptr);
+
+      // TODO: temp - debug example
+			emit_("debug", [](facebook::jsi::Runtime &rt, std::vector<facebook::jsi::Value> &args)
+			{
+				args.emplace_back(facebook::jsi::Value(999));
+				args.emplace_back(facebook::jsi::String::createFromAscii(rt, "some string to debug"));
+			});
 		}
 
 		// Accept another connection
@@ -253,6 +260,8 @@ private:
 
 namespace facebook::react
 {
+
+	using ArgFactory = std::function<void(jsi::Runtime &, std::vector<jsi::Value> &)>;
 
 	NativeWebsocketModule::NativeWebsocketModule(std::shared_ptr<CallInvoker> jsInvoker)
 			: NativeWebsocketModuleCxxSpec(std::move(jsInvoker)) {}
@@ -282,7 +291,7 @@ namespace facebook::react
 		auto const port = static_cast<unsigned short>(9090);
 		auto const threads = 1;
 
-		auto emitEvent = [&](const std::string &eventName, TurboModule::ArgFactory argFactory = nullptr)
+		auto emitEvent = [&](const std::string &eventName, facebook::react::ArgFactory argFactory = nullptr)
 		{
 			emitDeviceEvent(rt, eventName, argFactory);
 		};
