@@ -1,12 +1,12 @@
 import { createClient, corePlugins } from "../src/reactotron-core-client"
 import plugin from "../src/plugins/clear"
-import WebSocket from "ws"
+import { WebSocket } from "ws"
 
 const createSocket = (path) => new WebSocket(path)
 
 test("clears", () => {
   const client: any = createClient({ createSocket })
-  const results = []
+  const results = [] as Array<{ type: string; payload: any }>
   client.send = (type, payload) => results.push({ type, payload })
   client.use(plugin())
   expect(client.plugins.length).toBe(corePlugins.length + 1)
