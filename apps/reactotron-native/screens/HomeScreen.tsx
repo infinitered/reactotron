@@ -19,11 +19,15 @@ export function HomeScreen() {
     DeviceEventEmitter.addListener("close", (...args) => {
       console.log("close", { args })
     })
+    DeviceEventEmitter.addListener("debug", (...args) => {
+      console.log("[DEBUG]", { args })
+    })
 
     return () => {
       DeviceEventEmitter.removeAllListeners("something")
       DeviceEventEmitter.removeAllListeners("connection")
       DeviceEventEmitter.removeAllListeners("close")
+      DeviceEventEmitter.removeAllListeners("debug")
     }
   }, [])
 
