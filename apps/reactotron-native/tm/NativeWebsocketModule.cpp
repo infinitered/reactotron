@@ -18,7 +18,9 @@ namespace net = boost::asio;									 // from <boost/asio.hpp>
 using tcp = boost::asio::ip::tcp;							 // from <boost/asio/ip/tcp.hpp>
 using namespace std;
 
-//------------------------------------------------------------------------------
+namespace facebook::react {
+	using ArgFactory = std::function<void(jsi::Runtime &, std::vector<jsi::Value> &)>;
+}
 
 // Report a failure
 void fail(boost::beast::error_code ec, char const *what)
@@ -31,17 +33,13 @@ class session : public std::enable_shared_from_this<session>
 {
 	websocket::stream<boost::beast::tcp_stream> ws_;
 	boost::beast::flat_buffer buffer_;
-	// std::function<void(const std::string &)> emit_;
+	std::function<void(const std::string &, facebook::react::ArgFactory)> emit_;
 
 public:
 	// Take ownership of the socket
-	// explicit session(tcp::socket &&socket,
-	// 								 std::function<void(const std::string &)> emit)
-	// 		: ws_(std::move(socket), emit_(emit))
-	// {
-	// }
-	explicit session(tcp::socket &&socket)
-			: ws_(std::move(socket))
+	explicit session(tcp::socket &&socket,
+			std::function<void(const std::string &, facebook::react::ArgFactory)> emit)
+		: ws_(std::move(socket)), emit_(std::move(emit))
 	{
 	}
 
@@ -126,8 +124,13 @@ public:
 						&session::on_write,
 						shared_from_this()));
 
-		// emit_("message", [&buffer = buffer_](jsi::Runtime &rt, std::vector<jsi::Value> &args)
-		// 			{ args.emplace_back(jsi::String::createFromUtf8(rt, boost::beast::buffers_to_string(buffer.data()))); });
+		emit_("debug", [](facebook::jsi::Runtime &rt, std::vector<facebook::jsi::Value> &args) {
+				args.emplace_back(facebook::jsi::String::createFromAscii(rt, "in session"));
+		});
+		emit_("message", [&buffer = buffer_](facebook::jsi::Runtime &rt, std::vector<facebook::jsi::Value> &args)
+		{
+				args.emplace_back(facebook::jsi::String::createFromUtf8(rt, boost::beast::buffers_to_string(buffer.data())));
+		});
 	}
 
 	void
@@ -156,13 +159,13 @@ class listener : public std::enable_shared_from_this<listener>
 	net::io_context &ioc_;
 	tcp::acceptor acceptor_;
 	bool is_running_;
-	std::function<void(const std::string &, std::function<void(facebook::jsi::Runtime &, std::vector<facebook::jsi::Value> &)>)> emit_;
+	std::function<void(const std::string &, facebook::react::ArgFactory)> emit_;
 
 public:
 	listener(
 			net::io_context &ioc,
 			tcp::endpoint endpoint,
-			std::function<void(const std::string &, std::function<void(facebook::jsi::Runtime &, std::vector<facebook::jsi::Value> &)>)> emit)
+			std::function<void(const std::string &, facebook::react::ArgFactory)> emit)
 			: ioc_(ioc), acceptor_(ioc), emit_(emit), is_running_(false)
 	{
 		boost::beast::error_code ec;
@@ -209,6 +212,10 @@ public:
 	{
 		is_running_ = true;
 		do_accept();
+		emit_("debug", [](facebook::jsi::Runtime &rt, std::vector<facebook::jsi::Value> &args)
+		{
+			args.emplace_back(facebook::jsi::String::createFromAscii(rt, "session run()"));
+		});
 	}
 
 	void stop()
@@ -242,7 +249,10 @@ private:
 		else
 		{
 			// Create the session and run it
-			std::make_shared<session>(std::move(socket))->run();
+			//std::make_shared<session>(std::move(socket))->run();
+			auto new_session = std::make_shared<session>(std::move(socket), emit_);
+      new_session->run();
+
 			emit_("connection", nullptr);
 
       // TODO: temp - debug example
@@ -260,9 +270,6 @@ private:
 
 namespace facebook::react
 {
-
-	using ArgFactory = std::function<void(jsi::Runtime &, std::vector<jsi::Value> &)>;
-
 	NativeWebsocketModule::NativeWebsocketModule(std::shared_ptr<CallInvoker> jsInvoker)
 			: NativeWebsocketModuleCxxSpec(std::move(jsInvoker)) {}
 
