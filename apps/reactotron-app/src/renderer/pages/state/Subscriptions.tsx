@@ -13,6 +13,7 @@ import { getApplicationKeyMap } from "react-hotkeys"
 
 // Move this out of this page. We are just hacking around this for now
 import { KeybindKeys, getPlatformSequence } from "../help/components/Keybind"
+import { useAnalytics } from "../../util/analyticsHelpers"
 
 const Container = styled.div`
   display: flex;
@@ -57,6 +58,7 @@ function getLatestChanges(commands: any[]) {
 }
 
 function Subscriptions() {
+  const { sendAnalyticsEvent } = useAnalytics()
   const { commands, openSubscriptionModal } = useContext(ReactotronContext)
   const { removeSubscription, clearSubscriptions } = useContext(StateContext)
 
@@ -96,6 +98,10 @@ function Subscriptions() {
             icon: MdAdd,
             onClick: () => {
               openSubscriptionModal()
+              sendAnalyticsEvent({
+                category: "subscription",
+                action: "add",
+              })
             },
           },
           {
@@ -103,6 +109,10 @@ function Subscriptions() {
             icon: MdDeleteSweep,
             onClick: () => {
               clearSubscriptions()
+              sendAnalyticsEvent({
+                category: "subscription",
+                action: "clear",
+              })
             },
           },
         ]}

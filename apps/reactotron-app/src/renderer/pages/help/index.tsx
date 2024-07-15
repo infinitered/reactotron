@@ -12,8 +12,8 @@ import { getApplicationKeyMap } from "react-hotkeys"
 import { ItemContainer, ItemIconContainer } from "./SharedStyles"
 import KeybindGroup from "./components/KeybindGroup"
 import { reactotronLogo } from "../../images"
-
-const projectJson = require("../../../../package.json")
+import { useAnalytics } from "../../util/analyticsHelpers"
+import projectJson from "../../../../package.json"
 
 const Container = styled.div`
   display: flex;
@@ -85,6 +85,8 @@ function Keybinds() {
 }
 
 function Help() {
+  const { sendExternalLinkAnalyticsEvent } = useAnalytics()
+
   return (
     <Container>
       <Header title={`Using Reactotron ${projectJson.version}`} isDraggable />
@@ -94,25 +96,45 @@ function Help() {
         </LogoContainer>
         <Title>Let&apos;s Connect!</Title>
         <ConnectContainer>
-          <ItemContainer onClick={openRepo}>
+          <ItemContainer
+            onClick={() => {
+              openRepo()
+              sendExternalLinkAnalyticsEvent("repo")
+            }}
+          >
             <ItemIconContainer>
               <RepoIcon size={40} />
             </ItemIconContainer>
             GitHub Docs
           </ItemContainer>
-          <ItemContainer onClick={openFeedback}>
+          <ItemContainer
+            onClick={() => {
+              openFeedback()
+              sendExternalLinkAnalyticsEvent("feedback")
+            }}
+          >
             <ItemIconContainer>
               <FeedbackIcon size={40} />
             </ItemIconContainer>
             Feedback
           </ItemContainer>
-          <ItemContainer onClick={openUpdates}>
+          <ItemContainer
+            onClick={() => {
+              openUpdates()
+              sendExternalLinkAnalyticsEvent("updates")
+            }}
+          >
             <ItemIconContainer>
               <ReleaseIcon size={40} />
             </ItemIconContainer>
             Updates
           </ItemContainer>
-          <ItemContainer onClick={openTwitter}>
+          <ItemContainer
+            onClick={() => {
+              openTwitter()
+              sendExternalLinkAnalyticsEvent("twitter")
+            }}
+          >
             <ItemIconContainer>
               <TwitterIcon size={40} />
             </ItemIconContainer>
