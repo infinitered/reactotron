@@ -42,6 +42,13 @@ if (Platform.OS !== "web") {
   })
 }
 
+type Arg<AN extends string, AT extends ArgType = ArgType.String> = {
+  name: AN
+  type: AT
+  placeholder?: string
+  hidden?: boolean
+}
+
 /**
  * Reactotron allows you to define custom commands that you can run
  * from Reactotron itself, and they will run in your app.
@@ -83,7 +90,7 @@ reactotron.onCustomCommand({
   },
 })
 
-reactotron.onCustomCommand<[{ name: "route"; type: ArgType.String }]>({
+reactotron.onCustomCommand<[Arg<"route">]>({
   command: "navigateTo",
   handler: (args) => {
     const { route } = args ?? {}
@@ -107,6 +114,23 @@ reactotron.onCustomCommand({
     Reactotron.log("Going back")
     goBack()
   },
+})
+
+reactotron.onCustomCommand<[Arg<"data">]>({
+  title: "Log hidden data",
+  description: "Logs hidden input data",
+  command: "logHiddenData",
+  handler: (args) => {
+    Reactotron.log(`Hidden data: ${args?.data}`)
+  },
+  args: [
+    {
+      name: "data",
+      placeholder: "Provide hidden data",
+      hidden: true,
+      type: ArgType.String,
+    },
+  ],
 })
 
 /**
