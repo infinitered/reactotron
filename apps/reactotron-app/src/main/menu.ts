@@ -95,22 +95,24 @@ function buildViewMenu(window: Electron.BrowserWindow, isDevelopment: boolean) {
         ;(window as any).toggleDevTools()
       },
     },
-    { role: "separator" },
+    { type: "separator" },
     { role: "togglefullscreen" },
     { role: "resetZoom" },
     { role: "zoomIn" },
-    { role: "zoomOut" },
-    { role: "separator" }
+    { role: "zoomOut" }
   )
 
   if (isDevelopment) {
-    viewMenu.submenu.push({
-      label: isDarwin ? "Reload" : "&Reload",
-      accelerator: isDarwin ? "Command+R" : "Ctrl+R",
-      click: () => {
-        window.webContents.reload()
-      },
-    })
+    viewMenu.submenu.push(
+      { type: "separator" },
+      {
+        label: isDarwin ? "Reload" : "&Reload",
+        accelerator: isDarwin ? "Command+R" : "Ctrl+R",
+        click: () => {
+          window.webContents.reload()
+        },
+      }
+    )
   }
 
   return viewMenu
