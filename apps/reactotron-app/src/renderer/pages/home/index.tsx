@@ -13,6 +13,7 @@ import {
 import { Connection } from "../../contexts/Standalone/useStandalone"
 import Welcome from "./welcome"
 import AndroidDeviceHelp from "../help/components/AndroidDeviceHelp"
+import { MdOutlet, MdDeleteSweep } from "react-icons/md"
 
 const Container = styled.div`
   display: flex;
@@ -29,8 +30,9 @@ const ContentContainer = styled.div`
 const ConnectionContainer = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 10px 0px 10px 20px;
   border-bottom: 1px solid ${(props) => props.theme.line};
 `
 const IconContainer = styled.div`
@@ -39,7 +41,7 @@ const IconContainer = styled.div`
 const AppName = styled.div`
   padding-left: 10px;
   color: ${(props) => props.theme.tag};
-  width: 25%;
+
 `
 const PlatformDetails = styled.div`
   border-left: 1px solid ${(props) => props.theme.subtleLine};
@@ -53,6 +55,19 @@ const Screen = styled.div`
   padding-left: 10px;
   margin-left: 10px;
 `
+const ActionsContainer = styled.div`
+`
+const LeftContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 25%;
+  align-items: center;
+`
+const MiddleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
 
 function ConnectionCell({ connection }: { connection: Connection }) {
   const [ConnectionIcon, platformName, platformDetails, connectionName, screen] = useMemo(() => {
@@ -67,14 +82,30 @@ function ConnectionCell({ connection }: { connection: Connection }) {
 
   return (
     <ConnectionContainer>
-      <IconContainer>
-        <ConnectionIcon size={32} />
-      </IconContainer>
-      <AppName>{connectionName}</AppName>
-      <PlatformDetails>
-        {platformName} {platformDetails}
-      </PlatformDetails>
-      <Screen>{screen}</Screen>
+      <LeftContainer>
+        <IconContainer>
+          <ConnectionIcon size={32} />
+        </IconContainer>
+        <AppName>{connectionName}</AppName>
+      </LeftContainer>
+
+      <MiddleContainer>
+        <PlatformDetails>
+          {platformName} {platformDetails}
+        </PlatformDetails>
+        <Screen>{screen}</Screen>
+      </MiddleContainer>
+
+      <ActionsContainer>
+        <IconContainer>
+          <MdOutlet
+            size={24}
+            onClick={() => {
+              // removeSubscription(subscription.path)
+            }}
+          />
+        </IconContainer>
+      </ActionsContainer>
     </ConnectionContainer>
   )
 }
@@ -84,7 +115,15 @@ function Connections() {
 
   return (
     <Container>
-      <Header title="Connections" isDraggable />
+      <Header title="Connections" isDraggable actions={[
+        {
+          tip: "Clear",
+          icon: MdDeleteSweep,
+          onClick: () => {
+            // clearSubscriptions()
+          },
+        },
+      ]} />
       <ContentContainer>
         {connections.length > 0 ? (
           connections.map((connection) => (
