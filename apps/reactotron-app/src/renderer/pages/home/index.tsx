@@ -10,6 +10,7 @@ import {
   getIcon,
   getConnectionName,
 } from "../../util/connectionHelpers"
+import { ReactotronContext } from "reactotron-core-ui"
 import { Connection } from "../../contexts/Standalone/useStandalone"
 import Welcome from "./welcome"
 import AndroidDeviceHelp from "../help/components/AndroidDeviceHelp"
@@ -67,10 +68,16 @@ const MiddleContainer = styled.div`
   display: flex;
   flex-direction: row;
 `
+const ConnectionDisconnect = styled.div`
+  cursor: pointer;
+  color: ${(props) => props.theme.foreground};
+`
 
 
 function ConnectionCell({ connection }: { connection: Connection }) {
+  const { sendCommand } = useContext(ReactotronContext)
   const [ConnectionIcon, platformName, platformDetails, connectionName, screen] = useMemo(() => {
+
     return [
       getIcon(connection),
       getPlatformName(connection),
@@ -97,33 +104,33 @@ function ConnectionCell({ connection }: { connection: Connection }) {
       </MiddleContainer>
 
       <ActionsContainer>
-        <IconContainer>
+        <ConnectionDisconnect>
           <MdOutlet
             size={24}
             onClick={() => {
-              // removeSubscription(subscription.path)
+              sendCommand("clientDisconnect", {}, connection.clientId)
             }}
           />
-        </IconContainer>
+        </ConnectionDisconnect>
       </ActionsContainer>
     </ConnectionContainer>
   )
 }
 
 function Connections() {
-  const { connections } = useContext(StandaloneContext)
+  const { connections  } = useContext(StandaloneContext)
 
   return (
     <Container>
-      <Header title="Connections" isDraggable actions={[
+      <Header title="Connections" isDraggable actions={connections.length > 0  ? [
         {
           tip: "Clear",
           icon: MdDeleteSweep,
           onClick: () => {
-            // clearSubscriptions()
+            // clearSelectedConnectionCommands()
           },
         },
-      ]} />
+      ] : []} />
       <ContentContainer>
         {connections.length > 0 ? (
           connections.map((connection) => (
