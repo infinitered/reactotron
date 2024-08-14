@@ -17,17 +17,21 @@ const NEGATIVE_INFINITY = "~~~ -Infinity ~~~"
 
 /**
  * Fix BigInt serialization
- * BigInts are not supported by JSON.stringify.  This is a workaround.
+ * BigInts are not supported by JSON.stringify in Hermes android.
+ * This is a workaround.
  * https://github.com/GoogleChromeLabs/jsbi/issues/30#issuecomment-953187833
+ * https://github.com/infinitered/reactotron/issues/1436
  */
 declare global {
   interface BigInt {
     toJSON(): string
   }
 }
-// eslint-disable-next-line no-extend-native
-BigInt.prototype.toJSON = function () {
-  return this.toString()
+if (typeof BigInt !== "undefined") {
+  // eslint-disable-next-line no-extend-native
+  BigInt.prototype.toJSON = function () {
+    return this.toString()
+  }
 }
 
 /**
@@ -89,6 +93,8 @@ function serialize(source, proxyHack = false) {
           return value
         case "number":
           return value
+        case "bigint":
+          return value.toString()
         case "function":
           return getFunctionName(value)
       }

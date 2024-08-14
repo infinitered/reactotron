@@ -11,7 +11,8 @@ module.exports = function (api) {
   api.cache(true)
   return {
     assumptions: {
-      "setPublicClassFields": true,
+      setPublicClassFields: true,
+      privateFieldsAsSymbols: true,
     },
     presets: ["babel-preset-expo"],
     env: {
