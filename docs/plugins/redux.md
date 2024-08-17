@@ -67,7 +67,11 @@ Using [Redux-Toolkit's `configureStore`](https://redux-toolkit.js.org/api/config
 ```
 export const store = configureStore({
   reducer: persistedReducer,
+  // TypeScript version:
   enhancers: __DEV__ ? [reactotron.createEnhancer!()] : [],
+
+   // JavaScript version:
+  enhancers: __DEV__ ? [Reactotron.createEnhancer?.()] : [],
 })
 ```
 
