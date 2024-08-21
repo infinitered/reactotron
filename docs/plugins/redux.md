@@ -62,7 +62,7 @@ Then, add enhancer from `Reactotron.createEnhancer()`
 
 ## Using Redux-Toolkit configureStore
 
-Using (Redux-Toolkit's `configureStore`)[https://redux-toolkit.js.org/api/configureStore], add as an `enhancer`.
+Using [Redux-Toolkit's `configureStore`](https://redux-toolkit.js.org/api/configureStore), add as an `enhancer`.
 
 ```
 export const store = configureStore({
