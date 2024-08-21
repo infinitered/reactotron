@@ -5,6 +5,7 @@ import styled from "styled-components"
 import { MdSearch } from "react-icons/md"
 import { FaMagic } from "react-icons/fa"
 import { produce } from "immer"
+import { useAnalytics } from "../../util/analyticsHelpers"
 
 const Container = styled.div`
   display: flex;
@@ -113,6 +114,7 @@ function CustomCommandItem({
   customCommand: CustomCommand
   sendCustomCommand: (command: any, args: any) => void
 }) {
+  const { sendCustomCommandAnalyticsEvent } = useAnalytics()
   const [state, dispatch] = useReducer(customCommandItemReducer, customCommand.args, (args) => {
     if (!args) return {}
 
@@ -157,6 +159,7 @@ function CustomCommandItem({
       <SendButton
         onClick={() => {
           sendCustomCommand(customCommand.command, state)
+          sendCustomCommandAnalyticsEvent(customCommand.command)
         }}
       >
         Send Command

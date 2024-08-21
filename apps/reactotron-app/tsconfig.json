@@ -18,6 +18,7 @@
     "types": ["jest"],
     "skipLibCheck": true,
     "baseUrl": ".",
+    "resolveJsonModule": true,
   },
   "exclude": ["node_modules"],
   "include": ["src"],

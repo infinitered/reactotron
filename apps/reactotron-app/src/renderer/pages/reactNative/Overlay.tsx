@@ -17,6 +17,7 @@ import { OverlayMargins } from "./components/OverlayMargins"
 import type { DragEvent } from "react"
 import type { JustifyContent, AlignItems } from "./components/OverlayAlignment"
 import type { ResizeMode } from "./components/OverlayResizeMode"
+import { useAnalytics } from "../../util/analyticsHelpers"
 
 const isDevelopment = process.env.NODE_ENV !== "production"
 
@@ -54,6 +55,7 @@ const ReapplyContainer = styled.div`
 `
 
 function Overlay() {
+  const { sendAnalyticsEvent } = useAnalytics()
   const { overlayParams, updateOverlayParams } = useContext(ReactNativeContext)
   const {
     uri,
@@ -123,8 +125,18 @@ function Overlay() {
     event.preventDefault()
     event.stopPropagation()
     if (event.dataTransfer.files.length !== 1) {
+      sendAnalyticsEvent({
+        category: "error",
+        action: "OverlayDropImage",
+        label: "Too many files",
+      })
       return
     }
+    sendAnalyticsEvent({
+      category: "overlay",
+      action: "OverlayDropImage",
+      label: "Success",
+    })
     const file = event.dataTransfer.files[0]
     importFile(file.path)
   }
@@ -143,6 +155,11 @@ function Overlay() {
       height: null,
       alignItems: "center",
       justifyContent: "center",
+    })
+    sendAnalyticsEvent({
+      category: "overlay",
+      action: "OverlayRemoveImage",
+      label: "Success",
     })
   }
 
@@ -200,6 +217,11 @@ function Overlay() {
     event.stopPropagation()
     event.preventDefault()
     updateOverlayParams({ showDebug: newShowDebug })
+    sendAnalyticsEvent({
+      category: "overlay",
+      action: "OverlayShowDebug",
+      label: newShowDebug ? "On" : "Off",
+    })
   }
 
   function renderDropZone() {
