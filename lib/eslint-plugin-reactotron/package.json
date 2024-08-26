@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-reactotron",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "An ESLint plugin for Reactotron.",
   "author": "Infinite Red",
   "license": "MIT",
