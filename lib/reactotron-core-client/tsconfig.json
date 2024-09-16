@@ -4,6 +4,7 @@
     "allowJs": false,
     "declaration": true,
     "rootDir": ".",
+    "strict": true,
     "declarationDir": "dist/types",
     "emitDeclarationOnly": true,
     "emitDecoratorMetadata": true,

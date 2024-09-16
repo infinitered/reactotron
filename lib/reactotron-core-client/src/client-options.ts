@@ -6,24 +6,24 @@ type BrowserWebSocket = WebSocket
 /**
  * Configuration options for the Reactotron Client.
  */
-export interface ClientOptions<Client> extends LifeCycleMethods {
+export interface ClientOptions<Client> extends Omit<LifeCycleMethods, "onCommand"> {
   /**
    * A function which returns a websocket.
    *
    * This is over-engineered because we need the ability to create different
    * types of websockets for React Native, React, and NodeJS.  :|
    */
-  createSocket?: ((path: string) => BrowserWebSocket) | ((path: string) => NodeWebSocket)
+  createSocket?: ((path: string) => BrowserWebSocket) | ((path: string) => NodeWebSocket) | null
 
   /**
    * The hostname or ip address of the server.  Default: localhost.
    */
-  host?: string
+  host?: string | null
 
   /**
    * The port to connect to the server on.  Default: 9090.
    */
-  port?: number
+  port?: number | null
 
   /**
    * The name of this client. Usually the app name.
@@ -55,7 +55,7 @@ export interface ClientOptions<Client> extends LifeCycleMethods {
   /**
    * Fires when the server sends a command.
    */
-  onCommand?: (command: any) => void
+  onCommand?: (command: any) => void | null
 
   /**
    * Fires when we connect to the server.
