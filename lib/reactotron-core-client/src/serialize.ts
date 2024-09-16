@@ -113,7 +113,7 @@ function serialize(source, proxyHack = false) {
       return replacer == null ? value : replacer.call(this, key, value)
     }
   }
-  // @ts-ignore: Unreachable code error
+  // @ts-expect-error: Unreachable code error
   return JSON.stringify(source, serializer(null))
 }
 

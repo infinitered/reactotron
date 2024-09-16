@@ -595,6 +595,6 @@ export function createClient<Client extends ReactotronCore = ReactotronCore>(
   options?: ClientOptions<Client>
 ) {
   const client = new ReactotronImpl()
-  // @ts-ignore: Unreachable code error
+  // @ts-expect-error: Unreachable code error
   return client.configure(options) as unknown as Client
 }
