@@ -59,8 +59,8 @@ function serialize(source, proxyHack = false) {
    * @param {*} key - The key currently visited.
    * @param {*} value - The value to replace.
    */
-  function serializer(replacer) {
-    return function (this: any, key, value) {
+  function serializer(replacer: any | null) {
+    return function (this: never, key: never, value) {
       // slam dunks
       if (value === true) return true
 
@@ -105,14 +105,15 @@ function serialize(source, proxyHack = false) {
         const thisPos = stack.indexOf(this)
         ~thisPos ? stack.splice(thisPos + 1) : stack.push(this)
         ~thisPos ? keys.splice(thisPos, Infinity, key) : keys.push(key)
-        if (~stack.indexOf(value)) value = CIRCULAR
+        if (~stack.indexOf(value as never)) value = CIRCULAR
       } else {
-        stack.push(value)
+        stack.push(value as never)
       }
 
       return replacer == null ? value : replacer.call(this, key, value)
     }
   }
+  // @ts-expect-error: Unreachable code error
   return JSON.stringify(source, serializer(null))
 }
 

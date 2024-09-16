@@ -5,8 +5,11 @@ const isCreateSocketValid = (
   createSocket: unknown
 ): createSocket is ClientOptions<ReactotronCore>["createSocket"] =>
   typeof createSocket !== "undefined" && createSocket !== null
-const isHostValid = (host: string): boolean => typeof host === "string" && host && host !== ""
-const isPortValid = (port: number): boolean =>
+const isHostValid = (host: unknown): boolean => {
+  const res = Boolean(typeof host === "string" && host && host !== "")
+  return res
+}
+const isPortValid = (port: unknown): boolean =>
   typeof port === "number" && port >= 1 && port <= 65535
 const onCommandValid = (fn: (cmd: string) => any) => typeof fn === "function"
 
@@ -29,7 +32,7 @@ const validate = (options: ClientOptions<ReactotronCore>) => {
     throw new Error("invalid port")
   }
 
-  if (!onCommandValid(onCommand)) {
+  if (!onCommandValid(onCommand as (cmd: string) => any)) {
     throw new Error("invalid onCommand handler")
   }
 }
