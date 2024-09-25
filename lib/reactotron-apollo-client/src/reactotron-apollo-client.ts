@@ -1,6 +1,6 @@
 /* eslint-disable no-invalid-this */
 /* eslint-disable func-style */
-import { ApolloClient, ObservableQuery } from "@apollo/client"
+import { ApolloClient, gql, ObservableQuery } from "@apollo/client"
 import {
   ReactotronCore,
   Plugin,
@@ -18,8 +18,8 @@ import type { QueryInfo } from "@apollo/client/core/QueryInfo"
 import type { ASTNode } from "graphql"
 import { print } from "graphql"
 
-import { flatten, uniq } from "ramda"
-import pathObject from "./helpers/pathObject"
+// import { flatten, uniq } from "ramda"
+// import pathObject from "./helpers/pathObject"
 
 type ApolloClientType = ApolloClient<NormalizedCacheObject>
 
@@ -179,7 +179,7 @@ function getAllMutations(client: ApolloClientType): ArrayOfMutations {
   return final
 }
 
-async function getCurrentState(client: ApolloClientType): Promise<ApolloClientState> {
+function getCurrentState(client: ApolloClientType): Promise<ApolloClientState> {
   tick++
 
   let currentState: ApolloClientState
@@ -226,62 +226,150 @@ export const apolloPlugin =
       InferFeatures<Client, StateResponsePlugin>
 
     // --- Plugin-scoped variables ---------------------------------
+    let acknowledged = true
+    let apolloData: null | ApolloClientState
 
     // hang on to the apollo state
-    let apolloData = { cache: {}, queries: {}, mutations: {} }
+    function setup() {
+      reactotron.log("setup")
+      getCurrentState(apolloClient).then((data) => {
+        apolloData = data
+      })
+
+      reactotron.log("current state", apolloData)
+
+      function sendData() {
+        reactotron.log("sendData")
+        if (apolloData) {
+          reactotron.log("sendData", apolloData)
+          acknowledged = false
+        }
+      }
+
+      const poll = async (): Promise<void> => {
+        // TODO remove
+        reactotron.display({
+          name: "APOLLO CLIENT",
+          preview: `Poll`,
+          value: { acknowledged },
+        })
+
+        if (acknowledged) {
+          getCurrentState(apolloClient).then((data) => {
+            apolloData = data
+          })
+          reactotron.log("apolloData", apolloData)
+          sendData()
+        }
+        // sendSubscriptions()
+      }
+      apolloClient.__actionHookForDevTools(debounce(() => poll()))
+      // poll the apollo client every 2 seconds
+      // setInterval(poll, 2000)
+    }
 
     // a list of subscriptions the client is subscribing to
-    let subscriptions: string[] = []
+    // let subscriptions: string[] = []
 
     function subscribe(command: Command<"state.values.subscribe">) {
       const paths: string[] = (command && command.payload && command.payload.paths) || []
 
       if (paths) {
         // TODO ditch ramda
-        subscriptions = uniq(flatten(paths))
+        // subscriptions = uniq(flatten(paths))
       }
 
-      sendSubscriptions()
+      // sendSubscriptions()
     }
 
-    function getChanges() {
-      // TODO also check if cache state is empty
-      if (!reactotron) return []
+    // function ack(command: Command<"ack">) {
+    //   reactotron.log("ack", command)
+    //   acknowledged = true
+    // }
 
-      const changes = []
+    // function getChanges() {
+    //   // TODO also check if cache state is empty
+    //   if (!reactotron) return []
 
-      const state = apolloData.cache
+    //   reactotron.log("subscriptions", subscriptions)
 
-      subscriptions.forEach((path) => {
-        let cleanedPath = path
-        let starredPath = false
+    //   const changes = []
 
-        if (path && path.endsWith("*")) {
-          // Handle the star!
-          starredPath = true
-          cleanedPath = path.substring(0, path.length - 2)
-        }
+    //   const state = apolloData.cache
+    //   reactotron.log("getChanges", state)
 
-        const values = pathObject(cleanedPath, state)
+    //   subscriptions.forEach((path) => {
+    //     let cleanedPath = path
+    //     let starredPath = false
 
-        if (starredPath && cleanedPath && values) {
-          changes.push(
-            ...Object.entries(values).map((val) => ({
-              path: `${cleanedPath}.${val[0]}`,
-              value: val[1],
-            }))
-          )
-        } else {
-          changes.push({ path: cleanedPath, value: state[cleanedPath] })
-        }
+    //     if (path && path.endsWith("*")) {
+    //       // Handle the star!
+    //       starredPath = true
+    //       cleanedPath = path.substring(0, path.length - 2)
+    //     }
+
+    //     const values = pathObject(cleanedPath, state)
+
+    //     if (starredPath && cleanedPath && values) {
+    //       changes.push(
+    //         ...Object.entries(values).map((val) => ({
+    //           path: `${cleanedPath}.${val[0]}`,
+    //           value: val[1],
+    //         }))
+    //       )
+    //     } else {
+    //       changes.push({ path: cleanedPath, value: state[cleanedPath] })
+    //     }
+    //   })
+
+    //   return changes
+    // }
+
+    // function sendSubscriptions() {
+    //   const changes = getChanges()
+    //   reactotron.stateValuesChange(changes)
+    // }
+
+    async function handleRequest(command: Command<"apollo.request", { message: string }>) {
+      reactotron.display({
+        name: "APOLLO CLIENT",
+        preview: "request was made from server",
+        value: command.payload,
       })
 
-      return changes
+      // @ts-expect-error fix command type payload
+      reactotron.send("apollo.response", await getCurrentState(apolloClient))
     }
 
-    function sendSubscriptions() {
-      const changes = getChanges()
-      reactotron.stateValuesChange(changes)
+    async function handleUpdateFragment(
+      command: Command<"apollo.fragment.update", { message: string }>
+    ) {
+      apolloClient.cache.updateFragment(
+        {
+          id: `Chapter:1`,
+          fragmentName: "MyChapter",
+          fragment: gql`
+            fragment MyChapter on Chapter {
+              __typename
+              title
+            }
+          `,
+        },
+        (data) => {
+          return { ...data, title: `${command.payload.message}` }
+        }
+      )
+    }
+
+    async function handleAck() {
+      acknowledged = true
+      // const data = await getCurrentState(apolloClient)
+      if (apolloData) {
+        // @ts-expect-error fix command type payload
+        reactotron.send("apollo.response", apolloData)
+        acknowledged = false
+        apolloData = null
+      }
     }
 
     // --- Reactotron Hooks ---------------------------------
@@ -290,6 +378,9 @@ export const apolloPlugin =
     // TODO clear cache command?
     const COMMAND_MAP = {
       "state.values.subscribe": subscribe,
+      "apollo.ack": handleAck,
+      "apollo.request": handleRequest,
+      "apollo.fragment.update": handleUpdateFragment,
     } satisfies { [name: string]: (command: Command) => void }
 
     /**
@@ -311,26 +402,7 @@ export const apolloPlugin =
       onConnect() {
         reactotron.display({ name: "APOLLO CLIENT", preview: "Connected" })
 
-        const poll = () => {
-          // TODO remove
-          reactotron.display({
-            name: "APOLLO CLIENT",
-            preview: `Poll`,
-          })
-
-          getCurrentState(apolloClient).then((state) => {
-            apolloData = state
-
-            sendSubscriptions()
-
-            reactotron.display({
-              name: "APOLLO CLIENT",
-              preview: `State Updated`,
-              value: state,
-            })
-          })
-        }
-        apolloClient.__actionHookForDevTools(debounce(poll))
+        setup()
       },
       onDisconnect() {
         // Does this do anything? How do we clean up?
