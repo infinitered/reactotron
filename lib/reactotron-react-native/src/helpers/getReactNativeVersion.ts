@@ -1,6 +1,14 @@
-import { NativeModules } from "react-native"
+/* eslint-disable */
+import PlatformConstantsIOSSpec from "react-native/src/private/specs/modules/NativePlatformConstantsIOS"
+import PlatformConstantsAndroidSpec from "react-native/src/private/specs/modules/NativePlatformConstantsAndroid"
+/* eslint-enable */
 import { getReactNativeVersionWithModules } from "./getReactNativeVersionWithModules"
+import { TurboModuleRegistry } from "react-native"
 
 export default function getReactNativeVersion(): string | null {
-  return getReactNativeVersionWithModules(NativeModules)
+  const constants =
+    TurboModuleRegistry.getEnforcing<PlatformConstantsIOSSpec | PlatformConstantsAndroidSpec>(
+      "PlatformConstants"
+    ).getConstants() || {}
+  return getReactNativeVersionWithModules(constants)
 }

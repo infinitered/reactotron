@@ -1,4 +1,4 @@
-import { Platform, NativeModules } from "react-native"
+import { Platform, TurboModuleRegistry } from "react-native"
 import { createClient } from "reactotron-core-client"
 import type {
   ClientOptions,
@@ -8,6 +8,12 @@ import type {
   ReactotronCore,
 } from "reactotron-core-client"
 import type { AsyncStorageStatic } from "@react-native-async-storage/async-storage"
+
+/* eslint-disable */
+import SourceCodeSpec from "react-native/src/private/specs/modules/NativeSourceCode"
+import PlatformConstantsIOSSpec from "react-native/src/private/specs/modules/NativePlatformConstantsIOS"
+import PlatformConstantsAndroidSpec from "react-native/src/private/specs/modules/NativePlatformConstantsAndroid"
+/* eslint-enable */
 
 import getReactNativeVersion from "./helpers/getReactNativeVersion"
 import getReactNativeDimensions from "./helpers/getReactNativeDimensions"
@@ -21,7 +27,10 @@ import devTools from "./plugins/devTools"
 import trackGlobalLogs from "./plugins/trackGlobalLogs"
 import { getHostFromUrl } from "./helpers/parseURL"
 
-const constants = NativeModules.PlatformConstants || {}
+const constants =
+  TurboModuleRegistry.getEnforcing<PlatformConstantsIOSSpec | PlatformConstantsAndroidSpec>(
+    "PlatformConstants"
+  ).getConstants() || {}
 
 const REACTOTRON_ASYNC_CLIENT_ID = "@REACTOTRON/clientId"
 
@@ -37,7 +46,8 @@ let tempClientId: string | null = null
 const getHost = (defaultHost = "localhost") => {
   try {
     // RN Reference: https://github.com/facebook/react-native/blob/main/packages/react-native/src/private/specs/modules/NativeSourceCode.js
-    const scriptURL = NativeModules?.SourceCode?.getConstants().scriptURL
+    const scriptURL =
+      TurboModuleRegistry.getEnforcing<SourceCodeSpec>("SourceCode").getConstants().scriptURL
     if (typeof scriptURL !== "string") throw new Error("Invalid non-string URL")
 
     return getHostFromUrl(scriptURL)
