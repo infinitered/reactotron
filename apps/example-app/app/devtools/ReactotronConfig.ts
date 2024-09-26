@@ -4,8 +4,6 @@
  * @see https://github.com/infinitered/reactotron
  */
 import { Platform } from "react-native"
-// @ts-ignore
-import DevMenu from "react-native/Libraries/NativeModules/specs/NativeDevMenu"
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { ArgType } from "reactotron-core-client"
@@ -17,6 +15,11 @@ import { clear } from "app/utils/storage"
 import { goBack, resetRoot, navigate } from "app/navigators/navigationUtilities"
 
 import { Reactotron } from "./ReactotronClient"
+
+let DevMenu = null
+if (Platform.OS === "ios") {
+  DevMenu = require("react-native/Libraries/NativeModules/specs/NativeDevMenu")
+}
 
 const reactotron = Reactotron.configure({
   name: require("../../package.json").name,
@@ -55,15 +58,18 @@ if (Platform.OS !== "web") {
  * NOTE: If you edit this file while running the app, you will need to do a full refresh
  * or else your custom commands won't be registered correctly.
  */
-reactotron.onCustomCommand({
-  title: "Show Dev Menu",
-  description: "Opens the React Native dev menu",
-  command: "showDevMenu",
-  handler: () => {
-    Reactotron.log("Showing React Native dev menu")
-    DevMenu.show()
-  },
-})
+
+if (Platform.OS === "ios") {
+  reactotron.onCustomCommand({
+    title: "Show Dev Menu",
+    description: "Opens the React Native dev menu",
+    command: "showDevMenu",
+    handler: () => {
+      Reactotron.log("Showing React Native dev menu")
+      DevMenu.show()
+    },
+  })
+}
 
 reactotron.onCustomCommand({
   title: "Reset Root Store",
