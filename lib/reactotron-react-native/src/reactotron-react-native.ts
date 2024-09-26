@@ -48,6 +48,9 @@ const getHost = (defaultHost = "localhost") => {
   }
 }
 
+const { osRelease, model, serverHost, forceTouch, interfaceIdiom, systemName, uiMode, serial } =
+  getReactNativePlatformConstants()
+
 const DEFAULTS: ClientOptions<ReactotronReactNative> = {
   createSocket: (path: string) => new WebSocket(path), // eslint-disable-line
   host: getHost("localhost"),
@@ -59,7 +62,14 @@ const DEFAULTS: ClientOptions<ReactotronReactNative> = {
     reactotronLibraryVersion: "REACTOTRON_REACT_NATIVE_VERSION",
     platform: Platform.OS,
     platformVersion: Platform.Version,
-    ...getReactNativePlatformConstants(),
+    osRelease,
+    model,
+    serverHost,
+    forceTouch,
+    interfaceIdiom,
+    systemName,
+    uiMode,
+    serial,
     reactNativeVersion: getReactNativeVersion(),
     ...getReactNativeDimensions(),
   },
@@ -75,15 +85,13 @@ const DEFAULTS: ClientOptions<ReactotronReactNative> = {
     // Accounting for screen rotation
     const dimensions = [screenWidth, screenHeight].sort().join("-")
 
-    tempClientId = [
-      name,
-      Platform.OS,
-      Platform.Version,
-      getReactNativePlatformConstants().systemName,
-      getReactNativePlatformConstants().Model,
-      dimensions,
-      screenScale,
-    ]
+    const additionalInfo = Platform.select({
+      ios: systemName,
+      android: model,
+      default: "",
+    })
+
+    tempClientId = [name, Platform.OS, Platform.Version, additionalInfo, dimensions, screenScale]
       .filter(Boolean)
       .join("-")
 
