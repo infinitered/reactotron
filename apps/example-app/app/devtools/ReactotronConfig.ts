@@ -3,9 +3,9 @@
  * free desktop app for inspecting and debugging your React Native app.
  * @see https://github.com/infinitered/reactotron
  */
-import { Platform, TurboModuleRegistry } from "react-native"
-// eslint-disable-next-line
-import DevMenuSpec from "react-native/src/private/specs/modules/NativeDevMenu"
+import { Platform } from "react-native"
+// @ts-ignore
+import DevMenu from "react-native/Libraries/NativeModules/specs/NativeDevMenu"
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { ArgType } from "reactotron-core-client"
@@ -61,7 +61,7 @@ reactotron.onCustomCommand({
   command: "showDevMenu",
   handler: () => {
     Reactotron.log("Showing React Native dev menu")
-    TurboModuleRegistry.getEnforcing<DevMenuSpec>("DevMenu")?.show()
+    DevMenu.show()
   },
 })
 

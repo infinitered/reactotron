@@ -1,10 +1,8 @@
-import { TurboModuleRegistry } from "react-native"
 import type { ReactotronCore, Plugin } from "reactotron-core-client"
-// eslint-disable-next-line
-import DevMenuSpec from "react-native/src/private/specs/modules/NativeDevMenu"
+// eslint-disable-next-line import/namespace, import/default
+import DevMenu from "react-native/Libraries/NativeModules/specs/NativeDevMenu"
 
 const devTools = () => () => {
-  const DevMenu = TurboModuleRegistry.getEnforcing<DevMenuSpec>("DevMenu").show()
   return {
     onCommand: (command) => {
       if (command.type !== "devtools.open" && command.type !== "devtools.reload") return
