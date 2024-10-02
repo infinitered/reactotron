@@ -17,6 +17,11 @@ import { goBack, resetRoot, navigate } from "app/navigators/navigationUtilities"
 import { Reactotron } from "./ReactotronClient"
 
 let DevMenu = null
+/**
+ * This Platform.OS iOS restriction can be lifted in React Native 0.77
+ * The `DevMenu` module was missing in Android for the New Architecture
+ * See this PR for more details: https://github.com/facebook/react-native/pull/46723
+ */
 if (Platform.OS === "ios") {
   DevMenu = require("react-native/Libraries/NativeModules/specs/NativeDevMenu")
 }
