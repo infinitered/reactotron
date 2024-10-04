@@ -1,14 +1,14 @@
-export function getReactNativeVersionWithModules(nativeModules: any): string | null {
+export function getReactNativeVersionWithModules(constants: any): string | null {
   try {
     // dodge some bullets
-    if (!nativeModules.PlatformConstants) return null
-    if (!nativeModules.PlatformConstants.reactNativeVersion) return null
+    if (!constants) return null
+    if (!constants.reactNativeVersion) return null
 
     // grab the raw numbers
-    const major = nativeModules.PlatformConstants.reactNativeVersion.major
-    const minor = nativeModules.PlatformConstants.reactNativeVersion.minor
-    const patch = nativeModules.PlatformConstants.reactNativeVersion.patch
-    const prerelease = nativeModules.PlatformConstants.reactNativeVersion.prerelease
+    const major = constants.reactNativeVersion.major
+    const minor = constants.reactNativeVersion.minor
+    const patch = constants.reactNativeVersion.patch
+    const prerelease = constants.reactNativeVersion.prerelease
 
     // check the major or jet
     if (typeof major !== "number") return null

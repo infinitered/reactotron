@@ -1,6 +1,6 @@
-import { NativeModules } from "react-native"
 import { getReactNativeVersionWithModules } from "./getReactNativeVersionWithModules"
+import { Platform } from "react-native"
 
 export default function getReactNativeVersion(): string | null {
-  return getReactNativeVersionWithModules(NativeModules)
+  return getReactNativeVersionWithModules(Platform.constants)
 }
