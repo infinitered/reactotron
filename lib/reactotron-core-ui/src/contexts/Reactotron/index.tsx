@@ -25,6 +25,12 @@ interface ContextProps extends Props {
   isSubscriptionModalOpen: boolean
   openSubscriptionModal: () => void
   closeSubscriptionModal: () => void
+
+  // Diagnostic Modal
+  isDiagnosticModalOpen: boolean
+  openDiagnosticModal: () => void
+  closeDiagnosticModal: () => void
+
 }
 
 const ReactotronContext = React.createContext<ContextProps>({
@@ -39,6 +45,9 @@ const ReactotronContext = React.createContext<ContextProps>({
   isSubscriptionModalOpen: false,
   openSubscriptionModal: null,
   closeSubscriptionModal: null,
+  isDiagnosticModalOpen: false,
+  openDiagnosticModal: null,
+  closeDiagnosticModal: null,
 })
 
 const Provider: FunctionComponent<React.PropsWithChildren<Props>> = ({
@@ -56,6 +65,9 @@ const Provider: FunctionComponent<React.PropsWithChildren<Props>> = ({
     isSubscriptionModalOpen,
     openSubscriptionModal,
     closeSubscriptionModal,
+    isDiagnosticModalOpen,
+    openDiagnosticModal,
+    closeDiagnosticModal,
   } = useReactotron()
 
   return (
@@ -72,6 +84,9 @@ const Provider: FunctionComponent<React.PropsWithChildren<Props>> = ({
         isSubscriptionModalOpen,
         openSubscriptionModal,
         closeSubscriptionModal,
+        isDiagnosticModalOpen,
+        openDiagnosticModal,
+        closeDiagnosticModal,
       }}
     >
       {children}
