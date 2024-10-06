@@ -339,11 +339,6 @@ workflows:
           filters:
             branches:
               ignore: *release_branch_names
-      - publish-docs/build_docs:
-          <<: *ir_docs_config
-          filters:
-            branches:
-              ignore: *release_branch_names
 
 
   # Allows for manual publishing of docs independent of deployment
@@ -373,11 +368,6 @@ workflows:
               only: *release_branch_names
           requires:
             - build_and_test
-      - publish-docs/publish_docs:
-          <<: *ir_docs_config
-          filters:
-            branches:
-              only: *release_branch_names
       - release_package:
           context:
             - infinitered-npm-package
