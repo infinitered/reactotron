@@ -1,6 +1,7 @@
-import React, { useContext } from "react"
+import React, { useCallback, useContext, useMemo } from "react"
 import { clipboard } from "electron"
 import fs from "fs"
+import debounce from "lodash.debounce"
 import {
   Header,
   filterCommands,
@@ -79,6 +80,8 @@ function Timeline() {
     sendCommand("state.action.dispatch", { action })
   }
 
+  const { searchString, handleInputChange } = useDebouncedSearchInput(search, setSearch, 300)
+
   return (
     <Container>
       <Header
@@ -118,7 +121,7 @@ function Timeline() {
         {isSearchOpen && (
           <SearchContainer>
             <SearchLabel>Search</SearchLabel>
-            <SearchInput autoFocus value={search} onChange={(e) => setSearch(e.target.value)} />
+            <SearchInput autoFocus value={searchString} onChange={handleInputChange} />
             <ButtonContainer
               onClick={() => {
                 if (search === "") {
@@ -180,3 +183,26 @@ function Timeline() {
 }
 
 export default Timeline
+
+const useDebouncedSearchInput = (
+  initialValue: string,
+  setSearch: (search: string) => void,
+  delay: number = 300
+) => {
+  const [searchString, setSearchString] = React.useState<string>(initialValue)
+  const debouncedOnChange = useMemo(() => debounce(setSearch, delay), [delay, setSearch])
+
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target
+      setSearchString(value)
+      debouncedOnChange(value)
+    },
+    [debouncedOnChange]
+  )
+
+  return {
+    searchString,
+    handleInputChange,
+  }
+}

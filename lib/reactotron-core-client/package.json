@@ -1,6 +1,6 @@
 {
   "name": "reactotron-core-client",
-  "version": "2.9.2",
+  "version": "2.9.4",
   "description": "Grants Reactotron clients the ability to talk to a Reactotron server.",
   "author": "Infinite Red",
   "license": "MIT",
@@ -25,7 +25,7 @@
   },
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch --notify",
+    "test:watch": "jest --watch",
     "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}' --config ../../.prettierrc --ignore-path ../../.prettierignore",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",

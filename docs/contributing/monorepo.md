@@ -1,22 +1,22 @@
 # Monorepo Structure
 
-## Yarn 3
+## Yarn 4
 
-This project uses yarn 3 workspaces to manage the monorepo. It hoists dependencies shared across workspaces to the root of the project, and allows for a single `yarn.lock` file to be used for all packages.
+This project uses yarn 4 workspaces to manage the monorepo. It hoists dependencies shared across workspaces to the root of the project, and allows for a single `yarn.lock` file to be used for all packages.
 
-As long as you have yarn 1 installed, you will use the yarn 3 automatically using the version specified in `.yarnrc.yml`.
+As long as you have yarn 1 installed, you will use the yarn 4 automatically using the version specified in `.yarnrc.yml`.
 
 ### nodeLinker
 
-Yarn 3 philosophically has chosen to go in a direction where dependencies should be vendored and checked into the repo. This is a departure from the way yarn 1 and npm work, where dependencies are installed in the `node_modules` directory. They call this Plug'n'Play, and it is enabled by default in yarn 3.
+Yarn 4 philosophically has chosen to go in a direction where dependencies should be vendored and checked into the repo. This is a departure from the way yarn 1 and npm work, where dependencies are installed in the `node_modules` directory. They call this Plug'n'Play, and it is enabled by default in yarn 4.
 
 However, this can behavior can be modified through the `nodeLinker` value in `yarnrc.yml` to use `node-modules`, which is the normal behavior for yarn 1 and npm.
 
-Since yarn 1 is no longer being actively worked on, so we are using yarn 3 with the `nodeLinker` set to `node-modules`.
+Since yarn 1 is no longer being actively worked on, so we are using yarn 4 with the `nodeLinker` set to `node-modules`.
 
 ### Patches
 
-Yarn 3 has a patching feature similar to `patch-package` through `yarn patch <package>`. You can read more about it here: https://yarnpkg.com/cli/patch
+Yarn 4 has a patching feature similar to `patch-package` through `yarn patch <package>`. You can read more about it here: https://yarnpkg.com/cli/patch
 
 ## Nx
 

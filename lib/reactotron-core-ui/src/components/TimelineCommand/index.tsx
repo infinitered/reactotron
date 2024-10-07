@@ -80,6 +80,7 @@ const ChildrenContainer = styled.div`
   animation: fade-up 0.25s;
   will-change: transform opacity;
   padding: 0 40px 30px 40px;
+  word-break: break-all;
 `
 
 interface Props {

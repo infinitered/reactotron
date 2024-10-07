@@ -2,6 +2,25 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [5.1.9](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.8...reactotron-react-native@5.1.9) (2024-10-04)
+
+
+### Bug Fixes
+
+* **reactotron-react-native:** new arch support ([#1508](https://github.com/infinitered/reactotron/issues/1508) by [@frankcalise](https://github.com/frankcalise)) ([c114e09](https://github.com/infinitered/reactotron/commit/c114e09b8488e1a247faa1621a1679ef9ae3a6f8)), closes [#1486](https://github.com/infinitered/reactotron/issues/1486)
+
+### [5.1.8](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.7...reactotron-react-native@5.1.8) (2024-08-26)
+
+### [5.1.7](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.6...reactotron-react-native@5.1.7) (2024-05-15)
+
+### [5.1.6](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.5...reactotron-react-native@5.1.6) (2024-04-04)
+
+### [5.1.5](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.4...reactotron-react-native@5.1.5) (2024-04-01)
+
+### [5.1.4](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.3...reactotron-react-native@5.1.4) (2024-03-26)
+
+### [5.1.3](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.2...reactotron-react-native@5.1.3) (2024-02-15)
+
 ### [5.1.2](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.1...reactotron-react-native@5.1.2) (2024-02-14)
 
 ## [5.1.1](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.0...reactotron-react-native@5.1.1) (2024-02-14)

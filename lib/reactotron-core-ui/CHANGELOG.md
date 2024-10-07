@@ -2,6 +2,24 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.3.3](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.2...reactotron-core-ui@2.3.3) (2024-04-04)
+
+### [2.3.2](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.1...reactotron-core-ui@2.3.2) (2024-03-26)
+
+
+### Bug Fixes
+
+* **reactotron-core-ui:** Overlapping timeline layout ([#1457](https://github.com/infinitered/reactotron/issues/1457)) ([12a0215](https://github.com/infinitered/reactotron/commit/12a02152c7beca5518298dff82af24559e0dfb91))
+
+### [2.3.1](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.0...reactotron-core-ui@2.3.1) (2024-03-26)
+
+## [2.3.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.2.1...reactotron-core-ui@2.3.0) (2024-02-16)
+
+
+### Features
+
+* **reactotron-app:** Timeline deep-search ([#1417](https://github.com/infinitered/reactotron/issues/1417)) ([8d0e952](https://github.com/infinitered/reactotron/commit/8d0e9525ac30e895f38a0c2f99eeda155c14527f)), closes [#1181](https://github.com/infinitered/reactotron/issues/1181)
+
 ### [2.2.1](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.2.0...reactotron-core-ui@2.2.1) (2024-02-14)
 
 ## [2.2.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.1.1...reactotron-core-ui@2.2.0) (2024-02-14)

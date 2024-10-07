@@ -14,20 +14,21 @@ yarn add -D reactotron-react-native-mmkv
 
 Import your mmkv storage instance:
 
-```js
+```tsx
 import { MMKV } from "react-native-mmkv"
 export const storage = new MMKV()
 ```
 
 To use the `mmkvPlugin`, add the additional plugin on the `import` line.
 
-```js
+```tsx
 import Reactotron from "reactotron-react-native"
+import type { ReactotronReactNative } from "reactotron-react-native"
 import mmkvPlugin from "reactotron-react-native-mmkv"
 import { storage } from "./mmkv/storage/instance/location" // <--- update this location
 ...
 Reactotron.configure()
-  .use(mmkvPlugin({ storage })) // <--- here we go!
+  .use(mmkvPlugin<ReactotronReactNative>({ storage })) // <--- here we go!
   .connect()
 ```
 
@@ -37,8 +38,8 @@ And you're done! Now you can see your MMKV in Reactotron.
 
 `mmkvPlugin()` accepts an object with an `ignore` key. The value is an array of strings you would like to prevent sending to Reactotron.
 
-```js
-mmkvPlugin({
+```tsx
+mmkvPlugin<ReactotronReactNative>({
   storage,
   ignore: ["secret"],
 })

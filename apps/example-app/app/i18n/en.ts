@@ -44,6 +44,7 @@ const en = {
   networkingScreen: {
     title: "Reactotron automatically intercepts and logs network requests!",
     makeApiCall: "Make an API Call",
+    makeFailingApiCall: "Make a failing API Call",
   },
 
   repos: {

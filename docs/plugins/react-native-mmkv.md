@@ -4,26 +4,41 @@ title: MMKV
 
 # React Native MMKV
 
-The `react-native-mmkv` plugin allows you to track [MMKV](https://github.com/mrousavy/react-native-mmkv) updates.
+The `reactotron-react-native-mmkv` plugin allows you to track [MMKV](https://github.com/mrousavy/react-native-mmkv) updates.
+
+## Installing
+
+```
+npm i --save-dev reactotron-react-native-mmkv
+```
+
+```
+yarn add -D reactotron-react-native-mmkv
+```
 
 ## Usage
 
-Import your mmkv storage instance:
+Import your MMKV storage instance:
 
-```js
-import { MMKV } from "react-native-mmkv";
-export const storage = new MMKV();
+```tsx
+import { MMKV } from "react-native-mmkv"
+export const storage = new MMKV()
 ```
 
 To use the `mmkvPlugin`, add the additional plugin on the `import` line.
 
-```js
+```tsx
 import Reactotron from "reactotron-react-native"
+// success-line
+import type { ReactotronReactNative } from "reactotron-react-native"
+// success-line
 import mmkvPlugin from "reactotron-react-native-mmkv"
-import { storage } from "./mmkv/storage/instance/location" // <--- update this location
+// success-line
+import { storage } from "./mmkv/storage/instance/location" // <--- update this to your mmkv instance.
 ...
 Reactotron.configure()
-  .use(mmkvPlugin({ storage })) // <--- here we go!
+  // success-line
+  .use(mmkvPlugin<ReactotronReactNative>({ storage }))
   .connect()
 ```
 
@@ -33,9 +48,9 @@ And you're done! Now you can see your MMKV in Reactotron.
 
 `mmkvPlugin()` accepts an object with an `ignore` key. The value is an array of strings you would like to prevent sending to Reactotron.
 
-```js
-mmkvPlugin({
+```tsx
+mmkvPlugin<ReactotronReactNative>({
   storage,
   ignore: ["secret"],
-});
+})
 ```

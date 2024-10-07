@@ -1,6 +1,6 @@
 {
   "name": "reactotron-react-js",
-  "version": "3.3.13",
+  "version": "3.3.15",
   "description": "A development tool to explore, inspect, and diagnose your React JS/DOM apps.",
   "author": "Infinite Red",
   "license": "MIT",
@@ -25,7 +25,7 @@
   },
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch --notify",
+    "test:watch": "jest --watch",
     "format": "prettier '*.{js,ts,tsx,json,css,yml}|**/*.{js,ts,tsx,json,css,yml}'",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",
@@ -49,7 +49,7 @@
     "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/preset-env": "^7.23.2",
     "@babel/preset-typescript": "^7.23.2",
-    "@types/react": "18.2.35",
+    "@types/react": "18.2.45",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
     "babel-eslint": "^10.1.0",
