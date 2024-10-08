@@ -286,7 +286,7 @@ describe("contexts/Standalone/useStandalone", () => {
       expect(result.current.orphanedCommands[0]).toEqual({ connectionId: 1, payload: true })
     })
 
-    it("should clear commands from a connection", () => {
+    it("should clear commands from a connection but keeping the api ones", () => {
       const { result } = renderHook(() => useStandalone())
 
       act(() => {
@@ -299,13 +299,41 @@ describe("contexts/Standalone/useStandalone", () => {
 
       act(() => {
         result.current.commandReceived({ clientId: "1234", payload: true })
+        result.current.commandReceived({ clientId: "1234", payload: true, type: "api.response" })
       })
 
-      expect(result.current.connections[0].commands.length).toEqual(1)
-      expect(result.current.connections[0].commands[0]).toEqual({ clientId: "1234", payload: true })
+      expect(result.current.connections[0].commands.length).toEqual(2)
+      expect(result.current.connections[0].commands[0]).toEqual({ clientId: "1234", payload: true, type: "api.response"})
+      expect(result.current.connections[0].commands[1]).toEqual({ clientId: "1234", payload: true })
 
       act(() => {
         result.current.clearSelectedConnectionCommands()
+      })
+
+      expect(result.current.connections[0].commands.length).toEqual(1)
+      expect(result.current.connections[0].commands[0]).toEqual({ clientId: "1234", payload: true, type: "api.response"})
+    })
+
+    it("should clear network commands from a connection", () => {
+      const { result } = renderHook(() => useStandalone())
+
+      act(() => {
+        result.current.connectionEstablished({
+          clientId: "1234",
+          id: 0,
+          platform: "ios",
+        })
+      })
+
+      act(() => {
+        result.current.commandReceived({ clientId: "1234", payload: true, type: "api.response" })
+      })
+
+      expect(result.current.connections[0].commands.length).toEqual(1)
+      expect(result.current.connections[0].commands[0]).toEqual({ clientId: "1234", payload: true, type: "api.response" })
+
+      act(() => {
+        result.current.clearNetworkCommands()
       })
 
       expect(result.current.connections[0].commands.length).toEqual(0)

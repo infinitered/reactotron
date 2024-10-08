@@ -36,7 +36,7 @@ describe("contexts/Timline/useTimeline", () => {
     it("should default to no hidden commands", () => {
       const { result } = renderHook(() => useTimline())
 
-      expect(result.current.hiddenCommands).toEqual([])
+      expect(result.current.hiddenCommands).toEqual([CommandType.ApiResponse])
     })
 
     it("should have saved hidden commands", () => {
@@ -123,7 +123,7 @@ describe("contexts/Timline/useTimeline", () => {
     it("should set hidden commands", () => {
       const { result } = renderHook(() => useTimline())
 
-      expect(result.current.hiddenCommands).toEqual([])
+      expect(result.current.hiddenCommands).toEqual([CommandType.ApiResponse])
       act(() => {
         result.current.setHiddenCommands([CommandType.ClientIntro])
       })

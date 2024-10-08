@@ -1,6 +1,6 @@
 import { useReducer, useEffect } from "react"
 
-import type { CommandTypeKey } from "reactotron-core-contract"
+import { CommandType, type CommandTypeKey } from "reactotron-core-contract"
 
 export enum StorageKey {
   ReversedOrder = "ReactotronTimelineReversedOrder",
@@ -80,7 +80,7 @@ function useTimeline() {
   // Load some values
   useEffect(() => {
     const isReversed = localStorage.getItem(StorageKey.ReversedOrder) === "reversed"
-    const hiddenCommands = JSON.parse(localStorage.getItem(StorageKey.HiddenCommands) || "[]")
+    const hiddenCommands = JSON.parse(localStorage.getItem(StorageKey.HiddenCommands) || JSON.stringify([CommandType.ApiResponse]))
 
     dispatch({
       type: isReversed ? TimelineActionType.OrderReverse : TimelineActionType.OrderRegular,

@@ -20,7 +20,6 @@ const GROUPS = [
     items: [
       { value: CommandType.ClientIntro, text: "Connection" },
       { value: CommandType.Benchmark, text: "Benchmark" },
-      { value: CommandType.ApiResponse, text: "API" },
     ],
   },
   {
