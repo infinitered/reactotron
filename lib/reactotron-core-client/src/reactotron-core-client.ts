@@ -48,7 +48,7 @@ interface DisplayConfig {
   name: string
   value?: object | string | number | boolean | null | undefined
   preview?: string
-  image?: string
+  image?: string | { uri: string }
   important?: boolean
 }
 
@@ -133,11 +133,8 @@ export const corePlugins = [
   repl(),
 ] satisfies PluginCreator<ReactotronCore>[]
 
-export type InferPluginsFromCreators<Client, PC extends PluginCreator<Client>[]> = PC extends Array<
-  infer P extends PluginCreator<Client>
->
-  ? ReturnType<P>[]
-  : never
+export type InferPluginsFromCreators<Client, PC extends PluginCreator<Client>[]> =
+  PC extends Array<infer P extends PluginCreator<Client>> ? ReturnType<P>[] : never
 // #endregion
 
 type CorePluginFeatures = InferFeaturesFromPlugins<ReactotronCore, typeof corePlugins>
@@ -285,7 +282,7 @@ export class ReactotronImpl implements ReactotronCore {
 
       const getClientIdPromise = getClientId || emptyPromise
 
-      getClientIdPromise().then((clientId) => {
+      getClientIdPromise(name).then((clientId) => {
         this.isReady = true
         // introduce ourselves
         this.send("client.intro", {

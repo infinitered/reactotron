@@ -1,6 +1,6 @@
 {
   "name": "reactotron-mst",
-  "version": "3.1.6",
+  "version": "3.1.10",
   "description": "A Reactotron plugin for mobx-state-tree.",
   "author": "Infinite Red",
   "license": "MIT",
@@ -19,14 +19,14 @@
   "react-native": "src/index.ts",
   "exports": {
     "import": "./dist/index.esm.js",
-    "default": "./dist/index.js",
     "react-native": "./src/index.ts",
-    "types": "./dist/types/src/index.d.ts"
+    "types": "./dist/types/src/index.d.ts",
+    "default": "./dist/index.js"
   },
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch --notify",
-    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "test:watch": "jest --watch",
+    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}' --config ../../.prettierrc --ignore-path ../../.prettierignore",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",
     "prebuild": "yarn clean",
@@ -47,7 +47,7 @@
     "reactotron-core-client": "*"
   },
   "dependencies": {
-    "ramda": "^0.25.0"
+    "ramda": "^0.28.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
@@ -56,7 +56,7 @@
     "@types/jest": "^29.5.7",
     "@types/lodash.camelcase": "^4.3.7",
     "@types/node": "^18.18.8",
-    "@types/ramda": "^0.25.50",
+    "@types/ramda": "^0.28.0",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
     "babel-eslint": "^10.1.0",
@@ -72,8 +72,8 @@
     "eslint-plugin-standard": "^5.0.0",
     "jest": "^29.7.0",
     "lodash.camelcase": "^4.3.0",
-    "mobx": "^4.2.1",
-    "mobx-state-tree": "^2.0.4",
+    "mobx": "6.10.2",
+    "mobx-state-tree": "^5.3.0",
     "prettier": "^3.0.3",
     "reactotron-core-client": "workspace:*",
     "rollup": "^1.1.2",

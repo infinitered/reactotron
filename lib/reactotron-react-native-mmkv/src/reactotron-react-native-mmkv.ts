@@ -1,5 +1,5 @@
 import { type MMKV } from "react-native-mmkv"
-import type { Reactotron } from "reactotron-core-client"
+import type { ReactotronCore } from "reactotron-core-client"
 
 export interface MmkvPluginConfig {
   /**
@@ -22,19 +22,22 @@ interface Listener {
  *
  * @example
  * import { MMKV } from 'react-native-mmkv'
+ * import type { ReactotronReactNative } from 'reactotron-react-native'
  * // create your storage instance
  * const storage = new MMKV()
  *
  * // pass your instance to the plugin
- * Reactotron.use(mmkvPlugin({ storage }))
+ * Reactotron.use(mmkvPlugin<ReactotronReactNative>({ storage }))
  */
-export default function mmkvPlugin(config: MmkvPluginConfig) {
+export default function mmkvPlugin<Client extends ReactotronCore = ReactotronCore>(
+  config: MmkvPluginConfig
+) {
   /** This gives us the ability to ignore specific writes for less noise */
   const ignore = config.ignore ?? []
 
   let listener: Listener | undefined
 
-  return (reactotron: Reactotron) => {
+  return (reactotron: Client) => {
     const log = ({
       value,
       preview,

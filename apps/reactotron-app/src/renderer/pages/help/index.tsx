@@ -11,7 +11,6 @@ import { FaTwitter as TwitterIcon } from "react-icons/fa"
 import { getApplicationKeyMap } from "react-hotkeys"
 import { ItemContainer, ItemIconContainer } from "./SharedStyles"
 import KeybindGroup from "./components/KeybindGroup"
-import AndroidDeviceHelp from "./components/AndroidDeviceHelp"
 import { reactotronLogo } from "../../images"
 
 const projectJson = require("../../../../package.json")
@@ -99,7 +98,7 @@ function Help() {
             <ItemIconContainer>
               <RepoIcon size={40} />
             </ItemIconContainer>
-            Repo
+            GitHub Docs
           </ItemContainer>
           <ItemContainer onClick={openFeedback}>
             <ItemIconContainer>
@@ -120,8 +119,6 @@ function Help() {
             @reactotron
           </ItemContainer>
         </ConnectContainer>
-
-        <AndroidDeviceHelp />
 
         <Title>Keystrokes</Title>
         {Keybinds()}

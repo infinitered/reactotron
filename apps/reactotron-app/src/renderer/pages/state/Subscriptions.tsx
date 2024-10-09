@@ -120,14 +120,14 @@ function Subscriptions() {
             )}
           </EmptyState>
         ) : (
-          subscriptionValues.map((subscription) => {
+          subscriptionValues.map((subscription, index) => {
             const value =
               typeof subscription.value === "object"
                 ? { value: subscription.value }
                 : subscription.value
 
             return (
-              <SubscriptionContainer key={`subscription-${subscription.path}`}>
+              <SubscriptionContainer key={`subscription-${subscription.path}-${index}`}>
                 <SubscriptionPath>{subscription.path}</SubscriptionPath>
                 <SubscriptionValue>
                   <ContentView value={value} />

@@ -1,6 +1,7 @@
-import React, { useContext } from "react"
+import React, { useCallback, useContext, useMemo } from "react"
 import { clipboard, shell } from "electron"
 import fs from "fs"
+import debounce from "lodash.debounce"
 import {
   Header,
   filterCommands,
@@ -12,6 +13,7 @@ import {
   RandomJoke,
 } from "reactotron-core-ui"
 import { MdSearch, MdDeleteSweep, MdFilterList, MdSwapVert, MdReorder } from "react-icons/md"
+import { FaTimes } from "react-icons/fa"
 import styled from "styled-components"
 
 const Container = styled.div`
@@ -48,7 +50,7 @@ const SearchInput = styled.input`
 const HelpMessage = styled.div`
   margin: 0 40px;
 `
-const ButtonContainer = styled.div`
+const QuickStartButtonContainer = styled.div`
   display: flex;
   padding: 4px 8px;
   margin: 30px 20px;
@@ -66,11 +68,17 @@ const Divider = styled.div`
   margin: 40px 10px;
 `
 
+export const ButtonContainer = styled.div`
+  padding: 10px;
+  cursor: pointer;
+`
+
 function Timeline() {
   const { sendCommand, clearCommands, commands, openDispatchModal } = useContext(ReactotronContext)
   const {
     isSearchOpen,
     toggleSearch,
+    closeSearch,
     setSearch,
     search,
     isReversed,
@@ -95,6 +103,8 @@ function Timeline() {
   function openDocs() {
     shell.openExternal("https://docs.infinite.red/reactotron/quick-start/react-native/")
   }
+
+  const { searchString, handleInputChange } = useDebouncedSearchInput(search, setSearch, 300)
 
   return (
     <Container>
@@ -135,7 +145,18 @@ function Timeline() {
         {isSearchOpen && (
           <SearchContainer>
             <SearchLabel>Search</SearchLabel>
-            <SearchInput value={search} onChange={(e) => setSearch(e.target.value)} />
+            <SearchInput autoFocus value={searchString} onChange={handleInputChange} />
+            <ButtonContainer
+              onClick={() => {
+                if (search === "") {
+                  closeSearch()
+                } else {
+                  setSearch("")
+                }
+              }}
+            >
+              <FaTimes size={24} />
+            </ButtonContainer>
           </SearchContainer>
         )}
       </Header>
@@ -145,9 +166,9 @@ function Timeline() {
             <HelpMessage>
               Once your app connects and starts sending events, they will appear here.
             </HelpMessage>
-            <ButtonContainer onClick={openDocs}>
+            <QuickStartButtonContainer onClick={openDocs}>
               Check out the quick start guide here!
-            </ButtonContainer>
+            </QuickStartButtonContainer>
             <Divider />
             <RandomJoke />
           </EmptyState>
@@ -193,3 +214,26 @@ function Timeline() {
 }
 
 export default Timeline
+
+const useDebouncedSearchInput = (
+  initialValue: string,
+  setSearch: (search: string) => void,
+  delay: number = 300
+) => {
+  const [searchString, setSearchString] = React.useState<string>(initialValue)
+  const debouncedOnChange = useMemo(() => debounce(setSearch, delay), [delay, setSearch])
+
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target
+      setSearchString(value)
+      debouncedOnChange(value)
+    },
+    [debouncedOnChange]
+  )
+
+  return {
+    searchString,
+    handleInputChange,
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "reactotron-core-client",
-  "version": "2.8.11",
+  "version": "2.9.4",
   "description": "Grants Reactotron clients the ability to talk to a Reactotron server.",
   "author": "Infinite Red",
   "license": "MIT",
@@ -18,15 +18,15 @@
   "types": "dist/types/src/index.d.ts",
   "react-native": "src/index.ts",
   "exports": {
-    "default": "./dist/index.js",
     "import": "./dist/index.esm.js",
     "react-native": "./src/index.ts",
-    "types": "./dist/types/src/index.d.ts"
+    "types": "./dist/types/src/index.d.ts",
+    "default": "./dist/index.js"
   },
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch --notify",
-    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "test:watch": "jest --watch",
+    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}' --config ../../.prettierrc --ignore-path ../../.prettierignore",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",
     "prebuild": "yarn clean",

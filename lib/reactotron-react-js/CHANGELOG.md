@@ -2,6 +2,23 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.3.15](https://github.com/infinitered/reactotron/compare/reactotron-react-js@3.3.14...reactotron-react-js@3.3.15) (2024-08-26)
+
+### [3.3.14](https://github.com/infinitered/reactotron/compare/reactotron-react-js@3.3.13...reactotron-react-js@3.3.14) (2024-04-04)
+
+### [3.3.13](https://github.com/infinitered/reactotron/compare/reactotron-react-js@3.3.12...reactotron-react-js@3.3.13) (2024-02-14)
+
+## [3.3.12](https://github.com/infinitered/reactotron/compare/reactotron-react-js@3.3.11...reactotron-react-js@3.3.12) (2024-02-14)
+
+### [3.3.11](https://github.com/infinitered/reactotron/compare/reactotron-react-js@3.3.10...reactotron-react-js@3.3.11) (2024-01-25)
+
+
+### Bug Fixes
+
+* **architecture:** Attempt to mitigate compiler error: `Error: Default condition should be last one` ([#1423](https://github.com/infinitered/reactotron/issues/1423)) ([2c7e678](https://github.com/infinitered/reactotron/commit/2c7e678e5afaea79cd01f4ab6e90bd67339fc80a))
+
+### [3.3.10](https://github.com/infinitered/reactotron/compare/reactotron-react-js@3.3.9...reactotron-react-js@3.3.10) (2024-01-23)
+
 ### [3.3.9](https://github.com/infinitered/reactotron/compare/reactotron-react-js@3.3.9-beta.17...reactotron-react-js@3.3.9) (2023-12-05)
 
 ### [3.3.9-beta.17](https://github.com/infinitered/reactotron/compare/reactotron-react-js@3.3.9-beta.16...reactotron-react-js@3.3.9-beta.17) (2023-12-01)

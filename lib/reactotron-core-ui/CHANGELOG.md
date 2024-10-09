@@ -2,6 +2,56 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.3.3](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.2...reactotron-core-ui@2.3.3) (2024-04-04)
+
+### [2.3.2](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.1...reactotron-core-ui@2.3.2) (2024-03-26)
+
+
+### Bug Fixes
+
+* **reactotron-core-ui:** Overlapping timeline layout ([#1457](https://github.com/infinitered/reactotron/issues/1457)) ([12a0215](https://github.com/infinitered/reactotron/commit/12a02152c7beca5518298dff82af24559e0dfb91))
+
+### [2.3.1](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.0...reactotron-core-ui@2.3.1) (2024-03-26)
+
+## [2.3.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.2.1...reactotron-core-ui@2.3.0) (2024-02-16)
+
+
+### Features
+
+* **reactotron-app:** Timeline deep-search ([#1417](https://github.com/infinitered/reactotron/issues/1417)) ([8d0e952](https://github.com/infinitered/reactotron/commit/8d0e9525ac30e895f38a0c2f99eeda155c14527f)), closes [#1181](https://github.com/infinitered/reactotron/issues/1181)
+
+### [2.2.1](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.2.0...reactotron-core-ui@2.2.1) (2024-02-14)
+
+## [2.2.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.1.1...reactotron-core-ui@2.2.0) (2024-02-14)
+
+
+### Features
+
+* **timeline:** Show network request response code in timeline ([#1434](https://github.com/infinitered/reactotron/issues/1434)) ([ff32aa5](https://github.com/infinitered/reactotron/commit/ff32aa5d65dd14d880b3835e5ad3df6fd9647638)), closes [#1282](https://github.com/infinitered/reactotron/issues/1282)
+
+## [2.1.1](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.1.0...reactotron-core-ui@2.1.1) (2024-02-14)
+
+## [2.1.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.5...reactotron-core-ui@2.1.0) (2024-01-25)
+
+
+### Features
+
+* **reactotron-app:** JSON view of `AsyncStorage` values ([#1419](https://github.com/infinitered/reactotron/issues/1419)) [skip ci] ([9bfdee4](https://github.com/infinitered/reactotron/commit/9bfdee4bf47c35ec73bf5b2a7bf18b05a18ac7d5)), closes [#947](https://github.com/infinitered/reactotron/issues/947)
+
+
+### Bug Fixes
+
+* **architecture:** Attempt to mitigate compiler error: `Error: Default condition should be last one` ([#1423](https://github.com/infinitered/reactotron/issues/1423)) ([2c7e678](https://github.com/infinitered/reactotron/commit/2c7e678e5afaea79cd01f4ab6e90bd67339fc80a))
+
+### [2.0.5](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.4...reactotron-core-ui@2.0.5) (2024-01-23)
+
+### [2.0.4](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.3...reactotron-core-ui@2.0.4) (2024-01-18)
+
+
+### Bug Fixes
+
+* **reactotron-app:** added fontFamily from useTheme to Modal component ([#1401](https://github.com/infinitered/reactotron/issues/1401)) ([af9a78c](https://github.com/infinitered/reactotron/commit/af9a78cb62feae9cdb455a92826eee5908bb99a1))
+
 ### [2.0.3](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.0.2...reactotron-core-ui@2.0.3) (2023-12-22)
 
 

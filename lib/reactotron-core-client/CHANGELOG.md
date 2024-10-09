@@ -2,6 +2,35 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.9.4](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.9.3...reactotron-core-client@2.9.4) (2024-08-26)
+
+### [2.9.3](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.9.2...reactotron-core-client@2.9.3) (2024-04-01)
+
+### [2.9.2](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.9.1...reactotron-core-client@2.9.2) (2024-02-14)
+
+## [2.9.1](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.9.0...reactotron-core-client@2.9.1) (2024-02-14)
+
+## [2.9.0](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.8.13...reactotron-core-client@2.9.0) (2024-02-07)
+
+
+### Features
+
+* **example-app:** Add a LOT of functionality to the demo app ([#1424](https://github.com/infinitered/reactotron/issues/1424)) [skip ci] ([41a539c](https://github.com/infinitered/reactotron/commit/41a539c7e56e968a83ca61b100468f5267865ddd))
+
+
+### Bug Fixes
+
+* **reactotron-core-client:** Fixes `BigInt()` serialization ([#1437](https://github.com/infinitered/reactotron/issues/1437)) ([8f15acd](https://github.com/infinitered/reactotron/commit/8f15acd1475fab3042a6054f6f9114e82235b1af)), closes [#1436](https://github.com/infinitered/reactotron/issues/1436)
+
+### [2.8.13](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.8.12...reactotron-core-client@2.8.13) (2024-01-25)
+
+
+### Bug Fixes
+
+* **architecture:** Attempt to mitigate compiler error: `Error: Default condition should be last one` ([#1423](https://github.com/infinitered/reactotron/issues/1423)) ([2c7e678](https://github.com/infinitered/reactotron/commit/2c7e678e5afaea79cd01f4ab6e90bd67339fc80a))
+
+### [2.8.12](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.8.11...reactotron-core-client@2.8.12) (2024-01-23)
+
 ### [2.8.11](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.8.11-beta.17...reactotron-core-client@2.8.11) (2023-12-05)
 
 ### [2.8.11-beta.17](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.8.11-beta.16...reactotron-core-client@2.8.11-beta.17) (2023-12-01)

@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-reactotron",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "description": "An ESLint plugin for Reactotron.",
   "author": "Infinite Red",
   "license": "MIT",
@@ -18,15 +18,15 @@
   "types": "dist/types/src/index.d.ts",
   "react-native": "src/index.ts",
   "exports": {
-    "default": "./dist/index.js",
     "import": "./dist/index.esm.js",
     "types": "./dist/types/src/index.d.ts",
-    "react-native": "./src/index.ts"
+    "react-native": "./src/index.ts",
+    "default": "./dist/index.js"
   },
   "scripts": {
     "test": "jest --passWithNoTests",
-    "test:watch": "jest --watch --notify",
-    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "test:watch": "jest --watch",
+    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}' --config ../../.prettierrc --ignore-path ../../.prettierignore",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",
     "prebuild": "yarn clean",

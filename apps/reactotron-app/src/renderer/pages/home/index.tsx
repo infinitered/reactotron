@@ -12,18 +12,25 @@ import {
 } from "../../util/connectionHelpers"
 import { Connection } from "../../contexts/Standalone/useStandalone"
 import Welcome from "./welcome"
+import AndroidDeviceHelp from "../help/components/AndroidDeviceHelp"
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
 `
+const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow-y: scroll;
+`
 
 const ConnectionContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 10px 0;
+  padding: 10px 20px;
   border-bottom: 1px solid ${(props) => props.theme.line};
 `
 const IconContainer = styled.div`
@@ -78,13 +85,16 @@ function Connections() {
   return (
     <Container>
       <Header title="Connections" isDraggable />
-      {connections.length > 0 ? (
-        connections.map((connection) => (
-          <ConnectionCell key={connection.clientId} connection={connection} />
-        ))
-      ) : (
-        <Welcome />
-      )}
+      <ContentContainer>
+        {connections.length > 0 ? (
+          connections.map((connection) => (
+            <ConnectionCell key={connection.clientId} connection={connection} />
+          ))
+        ) : (
+          <Welcome />
+        )}
+        <AndroidDeviceHelp />
+      </ContentContainer>
     </Container>
   )
 }

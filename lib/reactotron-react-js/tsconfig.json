@@ -16,8 +16,8 @@
     "target": "es5",
     "lib": ["dom", "es2017"],
     "types": ["react", "jest"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
   },
   "exclude": ["node_modules"],
-  "include": ["src"]
+  "include": ["src"],
 }

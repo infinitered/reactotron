@@ -1,5 +1,4 @@
-import type { StoreEnhancer } from "redux"
-import { Plugin, Reactotron } from "reactotron-core-client"
+import type { Plugin, ReactotronCore } from "reactotron-core-client"
 
 import createCommandHander from "./commandHandler"
 import createSendAction from "./sendAction"
@@ -13,7 +12,7 @@ function reactotronRedux(pluginConfig: PluginConfig = {}) {
     restoreActionType: pluginConfig.restoreActionType || DEFAULT_REPLACER_TYPE,
   }
 
-  const storeCreationHandlers = []
+  const storeCreationHandlers: (() => void)[] = []
   const onReduxStoreCreation = (func: () => void) => {
     storeCreationHandlers.push(func)
   }
@@ -23,36 +22,29 @@ function reactotronRedux(pluginConfig: PluginConfig = {}) {
     })
   }
 
-  return (reactotron: Reactotron) => {
+  function plugin<Client extends ReactotronCore = ReactotronCore>(reactotron: Client) {
     return {
+      // Fires when we receive a command from the Reactotron app.
       onCommand: createCommandHander(reactotron, mergedPluginConfig, onReduxStoreCreation),
+
+      // All keys in this object will be attached to the main Reactotron instance
+      // and available to be called directly.
       features: {
         createEnhancer: createEnhancer(reactotron, mergedPluginConfig, handleStoreCreation),
         setReduxStore: (store) => {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore shhhhhh -- this is a private API
           reactotron.reduxStore = store
           handleStoreCreation()
         },
         reportReduxAction: createSendAction(reactotron),
       },
-    } satisfies Plugin<Reactotron>
+    } satisfies Plugin<Client>
   }
+
+  return plugin
 }
+
+export type ReactotronReduxPlugin = ReturnType<typeof reactotronRedux>
 
 export { reactotronRedux }
-
-declare module "reactotron-core-client" {
-  // eslint-disable-next-line import/export
-  export interface Reactotron {
-    reduxStore?: any
-
-    /**
-     * Enhancer creator
-     */
-    createEnhancer?: (skipSettingStore?: boolean) => StoreEnhancer
-
-    /**
-     * Store setter
-     */
-    setReduxStore?: (store: any) => void
-  }
-}

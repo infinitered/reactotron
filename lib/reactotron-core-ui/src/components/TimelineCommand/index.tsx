@@ -80,6 +80,7 @@ const ChildrenContainer = styled.div`
   animation: fade-up 0.25s;
   will-change: transform opacity;
   padding: 0 40px 30px 40px;
+  word-break: break-all;
 `
 
 interface Props {
@@ -96,6 +97,7 @@ interface Props {
   }[]
   isImportant?: boolean
   isTagged?: boolean
+  responseStatusCode?: number
 }
 
 function stopPropagation(
@@ -118,6 +120,7 @@ const TimelineCommand: React.FC<React.PropsWithChildren<Props>> = ({
   preview,
   isImportant,
   isTagged,
+  responseStatusCode,
   children,
 }) => {
   const ExpandIcon = isOpen ? IconOpen : IconClosed
@@ -135,7 +138,7 @@ const TimelineCommand: React.FC<React.PropsWithChildren<Props>> = ({
                 <TagIcon size={16} />
               </TagContainer>
             )}
-            {title}
+            {title} {responseStatusCode ? `(${responseStatusCode})` : ""}
           </TitleText>
         </TitleContainer>
         {!isOpen && <PreviewContainer>{preview}</PreviewContainer>}
