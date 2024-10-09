@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useMemo } from "react"
-import { clipboard } from "electron"
+import { clipboard, shell } from "electron"
 import fs from "fs"
 import debounce from "lodash.debounce"
 import {
@@ -10,6 +10,7 @@ import {
   EmptyState,
   ReactotronContext,
   TimelineContext,
+  RandomJoke,
 } from "reactotron-core-ui"
 import { MdSearch, MdDeleteSweep, MdFilterList, MdSwapVert, MdReorder } from "react-icons/md"
 import { FaTimes } from "react-icons/fa"
@@ -20,13 +21,11 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
 `
-
 const TimelineContainer = styled.div`
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 `
-
 const SearchContainer = styled.div`
   display: flex;
   align-items: center;
@@ -48,6 +47,27 @@ const SearchInput = styled.input`
   color: ${(props) => props.theme.foregroundDark};
   font-size: 14px;
 `
+const HelpMessage = styled.div`
+  margin: 0 40px;
+`
+const QuickStartButtonContainer = styled.div`
+  display: flex;
+  padding: 4px 8px;
+  margin: 30px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: ${(props) => props.theme.backgroundLighter};
+  color: ${(props) => props.theme.foreground};
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`
+const Divider = styled.div`
+  height: 1px;
+  background-color: ${(props) => props.theme.foregroundDark};
+  margin: 40px 10px;
+`
+
 export const ButtonContainer = styled.div`
   padding: 10px;
   cursor: pointer;
@@ -78,6 +98,10 @@ function Timeline() {
 
   const dispatchAction = (action: any) => {
     sendCommand("state.action.dispatch", { action })
+  }
+
+  function openDocs() {
+    shell.openExternal("https://docs.infinite.red/reactotron/quick-start/react-native/")
   }
 
   const { searchString, handleInputChange } = useDebouncedSearchInput(search, setSearch, 300)
@@ -139,7 +163,14 @@ function Timeline() {
       <TimelineContainer>
         {filteredCommands.length === 0 ? (
           <EmptyState icon={MdReorder} title="No Activity">
-            Once your app connects and starts sending events, they will appear here.
+            <HelpMessage>
+              Once your app connects and starts sending events, they will appear here.
+            </HelpMessage>
+            <QuickStartButtonContainer onClick={openDocs}>
+              Check out the quick start guide here!
+            </QuickStartButtonContainer>
+            <Divider />
+            <RandomJoke />
           </EmptyState>
         ) : (
           filteredCommands.map((command) => {
