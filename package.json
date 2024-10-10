@@ -66,6 +66,7 @@
     "lint": "npx nx run-many --target lint",
     "test": "npx nx run-many --target test",
     "ci:test": "npx nx run-many --target ci:test",
+    "ci:trust": "./scripts/git-clone-fork-to-trusted-branch.sh",
     "typecheck": "npx nx run-many --target typecheck",
     "format:write": "npx nx run-many --target format:write",
     "format:check": "npx nx run-many --target format:check",

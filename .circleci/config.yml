@@ -343,7 +343,8 @@ workflows:
           <<: *ir_docs_config
           filters:
             branches:
-              ignore: *release_branch_names
+              only:
+                - build-trusted-commits
 
 
   # Allows for manual publishing of docs independent of deployment
@@ -373,11 +374,19 @@ workflows:
               only: *release_branch_names
           requires:
             - build_and_test
+      - publish-docs/build_docs:
+          <<: *ir_docs_config
+          filters:
+            branches:
+              only:
+                - beta
+                - alpha
       - publish-docs/publish_docs:
           <<: *ir_docs_config
           filters:
             branches:
-              only: *release_branch_names
+              only:
+                - master
       - release_package:
           context:
             - infinitered-npm-package
