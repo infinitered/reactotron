@@ -19,7 +19,6 @@ anchors:
     resource_class: large
   # Default Settings
   defaults: &defaults
-    executor: *node_executor
     working_directory: ~/repo
   # Branch names used to trigger releases
   release_branch_names: &release_branch_names
@@ -204,6 +203,7 @@ commands:
 jobs:
   build_and_test:
     <<: *defaults
+    executor: *node_executor
     steps:
       - checkout
       - install-packages
@@ -280,6 +280,7 @@ jobs:
             yarn release:artifacts $CIRCLE_TAG
 
   build_app_windows:
+    executor: *node_executor
     <<: *defaults
     docker:
       - image: electronuserland/builder:16-wine
@@ -310,6 +311,9 @@ jobs:
 
   build_app_macos:
     <<: *defaults
+    executor:
+      name: macos/default
+      resource_class: large
     macos:
       xcode: "13.4.1"
     environment:
