@@ -17,11 +17,6 @@ anchors:
   node_executor: &node_executor
     name: node/default
     resource_class: large
-  base_executor: &base_executor
-    name: base-executor
-    docker:
-      - image: cimg/base:stable
-    resource_class: small
   # Default Settings
   defaults: &defaults
     executor: *node_executor
@@ -231,7 +226,7 @@ jobs:
           name: Typecheck
           command: yarn typecheck
   trust_check:
-    executor: *base_executor
+    executor: *node_executor
     steps:
       - run:
           name: Check if branch is trusted
