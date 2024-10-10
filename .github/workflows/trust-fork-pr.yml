@@ -1,0 +1,47 @@
+name: Trust Fork PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to trust'
+        required: true
+
+jobs:
+  trust-fork:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Git
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+      - name: Fetch PR details
+        id: pr
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: ${{ github.event.inputs.pr_number }}
+            });
+            return { 
+              head_repo: pr.data.head.repo.full_name,
+              head_branch: pr.data.head.ref
+            }
+
+      - name: Fetch and push to trusted branch
+        env:
+          FORK_REPO: ${{ fromJson(steps.pr.outputs.result).head_repo }}
+          FORK_BRANCH: ${{ fromJson(steps.pr.outputs.result).head_branch }}
+        run: |
+          git remote add fork https://github.com/${FORK_REPO}.git
+          git fetch fork ${FORK_BRANCH}
+          git push origin fork/${FORK_BRANCH}:temp-ci-trusted-fork --force

@@ -343,8 +343,7 @@ workflows:
           <<: *ir_docs_config
           filters:
             branches:
-              only:
-                - temp-ci-trusted-fork
+              ignore: *release_branch_names
 
   # Allows for manual publishing of docs independent of deployment
   # Use the 'trigger pipeline' button in circle ci and set 'force-publish-docs' to 'true'
