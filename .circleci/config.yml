@@ -12,8 +12,19 @@ parameters:
 # Anchors define reusable sections of YAML
 # See: https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/
 anchors:
-  # Defaults passed to all jobs
+
+  ### Executors
+  node_executor: &node_executor
+    name: node/default
+    resource_class: large
+  base_executor: &base_executor
+    name: base-executor
+    docker:
+      - image: cimg/base:stable
+    resource_class: small
+  # Default Settings
   defaults: &defaults
+    executor: *node_executor
     working_directory: ~/repo
   # Branch names used to trigger releases
   release_branch_names: &release_branch_names
@@ -198,9 +209,6 @@ commands:
 jobs:
   build_and_test:
     <<: *defaults
-    executor: &node_executor
-      name: node/default
-      resource_class: large
     steps:
       - checkout
       - install-packages
@@ -222,6 +230,24 @@ jobs:
       - run:
           name: Typecheck
           command: yarn typecheck
+  trust_check:
+    executor: *base_executor
+    steps:
+      - run:
+          name: Check if branch is trusted
+          command: |
+            if [ -n "$CIRCLE_PR_NUMBER" ]; then
+              if [[ $CIRCLE_BRANCH == temp-ci-trusted-fork-* ]]; then
+                echo "Branch is trusted"
+                exit 0
+              else
+                echo "Branch is not trusted. Please use the trust process before merging."
+                exit 1
+              fi
+            else
+              echo "Not a PR from a fork, skipping trust check"
+              exit 0
+            fi
 
   release_tags:
     <<: *defaults
@@ -328,18 +354,25 @@ jobs:
           command: yarn workspace reactotron-app release:artifacts $CIRCLE_TAG
 
 workflows:
-  pull_request:
-    # prevents the workflow from running when `force-publish-docs` is true
+  pull_request: # prevents the workflow from running when `force-publish-docs` is true
     when:
       and:
         - not: << pipeline.parameters.force-publish-docs >>
         - true  # Placeholder for correct YAML structure
     jobs:
+      - trust_check:
+          filters:
+            branches:
+              ignore: *release_branch_names
       - build_and_test:
+          requires:
+            - trust_check
           filters:
             branches:
               ignore: *release_branch_names
       - publish-docs/build_docs:
+          requires:
+            - trust_check
           <<: *ir_docs_config
           filters:
             branches:
@@ -353,8 +386,7 @@ workflows:
       - publish-docs/publish_docs:
           <<: *ir_docs_config
 
-  release:
-    # prevents the workflow from running when `force-publish-docs` is true
+  release: # prevents the workflow from running when `force-publish-docs` is true
     when:
       and:
         - not: << pipeline.parameters.force-publish-docs >>
