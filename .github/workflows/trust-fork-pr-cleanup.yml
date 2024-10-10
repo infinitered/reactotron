@@ -1,0 +1,37 @@
+name: Cleanup Trusted Branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch_to_delete:
+        description: 'Branch to delete'
+        required: true
+      delete_after:
+        description: 'Delete after (ISO 8601 date)'
+        required: true
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if it's time to delete
+        id: check_time
+        run: |
+          current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          if [[ "$current_time" > "${{ github.event.inputs.delete_after }}" ]]; then
+            echo "::set-output name=should_delete::true"
+          else
+            echo "::set-output name=should_delete::false"
+          fi
+
+      - name: Delete branch
+        if: steps.check_time.outputs.should_delete == 'true'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.rest.git.deleteRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'heads/${{ github.event.inputs.branch_to_delete }}'
+            });

@@ -1,0 +1,40 @@
+name: Cleanup All Temp Trusted Branches
+
+on:
+  workflow_dispatch:
+
+jobs:
+  delete-branches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Git
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+      - name: Find branches to delete
+        run: |
+          # Fetch all branches
+          git fetch --all
+          
+          # Find branches starting with 'temp-ci-trusted-fork-'
+          branches_to_delete=$(git branch -r | grep 'origin/temp-ci-trusted-fork-' | sed 's|origin/||')
+          
+          if [ -z "$branches_to_delete" ]; then
+            echo "No branches found to delete."
+            exit 0
+          fi
+
+          echo "Branches to delete:"
+          echo "$branches_to_delete"
+
+          # Delete each branch
+          for branch in $branches_to_delete; do
+            echo "Deleting branch: $branch"
+            git push origin --delete "$branch"
+          done
