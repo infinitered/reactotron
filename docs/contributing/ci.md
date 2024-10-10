@@ -36,11 +36,11 @@ The `ci:trust` script does the following:
 ### Notes
 
 1. The ci:trust script will only work if you have write access to the main repository. This prevents malicious users from running the script on the main repository.
-2. The ci:trust script pushes the commits to a branch called `temp-branch-to-test-fork`.
+2. The ci:trust script pushes the commits to a branch called `temp-ci-trusted-fork`.
 
 ::: warning
 
-The `temp-branch-to-test-fork` branch will be deleted and recreated if it already exists. This allows the script to
+The `temp-ci-trusted-fork` branch will be deleted and recreated if it already exists. This allows the script to
 clean up its own temporary branches.
 
 :::

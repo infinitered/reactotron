@@ -8,13 +8,13 @@
 #
 # Usage: ./scripts/git-clone-fork-to-trusted-branch.sh <fork_username>:<fork_branchname>
 #
-# Example: ./scripts/git-clone-fork-to-trusted-branch.sh "infinitered:build-trusted-commits"
+# Example: ./scripts/git-clone-fork-to-trusted-branch.sh "infinitered:temp-branch-to-test-fork"
 #
 ###############################################################################
 
 set -eo pipefail
 
-: "${GPF_REACTOTRON_BRANCH:=build-trusted-commits}"
+: "${GPF_REACTOTRON_BRANCH:=temp-ci-trusted-fork}"
 
 REACTOTRON_REPO="git@github.com:infinitered/reactotron.git"
 BRANCH_SPEC=$1
