@@ -29,22 +29,20 @@ jobs:
         id: pr
         uses: actions/github-script@v6
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const pr = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: ${{ github.event.inputs.pr_number }}
+              pull_number: parseInt(context.payload.inputs.pr_number)
             });
-            return { 
-              head_repo: pr.data.head.repo.full_name,
-              head_branch: pr.data.head.ref
-            }
+            core.setOutput('head_repo', pr.data.head.repo.full_name);
+            core.setOutput('head_branch', pr.data.head.ref);
 
       - name: Fetch and push to trusted branch
         env:
-          FORK_REPO: ${{ fromJson(steps.pr.outputs.result).head_repo }}
-          FORK_BRANCH: ${{ fromJson(steps.pr.outputs.result).head_branch }}
+          FORK_REPO: ${{ steps.pr.outputs.head_repo }}
+          FORK_BRANCH: ${{ steps.pr.outputs.head_branch }}
           UNIQUE_ID: ${{ steps.gen_uid.outputs.uid }}
         run: |
           git remote add fork https://github.com/${FORK_REPO}.git
@@ -58,18 +56,20 @@ jobs:
 
       - name: Schedule branch deletion
         if: success()
+        env:
+          UNIQUE_ID: ${{ steps.gen_uid.outputs.uid }}
         uses: actions/github-script@v6
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const deleteDate = new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(); // 24 hours from now
+            const deleteDate = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(); // 24 hours from now
             github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'trust-fork-pr-cleanup.yml',
               ref: 'main',
               inputs: {
-                branch_to_delete: 'temp-ci-trusted-fork-${{ steps.gen_uid.outputs.uid }}',
+                branch_to_delete: `temp-ci-trusted-fork-${process.env.UNIQUE_ID}`,
                 delete_after: deleteDate
               }
             });
