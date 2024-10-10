@@ -11,6 +11,10 @@ jobs:
   trust-fork:
     runs-on: ubuntu-latest
     steps:
+      - name: Generate unique identifier
+        id: gen_uid
+        run: echo "::set-output name=uid::$(date +%s)-${{ github.run_id }}"
+
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
@@ -41,7 +45,31 @@ jobs:
         env:
           FORK_REPO: ${{ fromJson(steps.pr.outputs.result).head_repo }}
           FORK_BRANCH: ${{ fromJson(steps.pr.outputs.result).head_branch }}
+          UNIQUE_ID: ${{ steps.gen_uid.outputs.uid }}
         run: |
           git remote add fork https://github.com/${FORK_REPO}.git
           git fetch fork ${FORK_BRANCH}
-          git push origin fork/${FORK_BRANCH}:temp-ci-trusted-fork --force
+          git push origin fork/${FORK_BRANCH}:temp-ci-trusted-fork-${UNIQUE_ID} --force
+
+      - name: Cleanup
+        if: always()
+        run: |
+          git remote remove fork
+
+      - name: Schedule branch deletion
+        if: success()
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const deleteDate = new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(); // 24 hours from now
+            github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'trust-fork-pr-cleanup.yml',
+              ref: 'main',
+              inputs: {
+                branch_to_delete: 'temp-ci-trusted-fork-${{ steps.gen_uid.outputs.uid }}',
+                delete_after: deleteDate
+              }
+            });
