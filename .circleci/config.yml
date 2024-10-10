@@ -311,9 +311,6 @@ jobs:
 
   build_app_macos:
     <<: *defaults
-    executor:
-      name: macos/default
-      resource_class: large
     macos:
       xcode: "13.4.1"
     environment:
