@@ -231,17 +231,13 @@ export const apolloPlugin =
 
     // hang on to the apollo state
     function setup() {
-      reactotron.log("setup")
       getCurrentState(apolloClient).then((data) => {
         apolloData = data
       })
 
-      reactotron.log("current state", apolloData)
-
       function sendData() {
         reactotron.log("sendData")
         if (apolloData) {
-          reactotron.log("sendData", apolloData)
           acknowledged = false
         }
       }
@@ -263,9 +259,6 @@ export const apolloPlugin =
         }
         // sendSubscriptions()
       }
-      apolloClient.__actionHookForDevTools(debounce(() => poll()))
-      // poll the apollo client every 2 seconds
-      // setInterval(poll, 2000)
     }
 
     // a list of subscriptions the client is subscribing to
@@ -331,12 +324,6 @@ export const apolloPlugin =
     // }
 
     async function handleRequest(command: Command<"apollo.request", { message: string }>) {
-      reactotron.display({
-        name: "APOLLO CLIENT",
-        preview: "request was made from server",
-        value: command.payload,
-      })
-
       // @ts-expect-error fix command type payload
       reactotron.send("apollo.response", await getCurrentState(apolloClient))
     }
@@ -400,14 +387,9 @@ export const apolloPlugin =
       onCommand,
 
       onConnect() {
-        reactotron.display({ name: "APOLLO CLIENT", preview: "Connected" })
-
         setup()
       },
-      onDisconnect() {
-        // Does this do anything? How do we clean up?
-        apolloClient.__actionHookForDevTools(null)
-      },
+      onDisconnect() {},
     } satisfies Plugin<Client>
   }
 
