@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.3.4](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.3...reactotron-core-ui@2.3.4) (2024-10-17)
+
+
+### Bug Fixes
+
+* **reactotron-app:** Timeline empty state improvements ([#1395](https://github.com/infinitered/reactotron/issues/1395) by [@carlinisaacson](https://github.com/carlinisaacson)) ([f1472d7](https://github.com/infinitered/reactotron/commit/f1472d7863e9640efa74203608769b14b641deec))
+
 ### [2.3.3](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.2...reactotron-core-ui@2.3.3) (2024-04-04)
 
 ### [2.3.2](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.1...reactotron-core-ui@2.3.2) (2024-03-26)
