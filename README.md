@@ -8,6 +8,19 @@ Reactotron is a powerful debugger for React and React Native applications. It pr
 
 We recommend that you watch [Darin Wilson's](https://github.com/darinwilson) talk at [Chain React](https://chainreactconf.com/): [Chain React 2018: Debugging and Beyond with Reactotron](https://www.youtube.com/watch?v=UiPo9A9k7xc)!
 
+
+## Key Features 
+Intuitive State Inspection: Gain real-time insights into your application's state, allowing you to identify changes and pinpoint potential issues.
+Network Request Monitoring: View and analyze all network interactions made by your app, including requests, responses, and headers.
+Performance Benchmarking: Conduct quick performance evaluations to assess your app's responsiveness and identify areas for optimization.
+Selective State Subscription: Focus on specific parts of your app's state that are most relevant to your debugging needs.
+Enhanced Logging: Leverage Reactotron to display messages similar to console.log statements, providing valuable debugging information.
+Comprehensive Error Tracking: Track global errors with source-mapped stack traces, including detailed information for sagas, promoting efficient error resolution.
+State Hot Swapping: Experiment with state changes on the fly using Redux or MobX state trees, accelerating your debugging workflow.
+Visual Overlays in React Native: Display helpful overlays on top of your React Native app, providing additional debugging context.
+Async Storage Exploration: Keep tabs on your app's Async Storage usage in React Native, ensuring data persistence is working as intended.
+Customizable and Extendable: Reactotron integrates seamlessly as a development dependency, ensuring a clean production build. Additionally, it supports a rich plugin ecosystem, enabling you to tailor the tool to your specific debugging requirements.
+
 ## Reactotron Superpowers
 
 Use Reactotron to:
@@ -64,7 +77,7 @@ On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotro
 
 ## Tips and Tricks
 
-[Some tips that will elevate your Reactotron experience.](https://docs.infinite.red/reactotron/tips/)
+ [The Reactotron documentation offers valuable tips and recommendations to elevate your debugging experience. Explore these resources to unlock the full potential of Reactotron. ](https://docs.infinite.red/reactotron/tips/)
 
 ## Bug Reports
 
@@ -79,6 +92,7 @@ When reporting problems with Reactotron, use the provided example app located in
 
 ## Troubleshooting
 
+The Reactotron team provides comprehensive troubleshooting guides for both React Native iOS and React Native Android environments. These guides address common issues you might encounter while using Reactotron.
 - [**React Native iOS**](https://docs.infinite.red/reactotron/troubleshooting/#react-native-ios)
 - [**React Native Android**](https://docs.infinite.red/reactotron/troubleshooting/#react-native-android)
 
@@ -89,3 +103,8 @@ Reactotron is developed by [Infinite Red](https://infinite.red), [@rmevans9](htt
 ## Premium Support
 
 [Reactotron](https://infinite.red/reactotron), as an open source project, is free to use and always will be. [Infinite Red](https://infinite.red/) offers premium React and [React Native](https://infinite.red/react-native) mobile app design/development services. Email us at [hello@infinite.red](mailto:hello@infinite.red) to get in touch for more details.
+
+## Remember
+
+- Replace bracketed placeholders https://github.com/infinitered/reactotron/releases with the actual URL upon creation.
+- Consult the official Reactotron documentation for specific code examples and detailed usage instructions for each feature and plugin.
