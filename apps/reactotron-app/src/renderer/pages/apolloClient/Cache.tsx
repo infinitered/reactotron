@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useMemo } from "react"
+import React, { useCallback, useContext, useEffect } from "react"
 import styled from "styled-components"
 import {
   Header,
@@ -12,7 +12,7 @@ import { MdSearch, MdWarning } from "react-icons/md"
 import { TbDatabaseDollar } from "react-icons/tb"
 import { Title } from "../reactNative/components/Shared"
 import { CommandType } from "reactotron-core-contract"
-import { FaTimes } from "react-icons/fa"
+import { FaArrowLeft, FaArrowRight, FaTimes } from "react-icons/fa"
 import { PiPushPinFill, PiPushPinSlash } from "react-icons/pi"
 import { Link, useNavigate, useParams } from "react-router-dom"
 
@@ -68,13 +68,18 @@ export const ButtonContainer = styled.div`
   cursor: pointer;
 `
 
+const ButtonContainerDisabled = styled.div`
+  padding: 10px;
+  cursor: not-allowed;
+`
+
 const RowContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `
 
-const CacheKeyRow = styled.div`
+const Row = styled.div`
   display: flex;
   flex-direction: row;
 `
@@ -177,8 +182,11 @@ function Cache() {
     closeSearch,
     setSearch,
     search,
+    setCacheKey,
     cacheKey: storedCacheKey,
   } = useContext(ApolloClientContext)
+
+  const [viewedKeys, setViewedKeys] = React.useState<string[]>([])
 
   // const sendMessage = React.useCallback(() => {
   //   sendCommand("apollo.request", {})
@@ -191,6 +199,10 @@ function Cache() {
     }, 1000)
     return () => clearInterval(interval)
   }, [sendCommand])
+
+  const pushViewedKey = (key: string) => {
+    setViewedKeys([...viewedKeys, key])
+  }
 
   // const updateFragment = React.useCallback(() => {
   //   sendCommand("apollo.fragment.update", { message: "Title from server" })
@@ -229,17 +241,65 @@ function Cache() {
 
   const { cacheKey } = useParams()
   const navigate = useNavigate()
+  const [currentIndex, setCurrentIndex] = React.useState(-1)
+
+  // const [history, setHistory] = useState([]);
+
+  useEffect(() => {
+    // Check if cacheKey is new
+    if (cacheKey && (currentIndex === -1 || history[currentIndex] !== cacheKey)) {
+      const newIndex = viewedKeys.indexOf(cacheKey)
+      if (newIndex === -1) {
+        // New cacheKey, add to history
+        const newHistory = [...viewedKeys, cacheKey]
+        setViewedKeys(newHistory)
+        setCurrentIndex(newHistory.length - 1)
+      } else {
+        // Existing cacheKey, just update the current index
+        setCurrentIndex(newIndex)
+      }
+    }
+  }, [cacheKey, viewedKeys, currentIndex])
+
+  const goBack = () => {
+    // Navigate to the previous cacheKey in the history
+    const currentPos = viewedKeys.indexOf(cacheKey)
+    if (currentPos > 0) {
+      navigate(`/apolloClient/cache/${viewedKeys[currentPos - 1]}`)
+      setCurrentIndex(currentIndex - 1)
+    }
+  }
+
+  const goForward = () => {
+    // Navigate to the next cacheKey in the history
+    const currentPos = viewedKeys.indexOf(cacheKey)
+    if (currentPos < viewedKeys.length - 1) {
+      navigate(`/apolloClient/cache/${viewedKeys[currentPos + 1]}`)
+      setCurrentIndex(currentIndex + 1)
+    }
+  }
   // const prevCacheKey = React.useRef(cacheKey)
 
-  const cacheData = data.cache[cacheKey] ?? "No data found"
+  const cacheData = data.cache[cacheKey] ?? undefined
 
   // console.log({ cacheKey, storedCacheKey })
 
-  useEffect(() => {
-    if (storedCacheKey) {
-      navigate(`/apolloClient/cache/${storedCacheKey}`)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (storedCacheKey) {
+  //     navigate(`/apolloClient/cache/${storedCacheKey}`)
+  //   }
+  // }, [])
+
+  // useEffect(() => {
+  //   if (cacheKey) {
+  //     const newViewedKeys = [...viewedKeys, cacheKey]
+  //     setViewedKeys(newViewedKeys)
+  //   }
+  // }, [cacheKey, viewedKeys])
+  const forwardDisabled = currentIndex === viewedKeys.length - 1
+  const backDisabled = currentIndex <= 0
+  const ForwardButtonWrapper = forwardDisabled ? ButtonContainerDisabled : ButtonContainer
+  const BackButtonWrapper = backDisabled ? ButtonContainerDisabled : ButtonContainer
 
   const clearSearch = () => {
     if (search === "") {
@@ -264,7 +324,10 @@ function Cache() {
   const valueRenderer = (transformed: any, untransformed: any, ...keyPath: any) => {
     if (keyPath[0] === "__ref") {
       return (
-        <StyledLink to={`/apolloClient/cache/${untransformed}`}>
+        <StyledLink
+          // onClick={() => pushViewedKey(untransformed)}
+          to={`/apolloClient/cache/${untransformed}`}
+        >
           <SpanContainer>{untransformed || transformed}</SpanContainer>
         </StyledLink>
       )
@@ -358,8 +421,12 @@ function Cache() {
             {pinnedKeys.map((key) => {
               const LinkWrapper = key === cacheKey ? SelectedCacheKeyLink : CacheKeyLink
               return (
-                <CacheKeyRow key={key}>
-                  <LinkWrapper key={key} to={`/apolloClient/cache/${key}`}>
+                <Row key={key}>
+                  <LinkWrapper
+                    key={key}
+                    // onClick={() => pushViewedKey(key)}
+                    to={`/apolloClient/cache/${key}`}
+                  >
                     <CacheKeyLabel>
                       <HighlightText text={key} searchTerm={search} />
                     </CacheKeyLabel>
@@ -368,7 +435,7 @@ function Cache() {
                   <ButtonContainer onClick={() => togglePin(key)}>
                     <PiPushPinSlash size={18} color={theme.foregroundDark} />
                   </ButtonContainer>
-                </CacheKeyRow>
+                </Row>
               )
             })}
 
@@ -395,8 +462,12 @@ function Cache() {
               .map((key: string) => {
                 const LinkWrapper = key === cacheKey ? SelectedCacheKeyLink : CacheKeyLink
                 return (
-                  <CacheKeyRow key={key}>
-                    <LinkWrapper key={key} to={`/apolloClient/cache/${key}`}>
+                  <Row key={key}>
+                    <LinkWrapper
+                      key={key}
+                      // onClick={() => pushViewedKey(key)}
+                      to={`/apolloClient/cache/${key}`}
+                    >
                       <CacheKeyLabel>
                         {!searchObjects ? (
                           <HighlightText text={key} searchTerm={search} />
@@ -409,12 +480,24 @@ function Cache() {
                     <ButtonContainer onClick={() => togglePin(key)}>
                       <PiPushPinFill size={18} color={theme.foregroundDark} />
                     </ButtonContainer>
-                  </CacheKeyRow>
+                  </Row>
                 )
               })}
           </LeftPanel>
           {cacheKey && (
             <RightPanel>
+              <Row>
+                <BackButtonWrapper onClick={goBack}>
+                  <FaArrowLeft
+                    color={backDisabled ? theme.foregroundDarker : theme.foregroundLight}
+                  />
+                </BackButtonWrapper>
+                <ForwardButtonWrapper onClick={goForward}>
+                  <FaArrowRight
+                    color={forwardDisabled ? theme.foregroundDarker : theme.foregroundLight}
+                  />
+                </ForwardButtonWrapper>
+              </Row>
               <TopSection>
                 <Title>Cache ID: {cacheKey}</Title>
                 <Link to="/apolloClient/cache">
@@ -422,11 +505,13 @@ function Cache() {
                 </Link>
               </TopSection>
 
-              <TreeView
-                value={{ [cacheKey]: cacheData }}
-                expand={expandInitially}
-                valueRenderer={valueRenderer}
-              />
+              {cacheKey && (
+                <TreeView
+                  value={{ [cacheKey]: cacheData }}
+                  expand={expandInitially}
+                  valueRenderer={valueRenderer}
+                />
+              )}
             </RightPanel>
           )}
         </RowContainer>
