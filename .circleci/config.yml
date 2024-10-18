@@ -261,7 +261,8 @@ jobs:
   build_app_windows:
     <<: *defaults
     docker:
-      - image: electronuserland/builder:16-wine
+      - image: electronuserland/builder:20-wine
+    resource_class: large
     environment:
       BUILD_TARGET: windows
     steps:
