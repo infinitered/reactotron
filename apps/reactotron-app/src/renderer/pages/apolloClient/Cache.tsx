@@ -13,6 +13,7 @@ import { TbDatabaseDollar } from "react-icons/tb"
 import { Title } from "../reactNative/components/Shared"
 import { CommandType } from "reactotron-core-contract"
 import { FaTimes } from "react-icons/fa"
+import { PiPushPinFill, PiPushPinSlash, PiPushPinSlashFill } from "react-icons/pi"
 import { Link, useNavigate, useParams } from "react-router-dom"
 
 const Container = styled.div`
@@ -52,12 +53,7 @@ const SearchContainer = styled.div`
   padding-top: 4px;
   padding-left: 10px;
 `
-const SearchLabel = styled.p`
-  padding: 0 10px;
-  font-size: 14px;
-  color: ${(props) => props.theme.foregroundDark};
-  vertical-align: middle;
-`
+
 const SearchInput = styled.input`
   border-radius: 4px;
   padding: 10px;
@@ -76,6 +72,11 @@ const RowContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+`
+
+const CacheKeyRow = styled.div`
+  display: flex;
+  flex-direction: row;
 `
 
 const LeftPanel = styled.div`
@@ -245,6 +246,15 @@ function Cache() {
 
   const [searchObjects, setSearchObjects] = React.useState(false)
   const [expandInitially, setExpandInitially] = React.useState(true)
+  const [pinnedKeys, setPinnedKeys] = React.useState<string[]>([])
+
+  const togglePin = (key: string) => {
+    if (pinnedKeys.includes(key)) {
+      setPinnedKeys(pinnedKeys.filter((k) => k !== key))
+    } else {
+      setPinnedKeys([...pinnedKeys, key])
+    }
+  }
 
   const valueRenderer = (transformed: any, untransformed: any, ...keyPath: any) => {
     if (keyPath[0] === "__ref") {
@@ -339,6 +349,23 @@ function Cache() {
         </WarningContainer>
         <RowContainer>
           <LeftPanel>
+            {/* always show pinnedKeys */}
+            {pinnedKeys.map((key) => {
+              return (
+                <CacheKeyRow key={key}>
+                  <CacheKeyLink key={key} to={`/apolloClient/cache/${key}`}>
+                    <CacheKeyLabel>
+                      <HighlightText text={key} searchTerm={search} />
+                    </CacheKeyLabel>
+                  </CacheKeyLink>
+
+                  <ButtonContainer onClick={() => togglePin(key)}>
+                    <PiPushPinSlash size={18} color={theme.foregroundDark} />
+                  </ButtonContainer>
+                </CacheKeyRow>
+              )
+            })}
+
             {Object.keys(data.cache)
               .filter((key) => {
                 if (search) {
@@ -350,20 +377,31 @@ function Cache() {
                   }
                 }
 
+                // check key is not pinned
+                if (pinnedKeys.includes(key)) {
+                  return false
+                }
+
                 return key
               })
               .map((key: string) => {
                 const LinkWrapper = key === cacheKey ? SelectedCacheKeyLink : CacheKeyLink
                 return (
-                  <LinkWrapper key={key} to={`/apolloClient/cache/${key}`}>
-                    <CacheKeyLabel>
-                      {!searchObjects ? (
-                        <HighlightText text={key} searchTerm={search} />
-                      ) : (
-                        <SpanContainer>{key}</SpanContainer>
-                      )}
-                    </CacheKeyLabel>
-                  </LinkWrapper>
+                  <CacheKeyRow key={key}>
+                    <LinkWrapper key={key} to={`/apolloClient/cache/${key}`}>
+                      <CacheKeyLabel>
+                        {!searchObjects ? (
+                          <HighlightText text={key} searchTerm={search} />
+                        ) : (
+                          <SpanContainer>{key}</SpanContainer>
+                        )}
+                      </CacheKeyLabel>
+                    </LinkWrapper>
+
+                    <ButtonContainer onClick={() => togglePin(key)}>
+                      <PiPushPinFill size={18} color={theme.foregroundDark} />
+                    </ButtonContainer>
+                  </CacheKeyRow>
                 )
               })}
           </LeftPanel>
