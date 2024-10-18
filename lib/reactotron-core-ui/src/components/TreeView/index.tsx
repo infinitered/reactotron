@@ -61,7 +61,6 @@ export default function TreeView({ value, valueRenderer, level = 1 }: Props) {
       shouldExpandNodeInitially={(keyName, data, minLevel) => minLevel <= level}
       theme={treeTheme}
       getItemString={(type, data, itemType, itemString, keyPath) => {
-        console.log({ type, data, itemType, itemString, keyPath })
         // when it's an object, display {}
         if (type === "Object") {
           return <MutedContainer>{itemType}</MutedContainer>
