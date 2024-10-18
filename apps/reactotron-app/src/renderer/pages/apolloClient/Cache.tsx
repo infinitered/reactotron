@@ -1,15 +1,19 @@
-import React, { useCallback, useContext, useMemo } from "react"
+import React, { useCallback, useContext, useEffect, useMemo } from "react"
 import styled from "styled-components"
-import { Header, ReactotronContext, TreeView, ApolloClientContext, theme } from "reactotron-core-ui"
+import {
+  Header,
+  ReactotronContext,
+  TreeView,
+  ApolloClientContext,
+  theme,
+  Checkbox,
+} from "reactotron-core-ui"
 import { MdSearch, MdWarning } from "react-icons/md"
-import { HiDocumentSearch, HiOutlinePencilAlt } from "react-icons/hi"
-import lodashDebounce from "lodash.debounce"
 import { TbDatabaseDollar } from "react-icons/tb"
 import { Title } from "../reactNative/components/Shared"
-import { OverlayButton } from "./components/Button"
 import { CommandType } from "reactotron-core-contract"
 import { FaTimes } from "react-icons/fa"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 
 const Container = styled.div`
   display: flex;
@@ -46,12 +50,13 @@ const SearchContainer = styled.div`
   align-items: center;
   padding-bottom: 10px;
   padding-top: 4px;
-  padding-right: 10px;
+  padding-left: 10px;
 `
 const SearchLabel = styled.p`
   padding: 0 10px;
   font-size: 14px;
   color: ${(props) => props.theme.foregroundDark};
+  vertical-align: middle;
 `
 const SearchInput = styled.input`
   border-radius: 4px;
@@ -109,6 +114,36 @@ const CacheKeyLabel = styled.span`
   color: ${(props) => props.theme.foregroundDark};
 `
 
+const Highlight = styled.span`
+  background-color: yellow;
+  color: black;
+`
+
+const VerticalContainer = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+`
+
+const HighlightText = ({ text, searchTerm }) => {
+  try {
+    const parts = text.toString().split(new RegExp(`(${searchTerm})`, "gi"))
+    return (
+      <>
+        {parts.map((part, index) =>
+          part.toLowerCase() === searchTerm.toLowerCase() ? (
+            <Highlight key={index}>{part}</Highlight>
+          ) : (
+            part
+          )
+        )}
+      </>
+    )
+  } catch (error) {
+    return text
+  }
+}
+
 let timer: ReturnType<typeof setTimeout>
 
 function debounce(func: (...args: any) => any, timeout = 7000): void {
@@ -130,8 +165,14 @@ const INITIAL_DATA = {
 function Cache() {
   const [data, setData] = React.useState<any>(INITIAL_DATA)
   const { sendCommand, addCommandListener } = React.useContext(ReactotronContext)
-  const { isSearchOpen, toggleSearch, closeSearch, setSearch, search } =
-    useContext(ApolloClientContext)
+  const {
+    isSearchOpen,
+    toggleSearch,
+    closeSearch,
+    setSearch,
+    search,
+    cacheKey: storedCacheKey,
+  } = useContext(ApolloClientContext)
 
   // const sendMessage = React.useCallback(() => {
   //   sendCommand("apollo.request", {})
@@ -181,7 +222,28 @@ function Cache() {
   // const { searchString, handleInputChange } = useDebouncedSearchInput(search, setSearch, 300)
 
   let { cacheKey } = useParams()
+  const navigate = useNavigate()
+  // const prevCacheKey = React.useRef(cacheKey)
+
   const cacheData = data.cache[cacheKey] ?? "No data found"
+
+  // console.log({ cacheKey, storedCacheKey })
+
+  useEffect(() => {
+    if (storedCacheKey) {
+      navigate(`/apolloClient/cache/${storedCacheKey}`)
+    }
+  }, [])
+
+  const clearSearch = () => {
+    if (search === "") {
+      closeSearch()
+    } else {
+      setSearch("")
+    }
+  }
+
+  const [searchObjects, setSearchObjects] = React.useState(false)
 
   const valueRenderer = (transformed: any, untransformed: any, ...keyPath: any) => {
     if (keyPath[0] === "__ref") {
@@ -191,7 +253,11 @@ function Cache() {
         </StyledLink>
       )
     } else {
-      return <SpanContainer>{untransformed || transformed}</SpanContainer>
+      if (searchObjects && search) {
+        return <HighlightText text={untransformed || transformed} searchTerm={search} />
+      } else {
+        return <SpanContainer>{untransformed || transformed}</SpanContainer>
+      }
     }
   }
 
@@ -239,11 +305,24 @@ function Cache() {
       >
         {isSearchOpen && (
           <SearchContainer>
-            <SearchLabel>Search</SearchLabel>
-            <SearchInput autoFocus value={search} onChange={handleInputChange} />
-            <ButtonContainer>
-              <FaTimes size={24} />
-            </ButtonContainer>
+            <VerticalContainer>
+              <SearchContainer>
+                <SearchInput
+                  placeholder="Search..."
+                  autoFocus
+                  value={search}
+                  onChange={handleInputChange}
+                />
+                <ButtonContainer onClick={clearSearch}>
+                  <FaTimes size={24} />
+                </ButtonContainer>
+              </SearchContainer>
+              <Checkbox
+                label="Include object values"
+                onToggle={() => setSearchObjects(!searchObjects)}
+                isChecked={searchObjects}
+              />
+            </VerticalContainer>
           </SearchContainer>
         )}
       </Header>
@@ -257,7 +336,12 @@ function Cache() {
             {Object.keys(data.cache)
               .filter((key) => {
                 if (search) {
-                  return key.toLowerCase().includes(search.toLowerCase())
+                  if (searchObjects) {
+                    const searchDataJson = JSON.stringify(data.cache[key])
+                    return searchDataJson.toLowerCase().includes(search.toLowerCase())
+                  } else {
+                    return key.toLowerCase().includes(search.toLowerCase())
+                  }
                 }
 
                 return key
@@ -265,8 +349,14 @@ function Cache() {
               .map((key: string) => {
                 const LinkWrapper = key === cacheKey ? SelectedCacheKeyLink : CacheKeyLink
                 return (
-                  <LinkWrapper to={`/apolloClient/cache/${key}`}>
-                    <CacheKeyLabel key={key}>{key}</CacheKeyLabel>
+                  <LinkWrapper key={key} to={`/apolloClient/cache/${key}`}>
+                    <CacheKeyLabel>
+                      {!searchObjects ? (
+                        <HighlightText text={key} searchTerm={search} />
+                      ) : (
+                        <SpanContainer>{key}</SpanContainer>
+                      )}
+                    </CacheKeyLabel>
                   </LinkWrapper>
                 )
               })}
