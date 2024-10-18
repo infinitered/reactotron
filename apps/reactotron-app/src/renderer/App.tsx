@@ -16,7 +16,6 @@ import Storybook from "./pages/reactNative/Storybook"
 import CustomCommands from "./pages/customCommands"
 import Help from "./pages/help"
 import Cache from "./pages/apolloClient/Cache"
-import { ApolloClientProvider } from "reactotron-core-ui"
 
 const AppContainer = styled.div`
   position: absolute;
@@ -71,14 +70,7 @@ function App() {
                 <Route path="/customCommands" element={<CustomCommands />} />
 
                 {/* TODO: Load custom UI pages from installed plugins */}
-                <Route
-                  path="/apolloClient/cache/:cacheKey?"
-                  element={
-                    <ApolloClientProvider>
-                      <Cache />
-                    </ApolloClientProvider>
-                  }
-                />
+                <Route path="/apolloClient/cache/:cacheKey?" element={<Cache />} />
 
                 {/* <Route path="/apolloClient/queries" element={<Queries />} />
                 <Route path="/apolloClient/mutations" element={<Mutations />} /> */}
