@@ -126,6 +126,11 @@ const VerticalContainer = styled.div`
   flex-direction: column;
 `
 
+const PinnedSeparator = styled.div`
+  border-top: 1px solid ${(props) => props.theme.chromeLine};
+  margin: 10px 0;
+`
+
 const HighlightText = ({ text, searchTerm }) => {
   try {
     const parts = text.toString().split(new RegExp(`(${searchTerm})`, "gi"))
@@ -351,13 +356,14 @@ function Cache() {
           <LeftPanel>
             {/* always show pinnedKeys */}
             {pinnedKeys.map((key) => {
+              const LinkWrapper = key === cacheKey ? SelectedCacheKeyLink : CacheKeyLink
               return (
                 <CacheKeyRow key={key}>
-                  <CacheKeyLink key={key} to={`/apolloClient/cache/${key}`}>
+                  <LinkWrapper key={key} to={`/apolloClient/cache/${key}`}>
                     <CacheKeyLabel>
                       <HighlightText text={key} searchTerm={search} />
                     </CacheKeyLabel>
-                  </CacheKeyLink>
+                  </LinkWrapper>
 
                   <ButtonContainer onClick={() => togglePin(key)}>
                     <PiPushPinSlash size={18} color={theme.foregroundDark} />
@@ -365,6 +371,8 @@ function Cache() {
                 </CacheKeyRow>
               )
             })}
+
+            {pinnedKeys.length > 0 && <PinnedSeparator />}
 
             {Object.keys(data.cache)
               .filter((key) => {
