@@ -5,6 +5,7 @@ import theme from "./theme"
 import ContentView from "./components/ContentView"
 import EmptyState from "./components/EmptyState"
 import Header from "./components/Header"
+import Checkbox from "./components/Checkbox"
 import Modal from "./components/Modal"
 import ReactotronAppProvider from "./components/ReactotronAppProvider"
 import ActionButton from "./components/ActionButton"
@@ -39,6 +40,7 @@ export {
   theme,
   ContentView,
   EmptyState,
+  Checkbox,
   Header,
   Modal,
   ReactotronAppProvider,
