@@ -13,7 +13,7 @@ import { TbDatabaseDollar } from "react-icons/tb"
 import { Title } from "../reactNative/components/Shared"
 import { CommandType } from "reactotron-core-contract"
 import { FaTimes } from "react-icons/fa"
-import { PiPushPinFill, PiPushPinSlash, PiPushPinSlashFill } from "react-icons/pi"
+import { PiPushPinFill, PiPushPinSlash } from "react-icons/pi"
 import { Link, useNavigate, useParams } from "react-router-dom"
 
 const Container = styled.div`
@@ -222,7 +222,7 @@ function Cache() {
 
   // const { searchString, handleInputChange } = useDebouncedSearchInput(search, setSearch, 300)
 
-  let { cacheKey } = useParams()
+  const { cacheKey } = useParams()
   const navigate = useNavigate()
   // const prevCacheKey = React.useRef(cacheKey)
 
@@ -428,26 +428,3 @@ function Cache() {
 }
 
 export default Cache
-
-// const useDebouncedSearchInput = (
-//   initialValue: string,
-//   setSearch: (search: string) => void,
-//   delay: number = 300
-// ) => {
-//   const [searchString, setSearchString] = React.useState<string>(initialValue)
-//   const debouncedOnChange = useMemo(() => debounce(setSearch, delay), [delay, setSearch])
-
-//   const handleInputChange = useCallback(
-//     (e: React.ChangeEvent<HTMLInputElement>) => {
-//       const { value } = e.target
-//       setSearchString(value)
-//       debouncedOnChange()
-//     },
-//     [debouncedOnChange]
-//   )
-
-//   return {
-//     searchString,
-//     handleInputChange,
-//   }
-// }
