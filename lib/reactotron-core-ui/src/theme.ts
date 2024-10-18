@@ -14,6 +14,7 @@ export default {
   constant: "#cda869",
   foreground: "#a7a7a7",
   foregroundDark: "#838184",
+  foregroundDarker: "#5f5f5f",
   foregroundLight: "#c3c3c3",
   glow: "hsla(0, 0%, 9.4%, 0.8)",
   heading: "#7587a6",
