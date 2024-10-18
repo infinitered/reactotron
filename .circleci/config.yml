@@ -340,11 +340,6 @@ workflows:
           filters:
             branches:
               ignore: *release_branch_names
-        # DO NOT MERGE: TEMP CHANGE TO TEST PR
-      - build_app_windows:
-          filters:
-            branches:
-              ignore: *release_branch_names
       - publish-docs/build_docs:
           <<: *ir_docs_config
           filters:
