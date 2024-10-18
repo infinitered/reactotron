@@ -43,9 +43,10 @@ interface Props {
   value: any
   level?: number
   valueRenderer?: ValueRenderer
+  expand?: boolean
 }
 
-export default function TreeView({ value, valueRenderer, level = 1 }: Props) {
+export default function TreeView({ value, valueRenderer, level = 1, expand = false }: Props) {
   const renderer = (transformed: any, untransformed: any, ...keyPath: any) => {
     if (valueRenderer) {
       return valueRenderer(transformed, untransformed, ...keyPath)
@@ -58,9 +59,9 @@ export default function TreeView({ value, valueRenderer, level = 1 }: Props) {
     <JSONTree
       data={value}
       hideRoot
-      shouldExpandNodeInitially={(keyName, data, minLevel) => minLevel <= level}
+      shouldExpandNodeInitially={(keyName, data, minLevel) => expand || minLevel <= level}
       theme={treeTheme}
-      getItemString={(type, data, itemType, itemString, keyPath) => {
+      getItemString={(type, data, itemType, itemString) => {
         // when it's an object, display {}
         if (type === "Object") {
           return <MutedContainer>{itemType}</MutedContainer>

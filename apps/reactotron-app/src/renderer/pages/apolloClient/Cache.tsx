@@ -244,6 +244,7 @@ function Cache() {
   }
 
   const [searchObjects, setSearchObjects] = React.useState(false)
+  const [expandInitially, setExpandInitially] = React.useState(true)
 
   const valueRenderer = (transformed: any, untransformed: any, ...keyPath: any) => {
     if (keyPath[0] === "__ref") {
@@ -322,6 +323,11 @@ function Cache() {
                 onToggle={() => setSearchObjects(!searchObjects)}
                 isChecked={searchObjects}
               />
+              <Checkbox
+                label="Expand data initially"
+                onToggle={() => setExpandInitially(!expandInitially)}
+                isChecked={expandInitially}
+              />
             </VerticalContainer>
           </SearchContainer>
         )}
@@ -370,7 +376,11 @@ function Cache() {
                 </Link>
               </TopSection>
 
-              <TreeView value={{ [cacheKey]: cacheData }} level={5} valueRenderer={valueRenderer} />
+              <TreeView
+                value={{ [cacheKey]: cacheData }}
+                expand={expandInitially}
+                valueRenderer={valueRenderer}
+              />
             </RightPanel>
           )}
         </RowContainer>
