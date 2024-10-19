@@ -12,9 +12,10 @@ import { MdSearch, MdWarning } from "react-icons/md"
 import { TbDatabaseDollar } from "react-icons/tb"
 import { Title } from "../reactNative/components/Shared"
 import { CommandType } from "reactotron-core-contract"
-import { FaArrowLeft, FaArrowRight, FaTimes } from "react-icons/fa"
+import { FaArrowLeft, FaArrowRight, FaExternalLinkAlt, FaTimes } from "react-icons/fa"
 import { PiPushPinFill, PiPushPinSlash } from "react-icons/pi"
 import { Link, useNavigate, useParams } from "react-router-dom"
+import { shell } from "electron"
 
 const Container = styled.div`
   display: flex;
@@ -82,6 +83,10 @@ const RowContainer = styled.div`
 const Row = styled.div`
   display: flex;
   flex-direction: row;
+`
+
+const IconContainer = styled.span`
+  padding-left: 10px;
 `
 
 const LeftPanel = styled.div`
@@ -261,6 +266,10 @@ function Cache() {
     }
   }, [cacheKey, viewedKeys, currentIndex])
 
+  function openURL(url) {
+    shell.openExternal(url)
+  }
+
   const goBack = () => {
     // Navigate to the previous cacheKey in the history
     const currentPos = viewedKeys.indexOf(cacheKey)
@@ -323,6 +332,7 @@ function Cache() {
 
   const valueRenderer = (transformed: any, untransformed: any, ...keyPath: any) => {
     if (keyPath[0] === "__ref") {
+      // TODO hover this span and show the cacheData[untransformed] in a tooltip
       return (
         <StyledLink
           // onClick={() => pushViewedKey(untransformed)}
@@ -332,10 +342,33 @@ function Cache() {
         </StyledLink>
       )
     } else {
+      let onClick
+      if (typeof untransformed === "string" && untransformed.startsWith("http")) {
+        onClick = () => openURL(untransformed)
+      }
+
       if (searchObjects && search) {
-        return <HighlightText text={untransformed || transformed} searchTerm={search} />
+        return (
+          <SpanContainer onClick={onClick} style={{ cursor: onClick ? "pointer" : "auto" }}>
+            <HighlightText text={untransformed || transformed} searchTerm={search} />
+            {!!onClick && (
+              <IconContainer>
+                <FaExternalLinkAlt color={theme.foregroundDark} />
+              </IconContainer>
+            )}
+          </SpanContainer>
+        )
       } else {
-        return <SpanContainer>{untransformed || transformed}</SpanContainer>
+        return (
+          <SpanContainer onClick={onClick} style={{ cursor: onClick ? "pointer" : "auto" }}>
+            {untransformed || transformed}
+            {!!onClick && (
+              <IconContainer>
+                <FaExternalLinkAlt color={theme.foregroundDark} />
+              </IconContainer>
+            )}
+          </SpanContainer>
+        )
       }
     }
   }
