@@ -7,6 +7,7 @@ import {
   ApolloClientContext,
   theme,
   Checkbox,
+  Tooltip,
 } from "reactotron-core-ui"
 import { MdSearch, MdWarning } from "react-icons/md"
 import { TbDatabaseDollar } from "react-icons/tb"
@@ -205,10 +206,6 @@ function Cache() {
     return () => clearInterval(interval)
   }, [sendCommand])
 
-  const pushViewedKey = (key: string) => {
-    setViewedKeys([...viewedKeys, key])
-  }
-
   // const updateFragment = React.useCallback(() => {
   //   sendCommand("apollo.fragment.update", { message: "Title from server" })
   // }, [sendCommand])
@@ -233,6 +230,7 @@ function Cache() {
 
   React.useEffect(() => {
     sendCommand("apollo.request", {})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleInputChange = useCallback(
@@ -287,24 +285,9 @@ function Cache() {
       setCurrentIndex(currentIndex + 1)
     }
   }
-  // const prevCacheKey = React.useRef(cacheKey)
 
   const cacheData = data.cache[cacheKey] ?? undefined
 
-  // console.log({ cacheKey, storedCacheKey })
-
-  // useEffect(() => {
-  //   if (storedCacheKey) {
-  //     navigate(`/apolloClient/cache/${storedCacheKey}`)
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   if (cacheKey) {
-  //     const newViewedKeys = [...viewedKeys, cacheKey]
-  //     setViewedKeys(newViewedKeys)
-  //   }
-  // }, [cacheKey, viewedKeys])
   const forwardDisabled = currentIndex === viewedKeys.length - 1
   const backDisabled = currentIndex <= 0
   const ForwardButtonWrapper = forwardDisabled ? ButtonContainerDisabled : ButtonContainer
@@ -332,13 +315,16 @@ function Cache() {
 
   const valueRenderer = (transformed: any, untransformed: any, ...keyPath: any) => {
     if (keyPath[0] === "__ref") {
-      // TODO hover this span and show the cacheData[untransformed] in a tooltip
       return (
         <StyledLink
-          // onClick={() => pushViewedKey(untransformed)}
           to={`/apolloClient/cache/${untransformed}`}
+          data-tip
+          data-for={`ref-for-${untransformed}`}
         >
           <SpanContainer>{untransformed || transformed}</SpanContainer>
+          <Tooltip id={`ref-for-${untransformed}`} effect="solid">
+            <TreeView value={{ ...data.cache[untransformed] }} expand={true} />
+          </Tooltip>
         </StyledLink>
       )
     } else {
@@ -540,7 +526,7 @@ function Cache() {
 
               {cacheKey && (
                 <TreeView
-                  value={{ [cacheKey]: cacheData }}
+                  value={{ ...cacheData }}
                   expand={expandInitially}
                   valueRenderer={valueRenderer}
                 />
