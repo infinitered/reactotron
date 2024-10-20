@@ -19,6 +19,7 @@ interface ApolloClientState {
   currentIndex: number
   pinnedKeys: string[]
   data: ApolloClientData
+  isEditOpen: boolean
 }
 
 export const INITIAL_DATA = {
@@ -37,11 +38,17 @@ enum ApolloClientActionType {
   IndexSet = "INDEX_SET",
   PinnedKeysSet = "PINNED_KEYS_SET",
   DataSet = "DATA_SET",
+  EditOpen = "EDIT_OPEN",
+  EditClose = "EDIT_CLOSE",
 }
 
 type Action =
   | {
-      type: ApolloClientActionType.SearchOpen | ApolloClientActionType.SearchClose
+      type:
+        | ApolloClientActionType.SearchOpen
+        | ApolloClientActionType.SearchClose
+        | ApolloClientActionType.EditOpen
+        | ApolloClientActionType.EditClose
     }
   | {
       type: ApolloClientActionType.SearchSet
@@ -70,6 +77,10 @@ function ApolloClientReducer(state: ApolloClientState, action: Action) {
       return { ...state, isSearchOpen: true }
     case ApolloClientActionType.SearchClose:
       return { ...state, isSearchOpen: false }
+    case ApolloClientActionType.EditClose:
+      return { ...state, isEditOpen: false }
+    case ApolloClientActionType.EditOpen:
+      return { ...state, isEditOpen: true }
     case ApolloClientActionType.SearchSet:
       return { ...state, search: action.payload }
     case ApolloClientActionType.ViewedKeysSet:
@@ -93,6 +104,7 @@ function useApolloClient() {
     currentIndex: -1,
     pinnedKeys: [],
     data: INITIAL_DATA,
+    isEditOpen: false,
   })
 
   // Setup event handlers
@@ -113,6 +125,18 @@ function useApolloClient() {
   const closeSearch = useCallback(() => {
     dispatch({
       type: ApolloClientActionType.SearchClose,
+    })
+  }, [])
+
+  const openEdit = useCallback(() => {
+    dispatch({
+      type: ApolloClientActionType.EditOpen,
+    })
+  }, [])
+
+  const closeEdit = useCallback(() => {
+    dispatch({
+      type: ApolloClientActionType.EditClose,
     })
   }, [])
 
@@ -211,6 +235,9 @@ function useApolloClient() {
     pinnedKeys: state.pinnedKeys,
     data: state.data,
     setData,
+    openEdit,
+    closeEdit,
+    isEditOpen: state.isEditOpen,
   }
 
   return contextValue

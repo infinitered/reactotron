@@ -8,6 +8,7 @@ import {
   theme,
   Checkbox,
   Tooltip,
+  ApolloUpdateCacheValueModal,
 } from "reactotron-core-ui"
 import { TbDatabaseDollar } from "react-icons/tb"
 import { Title } from "../reactNative/components/Shared"
@@ -166,6 +167,9 @@ function Cache() {
     togglePin,
     data,
     setData,
+    isEditOpen,
+    closeEdit,
+    openEdit,
   } = useContext(ApolloClientContext)
 
   // send polling apollo.request command every half second
@@ -246,7 +250,6 @@ function Cache() {
         identifier[keyField] = cacheData[keyField]
       })
 
-      console.log({ keyFields, identifier })
       if (keyFields.length > 0) {
         const updates: ApolloClientCacheUpdatePayload = {
           // @ts-expect-error fix this
@@ -257,22 +260,24 @@ function Cache() {
           // // @ts-expect-error fix this
           // keyValue: cacheData.id,
           fieldName,
-          fieldValue: "new value",
+          fieldValue: cacheData[fieldName],
         }
-        sendCommand(CommandType.ApolloClientUpdateCache, updates)
+
+        setInitialValue(updates)
+        openEdit()
       } else {
         // we need to prompt the user to something to help identify the key for this object
         // otherwise we can't properly update the cache
       }
     },
-    [cacheData, cacheKey, sendCommand]
+    [cacheData, cacheKey, openEdit]
   )
 
-  console.log({ data })
-
   // TODO add these options to the context in order to not lose state on tab switch
+  // TODO also add an option for the poll time?
   const [searchObjects, setSearchObjects] = React.useState(false)
   const [expandInitially, setExpandInitially] = React.useState(true)
+  const [initialValue, setInitialValue] = React.useState({ fieldValue: "" })
 
   const valueRenderer = (transformed: any, untransformed: any, ...keyPath: any) => {
     if (keyPath[0] === "__ref") {
@@ -315,6 +320,7 @@ function Cache() {
                 <FaExternalLinkAlt color={theme.foregroundDark} />
               </IconContainer>
             )}
+
             <ButtonContainer onClick={() => handleEditKeyValue(keyPath[0])}>
               <FaEdit size={18} color={theme.foregroundDark} />
             </ButtonContainer>
@@ -487,6 +493,19 @@ function Cache() {
           )}
         </RowContainer>
       </CacheContainer>
+
+      <ApolloUpdateCacheValueModal
+        isOpen={isEditOpen}
+        onClose={() => {
+          closeEdit()
+          setInitialValue({ fieldValue: "" })
+        }}
+        onDispatchAction={(updates) => {
+          sendCommand(CommandType.ApolloClientUpdateCache, updates)
+        }}
+        initialValue={initialValue}
+        cacheKey={cacheKey}
+      />
     </Container>
   )
 }
@@ -536,7 +555,7 @@ function identifyKeyFields(cacheKey, cacheObject) {
   // Loop through each identifier and match it against the object's properties
   identifiers.forEach((identifier) => {
     for (const [key, value] of Object.entries(cacheObject)) {
-      if (value.toString() === identifier && !keyFields.includes(key)) {
+      if (value && value.toString() === identifier && !keyFields.includes(key)) {
         keyFields.push(key) // Add matching key field if not already included
       }
     }

@@ -20,6 +20,9 @@ interface Context {
   pinnedKeys: string[]
   data: ApolloClientData
   setData: (data: ApolloClientData) => void
+  isEditOpen: boolean
+  openEdit: () => void
+  closeEdit: () => void
 }
 
 const ApolloClientContext = React.createContext<Context>({
@@ -40,6 +43,9 @@ const ApolloClientContext = React.createContext<Context>({
   pinnedKeys: [],
   data: INITIAL_DATA,
   setData: null,
+  isEditOpen: false,
+  openEdit: null,
+  closeEdit: null,
 })
 
 const Provider: FunctionComponent<any> = ({ children }) => {
@@ -61,6 +67,9 @@ const Provider: FunctionComponent<any> = ({ children }) => {
     pinnedKeys,
     data,
     setData,
+    isEditOpen,
+    openEdit,
+    closeEdit,
   } = useApolloClient()
 
   return (
@@ -83,6 +92,9 @@ const Provider: FunctionComponent<any> = ({ children }) => {
         pinnedKeys,
         data,
         setData,
+        isEditOpen,
+        openEdit,
+        closeEdit,
       }}
     >
       {children}

@@ -24,6 +24,7 @@ import TimelineContext, { TimelineProvider } from "./contexts/Timeline"
 import ApolloClientContext, { ApolloClientProvider } from "./contexts/ApolloClient"
 
 // Modals
+import ApolloUpdateCacheValueModal from "./modals/ApolloUpdateCacheValueModal"
 import DispatchActionModal from "./modals/DispatchActionModal"
 import SnapshotRenameModal from "./modals/SnapshotRenameModal"
 import SubscriptionAddModal from "./modals/SubscriptionAddModal"
@@ -49,6 +50,7 @@ export {
   TimelineCommand,
   timelineCommandResolver,
   TimelineCommandTabButton,
+  ApolloUpdateCacheValueModal,
   DispatchActionModal,
   SnapshotRenameModal,
   SubscriptionAddModal,
