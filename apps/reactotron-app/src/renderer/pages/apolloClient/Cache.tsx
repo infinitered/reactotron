@@ -9,7 +9,6 @@ import {
   Checkbox,
   Tooltip,
 } from "reactotron-core-ui"
-import { MdSearch, MdWarning } from "react-icons/md"
 import { TbDatabaseDollar } from "react-icons/tb"
 import { Title } from "../reactNative/components/Shared"
 import { CommandType } from "reactotron-core-contract"
@@ -33,19 +32,7 @@ const CacheContainer = styled.div`
 const TopSection = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-`
-
-const WarningContainer = styled.div`
-  display: flex;
-  color: ${(props) => props.theme.warning};
-  background-color: ${(props) => props.theme.backgroundDarker};
-  border-top: 1px solid ${(props) => props.theme.chromeLine};
-  align-items: center;
-  padding: 0 20px;
-`
-const WarningDescription = styled.div`
-  margin-left: 20px;
+  padding-left: 10px;
 `
 
 const SearchContainer = styled.div`
@@ -87,6 +74,10 @@ const Row = styled.div`
 `
 
 const IconContainer = styled.span`
+  padding-left: 10px;
+`
+
+const TreeContainer = styled.div`
   padding-left: 10px;
 `
 
@@ -180,23 +171,20 @@ const INITIAL_DATA = {
 }
 
 function Cache() {
+  // This could go to the context? but we grab it on mount
   const [data, setData] = React.useState<any>(INITIAL_DATA)
   const { sendCommand, addCommandListener } = React.useContext(ReactotronContext)
   const {
-    isSearchOpen,
-    toggleSearch,
     closeSearch,
     setSearch,
     search,
-    setCacheKey,
-    cacheKey: storedCacheKey,
+    viewedKeys,
+    setViewedKeys,
+    currentIndex,
+    goForward,
+    goBack,
+    getCurrentKey,
   } = useContext(ApolloClientContext)
-
-  const [viewedKeys, setViewedKeys] = React.useState<string[]>([])
-
-  // const sendMessage = React.useCallback(() => {
-  //   sendCommand("apollo.request", {})
-  // }, [sendCommand])
 
   // send polling apollo.request command every half second
   React.useEffect(() => {
@@ -206,32 +194,21 @@ function Cache() {
     return () => clearInterval(interval)
   }, [sendCommand])
 
+  // TODO rework this to be custom from the UI to send data from server to client
+  // below is an example
   // const updateFragment = React.useCallback(() => {
   //   sendCommand("apollo.fragment.update", { message: "Title from server" })
   // }, [sendCommand])
 
-  const resyncData = React.useCallback(() => {
-    debounce(() => {
-      sendCommand("apollo.request", {})
-    })
-  }, [sendCommand])
-
   React.useEffect(() => {
     addCommandListener((command) => {
       if (command.type === CommandType.ApolloClientResponse) {
-        // TODO reorder the way things come in so recent is at top
-        // see https://github.com/expo/dev-plugins/blob/main/packages/apollo-client/webui/src/App.tsx#L44-L46
+        // TODO reorder the way things come in so recent is at top ?
         setData(command.payload)
         sendCommand("apollo.ack", {})
-        resyncData()
       }
     })
-  }, [addCommandListener, sendCommand, resyncData])
-
-  React.useEffect(() => {
-    sendCommand("apollo.request", {})
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [addCommandListener, sendCommand])
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -240,52 +217,35 @@ function Cache() {
     [setSearch]
   )
 
-  // const { searchString, handleInputChange } = useDebouncedSearchInput(search, setSearch, 300)
-
-  const { cacheKey } = useParams()
+  const { cacheKey: routeKey } = useParams()
   const navigate = useNavigate()
-  const [currentIndex, setCurrentIndex] = React.useState(-1)
-
-  // const [history, setHistory] = useState([]);
+  /**
+   * if we have unmounted via another tab press,
+   * restore the last key we were viewing when user returns here
+   */
+  useEffect(() => {
+    if (!routeKey) {
+      const lastItem = getCurrentKey()
+      if (lastItem) {
+        navigate(`/apolloClient/cache/${lastItem}`)
+      }
+    }
+  }, [routeKey, getCurrentKey, navigate])
 
   useEffect(() => {
     // Check if cacheKey is new
-    if (cacheKey && (currentIndex === -1 || history[currentIndex] !== cacheKey)) {
-      const newIndex = viewedKeys.indexOf(cacheKey)
-      if (newIndex === -1) {
-        // New cacheKey, add to history
-        const newHistory = [...viewedKeys, cacheKey]
-        setViewedKeys(newHistory)
-        setCurrentIndex(newHistory.length - 1)
-      } else {
-        // Existing cacheKey, just update the current index
-        setCurrentIndex(newIndex)
-      }
+    const currentItem = getCurrentKey()
+    if (routeKey && currentItem !== routeKey) {
+      // TODO rename `setViewedKeys` to `addKeyToHistory`
+      setViewedKeys(routeKey)
     }
-  }, [cacheKey, viewedKeys, currentIndex])
+  }, [routeKey, setViewedKeys, getCurrentKey])
 
   function openURL(url) {
     shell.openExternal(url)
   }
 
-  const goBack = () => {
-    // Navigate to the previous cacheKey in the history
-    const currentPos = viewedKeys.indexOf(cacheKey)
-    if (currentPos > 0) {
-      navigate(`/apolloClient/cache/${viewedKeys[currentPos - 1]}`)
-      setCurrentIndex(currentIndex - 1)
-    }
-  }
-
-  const goForward = () => {
-    // Navigate to the next cacheKey in the history
-    const currentPos = viewedKeys.indexOf(cacheKey)
-    if (currentPos < viewedKeys.length - 1) {
-      navigate(`/apolloClient/cache/${viewedKeys[currentPos + 1]}`)
-      setCurrentIndex(currentIndex + 1)
-    }
-  }
-
+  const cacheKey = getCurrentKey() ?? routeKey
   const cacheData = data.cache[cacheKey] ?? undefined
 
   const forwardDisabled = currentIndex === viewedKeys.length - 1
@@ -301,6 +261,7 @@ function Cache() {
     }
   }
 
+  // TODO add these options to the context in order to not lose state on tab switch
   const [searchObjects, setSearchObjects] = React.useState(false)
   const [expandInitially, setExpandInitially] = React.useState(true)
   const [pinnedKeys, setPinnedKeys] = React.useState<string[]>([])
@@ -391,49 +352,43 @@ function Cache() {
           //   },
           // },
         ]}
-        actions={[
-          {
-            tip: "Search",
-            icon: MdSearch,
-            onClick: () => {
-              toggleSearch()
-            },
-          },
-        ]}
+        // actions={[
+        //   {
+        //     tip: "Search",
+        //     icon: MdSearch,
+        //     onClick: () => {
+        //       toggleSearch()
+        //     },
+        //   },
+        // ]}
       >
-        {isSearchOpen && (
-          <SearchContainer>
-            <VerticalContainer>
-              <SearchContainer>
-                <SearchInput
-                  placeholder="Search..."
-                  autoFocus
-                  value={search}
-                  onChange={handleInputChange}
-                />
-                <ButtonContainer onClick={clearSearch}>
-                  <FaTimes size={24} />
-                </ButtonContainer>
-              </SearchContainer>
-              <Checkbox
-                label="Include object values"
-                onToggle={() => setSearchObjects(!searchObjects)}
-                isChecked={searchObjects}
+        <SearchContainer>
+          <VerticalContainer>
+            <SearchContainer>
+              <SearchInput
+                placeholder="Search..."
+                autoFocus
+                value={search}
+                onChange={handleInputChange}
               />
-              <Checkbox
-                label="Expand data initially"
-                onToggle={() => setExpandInitially(!expandInitially)}
-                isChecked={expandInitially}
-              />
-            </VerticalContainer>
-          </SearchContainer>
-        )}
+              <ButtonContainer onClick={clearSearch}>
+                <FaTimes size={24} />
+              </ButtonContainer>
+            </SearchContainer>
+            <Checkbox
+              label="Include object values"
+              onToggle={() => setSearchObjects(!searchObjects)}
+              isChecked={searchObjects}
+            />
+            <Checkbox
+              label="Expand data initially"
+              onToggle={() => setExpandInitially(!expandInitially)}
+              isChecked={expandInitially}
+            />
+          </VerticalContainer>
+        </SearchContainer>
       </Header>
       <CacheContainer>
-        <WarningContainer>
-          <MdWarning size={60} />
-          <WarningDescription>This is preview feature.</WarningDescription>
-        </WarningContainer>
         <RowContainer>
           <LeftPanel>
             {/* always show pinnedKeys */}
@@ -482,11 +437,7 @@ function Cache() {
                 const LinkWrapper = key === cacheKey ? SelectedCacheKeyLink : CacheKeyLink
                 return (
                   <Row key={key}>
-                    <LinkWrapper
-                      key={key}
-                      // onClick={() => pushViewedKey(key)}
-                      to={`/apolloClient/cache/${key}`}
-                    >
+                    <LinkWrapper key={key} to={`/apolloClient/cache/${key}`}>
                       <CacheKeyLabel>
                         {!searchObjects ? (
                           <HighlightText text={key} searchTerm={search} />
@@ -519,12 +470,9 @@ function Cache() {
               </Row>
               <TopSection>
                 <Title>Cache ID: {cacheKey}</Title>
-                <Link to="/apolloClient/cache">
-                  <FaTimes size={24} color={theme.foregroundDark} />
-                </Link>
               </TopSection>
 
-              {cacheKey && (
+              {cacheData && currentIndex >= -1 && (
                 <TreeView
                   value={{ ...cacheData }}
                   expand={expandInitially}

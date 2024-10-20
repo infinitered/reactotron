@@ -9,8 +9,13 @@ interface Context {
   closeSearch: () => void
   search: string
   setSearch: (search: string) => void
-  cacheKey: string
-  setCacheKey: (cacheKey: string) => void
+  viewedKeys: string[]
+  setViewedKeys: (viewedKey: string) => void
+  currentIndex: number
+  setCurrentIndex: (currentIndex: number) => void
+  getCurrentKey: () => string | null
+  goForward: () => void
+  goBack: () => void
 }
 
 const ApolloClientContext = React.createContext<Context>({
@@ -20,8 +25,13 @@ const ApolloClientContext = React.createContext<Context>({
   closeSearch: null,
   search: "",
   setSearch: null,
-  cacheKey: "",
-  setCacheKey: null,
+  viewedKeys: [],
+  setViewedKeys: null,
+  currentIndex: -1,
+  setCurrentIndex: null,
+  getCurrentKey: null,
+  goForward: null,
+  goBack: null,
 })
 
 const Provider: FunctionComponent<any> = ({ children }) => {
@@ -32,8 +42,13 @@ const Provider: FunctionComponent<any> = ({ children }) => {
     closeSearch,
     search,
     setSearch,
-    cacheKey,
-    setCacheKey,
+    setViewedKeys,
+    viewedKeys,
+    currentIndex,
+    setCurrentIndex,
+    getCurrentKey,
+    goBack,
+    goForward,
   } = useApolloClient()
 
   return (
@@ -45,8 +60,13 @@ const Provider: FunctionComponent<any> = ({ children }) => {
         closeSearch,
         search,
         setSearch,
-        cacheKey,
-        setCacheKey,
+        viewedKeys,
+        setViewedKeys,
+        currentIndex,
+        setCurrentIndex,
+        getCurrentKey,
+        goBack,
+        goForward,
       }}
     >
       {children}
