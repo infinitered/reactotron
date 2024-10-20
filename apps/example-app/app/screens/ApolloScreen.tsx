@@ -1,13 +1,12 @@
 import React from "react"
 import { FlatList, TextStyle, View, ViewStyle } from "react-native"
-import { Button, ListItem, Text } from "app/components"
+import { ListItem, Text } from "app/components"
 import { AppStackScreenProps } from "app/navigators"
 import { colors, spacing } from "app/theme"
 import { useSafeAreaInsetsStyle } from "app/utils/useSafeAreaInsetsStyle"
 import { gql, useQuery } from "@apollo/client"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
-import { client } from "app/stores/apollo"
 
 const CHAPTERS_QUERY = gql`
   query Chapters {
@@ -37,41 +36,11 @@ const ChapterItem = ({
     subheader = ""
   }
 
-  const mutate = () => {
-    const frag = client.cache.readFragment({
-      id: `Chapter:1`,
-      fragmentName: "MyChapter",
-      fragment: gql`
-        fragment MyChapter on Chapter {
-          __typename
-          title
-        }
-      `,
-    })
-
-    client.cache.updateFragment(
-      {
-        id: `Chapter:${chapter.id.toString()}`,
-        fragmentName: "MyChapter",
-        fragment: gql`
-          fragment MyChapter on Chapter {
-            __typename
-            title
-          }
-        `,
-      },
-      (data) => {
-        return { ...data, title: `${data.title} - ${new Date().valueOf().toString()}` }
-      }
-    )
-  }
-
   return (
     <ListItem
       text={`${header}${subheader}`}
       onPress={onPress}
       containerStyle={{ paddingHorizontal: spacing.sm }}
-      RightComponent={<Button preset="reversed" text="Mutate" onPress={mutate} />}
     />
   )
 }
