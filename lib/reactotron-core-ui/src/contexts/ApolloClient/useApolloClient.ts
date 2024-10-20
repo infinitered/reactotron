@@ -5,12 +5,28 @@ import { useCallback, useReducer } from "react"
 //   HiddenCommands = "ReactotronApolloClientHiddenCommands",
 // }
 
+export interface ApolloClientData {
+  id: string
+  lastUpdatedAt: Date
+  // cache array of objects
+  cache: Record<string, unknown>
+}
+
 interface ApolloClientState {
   isSearchOpen: boolean
   search: string
   viewedKeys: string[]
   currentIndex: number
   pinnedKeys: string[]
+  data: ApolloClientData
+}
+
+export const INITIAL_DATA = {
+  id: "x",
+  lastUpdatedAt: new Date(),
+  // queries: [],
+  // mutations: [],
+  cache: {},
 }
 
 enum ApolloClientActionType {
@@ -20,6 +36,7 @@ enum ApolloClientActionType {
   ViewedKeysSet = "VIEWED_KEYS_SET",
   IndexSet = "INDEX_SET",
   PinnedKeysSet = "PINNED_KEYS_SET",
+  DataSet = "DATA_SET",
 }
 
 type Action =
@@ -42,6 +59,10 @@ type Action =
       type: ApolloClientActionType.ViewedKeysSet
       payload: string[]
     }
+  | {
+      type: ApolloClientActionType.DataSet
+      payload: ApolloClientData
+    }
 
 function ApolloClientReducer(state: ApolloClientState, action: Action) {
   switch (action.type) {
@@ -57,6 +78,8 @@ function ApolloClientReducer(state: ApolloClientState, action: Action) {
       return { ...state, currentIndex: action.payload }
     case ApolloClientActionType.PinnedKeysSet:
       return { ...state, pinnedKeys: action.payload }
+    case ApolloClientActionType.DataSet:
+      return { ...state, data: action.payload }
     default:
       return state
   }
@@ -69,6 +92,7 @@ function useApolloClient() {
     viewedKeys: [],
     currentIndex: -1,
     pinnedKeys: [],
+    data: INITIAL_DATA,
   })
 
   // Setup event handlers
@@ -162,6 +186,13 @@ function useApolloClient() {
     [state.pinnedKeys]
   )
 
+  const setData = useCallback((data: ApolloClientData) => {
+    dispatch({
+      type: ApolloClientActionType.DataSet,
+      payload: data,
+    })
+  }, [])
+
   const contextValue = {
     isSearchOpen: state.isSearchOpen,
     toggleSearch,
@@ -178,6 +209,8 @@ function useApolloClient() {
     goBack,
     togglePin,
     pinnedKeys: state.pinnedKeys,
+    data: state.data,
+    setData,
   }
 
   return contextValue

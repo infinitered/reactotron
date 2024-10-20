@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
 
-import useApolloClient from "./useApolloClient"
+import useApolloClient, { ApolloClientData, INITIAL_DATA } from "./useApolloClient"
 
 interface Context {
   isSearchOpen: boolean
@@ -18,6 +18,8 @@ interface Context {
   goBack: () => void
   togglePin: (key: string) => void
   pinnedKeys: string[]
+  data: ApolloClientData
+  setData: (data: ApolloClientData) => void
 }
 
 const ApolloClientContext = React.createContext<Context>({
@@ -36,6 +38,8 @@ const ApolloClientContext = React.createContext<Context>({
   goBack: null,
   togglePin: null,
   pinnedKeys: [],
+  data: INITIAL_DATA,
+  setData: null,
 })
 
 const Provider: FunctionComponent<any> = ({ children }) => {
@@ -55,6 +59,8 @@ const Provider: FunctionComponent<any> = ({ children }) => {
     goForward,
     togglePin,
     pinnedKeys,
+    data,
+    setData,
   } = useApolloClient()
 
   return (
@@ -75,6 +81,8 @@ const Provider: FunctionComponent<any> = ({ children }) => {
         goForward,
         togglePin,
         pinnedKeys,
+        data,
+        setData,
       }}
     >
       {children}

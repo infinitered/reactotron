@@ -77,10 +77,6 @@ const IconContainer = styled.span`
   padding-left: 10px;
 `
 
-const TreeContainer = styled.div`
-  padding-left: 10px;
-`
-
 const LeftPanel = styled.div`
   display: flex;
   flex-direction: column;
@@ -162,17 +158,9 @@ function debounce(func: (...args: any) => any, timeout = 7000): void {
   }, timeout)
 }
 
-const INITIAL_DATA = {
-  id: "x",
-  lastUpdateAt: new Date(),
-  queries: [],
-  mutations: [],
-  cache: [],
-}
-
 function Cache() {
   // This could go to the context? but we grab it on mount
-  const [data, setData] = React.useState<any>(INITIAL_DATA)
+
   const { sendCommand, addCommandListener } = React.useContext(ReactotronContext)
   const {
     closeSearch,
@@ -186,6 +174,8 @@ function Cache() {
     getCurrentKey,
     pinnedKeys,
     togglePin,
+    data,
+    setData,
   } = useContext(ApolloClientContext)
 
   // send polling apollo.request command every half second
@@ -210,7 +200,7 @@ function Cache() {
         sendCommand("apollo.ack", {})
       }
     })
-  }, [addCommandListener, sendCommand])
+  }, [addCommandListener, sendCommand, setData])
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
