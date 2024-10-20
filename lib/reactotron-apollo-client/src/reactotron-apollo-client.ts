@@ -1,6 +1,6 @@
 /* eslint-disable no-invalid-this */
 /* eslint-disable func-style */
-import { ApolloClient, gql, ObservableQuery } from "@apollo/client"
+import { ApolloClient, ObservableQuery } from "@apollo/client"
 import {
   ReactotronCore,
   Plugin,
@@ -200,16 +200,16 @@ function getCurrentState(client: ApolloClientType): Promise<ApolloClientState> {
   })
 }
 
-function debounce(func: (...args: any) => any, timeout = 500): () => any {
-  let timer
-  return (...args) => {
-    clearTimeout(timer)
-    timer = setTimeout(() => {
-      // @ts-expect-error add typings for this
-      func.apply(this, args)
-    }, timeout)
-  }
-}
+// function debounce(func: (...args: any) => any, timeout = 500): () => any {
+//   let timer
+//   return (...args) => {
+//     clearTimeout(timer)
+//     timer = setTimeout(() => {
+//       // @ts-expect-error add typings for this
+//       func.apply(this, args)
+//     }, timeout)
+//   }
+// }
 
 export interface ApolloPluginConfig {
   apolloClient: ApolloClient<NormalizedCacheObject>
@@ -226,7 +226,7 @@ export const apolloPlugin =
       InferFeatures<Client, StateResponsePlugin>
 
     // --- Plugin-scoped variables ---------------------------------
-    let acknowledged = true
+    // let acknowledged = true
     let apolloData: null | ApolloClientState
 
     // hang on to the apollo state
@@ -235,30 +235,30 @@ export const apolloPlugin =
         apolloData = data
       })
 
-      function sendData() {
-        reactotron.log("sendData")
-        if (apolloData) {
-          acknowledged = false
-        }
-      }
+      // function sendData() {
+      //   reactotron.log("sendData")
+      //   if (apolloData) {
+      //     acknowledged = false
+      //   }
+      // }
 
-      const poll = async (): Promise<void> => {
-        // TODO remove
-        reactotron.display({
-          name: "APOLLO CLIENT",
-          preview: `Poll`,
-          value: { acknowledged },
-        })
+      // const poll = async (): Promise<void> => {
+      //   // TODO remove
+      //   reactotron.display({
+      //     name: "APOLLO CLIENT",
+      //     preview: `Poll`,
+      //     value: { acknowledged },
+      //   })
 
-        if (acknowledged) {
-          getCurrentState(apolloClient).then((data) => {
-            apolloData = data
-          })
-          reactotron.log("apolloData", apolloData)
-          sendData()
-        }
-        // sendSubscriptions()
-      }
+      //   if (acknowledged) {
+      //     getCurrentState(apolloClient).then((data) => {
+      //       apolloData = data
+      //     })
+      //     reactotron.log("apolloData", apolloData)
+      //     sendData()
+      //   }
+      //   // sendSubscriptions()
+      // }
     }
 
     // a list of subscriptions the client is subscribing to
@@ -323,38 +323,35 @@ export const apolloPlugin =
     //   reactotron.stateValuesChange(changes)
     // }
 
-    async function handleRequest(command: Command<"apollo.request", { message: string }>) {
+    async function handleRequest() {
       // @ts-expect-error fix command type payload
       reactotron.send("apollo.response", await getCurrentState(apolloClient))
     }
 
-    async function handleUpdateFragment(
-      command: Command<"apollo.fragment.update", { message: string }>
-    ) {
-      apolloClient.cache.updateFragment(
-        {
-          id: `Chapter:1`,
-          fragmentName: "MyChapter",
-          fragment: gql`
-            fragment MyChapter on Chapter {
-              __typename
-              title
-            }
-          `,
+    async function handleUpdateCache(command: Command<"apollo.cache.update">) {
+      // const { typename, keyField, keyValue, fieldName, fieldValue } = command.payload
+      const { typename, identifier, fieldName, fieldValue } = command.payload
+      const result = apolloClient.cache.modify({
+        // id: apolloClient.cache.identify({ __typename: typename, [keyField]: keyValue }),
+        id: apolloClient.cache.identify({ __typename: typename, ...identifier }),
+        fields: {
+          [fieldName](existingValue, { readField }) {
+            // newValue is received from the WebSocket message
+            return fieldValue // Update the dynamically specified field
+          },
         },
-        (data) => {
-          return { ...data, title: `${command.payload.message}` }
-        }
-      )
+      })
+
+      reactotron.log("apollo.cache.update", result, identifier)
     }
 
     async function handleAck() {
-      acknowledged = true
+      // acknowledged = true
       // const data = await getCurrentState(apolloClient)
       if (apolloData) {
         // @ts-expect-error fix command type payload
         reactotron.send("apollo.response", apolloData)
-        acknowledged = false
+        // acknowledged = false
         apolloData = null
       }
     }
@@ -367,7 +364,7 @@ export const apolloPlugin =
       "state.values.subscribe": subscribe,
       "apollo.ack": handleAck,
       "apollo.request": handleRequest,
-      "apollo.fragment.update": handleUpdateFragment,
+      "apollo.cache.update": handleUpdateCache,
     } satisfies { [name: string]: (command: Command) => void }
 
     /**

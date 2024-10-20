@@ -60,3 +60,12 @@ export interface StateActionCompletePayload {
   action: Record<string, any>
   ms?: number
 }
+
+export interface ApolloClientCacheUpdatePayload {
+  typename: string
+  identifier: Record<string, any>
+  // keyField: string
+  // keyValue: Value
+  fieldName: string
+  fieldValue: Value
+}

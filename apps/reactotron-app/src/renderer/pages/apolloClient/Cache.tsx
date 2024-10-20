@@ -11,8 +11,8 @@ import {
 } from "reactotron-core-ui"
 import { TbDatabaseDollar } from "react-icons/tb"
 import { Title } from "../reactNative/components/Shared"
-import { CommandType } from "reactotron-core-contract"
-import { FaArrowLeft, FaArrowRight, FaExternalLinkAlt, FaTimes } from "react-icons/fa"
+import { ApolloClientCacheUpdatePayload, CommandType } from "reactotron-core-contract"
+import { FaArrowLeft, FaArrowRight, FaEdit, FaExternalLinkAlt, FaTimes } from "react-icons/fa"
 import { PiPushPinFill, PiPushPinSlash } from "react-icons/pi"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { shell } from "electron"
@@ -148,16 +148,6 @@ const HighlightText = ({ text, searchTerm }) => {
   }
 }
 
-let timer: ReturnType<typeof setTimeout>
-
-function debounce(func: (...args: any) => any, timeout = 7000): void {
-  clearTimeout(timer)
-  timer = setTimeout(() => {
-    // @ts-expect-error add typings for this
-    func.apply(this, args)
-  }, timeout)
-}
-
 function Cache() {
   // This could go to the context? but we grab it on mount
 
@@ -185,12 +175,6 @@ function Cache() {
     }, 1000)
     return () => clearInterval(interval)
   }, [sendCommand])
-
-  // TODO rework this to be custom from the UI to send data from server to client
-  // below is an example
-  // const updateFragment = React.useCallback(() => {
-  //   sendCommand("apollo.fragment.update", { message: "Title from server" })
-  // }, [sendCommand])
 
   React.useEffect(() => {
     addCommandListener((command) => {
@@ -253,6 +237,39 @@ function Cache() {
     }
   }
 
+  const handleEditKeyValue = useCallback(
+    (fieldName: string) => {
+      // identify the possible composite key fields
+      const keyFields = identifyKeyFields(cacheKey, cacheData)
+      const identifier = {}
+      keyFields.forEach((keyField) => {
+        identifier[keyField] = cacheData[keyField]
+      })
+
+      console.log({ keyFields, identifier })
+      if (keyFields.length > 0) {
+        const updates: ApolloClientCacheUpdatePayload = {
+          // @ts-expect-error fix this
+          typename: cacheData.__typename,
+          identifier,
+          // TODO how to determine the `id` field if not `id`?
+          // keyField: "id",
+          // // @ts-expect-error fix this
+          // keyValue: cacheData.id,
+          fieldName,
+          fieldValue: "new value",
+        }
+        sendCommand(CommandType.ApolloClientUpdateCache, updates)
+      } else {
+        // we need to prompt the user to something to help identify the key for this object
+        // otherwise we can't properly update the cache
+      }
+    },
+    [cacheData, cacheKey, sendCommand]
+  )
+
+  console.log({ data })
+
   // TODO add these options to the context in order to not lose state on tab switch
   const [searchObjects, setSearchObjects] = React.useState(false)
   const [expandInitially, setExpandInitially] = React.useState(true)
@@ -267,6 +284,7 @@ function Cache() {
         >
           <SpanContainer>{untransformed || transformed}</SpanContainer>
           <Tooltip id={`ref-for-${untransformed}`} effect="solid">
+            {/* @ts-expect-error fix this */}
             <TreeView value={{ ...data.cache[untransformed] }} expand={true} />
           </Tooltip>
         </StyledLink>
@@ -297,6 +315,9 @@ function Cache() {
                 <FaExternalLinkAlt color={theme.foregroundDark} />
               </IconContainer>
             )}
+            <ButtonContainer onClick={() => handleEditKeyValue(keyPath[0])}>
+              <FaEdit size={18} color={theme.foregroundDark} />
+            </ButtonContainer>
           </SpanContainer>
         )
       }
@@ -471,3 +492,55 @@ function Cache() {
 }
 
 export default Cache
+
+// function identifyKeyFields(cacheKey, cacheObject) {
+//   if (!cacheKey || !cacheObject) {
+//     return []; // Early exit if no data is provided
+//   }
+
+//   const keyParts = cacheKey.split(':');
+//   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+//   const typename = keyParts.shift(); // Extract typename
+//   const identifier = keyParts.join(':'); // Handle cases where identifier might contain ':'
+
+//   const keyFields = [];
+
+//   // First check if 'id' is a matching key field
+//   // eslint-disable-next-line no-prototype-builtins
+//   if ("id" in cacheObject && cacheObject.id.toString() === identifier) {
+//     keyFields.push('id');
+//   } else {
+//     // Iterate through each field to find matches
+//     Object.entries(cacheObject).forEach(([key, value]) => {
+//       if (value.toString() === identifier && key !== 'id') {
+//         keyFields.push(key);
+//       }
+//     });
+//   }
+
+//   return keyFields; // Return an array of key fields
+// }
+function identifyKeyFields(cacheKey, cacheObject) {
+  if (!cacheKey || !cacheObject) {
+    return [] // Early exit if no data is provided
+  }
+
+  // Assuming the cacheKey format could be something like "User:john:01012000"
+  const keyParts = cacheKey.split(":")
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const typename = keyParts.shift() // Remove the typename part
+  const identifiers = keyParts // Remaining parts are the identifiers
+
+  const keyFields = []
+
+  // Loop through each identifier and match it against the object's properties
+  identifiers.forEach((identifier) => {
+    for (const [key, value] of Object.entries(cacheObject)) {
+      if (value.toString() === identifier && !keyFields.includes(key)) {
+        keyFields.push(key) // Add matching key field if not already included
+      }
+    }
+  })
+
+  return keyFields // Return an array of key fields
+}

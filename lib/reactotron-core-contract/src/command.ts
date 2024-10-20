@@ -1,6 +1,7 @@
 import type { LogPayload } from "./log"
 import { EditorOpenPayload } from "./openInEditor"
 import type {
+  ApolloClientCacheUpdatePayload,
   StateActionCompletePayload,
   StateActionDispatchPayload,
   StateBackupRequestPayload,
@@ -48,7 +49,7 @@ export const CommandType = {
   ApolloClientRequest: "apollo.request",
   ApolloClientResponse: "apollo.response",
   ApolloClientAck: "apollo.ack",
-  ApolloClientUpdateFragment: "apollo.fragment.update",
+  ApolloClientUpdateCache: "apollo.cache.update",
 } as const
 
 export type CommandTypeKey = (typeof CommandType)[keyof typeof CommandType]
@@ -86,7 +87,7 @@ export interface CommandMap {
   [CommandType.ApolloClientAck]: boolean
   [CommandType.ApolloClientRequest]: { message: string }
   [CommandType.ApolloClientResponse]: { message: string }
-  [CommandType.ApolloClientUpdateFragment]: { message: string }
+  [CommandType.ApolloClientUpdateCache]: ApolloClientCacheUpdatePayload
 }
 
 export interface Command<
