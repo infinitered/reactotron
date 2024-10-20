@@ -184,6 +184,8 @@ function Cache() {
     goForward,
     goBack,
     getCurrentKey,
+    pinnedKeys,
+    togglePin,
   } = useContext(ApolloClientContext)
 
   // send polling apollo.request command every half second
@@ -264,15 +266,6 @@ function Cache() {
   // TODO add these options to the context in order to not lose state on tab switch
   const [searchObjects, setSearchObjects] = React.useState(false)
   const [expandInitially, setExpandInitially] = React.useState(true)
-  const [pinnedKeys, setPinnedKeys] = React.useState<string[]>([])
-
-  const togglePin = (key: string) => {
-    if (pinnedKeys.includes(key)) {
-      setPinnedKeys(pinnedKeys.filter((k) => k !== key))
-    } else {
-      setPinnedKeys([...pinnedKeys, key])
-    }
-  }
 
   const valueRenderer = (transformed: any, untransformed: any, ...keyPath: any) => {
     if (keyPath[0] === "__ref") {

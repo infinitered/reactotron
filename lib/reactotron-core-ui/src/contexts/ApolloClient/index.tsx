@@ -16,6 +16,8 @@ interface Context {
   getCurrentKey: () => string | null
   goForward: () => void
   goBack: () => void
+  togglePin: (key: string) => void
+  pinnedKeys: string[]
 }
 
 const ApolloClientContext = React.createContext<Context>({
@@ -32,6 +34,8 @@ const ApolloClientContext = React.createContext<Context>({
   getCurrentKey: null,
   goForward: null,
   goBack: null,
+  togglePin: null,
+  pinnedKeys: [],
 })
 
 const Provider: FunctionComponent<any> = ({ children }) => {
@@ -49,6 +53,8 @@ const Provider: FunctionComponent<any> = ({ children }) => {
     getCurrentKey,
     goBack,
     goForward,
+    togglePin,
+    pinnedKeys,
   } = useApolloClient()
 
   return (
@@ -67,6 +73,8 @@ const Provider: FunctionComponent<any> = ({ children }) => {
         getCurrentKey,
         goBack,
         goForward,
+        togglePin,
+        pinnedKeys,
       }}
     >
       {children}

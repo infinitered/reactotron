@@ -10,6 +10,7 @@ interface ApolloClientState {
   search: string
   viewedKeys: string[]
   currentIndex: number
+  pinnedKeys: string[]
 }
 
 enum ApolloClientActionType {
@@ -18,6 +19,7 @@ enum ApolloClientActionType {
   SearchSet = "SEARCH_SET",
   ViewedKeysSet = "VIEWED_KEYS_SET",
   IndexSet = "INDEX_SET",
+  PinnedKeysSet = "PINNED_KEYS_SET",
 }
 
 type Action =
@@ -27,6 +29,10 @@ type Action =
   | {
       type: ApolloClientActionType.SearchSet
       payload: string
+    }
+  | {
+      type: ApolloClientActionType.PinnedKeysSet
+      payload: string[]
     }
   | {
       type: ApolloClientActionType.IndexSet
@@ -49,6 +55,8 @@ function ApolloClientReducer(state: ApolloClientState, action: Action) {
       return { ...state, viewedKeys: action.payload, currentIndex: action.payload.length - 1 }
     case ApolloClientActionType.IndexSet:
       return { ...state, currentIndex: action.payload }
+    case ApolloClientActionType.PinnedKeysSet:
+      return { ...state, pinnedKeys: action.payload }
     default:
       return state
   }
@@ -60,6 +68,7 @@ function useApolloClient() {
     search: "",
     viewedKeys: [],
     currentIndex: -1,
+    pinnedKeys: [],
   })
 
   // Setup event handlers
@@ -114,8 +123,6 @@ function useApolloClient() {
         state.viewedKeys.length === 0 ||
         state.viewedKeys[state.viewedKeys.length - 1] !== viewedKey
       ) {
-        // const newHistory = state.viewedKeys.slice(0, state.currentIndex + 1) // Safely trims the history if needed
-        // newHistory.push(viewedKey)
         const newHistory = [...state.viewedKeys, viewedKey]
         dispatch({
           type: ApolloClientActionType.ViewedKeysSet,
@@ -142,6 +149,19 @@ function useApolloClient() {
     return state.currentIndex >= 0 ? state.viewedKeys[state.currentIndex] : null
   }, [state.currentIndex, state.viewedKeys])
 
+  const togglePin = useCallback(
+    (key: string) => {
+      const newPinnedKeys = state.pinnedKeys.includes(key)
+        ? state.pinnedKeys.filter((k) => k !== key)
+        : [...state.pinnedKeys, key]
+      dispatch({
+        type: ApolloClientActionType.PinnedKeysSet,
+        payload: newPinnedKeys,
+      })
+    },
+    [state.pinnedKeys]
+  )
+
   const contextValue = {
     isSearchOpen: state.isSearchOpen,
     toggleSearch,
@@ -156,6 +176,8 @@ function useApolloClient() {
     getCurrentKey,
     goForward,
     goBack,
+    togglePin,
+    pinnedKeys: state.pinnedKeys,
   }
 
   return contextValue
