@@ -3,6 +3,8 @@
 //
 // Mostly adapted from https://github.com/isaacs/json-stringify-safe
 
+import { prototype } from "assert"
+
 // replacement tokens
 const UNDEFINED = "~~~ undefined ~~~"
 const NULL = `~~~ null ~~~`
@@ -25,9 +27,12 @@ declare global {
     toJSON(): string
   }
 }
-// eslint-disable-next-line no-extend-native
-BigInt.prototype.toJSON = function () {
-  return this.toString()
+// Extend BigInt.prototype.toJSON if BigInt is available and method is not already defined
+if (typeof BigInt !== 'undefined' && !BigInt.prototype.toJSON) {
+  // eslint-disable-next-line no-extend-native
+  BigInt.prototype.toJSON = function () {
+    return this.toString() + "n"; // Append 'n' to distinguish BigInt
+  };
 }
 
 /**
