@@ -263,6 +263,8 @@ function Cache() {
           fieldValue: cacheData[fieldName],
         }
 
+        console.log("setting initial value", typeof updates.fieldValue)
+
         setInitialValue(updates)
         openEdit()
       } else {
@@ -501,6 +503,7 @@ function Cache() {
           setInitialValue({ fieldValue: "" })
         }}
         onDispatchAction={(updates) => {
+          console.log({ updates })
           sendCommand(CommandType.ApolloClientUpdateCache, updates)
         }}
         initialValue={initialValue}
