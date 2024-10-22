@@ -130,6 +130,8 @@ const PinnedSeparator = styled.div`
   margin: 10px 0;
 `
 
+const READ_ONLY_FIELDS = ["__typename", "id"]
+
 const HighlightText = ({ text, searchTerm }) => {
   try {
     const parts = text.toString().split(new RegExp(`(${searchTerm})`, "gi"))
@@ -279,7 +281,12 @@ function Cache() {
   // TODO also add an option for the poll time?
   const [searchObjects, setSearchObjects] = React.useState(false)
   const [expandInitially, setExpandInitially] = React.useState(true)
-  const [initialValue, setInitialValue] = React.useState({ fieldValue: "" })
+  const [initialValue, setInitialValue] = React.useState<ApolloClientCacheUpdatePayload>({
+    fieldValue: "",
+    typename: "",
+    identifier: {},
+    fieldName: "",
+  })
 
   const valueRenderer = (transformed: any, untransformed: any, ...keyPath: any) => {
     if (keyPath[0] === "__ref") {
@@ -311,6 +318,17 @@ function Cache() {
                 <FaExternalLinkAlt color={theme.foregroundDark} />
               </IconContainer>
             )}
+
+            {/* TODO don't show edit button for __typename and any key fields */}
+            {cacheKey === "ROOT_QUERY" ||
+              (!READ_ONLY_FIELDS.includes(keyPath[0]) && (
+                <ButtonContainer
+                  onClick={() => handleEditKeyValue(keyPath[0])}
+                  style={{ display: "inline", padding: "0 5px" }}
+                >
+                  <FaEdit size={18} color={theme.foregroundDark} />
+                </ButtonContainer>
+              ))}
           </SpanContainer>
         )
       } else {
@@ -323,9 +341,16 @@ function Cache() {
               </IconContainer>
             )}
 
-            <ButtonContainer onClick={() => handleEditKeyValue(keyPath[0])}>
-              <FaEdit size={18} color={theme.foregroundDark} />
-            </ButtonContainer>
+            {/* TODO don't show edit button for __typename and any key fields */}
+            {cacheKey === "ROOT_QUERY" ||
+              (!READ_ONLY_FIELDS.includes(keyPath[0]) && (
+                <ButtonContainer
+                  onClick={() => handleEditKeyValue(keyPath[0])}
+                  style={{ display: "inline", padding: "0 5px" }}
+                >
+                  <FaEdit size={18} color={theme.foregroundDark} />
+                </ButtonContainer>
+              ))}
           </SpanContainer>
         )
       }
@@ -345,6 +370,7 @@ function Cache() {
             // eslint-disable-next-line @typescript-eslint/no-empty-function
             onClick: () => {},
           },
+          /* TODO Add queries and mutations tabs up top */
           // {
           //   text: "Queries",
           //   icon: HiDocumentSearch,
@@ -364,15 +390,6 @@ function Cache() {
           //   },
           // },
         ]}
-        // actions={[
-        //   {
-        //     tip: "Search",
-        //     icon: MdSearch,
-        //     onClick: () => {
-        //       toggleSearch()
-        //     },
-        //   },
-        // ]}
       >
         <SearchContainer>
           <VerticalContainer>
@@ -387,16 +404,18 @@ function Cache() {
                 <FaTimes size={24} />
               </ButtonContainer>
             </SearchContainer>
-            <Checkbox
-              label="Include object values"
-              onToggle={() => setSearchObjects(!searchObjects)}
-              isChecked={searchObjects}
-            />
-            <Checkbox
-              label="Expand data initially"
-              onToggle={() => setExpandInitially(!expandInitially)}
-              isChecked={expandInitially}
-            />
+            <Row style={{ gap: "20px", paddingLeft: "10px" }}>
+              <Checkbox
+                label="Search object values"
+                onToggle={() => setSearchObjects(!searchObjects)}
+                isChecked={searchObjects}
+              />
+              <Checkbox
+                label="Expand data initially"
+                onToggle={() => setExpandInitially(!expandInitially)}
+                isChecked={expandInitially}
+              />
+            </Row>
           </VerticalContainer>
         </SearchContainer>
       </Header>
@@ -500,7 +519,7 @@ function Cache() {
         isOpen={isEditOpen}
         onClose={() => {
           closeEdit()
-          setInitialValue({ fieldValue: "" })
+          setInitialValue({ fieldValue: "", typename: "", identifier: {}, fieldName: "" })
         }}
         onDispatchAction={(updates) => {
           console.log({ updates })
@@ -515,33 +534,6 @@ function Cache() {
 
 export default Cache
 
-// function identifyKeyFields(cacheKey, cacheObject) {
-//   if (!cacheKey || !cacheObject) {
-//     return []; // Early exit if no data is provided
-//   }
-
-//   const keyParts = cacheKey.split(':');
-//   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//   const typename = keyParts.shift(); // Extract typename
-//   const identifier = keyParts.join(':'); // Handle cases where identifier might contain ':'
-
-//   const keyFields = [];
-
-//   // First check if 'id' is a matching key field
-//   // eslint-disable-next-line no-prototype-builtins
-//   if ("id" in cacheObject && cacheObject.id.toString() === identifier) {
-//     keyFields.push('id');
-//   } else {
-//     // Iterate through each field to find matches
-//     Object.entries(cacheObject).forEach(([key, value]) => {
-//       if (value.toString() === identifier && key !== 'id') {
-//         keyFields.push(key);
-//       }
-//     });
-//   }
-
-//   return keyFields; // Return an array of key fields
-// }
 function identifyKeyFields(cacheKey, cacheObject) {
   if (!cacheKey || !cacheObject) {
     return [] // Early exit if no data is provided
