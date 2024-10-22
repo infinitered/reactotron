@@ -70,7 +70,7 @@ function SideBar({ isOpen, serverStatus, plugins }: SideBarProps) {
   }
 
   const hasApolloClient = React.useMemo(
-    () => plugins.findIndex((plugin) => plugin === "apollo-client") >= -1,
+    () => plugins.find((plugin) => plugin === "apollo-client"),
     [plugins]
   )
 
