@@ -1,0 +1,75 @@
+name: Trust Fork PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to trust'
+        required: true
+
+jobs:
+  trust-fork:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate unique identifier
+        id: gen_uid
+        run: echo "::set-output name=uid::$(date +%s)-${{ github.run_id }}"
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Git
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+      - name: Fetch PR details
+        id: pr
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: parseInt(context.payload.inputs.pr_number)
+            });
+            core.setOutput('head_repo', pr.data.head.repo.full_name);
+            core.setOutput('head_branch', pr.data.head.ref);
+
+      - name: Fetch and push to trusted branch
+        env:
+          FORK_REPO: ${{ steps.pr.outputs.head_repo }}
+          FORK_BRANCH: ${{ steps.pr.outputs.head_branch }}
+          UNIQUE_ID: ${{ steps.gen_uid.outputs.uid }}
+        run: |
+          git remote add fork https://github.com/${FORK_REPO}.git
+          git fetch fork ${FORK_BRANCH}
+          git push origin fork/${FORK_BRANCH}:temp-ci-trusted-fork-${UNIQUE_ID} --force
+
+      - name: Cleanup
+        if: always()
+        run: |
+          git remote remove fork
+
+      - name: Schedule branch deletion
+        if: success()
+        env:
+          UNIQUE_ID: ${{ steps.gen_uid.outputs.uid }}
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const deleteDate = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(); // 24 hours from now
+            github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'trust-fork-pr-cleanup.yml',
+              ref: 'main',
+              inputs: {
+                branch_to_delete: `temp-ci-trusted-fork-${process.env.UNIQUE_ID}`,
+                delete_after: deleteDate
+              }
+            });
