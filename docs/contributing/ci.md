@@ -16,13 +16,13 @@ For PRs from untrusted forks, to run the CI scripts, we need to:
 ## How to run the CI scripts on untrusted forks:
 
 1. Copy the name of the branch from the PR.
-   <img src="./images/ci-copy-fork-branch.png" alt="ci-copy-fork-branch" width="400"/>
+   ![Copy Fork Branch](./images/ci-copy-fork-branch.png)
 2. From your local clone of the main repository, run the `ci:trust` script.
-    ```bash
-    yarn ci:trust <branch-name>
-    ```
+   ```bash
+   yarn ci:trust <branch-name>
+   ```
 3. The branch will be pushed and the tests will run
-   <img src="./images/ci-tests-running.png" alt="ci-tests-running" width="400"/>
+   ![CI Tests Running](./images/ci-tests-running.png)
 
 ## What does ci:trust do?
 
@@ -38,7 +38,7 @@ The `ci:trust` script does the following:
 1. The ci:trust script will only work if you have write access to the main repository. This prevents malicious users from running the script on the main repository.
 2. The ci:trust script pushes the commits to a branch called `temp-ci-trusted-fork`.
 
-::: warning
+:::warning
 
 The `temp-ci-trusted-fork` branch will be deleted and recreated if it already exists. This allows the script to
 clean up its own temporary branches.
