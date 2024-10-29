@@ -13,10 +13,17 @@ import {
 import { TbDatabaseDollar } from "react-icons/tb"
 import { Title } from "../reactNative/components/Shared"
 import { ApolloClientCacheUpdatePayload, CommandType } from "reactotron-core-contract"
-import { FaArrowLeft, FaArrowRight, FaEdit, FaExternalLinkAlt, FaTimes } from "react-icons/fa"
+import {
+FaArrowLeft,
+FaArrowRight,
+  FaCopy,
+FaEdit,
+FaExternalLinkAlt,
+FaTimes,
+} from "react-icons/fa"
 import { PiPushPinFill, PiPushPinSlash } from "react-icons/pi"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { shell } from "electron"
+import { clipboard, shell } from "electron"
 
 const Container = styled.div`
   display: flex;
@@ -485,8 +492,9 @@ function Cache() {
                 )
               })}
           </LeftPanel>
-          {cacheKey && (
+          {cacheData && (
             <RightPanel>
+<Row style={{ justifyContent: "space-between" }}>
               <Row>
                 <BackButtonWrapper onClick={goBack}>
                   <FaArrowLeft
@@ -498,6 +506,16 @@ function Cache() {
                     color={forwardDisabled ? theme.foregroundDarker : theme.foregroundLight}
                   />
                 </ForwardButtonWrapper>
+</Row>
+{cacheData !== undefined && (
+                <ButtonContainer
+                  onClick={() => {
+                    clipboard.writeText(JSON.stringify(cacheData, null, 2))
+                  }}
+                >
+                  <FaCopy                     color={theme.foregroundLight}                   />
+                </ButtonContainer>
+)}
               </Row>
               <TopSection>
                 <Title>Cache ID: {cacheKey}</Title>
