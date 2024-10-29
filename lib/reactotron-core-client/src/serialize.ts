@@ -49,9 +49,9 @@ function getFunctionName(fn: any): string {
  *
  *  @param {any} source - The victim.
  */
-function serialize(source, proxyHack = false) {
-  const stack = []
-  const keys = []
+function serialize(source: any, proxyHack = false) {
+  const stack = [] as any[]
+  const keys = [] as string[]
 
   /**
    * Replace this object node with something potentially custom.
@@ -60,7 +60,7 @@ function serialize(source, proxyHack = false) {
    * @param {*} value - The value to replace.
    */
   function serializer(replacer) {
-    return function (this: any, key, value) {
+    return function (this: any, key: string, value: any) {
       // slam dunks
       if (value === true) return true
 
