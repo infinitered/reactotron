@@ -32,9 +32,9 @@ const Container = styled.div`
 `
 
 const CacheContainer = styled.div`
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
 `
 
 const TopSection = styled.div`
@@ -70,12 +70,6 @@ const ButtonContainerDisabled = styled.div`
   cursor: not-allowed;
 `
 
-const RowContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`
-
 const Row = styled.div`
   display: flex;
   flex-direction: row;
@@ -86,18 +80,22 @@ const IconContainer = styled.span`
 `
 
 const LeftPanel = styled.div`
-  display: flex;
+  overflow-y: auto;
+  max-height: 100%;
   flex-direction: column;
   flex: 1;
   padding: 10px;
   justify-content: flex-start;
+  padding-bottom: 250px;
 `
 
 const RightPanel = styled.div`
-  display: flex;
   flex-direction: column;
   flex: 2;
   padding: 10px;
+  overflow-y: auto;
+  max-height: 100%;
+  padding-bottom: 250px;
   background-color: ${(props) => props.theme.backgroundSubtleDark};
 `
 
@@ -408,108 +406,106 @@ function Cache() {
         </SearchContainer>
       </Header>
       <CacheContainer>
-        <RowContainer>
-          <LeftPanel>
-            {/* always show pinnedKeys */}
-            {pinnedKeys.map((key) => {
+        <LeftPanel>
+          {/* always show pinnedKeys */}
+          {pinnedKeys.map((key) => {
+            const LinkWrapper = key === cacheKey ? SelectedCacheKeyLink : CacheKeyLink
+            return (
+              <Row key={key}>
+                <LinkWrapper
+                  key={key}
+                  // onClick={() => pushViewedKey(key)}
+                  to={`/apolloClient/cache/${key}`}
+                >
+                  <CacheKeyLabel>
+                    <HighlightText text={key} searchTerm={search} />
+                  </CacheKeyLabel>
+                </LinkWrapper>
+
+                <ButtonContainer onClick={() => togglePin(key)}>
+                  <PiPushPinSlash size={18} color={theme.foregroundDark} />
+                </ButtonContainer>
+              </Row>
+            )
+          })}
+
+          {pinnedKeys.length > 0 && <PinnedSeparator />}
+
+          {Object.keys(data.cache)
+            .filter((key) => {
+              if (search) {
+                if (searchObjects) {
+                  const searchDataJson = JSON.stringify(data.cache[key])
+                  return searchDataJson.toLowerCase().includes(search.toLowerCase())
+                } else {
+                  return key.toLowerCase().includes(search.toLowerCase())
+                }
+              }
+
+              // check key is not pinned
+              if (pinnedKeys.includes(key)) {
+                return false
+              }
+
+              return key
+            })
+            .map((key: string) => {
               const LinkWrapper = key === cacheKey ? SelectedCacheKeyLink : CacheKeyLink
               return (
                 <Row key={key}>
-                  <LinkWrapper
-                    key={key}
-                    // onClick={() => pushViewedKey(key)}
-                    to={`/apolloClient/cache/${key}`}
-                  >
+                  <LinkWrapper key={key} to={`/apolloClient/cache/${key}`}>
                     <CacheKeyLabel>
-                      <HighlightText text={key} searchTerm={search} />
+                      {!searchObjects ? (
+                        <HighlightText text={key} searchTerm={search} />
+                      ) : (
+                        <SpanContainer>{key}</SpanContainer>
+                      )}
                     </CacheKeyLabel>
                   </LinkWrapper>
 
                   <ButtonContainer onClick={() => togglePin(key)}>
-                    <PiPushPinSlash size={18} color={theme.foregroundDark} />
+                    <PiPushPinFill size={18} color={theme.foregroundDark} />
                   </ButtonContainer>
                 </Row>
               )
             })}
-
-            {pinnedKeys.length > 0 && <PinnedSeparator />}
-
-            {Object.keys(data.cache)
-              .filter((key) => {
-                if (search) {
-                  if (searchObjects) {
-                    const searchDataJson = JSON.stringify(data.cache[key])
-                    return searchDataJson.toLowerCase().includes(search.toLowerCase())
-                  } else {
-                    return key.toLowerCase().includes(search.toLowerCase())
-                  }
-                }
-
-                // check key is not pinned
-                if (pinnedKeys.includes(key)) {
-                  return false
-                }
-
-                return key
-              })
-              .map((key: string) => {
-                const LinkWrapper = key === cacheKey ? SelectedCacheKeyLink : CacheKeyLink
-                return (
-                  <Row key={key}>
-                    <LinkWrapper key={key} to={`/apolloClient/cache/${key}`}>
-                      <CacheKeyLabel>
-                        {!searchObjects ? (
-                          <HighlightText text={key} searchTerm={search} />
-                        ) : (
-                          <SpanContainer>{key}</SpanContainer>
-                        )}
-                      </CacheKeyLabel>
-                    </LinkWrapper>
-
-                    <ButtonContainer onClick={() => togglePin(key)}>
-                      <PiPushPinFill size={18} color={theme.foregroundDark} />
-                    </ButtonContainer>
-                  </Row>
-                )
-              })}
-          </LeftPanel>
-          {cacheData && (
-            <RightPanel>
-              <Row style={{ justifyContent: "space-between" }}>
-                <Row>
-                  <BackButtonWrapper onClick={goBack}>
-                    <FaArrowLeft
-                      color={backDisabled ? theme.foregroundDarker : theme.foregroundLight}
-                    />
-                  </BackButtonWrapper>
-                  <ForwardButtonWrapper onClick={goForward}>
-                    <FaArrowRight
-                      color={forwardDisabled ? theme.foregroundDarker : theme.foregroundLight}
-                    />
-                  </ForwardButtonWrapper>
-                </Row>
-                {cacheData !== undefined && (
-                  <ButtonContainer
-                    onClick={() => {
-                      clipboard.writeText(JSON.stringify(cacheData, null, 2))
-                    }}
-                  >
-                    <FaCopy color={theme.foregroundLight} />
-                  </ButtonContainer>
-                )}
+        </LeftPanel>
+        {cacheData && (
+          <RightPanel>
+            <Row style={{ justifyContent: "space-between" }}>
+              <Row>
+                <BackButtonWrapper onClick={goBack}>
+                  <FaArrowLeft
+                    color={backDisabled ? theme.foregroundDarker : theme.foregroundLight}
+                  />
+                </BackButtonWrapper>
+                <ForwardButtonWrapper onClick={goForward}>
+                  <FaArrowRight
+                    color={forwardDisabled ? theme.foregroundDarker : theme.foregroundLight}
+                  />
+                </ForwardButtonWrapper>
               </Row>
-              <TopSection>
-                <Title>Cache ID: {cacheKey}</Title>
-              </TopSection>
+              {cacheData !== undefined && (
+                <ButtonContainer
+                  onClick={() => {
+                    clipboard.writeText(JSON.stringify(cacheData, null, 2))
+                  }}
+                >
+                  <FaCopy color={theme.foregroundLight} />
+                </ButtonContainer>
+              )}
+            </Row>
+            <TopSection>
+              <Title>Cache ID: {cacheKey}</Title>
+            </TopSection>
 
-              <TreeView
-                value={{ ...cacheData }}
-                expand={expandInitially}
-                valueRenderer={valueRenderer}
-              />
-            </RightPanel>
-          )}
-        </RowContainer>
+            <TreeView
+              value={{ ...cacheData }}
+              expand={expandInitially}
+              valueRenderer={valueRenderer}
+            />
+          </RightPanel>
+        )}
       </CacheContainer>
 
       <ApolloUpdateCacheValueModal
