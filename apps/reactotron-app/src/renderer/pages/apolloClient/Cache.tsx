@@ -14,12 +14,12 @@ import { TbDatabaseDollar } from "react-icons/tb"
 import { Title } from "../reactNative/components/Shared"
 import { ApolloClientCacheUpdatePayload, CommandType } from "reactotron-core-contract"
 import {
-FaArrowLeft,
-FaArrowRight,
+  FaArrowLeft,
+  FaArrowRight,
   FaCopy,
-FaEdit,
-FaExternalLinkAlt,
-FaTimes,
+  FaEdit,
+  FaExternalLinkAlt,
+  FaTimes,
 } from "react-icons/fa"
 import { PiPushPinFill, PiPushPinSlash } from "react-icons/pi"
 import { Link, useNavigate, useParams } from "react-router-dom"
@@ -161,7 +161,7 @@ const HighlightText = ({ text, searchTerm }) => {
 function Cache() {
   // This could go to the context? but we grab it on mount
 
-  const { sendCommand, addCommandListener } = React.useContext(ReactotronContext)
+  const { sendCommand } = React.useContext(ReactotronContext)
   const {
     closeSearch,
     setSearch,
@@ -175,29 +175,10 @@ function Cache() {
     pinnedKeys,
     togglePin,
     data,
-    setData,
     isEditOpen,
     closeEdit,
     openEdit,
   } = useContext(ApolloClientContext)
-
-  // send polling apollo.request command every half second
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      sendCommand("apollo.request", {})
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [sendCommand])
-
-  React.useEffect(() => {
-    addCommandListener((command) => {
-      if (command.type === CommandType.ApolloClientResponse) {
-        // TODO reorder the way things come in so recent is at top ?
-        setData(command.payload)
-        sendCommand("apollo.ack", {})
-      }
-    })
-  }, [addCommandListener, sendCommand, setData])
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -494,40 +475,38 @@ function Cache() {
           </LeftPanel>
           {cacheData && (
             <RightPanel>
-<Row style={{ justifyContent: "space-between" }}>
-              <Row>
-                <BackButtonWrapper onClick={goBack}>
-                  <FaArrowLeft
-                    color={backDisabled ? theme.foregroundDarker : theme.foregroundLight}
-                  />
-                </BackButtonWrapper>
-                <ForwardButtonWrapper onClick={goForward}>
-                  <FaArrowRight
-                    color={forwardDisabled ? theme.foregroundDarker : theme.foregroundLight}
-                  />
-                </ForwardButtonWrapper>
-</Row>
-{cacheData !== undefined && (
-                <ButtonContainer
-                  onClick={() => {
-                    clipboard.writeText(JSON.stringify(cacheData, null, 2))
-                  }}
-                >
-                  <FaCopy                     color={theme.foregroundLight}                   />
-                </ButtonContainer>
-)}
+              <Row style={{ justifyContent: "space-between" }}>
+                <Row>
+                  <BackButtonWrapper onClick={goBack}>
+                    <FaArrowLeft
+                      color={backDisabled ? theme.foregroundDarker : theme.foregroundLight}
+                    />
+                  </BackButtonWrapper>
+                  <ForwardButtonWrapper onClick={goForward}>
+                    <FaArrowRight
+                      color={forwardDisabled ? theme.foregroundDarker : theme.foregroundLight}
+                    />
+                  </ForwardButtonWrapper>
+                </Row>
+                {cacheData !== undefined && (
+                  <ButtonContainer
+                    onClick={() => {
+                      clipboard.writeText(JSON.stringify(cacheData, null, 2))
+                    }}
+                  >
+                    <FaCopy color={theme.foregroundLight} />
+                  </ButtonContainer>
+                )}
               </Row>
               <TopSection>
                 <Title>Cache ID: {cacheKey}</Title>
               </TopSection>
 
-              {cacheData && currentIndex >= -1 && (
-                <TreeView
-                  value={{ ...cacheData }}
-                  expand={expandInitially}
-                  valueRenderer={valueRenderer}
-                />
-              )}
+              <TreeView
+                value={{ ...cacheData }}
+                expand={expandInitially}
+                valueRenderer={valueRenderer}
+              />
             </RightPanel>
           )}
         </RowContainer>
@@ -540,7 +519,6 @@ function Cache() {
           setInitialValue({ fieldValue: "", typename: "", identifier: {}, fieldName: "" })
         }}
         onDispatchAction={(updates) => {
-          console.log({ updates })
           sendCommand(CommandType.ApolloClientUpdateCache, updates)
         }}
         initialValue={initialValue}

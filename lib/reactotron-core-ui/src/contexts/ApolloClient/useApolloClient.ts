@@ -9,7 +9,7 @@ export interface ApolloClientData {
   id: string
   lastUpdatedAt: Date
   // cache array of objects
-  cache: Record<string, unknown>
+  cache: Record<string, object>
 }
 
 interface ApolloClientState {
