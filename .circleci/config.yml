@@ -12,7 +12,12 @@ parameters:
 # Anchors define reusable sections of YAML
 # See: https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/
 anchors:
-  # Defaults passed to all jobs
+
+  ### Executors
+  node_executor: &node_executor
+    name: node/default
+    resource_class: large
+  # Default Settings
   defaults: &defaults
     working_directory: ~/repo
   # Branch names used to trigger releases
@@ -198,9 +203,7 @@ commands:
 jobs:
   build_and_test:
     <<: *defaults
-    executor: &node_executor
-      name: node/default
-      resource_class: large
+    executor: *node_executor
     steps:
       - checkout
       - install-packages
@@ -222,6 +225,24 @@ jobs:
       - run:
           name: Typecheck
           command: yarn typecheck
+  trust_check:
+    executor: *node_executor
+    steps:
+      - run:
+          name: Check if branch is trusted
+          command: |
+            if [ -n "$CIRCLE_PR_NUMBER" ]; then
+              if [[ $CIRCLE_BRANCH == temp-ci-trusted-fork-* ]]; then
+                echo "Branch is trusted"
+                exit 0
+              else
+                echo "Branch is not trusted. Please use the trust process before merging."
+                exit 1
+              fi
+            else
+              echo "Not a PR from a fork, skipping trust check"
+              exit 0
+            fi
 
   release_tags:
     <<: *defaults
@@ -259,9 +280,11 @@ jobs:
             yarn release:artifacts $CIRCLE_TAG
 
   build_app_windows:
+    executor: *node_executor
     <<: *defaults
     docker:
-      - image: electronuserland/builder:16-wine
+      - image: electronuserland/builder:20-wine
+    resource_class: large
     environment:
       BUILD_TARGET: windows
     steps:
@@ -328,23 +351,29 @@ jobs:
           command: yarn workspace reactotron-app release:artifacts $CIRCLE_TAG
 
 workflows:
-  pull_request:
-    # prevents the workflow from running when `force-publish-docs` is true
+  pull_request: # prevents the workflow from running when `force-publish-docs` is true
     when:
       and:
         - not: << pipeline.parameters.force-publish-docs >>
         - true  # Placeholder for correct YAML structure
     jobs:
+      - trust_check:
+          filters:
+            branches:
+              ignore: *release_branch_names
       - build_and_test:
+          requires:
+            - trust_check
           filters:
             branches:
               ignore: *release_branch_names
       - publish-docs/build_docs:
+          requires:
+            - trust_check
           <<: *ir_docs_config
           filters:
             branches:
               ignore: *release_branch_names
-
 
   # Allows for manual publishing of docs independent of deployment
   # Use the 'trigger pipeline' button in circle ci and set 'force-publish-docs' to 'true'
@@ -354,8 +383,7 @@ workflows:
       - publish-docs/publish_docs:
           <<: *ir_docs_config
 
-  release:
-    # prevents the workflow from running when `force-publish-docs` is true
+  release: # prevents the workflow from running when `force-publish-docs` is true
     when:
       and:
         - not: << pipeline.parameters.force-publish-docs >>
@@ -373,11 +401,19 @@ workflows:
               only: *release_branch_names
           requires:
             - build_and_test
+      - publish-docs/build_docs:
+          <<: *ir_docs_config
+          filters:
+            branches:
+              only:
+                - beta
+                - alpha
       - publish-docs/publish_docs:
           <<: *ir_docs_config
           filters:
             branches:
-              only: *release_branch_names
+              only:
+                - master
       - release_package:
           context:
             - infinitered-npm-package

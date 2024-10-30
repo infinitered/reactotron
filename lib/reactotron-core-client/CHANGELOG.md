@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.9.5](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.9.4...reactotron-core-client@2.9.5) (2024-10-29)
+
+
+### Bug Fixes
+
+* enable strict mode for TS types ([#1466](https://github.com/infinitered/reactotron/issues/1466)) ([fd8cf47](https://github.com/infinitered/reactotron/commit/fd8cf47cb32d6477f2b24f154a97ad78902c1f74))
+
+### [2.9.4](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.9.3...reactotron-core-client@2.9.4) (2024-08-26)
+
 ### [2.9.3](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.9.2...reactotron-core-client@2.9.3) (2024-04-01)
 
 ### [2.9.2](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.9.1...reactotron-core-client@2.9.2) (2024-02-14)
