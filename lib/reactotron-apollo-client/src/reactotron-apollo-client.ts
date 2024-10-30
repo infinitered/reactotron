@@ -215,9 +215,8 @@ export interface ApolloPluginConfig {
   apolloClient: ApolloClient<NormalizedCacheObject>
 }
 
-export const apolloPlugin =
-  (options: ApolloPluginConfig) =>
-  <Client extends ReactotronCore>(reactotronClient: Client) => {
+export default function apolloPlugin<Client extends ReactotronCore>(options: ApolloPluginConfig) {
+  return (reactotronClient: Client) => {
     const { apolloClient } = options
     assertHasLoggerPlugin(reactotronClient)
     assertHasStateResponsePlugin(reactotronClient)
@@ -329,13 +328,12 @@ export const apolloPlugin =
     }
 
     async function handleUpdateCache(command: Command<"apollo.cache.update">) {
-      // const { typename, keyField, keyValue, fieldName, fieldValue } = command.payload
       const { typename, identifier, fieldName, fieldValue } = command.payload
       const result = apolloClient.cache.modify({
         // id: apolloClient.cache.identify({ __typename: typename, [keyField]: keyValue }),
         id: apolloClient.cache.identify({ __typename: typename, ...identifier }),
         fields: {
-          [fieldName](existingValue, { readField }) {
+          [fieldName]() {
             // newValue is received from the WebSocket message
             return fieldValue // Update the dynamically specified field
           },
@@ -386,8 +384,6 @@ export const apolloPlugin =
       onConnect() {
         setup()
       },
-      onDisconnect() {},
     } satisfies Plugin<Client>
   }
-
-export default apolloPlugin
+}
