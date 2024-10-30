@@ -1,7 +1,7 @@
 {
   "name": "reactotron-app",
   "productName": "Reactotron",
-  "version": "3.7.0",
+  "version": "3.7.3",
   "description": "Reactotron desktop mode engage!",
   "author": {
     "name": "Infinite Red",
@@ -26,7 +26,7 @@
     "build:release": "node scripts/build.release.js",
     "release:artifacts": "node scripts/release.artifacts.js",
     "test": "jest",
-    "test:watch": "jest --watch --notify",
+    "test:watch": "jest --watch",
     "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}' --config ../../.prettierrc --ignore-path ../../.prettierignore",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",
@@ -85,7 +85,7 @@
     "@storybook/react": "^5.2.8",
     "@testing-library/react": "^14.1.2",
     "@types/jest": "^29.5.7",
-    "@types/react": "18.2.35",
+    "@types/react": "18.2.45",
     "@types/react-dom": "18.2.14",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",

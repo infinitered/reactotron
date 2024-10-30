@@ -1,5 +1,10 @@
+import { Platform } from "react-native"
 import type { ReactotronCore, Plugin } from "reactotron-core-client"
-import { NativeModules } from "react-native"
+
+let DevMenu = { show: () => {}, reload: () => {} }
+if (Platform.OS === "ios") {
+  DevMenu = require("react-native/Libraries/NativeModules/specs/NativeDevMenu")
+}
 
 const devTools = () => () => {
   return {
@@ -8,11 +13,11 @@ const devTools = () => () => {
       if (command.type !== "devtools.open" && command.type !== "devtools.reload") return
 
       if (command.type === "devtools.open") {
-        NativeModules.DevMenu.show()
+        DevMenu.show()
       }
 
       if (command.type === "devtools.reload") {
-        NativeModules.DevMenu.reload()
+        DevMenu.reload()
       }
     },
   } satisfies Plugin<ReactotronCore>

@@ -1,6 +1,6 @@
 {
   "name": "reactotron-mst",
-  "version": "3.1.9",
+  "version": "3.1.10",
   "description": "A Reactotron plugin for mobx-state-tree.",
   "author": "Infinite Red",
   "license": "MIT",
@@ -25,7 +25,7 @@
   },
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch --notify",
+    "test:watch": "jest --watch",
     "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}' --config ../../.prettierrc --ignore-path ../../.prettierignore",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",

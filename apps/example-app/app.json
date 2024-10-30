@@ -17,7 +17,9 @@
       "fallbackToCacheTimeout": 0
     },
     "jsEngine": "hermes",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "android": {
       "icon": "./assets/images/app-icon-android-legacy.png",
       "package": "com.exampleapp",
@@ -63,7 +65,8 @@
             "newArchEnabled": false
           }
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "tsconfigPaths": true
