@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.9.6](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.9.5...reactotron-core-client@2.9.6) (2024-10-30)
+
+
+### Bug Fixes
+
+* BigInts on hermes android were crashing during serialization for reactotron ([#1498](https://github.com/infinitered/reactotron/issues/1498) by [@markrickert](https://github.com/markrickert)) ([3b64afb](https://github.com/infinitered/reactotron/commit/3b64afb23a5f9ee177af8649703b7e139a32db9a)), closes [#1436](https://github.com/infinitered/reactotron/issues/1436)
+
 ### [2.9.5](https://github.com/infinitered/reactotron/compare/reactotron-core-client@2.9.4...reactotron-core-client@2.9.5) (2024-10-29)
 
 
