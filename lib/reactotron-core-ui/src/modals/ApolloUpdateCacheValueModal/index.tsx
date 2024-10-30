@@ -2,7 +2,7 @@ import React, { FunctionComponent, useRef, useState, useCallback, useEffect } fr
 import styled from "styled-components"
 
 import Modal, { KeystrokeContainer, Keystroke } from "../../components/Modal"
-import { ApolloClientCacheUpdatePayload } from "reactotron-core-contract"
+import type { ApolloClientCacheUpdatePayload } from "reactotron-core-contract"
 
 const KEY_MAPS = {
   command: "⌘",

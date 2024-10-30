@@ -1,5 +1,6 @@
 import React from "react"
-import { JSONTree, ValueRenderer } from "react-json-tree"
+import { JSONTree } from "react-json-tree"
+import type { ValueRenderer } from "react-json-tree"
 import styled from "styled-components"
 
 import baseTheme from "../../theme"

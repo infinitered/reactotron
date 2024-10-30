@@ -12,7 +12,7 @@ import {
 } from "reactotron-core-ui"
 import { TbDatabaseDollar } from "react-icons/tb"
 import { Title } from "../reactNative/components/Shared"
-import { ApolloClientCacheUpdatePayload, CommandType } from "reactotron-core-contract"
+import type { ApolloClientCacheUpdatePayload, CommandType } from "reactotron-core-contract"
 import {
   FaArrowLeft,
   FaArrowRight,
@@ -243,15 +243,9 @@ function Cache() {
           // @ts-expect-error fix this
           typename: cacheData.__typename,
           identifier,
-          // TODO how to determine the `id` field if not `id`?
-          // keyField: "id",
-          // // @ts-expect-error fix this
-          // keyValue: cacheData.id,
           fieldName,
           fieldValue: cacheData[fieldName],
         }
-
-        console.log("setting initial value", typeof updates.fieldValue)
 
         setInitialValue(updates)
         openEdit()
@@ -284,7 +278,6 @@ function Cache() {
         >
           <SpanContainer>{untransformed || transformed}</SpanContainer>
           <Tooltip id={`ref-for-${untransformed}`} effect="solid">
-            {/* @ts-expect-error fix this */}
             <TreeView value={{ ...data.cache[untransformed] }} expand={true} />
           </Tooltip>
         </StyledLink>
