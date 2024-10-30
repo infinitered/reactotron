@@ -12,7 +12,8 @@ import {
 } from "reactotron-core-ui"
 import { TbDatabaseDollar } from "react-icons/tb"
 import { Title } from "../reactNative/components/Shared"
-import type { ApolloClientCacheUpdatePayload, CommandType } from "reactotron-core-contract"
+import { CommandType } from "reactotron-core-contract"
+import type { ApolloClientCacheUpdatePayload } from "reactotron-core-contract"
 import {
   FaArrowLeft,
   FaArrowRight,
@@ -526,8 +527,8 @@ function identifyKeyFields(cacheKey, cacheObject) {
 
   // Assuming the cacheKey format could be something like "User:john:01012000"
   const keyParts = cacheKey.split(":")
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const typename = keyParts.shift() // Remove the typename part
+
+  keyParts.shift() // Remove the typename part
   const identifiers = keyParts // Remaining parts are the identifiers
 
   const keyFields = []
