@@ -15,6 +15,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "1234",
           id: 0,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -24,6 +25,7 @@ describe("contexts/Standalone/useStandalone", () => {
         id: 0,
         platform: "ios",
         commands: [],
+        plugins: [],
         connected: true,
       })
       expect(result.current.selectedClientId).toEqual("1234")
@@ -39,6 +41,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "1234",
           id: 0,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -48,6 +51,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "1234",
           id: 0,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -57,6 +61,7 @@ describe("contexts/Standalone/useStandalone", () => {
         id: 0,
         platform: "ios",
         commands: [],
+        plugins: [],
         connected: true,
       })
     })
@@ -73,6 +78,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "1234",
           id: 0,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -95,6 +101,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "1234",
           id: 0,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -105,6 +112,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "12345",
           id: 1,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -119,6 +127,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "1234",
           id: 0,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -129,6 +138,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "1234",
           id: 0,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -143,6 +153,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "1234",
           id: 0,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -151,6 +162,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "567",
           id: 1,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -161,6 +173,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "567",
           id: 1,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -175,6 +188,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "1234",
           id: 0,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -183,6 +197,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "567",
           id: 1,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -193,6 +208,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "1234",
           id: 0,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -207,6 +223,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "1234",
           id: 0,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -217,6 +234,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "1234",
           id: 0,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -231,6 +249,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "1234",
           id: 0,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -251,6 +270,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "1234",
           id: 0,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -259,6 +279,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "456",
           id: 1,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -294,6 +315,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "1234",
           id: 0,
           platform: "ios",
+          plugins: [],
         })
       })
 
@@ -320,6 +342,7 @@ describe("contexts/Standalone/useStandalone", () => {
           clientId: "1234",
           id: 0,
           platform: "ios",
+          plugins: [],
         })
       })
 

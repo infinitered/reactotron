@@ -13,6 +13,7 @@ test("plugins support onPlugin", (done) => {
       expect(instance).toBe(client)
       done()
     },
+    name: "test-plugin",
   })
 
   // add the plugin

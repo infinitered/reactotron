@@ -24,7 +24,9 @@ test("plugins support send", (done) => {
   // the plugin to extract the send function
   const plugin: PluginCreator<ReactotronCore> = (reactotron) => {
     capturedSend = reactotron.send
-    return {}
+    return {
+      name: "test-plugin",
+    }
   }
 
   // create the client, add the plugin, and connect
