@@ -1,5 +1,49 @@
 import childProcess from "child_process"
-import { type BrowserWindow, dialog, ipcMain } from "electron"
+import { type BrowserWindow, dialog, ipcMain, Menu, MenuItem } from "electron"
+import { ReactotronConnection } from "src/renderer/contexts/Standalone/useStandalone"
+
+interface menuTemplateModel {
+  label: string
+  submenu: any[]
+}
+
+export const setupActiveConnectionsMenuIpcCommands = (
+  window: BrowserWindow,
+  menuTemplate: menuTemplateModel[]
+) => {
+  ipcMain.on(
+    "remove-connection-from-connection-menu",
+    (_event, connection: ReactotronConnection) => {
+      const menu = Menu.getApplicationMenu()
+      const activeConnectionsMenu = menu.getMenuItemById("activeConnectionsMenu")
+
+      //menuTemplate[2] => view menu
+      //menuTemplate[2].submenu[1] => connections menu
+      if (menuTemplate[2]?.submenu[1]?.submenu && activeConnectionsMenu) {
+        //remove the disconnected connection from active connections menu
+        menuTemplate[2].submenu[1].submenu = activeConnectionsMenu.submenu.items.filter(
+          (item) => item.id !== connection.clientId
+        )
+      }
+
+      const updatedMenu = Menu.buildFromTemplate(menuTemplate.filter((t) => !!t))
+      Menu.setApplicationMenu(updatedMenu)
+    }
+  )
+
+  ipcMain.on("add-connection-to-connection-menu", (_event, connection: ReactotronConnection) => {
+    const menu = Menu.getApplicationMenu()
+    const fileSubMenu = menu.getMenuItemById("activeConnectionsMenu")
+
+    fileSubMenu.submenu.append(
+      new MenuItem({
+        label: connection.name,
+        id: connection.clientId,
+        click: () => window.webContents.send("select-connection-from-menu", connection.clientId),
+      })
+    )
+  })
+}
 
 // This function sets up numerous IPC commands for communicating with android devices.
 // It also watches for android devices being plugged in and unplugged.

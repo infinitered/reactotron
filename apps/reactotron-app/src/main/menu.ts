@@ -1,5 +1,6 @@
 import { Menu, app, shell } from "electron"
 import Store from "electron-store"
+import { setupActiveConnectionsMenuIpcCommands } from "./utils"
 
 const configStore = new Store()
 
@@ -89,6 +90,12 @@ function buildViewMenu(window: Electron.BrowserWindow, isDevelopment: boolean) {
       },
     },
     {
+      id: "activeConnectionsMenu",
+      label: "Active Connections",
+      submenu: [],
+    },
+    { type: "separator" },
+    {
       label: "Toggle Developer Tools",
       accelerator: "Alt+Command+I",
       click: () => {
@@ -168,5 +175,9 @@ export default function createMenu(window: Electron.BrowserWindow, isDevelopment
   ]
 
   const menu = Menu.buildFromTemplate(template.filter((t) => !!t) as any)
+
+  //ipc for adding and removing connection from active connections menu as they connect/drop
+  setupActiveConnectionsMenuIpcCommands(window, template)
+
   Menu.setApplicationMenu(menu)
 }
