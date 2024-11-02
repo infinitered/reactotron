@@ -190,14 +190,15 @@ function getPreview(message: any) {
 
       const preview = stringifyObject(firstValues, {
         transform: (obj, prop, originalResult) => {
-          const objType = typeof obj[prop]
+          if (obj[prop] === null) return "null"
 
-          if (objType === "object") {
-            return "{...}"
-          } else if (objType === "string") {
-            return originalResult.slice(0, 80)
-          } else {
-            return originalResult
+          switch (typeof obj[prop]) {
+            case "object":
+              return "{...}"
+            case "string":
+              return originalResult.slice(0, 80)
+            default:
+              return originalResult
           }
         },
       })
