@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.3.5](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.4...reactotron-core-ui@2.3.5) (2024-11-04)
+
+
+### Bug Fixes
+
+* Handling console.log(null) ([#1520](https://github.com/infinitered/reactotron/issues/1520)) ([98e4805](https://github.com/infinitered/reactotron/commit/98e48053d1d3ab430874b4710b38cb7cd35078bb)), closes [#1517](https://github.com/infinitered/reactotron/issues/1517)
+
 ### [2.3.4](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.3...reactotron-core-ui@2.3.4) (2024-10-17)
 
 
