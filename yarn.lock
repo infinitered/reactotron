@@ -23940,16 +23940,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-flipper@npm:0.164.0":
-  version: 0.164.0
-  resolution: "react-native-flipper@npm:0.164.0"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-native: ">0.62.0"
-  checksum: 10/2653c672dcd9a380f6e022ab882d38a3f62613f9967206be216f424353180bd14e2213706470e49c43e8494616eeb506132cd2d480dded8716217a9d55f25963
-  languageName: node
-  linkType: hard
-
 "react-native-gesture-handler@npm:~2.16.1":
   version: 2.16.2
   resolution: "react-native-gesture-handler@npm:2.16.2"
@@ -24878,7 +24868,6 @@ __metadata:
     prettier: "npm:^3.0.3"
     react: "npm:^18.2.0"
     react-native: "npm:0.73.6"
-    react-native-flipper: "npm:0.164.0"
     reactotron-core-client: "workspace:*"
     rimraf: "npm:5.0.5"
     rollup: "npm:2.60.2"
@@ -24891,9 +24880,6 @@ __metadata:
     typescript: "npm:^4.9.5"
   peerDependencies:
     react-native: ">=0.40.0"
-  dependenciesMeta:
-    react-native-flipper:
-      optional: true
   languageName: unknown
   linkType: soft
 
