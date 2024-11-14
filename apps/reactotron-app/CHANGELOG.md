@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.7.4](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.3...reactotron-app@3.7.4) (2024-11-14)
+
+
+### Bug Fixes
+
+* Removing react-native-flipper ([#1524](https://github.com/infinitered/reactotron/issues/1524)) ([b1e7022](https://github.com/infinitered/reactotron/commit/b1e7022f8dab52896bc0f058bc877ae767bf1aee)), closes [#1333](https://github.com/infinitered/reactotron/issues/1333)
+
 ### [3.7.3](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.2...reactotron-app@3.7.3) (2024-10-17)
 
 
