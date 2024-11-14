@@ -10,11 +10,13 @@ import { ArgType } from "reactotron-core-client"
 import { mst } from "reactotron-mst"
 import apisaucePlugin from "reactotron-apisauce"
 import { reactotronRedux } from "reactotron-redux"
+import apolloPlugin from "reactotron-apollo-client"
 
 import { clear } from "app/utils/storage"
 import { goBack, resetRoot, navigate } from "app/navigators/navigationUtilities"
 
 import { Reactotron } from "./ReactotronClient"
+import { client } from "../stores/apollo" // <--- update this location
 
 let DevMenu = null
 /**
@@ -41,6 +43,7 @@ const reactotron = Reactotron.configure({
       filter: (event) => /postProcessSnapshot|@APPLY_SNAPSHOT/.test(event.name) === false,
     })
   )
+  .use(apolloPlugin({ apolloClient: client }))
 
 if (Platform.OS !== "web") {
   reactotron.setAsyncStorageHandler?.(AsyncStorage)

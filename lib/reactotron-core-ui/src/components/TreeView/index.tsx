@@ -1,5 +1,6 @@
 import React from "react"
 import { JSONTree } from "react-json-tree"
+import type { ValueRenderer } from "react-json-tree"
 import styled from "styled-components"
 
 import baseTheme from "../../theme"
@@ -30,6 +31,8 @@ const MutedContainer = styled.span`
   color: ${(props) => props.theme.highlight};
 `
 
+const SpanContainer = styled.span``
+
 const treeTheme = {
   tree: { backgroundColor: "transparent", marginTop: -3 },
   ...theme,
@@ -40,29 +43,39 @@ interface Props {
   // value: object
   value: any
   level?: number
+  valueRenderer?: ValueRenderer
+  expand?: boolean
 }
 
-export default function TreeView({ value, level = 1 }: Props) {
+export default function TreeView({ value, valueRenderer, level = 1, expand = false }: Props) {
+  const renderer = (transformed: any, untransformed: any, ...keyPath: any) => {
+    if (valueRenderer) {
+      return valueRenderer(transformed, untransformed, ...keyPath)
+    }
+
+    return <SpanContainer>{`${untransformed || transformed}`}</SpanContainer>
+  }
+
   return (
     <JSONTree
       data={value}
       hideRoot
-      shouldExpandNodeInitially={(keyName, data, minLevel) => minLevel <= level}
+      shouldExpandNodeInitially={(keyName, data, minLevel) => expand || minLevel <= level}
       theme={treeTheme}
       getItemString={(type, data, itemType, itemString) => {
+        // when it's an object, display {}
         if (type === "Object") {
           return <MutedContainer>{itemType}</MutedContainer>
         }
 
+        // when it's an array, display [] X items
         return (
           <MutedContainer>
             {itemType} {itemString}
           </MutedContainer>
         )
       }}
-      valueRenderer={(transformed, untransformed) => {
-        return <span>{`${untransformed || transformed}`}</span>
-      }}
+      valueRenderer={renderer}
     />
   )
 }

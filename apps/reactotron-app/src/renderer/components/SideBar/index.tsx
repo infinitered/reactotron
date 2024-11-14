@@ -6,9 +6,17 @@ import SidebarStateless from "./Sidebar"
 
 function SideBar() {
   const { isSideBarOpen } = useContext(LayoutContext)
-  const { serverStatus } = useContext(StandaloneContext)
 
-  return <SidebarStateless isOpen={isSideBarOpen} serverStatus={serverStatus} />
+  const standaloneContext = useContext(StandaloneContext)
+  const { serverStatus, selectedConnection } = standaloneContext
+
+  return (
+    <SidebarStateless
+      isOpen={isSideBarOpen}
+      serverStatus={serverStatus}
+      plugins={selectedConnection?.plugins || []}
+    />
+  )
 }
 
 export default SideBar

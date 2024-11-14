@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux"
 import { Button, Text } from "app/components"
 import type { AppStackScreenProps } from "app/navigators"
 import { colors, spacing } from "app/theme"
-import type { AppDispatch } from "app/redux"
-import { throwAnError, throwErrorAsync } from "app/redux/errorSlice"
+import type { AppDispatch } from "app/stores/redux"
+import { throwAnError, throwErrorAsync } from "app/stores/redux/errorSlice"
 import { useSafeAreaInsetsStyle } from "app/utils/useSafeAreaInsetsStyle"
 
 interface ErrorGeneratorScreenProps extends AppStackScreenProps<"ErrorGenerator"> {}
