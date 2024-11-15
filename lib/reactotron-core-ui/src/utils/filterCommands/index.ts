@@ -24,6 +24,7 @@ const COMMON_MATCHING_PATHS = [
   path("payload", "triggerType"),
   path("payload", "description"),
   path("payload", "request", "url"),
+  path("payload", "request", "data"),
 ]
 
 export function filterSearch(commands: any[], search: string) {
@@ -34,7 +35,7 @@ export function filterSearch(commands: any[], search: string) {
   const searchRegex = new RegExp(trimmedSearch.replace(/\s/, "."), "i")
 
   const matching = (value: string) => {
-    if(!value) {
+    if (!value) {
       return false
     }
 
