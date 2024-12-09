@@ -5,15 +5,19 @@ import type { Command } from "reactotron-core-contract"
 import { CommandType } from "reactotron-core-contract"
 import ReactotronContext from "../Reactotron"
 
+export type CustomCommandArg = {
+  name: string
+  placeholder?: string
+  hidden?: boolean
+}
+
 export interface CustomCommand {
   clientId: string
   id: string
   title?: string
   command: string
   description?: string
-  args?: {
-    name: string
-  }[]
+  args?: CustomCommandArg[]
 }
 
 interface CustomCommandState {
