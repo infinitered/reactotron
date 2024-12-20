@@ -2,7 +2,7 @@ import { Platform } from "react-native"
 import type { ReactotronCore, Plugin } from "reactotron-core-client"
 
 let DevMenu = { show: () => {}, reload: () => {} }
-if (Platform.OS === "ios") {
+if (Platform.OS === "ios" && __DEV__) {
   DevMenu = require("react-native/Libraries/NativeModules/specs/NativeDevMenu")
 }
 
