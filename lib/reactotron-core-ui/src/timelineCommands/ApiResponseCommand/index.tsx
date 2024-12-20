@@ -148,7 +148,9 @@ const ApiResponseCommand: FunctionComponent<Props> = ({
   const cleanedUrl = request.url.replace(/^http(s):\/\/[^/]+/i, "").replace(/\?.*$/i, "")
   const operationName = formatOperationName(request.data)
 
-  const preview = `${(request.method || "").toUpperCase()} ${cleanedUrl} ${operationName}`
+  const preview = [(request.method || "").toUpperCase(), cleanedUrl, operationName]
+    .filter(Boolean)
+    .join(" ")
 
   const summary = {
     "Status Code": response.status,
