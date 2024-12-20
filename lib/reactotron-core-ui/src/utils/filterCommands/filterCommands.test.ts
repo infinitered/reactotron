@@ -12,6 +12,14 @@ const TEST_COMMANDS = [
   { type: "ADUMMYOBJ", payload: { request: { url: "SEARCHURL" } } },
   { type: "log", payload: { debug: "LOGDEBUG" } },
   { type: "client.intro", payload: { connection: "SEARCHCONNECTION" } },
+  {
+    type: "ADUMMYOBJ",
+    payload: {
+      request: {
+        data: '{"operationName":"SEARCHDATA","variables":{"testing":{"nested":"thing"}},"query":"query LaunchList {\\n  launches {\\n    id\\n }\\n}\\n"}',
+      },
+    },
+  },
 ]
 
 const TESTS = [
@@ -52,6 +60,20 @@ const TESTS = [
     result: [{ type: "ADUMMYOBJ", payload: { request: { url: "SEARCHURL" } } }],
   },
   {
+    name: "payload.request.data",
+    search: "SEARCHDATA",
+    result: [
+      {
+        type: "ADUMMYOBJ",
+        payload: {
+          request: {
+            data: '{"operationName":"SEARCHDATA","variables":{"testing":{"nested":"thing"}},"query":"query LaunchList {\\n  launches {\\n    id\\n }\\n}\\n"}',
+          },
+        },
+      },
+    ],
+  },
+  {
     name: "log => debug",
     search: "debug",
     result: [{ type: "log", payload: { debug: "LOGDEBUG" } }],
@@ -82,6 +104,14 @@ const TESTS = [
       { type: "ADUMMYOBJ", payload: { triggerType: "SEARCHTRIGGERTYPE" } },
       { type: "ADUMMYOBJ", payload: { description: "SEARCHDESCRIPTION" } },
       { type: "ADUMMYOBJ", payload: { request: { url: "SEARCHURL" } } },
+      {
+        type: "ADUMMYOBJ",
+        payload: {
+          request: {
+            data: '{"operationName":"SEARCHDATA","variables":{"testing":{"nested":"thing"}},"query":"query LaunchList {\\n  launches {\\n    id\\n }\\n}\\n"}',
+          },
+        },
+      },
     ],
   },
   {
@@ -96,6 +126,14 @@ const TESTS = [
       { type: "ADUMMYOBJ", payload: { triggerType: "SEARCHTRIGGERTYPE" } },
       { type: "ADUMMYOBJ", payload: { description: "SEARCHDESCRIPTION" } },
       { type: "ADUMMYOBJ", payload: { request: { url: "SEARCHURL" } } },
+      {
+        type: "ADUMMYOBJ",
+        payload: {
+          request: {
+            data: '{"operationName":"SEARCHDATA","variables":{"testing":{"nested":"thing"}},"query":"query LaunchList {\\n  launches {\\n    id\\n }\\n}\\n"}',
+          },
+        },
+      },
     ],
   },
   {
@@ -104,6 +142,14 @@ const TESTS = [
     result: [
       { type: "ADUMMYOBJ", payload: { message: "SEARCHMESSAGE" } },
       { type: "ADUMMYOBJ", payload: { name: "SEARCHNAME" } },
+      {
+        type: "ADUMMYOBJ",
+        payload: {
+          request: {
+            data: '{"operationName":"SEARCHDATA","variables":{"testing":{"nested":"thing"}},"query":"query LaunchList {\\n  launches {\\n    id\\n }\\n}\\n"}',
+          },
+        },
+      },
     ],
   },
   {
@@ -112,6 +158,14 @@ const TESTS = [
     result: [
       { type: "ADUMMYOBJ", payload: { message: "SEARCHMESSAGE" } },
       { type: "ADUMMYOBJ", payload: { name: "SEARCHNAME" } },
+      {
+        type: "ADUMMYOBJ",
+        payload: {
+          request: {
+            data: '{"operationName":"SEARCHDATA","variables":{"testing":{"nested":"thing"}},"query":"query LaunchList {\\n  launches {\\n    id\\n }\\n}\\n"}',
+          },
+        },
+      },
     ],
   },
   {
@@ -125,6 +179,14 @@ const TESTS = [
       { type: "ADUMMYOBJ", payload: { triggerType: "SEARCHTRIGGERTYPE" } },
       { type: "ADUMMYOBJ", payload: { description: "SEARCHDESCRIPTION" } },
       { type: "ADUMMYOBJ", payload: { request: { url: "SEARCHURL" } } },
+      {
+        type: "ADUMMYOBJ",
+        payload: {
+          request: {
+            data: '{"operationName":"SEARCHDATA","variables":{"testing":{"nested":"thing"}},"query":"query LaunchList {\\n  launches {\\n    id\\n }\\n}\\n"}',
+          },
+        },
+      },
     ],
   },
 ]
