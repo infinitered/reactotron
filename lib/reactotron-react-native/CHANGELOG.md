@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [5.1.11](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.10...reactotron-react-native@5.1.11) (2024-12-23)
+
+
+### Bug Fixes
+
+* **reactotron-react-native:** only set DevMenu when in __DEV__ ([#1527](https://github.com/infinitered/reactotron/issues/1527) by [@frankcalise](https://github.com/frankcalise) and [@joshuayoes](https://github.com/joshuayoes)) ([5f692ac](https://github.com/infinitered/reactotron/commit/5f692ac953e73d131eaff6e403afc2211ace9ca2)), closes [#1513](https://github.com/infinitered/reactotron/issues/1513)
+
 ### [5.1.10](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.9...reactotron-react-native@5.1.10) (2024-11-14)
 
 
