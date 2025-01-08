@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.1.5](https://github.com/infinitered/reactotron/compare/reactotron-core-server@3.1.4...reactotron-core-server@3.1.5) (2025-01-07)
+
+
+### Bug Fixes
+
+* **package.json:** remove "react-native" export condition ([#1530](https://github.com/infinitered/reactotron/issues/1530)) ([47be69f](https://github.com/infinitered/reactotron/commit/47be69fae1e410a22907893a69474857a3e5a854))
+
 ### [3.1.4](https://github.com/infinitered/reactotron/compare/reactotron-core-server@3.1.3...reactotron-core-server@3.1.4) (2024-08-26)
 
 ### [3.1.3](https://github.com/infinitered/reactotron/compare/reactotron-core-server@3.1.2...reactotron-core-server@3.1.3) (2024-02-14)
