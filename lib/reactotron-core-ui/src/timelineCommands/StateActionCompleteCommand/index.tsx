@@ -15,6 +15,7 @@ const NameContainer = styled.div`
 interface StateActionCompletePayload {
   name: string
   action: any
+  diff?: any
 }
 
 interface Props extends TimelineCommandProps<StateActionCompletePayload> {}
@@ -67,6 +68,8 @@ const StateActionCompleteCommand: FunctionComponent<Props> = ({
     >
       <NameContainer>{payload.name}</NameContainer>
       <ContentView value={payload.action} />
+      {/* TODO: Create a diff component */}
+      <ContentView value={payload.diff} />
     </TimelineCommand>
   )
 }

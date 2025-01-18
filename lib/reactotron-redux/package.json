@@ -40,6 +40,9 @@
     "typecheck": "yarn tsc",
     "ci:test": "yarn test --runInBand"
   },
+  "dependencies": {
+    "microdiff": "^1.5.0"
+  },
   "peerDependencies": {
     "reactotron-core-client": "*",
     "redux": ">=4.0.0"

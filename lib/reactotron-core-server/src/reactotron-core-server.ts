@@ -221,13 +221,14 @@ export default class Server {
       socket.on("message", (incoming: RawData) => {
         const message = JSON.parse(incoming.toString())
         repair(message)
-        const { type, important, payload, deltaTime = 0 } = message
+        const { type, important, payload, deltaTime = 0, diff } = message
         this.messageId++
 
         const fullCommand: Command = {
           type,
           important,
           payload,
+          diff,
           connectionId: thisConnectionId,
           messageId: this.messageId,
           date: extractOrCreateDate(message.date),
@@ -291,6 +292,7 @@ export default class Server {
             id: thisConnectionId,
             address: partConn.address,
             clientId: fullCommand.clientId,
+            diff,
           })
 
           // then trigger the connection
