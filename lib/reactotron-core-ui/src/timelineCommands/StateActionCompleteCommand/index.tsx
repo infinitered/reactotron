@@ -2,10 +2,12 @@ import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { MdRepeat, MdCode } from "react-icons/md"
 import stringifyObject from "stringify-object"
+import type { Difference } from "reactotron-core-contract"
 
 import TimelineCommand from "../../components/TimelineCommand"
 import ContentView from "../../components/ContentView"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
+import TreeViewDiff from "../../components/TreeViewDiff"
 
 const NameContainer = styled.div`
   color: ${(props) => props.theme.bold};
@@ -15,7 +17,7 @@ const NameContainer = styled.div`
 interface StateActionCompletePayload {
   name: string
   action: any
-  diff?: any
+  diff?: Difference[]
 }
 
 interface Props extends TimelineCommandProps<StateActionCompletePayload> {}
@@ -68,8 +70,7 @@ const StateActionCompleteCommand: FunctionComponent<Props> = ({
     >
       <NameContainer>{payload.name}</NameContainer>
       <ContentView value={payload.action} />
-      {/* TODO: Create a diff component */}
-      <ContentView value={payload.diff} />
+      <TreeViewDiff value={payload.diff} />
     </TimelineCommand>
   )
 }
