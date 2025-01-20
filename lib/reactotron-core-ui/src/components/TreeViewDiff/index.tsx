@@ -54,18 +54,19 @@ export default function TreeViewDiff({ value, level = 1 }: Props): ReactElement 
     if (diff.type === "CHANGE") {
       acc[diff.path.join(".")] = (
         <span>
-          <RemovedValue>{String(diff.oldValue)}</RemovedValue>
-          <NewValue>{String(diff.value)}</NewValue>
+          <RemovedValue>{JSON.stringify(diff.oldValue)}</RemovedValue>
+          <NewValue>{JSON.stringify(diff.value)}</NewValue>
         </span>
       )
       return acc
     }
     if (diff.type === "CREATE") {
-      acc[diff.path.join(".")] = <NewValue>{diff.value}</NewValue>
+      acc[diff.path.join(".")] = <NewValue>{JSON.stringify(diff.value)}</NewValue>
+
       return acc
     }
     if (diff.type === "REMOVE") {
-      acc[diff.path.join(".")] = <RemovedValue>{diff.oldValue}</RemovedValue>
+      acc[diff.path.join(".")] = <RemovedValue>{JSON.stringify(diff.oldValue)}</RemovedValue>
       return acc
     }
     return acc
