@@ -15,7 +15,7 @@ export default function createCustomDispatch(
     const elapsed = reactotron.startTimer()
 
     // save the state before the action is dispatched to be used on "diff"
-    const oldState = store.getState()
+    const oldState = store?.getState?.()
 
     // call the original dispatch that actually does the real work
     const result = store.dispatch(action)
@@ -46,7 +46,7 @@ export default function createCustomDispatch(
       if (pluginConfig && typeof pluginConfig.isActionImportant === "function") {
         important = !!pluginConfig.isActionImportant(unwrappedAction)
       }
-      const state = store.getState()
+      const state = store?.getState?.()
       reactotron.reportReduxAction(unwrappedAction, ms, important, diff(oldState, state))
     }
 

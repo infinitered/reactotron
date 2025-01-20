@@ -20,7 +20,7 @@ describe("customDispatch", () => {
     dispatch(action)
 
     expect(mockStore.dispatch).toHaveBeenCalledWith(action)
-    expect(mockReactotron.reportReduxAction).toHaveBeenCalledWith(action, 1000, false)
+    expect(mockReactotron.reportReduxAction).toHaveBeenCalledWith(action, 1000, false, [])
   })
 
   it.todo("should handle 'PERFORM_ACTION' actions correctly")
@@ -94,7 +94,7 @@ describe("customDispatch", () => {
     dispatch(action)
 
     expect(mockStore.dispatch).toHaveBeenCalledWith(action)
-    expect(mockReactotron.reportReduxAction).toHaveBeenCalledWith(action, 1000, false)
+    expect(mockReactotron.reportReduxAction).toHaveBeenCalledWith(action, 1000, false, [])
   })
 
   it("should respect the exclude list and not send an item off of it if it is a regex", () => {
@@ -142,7 +142,7 @@ describe("customDispatch", () => {
     dispatch(action)
 
     expect(mockStore.dispatch).toHaveBeenCalledWith(action)
-    expect(mockReactotron.reportReduxAction).toHaveBeenCalledWith(action, 1000, false)
+    expect(mockReactotron.reportReduxAction).toHaveBeenCalledWith(action, 1000, false, [])
   })
 
   it("should respect the exclude list and should still send items not on the list", () => {
@@ -166,7 +166,7 @@ describe("customDispatch", () => {
     dispatch(action)
 
     expect(mockStore.dispatch).toHaveBeenCalledWith(action)
-    expect(mockReactotron.reportReduxAction).toHaveBeenCalledWith(action, 1000, false)
+    expect(mockReactotron.reportReduxAction).toHaveBeenCalledWith(action, 1000, false, [])
   })
 
   it("should exclude the restoreActionType by default", () => {
@@ -213,7 +213,7 @@ describe("customDispatch", () => {
     dispatch(action)
 
     expect(mockStore.dispatch).toHaveBeenCalledWith(action)
-    expect(mockReactotron.reportReduxAction).toHaveBeenCalledWith(action, 1000, true)
+    expect(mockReactotron.reportReduxAction).toHaveBeenCalledWith(action, 1000, true, [])
   })
 
   it("should call isActionImportant and mark the action as important if it returns false", () => {
@@ -237,6 +237,6 @@ describe("customDispatch", () => {
     dispatch(action)
 
     expect(mockStore.dispatch).toHaveBeenCalledWith(action)
-    expect(mockReactotron.reportReduxAction).toHaveBeenCalledWith(action, 1000, false)
+    expect(mockReactotron.reportReduxAction).toHaveBeenCalledWith(action, 1000, false, [])
   })
 })
