@@ -27,18 +27,13 @@ const theme = {
   scheme: "twilight",
 }
 
-// const MutedContainer = styled.span`
-//   color: ${(props) => props.theme.highlight};
-// `
-
 const RemovedValue = styled.span`
-  color: ${(props) => props.theme.tag};
+  color: ${(props) => props.theme.delete};
   text-decoration: line-through;
   margin-right: 4px;
 `
-
 const NewValue = styled.span`
-  color: ${(props) => props.theme.constant};
+  color: ${(props) => props.theme.string};
 `
 
 const treeTheme = {
