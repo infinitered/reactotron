@@ -118,7 +118,7 @@ function Timeline() {
       const homeDir = os.homedir()
       const downloadDir = path.join(homeDir, "Downloads")
       fs.writeFileSync(
-        path.resolve(downloadDir, `timeline-log-${Date.now()}.txt`),
+        path.resolve(downloadDir, `timeline-log-${Date.now()}.json`),
         JSON.stringify(commands),
         "utf8"
       )
