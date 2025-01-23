@@ -9,7 +9,6 @@ interface Context {
   toggleSearch: () => void
   openSearch: () => void
   closeSearch: () => void
-  downloadLog: (commands: any[]) => void
   search: string
   setSearch: (search: string) => void
   isFilterOpen: boolean
@@ -26,7 +25,6 @@ const TimelineContext = React.createContext<Context>({
   toggleSearch: null,
   openSearch: null,
   closeSearch: null,
-  downloadLog: null,
   search: "",
   setSearch: null,
   isFilterOpen: false,
@@ -53,7 +51,6 @@ const Provider: FunctionComponent<any> = ({ children }) => {
     toggleReverse,
     hiddenCommands,
     setHiddenCommands,
-    downloadLog,
   } = useTimeline()
 
   return (
@@ -63,7 +60,6 @@ const Provider: FunctionComponent<any> = ({ children }) => {
         toggleSearch,
         openSearch,
         closeSearch,
-        downloadLog,
         search,
         setSearch,
         isFilterOpen,

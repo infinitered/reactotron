@@ -1,6 +1,8 @@
 import React, { useCallback, useContext, useMemo } from "react"
 import { clipboard, shell } from "electron"
 import fs from "fs"
+import os from "os"
+import path from "path"
 import debounce from "lodash.debounce"
 import {
   Header,
@@ -95,7 +97,6 @@ function Timeline() {
     isFilterOpen,
     hiddenCommands,
     setHiddenCommands,
-    downloadLog,
   } = useContext(TimelineContext)
 
   let filteredCommands = filterCommands(commands, search, hiddenCommands)
@@ -112,6 +113,21 @@ function Timeline() {
     shell.openExternal("https://docs.infinite.red/reactotron/quick-start/react-native/")
   }
 
+  function downloadLog() {
+    if (commands.length > 0) {
+      const homeDir = os.homedir()
+      const downloadDir = path.join(homeDir, "Downloads")
+      fs.writeFileSync(
+        path.resolve(downloadDir, `timeline-log-${Date.now()}.txt`),
+        JSON.stringify(commands),
+        "utf8"
+      )
+      console.log(`Exported timeline log to ${downloadDir}`)
+    } else {
+      console.error("There is nothing to export.")
+    }
+  }
+
   const { searchString, handleInputChange } = useDebouncedSearchInput(search, setSearch, 300)
 
   return (
@@ -124,7 +140,7 @@ function Timeline() {
             tip: "Export Log",
             icon: MdDownload,
             onClick: () => {
-              downloadLog(filteredCommands)
+              downloadLog()
             },
           },
           {
