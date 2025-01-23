@@ -134,11 +134,14 @@ function useTimeline() {
   }
 
   const downloadLog = (commands: any[]) => {
-    console.log("test!!!")
-    let downloadPath =
-      os.platform() === "darwin" ? path.dirname("/Downloads") : path.dirname("C:\\")
-    fs.writeFileSync(`timeline-log-${Date.now()}.txt`, JSON.stringify(commands), "utf8")
-    console.log(`Exported timeline log to ${downloadPath}`)
+    const homeDir = os.homedir()
+    const downloadDir = path.join(homeDir, "Downloads")
+    fs.writeFileSync(
+      path.resolve(downloadDir, `timeline-log-${Date.now()}.txt`),
+      JSON.stringify(commands),
+      "utf8"
+    )
+    console.log(`Exported timeline log to ${downloadDir}`)
   }
 
   const toggleReverse = () => {
