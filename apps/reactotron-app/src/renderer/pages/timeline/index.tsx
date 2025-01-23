@@ -12,7 +12,14 @@ import {
   TimelineContext,
   RandomJoke,
 } from "reactotron-core-ui"
-import { MdSearch, MdDeleteSweep, MdFilterList, MdSwapVert, MdReorder } from "react-icons/md"
+import {
+  MdSearch,
+  MdDeleteSweep,
+  MdFilterList,
+  MdSwapVert,
+  MdReorder,
+  MdDownload,
+} from "react-icons/md"
 import { FaTimes } from "react-icons/fa"
 import styled from "styled-components"
 
@@ -88,6 +95,7 @@ function Timeline() {
     isFilterOpen,
     hiddenCommands,
     setHiddenCommands,
+    downloadLog,
   } = useContext(TimelineContext)
 
   let filteredCommands = filterCommands(commands, search, hiddenCommands)
@@ -112,6 +120,13 @@ function Timeline() {
         title="Timeline"
         isDraggable
         actions={[
+          {
+            tip: "Export Log",
+            icon: MdDownload,
+            onClick: () => {
+              downloadLog(filteredCommands)
+            },
+          },
           {
             tip: "Search",
             icon: MdSearch,

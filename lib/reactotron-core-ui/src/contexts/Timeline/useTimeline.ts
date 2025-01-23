@@ -1,4 +1,7 @@
 import { useReducer, useEffect } from "react"
+import fs from "fs"
+import path from "path"
+import os from "os"
 
 import type { CommandTypeKey } from "reactotron-core-contract"
 
@@ -130,6 +133,14 @@ function useTimeline() {
     })
   }
 
+  const downloadLog = (commands: any[]) => {
+    console.log("test!!!")
+    let downloadPath =
+      os.platform() === "darwin" ? path.dirname("/Downloads") : path.dirname("C:\\")
+    fs.writeFileSync(`timeline-log-${Date.now()}.txt`, JSON.stringify(commands), "utf8")
+    console.log(`Exported timeline log to ${downloadPath}`)
+  }
+
   const toggleReverse = () => {
     const isReversed = !state.isReversed
 
@@ -163,6 +174,7 @@ function useTimeline() {
     toggleReverse,
     hiddenCommands: state.hiddenCommands,
     setHiddenCommands,
+    downloadLog,
   }
 }
 
