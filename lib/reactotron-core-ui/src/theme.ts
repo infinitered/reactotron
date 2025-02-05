@@ -27,4 +27,5 @@ export default {
   tag: "#cf6a4c",
   tagComplement: "hsl(13.699999999999989, 57.7%, 91.6%)",
   warning: "#9b703f",
+  delete: "rgb(239,135,131)",
 }
