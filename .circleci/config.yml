@@ -24,6 +24,11 @@ anchors:
     - master
     - beta
     - alpha
+  releases_and_forks: &releases_and_forks
+    - master
+    - beta
+    - alpha
+    - /pull\/[0-9]+/ # forks will have the branch set to /pull/<number>
   # All branches
   release_branch_filter: &release_branch_filter
     ignore: /.*/
@@ -371,7 +376,7 @@ workflows:
           <<: *ir_docs_config
           filters:
             branches:
-              ignore: *release_branch_names
+              ignore: *releases_and_forks
 
   # Allows for manual publishing of docs independent of deployment
   # Use the 'trigger pipeline' button in circle ci and set 'force-publish-docs' to 'true'
