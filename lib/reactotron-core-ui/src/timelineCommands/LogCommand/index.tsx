@@ -174,37 +174,42 @@ function getLevelName(level: string) {
 
 // function getPreview(message: string | object | boolean | number) {
 function getPreview(message: any) {
-  if (typeof message === "string") {
-    return message.substr(0, 500)
-  } else if (typeof message === "object") {
-    const firstValues = {}
+  // Special case: typeof null === "object"
+  // Explanation: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof#typeof_null
+  if (message === null) return "null"
 
-    Object.keys(message)
-      .slice(0, 5)
-      .forEach((key) => (firstValues[key] = message[key]))
+  switch (typeof message) {
+    case "string":
+      return message.slice(0, 500)
+    case "object": {
+      const firstValues = {}
 
-    const preview = stringifyObject(firstValues, {
-      transform: (obj, prop, originalResult) => {
-        const objType = typeof obj[prop]
+      Object.keys(message)
+        .slice(0, 5)
+        .forEach((key) => (firstValues[key] = message[key]))
 
-        if (objType === "object") {
-          return "{...}"
-        } else if (objType === "string") {
-          return originalResult.substr(0, 80)
-        } else {
-          return originalResult
-        }
-      },
-    })
+      const preview = stringifyObject(firstValues, {
+        transform: (obj, prop, originalResult) => {
+          if (obj[prop] === null) return "null"
 
-    return Object.keys(message).length > Object.keys(firstValues).length
-      ? preview.replace(/\s\}$/i, ", ...}")
-      : preview
-  } else if (message === null || typeof message === "boolean" || typeof message === "number") {
-    return String(message)
+          switch (typeof obj[prop]) {
+            case "object":
+              return "{...}"
+            case "string":
+              return originalResult.slice(0, 80)
+            default:
+              return originalResult
+          }
+        },
+      })
+
+      return Object.keys(message).length > Object.keys(firstValues).length
+        ? preview.replace(/\s\}$/i, ", ...}")
+        : preview
+    }
+    default:
+      return String(message)
   }
-
-  return message
 }
 
 function useFileSource(stack: LogPayload, readFile: (path: string) => Promise<string>) {

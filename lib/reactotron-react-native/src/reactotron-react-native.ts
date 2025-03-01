@@ -1,4 +1,4 @@
-import { Platform, NativeModules } from "react-native"
+import { Platform } from "react-native"
 import { createClient } from "reactotron-core-client"
 import type {
   ClientOptions,
@@ -8,7 +8,8 @@ import type {
   ReactotronCore,
 } from "reactotron-core-client"
 import type { AsyncStorageStatic } from "@react-native-async-storage/async-storage"
-
+// eslint-disable-next-line import/namespace, import/default
+import NativeSourceCode from "react-native/Libraries/NativeModules/specs/NativeSourceCode"
 import getReactNativeVersion from "./helpers/getReactNativeVersion"
 import getReactNativeDimensions from "./helpers/getReactNativeDimensions"
 import asyncStorage, { AsyncStorageOptions } from "./plugins/asyncStorage"
@@ -19,8 +20,8 @@ import networking, { NetworkingOptions } from "./plugins/networking"
 import storybook from "./plugins/storybook"
 import devTools from "./plugins/devTools"
 import trackGlobalLogs from "./plugins/trackGlobalLogs"
-
-const constants = NativeModules.PlatformConstants || {}
+import { getHostFromUrl } from "./helpers/parseURL"
+import getReactNativePlatformConstants from "./helpers/getReactNativePlatformConstants"
 
 const REACTOTRON_ASYNC_CLIENT_ID = "@REACTOTRON/clientId"
 
@@ -33,13 +34,22 @@ let tempClientId: string | null = null
  *
  * On an Android emulator, if you want to connect any servers of local, you will need run adb reverse on your terminal. This function gets the localhost IP of host machine directly to bypass this.
  */
-const getHost = (defaultHost = "localhost") =>
-  typeof NativeModules?.SourceCode?.getConstants().scriptURL === "string" // type guard in case this ever breaks https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/NativeModules/specs/NativeSourceCode.js#L15-L21
-    ? NativeModules.SourceCode.scriptURL // Example: 'http://192.168.0.100:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=com.helloworld'
-        .split("://")[1] // Remove the scheme: '192.168.0.100:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=com.helloworld'
-        .split("/")[0] // Remove the path: '192.168.0.100:8081'
-        .split(":")[0] // Remove the port: '192.168.0.100'
-    : defaultHost
+const getHost = (defaultHost = "localhost") => {
+  try {
+    // RN Reference: https://github.com/facebook/react-native/blob/main/packages/react-native/src/private/specs/modules/NativeSourceCode.js
+    const scriptURL = NativeSourceCode.getConstants().scriptURL
+
+    if (typeof scriptURL !== "string") throw new Error("Invalid non-string URL")
+
+    return getHostFromUrl(scriptURL)
+  } catch (error) {
+    console.warn(`getHost: "${error.message}" for scriptURL - Falling back to ${defaultHost}`)
+    return defaultHost
+  }
+}
+
+const { osRelease, model, serverHost, forceTouch, interfaceIdiom, systemName, uiMode, serial } =
+  getReactNativePlatformConstants()
 
 const DEFAULTS: ClientOptions<ReactotronReactNative> = {
   createSocket: (path: string) => new WebSocket(path), // eslint-disable-line
@@ -52,15 +62,14 @@ const DEFAULTS: ClientOptions<ReactotronReactNative> = {
     reactotronLibraryVersion: "REACTOTRON_REACT_NATIVE_VERSION",
     platform: Platform.OS,
     platformVersion: Platform.Version,
-    osRelease: constants.Release,
-    model: constants.Model,
-    serverHost: constants.ServerHost,
-    forceTouch: constants.forceTouchAvailable || false,
-    interfaceIdiom: constants.interfaceIdiom,
-    systemName: constants.systemName,
-    uiMode: constants.uiMode,
-    serial: constants.Serial,
-    androidId: constants.androidID,
+    osRelease,
+    model,
+    serverHost,
+    forceTouch,
+    interfaceIdiom,
+    systemName,
+    uiMode,
+    serial,
     reactNativeVersion: getReactNativeVersion(),
     ...getReactNativeDimensions(),
   },
@@ -76,15 +85,13 @@ const DEFAULTS: ClientOptions<ReactotronReactNative> = {
     // Accounting for screen rotation
     const dimensions = [screenWidth, screenHeight].sort().join("-")
 
-    tempClientId = [
-      name,
-      Platform.OS,
-      Platform.Version,
-      constants.systemName,
-      constants.Model,
-      dimensions,
-      screenScale,
-    ]
+    const additionalInfo = Platform.select({
+      ios: systemName,
+      android: model,
+      default: "",
+    })
+
+    tempClientId = [name, Platform.OS, Platform.Version, additionalInfo, dimensions, screenScale]
       .filter(Boolean)
       .join("-")
 

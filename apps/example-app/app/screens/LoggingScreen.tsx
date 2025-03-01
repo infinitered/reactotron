@@ -79,6 +79,31 @@ export const LoggingScreen: React.FC<LoggingScreenProps> = function LoggingScree
               console.error("This is a console.error()", { with: "possible data" })
             }}
           />
+          <Button
+            text="console.log a BigInt"
+            textStyle={$darkText}
+            style={$button}
+            onPress={() => {
+              console.log(BigInt(0))
+            }}
+          />
+          <Button
+            text="console.log a JSON Serialized BigInt"
+            textStyle={$darkText}
+            style={$button}
+            onPress={() => {
+              console.log(
+                JSON.stringify({
+                  int: 12,
+                  string: "hello",
+                  function: function () {
+                    console.log("HELLO!")
+                  },
+                  bigInt: BigInt(0),
+                })
+              )
+            }}
+          />
         </View>
         <View style={$topContainer}>
           <Text style={$text} tx="loggingsScreen.subtitle" />
