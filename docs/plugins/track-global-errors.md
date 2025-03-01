@@ -12,13 +12,13 @@ Both `reactotron-react-native` and `reactotron-react-js` ship with this plugin.
 To use the `trackGlobalErrors` plugin, add the additional plugin on the `import` line.
 
 ```js
-import Reactotron, { trackGlobalErrors } from "reactotron-react-native";
+import Reactotron, { trackGlobalErrors } from "reactotron-react-native"
 ```
 
 or
 
 ```js
-import Reactotron, { trackGlobalErrors } from "reactotron-react-js";
+import Reactotron, { trackGlobalErrors } from "reactotron-react-js"
 ```
 
 Next, add it as a plugin to Reactotron.
@@ -26,7 +26,7 @@ Next, add it as a plugin to Reactotron.
 ```js
 Reactotron.configure()
   .use(trackGlobalErrors()) // <--- here we go!
-  .connect();
+  .connect()
 ```
 
 ## Options
@@ -39,11 +39,10 @@ For example, on React Native, you'd like to leave off any frames sourced from Re
 Reactotron.configure()
   .use(
     trackGlobalErrors({
-      veto: (frame) =>
-        frame.fileName.indexOf("/node_modules/react-native/") >= 0,
+      veto: (frame) => frame.fileName.indexOf("/node_modules/react-native/") >= 0,
     })
   )
-  .connect();
+  .connect()
 ```
 
 `veto` is a function that takes an `object` and returns a `boolean`. `true` = ditch it. `false` = keep it.
@@ -70,7 +69,7 @@ Reactotron.configure()
       offline: true,
     })
   )
-  .connect();
+  .connect()
 ```
 
 # How It Works Internally

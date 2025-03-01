@@ -14,7 +14,7 @@ There are two ways you can write your custom commands.
 ```js
 Reactotron.onCustomCommand({
   command: "test2",
-  handler: () => console.log("This is an example 2"),  // Optional settings
+  handler: () => console.log("This is an example 2"), // Optional settings
   title: "A thing", // This shows on the button
   description: "The desc", // This shows below the button
 })
@@ -38,7 +38,7 @@ const selfRemoving = Reactotron.onCustomCommand({
 
 ## Some real-world examples:
 
-You can find [many real-world examples in Ignite](https://github.com/infinitered/ignite/blob/master/boilerplate/app/devtools/ReactotronConfig.ts), InfiniteRed's boilerplate react native solution. 
+You can find [many real-world examples in Ignite](https://github.com/infinitered/ignite/blob/master/boilerplate/app/devtools/ReactotronConfig.ts), InfiniteRed's boilerplate react native solution.
 
 Here are some examples:
 

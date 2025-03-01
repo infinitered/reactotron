@@ -17,8 +17,8 @@
     "noUnusedLocals": true,
     "sourceMap": true,
     "target": "es2015",
-    "esModuleInterop": true,
+    "esModuleInterop": true
   },
   "exclude": ["node_modules"],
-  "include": ["src"],
+  "include": ["src"]
 }

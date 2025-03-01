@@ -32,7 +32,7 @@ const ListViewComponent = forwardRef(
     const ListComponentWrapper = isRTL ? FlatList : FlashList
 
     return <ListComponentWrapper {...props} ref={ref} />
-  },
+  }
 )
 
 ListViewComponent.displayName = "ListView"
@@ -40,5 +40,5 @@ ListViewComponent.displayName = "ListView"
 export const ListView = ListViewComponent as <T>(
   props: ListViewProps<T> & {
     ref?: React.RefObject<ListViewRef<T>>
-  },
+  }
 ) => React.ReactElement

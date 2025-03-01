@@ -17,7 +17,7 @@
  */
 export const getWorkspaceList = async () => {
   /** @type {WorkspaceList} */
-  const workspaceMetadata = [];
+  const workspaceMetadata = []
   try {
     /**
      * Example output
@@ -28,31 +28,31 @@ export const getWorkspaceList = async () => {
      * \n
      * ```
      */
-    const output = await $`yarn workspaces list --json`.quiet();
+    const output = await $`yarn workspaces list --json`.quiet()
 
     /**
      * @param {string} line
      * @returns {WorkspaceMetadata}
      */
-    const parse = (line) => JSON.parse(line.trim());
+    const parse = (line) => JSON.parse(line.trim())
 
     const info = output.stdout
       .split(os.EOL) // split on \n
       .filter((line) => !!line) // remove any empty lines like ''
       .map(parse)
-      .filter((line) => line.location !== "."); // filter out root workspace: `{"location":".","name":"reactotron"}`
+      .filter((line) => line.location !== ".") // filter out root workspace: `{"location":".","name":"reactotron"}`
 
-    workspaceMetadata.push(...info);
+    workspaceMetadata.push(...info)
   } catch (error) {
-    console.error(`Failed to get workspace names`);
+    console.error(`Failed to get workspace names`)
     if (error instanceof ProcessOutput) {
-      console.error(error.stdout);
+      console.error(error.stdout)
     }
     if (error instanceof Error) {
-      console.error(error.message);
+      console.error(error.message)
     }
-    process.exit(1);
+    process.exit(1)
   }
 
-  return workspaceMetadata;
-};
+  return workspaceMetadata
+}

@@ -21,10 +21,10 @@ jobs:
         run: |
           # Fetch all branches
           git fetch --all
-          
+
           # Find branches starting with 'temp-ci-trusted-fork-'
           branches_to_delete=$(git branch -r | grep 'origin/temp-ci-trusted-fork-' | sed 's|origin/||')
-          
+
           if [ -z "$branches_to_delete" ]; then
             echo "No branches found to delete."
             exit 0

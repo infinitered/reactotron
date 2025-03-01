@@ -1,4 +1,4 @@
-export function apiRequestToCurl (payload: any = {}) {
+export function apiRequestToCurl(payload: any = {}) {
   const output = []
   const request = payload.request || {}
   const { method, headers, data, url } = request

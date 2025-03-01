@@ -57,9 +57,6 @@ On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotro
 - [**MST**](https://docs.infinite.red/reactotron/plugins/mst/)
 - [**Redux**](https://docs.infinite.red/reactotron/plugins/redux/)
 - [**Open in Editor**](https://docs.infinite.red/reactotron/plugins/open-in-editor/)
-- [**Storybook (only for React Native)**](https://docs.infinite.red/reactotron/plugins/storybook/) \
-   `reactotron-react-native` ships with [Storybook](https://storybook.js.org/).
-  This enables you to switch to Storybook from the Reactotron app.
 - [**Custom Commands**](https://docs.infinite.red/reactotron/custom-commands/)
 
 ## Tips and Tricks

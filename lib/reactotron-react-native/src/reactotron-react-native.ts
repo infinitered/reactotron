@@ -17,7 +17,6 @@ import overlay from "./plugins/overlay"
 import openInEditor, { OpenInEditorOptions } from "./plugins/openInEditor"
 import trackGlobalErrors, { TrackGlobalErrorsOptions } from "./plugins/trackGlobalErrors"
 import networking, { NetworkingOptions } from "./plugins/networking"
-import storybook from "./plugins/storybook"
 import devTools from "./plugins/devTools"
 import trackGlobalLogs from "./plugins/trackGlobalLogs"
 import { getHostFromUrl } from "./helpers/parseURL"
@@ -114,7 +113,6 @@ export interface UseReactNativeOptions {
   overlay?: boolean
   asyncStorage?: AsyncStorageOptions | boolean
   networking?: NetworkingOptions | boolean
-  storybook?: boolean
   devTools?: boolean
 }
 
@@ -125,7 +123,6 @@ export const reactNativeCorePlugins = [
   openInEditor(),
   overlay(),
   networking(),
-  storybook(),
   devTools(),
 ] satisfies PluginCreator<ReactotronCore>[]
 
@@ -171,10 +168,6 @@ reactotron.useReactNative = (options: UseReactNativeOptions = {}) => {
     reactotron.use(networking(getPluginOptions(options.networking)))
   }
 
-  if (options.storybook !== false) {
-    reactotron.use(storybook())
-  }
-
   if (options.devTools !== false) {
     reactotron.use(devTools())
   }
@@ -195,7 +188,6 @@ export {
   openInEditor,
   overlay,
   networking,
-  storybook,
   devTools,
 }
 

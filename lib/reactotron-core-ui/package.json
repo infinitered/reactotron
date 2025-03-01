@@ -19,12 +19,10 @@
     "default": "./dist/index.js"
   },
   "scripts": {
-    "start": "start-storybook -p 6006",
     "prebuild": "yarn clean",
     "build": "yarn tsc && yarn compile",
     "prebuild:dev": "yarn clean",
     "build:dev": "yarn tsc && yarn compile:dev",
-    "build-storybook": "build-storybook",
     "clean": "rimraf ./dist",
     "lint": "eslint src --ext .ts,.tsx",
     "test": "jest",
@@ -67,14 +65,9 @@
     "@babel/preset-env": "^7.23.2",
     "@babel/preset-react": "7.22.15",
     "@babel/preset-typescript": "^7.23.2",
-    "@storybook/addon-actions": "6.1.21",
-    "@storybook/addon-knobs": "6.2.9",
-    "@storybook/addon-links": "6.1.21",
-    "@storybook/addons": "6.1.21",
-    "@storybook/react": "6.1.21",
     "@testing-library/react": "^14.1.2",
     "@types/jest": "^29.5.7",
-    "@types/react": "18.2.45",
+    "@types/react": "~18.2.79",
     "@types/react-dom": "18.2.14",
     "@types/react-modal": "3.13.1",
     "@types/react-motion": "0.0.31",
@@ -109,7 +102,8 @@
     "rollup-plugin-peer-deps-external": "2.2.4",
     "styled-components": "^6.1.0",
     "ts-jest": "^29.1.1",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "webpack": "^4.47.0"
   },
   "eslintConfig": {
     "root": false,

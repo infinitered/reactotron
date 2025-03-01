@@ -24,7 +24,7 @@ const edgeInsetMap: Record<string, Edge> = {
  */
 export function useSafeAreaInsetsStyle(
   safeAreaEdges: ExtendedEdge[] = [],
-  property: "padding" | "margin" = "padding",
+  property: "padding" | "margin" = "padding"
 ): Pick<
   FlexStyle,
   | "marginBottom"

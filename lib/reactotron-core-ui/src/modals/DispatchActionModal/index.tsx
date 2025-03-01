@@ -69,7 +69,7 @@ const DispatchActionModal: FunctionComponent<Props> = ({
   const handleKeypress = (e) => {
     if (e.keyCode === 13 && e.metaKey) {
       // We need to take a string that is not exactly JSON and make it an object.
-      const actualAction = eval(`(${action})`) // eslint-disable-line
+      const actualAction = eval(`(${action})`) // eslint-disable-line no-eval
 
       onDispatchAction(actualAction)
       setAction("")

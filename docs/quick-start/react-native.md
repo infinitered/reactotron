@@ -32,18 +32,18 @@ yarn add reactotron-react-native -D
 Create a file in your root folder `ReactotronConfig.js` and paste this:
 
 ```js
-import Reactotron from "reactotron-react-native";
+import Reactotron from "reactotron-react-native"
 
 Reactotron.configure() // controls connection & communication settings
   .useReactNative() // add all built-in react native plugins
-  .connect(); // let's connect!
+  .connect() // let's connect!
 ```
 
 Or using a more advanced way to customize which plugins to include:
 
 ```js
-import Reactotron from "reactotron-react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import Reactotron from "reactotron-react-native"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 Reactotron.setAsyncStorageHandler(AsyncStorage)
   .configure({
@@ -59,17 +59,17 @@ Reactotron.setAsyncStorageHandler(AsyncStorage)
     errors: { veto: (stackFrame) => false }, // or turn it off with false
     overlay: false, // just turning off overlay
   })
-  .connect();
+  .connect()
 ```
 
 Alternatively, you can create your own plugin and provide it via:
 
 ```js
-import Reactotron from "reactotron-react-native";
+import Reactotron from "reactotron-react-native"
 
 const middleware = (tron) => {
   /* plugin definition */
-};
+}
 
 Reactotron.setAsyncStorageHandler(AsyncStorage)
   .configure({
@@ -77,7 +77,7 @@ Reactotron.setAsyncStorageHandler(AsyncStorage)
   })
   .useReactNative() // add all built-in react native plugins
   .use(middleware) // plus some custom made plugin.
-  .connect();
+  .connect()
 ```
 
 #### **Step 3 - Add Reactotron to your app**
@@ -91,7 +91,7 @@ on line 1:
 
 ```js
 if (__DEV__) {
-  require("./ReactotronConfig");
+  require("./ReactotronConfig")
 }
 ```
 
