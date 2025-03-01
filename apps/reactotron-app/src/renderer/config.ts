@@ -1,24 +1,29 @@
 import Store from "electron-store"
 
-const schema = {
-  serverPort: {
-    type: "number",
-    default: 9090,
-  },
-  commandHistory: {
-    type: "number",
-    default: 500,
-  },
+type StoreType = {
+  serverPort: number
+  commandHistory: number
 }
 
-const configStore = new Store({ schema } as any)
+const config = new Store<StoreType>({
+  schema: {
+    serverPort: {
+      type: "number",
+      default: 9090,
+    },
+    commandHistory: {
+      type: "number",
+      default: 500,
+    },
+  },
+})
 
 // Setup defaults
-if (!configStore.has("serverPort")) {
-  configStore.set("serverPort", 9090)
+if (!config.has("serverPort")) {
+  config.set("serverPort", 9090)
 }
-if (!configStore.has("commandHistory")) {
-  configStore.set("commandHistory", 500)
+if (!config.has("commandHistory")) {
+  config.set("commandHistory", 500)
 }
 
-export default configStore
+export default config

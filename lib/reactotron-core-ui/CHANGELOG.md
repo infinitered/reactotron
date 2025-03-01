@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.4.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.6...reactotron-core-ui@2.4.0) (2025-01-28)
+
+
+### Features
+
+* show graphql operation name for graphql requests ([#1521](https://github.com/infinitered/reactotron/issues/1521) by [@yurik256](https://github.com/yurik256)) ([21b9759](https://github.com/infinitered/reactotron/commit/21b9759e03f893961e7eca5514b0cbc6b08941f9))
+
 ### [2.3.6](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.5...reactotron-core-ui@2.3.6) (2025-01-07)
 
 
