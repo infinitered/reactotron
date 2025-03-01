@@ -66,5 +66,5 @@ export default function repairSerialization(payload: any) {
   walker(payload)
 
   // HACK - We should eventually make this function do less mutation
-  return payload;
+  return payload
 }

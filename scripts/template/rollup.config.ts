@@ -1,9 +1,9 @@
-import resolve from "rollup-plugin-node-resolve";
-import babel from "rollup-plugin-babel";
-import filesize from "rollup-plugin-filesize";
-import minify from "rollup-plugin-babel-minify";
+import resolve from "rollup-plugin-node-resolve"
+import babel from "rollup-plugin-babel"
+import filesize from "rollup-plugin-filesize"
+import minify from "rollup-plugin-babel-minify"
 
-const pkg = require("./package.json");
+const pkg = require("./package.json")
 
 export default {
   input: "src/reactotron-template.ts",
@@ -29,4 +29,4 @@ export default {
   ],
   // put any external react-native- deps here
   external: ["reactotron-core-client"],
-};
+}

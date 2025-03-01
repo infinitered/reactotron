@@ -7,7 +7,7 @@ const benchmark = () => (reactotron: ReactotronCore) => {
   const { startTimer } = reactotron
 
   const benchmark = (title: string) => {
-    const steps = [] as Array<{title: string, time: number, delta: number}>
+    const steps = [] as Array<{ title: string; time: number; delta: number }>
     const elapsed = startTimer()
     const step = (stepTitle: string) => {
       const previousTime = steps.length === 0 ? 0 : (steps[steps.length - 1] as any).time

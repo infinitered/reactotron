@@ -14,7 +14,7 @@ type Action = { type: ActionTypes.ToggleSideBar }
 export function reducer(state: State, action: Action) {
   switch (action.type) {
     case ActionTypes.ToggleSideBar:
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         draftState.isSideBarOpen = !draftState.isSideBarOpen
       })
     default:

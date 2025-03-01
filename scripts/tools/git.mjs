@@ -1,7 +1,7 @@
-import "zx/globals";
+import "zx/globals"
 // @ts-check
 
-import { ROOT_DIR } from "./path.mjs";
+import { ROOT_DIR } from "./path.mjs"
 
 /**
  * Sorry for this horrible regex, but it's the only one I could find that worked
@@ -11,7 +11,7 @@ import { ROOT_DIR } from "./path.mjs";
  * @example 'reactotron-apisauce@3.0.1-alpha.1'
  */
 export const GIT_TAG_REGEX =
-  /([\w-]+@|v)([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?/g; // 'reactotron-app@3.0.0'
+  /([\w-]+@|v)([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?/g // 'reactotron-app@3.0.0'
 
 /**
  * Example inputs:
@@ -29,26 +29,26 @@ export const GIT_TAG_REGEX =
  * @param line {string}
  */
 const parseTag = (line) => {
-  const tag = line.match(GIT_TAG_REGEX);
-  return tag ? tag[0] : null;
-};
+  const tag = line.match(GIT_TAG_REGEX)
+  return tag ? tag[0] : null
+}
 
 const unique = (value, index, self) => {
-  return self.indexOf(value) === index;
-};
+  return self.indexOf(value) === index
+}
 
 /**
  * Grabs all the tags in the local repository.
  * @returns {Promise<string[]>}
  */
 export const getLocalTags = async () => {
-  const tags = await $`cd ${ROOT_DIR} && git show-ref --tags`.quiet();
+  const tags = await $`cd ${ROOT_DIR} && git show-ref --tags`.quiet()
   return tags.stdout
     .split(os.EOL)
     .map(parseTag)
     .filter((tag) => !!tag)
-    .filter(unique);
-};
+    .filter(unique)
+}
 
 /**
  * Grabs all the tags from the remote origin.
@@ -56,11 +56,11 @@ export const getLocalTags = async () => {
  * @returns {Promise<string[]>}
  */
 export const getRemoteTags = async () => {
-  const tags = await $`cd ${ROOT_DIR} && git ls-remote --tags origin`.quiet();
+  const tags = await $`cd ${ROOT_DIR} && git ls-remote --tags origin`.quiet()
 
   return tags.stdout
     .split(os.EOL)
     .map(parseTag)
     .filter((tag) => !!tag)
-    .filter(unique);
-};
+    .filter(unique)
+}

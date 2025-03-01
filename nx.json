@@ -2,25 +2,15 @@
   "defaultBase": "master",
   "targetDefaults": {
     "build": {
-      "dependsOn": [
-        "clean",
-        "^build"
-      ],
-      "outputs": [
-        "{projectRoot}/dist",
-        "{projectRoot}/build",
-        "{projectRoot}/public/build"
-      ],
+      "dependsOn": ["clean", "^build"],
+      "outputs": ["{projectRoot}/dist", "{projectRoot}/build", "{projectRoot}/public/build"],
       "cache": true
     },
     "version": {
       "options": {
         "preset": "conventional",
         "tagPrefix": "{projectName}@",
-        "skipCommitTypes": [
-          "docs",
-          "release"
-        ],
+        "skipCommitTypes": ["docs", "release"],
         "commitMessageFormat": "release({projectName}): ${version} [skip ci]"
       }
     },

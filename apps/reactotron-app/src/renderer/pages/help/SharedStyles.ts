@@ -17,4 +17,3 @@ export const ItemIconContainer = styled.div`
   color: ${(props) => props.theme.foregroundLight};
   margin-bottom: 8px;
 `
-

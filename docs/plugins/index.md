@@ -13,9 +13,7 @@ To install a plugin, you need to add it to your Reactotron client. You can do th
 ```js
 import Reactotron from "reactotron-react-native"
 
-Reactotron.configure()
-  .use(somePlugin())
-  .connect()
+Reactotron.configure().use(somePlugin()).connect()
 ```
 
 # Community-made plugins
