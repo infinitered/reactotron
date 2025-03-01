@@ -135,11 +135,14 @@ export function reducer(state: State, action: Action) {
           return
         }
 
-        draftState.commandListeners.forEach((cl) => cl(action.payload))
-
         const connection = draftState.connections.find(
           (c) => c.clientId === action.payload.clientId
         )
+
+        if (!connection) {
+          console.error("Command received for unknown connection", action.payload)
+          return
+        }
 
         connection.commands = [action.payload, ...connection.commands]
       })
@@ -205,9 +208,16 @@ function useStandalone() {
   }, [])
 
   // Called when commands are flowing in.
-  const commandReceived = useCallback((command: any) => {
-    dispatch({ type: ActionTypes.CommandReceived, payload: command })
-  }, [])
+  const commandReceived = useCallback(
+    (command: any) => {
+      // First dispatch to update state
+      dispatch({ type: ActionTypes.CommandReceived, payload: command })
+
+      // Then notify listeners
+      state.commandListeners.forEach((cl) => cl(command))
+    },
+    [state.commandListeners]
+  )
 
   // Called when a client disconnects. NOTE: They could be coming back. This could happen with a reload of the simulator!
   const connectionDisconnected = useCallback((connection: ReactotronConnection) => {
