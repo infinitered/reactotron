@@ -63,12 +63,100 @@ console.log(`Found ${files.length} files to upload`)
 console.log(`Files: ${files.join(", ")}`)
 
 // get mimie types
-const mime = require("mime")
-mime.define({ "application/x-apple-diskimage": ["dmg"] }, true)
+const mime = require("mime-types")
 files.forEach((file) => {
-  const mimeType = mime.getType(file)
+  const mimeType = mime.lookup(file)
   console.log(`File '${file}' has mime type '${mimeType}'`)
 })
+// #endregion
+
+// #region extract changelog entry for this version
+/**
+ * Gets the changelog entry for a specific version
+ * @param {string} version The version to extract (without '@' prefix)
+ * @returns {string} The formatted changelog entry or a default message
+ */
+function getChangelogEntry(version) {
+  try {
+    // Try to find and parse the appropriate CHANGELOG.md file
+    const changelogPath = path.join(__dirname, "..", "CHANGELOG.md")
+
+    // If changelog doesn't exist, return a default message
+    if (!fs.existsSync(changelogPath)) {
+      console.warn(`No CHANGELOG.md found at ${changelogPath}`)
+      return `Release version ${version}. See repository for changes.`
+    }
+
+    const changelog = fs.readFileSync(changelogPath, "utf8")
+
+    // Extract the section for this version
+    // Match both ## and ### header styles
+    const versionHeaderRegex = new RegExp(
+      `(?:##|###)\\s*\\[${version}\\][^]*?(?=(?:##|###)\\s*\\[|$)`,
+      "s"
+    )
+    const match = changelog.match(versionHeaderRegex)
+
+    if (!match) {
+      console.warn(`No changelog entry found for version ${version}`)
+      return `Release version ${version}. See repository for changes.`
+    }
+
+    // Return the matching section, excluding the header
+    const lines = match[0].split("\n")
+    const contentWithoutHeader = lines.slice(1).join("\n").trim()
+
+    // If the changelog entry is empty, try to find accumulated changes
+    if (!contentWithoutHeader) {
+      console.warn(
+        `Empty changelog entry for version ${version}, looking for accumulated changes...`
+      )
+
+      // Find previous significant version to compare against
+      const allVersionsRegex = /(?:##|###)\s*\[([^\]]+)\]/g
+      const versions = []
+      let versionMatch
+
+      while ((versionMatch = allVersionsRegex.exec(changelog)) !== null) {
+        versions.push(versionMatch[1])
+      }
+
+      // Get index of current version
+      const currentIndex = versions.indexOf(version)
+
+      if (currentIndex !== -1 && currentIndex < versions.length - 1) {
+        // Find previous significant version (with different major or minor)
+        const [currentMajor, currentMinor] = version.split(".").map(Number)
+        let previousVersion = null
+
+        for (let i = currentIndex + 1; i < versions.length; i++) {
+          const ver = versions[i]
+          const [major, minor] = ver.split(".").map(Number)
+
+          if (major !== currentMajor || minor !== currentMinor) {
+            previousVersion = ver
+            break
+          }
+        }
+
+        if (previousVersion) {
+          return `This release includes all changes accumulated since version ${previousVersion}.\n\nSee the [CHANGELOG](https://github.com/infinitered/reactotron/blob/master/apps/reactotron-app/CHANGELOG.md) for more details.`
+        }
+      }
+
+      return `Release version ${version}. See repository for changes.`
+    }
+
+    return contentWithoutHeader
+  } catch (error) {
+    console.error(`Error extracting changelog entry: ${error.message}`)
+    return `Release version ${version}. See repository for changes.`
+  }
+}
+
+// Get the release notes for this version
+const releaseNotes = getChangelogEntry(version)
+console.log(`Got release notes (${releaseNotes.length} characters)`)
 // #endregion
 
 // #region release on github
@@ -86,6 +174,7 @@ const repo = "reactotron"
       repo,
       tag_name: gitTag,
       name: gitTag,
+      body: releaseNotes,
       prerelease: gitTag.includes("beta") || gitTag.includes("alpha"),
       draft: !isCi,
       target_commitish: gitTag.includes("beta")
@@ -104,7 +193,7 @@ const repo = "reactotron"
             release_id: release.id,
             name: file,
             headers: {
-              "Content-Type": mime.getType(file) || "application/octet-stream",
+              "Content-Type": mime.lookup(file) || "application/octet-stream",
             },
             // @ts-ignore data is expecting json by default, but we want to send a buffer
             data: fs.readFileSync(path.join(folder, file)),

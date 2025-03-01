@@ -124,6 +124,15 @@ function buildToolbar(commandPayload, copyToClipboard: (text: string) => void) {
   return toolbarItems
 }
 
+export function formatOperationName(requestData: string): string {
+  try {
+    const parsedData = JSON.parse(requestData)
+    return parsedData?.operationName?.toString() || ""
+  } catch (_err) {
+    return ""
+  }
+}
+
 const ApiResponseCommand: FunctionComponent<Props> = ({
   command,
   copyToClipboard,
@@ -137,7 +146,11 @@ const ApiResponseCommand: FunctionComponent<Props> = ({
   const { duration, request, response } = payload
 
   const cleanedUrl = request.url.replace(/^http(s):\/\/[^/]+/i, "").replace(/\?.*$/i, "")
-  const preview = `${(request.method || "").toUpperCase()} ${cleanedUrl}`
+  const operationName = formatOperationName(request.data)
+
+  const preview = [(request.method || "").toUpperCase(), cleanedUrl, operationName]
+    .filter(Boolean)
+    .join(" ")
 
   const summary = {
     "Status Code": response.status,

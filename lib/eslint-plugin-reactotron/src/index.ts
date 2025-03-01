@@ -16,7 +16,7 @@ import { noTronInProduction } from "./rules/no-tron-in-production"
     }
   ```
  */
-const eslintPluginReactotron = {
+const eslintPluginReactotron: Linter.Plugin = {
   rules: {
     "no-tron-in-production": noTronInProduction,
   },
