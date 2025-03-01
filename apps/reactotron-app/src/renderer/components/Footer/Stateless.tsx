@@ -85,7 +85,7 @@ function renderCollapsed(
   return (
     <>
       <ConnectionInfo>
-        port {config.get("serverPort") as string} | {connections.length} connections
+        port {config.get("serverPort")} | {connections.length} connections
       </ConnectionInfo>
       {serverStatus === "portUnavailable" && (
         <ConnectionInfo>Port 9090 unavailable.</ConnectionInfo>

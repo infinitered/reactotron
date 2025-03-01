@@ -10,7 +10,7 @@ There are three main parties:
 2. The Electron app with Reactotron's UI, which subscribes to app updates
 3. The app client that we are debugging, which sends commands with information about the app to the server
 
-<img src="./images/architecture-app-mobile-diagram.png" alt="Diagram of the Reactotron Electron app, reactotron-core-server, and the app client" />
+![Diagram of the Reactotron Electron app, reactotron-core-server, and the app client.](./images/architecture-app-mobile-diagram.png)
 
 Websockets are used to sends "commands", which are JSON objects with information about the app we are debugging. The payloads are sent to the server, which then publishes them to all subscribers (like the Electron app).
 
@@ -18,7 +18,7 @@ Websockets are used to sends "commands", which are JSON objects with information
 
 This repository is broken into different workspaces:
 
-<img src="./images/architecture-workspace-chart.png" alt="Diagram of the Reactotron electron app and client, and which workspaces they correspond to." />
+![Diagram of the Reactotron electron app and client, and which workspaces they correspond to.](./images/architecture-workspace-chart.png)
 
 ### Reactotron app
 

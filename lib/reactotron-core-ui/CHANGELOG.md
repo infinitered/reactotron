@@ -2,6 +2,34 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.4.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.6...reactotron-core-ui@2.4.0) (2025-01-28)
+
+
+### Features
+
+* show graphql operation name for graphql requests ([#1521](https://github.com/infinitered/reactotron/issues/1521) by [@yurik256](https://github.com/yurik256)) ([21b9759](https://github.com/infinitered/reactotron/commit/21b9759e03f893961e7eca5514b0cbc6b08941f9))
+
+### [2.3.6](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.5...reactotron-core-ui@2.3.6) (2025-01-07)
+
+
+### Bug Fixes
+
+* **package.json:** remove "react-native" export condition ([#1530](https://github.com/infinitered/reactotron/issues/1530)) ([47be69f](https://github.com/infinitered/reactotron/commit/47be69fae1e410a22907893a69474857a3e5a854))
+
+### [2.3.5](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.4...reactotron-core-ui@2.3.5) (2024-11-04)
+
+
+### Bug Fixes
+
+* Handling console.log(null) ([#1520](https://github.com/infinitered/reactotron/issues/1520)) ([98e4805](https://github.com/infinitered/reactotron/commit/98e48053d1d3ab430874b4710b38cb7cd35078bb)), closes [#1517](https://github.com/infinitered/reactotron/issues/1517)
+
+### [2.3.4](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.3...reactotron-core-ui@2.3.4) (2024-10-17)
+
+
+### Bug Fixes
+
+* **reactotron-app:** Timeline empty state improvements ([#1395](https://github.com/infinitered/reactotron/issues/1395) by [@carlinisaacson](https://github.com/carlinisaacson)) ([f1472d7](https://github.com/infinitered/reactotron/commit/f1472d7863e9640efa74203608769b14b641deec))
+
 ### [2.3.3](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.2...reactotron-core-ui@2.3.3) (2024-04-04)
 
 ### [2.3.2](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.1...reactotron-core-ui@2.3.2) (2024-03-26)

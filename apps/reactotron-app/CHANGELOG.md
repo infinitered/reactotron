@@ -2,6 +2,29 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.7.7](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.6...reactotron-app@3.7.7) (2025-03-01)
+
+### [3.7.6](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.5...reactotron-app@3.7.6) (2025-02-12)
+
+### [3.7.5](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.4...reactotron-app@3.7.5) (2025-02-03)
+
+### [3.7.4](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.3...reactotron-app@3.7.4) (2024-11-14)
+
+
+### Bug Fixes
+
+* Removing react-native-flipper ([#1524](https://github.com/infinitered/reactotron/issues/1524)) ([b1e7022](https://github.com/infinitered/reactotron/commit/b1e7022f8dab52896bc0f058bc877ae767bf1aee)), closes [#1333](https://github.com/infinitered/reactotron/issues/1333)
+
+### [3.7.3](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.2...reactotron-app@3.7.3) (2024-10-17)
+
+
+### Bug Fixes
+
+* **reactotron-app:** proper separators in view menu ([#1492](https://github.com/infinitered/reactotron/issues/1492) by @DIntriglia) ([39893d8](https://github.com/infinitered/reactotron/commit/39893d8f6ed8b614e83a414325233bf752074dbb))
+* **reactotron-app:** Timeline empty state improvements ([#1395](https://github.com/infinitered/reactotron/issues/1395) by [@carlinisaacson](https://github.com/carlinisaacson)) ([f1472d7](https://github.com/infinitered/reactotron/commit/f1472d7863e9640efa74203608769b14b641deec))
+
+### [3.7.2](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.1...reactotron-app@3.7.2) (2024-08-26)
+
 ### [3.7.1](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.0...reactotron-app@3.7.1) (2024-04-04)
 
 ## [3.7.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.6.2...reactotron-app@3.7.0) (2024-02-16)
