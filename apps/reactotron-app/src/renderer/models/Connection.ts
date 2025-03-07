@@ -9,7 +9,7 @@ export const ConnectionModel = t
 
     platform: t.enumeration(["ios", "android", "browser"] as const),
     name: "",
-    platformVersion: "",
+    platformVersion: t.optional(t.union(t.number, t.string), ""),
     osRelease: "",
     userAgent: "",
 
