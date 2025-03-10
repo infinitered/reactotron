@@ -2,7 +2,7 @@ import React from "react"
 import { JSONTree } from "react-json-tree"
 import styled from "styled-components"
 
-import baseTheme from "../../theme"
+import darkTheme, { lightTheme } from "../../theme"
 
 // TODO: Ripping this right from reactotron right now... should probably be better.
 const theme = {
@@ -30,11 +30,11 @@ const MutedContainer = styled.span`
   color: ${(props) => props.theme.highlight};
 `
 
-const treeTheme = {
+const getTreeTheme = (baseTheme: Record<string, any>) => ({
   tree: { backgroundColor: "transparent", marginTop: -3 },
   ...theme,
   base0B: baseTheme.foreground,
-}
+})
 
 interface Props {
   // value: object
@@ -42,7 +42,17 @@ interface Props {
   level?: number
 }
 
+const isDark = window.matchMedia("(prefers-color-scheme: dark)")
+
+const getTheme = (isDark: boolean) => {
+  return isDark ? darkTheme : lightTheme
+}
+
 export default function TreeView({ value, level = 1 }: Props) {
+  const [treeTheme, setTreeTheme] = React.useState(getTreeTheme(getTheme(isDark.matches)))
+
+  isDark.addEventListener("change", ({ matches }) => setTreeTheme(getTreeTheme(getTheme(matches))))
+
   return (
     <JSONTree
       data={value}
