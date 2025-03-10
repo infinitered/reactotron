@@ -1,4 +1,4 @@
-export default {
+const darkTheme = {
   fontFamily:
     '"Fira Code", "SF Mono", "Consolas", "Segoe UI", "Roboto", "-apple-system", "Helvetica Neue", sans-serif',
   background: "#1e1e1e",
@@ -28,3 +28,36 @@ export default {
   tagComplement: "hsl(13.699999999999989, 57.7%, 91.6%)",
   warning: "#9b703f",
 }
+
+export const lightTheme = {
+  fontFamily:
+    '"Fira Code", "SF Mono", "Consolas", "Segoe UI", "Roboto", "-apple-system", "Helvetica Neue", sans-serif',
+  background: "#ffffff",
+  backgroundDarker: "hsl(0, 0%, 90%)",
+  backgroundHighlight: "#f0f0f0",
+  backgroundLight: "#f9f9f9",
+  backgroundLighter: "#e6e6e6",
+  backgroundSubtleDark: "hsl(0, 0%, 95%)",
+  backgroundSubtleLight: "hsl(0, 0%, 97%)",
+  bold: "#222222",
+  chrome: "hsl(0, 0%, 90%)",
+  chromeLine: "hsl(0, 0%, 85%)",
+  constant: "#d17d00",
+  foreground: "#333333",
+  foregroundDark: "#555555",
+  foregroundLight: "#666666",
+  glow: "hsla(0, 0%, 90%, 0.8)",
+  heading: "#4b5f85",
+  highlight: "hsl(210, 10%, 70%)",
+  keyword: "#9b0000",
+  line: "hsl(204, 4.8%, 95%)",
+  modalOverlay: "hsla(0, 0%, 100%, 0.95)",
+  string: "#718c00",
+  subtleLine: "hsl(204, 4.8%, 90%)",
+  support: "#597ab8",
+  tag: "#d9484f",
+  tagComplement: "hsl(13.7, 57.7%, 45%)",
+  warning: "#b35900",
+}
+
+export default darkTheme
