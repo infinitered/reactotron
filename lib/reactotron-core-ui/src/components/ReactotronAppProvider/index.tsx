@@ -1,7 +1,8 @@
 import React from "react"
 import styled, { ThemeProvider } from "styled-components"
 
-import darkTheme, { lightTheme } from "../../theme"
+import useColorScheme from "../../hooks/useColorScheme"
+import { themes } from "../../themes"
 
 const ReactotronContainer = styled.div`
   font-family: ${(props) => props.theme.fontFamily};
@@ -11,19 +12,11 @@ const ReactotronContainer = styled.div`
   user-select: none;
 `
 
-const isDark = window.matchMedia("(prefers-color-scheme: dark)")
-
-const getTheme = (isDark: boolean) => {
-  return isDark ? darkTheme : lightTheme
-}
-
 const ReactotronAppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = React.useState(getTheme(isDark.matches))
-
-  isDark.addEventListener("change", ({ matches }) => setTheme(getTheme(matches)))
+  const colorScheme = useColorScheme()
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={themes[colorScheme]}>
       <ReactotronContainer>{children}</ReactotronContainer>
     </ThemeProvider>
   )
