@@ -1,39 +1,37 @@
-/* eslint-disable react/display-name */
-import { renderHook } from "@testing-library/react"
+import { renderHook, act } from "@testing-library/react"
 import useColorScheme from "./useColorScheme"
 
 describe("useColorScheme", () => {
-  let mockMatchMedia: jest.Mock
-  let mockAddEventListener: jest.Mock
-  let mockRemoveEventListener: jest.Mock
+  const addEventListener = jest.fn()
+  const removeEventListener = jest.fn()
 
-  beforeEach(() => {
-    mockAddEventListener = jest.fn()
-    mockRemoveEventListener = jest.fn()
-    mockMatchMedia = jest.fn().mockReturnValue({
-      matches: false,
-      addEventListener: mockAddEventListener,
-      removeEventListener: mockRemoveEventListener,
-    })
-
-    window.matchMedia = mockMatchMedia
+  const mockMatchMedia = jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    addEventListener,
+    removeEventListener
+  }))
+  
+  const originalMatchMedia = window.matchMedia
+  
+  afterEach(() => {
+    jest.resetAllMocks()
+    window.matchMedia = originalMatchMedia
   })
 
-  it("should return dark when window is undefined", () => {
-    const windowSpy = jest.spyOn(global, "window", "get")
-    windowSpy.mockImplementation(() => undefined as any)
+  it("should return dark when window.matchMedia is undefined", () => {
+    window.matchMedia = undefined
 
     const { result } = renderHook(() => useColorScheme())
     expect(result.current).toBe("dark")
-
-    windowSpy.mockRestore()
   })
 
   it("should return light when system preference is light", () => {
+    window.matchMedia = mockMatchMedia
     mockMatchMedia.mockReturnValue({
       matches: false,
-      addEventListener: mockAddEventListener,
-      removeEventListener: mockRemoveEventListener,
+      addEventListener,
+      removeEventListener
     })
 
     const { result } = renderHook(() => useColorScheme())
@@ -41,10 +39,11 @@ describe("useColorScheme", () => {
   })
 
   it("should return dark when system preference is dark", () => {
+    window.matchMedia = mockMatchMedia
     mockMatchMedia.mockReturnValue({
       matches: true,
-      addEventListener: mockAddEventListener,
-      removeEventListener: mockRemoveEventListener,
+      addEventListener,
+      removeEventListener
     })
 
     const { result } = renderHook(() => useColorScheme())
@@ -52,19 +51,40 @@ describe("useColorScheme", () => {
   })
 
   it("should update when system preference changes", () => {
+    let colorSchemeChangeHandler: (e: { matches: boolean }) => void
+    const _addEventListener = jest.fn().mockImplementation((_, handler) => {
+      colorSchemeChangeHandler = handler
+    })
+
+    window.matchMedia = mockMatchMedia
+    mockMatchMedia.mockReturnValue({
+      matches: false,
+      addEventListener: _addEventListener,
+      removeEventListener,
+    })
+
     const { result } = renderHook(() => useColorScheme())
     expect(result.current).toBe("light")
 
-    const handler = mockAddEventListener.mock.calls[0][1]
-    handler({ matches: true })
+    act(() => {
+      colorSchemeChangeHandler({ matches: true })
+    })
 
     expect(result.current).toBe("dark")
   })
 
   it("should clean up event listener on unmount", () => {
+    window.matchMedia = mockMatchMedia
+
+    mockMatchMedia.mockReturnValue({
+      matches: false,
+      addEventListener,
+      removeEventListener,
+    })
+
     const { unmount } = renderHook(() => useColorScheme())
     unmount()
 
-    expect(mockRemoveEventListener).toHaveBeenCalled()
+    expect(removeEventListener).toHaveBeenCalledWith("change", expect.any(Function))
   })
 })

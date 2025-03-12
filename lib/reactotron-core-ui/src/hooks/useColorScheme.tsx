@@ -1,19 +1,23 @@
 import React from "react"
 import { ColorScheme } from "../themes"
 
-const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
-
 function getColorScheme({ matches }: MediaQueryList | MediaQueryListEvent): ColorScheme {
   return matches ? "dark" : "light"
 }
 
 function useColorScheme(): ColorScheme {
+  const mediaQueryRef = React.useRef<MediaQueryList | null>(window?.matchMedia?.("(prefers-color-scheme: dark)") || null)
+
   const [colorScheme, setColorScheme] = React.useState<ColorScheme>(() => {
-    if (typeof window === "undefined") return "dark"
-    return getColorScheme(mediaQuery)
+    if (typeof window === "undefined" || !mediaQueryRef.current) return "dark"
+    return getColorScheme(mediaQueryRef.current)
   })
 
   React.useEffect(() => {
+    const mediaQuery = mediaQueryRef.current
+
+    if (!mediaQuery) return () => {}
+
     const handleChange = (e: MediaQueryListEvent) => {
       setColorScheme(getColorScheme(e))
     }
