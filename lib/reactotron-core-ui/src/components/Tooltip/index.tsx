@@ -16,6 +16,7 @@ function ToolTip(props: TooltipProps) {
       border
       borderColor={theme.highlight}
       textColor={theme.foreground}
+      backgroundColor={theme.backgroundSubtleLight}
       {...props}
     />
   )
