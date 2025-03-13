@@ -1,7 +1,8 @@
 import React from "react"
 import styled, { ThemeProvider } from "styled-components"
 
-import theme from "../../theme"
+import useColorScheme from "../../hooks/useColorScheme"
+import { themes } from "../../themes"
 
 const ReactotronContainer = styled.div`
   font-family: ${(props) => props.theme.fontFamily};
@@ -12,8 +13,10 @@ const ReactotronContainer = styled.div`
 `
 
 const ReactotronAppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const colorScheme = useColorScheme()
+
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={themes[colorScheme]}>
       <ReactotronContainer>{children}</ReactotronContainer>
     </ThemeProvider>
   )
