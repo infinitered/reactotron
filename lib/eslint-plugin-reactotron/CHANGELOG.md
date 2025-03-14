@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.1.7](https://github.com/infinitered/reactotron/compare/eslint-plugin-reactotron@0.1.6...eslint-plugin-reactotron@0.1.7) (2025-03-01)
+
 ### [0.1.6](https://github.com/infinitered/reactotron/compare/eslint-plugin-reactotron@0.1.5...eslint-plugin-reactotron@0.1.6) (2025-01-07)
 
 

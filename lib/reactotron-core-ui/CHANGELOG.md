@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.5.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.4.0...reactotron-core-ui@2.5.0) (2025-03-13)
+
+
+### Features
+
+* **reactotron-app:** add auto light/dark mode switching ([#1547](https://github.com/infinitered/reactotron/issues/1547) by [@arkthur](https://github.com/arkthur)) ([6477628](https://github.com/infinitered/reactotron/commit/6477628979de4dc94a1086efdbbeef6b78cbf312))
+
 ## [2.4.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.6...reactotron-core-ui@2.4.0) (2025-01-28)
 
 

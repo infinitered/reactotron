@@ -1,5 +1,5 @@
 // Styles
-import theme from "./theme"
+import { themes } from "./themes"
 
 // Components
 import ActionButton from "./components/ActionButton"
@@ -57,7 +57,7 @@ export {
   StateContext,
   StateProvider,
   SubscriptionAddModal,
-  theme,
+  themes,
   TimelineCommand,
   timelineCommandResolver,
   TimelineCommandTabButton,
