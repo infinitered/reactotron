@@ -8,7 +8,7 @@ Unzip & run.
 
 ![Installing The App](./images/quick-start-react-js/installing.jpg)
 
-If you run into an [issue](https://github.com/infinitered/reactotron/issues/1140) opening the application on Mac you can install with Homebrew instead. 
+If you run into an [issue](https://github.com/infinitered/reactotron/issues/1140) opening the application on Mac you can install with Homebrew instead: `brew install reactotron`
 
 ## Configure Reactotron with your project
 
