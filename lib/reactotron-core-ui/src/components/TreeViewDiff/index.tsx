@@ -2,7 +2,8 @@ import React, { ReactElement, type ReactNode } from "react"
 import { JSONTree, type ValueRenderer } from "react-json-tree"
 import styled from "styled-components"
 
-import baseTheme from "../../theme"
+import useColorScheme from "../../hooks/useColorScheme"
+import { ReactotronTheme, themes } from "../../themes"
 import type { Difference } from "reactotron-core-contract"
 
 // TODO: Ripping this right from reactotron right now... should probably be better.
@@ -36,11 +37,11 @@ const NewValue = styled.span`
   color: ${(props) => props.theme.string};
 `
 
-const treeTheme = {
+const getTreeTheme = (baseTheme: ReactotronTheme) => ({
   tree: { backgroundColor: "transparent", marginTop: -3 },
   ...theme,
   base0B: baseTheme.foreground,
-}
+})
 
 interface Props {
   value?: Difference[]
@@ -48,6 +49,7 @@ interface Props {
 }
 
 export default function TreeViewDiff({ value, level = 1 }: Props): ReactElement | null {
+  const colorScheme = useColorScheme()
   if (value == null || value.length === 0) return null
 
   const mappedValues: Record<string, ReactNode> = value.reduce((acc, diff) => {
@@ -87,7 +89,7 @@ export default function TreeViewDiff({ value, level = 1 }: Props): ReactElement 
       data={treeData}
       hideRoot
       shouldExpandNodeInitially={(_keyName, _data, minLevel) => minLevel <= level}
-      theme={treeTheme}
+      theme={getTreeTheme(themes[colorScheme])}
       valueRenderer={valueRenderer}
     />
   )

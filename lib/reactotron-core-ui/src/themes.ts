@@ -26,6 +26,7 @@ interface ReactotronTheme {
   tag: string
   tagComplement: string
   warning: string
+  delete: string
 }
 
 const colorSchemes = ["dark", "light"] as const
@@ -62,6 +63,7 @@ const themes: Record<ColorScheme, ReactotronTheme> = {
     tag: "#cf6a4c",
     tagComplement: "hsl(13.699999999999989, 57.7%, 91.6%)",
     warning: "#9b703f",
+    delete: "rgb(239,135,131)",
   },
   light: {
     fontFamily:
@@ -92,6 +94,7 @@ const themes: Record<ColorScheme, ReactotronTheme> = {
     tag: "#d9484f",
     tagComplement: "hsl(13.7, 57.7%, 45%)",
     warning: "#b35900",
+    delete: "rgb(239,135,131)",
   },
 }
 
