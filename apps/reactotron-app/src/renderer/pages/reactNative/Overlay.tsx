@@ -3,7 +3,7 @@ import styled from "styled-components"
 import fs from "fs"
 import { nativeImage } from "electron"
 import { Header, ReactNativeContext } from "reactotron-core-ui"
-import { MdBook, MdCamera } from "react-icons/md"
+import { MdCamera } from "react-icons/md"
 
 import { OverlayAlignment } from "./components/OverlayAlignment"
 import { OverlayButton } from "./components/OverlayButton"
@@ -293,15 +293,6 @@ function Overlay() {
             isActive: true,
             // eslint-disable-next-line @typescript-eslint/no-empty-function
             onClick: () => {},
-          },
-          {
-            text: "Storybook",
-            icon: MdBook,
-            isActive: false,
-            onClick: () => {
-              // TODO: Couldn't get react-router-dom to do it for me so I forced it.
-              window.location.hash = "#/native/storybook"
-            },
           },
         ]}
       />

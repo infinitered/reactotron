@@ -11,7 +11,7 @@ The `networking` plugin is `reactotron-react-native` which allows you to track a
 To use the `networking` plugin, you need to add the additional plugin on the `import` line.
 
 ```js
-import Reactotron, { networking } from "reactotron-react-native";
+import Reactotron, { networking } from "reactotron-react-native"
 ```
 
 Next, add it as a plugin to Reactotron.
@@ -19,7 +19,7 @@ Next, add it as a plugin to Reactotron.
 ```js
 Reactotron.configure()
   .use(networking()) // <--- here we go!
-  .connect();
+  .connect()
 ```
 
 And you're done! Now you can see your XMLHttpRequests in Reactotron.
@@ -35,5 +35,5 @@ And you're done! Now you can see your XMLHttpRequests in Reactotron.
 networking({
   ignoreContentTypes: /^(image)\/.*$/i,
   ignoreUrls: /\/(logs|symbolicate)$/,
-});
+})
 ```

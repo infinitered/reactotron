@@ -22,13 +22,12 @@ export default function OverlayCreator() {
       features: {
         overlay:
           (WrappedComponent: React.ComponentType) =>
-          (props: Record<string, any> = {}) =>
-            (
-              <View style={{ flex: 1 }}>
-                <WrappedComponent {...props} />
-                <FullScreenOverlay emitter={emitter} />
-              </View>
-            ),
+          (props: Record<string, any> = {}) => (
+            <View style={{ flex: 1 }}>
+              <WrappedComponent {...props} />
+              <FullScreenOverlay emitter={emitter} />
+            </View>
+          ),
       },
     } satisfies Plugin<ReactotronCore>
   }

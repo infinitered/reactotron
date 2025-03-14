@@ -1,10 +1,9 @@
 ---
 name: File An Issue
 about: Report an issue with Reactotron
-title: ''
-labels: ''
-assignees: ''
-
+title: ""
+labels: ""
+assignees: ""
 ---
 
 If you have a general question, please ask it in the #reactotron channel of the

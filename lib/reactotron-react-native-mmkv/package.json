@@ -41,6 +41,8 @@
     "ci:test": "yarn test --runInBand"
   },
   "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-native": ">=0.59.0",
     "react-native-mmkv": "*",
     "reactotron-core-client": "*"
   },

@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       branch_to_delete:
-        description: 'Branch to delete'
+        description: "Branch to delete"
         required: true
       delete_after:
-        description: 'Delete after (ISO 8601 date)'
+        description: "Delete after (ISO 8601 date)"
         required: true
 
 jobs:
