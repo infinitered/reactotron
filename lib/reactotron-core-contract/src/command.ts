@@ -93,6 +93,7 @@ export interface Command<
   important: boolean
   messageId: number
   payload: Payload
+  diff?: any
 }
 
 export type CommandEvent = (command: Command) => void

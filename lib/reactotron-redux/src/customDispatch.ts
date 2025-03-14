@@ -1,9 +1,11 @@
+import diff from "microdiff"
+
 import { PluginConfig } from "./pluginConfig"
 
 export default function createCustomDispatch(
   reactotron: any,
   // eslint-disable-next-line @typescript-eslint/ban-types
-  store: { dispatch: Function },
+  store: { dispatch: Function; getState?: Function },
   pluginConfig: PluginConfig
 ) {
   const exceptions = [pluginConfig.restoreActionType, ...(pluginConfig.except || [])]
@@ -11,6 +13,9 @@ export default function createCustomDispatch(
   return (action: any) => {
     // start a timer
     const elapsed = reactotron.startTimer()
+
+    // save the state before the action is dispatched to be used on "diff"
+    const oldState = store?.getState?.()
 
     // call the original dispatch that actually does the real work
     const result = store.dispatch(action)
@@ -41,8 +46,8 @@ export default function createCustomDispatch(
       if (pluginConfig && typeof pluginConfig.isActionImportant === "function") {
         important = !!pluginConfig.isActionImportant(unwrappedAction)
       }
-
-      reactotron.reportReduxAction(unwrappedAction, ms, important)
+      const state = store?.getState?.()
+      reactotron.reportReduxAction(unwrappedAction, ms, important, diff(oldState, state))
     }
 
     return result
