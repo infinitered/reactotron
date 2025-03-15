@@ -32,7 +32,8 @@ export function filterSearch(commands: any[], search: string) {
 
   if (trimmedSearch === "") return [...commands]
 
-  const searchRegex = new RegExp(trimmedSearch.replace(/\s/, "."), "i")
+  const escapeRegex = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+  const searchRegex = new RegExp(escapeRegex(trimmedSearch).replace(/\s/, "."), "i")
 
   const matching = (value: string) => {
     if (!value) {
