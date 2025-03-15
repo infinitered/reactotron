@@ -1,5 +1,6 @@
 import { CommandType } from "reactotron-core-contract"
 import type { CommandTypeKey } from "reactotron-core-contract"
+import { escapeRegex } from "../escape-regex"
 
 function path(...searchPath) {
   return (obj) => {
@@ -32,7 +33,6 @@ export function filterSearch(commands: any[], search: string) {
 
   if (trimmedSearch === "") return [...commands]
 
-  const escapeRegex = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
   const searchRegex = new RegExp(escapeRegex(trimmedSearch).replace(/\s/, "."), "i")
 
   const matching = (value: string) => {
