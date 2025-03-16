@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.0](https://github.com/infinitered/reactotron/compare/reactotron-core-contract@0.2.5...reactotron-core-contract@0.3.0) (2025-03-16)
+
+
+### Features
+
+* **reactotron-app:** show redux diffs in timeline ([#1531](https://github.com/infinitered/reactotron/issues/1531) by [@camilossantos2809](https://github.com/camilossantos2809)) ([77831ae](https://github.com/infinitered/reactotron/commit/77831aeb928d0e63c8828b90efa17caeab67f699)), closes [#496](https://github.com/infinitered/reactotron/issues/496)
+
 ### [0.2.5](https://github.com/infinitered/reactotron/compare/reactotron-core-contract@0.2.4...reactotron-core-contract@0.2.5) (2025-01-07)
 
 
