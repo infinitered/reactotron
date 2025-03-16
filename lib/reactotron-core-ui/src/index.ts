@@ -14,6 +14,7 @@ import TimelineCommandTabButton from "./components/TimelineCommandTabButton"
 import Timestamp from "./components/Timestamp"
 import Tooltip from "./components/Tooltip"
 import TreeView from "./components/TreeView"
+import TreeViewDiff from "./components/TreeViewDiff"
 
 // Contexts
 import ReactotronContext, { ReactotronProvider } from "./contexts/Reactotron"
@@ -67,6 +68,7 @@ export {
   Timestamp,
   Tooltip,
   TreeView,
+  TreeViewDiff,
 }
 
 export type { CustomCommand } from "./contexts/CustomCommands/useCustomCommands"
