@@ -90,7 +90,13 @@ function Timeline() {
     setHiddenCommands,
   } = useContext(TimelineContext)
 
-  let filteredCommands = filterCommands(commands, search, hiddenCommands)
+  let filteredCommands
+  try {
+    filteredCommands = filterCommands(commands, search, hiddenCommands)
+  } catch (error) {
+    console.error(error)
+    filteredCommands = commands
+  }
 
   if (isReversed) {
     filteredCommands = filteredCommands.reverse()

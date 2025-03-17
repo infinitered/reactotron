@@ -10,6 +10,9 @@ const TEST_COMMANDS = [
   { type: "ADUMMYOBJ", payload: { triggerType: "SEARCHTRIGGERTYPE" } },
   { type: "ADUMMYOBJ", payload: { description: "SEARCHDESCRIPTION" } },
   { type: "ADUMMYOBJ", payload: { request: { url: "SEARCHURL" } } },
+  { type: "REGEX", payload: { message: "[1234] Log text" } },
+  { type: "REGEX", payload: { message: "123 Log text" } },
+  { type: "REGEX", payload: { message: "Log text (123)" } },
   { type: "log", payload: { debug: "LOGDEBUG" } },
   { type: "client.intro", payload: { connection: "SEARCHCONNECTION" } },
   {
@@ -188,6 +191,16 @@ const TESTS = [
         },
       },
     ],
+  },
+  {
+    name: "search that results in a invalid regex",
+    search: "[123",
+    result: [{ type: "REGEX", payload: { message: "[1234] Log text" } }],
+  },
+  {
+    name: "another search that results in a invalid regex",
+    search: "123)",
+    result: [{ type: "REGEX", payload: { message: "Log text (123)" } }],
   },
 ]
 
