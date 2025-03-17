@@ -2,6 +2,27 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [5.1.12](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.11...reactotron-react-native@5.1.12) (2025-01-07)
+
+
+### Bug Fixes
+
+* **package.json:** remove "react-native" export condition ([#1530](https://github.com/infinitered/reactotron/issues/1530)) ([47be69f](https://github.com/infinitered/reactotron/commit/47be69fae1e410a22907893a69474857a3e5a854))
+
+### [5.1.11](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.10...reactotron-react-native@5.1.11) (2024-12-23)
+
+
+### Bug Fixes
+
+* **reactotron-react-native:** only set DevMenu when in __DEV__ ([#1527](https://github.com/infinitered/reactotron/issues/1527) by [@frankcalise](https://github.com/frankcalise) and [@joshuayoes](https://github.com/joshuayoes)) ([5f692ac](https://github.com/infinitered/reactotron/commit/5f692ac953e73d131eaff6e403afc2211ace9ca2)), closes [#1513](https://github.com/infinitered/reactotron/issues/1513)
+
+### [5.1.10](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.9...reactotron-react-native@5.1.10) (2024-11-14)
+
+
+### Bug Fixes
+
+* Removing react-native-flipper ([#1524](https://github.com/infinitered/reactotron/issues/1524)) ([b1e7022](https://github.com/infinitered/reactotron/commit/b1e7022f8dab52896bc0f058bc877ae767bf1aee)), closes [#1333](https://github.com/infinitered/reactotron/issues/1333)
+
 ### [5.1.9](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.8...reactotron-react-native@5.1.9) (2024-10-04)
 
 

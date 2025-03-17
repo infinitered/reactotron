@@ -1,6 +1,6 @@
 {
   "name": "reactotron-core-ui",
-  "version": "2.3.5",
+  "version": "2.6.0",
   "description": "Core UI components for Reactotron",
   "author": "Infinite Red",
   "license": "MIT",
@@ -16,7 +16,6 @@
   "exports": {
     "import": "./dist/index.esm.js",
     "types": "./dist/types/src/index.d.ts",
-    "react-native": "./src/index.ts",
     "default": "./dist/index.js"
   },
   "scripts": {

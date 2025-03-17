@@ -3,7 +3,7 @@
  * free desktop app for inspecting and debugging your React Native app.
  * @see https://github.com/infinitered/reactotron
  */
-import { Platform } from "react-native"
+import { Platform, TurboModuleRegistry } from "react-native"
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { ArgType } from "reactotron-core-client"
@@ -17,16 +17,6 @@ import { goBack, resetRoot, navigate } from "app/navigators/navigationUtilities"
 
 import { Reactotron } from "./ReactotronClient"
 import { client } from "../stores/apollo" // <--- update this location
-
-let DevMenu = null
-/**
- * This Platform.OS iOS restriction can be lifted in React Native 0.77
- * The `DevMenu` module was missing in Android for the New Architecture
- * See this PR for more details: https://github.com/facebook/react-native/pull/46723
- */
-if (Platform.OS === "ios") {
-  DevMenu = require("react-native/Libraries/NativeModules/specs/NativeDevMenu")
-}
 
 const reactotron = Reactotron.configure({
   name: require("../../package.json").name,
@@ -67,6 +57,11 @@ if (Platform.OS !== "web") {
  * or else your custom commands won't be registered correctly.
  */
 
+/**
+ * This Platform.OS iOS restriction can be lifted in React Native 0.77
+ * The `DevMenu` module was missing in Android for the New Architecture
+ * See this PR for more details: https://github.com/facebook/react-native/pull/46723
+ */
 if (Platform.OS === "ios") {
   reactotron.onCustomCommand({
     title: "Show Dev Menu",
@@ -74,7 +69,7 @@ if (Platform.OS === "ios") {
     command: "showDevMenu",
     handler: () => {
       Reactotron.log("Showing React Native dev menu")
-      DevMenu.show()
+      TurboModuleRegistry.get<{ show: () => void; getConstants: () => {} }>("DevMenu")?.show()
     },
   })
 }

@@ -3,7 +3,8 @@ import { JSONTree } from "react-json-tree"
 import type { ValueRenderer } from "react-json-tree"
 import styled from "styled-components"
 
-import baseTheme from "../../theme"
+import useColorScheme from "../../hooks/useColorScheme"
+import { ReactotronTheme, themes } from "../../themes"
 
 // TODO: Ripping this right from reactotron right now... should probably be better.
 const theme = {
@@ -33,11 +34,11 @@ const MutedContainer = styled.span`
 
 const SpanContainer = styled.span``
 
-const treeTheme = {
+const getTreeTheme = (baseTheme: ReactotronTheme) => ({
   tree: { backgroundColor: "transparent", marginTop: -3 },
   ...theme,
   base0B: baseTheme.foreground,
-}
+})
 
 interface Props {
   // value: object
@@ -48,6 +49,7 @@ interface Props {
 }
 
 export default function TreeView({ value, valueRenderer, level = 1, expand = false }: Props) {
+  const colorScheme = useColorScheme()
   const renderer = (transformed: any, untransformed: any, ...keyPath: any) => {
     if (valueRenderer) {
       return valueRenderer(transformed, untransformed, ...keyPath)
@@ -61,7 +63,7 @@ export default function TreeView({ value, valueRenderer, level = 1, expand = fal
       data={value}
       hideRoot
       shouldExpandNodeInitially={(keyName, data, minLevel) => expand || minLevel <= level}
-      theme={treeTheme}
+      theme={getTreeTheme(themes[colorScheme])}
       getItemString={(type, data, itemType, itemString) => {
         // when it's an object, display {}
         if (type === "Object") {

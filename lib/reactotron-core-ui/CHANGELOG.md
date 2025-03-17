@@ -2,6 +2,34 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.6.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.5.0...reactotron-core-ui@2.6.0) (2025-03-16)
+
+
+### Features
+
+* **reactotron-app:** show redux diffs in timeline ([#1531](https://github.com/infinitered/reactotron/issues/1531) by [@camilossantos2809](https://github.com/camilossantos2809)) ([77831ae](https://github.com/infinitered/reactotron/commit/77831aeb928d0e63c8828b90efa17caeab67f699)), closes [#496](https://github.com/infinitered/reactotron/issues/496)
+
+## [2.5.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.4.0...reactotron-core-ui@2.5.0) (2025-03-13)
+
+
+### Features
+
+* **reactotron-app:** add auto light/dark mode switching ([#1547](https://github.com/infinitered/reactotron/issues/1547) by [@arkthur](https://github.com/arkthur)) ([6477628](https://github.com/infinitered/reactotron/commit/6477628979de4dc94a1086efdbbeef6b78cbf312))
+
+## [2.4.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.6...reactotron-core-ui@2.4.0) (2025-01-28)
+
+
+### Features
+
+* show graphql operation name for graphql requests ([#1521](https://github.com/infinitered/reactotron/issues/1521) by [@yurik256](https://github.com/yurik256)) ([21b9759](https://github.com/infinitered/reactotron/commit/21b9759e03f893961e7eca5514b0cbc6b08941f9))
+
+### [2.3.6](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.5...reactotron-core-ui@2.3.6) (2025-01-07)
+
+
+### Bug Fixes
+
+* **package.json:** remove "react-native" export condition ([#1530](https://github.com/infinitered/reactotron/issues/1530)) ([47be69f](https://github.com/infinitered/reactotron/commit/47be69fae1e410a22907893a69474857a3e5a854))
+
 ### [2.3.5](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.3.4...reactotron-core-ui@2.3.5) (2024-11-04)
 
 

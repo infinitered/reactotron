@@ -98,7 +98,7 @@ export function reducer(state: State, action: Action) {
           )
         }
 
-        // TODO: Figure out if we can stop having these dumb commands so early. Make core client only send once we actually have a client ID! (maybe won't work for flipper if it doesn't assign client id? Maybe that is how this broke?!?)
+        // TODO: Figure out if we can stop having these dumb commands so early. Make core client only send once we actually have a client ID!
 
         const filteredConnections = draftState.connections.filter((c) => c.connected)
 

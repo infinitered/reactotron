@@ -58,16 +58,25 @@ ReactotronConfig, you'll need to add `reactotron-redux` as plugin
 + export default reactotron // also: export me so I can be referenced by Redux store
 ```
 
-Then, add enhancer from `Reactotron.createEnhancer()`
+Next, we'll add the enhancer from `Reactotron.createEnhancer()` in development.
 
 ## Using Redux-Toolkit configureStore
 
-Using [Redux-Toolkit's `configureStore`](https://redux-toolkit.js.org/api/configureStore), add as an `enhancer`.
+Using [Redux-Toolkit's `configureStore`](https://redux-toolkit.js.org/api/configureStore), add the `enhancers` key.
 
-```
+```tsx
+const createEnhancers = (getDefaultEnhancers: GetDefaultEnhancers<any>) => {
+  if (__DEV__) {
+    const reactotron = require("../devtools/ReactotronConfig").default
+    return getDefaultEnhancers().concat(reactotron.createEnhancer())
+  } else {
+    return getDefaultEnhancers()
+  }
+}
+
 export const store = configureStore({
   reducer: persistedReducer,
-  enhancers: __DEV__ ? [reactotron.createEnhancer!()] : [],
+  enhancers: createEnhancers,
 })
 ```
 

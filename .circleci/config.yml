@@ -12,7 +12,6 @@ parameters:
 # Anchors define reusable sections of YAML
 # See: https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/
 anchors:
-
   ### Executors
   node_executor: &node_executor
     name: node/default
@@ -44,7 +43,6 @@ anchors:
     target_docs_dir: docs
     target_repo: git@github.com:infinitered/ir-docs.git
     target_repo_directory: ir-docs
-
 
 orbs:
   node: circleci/node@5.2.0
@@ -283,7 +281,7 @@ jobs:
     executor: *node_executor
     <<: *defaults
     docker:
-      - image: electronuserland/builder:20-wine
+      - image: electronuserland/builder:20-wine-07.24
     resource_class: large
     environment:
       BUILD_TARGET: windows
@@ -355,7 +353,7 @@ workflows:
     when:
       and:
         - not: << pipeline.parameters.force-publish-docs >>
-        - true  # Placeholder for correct YAML structure
+        - true # Placeholder for correct YAML structure
     jobs:
       - trust_check:
           filters:
@@ -387,7 +385,7 @@ workflows:
     when:
       and:
         - not: << pipeline.parameters.force-publish-docs >>
-        - true  # Placeholder for correct YAML structure
+        - true # Placeholder for correct YAML structure
     jobs:
       - build_and_test:
           filters:

@@ -1,5 +1,6 @@
 import { CommandType } from "reactotron-core-contract"
 import type { CommandTypeKey } from "reactotron-core-contract"
+import { escapeRegex } from "../escape-regex"
 
 function path(...searchPath) {
   return (obj) => {
@@ -24,6 +25,7 @@ const COMMON_MATCHING_PATHS = [
   path("payload", "triggerType"),
   path("payload", "description"),
   path("payload", "request", "url"),
+  path("payload", "request", "data"),
 ]
 
 export function filterSearch(commands: any[], search: string) {
@@ -31,7 +33,7 @@ export function filterSearch(commands: any[], search: string) {
 
   if (trimmedSearch === "") return [...commands]
 
-  const searchRegex = new RegExp(trimmedSearch.replace(/\s/, "."), "i")
+  const searchRegex = new RegExp(escapeRegex(trimmedSearch).replace(/\s/, "."), "i")
 
   const matching = (value: string) => {
     if (!value) {
