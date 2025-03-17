@@ -5,7 +5,6 @@ import {
   ReactotronContext,
   TreeView,
   ApolloClientContext,
-  theme,
   Checkbox,
   Tooltip,
   ApolloUpdateCacheValueModal,
