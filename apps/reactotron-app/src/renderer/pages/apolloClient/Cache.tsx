@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect } from "react"
-import styled from "styled-components"
+import styled, { useTheme } from "styled-components"
 import {
   Header,
   ReactotronContext,
@@ -157,7 +157,7 @@ const HighlightText = ({ text, searchTerm }) => {
 }
 
 function Cache() {
-  // This could go to the context? but we grab it on mount
+  const theme = useTheme()
 
   const { sendCommand } = React.useContext(ReactotronContext)
   const {
