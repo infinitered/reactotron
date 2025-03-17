@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.6.1](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.6.0...reactotron-core-ui@2.6.1) (2025-03-17)
+
+
+### Bug Fixes
+
+* **reactotron-app:** fix unescaped regex symbols crash ([#1550](https://github.com/infinitered/reactotron/issues/1550) by [@camilossantos2809](https://github.com/camilossantos2809)) ([0ecaa1d](https://github.com/infinitered/reactotron/commit/0ecaa1dd0c89afa869bc80c05fd21356562bfc7b)), closes [#1541](https://github.com/infinitered/reactotron/issues/1541)
+
 ## [2.6.0](https://github.com/infinitered/reactotron/compare/reactotron-core-ui@2.5.0...reactotron-core-ui@2.6.0) (2025-03-16)
 
 
