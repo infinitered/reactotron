@@ -14,7 +14,8 @@ test("plugins support onDisconnect", (done) => {
   createClosingServer(port)
 
   // this plugin supports onDisconnect
-  const plugin = () => ({ onDisconnect: done }) satisfies Plugin<ReactotronCore>
+  const plugin = () =>
+    ({ name: "test-plugin", onDisconnect: done }) satisfies Plugin<ReactotronCore>
 
   // create a client & add the plugin
   createClient({ createSocket, port, plugins: [plugin] }).connect()

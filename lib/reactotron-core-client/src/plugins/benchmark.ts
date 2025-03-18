@@ -23,6 +23,7 @@ const benchmark = () => (reactotron: ReactotronCore) => {
   }
 
   return {
+    name: "benchmark",
     features: { benchmark },
   } satisfies Plugin<ReactotronCore>
 }

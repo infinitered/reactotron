@@ -72,6 +72,12 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = function WelcomeScree
               navigation.navigate("Redux")
             }}
           />
+          <ListItem
+            text="Apollo Client"
+            onPress={() => {
+              navigation.navigate("Apollo")
+            }}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
