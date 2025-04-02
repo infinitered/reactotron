@@ -114,18 +114,14 @@ function Timeline() {
   }
 
   function downloadLog() {
-    if (commands.length > 0) {
-      const homeDir = os.homedir()
-      const downloadDir = path.join(homeDir, "Downloads")
-      fs.writeFileSync(
-        path.resolve(downloadDir, `timeline-log-${Date.now()}.json`),
-        JSON.stringify(commands),
-        "utf8"
-      )
-      console.log(`Exported timeline log to ${downloadDir}`)
-    } else {
-      console.error("There is nothing to export.")
-    }
+    const homeDir = os.homedir()
+    const downloadDir = path.join(homeDir, "Downloads")
+    fs.writeFileSync(
+      path.resolve(downloadDir, `timeline-log-${Date.now()}.json`),
+      JSON.stringify(commands || []),
+      "utf8"
+    )
+    console.log(`Exported timeline log to ${downloadDir}`)
   }
 
   const { searchString, handleInputChange } = useDebouncedSearchInput(search, setSearch, 300)
