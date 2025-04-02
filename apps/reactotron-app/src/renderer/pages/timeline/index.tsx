@@ -1,6 +1,8 @@
 import React, { useCallback, useContext, useMemo } from "react"
 import { clipboard, shell } from "electron"
 import fs from "fs"
+import os from "os"
+import path from "path"
 import debounce from "lodash.debounce"
 import {
   Header,
@@ -12,7 +14,14 @@ import {
   TimelineContext,
   RandomJoke,
 } from "reactotron-core-ui"
-import { MdSearch, MdDeleteSweep, MdFilterList, MdSwapVert, MdReorder } from "react-icons/md"
+import {
+  MdSearch,
+  MdDeleteSweep,
+  MdFilterList,
+  MdSwapVert,
+  MdReorder,
+  MdDownload,
+} from "react-icons/md"
 import { FaTimes } from "react-icons/fa"
 import styled from "styled-components"
 
@@ -110,6 +119,17 @@ function Timeline() {
     shell.openExternal("https://docs.infinite.red/reactotron/quick-start/react-native/")
   }
 
+  function downloadLog() {
+    const homeDir = os.homedir()
+    const downloadDir = path.join(homeDir, "Downloads")
+    fs.writeFileSync(
+      path.resolve(downloadDir, `timeline-log-${Date.now()}.json`),
+      JSON.stringify(commands || []),
+      "utf8"
+    )
+    console.log(`Exported timeline log to ${downloadDir}`)
+  }
+
   const { searchString, handleInputChange } = useDebouncedSearchInput(search, setSearch, 300)
 
   return (
@@ -118,6 +138,13 @@ function Timeline() {
         title="Timeline"
         isDraggable
         actions={[
+          {
+            tip: "Export Log",
+            icon: MdDownload,
+            onClick: () => {
+              downloadLog()
+            },
+          },
           {
             tip: "Search",
             icon: MdSearch,
