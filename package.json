@@ -54,7 +54,7 @@
     "webpack": "patch:webpack@npm%3A4.47.0#./.yarn/patches/webpack-npm-4.47.0-42e477a08c.patch"
   },
   "scripts": {
-    "postinstall": "sh ./scripts/postinstall.sh",
+    "22postinstall22": "sh ./scripts/postinstall.sh",
     "clean": "sh ./scripts/clean.sh",
     "reset": "sh ./scripts/reset.sh",
     "start": "yarn workspace reactotron-app start",
