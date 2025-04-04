@@ -16,6 +16,7 @@ import {
   Header,
   SnapshotRenameModal,
   StateContext,
+  Tooltip,
 } from "reactotron-core-ui"
 import styled from "styled-components"
 
@@ -78,36 +79,48 @@ function SnapshotItem({
       >
         <SnapshotName>{snapshot.name}</SnapshotName>
         <SnapshotAction
+          data-tip="Copy to clipboard"
+          data-for="copy-to-clipboard"
           onClick={(e) => {
             e.stopPropagation()
             clipboard.writeText(JSON.stringify(snapshot))
           }}
         >
           <MdCallReceived size={24} />
+          <Tooltip id="copy-to-clipboard" />
         </SnapshotAction>
         <SnapshotAction
+          data-tip="Restore Snapshot"
+          data-for="restore-snapshot"
           onClick={(e) => {
             e.stopPropagation()
             restoreSnapshot(snapshot)
           }}
         >
           <MdFileUpload size={24} />
+          <Tooltip id="restore-snapshot" />
         </SnapshotAction>
         <SnapshotAction
+          data-tip="Rename Snapshot"
+          data-for="rename-snapshot"
           onClick={(e) => {
             e.stopPropagation()
             openSnapshotRenameModal(snapshot)
           }}
         >
           <MdCreate size={24} />
+          <Tooltip id="rename-snapshot" />
         </SnapshotAction>
         <SnapshotAction
+          data-tip="Delete Snapshot"
+          data-for="delete-snapshot"
           onClick={(e) => {
             e.stopPropagation()
             removeSnapshot(snapshot)
           }}
         >
           <MdDelete size={24} />
+          <Tooltip id="delete-snapshot" />
         </SnapshotAction>
       </SnapshotDetailRow>
       {isOpen && (

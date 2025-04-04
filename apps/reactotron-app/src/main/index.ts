@@ -28,10 +28,13 @@ function createMainWindow() {
   })
 
   const window = new BrowserWindow({
+    title: "Reactotron",
     x: mainWindowState.x,
     y: mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
+    minWidth: 800,
+    minHeight: 700,
     titleBarStyle: "hiddenInset",
     webPreferences: {
       nodeIntegration: true,

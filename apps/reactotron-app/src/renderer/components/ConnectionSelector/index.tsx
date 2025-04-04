@@ -2,8 +2,13 @@ import React, { useMemo } from "react"
 import { MdCheckCircle as Checkmark } from "react-icons/md"
 import styled from "rn-css"
 
+import {
+  getIcon,
+  getPlatformName,
+  getPlatformDetails,
+  getConnectionName,
+} from "../../util/connectionHelpers"
 import { Connection } from "../../contexts/Standalone/useStandalone"
-import { getIcon, getPlatformDetails, getPlatformName } from "../../util/connectionHelpers"
 
 const Container = styled.View`
   display: flex;
@@ -32,20 +37,23 @@ const InfoContainer = styled.View`
 interface ConnectionSelectorProps {
   selectedConnection: Connection | null
   connection: Connection
-  showName: boolean
   onClick: () => void
 }
 
 export default function ConnectionSelector({
   selectedConnection,
   connection,
-  showName,
   onClick,
 }: ConnectionSelectorProps) {
   const isSelected = selectedConnection && selectedConnection.clientId === connection.clientId
 
-  const [ConnectionIcon, platformName, platformDetails] = useMemo(() => {
-    return [getIcon(connection), getPlatformName(connection), getPlatformDetails(connection)]
+  const [ConnectionIcon, platformName, platformDetails, connectionName] = useMemo(() => {
+    return [
+      getIcon(connection),
+      getPlatformName(connection),
+      getPlatformDetails(connection),
+      getConnectionName(connection),
+    ]
   }, [connection])
 
   return (
@@ -59,11 +67,10 @@ export default function ConnectionSelector({
         )}
       </IconContainer>
       <InfoContainer>
+        <div>{connectionName}</div>
         <div>
-          {platformName}
-          {showName ? ` - ${connection.name}` : ""}
+          {platformName} {platformDetails}
         </div>
-        <div>{platformDetails}</div>
       </InfoContainer>
     </Container>
   )

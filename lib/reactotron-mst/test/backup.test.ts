@@ -1,4 +1,3 @@
-import td from "testdouble"
 import { TestUserModel, commandMetadataFixture, createMstPlugin } from "./fixtures"
 import type { Command } from "reactotron-core-contract"
 
@@ -20,9 +19,10 @@ describe("backup", () => {
     track(user)
     plugin.onCommand(INBOUND)
 
-    const send = td.explain(reactotron.send)
-    expect(send.callCount).toEqual(1)
-    const [type, payload] = send.calls[0].args
+    const send = reactotron.send
+
+    expect(send).toHaveBeenCalledTimes(1)
+    const [type, payload] = send.mock.calls[0]
     expect(type).toEqual(OUTBOUND.type)
     expect(payload).toEqual({ state: { age: 100, name: "" } })
   })
@@ -31,6 +31,6 @@ describe("backup", () => {
     const { reactotron, plugin } = createMstPlugin()
     plugin.onCommand(OUTBOUND)
 
-    expect(td.explain(reactotron.send).callCount).toEqual(0)
+    expect(reactotron.send).toHaveBeenCalledTimes(0)
   })
 })

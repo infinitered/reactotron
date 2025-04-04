@@ -1,7 +1,11 @@
-import { clipboard } from "electron"
+import React, { useCallback, useContext, useMemo } from "react"
+import { clipboard, shell } from "electron"
 import fs from "fs"
 import React, { useContext } from "react"
 import { MdDeleteSweep, MdFilterList, MdReorder, MdSearch, MdSwapVert } from "react-icons/md"
+import os from "os"
+import path from "path"
+import debounce from "lodash.debounce"
 import {
   EmptyState,
   Header,
@@ -10,20 +14,28 @@ import {
   TimelineFilterModal,
   filterCommands,
   timelineCommandResolver,
+  RandomJoke,
 } from "reactotron-core-ui"
-import styled from "rn-css"
+import {
+  MdSearch,
+  MdDeleteSweep,
+  MdFilterList,
+  MdSwapVert,
+  MdReorder,
+  MdDownload,
+} from "react-icons/md"
+import { FaTimes } from "react-icons/fa"
+import styled from "styled-components"
 
 const Container = styled.View`
   flex-direction: column;
   width: 100%;
 `
-
 const TimelineContainer = styled.View`
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 `
-
 const SearchContainer = styled.View`
   align-items: center;
   flex-direction: row;
@@ -45,12 +57,63 @@ const SearchInput = styled.TextInput`
   font-size: 14px;
   padding: 10px;
 `
+const HelpMessage = styled.div`
+  margin: 0 40px;
+`
+const QuickStartButtonContainer = styled.div`
+  display: flex;
+  padding: 4px 8px;
+  margin: 30px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: ${(props) => props.theme.backgroundLighter};
+  color: ${(props) => props.theme.foreground};
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`
+const Divider = styled.div`
+  height: 1px;
+  background-color: ${(props) => props.theme.foregroundDark};
+  margin: 40px 10px;
+`
+
+export const ButtonContainer = styled.div`
+  padding: 10px;
+  cursor: pointer;
+`
+const HelpMessage = styled.div`
+  margin: 0 40px;
+`
+const QuickStartButtonContainer = styled.div`
+  display: flex;
+  padding: 4px 8px;
+  margin: 30px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: ${(props) => props.theme.backgroundLighter};
+  color: ${(props) => props.theme.foreground};
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`
+const Divider = styled.div`
+  height: 1px;
+  background-color: ${(props) => props.theme.foregroundDark};
+  margin: 40px 10px;
+`
+
+export const ButtonContainer = styled.div`
+  padding: 10px;
+  cursor: pointer;
+`
 
 function Timeline() {
   const { sendCommand, clearCommands, commands, openDispatchModal } = useContext(ReactotronContext)
   const {
     isSearchOpen,
     toggleSearch,
+    closeSearch,
     setSearch,
     search,
     isReversed,
@@ -62,7 +125,13 @@ function Timeline() {
     setHiddenCommands,
   } = useContext(TimelineContext)
 
-  let filteredCommands = filterCommands(commands, search, hiddenCommands)
+  let filteredCommands
+  try {
+    filteredCommands = filterCommands(commands, search, hiddenCommands)
+  } catch (error) {
+    console.error(error)
+    filteredCommands = commands
+  }
 
   if (isReversed) {
     filteredCommands = filteredCommands.reverse()
@@ -72,12 +141,36 @@ function Timeline() {
     sendCommand("state.action.dispatch", { action })
   }
 
+  function openDocs() {
+    shell.openExternal("https://docs.infinite.red/reactotron/quick-start/react-native/")
+  }
+
+  function downloadLog() {
+    const homeDir = os.homedir()
+    const downloadDir = path.join(homeDir, "Downloads")
+    fs.writeFileSync(
+      path.resolve(downloadDir, `timeline-log-${Date.now()}.json`),
+      JSON.stringify(commands || []),
+      "utf8"
+    )
+    console.log(`Exported timeline log to ${downloadDir}`)
+  }
+
+  const { searchString, handleInputChange } = useDebouncedSearchInput(search, setSearch, 300)
+
   return (
     <Container>
       <Header
         title="Timeline"
         isDraggable
         actions={[
+          {
+            tip: "Export Log",
+            icon: MdDownload,
+            onClick: () => {
+              downloadLog()
+            },
+          },
           {
             tip: "Search",
             icon: MdSearch,
@@ -111,14 +204,32 @@ function Timeline() {
         {isSearchOpen && (
           <SearchContainer>
             <SearchLabel>Search</SearchLabel>
-            <SearchInput value={search} onChange={(e) => setSearch(e.target.value)} />
+            <SearchInput autoFocus value={searchString} onChange={handleInputChange} />
+            <ButtonContainer
+              onClick={() => {
+                if (search === "") {
+                  closeSearch()
+                } else {
+                  setSearch("")
+                }
+              }}
+            >
+              <FaTimes size={24} />
+            </ButtonContainer>
           </SearchContainer>
         )}
       </Header>
       <TimelineContainer>
         {filteredCommands.length === 0 ? (
           <EmptyState icon={MdReorder} title="No Activity">
-            Once your app connects and starts sending events, they will appear here.
+            <HelpMessage>
+              Once your app connects and starts sending events, they will appear here.
+            </HelpMessage>
+            <QuickStartButtonContainer onClick={openDocs}>
+              Check out the quick start guide here!
+            </QuickStartButtonContainer>
+            <Divider />
+            <RandomJoke />
           </EmptyState>
         ) : (
           filteredCommands.map((command) => {
@@ -162,3 +273,26 @@ function Timeline() {
 }
 
 export default Timeline
+
+const useDebouncedSearchInput = (
+  initialValue: string,
+  setSearch: (search: string) => void,
+  delay: number = 300
+) => {
+  const [searchString, setSearchString] = React.useState<string>(initialValue)
+  const debouncedOnChange = useMemo(() => debounce(setSearch, delay), [delay, setSearch])
+
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target
+      setSearchString(value)
+      debouncedOnChange(value)
+    },
+    [debouncedOnChange]
+  )
+
+  return {
+    searchString,
+    handleInputChange,
+  }
+}

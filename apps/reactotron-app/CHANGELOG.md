@@ -2,6 +2,121 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.7.8](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.7...reactotron-app@3.7.8) (2025-03-17)
+
+
+### Bug Fixes
+
+* **reactotron-app:** fix unescaped regex symbols crash ([#1550](https://github.com/infinitered/reactotron/issues/1550) by [@camilossantos2809](https://github.com/camilossantos2809)) ([0ecaa1d](https://github.com/infinitered/reactotron/commit/0ecaa1dd0c89afa869bc80c05fd21356562bfc7b)), closes [#1541](https://github.com/infinitered/reactotron/issues/1541)
+
+### [3.7.7](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.6...reactotron-app@3.7.7) (2025-03-01)
+
+### [3.7.6](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.5...reactotron-app@3.7.6) (2025-02-12)
+
+### [3.7.5](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.4...reactotron-app@3.7.5) (2025-02-03)
+
+### [3.7.4](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.3...reactotron-app@3.7.4) (2024-11-14)
+
+
+### Bug Fixes
+
+* Removing react-native-flipper ([#1524](https://github.com/infinitered/reactotron/issues/1524)) ([b1e7022](https://github.com/infinitered/reactotron/commit/b1e7022f8dab52896bc0f058bc877ae767bf1aee)), closes [#1333](https://github.com/infinitered/reactotron/issues/1333)
+
+### [3.7.3](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.2...reactotron-app@3.7.3) (2024-10-17)
+
+
+### Bug Fixes
+
+* **reactotron-app:** proper separators in view menu ([#1492](https://github.com/infinitered/reactotron/issues/1492) by @DIntriglia) ([39893d8](https://github.com/infinitered/reactotron/commit/39893d8f6ed8b614e83a414325233bf752074dbb))
+* **reactotron-app:** Timeline empty state improvements ([#1395](https://github.com/infinitered/reactotron/issues/1395) by [@carlinisaacson](https://github.com/carlinisaacson)) ([f1472d7](https://github.com/infinitered/reactotron/commit/f1472d7863e9640efa74203608769b14b641deec))
+
+### [3.7.2](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.1...reactotron-app@3.7.2) (2024-08-26)
+
+### [3.7.1](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.0...reactotron-app@3.7.1) (2024-04-04)
+
+## [3.7.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.6.2...reactotron-app@3.7.0) (2024-02-16)
+
+
+### Features
+
+* **reactotron-app:** Timeline deep-search ([#1417](https://github.com/infinitered/reactotron/issues/1417)) ([8d0e952](https://github.com/infinitered/reactotron/commit/8d0e9525ac30e895f38a0c2f99eeda155c14527f)), closes [#1181](https://github.com/infinitered/reactotron/issues/1181)
+
+### [3.6.2](https://github.com/infinitered/reactotron/compare/reactotron-app@3.6.1...reactotron-app@3.6.2) (2024-02-14)
+
+## [3.6.1](https://github.com/infinitered/reactotron/compare/reactotron-app@3.6.0...reactotron-app@3.6.1) (2024-02-14)
+
+
+### Bug Fixes
+
+* **reactotron-app:** added min width and height of electron window ([#1429](https://github.com/infinitered/reactotron/issues/1429)) ([a4467a2](https://github.com/infinitered/reactotron/commit/a4467a2d42a0532627d946578101379fe827436c))
+
+## [3.6.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.5.1...reactotron-app@3.6.0) (2024-02-14)
+
+
+### Features
+
+* **example-app:** Add a LOT of functionality to the demo app ([#1424](https://github.com/infinitered/reactotron/issues/1424)) [skip ci] ([41a539c](https://github.com/infinitered/reactotron/commit/41a539c7e56e968a83ca61b100468f5267865ddd))
+* **reactotron-app:** Added Electron BrowserWindow title for Linux users ([#1425](https://github.com/infinitered/reactotron/issues/1425)) ([726f255](https://github.com/infinitered/reactotron/commit/726f255412322598717f59f10d73ea7b4279f467))
+
+### [3.5.1](https://github.com/infinitered/reactotron/compare/reactotron-app@3.5.0...reactotron-app@3.5.1) (2024-01-25)
+
+## [3.5.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.4.0...reactotron-app@3.5.0) (2024-01-24)
+
+
+### Features
+
+* **reactotron-app:** Close the timeline search on 2nd “X” press ([#1418](https://github.com/infinitered/reactotron/issues/1418)) ([8e97074](https://github.com/infinitered/reactotron/commit/8e970743f50a54c6d3b411024e929b9a33dbcbe2)), closes [#1394](https://github.com/infinitered/reactotron/issues/1394)
+
+## [3.4.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.3.1...reactotron-app@3.4.0) (2024-01-24)
+
+
+### Features
+
+* **reactotron-app:** Adds tooltips to state snapshot item commands. ([#1386](https://github.com/infinitered/reactotron/issues/1386)) ([96891ac](https://github.com/infinitered/reactotron/commit/96891ac1ef94b63e0e5b292da3b5ddaa0e87e363))
+
+### [3.3.1](https://github.com/infinitered/reactotron/compare/reactotron-app@3.3.0...reactotron-app@3.3.1) (2024-01-23)
+
+## [3.3.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.2.0...reactotron-app@3.3.0) (2024-01-17)
+
+
+### Features
+
+* make home screen default route when app starts up ([#1393](https://github.com/infinitered/reactotron/issues/1393)) ([b78afb8](https://github.com/infinitered/reactotron/commit/b78afb89ba8e5e4805f07c7bc4dd6d9e3dd9e989))
+
+## [3.2.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.4...reactotron-app@3.2.0) (2024-01-15)
+
+
+### Features
+
+* **reactotron-app:** Move android devices from Help to Home ([#1396](https://github.com/infinitered/reactotron/issues/1396)) ([e7547c6](https://github.com/infinitered/reactotron/commit/e7547c6f36789e089bc2cfe1964e413268be2d05))
+
+### [3.1.4](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.3...reactotron-app@3.1.4) (2023-12-22)
+
+
+### Features
+
+* Zoom font size with cmd+ and cmd- ([#1361](https://github.com/infinitered/reactotron/issues/1361)) ([51658ac](https://github.com/infinitered/reactotron/commit/51658ac8447acb56b7bbb0f64f14ebc59c21bae4))
+
+### [3.1.3](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.2...reactotron-app@3.1.3) (2023-12-19)
+
+### [3.1.2](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.1...reactotron-app@3.1.2) (2023-12-19)
+
+
+### Bug Fixes
+
+* **app:** docs link ([#1372](https://github.com/infinitered/reactotron/issues/1372) by [@frankcalise](https://github.com/frankcalise)) ([f3c75a6](https://github.com/infinitered/reactotron/commit/f3c75a6d6e7d5b8098987c09a28e5f0d9720b352))
+
+### [3.1.1](https://github.com/infinitered/reactotron/compare/reactotron-app@3.1.0...reactotron-app@3.1.1) (2023-12-13)
+
+## [3.1.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0...reactotron-app@3.1.0) (2023-12-08)
+
+
+### Features
+
+* **ui:** Display error if port is already in use ([#1335](https://github.com/infinitered/reactotron/issues/1335) by [@jamonholmgren](https://github.com/jamonholmgren)) ([e205e37](https://github.com/infinitered/reactotron/commit/e205e3704b5378b1807d781f7ba5ba3338dc7ff7))
+
+## [3.0.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.39...reactotron-app@3.0.0) (2023-12-05)
+
 ## [3.0.0-beta.39](https://github.com/infinitered/reactotron/compare/reactotron-app@3.0.0-beta.38...reactotron-app@3.0.0-beta.39) (2023-12-05)
 
 

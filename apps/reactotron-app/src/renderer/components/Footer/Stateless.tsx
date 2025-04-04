@@ -4,8 +4,12 @@ import { Pressable } from "react-native"
 import styled from "rn-css"
 
 import config from "../../config"
-import { Connection } from "../../contexts/Standalone/useStandalone"
-import { getPlatformDetails, getPlatformName } from "../../util/connectionHelpers"
+import {
+  getPlatformName,
+  getPlatformDetails,
+  getConnectionName,
+} from "../../util/connectionHelpers"
+import { Connection, ServerStatus } from "../../contexts/Standalone/useStandalone"
 import ConnectionSelector from "../ConnectionSelector"
 
 const Container = styled.View`
@@ -43,17 +47,12 @@ const ExpandContainer = styled(Pressable)`
   cursor: pointer;
 `
 
-function renderDeviceName(connection: Connection) {
-  return `${getPlatformName(connection)} ${getPlatformDetails(connection)}`
-}
-
 function renderExpanded(
+  serverStatus: ServerStatus,
   connections: Connection[],
   selectedConnection: Connection | null,
   onChangeConnection: (clientId: string | null) => void
 ) {
-  const showName = connections && connections.some((c) => c.name !== connections[0].name)
-
   return (
     <ConnectionContainer>
       {connections.map((c) => (
@@ -61,7 +60,6 @@ function renderExpanded(
           key={c.id}
           selectedConnection={selectedConnection}
           connection={c}
-          showName={showName}
           onClick={() => onChangeConnection(c.clientId)}
         />
       ))}
@@ -69,21 +67,37 @@ function renderExpanded(
   )
 }
 
-function renderCollapsed(connections: Connection[], selectedConnection: Connection | null) {
+function renderConnectionInfo(selectedConnection) {
+  return selectedConnection
+    ? `${getConnectionName(selectedConnection)} | ${getPlatformName(
+        selectedConnection
+      )} ${getPlatformDetails(selectedConnection)}`
+    : "Waiting for connection"
+}
+
+function renderCollapsed(
+  serverStatus: ServerStatus,
+  connections: Connection[],
+  selectedConnection: Connection | null
+) {
   return (
     <>
       <ConnectionInfo>
-        port {config.get("serverPort") as string} | {connections.length} connections
+        port {config.get("serverPort")} | {connections.length} connections
       </ConnectionInfo>
-      <ConnectionInfo>
-        device:{" "}
-        {selectedConnection ? renderDeviceName(selectedConnection) : "Waiting for connection"}
-      </ConnectionInfo>
+      {serverStatus === "portUnavailable" && (
+        <ConnectionInfo>Port 9090 unavailable.</ConnectionInfo>
+      )}
+      {serverStatus === "started" && (
+        <ConnectionInfo>{renderConnectionInfo(selectedConnection)}</ConnectionInfo>
+      )}
+      {serverStatus === "stopped" && <ConnectionInfo>Waiting for server to start</ConnectionInfo>}
     </>
   )
 }
 
 interface Props {
+  serverStatus: ServerStatus
   connections: Connection[]
   selectedConnection: Connection | null
   isOpen: boolean
@@ -91,13 +105,20 @@ interface Props {
   onChangeConnection: (clientId: string | null) => void
 }
 
-function Header({ connections, selectedConnection, isOpen, setIsOpen, onChangeConnection }: Props) {
+function Header({
+  serverStatus,
+  connections,
+  selectedConnection,
+  isOpen,
+  setIsOpen,
+  onChangeConnection,
+}: Props) {
   const renderMethod = isOpen ? renderExpanded : renderCollapsed
 
   return (
     <Container>
       <ContentContainer onPress={() => !isOpen && setIsOpen(true)} $isOpen={isOpen}>
-        {renderMethod(connections, selectedConnection, onChangeConnection)}
+        {renderMethod(serverStatus, connections, selectedConnection, onChangeConnection)}
         <ExpandContainer onPress={() => setIsOpen(!isOpen)}>
           <ExpandIcon size={18} />
         </ExpandContainer>

@@ -7,6 +7,8 @@ import useTimeline from "./useTimeline"
 interface Context {
   isSearchOpen: boolean
   toggleSearch: () => void
+  openSearch: () => void
+  closeSearch: () => void
   search: string
   setSearch: (search: string) => void
   isFilterOpen: boolean
@@ -21,6 +23,8 @@ interface Context {
 const TimelineContext = React.createContext<Context>({
   isSearchOpen: false,
   toggleSearch: null,
+  openSearch: null,
+  closeSearch: null,
   search: "",
   setSearch: null,
   isFilterOpen: false,
@@ -36,6 +40,8 @@ const Provider: FunctionComponent<any> = ({ children }) => {
   const {
     isSearchOpen,
     toggleSearch,
+    openSearch,
+    closeSearch,
     search,
     setSearch,
     isFilterOpen,
@@ -52,6 +58,8 @@ const Provider: FunctionComponent<any> = ({ children }) => {
       value={{
         isSearchOpen,
         toggleSearch,
+        openSearch,
+        closeSearch,
         search,
         setSearch,
         isFilterOpen,

@@ -16,6 +16,25 @@ const NEGATIVE_INFINITY = "~~~ -Infinity ~~~"
 // const NAN = '~~~ NaN ~~~'
 
 /**
+ * Fix BigInt serialization
+ * BigInts are not supported by JSON.stringify in Hermes android.
+ * This is a workaround.
+ * https://github.com/GoogleChromeLabs/jsbi/issues/30#issuecomment-953187833
+ * https://github.com/infinitered/reactotron/issues/1436
+ */
+declare global {
+  interface BigInt {
+    toJSON(): string
+  }
+}
+if (typeof BigInt !== "undefined") {
+  // eslint-disable-next-line no-extend-native
+  BigInt.prototype.toJSON = function () {
+    return this.toString()
+  }
+}
+
+/**
  * Attempts to give a name to a function.
  *
  * @param {Function} fn - The function to name.
@@ -34,9 +53,9 @@ function getFunctionName(fn: any): string {
  *
  *  @param {any} source - The victim.
  */
-function serialize(source, proxyHack = false) {
-  const stack = []
-  const keys = []
+function serialize(source: any, proxyHack = false) {
+  const stack = [] as any[]
+  const keys = [] as string[]
 
   /**
    * Replace this object node with something potentially custom.
@@ -45,7 +64,7 @@ function serialize(source, proxyHack = false) {
    * @param {*} value - The value to replace.
    */
   function serializer(replacer) {
-    return function (this: any, key, value) {
+    return function (this: any, key: string, value: any) {
       // slam dunks
       if (value === true) return true
 
@@ -74,6 +93,8 @@ function serialize(source, proxyHack = false) {
           return value
         case "number":
           return value
+        case "bigint":
+          return value.toString()
         case "function":
           return getFunctionName(value)
       }
@@ -98,7 +119,6 @@ function serialize(source, proxyHack = false) {
       return replacer == null ? value : replacer.call(this, key, value)
     }
   }
-
   return JSON.stringify(source, serializer(null))
 }
 

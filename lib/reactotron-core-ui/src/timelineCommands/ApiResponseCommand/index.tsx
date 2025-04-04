@@ -13,6 +13,8 @@ import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 const NameContainer = styled.View`
   color: ${(props) => props.theme.bold};
   padding-bottom: 10px;
+  user-select: text;
+  cursor: text;
 `
 
 const TabsContainer = styled.View`
@@ -122,6 +124,15 @@ function buildToolbar(commandPayload, copyToClipboard: (text: string) => void) {
   return toolbarItems
 }
 
+export function formatOperationName(requestData: string): string {
+  try {
+    const parsedData = JSON.parse(requestData)
+    return parsedData?.operationName?.toString() || ""
+  } catch (_err) {
+    return ""
+  }
+}
+
 const ApiResponseCommand: FunctionComponent<Props> = ({
   command,
   copyToClipboard,
@@ -135,7 +146,11 @@ const ApiResponseCommand: FunctionComponent<Props> = ({
   const { duration, request, response } = payload
 
   const cleanedUrl = request.url.replace(/^http(s):\/\/[^/]+/i, "").replace(/\?.*$/i, "")
-  const preview = `${(request.method || "").toUpperCase()} ${cleanedUrl}`
+  const operationName = formatOperationName(request.data)
+
+  const preview = [(request.method || "").toUpperCase(), cleanedUrl, operationName]
+    .filter(Boolean)
+    .join(" ")
 
   const summary = {
     "Status Code": response.status,
@@ -156,6 +171,7 @@ const ApiResponseCommand: FunctionComponent<Props> = ({
       toolbar={toolbar}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
+      responseStatusCode={payload.response?.status}
     >
       <NameContainer>{payload.request.url}</NameContainer>
       <ContentView value={summary} />

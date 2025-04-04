@@ -11,7 +11,6 @@ import { Header } from "reactotron-core-ui"
 import styled from "styled-components"
 import { reactotronLogo } from "../../images"
 import { ItemContainer, ItemIconContainer } from "./SharedStyles"
-import AndroidDeviceHelp from "./components/AndroidDeviceHelp"
 import KeybindGroup from "./components/KeybindGroup"
 
 const projectJson = require("../../../../package.json")
@@ -99,7 +98,7 @@ function Help() {
             <ItemIconContainer>
               <RepoIcon size={40} />
             </ItemIconContainer>
-            Repo
+            GitHub Docs
           </ItemContainer>
           <ItemContainer onClick={openFeedback}>
             <ItemIconContainer>
@@ -120,8 +119,6 @@ function Help() {
             @reactotron
           </ItemContainer>
         </ConnectContainer>
-
-        <AndroidDeviceHelp />
 
         <Title>Keystrokes</Title>
         {Keybinds()}

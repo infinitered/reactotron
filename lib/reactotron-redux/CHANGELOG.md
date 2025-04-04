@@ -2,6 +2,49 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.2.0](https://github.com/infinitered/reactotron/compare/reactotron-redux@3.1.11...reactotron-redux@3.2.0) (2025-03-16)
+
+
+### Features
+
+* **reactotron-app:** show redux diffs in timeline ([#1531](https://github.com/infinitered/reactotron/issues/1531) by [@camilossantos2809](https://github.com/camilossantos2809)) ([77831ae](https://github.com/infinitered/reactotron/commit/77831aeb928d0e63c8828b90efa17caeab67f699)), closes [#496](https://github.com/infinitered/reactotron/issues/496)
+
+### [3.1.11](https://github.com/infinitered/reactotron/compare/reactotron-redux@3.1.10...reactotron-redux@3.1.11) (2025-01-07)
+
+
+### Bug Fixes
+
+* **package.json:** remove "react-native" export condition ([#1530](https://github.com/infinitered/reactotron/issues/1530)) ([47be69f](https://github.com/infinitered/reactotron/commit/47be69fae1e410a22907893a69474857a3e5a854))
+
+### [3.1.10](https://github.com/infinitered/reactotron/compare/reactotron-redux@3.1.9...reactotron-redux@3.1.10) (2024-08-26)
+
+### [3.1.9](https://github.com/infinitered/reactotron/compare/reactotron-redux@3.1.8...reactotron-redux@3.1.9) (2024-02-14)
+
+## [3.1.8](https://github.com/infinitered/reactotron/compare/reactotron-redux@3.1.7...reactotron-redux@3.1.8) (2024-02-14)
+
+### [3.1.7](https://github.com/infinitered/reactotron/compare/reactotron-redux@3.1.6...reactotron-redux@3.1.7) (2024-01-25)
+
+
+### Bug Fixes
+
+* **architecture:** Attempt to mitigate compiler error: `Error: Default condition should be last one` ([#1423](https://github.com/infinitered/reactotron/issues/1423)) ([2c7e678](https://github.com/infinitered/reactotron/commit/2c7e678e5afaea79cd01f4ab6e90bd67339fc80a))
+
+### [3.1.6](https://github.com/infinitered/reactotron/compare/reactotron-redux@3.1.5...reactotron-redux@3.1.6) (2024-01-17)
+
+
+### Bug Fixes
+
+* **reactotron-redux:** Typescript fixes for reactotron-redux interface ([#1404](https://github.com/infinitered/reactotron/issues/1404) by @Jpoliachik) ([5dacbd9](https://github.com/infinitered/reactotron/commit/5dacbd9525bae74a70ce6b0ab9e9cc6b8778f708))
+
+### [3.1.5](https://github.com/infinitered/reactotron/compare/reactotron-redux@3.1.4...reactotron-redux@3.1.5) (2024-01-09)
+
+
+### Bug Fixes
+
+* update client types in reactotron-react-native-mmkv and reactotron-redux ([#1397](https://github.com/infinitered/reactotron/issues/1397)) ([1478ea1](https://github.com/infinitered/reactotron/commit/1478ea176552b9e0e6606a41f4cc2cd3a33fe587)), closes [#1391](https://github.com/infinitered/reactotron/issues/1391)
+
+### [3.1.4](https://github.com/infinitered/reactotron/compare/reactotron-redux@3.1.4-beta.17...reactotron-redux@3.1.4) (2023-12-05)
+
 ### [3.1.4-beta.17](https://github.com/infinitered/reactotron/compare/reactotron-redux@3.1.4-beta.16...reactotron-redux@3.1.4-beta.17) (2023-12-01)
 
 

@@ -10,6 +10,7 @@ import {
   isAlive,
   isProtected,
   isRoot,
+  isType,
   onSnapshot,
 } from "mobx-state-tree"
 import type {
@@ -102,7 +103,7 @@ interface TrackedNode {
   /**
    * The mst model type
    */
-  modelType: IType<any, any>
+  modelType: IType<any, any, any>
 }
 
 interface NodeTracker {
@@ -181,7 +182,7 @@ export function mst(opts: MstPluginOptions = {}) {
         const modelType = getType(node)
 
         // we only want types
-        if (modelType.isType) {
+        if (isType(modelType)) {
           try {
             attachReactotronToMstNode(node)
             // track this
@@ -390,7 +391,10 @@ export function mst(opts: MstPluginOptions = {}) {
       if (trackedNode && trackedNode.node) {
         const state = getSnapshot<IStateTreeNode>(trackedNode.node)
         if (isNilOrEmpty(atPath)) {
-          client.stateKeysResponse(null, keys(state))
+          client.stateKeysResponse(
+            null,
+            keys(state).map((s) => s.toString())
+          )
         } else {
           const keyList = keys(dotPath(atPath, state))
           client.stateKeysResponse(atPath, keyList)

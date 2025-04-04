@@ -48,7 +48,7 @@ interface DisplayConfig {
   name: string
   value?: object | string | number | boolean | null | undefined
   preview?: string
-  image?: string
+  image?: string | { uri: string }
   important?: boolean
 }
 
@@ -101,7 +101,7 @@ export interface ReactotronCore {
     important?: boolean
   ) => void
   display: (config: DisplayConfig) => void
-  onCustomCommand: <Args extends CustomCommandArg[] = CustomCommand["args"]>(
+  onCustomCommand: <Args extends CustomCommandArg[] = Exclude<CustomCommand["args"], undefined>>(
     config: CustomCommand<Args>
   ) => () => void | ((config: string, optHandler?: () => void) => () => void)
   /**
@@ -133,11 +133,8 @@ export const corePlugins = [
   repl(),
 ] satisfies PluginCreator<ReactotronCore>[]
 
-export type InferPluginsFromCreators<Client, PC extends PluginCreator<Client>[]> = PC extends Array<
-  infer P extends PluginCreator<Client>
->
-  ? ReturnType<P>[]
-  : never
+export type InferPluginsFromCreators<Client, PC extends PluginCreator<Client>[]> =
+  PC extends Array<infer P extends PluginCreator<Client>> ? ReturnType<P>[] : never
 // #endregion
 
 type CorePluginFeatures = InferFeaturesFromPlugins<ReactotronCore, typeof corePlugins>
@@ -164,9 +161,11 @@ function emptyPromise() {
   return Promise.resolve("")
 }
 
-export class ReactotronImpl implements ReactotronCore {
+export class ReactotronImpl
+  implements Omit<ReactotronCore, "options" | "plugins" | "configure" | "connect" | "use">
+{
   // the configuration options
-  options: ClientOptions<ReactotronCore>
+  options!: ClientOptions<ReactotronCore>
 
   /**
    * Are we connected to a server?
@@ -176,7 +175,7 @@ export class ReactotronImpl implements ReactotronCore {
   /**
    * The socket we're using.
    */
-  socket: WebSocket = null
+  socket: WebSocket = null as never
 
   /**
    * Available plugins.
@@ -224,7 +223,7 @@ export class ReactotronImpl implements ReactotronCore {
     // options get merged & validated before getting set
     const newOptions = Object.assign(
       {
-        createSocket: null,
+        createSocket: null as never,
         host: "localhost",
         port: 9090,
         name: "reactotron-core-client",
@@ -243,10 +242,11 @@ export class ReactotronImpl implements ReactotronCore {
 
     // if we have plugins, let's add them here
     if (Array.isArray(this.options.plugins)) {
-      this.options.plugins.forEach((p) => this.use(p))
+      this.options.plugins.forEach((p) => this.use(p as never))
     }
 
-    return this as this & InferFeaturesFromPlugins<this, ClientOptions<this>["plugins"]>
+    return this as this &
+      InferFeaturesFromPlugins<this, Exclude<ClientOptions<this>["plugins"], undefined>>
   }
 
   close() {
@@ -273,7 +273,7 @@ export class ReactotronImpl implements ReactotronCore {
 
     // establish a connection to the server
     const protocol = secure ? "wss" : "ws"
-    const socket = createSocket(`${protocol}://${host}:${port}`)
+    const socket = createSocket!(`${protocol}://${host}:${port}`)
 
     // fires when we talk to the server
     const onOpen = () => {
@@ -285,7 +285,7 @@ export class ReactotronImpl implements ReactotronCore {
 
       const getClientIdPromise = getClientId || emptyPromise
 
-      getClientIdPromise().then((clientId) => {
+      getClientIdPromise(name!).then((clientId) => {
         this.isReady = true
         // introduce ourselves
         this.send("client.intro", {
@@ -355,7 +355,7 @@ export class ReactotronImpl implements ReactotronCore {
     }
 
     // this is ws style from require('ws') on node js
-    if ("on" in socket && socket.on) {
+    if ("on" in socket && socket.on!) {
       const nodeWebSocket = socket as WebSocket
       nodeWebSocket.on("open", onOpen)
       nodeWebSocket.on("close", onClose)
@@ -464,7 +464,7 @@ export class ReactotronImpl implements ReactotronCore {
       // here's how we're going to inject these in
       const inject = (key: string) => {
         // grab the function
-        const featureFunction = plugin.features[key]
+        const featureFunction = plugin.features![key]
 
         // only functions may pass
         if (typeof featureFunction !== "function") {
@@ -497,20 +497,20 @@ export class ReactotronImpl implements ReactotronCore {
   onCustomCommand(config: CustomCommand | string, optHandler?: () => void): () => void {
     let command: string
     let handler: () => void
-    let title: string
-    let description: string
-    let args: CustomCommandArg[]
+    let title!: string
+    let description!: string
+    let args!: CustomCommandArg[]
 
     if (typeof config === "string") {
       command = config
-      handler = optHandler
+      handler = optHandler!
     } else {
       command = config.command
       handler = config.handler
 
-      title = config.title
-      description = config.description
-      args = config.args
+      title = config.title!
+      description = config.description!
+      args = config.args!
     }
 
     // Validations
@@ -538,7 +538,7 @@ export class ReactotronImpl implements ReactotronCore {
     }
 
     if (args) {
-      const argNames = []
+      const argNames = [] as string[]
 
       args.forEach((arg) => {
         if (!arg.name) {
@@ -595,5 +595,5 @@ export function createClient<Client extends ReactotronCore = ReactotronCore>(
   options?: ClientOptions<Client>
 ) {
   const client = new ReactotronImpl()
-  return client.configure(options as unknown) as unknown as Client
+  return client.configure(options as never) as unknown as Client
 }

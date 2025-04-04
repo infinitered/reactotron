@@ -1,14 +1,52 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
-
-defaults: &defaults
-  working_directory: ~/repo
+---
+# Reactotron CircleCI Config
 
 version: 2.1
+
+# used to force publish to ir-docs
+parameters:
+  force-publish-docs:
+    type: boolean
+    default: false
+
+# Anchors define reusable sections of YAML
+# See: https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/
+anchors:
+  ### Executors
+  node_executor: &node_executor
+    name: node/default
+    resource_class: large
+  # Default Settings
+  defaults: &defaults
+    working_directory: ~/repo
+  # Branch names used to trigger releases
+  release_branch_names: &release_branch_names
+    - master
+    - beta
+    - alpha
+  # All branches
+  release_branch_filter: &release_branch_filter
+    ignore: /.*/
+  # Filter to identify tags of releases
+  release_app_filter: &release_app_filter
+    - /^reactotron-app@.*/
+  # Shared ir-docs config
+  ir_docs_config: &ir_docs_config
+    description: >-
+      Reactotron - A desktop app for inspecting your React JS and React Native projects.
+    git_email: ci@infinite.red
+    git_username: Infinite Red
+    label: Reactotron
+    project_name: reactotron
+    source_docs_dir: docs
+    source_repo_directory: source
+    target_docs_dir: docs
+    target_repo: git@github.com:infinitered/ir-docs.git
+    target_repo_directory: ir-docs
+
 orbs:
-  node: circleci/node@5.1.0
+  node: circleci/node@5.2.0
+  publish-docs: infinitered/publish-docs@0.4
 
 commands:
   install-packages:
@@ -67,6 +105,10 @@ commands:
           name: Restore lib/reactotron-react-native-mmkv/dist/
           keys:
             - lib/reactotron-react-native-mmkv/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-react-native-mmkv/package.json" }}
+      - restore_cache:
+          name: Restore lib/eslint-plugin-reactotron/dist/
+          keys:
+            - lib/eslint-plugin-reactotron/dist/-<<parameters.cache-key>>-{{ checksum "lib/eslint-plugin-reactotron/package.json" }}
       - run:
           name: Install packages
           command: yarn install --immutable
@@ -134,6 +176,11 @@ commands:
           paths:
             - lib/reactotron-react-native-mmkv/dist/
           key: lib/reactotron-react-native-mmkv/dist/-<<parameters.cache-key>>-{{ checksum "lib/reactotron-react-native-mmkv/package.json" }}
+      - save_cache:
+          name: Saving eslint-plugin-reactotron/dist/
+          paths:
+            - lib/eslint-plugin-reactotron/dist/
+          key: lib/eslint-plugin-reactotron/dist/-<<parameters.cache-key>>-{{ checksum "lib/eslint-plugin-reactotron/package.json" }}
   release-reactotron-app:
     description: Create release build of Reactotron app, upload to workspace
     parameters:
@@ -154,9 +201,7 @@ commands:
 jobs:
   build_and_test:
     <<: *defaults
-    executor: &node_executor
-      name: node/default
-      resource_class: large
+    executor: *node_executor
     steps:
       - checkout
       - install-packages
@@ -178,6 +223,24 @@ jobs:
       - run:
           name: Typecheck
           command: yarn typecheck
+  trust_check:
+    executor: *node_executor
+    steps:
+      - run:
+          name: Check if branch is trusted
+          command: |
+            if [ -n "$CIRCLE_PR_NUMBER" ]; then
+              if [[ $CIRCLE_BRANCH == temp-ci-trusted-fork-* ]]; then
+                echo "Branch is trusted"
+                exit 0
+              else
+                echo "Branch is not trusted. Please use the trust process before merging."
+                exit 1
+              fi
+            else
+              echo "Not a PR from a fork, skipping trust check"
+              exit 0
+            fi
 
   release_tags:
     <<: *defaults
@@ -215,9 +278,11 @@ jobs:
             yarn release:artifacts $CIRCLE_TAG
 
   build_app_windows:
+    executor: *node_executor
     <<: *defaults
     docker:
-      - image: electronuserland/builder:16-wine
+      - image: electronuserland/builder:20-wine-07.24
+    resource_class: large
     environment:
       BUILD_TARGET: windows
     steps:
@@ -284,17 +349,43 @@ jobs:
           command: yarn workspace reactotron-app release:artifacts $CIRCLE_TAG
 
 workflows:
-  pull_request:
+  pull_request: # prevents the workflow from running when `force-publish-docs` is true
+    when:
+      and:
+        - not: << pipeline.parameters.force-publish-docs >>
+        - true # Placeholder for correct YAML structure
     jobs:
-      - build_and_test:
+      - trust_check:
           filters:
             branches:
-              ignore: &release_branch_names
-                - master
-                - beta
-                - alpha
+              ignore: *release_branch_names
+      - build_and_test:
+          requires:
+            - trust_check
+          filters:
+            branches:
+              ignore: *release_branch_names
+      - publish-docs/build_docs:
+          requires:
+            - trust_check
+          <<: *ir_docs_config
+          filters:
+            branches:
+              ignore: *release_branch_names
 
-  release:
+  # Allows for manual publishing of docs independent of deployment
+  # Use the 'trigger pipeline' button in circle ci and set 'force-publish-docs' to 'true'
+  force_publish_docs:
+    when: << pipeline.parameters.force-publish-docs >>
+    jobs:
+      - publish-docs/publish_docs:
+          <<: *ir_docs_config
+
+  release: # prevents the workflow from running when `force-publish-docs` is true
+    when:
+      and:
+        - not: << pipeline.parameters.force-publish-docs >>
+        - true # Placeholder for correct YAML structure
     jobs:
       - build_and_test:
           filters:
@@ -308,23 +399,34 @@ workflows:
               only: *release_branch_names
           requires:
             - build_and_test
+      - publish-docs/build_docs:
+          <<: *ir_docs_config
+          filters:
+            branches:
+              only:
+                - beta
+                - alpha
+      - publish-docs/publish_docs:
+          <<: *ir_docs_config
+          filters:
+            branches:
+              only:
+                - master
       - release_package:
           context:
             - infinitered-npm-package
           filters:
-            branches: &release_branch_filter
-              ignore: /.*/ # ignore all branches
+            branches: *release_branch_filter
             tags:
               only:
-                - /^(?!reactotron-app)reactotron-.*@.*/ # matches 'reactotron-core-ui@2.0.1' but not 'reactotron-app@3.0.0'
+                - /^(?!reactotron-app)(reactotron-.*|eslint-plugin-reactotron)@.*/ # matches 'reactotron-core-ui@2.0.1', 'eslint-plugin-reactotron@0.1.0' but not 'reactotron-app@3.0.0'
       - build_app_windows:
           context:
             - infinitered-npm-package
           filters:
             branches: *release_branch_filter
             tags:
-              only: &release_app_filter
-                - /^reactotron-app@.*/
+              only: *release_app_filter
       - build_app_macos:
           context:
             - ReactotronCerts

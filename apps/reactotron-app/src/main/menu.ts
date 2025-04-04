@@ -94,17 +94,25 @@ function buildViewMenu(window: Electron.BrowserWindow, isDevelopment: boolean) {
       click: () => {
         ;(window as any).toggleDevTools()
       },
-    }
+    },
+    { type: "separator" },
+    { role: "togglefullscreen" },
+    { role: "resetZoom" },
+    { role: "zoomIn" },
+    { role: "zoomOut" }
   )
 
   if (isDevelopment) {
-    viewMenu.submenu.push({
-      label: isDarwin ? "Reload" : "&Reload",
-      accelerator: isDarwin ? "Command+R" : "Ctrl+R",
-      click: () => {
-        window.webContents.reload()
-      },
-    })
+    viewMenu.submenu.push(
+      { type: "separator" },
+      {
+        label: isDarwin ? "Reload" : "&Reload",
+        accelerator: isDarwin ? "Command+R" : "Ctrl+R",
+        click: () => {
+          window.webContents.reload()
+        },
+      }
+    )
   }
 
   return viewMenu
@@ -159,6 +167,6 @@ export default function createMenu(window: Electron.BrowserWindow, isDevelopment
     buildHelpMenu(),
   ]
 
-  const menu = Menu.buildFromTemplate(template.filter(t => !!t) as any)
+  const menu = Menu.buildFromTemplate(template.filter((t) => !!t) as any)
   Menu.setApplicationMenu(menu)
 }

@@ -32,6 +32,7 @@ module.exports = {
       "react-native/Libraries/LogBox/Data/parseLogBoxLog.js",
       "react-native/Libraries/LogBox/LogBox.js",
       "react-native/Libraries/Core/NativeExceptionsManager.js",
+      "react-native/Libraries/NativeModules/specs/NativeDevMenu.js",
     ],
   },
   rules: {
@@ -55,5 +56,6 @@ module.exports = {
     "**/build/**/*",
     "examples",
     "scripts",
+    "**/CHANGELOG.md",
   ],
-};
+}

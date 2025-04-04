@@ -1,23 +1,22 @@
 {
   "name": "reactotron-core-ui",
-  "version": "2.0.2-beta.24",
+  "version": "2.6.1",
   "description": "Core UI components for Reactotron",
   "author": "Infinite Red",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-core-ui",
-  "repository": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-core-ui",
+  "homepage": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-core-ui",
+  "repository": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-core-ui",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/types/src/index.d.ts",
   "react-native": "src/index.ts",
   "exports": {
-    "default": "./dist/index.js",
     "import": "./dist/index.esm.js",
     "types": "./dist/types/src/index.d.ts",
-    "react-native": "./src/index.ts"
+    "default": "./dist/index.js"
   },
   "scripts": {
     "start": "start-storybook -p 6006",
@@ -32,10 +31,9 @@
     "tsc": "tsc",
     "compile": "NODE_ENV=production rollup -c",
     "compile:dev": "NODE_ENV=development rollup -c",
-    "chromatic": "chromatic",
     "typecheck": "tsc",
     "ci:test": "yarn test --runInBand",
-    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}' --config ../../.prettierrc --ignore-path ../../.prettierignore",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write"
   },
@@ -74,9 +72,9 @@
     "@storybook/addon-links": "6.1.21",
     "@storybook/addons": "6.1.21",
     "@storybook/react": "6.1.21",
-    "@testing-library/react-hooks": "8.0.1",
+    "@testing-library/react": "^14.1.2",
     "@types/jest": "^29.5.7",
-    "@types/react": "18.2.35",
+    "@types/react": "18.2.45",
     "@types/react-dom": "18.2.14",
     "@types/react-motion": "0.0.31",
     "@types/stringify-object": "3.3.1",
@@ -109,7 +107,6 @@
     "rollup-plugin-filesize": "9.1.1",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-peer-deps-external": "2.2.4",
-    "storybook-chromatic": "^4.0.2",
     "styled-components": "^6.1.0",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"

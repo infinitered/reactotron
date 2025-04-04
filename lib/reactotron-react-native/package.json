@@ -1,14 +1,14 @@
 {
   "name": "reactotron-react-native",
-  "version": "5.0.4-beta.19",
+  "version": "5.1.12",
   "description": "A development tool to explore, inspect, and diagnose your React Native apps.",
   "author": "Infinite Red",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-react-native",
-  "repository": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-react-native",
+  "homepage": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-react-native",
+  "repository": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-react-native",
   "files": [
     "dist",
     "src"
@@ -18,15 +18,14 @@
   "types": "dist/types/src/index.d.ts",
   "react-native": "src/index.ts",
   "exports": {
-    "default": "./dist/index.js",
     "import": "./dist/index.esm.js",
     "types": "./dist/types/src/index.d.ts",
-    "react-native": "./src/index.ts"
+    "default": "./dist/index.js"
   },
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch --notify",
-    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "test:watch": "jest --watch",
+    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}' --config ../../.prettierrc --ignore-path ../../.prettierignore",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",
     "prebuild": "yarn clean",
@@ -46,11 +45,7 @@
   },
   "dependencies": {
     "mitt": "^3.0.1",
-    "query-string": "6.14.1",
     "reactotron-core-client": "workspace:*"
-  },
-  "optionalDependencies": {
-    "react-native-flipper": "^0.164.0"
   },
   "resolutions": {
     "@types/react-native": "0.72.1"
@@ -64,7 +59,7 @@
     "@react-native-async-storage/async-storage": "^1.19.4",
     "@types/jest": "^29.5.7",
     "@types/node": "^18.18.8",
-    "@types/react": "18.2.35",
+    "@types/react": "18.2.45",
     "@types/react-native": "0.72.5",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
@@ -81,8 +76,7 @@
     "npm-run-all": "4.1.5",
     "prettier": "^3.0.3",
     "react": "^18.2.0",
-    "react-native": "0.72.6",
-    "react-native-flipper": "0.164.0",
+    "react-native": "0.73.6",
     "rimraf": "5.0.5",
     "rollup": "2.60.2",
     "rollup-plugin-babel": "4.4.0",

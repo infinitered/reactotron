@@ -32,7 +32,7 @@
     "@types/eslint": "^8.44.4",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
-    "eslint": "^8.53.0",
+    "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.29.0",
@@ -48,7 +48,7 @@
   },
   "resolutions": {
     "@nx/devkit": "17.0.3",
-    "@types/react": "18.2.35",
+    "@types/react": "18.2.45",
     "electron-webpack": "patch:electron-webpack@npm%3A2.8.2#./.yarn/patches/electron-webpack-npm-2.8.2-1bda600605.patch",
     "react-hotkeys": "patch:react-hotkeys@npm%3A2.0.0#./.yarn/patches/react-hotkeys-npm-2.0.0-8e6c50bd05.patch",
     "webpack": "patch:webpack@npm%3A4.47.0#./.yarn/patches/webpack-npm-4.47.0-42e477a08c.patch"
@@ -57,13 +57,16 @@
     "22postinstall22": "sh ./scripts/postinstall.sh",
     "clean": "sh ./scripts/clean.sh",
     "reset": "sh ./scripts/reset.sh",
+    "generate:plugin": "zx scripts/generate-plugin.mjs",
     "start": "yarn workspace reactotron-app start",
+    "start:example": "yarn workspace example-app start",
     "build": "npx nx run-many --target build",
     "build:watch": "npx nx watch --all -- npx nx run \\$NX_PROJECT_NAME:build",
     "build:dev": "npx nx run-many --target build:dev",
     "lint": "npx nx run-many --target lint",
     "test": "npx nx run-many --target test",
     "ci:test": "npx nx run-many --target ci:test",
+    "ci:trust": "sh ./scripts/git-clone-fork-to-trusted-branch.sh",
     "typecheck": "npx nx run-many --target typecheck",
     "format:write": "npx nx run-many --target format:write",
     "format:check": "npx nx run-many --target format:check",
@@ -76,7 +79,7 @@
     "build-and-test:local": "yarn build && yarn package:validate && yarn lint && yarn format:check && yarn test && yarn typecheck",
     "package:validate": "zx scripts/package.validate.mjs"
   },
-  "packageManager": "yarn@3.6.3",
+  "packageManager": "yarn@4.1.1",
   "dependencies": {
     "react-native-macos": "^0.72.0-0"
   }

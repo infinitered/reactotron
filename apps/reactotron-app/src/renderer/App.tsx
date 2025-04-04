@@ -22,7 +22,6 @@ const AppContainer = styled.View`
   bottom: 0;
   left: 0;
   right: 0;
-
   display: flex;
   flex-direction: column;
   background-color: ${(props) => props.theme.background};
@@ -52,10 +51,10 @@ function App() {
             <MainContainer>
               <Routes>
                 {/* Home */}
-                <Route path="/home" element={<Home />} />
+                <Route path="/" element={<Home />} />
 
                 {/* Timeline */}
-                <Route path="/" element={<Timeline />} />
+                <Route path="/timeline" element={<Timeline />} />
 
                 {/* State */}
                 <Route path="/state/subscriptions" element={<Subscriptions />} />

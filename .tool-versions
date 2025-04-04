@@ -1,2 +1,4 @@
-nodejs 18.14.0
+nodejs 22.11.0
+
+# This is weird, but leave it as 1.22.19 -- it'll use 4.1.1 automatically
 yarn 1.22.19

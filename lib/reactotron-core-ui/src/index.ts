@@ -1,18 +1,20 @@
 // Styles
-import theme from "./theme"
+import { themes } from "./themes"
 
 // Components
+import ActionButton from "./components/ActionButton"
 import ContentView from "./components/ContentView"
 import EmptyState from "./components/EmptyState"
 import Header from "./components/Header"
 import Modal from "./components/Modal"
+import RandomJoke from "./components/RandomJoke"
 import ReactotronAppProvider from "./components/ReactotronAppProvider"
-import ActionButton from "./components/ActionButton"
-import Tooltip from "./components/Tooltip"
 import TimelineCommand from "./components/TimelineCommand"
 import TimelineCommandTabButton from "./components/TimelineCommandTabButton"
 import Timestamp from "./components/Timestamp"
+import Tooltip from "./components/Tooltip"
 import TreeView from "./components/TreeView"
+import TreeViewDiff from "./components/TreeViewDiff"
 
 // Contexts
 import ReactotronContext, { ReactotronProvider } from "./contexts/Reactotron"
@@ -35,36 +37,38 @@ import repairSerialization from "./utils/repair-serialization"
 import filterCommands from "./utils/filterCommands"
 
 export {
-  theme,
+  // Contexts
+  ActionButton,
   ContentView,
+  CustomCommandsContext,
+  CustomCommandsProvider,
+  DispatchActionModal,
   EmptyState,
+  filterCommands,
   Header,
   Modal,
+  RandomJoke,
+  ReactNativeContext,
+  ReactNativeProvider,
   ReactotronAppProvider,
-  ActionButton,
-  Tooltip,
+  ReactotronContext,
+  ReactotronProvider,
+  repairSerialization,
+  SnapshotRenameModal,
+  StateContext,
+  StateProvider,
+  SubscriptionAddModal,
+  themes,
   TimelineCommand,
   timelineCommandResolver,
   TimelineCommandTabButton,
-  DispatchActionModal,
-  SnapshotRenameModal,
-  SubscriptionAddModal,
-  TimelineFilterModal,
-  Timestamp,
-  TreeView,
-  repairSerialization,
-  filterCommands,
-  // Contexts
-  ReactotronContext,
-  ReactotronProvider,
-  CustomCommandsContext,
-  CustomCommandsProvider,
-  ReactNativeContext,
-  ReactNativeProvider,
-  StateContext,
-  StateProvider,
   TimelineContext,
+  TimelineFilterModal,
   TimelineProvider,
+  Timestamp,
+  Tooltip,
+  TreeView,
+  TreeViewDiff,
 }
 
 export type { CustomCommand } from "./contexts/CustomCommands/useCustomCommands"

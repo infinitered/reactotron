@@ -1,4 +1,4 @@
-import { merge, find, propEq, without, contains, forEach, pluck, reject, equals } from "ramda"
+import { find, propEq, without, forEach, pluck, reject, equals, mergeRight, includes } from "ramda"
 import { createServer as createHttpsServer, ServerOptions as HttpsServerOptions } from "https"
 import type {
   ServerEventMap,
@@ -71,7 +71,7 @@ export default class Server {
   /**
    * Additional server configuration.
    */
-  options: ServerOptions = merge({}, DEFAULTS)
+  options: ServerOptions = mergeRight({}, DEFAULTS)
 
   /**
    * A unique id which is assigned to each inbound message.
@@ -118,7 +118,7 @@ export default class Server {
    */
   configure(options: ServerOptions = DEFAULTS) {
     // options get merged & validated before getting set
-    const newOptions = merge(this.options, options)
+    const newOptions = mergeRight(this.options, options)
     validate(newOptions)
     this.options = newOptions
     return this
@@ -144,8 +144,16 @@ export default class Server {
   start = () => {
     const { port } = this.options
     const httpsServerOptions = buildHttpsServerOptions(this.options.wss)
+
     if (!httpsServerOptions) {
       this.wss = new WebSocketServer({ port })
+      this.wss.on("error", (error) => {
+        if (error.message.includes("EADDRINUSE")) {
+          this.emitter.emit("portUnavailable", port)
+        } else {
+          console.error(error)
+        }
+      })
     } else {
       const server = createHttpsServer(httpsServerOptions)
       this.wss = new WebSocketServer({ server })
@@ -213,13 +221,14 @@ export default class Server {
       socket.on("message", (incoming: RawData) => {
         const message = JSON.parse(incoming.toString())
         repair(message)
-        const { type, important, payload, deltaTime = 0 } = message
+        const { type, important, payload, deltaTime = 0, diff } = message
         this.messageId++
 
         const fullCommand: Command = {
           type,
           important,
           payload,
+          diff,
           connectionId: thisConnectionId,
           messageId: this.messageId,
           date: extractOrCreateDate(message.date),
@@ -279,10 +288,11 @@ export default class Server {
           fullCommand.clientId = connectionClientId
 
           // bestow the payload onto the connection
-          const connection = merge(payload, {
+          const connection = mergeRight(payload, {
             id: thisConnectionId,
             address: partConn.address,
             clientId: fullCommand.clientId,
+            diff,
           })
 
           // then trigger the connection
@@ -361,7 +371,7 @@ export default class Server {
    */
   stateValuesSubscribe(path) {
     // prevent duplicates
-    if (contains(path, this.subscriptions)) {
+    if (includes(path, this.subscriptions)) {
       return
     }
 
@@ -381,7 +391,7 @@ export default class Server {
    */
   stateValuesUnsubscribe(path) {
     // if it doesn't exist, jet
-    if (!contains(path, this.subscriptions)) {
+    if (!includes(path, this.subscriptions)) {
       return
     }
 

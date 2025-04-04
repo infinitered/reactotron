@@ -67,6 +67,13 @@ export function getPlatformDetails(connection: Connection) {
   }
 }
 
+export function getConnectionName(connection: Connection) {
+  if (!connection.name) {
+    return "Name unknown"
+  }
+  return connection.name
+}
+
 export function getScreen(connection) {
   const { windowWidth, windowHeight, screenScale } = connection
 

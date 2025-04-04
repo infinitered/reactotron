@@ -24,7 +24,7 @@ const Container = styled(Pressable)`
 `
 
 function openDocs() {
-  shell.openExternal("https://github.com/infinitered/reactotron")
+  shell.openExternal("https://docs.infinite.red/reactotron/")
 }
 
 function Welcome() {

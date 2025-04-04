@@ -3,12 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "targets": {
     "version": {
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "baseBranch": "beta",
-        "releaseAs": "prerelease",
-        "preid": "beta"
-      }
+      "executor": "@jscutlery/semver:version"
     }
   }
 }

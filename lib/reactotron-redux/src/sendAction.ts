@@ -1,7 +1,9 @@
-import { Reactotron } from "reactotron-core-client"
+import type { ReactotronCore } from "reactotron-core-client"
 
-export default function createSendAction(reactotron: Reactotron) {
-  return (action: { type: any }, ms: number, important = false) => {
+export default function createSendAction<Client extends ReactotronCore = ReactotronCore>(
+  reactotron: Client
+) {
+  return (action: { type: any }, ms: number, important = false, diff?: any) => {
     // let's call the type, name because that's "generic" name in Reactotron
     let { type: name } = action
 
@@ -14,6 +16,6 @@ export default function createSendAction(reactotron: Reactotron) {
     }
 
     // off ya go!
-    reactotron.send("state.action.complete", { name, action, ms }, important)
+    reactotron.send("state.action.complete", { name, action, ms, diff }, important)
   }
 }

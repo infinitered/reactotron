@@ -1,14 +1,14 @@
 {
   "name": "reactotron-redux",
-  "version": "3.1.4-beta.17",
+  "version": "3.2.0",
   "description": "A Reactotron plugin for Redux.",
   "author": "Infinite Red",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-redux",
-  "repository": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-redux",
+  "homepage": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-redux",
+  "repository": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-redux",
   "files": [
     "dist",
     "src"
@@ -18,15 +18,14 @@
   "types": "dist/types/src/index.d.ts",
   "react-native": "src/index.ts",
   "exports": {
-    "default": "./dist/index.js",
     "import": "./dist/index.esm.js",
     "types": "./dist/types/src/index.d.ts",
-    "react-native": "./src/index.ts"
+    "default": "./dist/index.js"
   },
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch --notify",
-    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "test:watch": "jest --watch",
+    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}' --config ../../.prettierrc --ignore-path ../../.prettierignore",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",
     "prebuild": "yarn clean",
@@ -40,6 +39,9 @@
     "tsc": "tsc",
     "typecheck": "yarn tsc",
     "ci:test": "yarn test --runInBand"
+  },
+  "dependencies": {
+    "microdiff": "^1.5.0"
   },
   "peerDependencies": {
     "reactotron-core-client": "*",

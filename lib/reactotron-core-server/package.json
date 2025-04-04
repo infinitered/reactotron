@@ -1,14 +1,14 @@
 {
   "name": "reactotron-core-server",
-  "version": "3.0.6-beta.16",
+  "version": "3.2.0",
   "description": "Grants Reactotron servers the ability to talk to a Reactotron client.",
   "author": "Infinite Red",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/infinitered/reactotron/issues"
   },
-  "homepage": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-core-server",
-  "repository": "https://github.com/infinitered/reactotron/tree/beta/lib/reactotron-core-server",
+  "homepage": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-core-server",
+  "repository": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-core-server",
   "files": [
     "dist",
     "src"
@@ -18,15 +18,14 @@
   "types": "dist/types/src/index.d.ts",
   "react-native": "src/index.ts",
   "exports": {
-    "default": "./dist/index.js",
     "import": "./dist/index.esm.js",
     "types": "./dist/types/src/index.d.ts",
-    "react-native": "./src/index.ts"
+    "default": "./dist/index.js"
   },
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch --notify",
-    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}'",
+    "test:watch": "jest --watch",
+    "format": "prettier '*.{js,ts,tsx,json,md,css,yml}|**/*.{js,ts,tsx,json,md,css,yml}' --config ../../.prettierrc --ignore-path ../../.prettierignore",
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",
     "prebuild": "yarn clean",
@@ -42,7 +41,7 @@
   },
   "dependencies": {
     "mitt": "^3.0.1",
-    "ramda": "0.26.1",
+    "ramda": "0.28.0",
     "reactotron-core-contract": "workspace:*",
     "ws": "^8.14.2"
   },
@@ -53,7 +52,7 @@
     "@babel/preset-typescript": "^7.23.2",
     "@types/jest": "^29.5.7",
     "@types/node": "^18.18.8",
-    "@types/ramda": "0.26.44",
+    "@types/ramda": "^0.28.0",
     "@types/ws": "^8.5.8",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",

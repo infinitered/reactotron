@@ -1,6 +1,6 @@
 import {
   InferFeatures,
-  Reactotron,
+  ReactotronCore,
   StateResponsePlugin,
   assertHasStateResponsePlugin,
 } from "reactotron-core-client"
@@ -10,19 +10,21 @@ import pathObject from "./helpers/pathObject"
 import createSubscriptionsHandler from "./subscriptionsHandler"
 import { PluginConfig } from "./pluginConfig"
 
-export default function createCommandHandler(
-  reactotron: Reactotron,
+export default function createCommandHandler<Client extends ReactotronCore = ReactotronCore>(
+  reactotron: Client,
   pluginConfig: PluginConfig,
   onReduxStoreCreation: (func: () => void) => void
 ) {
   // make sure have loaded the StateResponsePlugin
   assertHasStateResponsePlugin(reactotron)
-  const client = reactotron as Reactotron & InferFeatures<Reactotron, StateResponsePlugin>
+  const client = reactotron as Client & InferFeatures<Client, StateResponsePlugin>
 
   // create our subscriptions handler
   const subscriptionsHandler = createSubscriptionsHandler(reactotron, onReduxStoreCreation)
 
   return ({ type, payload }: { type: string; payload?: any }) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore shhhhhh -- this is a private API
     const reduxStore = client.reduxStore
 
     switch (type) {
@@ -88,6 +90,8 @@ export default function createCommandHandler(
           restoredState = pluginConfig.onRestore(payload.state, reduxStore.getState())
         }
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore shhhhhh -- this is a private API
         client.reduxStore.dispatch({
           type: pluginConfig.restoreActionType,
           state: restoredState,

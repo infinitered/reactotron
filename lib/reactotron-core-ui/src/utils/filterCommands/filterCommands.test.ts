@@ -10,8 +10,19 @@ const TEST_COMMANDS = [
   { type: "ADUMMYOBJ", payload: { triggerType: "SEARCHTRIGGERTYPE" } },
   { type: "ADUMMYOBJ", payload: { description: "SEARCHDESCRIPTION" } },
   { type: "ADUMMYOBJ", payload: { request: { url: "SEARCHURL" } } },
+  { type: "REGEX", payload: { message: "[1234] Log text" } },
+  { type: "REGEX", payload: { message: "123 Log text" } },
+  { type: "REGEX", payload: { message: "Log text (123)" } },
   { type: "log", payload: { debug: "LOGDEBUG" } },
   { type: "client.intro", payload: { connection: "SEARCHCONNECTION" } },
+  {
+    type: "ADUMMYOBJ",
+    payload: {
+      request: {
+        data: '{"operationName":"SEARCHDATA","variables":{"testing":{"nested":"thing"}},"query":"query LaunchList {\\n  launches {\\n    id\\n }\\n}\\n"}',
+      },
+    },
+  },
 ]
 
 const TESTS = [
@@ -52,6 +63,20 @@ const TESTS = [
     result: [{ type: "ADUMMYOBJ", payload: { request: { url: "SEARCHURL" } } }],
   },
   {
+    name: "payload.request.data",
+    search: "SEARCHDATA",
+    result: [
+      {
+        type: "ADUMMYOBJ",
+        payload: {
+          request: {
+            data: '{"operationName":"SEARCHDATA","variables":{"testing":{"nested":"thing"}},"query":"query LaunchList {\\n  launches {\\n    id\\n }\\n}\\n"}',
+          },
+        },
+      },
+    ],
+  },
+  {
     name: "log => debug",
     search: "debug",
     result: [{ type: "log", payload: { debug: "LOGDEBUG" } }],
@@ -82,7 +107,100 @@ const TESTS = [
       { type: "ADUMMYOBJ", payload: { triggerType: "SEARCHTRIGGERTYPE" } },
       { type: "ADUMMYOBJ", payload: { description: "SEARCHDESCRIPTION" } },
       { type: "ADUMMYOBJ", payload: { request: { url: "SEARCHURL" } } },
+      {
+        type: "ADUMMYOBJ",
+        payload: {
+          request: {
+            data: '{"operationName":"SEARCHDATA","variables":{"testing":{"nested":"thing"}},"query":"query LaunchList {\\n  launches {\\n    id\\n }\\n}\\n"}',
+          },
+        },
+      },
     ],
+  },
+  {
+    name: "deep search results",
+    search: "SEARCH",
+    result: [
+      { type: "SEARCHTYPE" },
+      { type: "ADUMMYOBJ", payload: { message: "SEARCHMESSAGE" } },
+      { type: "ADUMMYOBJ", payload: { preview: "SEARCHPREVIEW" } },
+      { type: "ADUMMYOBJ", payload: { name: "SEARCHNAME" } },
+      { type: "ADUMMYOBJ", payload: { path: "SEARCHPATH" } },
+      { type: "ADUMMYOBJ", payload: { triggerType: "SEARCHTRIGGERTYPE" } },
+      { type: "ADUMMYOBJ", payload: { description: "SEARCHDESCRIPTION" } },
+      { type: "ADUMMYOBJ", payload: { request: { url: "SEARCHURL" } } },
+      {
+        type: "ADUMMYOBJ",
+        payload: {
+          request: {
+            data: '{"operationName":"SEARCHDATA","variables":{"testing":{"nested":"thing"}},"query":"query LaunchList {\\n  launches {\\n    id\\n }\\n}\\n"}',
+          },
+        },
+      },
+    ],
+  },
+  {
+    name: "deep search results - even deeper",
+    search: "ME",
+    result: [
+      { type: "ADUMMYOBJ", payload: { message: "SEARCHMESSAGE" } },
+      { type: "ADUMMYOBJ", payload: { name: "SEARCHNAME" } },
+      {
+        type: "ADUMMYOBJ",
+        payload: {
+          request: {
+            data: '{"operationName":"SEARCHDATA","variables":{"testing":{"nested":"thing"}},"query":"query LaunchList {\\n  launches {\\n    id\\n }\\n}\\n"}',
+          },
+        },
+      },
+    ],
+  },
+  {
+    name: "deep search results - case insensitive",
+    search: "me",
+    result: [
+      { type: "ADUMMYOBJ", payload: { message: "SEARCHMESSAGE" } },
+      { type: "ADUMMYOBJ", payload: { name: "SEARCHNAME" } },
+      {
+        type: "ADUMMYOBJ",
+        payload: {
+          request: {
+            data: '{"operationName":"SEARCHDATA","variables":{"testing":{"nested":"thing"}},"query":"query LaunchList {\\n  launches {\\n    id\\n }\\n}\\n"}',
+          },
+        },
+      },
+    ],
+  },
+  {
+    name: "deep search results - type case insensitive",
+    search: "myobj",
+    result: [
+      { type: "ADUMMYOBJ", payload: { message: "SEARCHMESSAGE" } },
+      { type: "ADUMMYOBJ", payload: { preview: "SEARCHPREVIEW" } },
+      { type: "ADUMMYOBJ", payload: { name: "SEARCHNAME" } },
+      { type: "ADUMMYOBJ", payload: { path: "SEARCHPATH" } },
+      { type: "ADUMMYOBJ", payload: { triggerType: "SEARCHTRIGGERTYPE" } },
+      { type: "ADUMMYOBJ", payload: { description: "SEARCHDESCRIPTION" } },
+      { type: "ADUMMYOBJ", payload: { request: { url: "SEARCHURL" } } },
+      {
+        type: "ADUMMYOBJ",
+        payload: {
+          request: {
+            data: '{"operationName":"SEARCHDATA","variables":{"testing":{"nested":"thing"}},"query":"query LaunchList {\\n  launches {\\n    id\\n }\\n}\\n"}',
+          },
+        },
+      },
+    ],
+  },
+  {
+    name: "search that results in a invalid regex",
+    search: "[123",
+    result: [{ type: "REGEX", payload: { message: "[1234] Log text" } }],
+  },
+  {
+    name: "another search that results in a invalid regex",
+    search: "123)",
+    result: [{ type: "REGEX", payload: { message: "Log text (123)" } }],
   },
 ]
 
