@@ -2,6 +2,9 @@
   "name": "reactotron-native",
   "version": "0.0.1",
   "private": true,
+  "installConfig": {
+    "hoistingLimits": "workspaces"
+  },
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",

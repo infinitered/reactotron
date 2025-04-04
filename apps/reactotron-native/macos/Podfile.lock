@@ -1209,6 +1209,8 @@ PODS:
     - React-jsiexecutor
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
+  - react-native-safe-area-context (4.14.1):
+    - React-Core
   - React-NativeModulesApple (0.78.1):
     - glog
     - React-callinvoker
@@ -1480,7 +1482,7 @@ PODS:
     - React-logger (= 0.78.1)
     - React-perflogger (= 0.78.1)
     - React-utils (= 0.78.1)
-  - RNGestureHandler (2.16.2):
+  - RNGestureHandler (2.25.0):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2024.11.18.00)
@@ -1501,7 +1503,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNSVG (13.14.0):
+  - RNSVG (15.11.2):
     - React-Core
   - SocketRocket (0.7.1)
   - Yoga (0.0.0)
@@ -1545,6 +1547,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native-macos/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native-macos/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native-macos/ReactCommon/react/nativemodule/microtasks`)
+  - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-NativeModulesApple (from `../node_modules/react-native-macos/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native-macos/ReactCommon/reactperflogger`)
   - React-performancetimeline (from `../node_modules/react-native-macos/ReactCommon/react/performance/timeline`)
@@ -1572,8 +1575,8 @@ DEPENDENCIES:
   - ReactAppDependencyProvider (from `build/generated/ios`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native-macos/ReactCommon`)
-  - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler`)
-  - RNSVG (from `../../../node_modules/react-native-svg`)
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNSVG (from `../node_modules/react-native-svg`)
   - SocketRocket (from `../node_modules/react-native-macos/third-party-podspecs/SocketRocket.podspec`)
   - Yoga (from `../node_modules/react-native-macos/ReactCommon/yoga`)
 
@@ -1650,6 +1653,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-macos/ReactCommon"
   React-microtasksnativemodule:
     :path: "../node_modules/react-native-macos/ReactCommon/react/nativemodule/microtasks"
+  react-native-safe-area-context:
+    :path: "../node_modules/react-native-safe-area-context"
   React-NativeModulesApple:
     :path: "../node_modules/react-native-macos/ReactCommon/react/nativemodule/core/platform/ios"
   React-perflogger:
@@ -1705,9 +1710,9 @@ EXTERNAL SOURCES:
   ReactCommon:
     :path: "../node_modules/react-native-macos/ReactCommon"
   RNGestureHandler:
-    :path: "../../../node_modules/react-native-gesture-handler"
+    :path: "../node_modules/react-native-gesture-handler"
   RNSVG:
-    :path: "../../../node_modules/react-native-svg"
+    :path: "../node_modules/react-native-svg"
   SocketRocket:
     :podspec: "../node_modules/react-native-macos/third-party-podspecs/SocketRocket.podspec"
   Yoga:
@@ -1750,6 +1755,7 @@ SPEC CHECKSUMS:
   React-logger: 23a832d77d47a94c7fce0158e724f90754dc4064
   React-Mapbuffer: 61658c03873cb7a261ba2b092053e47e382d2508
   React-microtasksnativemodule: 34555d2ca021d7ea415fb650ee8d5c03e3327ca0
+  react-native-safe-area-context: 758e894ca5a9bd1868d2a9cfbca7326a2b6bf9dc
   React-NativeModulesApple: 07f9795e2bfa264153d6d8621d12c843f242df23
   React-perflogger: dbede9961c0f7ae0a0ac695eb4660da6cfae8b5d
   React-performancetimeline: 01dfe7ca6a6fd57d204787003b29a6e8ef924e1b
@@ -1777,8 +1783,8 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: f52406f67dbe92dedb94e026f4fc26d196d6809c
   ReactCodegen: b770520e68025f09a9d6ebe4026b06cce672891e
   ReactCommon: 1f91dfb47f3aa7bf768bd3c2003f5bd48f5b17f3
-  RNGestureHandler: 6749ba8a5c388c86f8789ad0015550f7af9ae1d0
-  RNSVG: 4cab00c621b328a4a2fedaaedc15d8822216723e
+  RNGestureHandler: 3aebdd5727d76b567572472b9e52c29536ee0eef
+  RNSVG: 4c63b12b7b5761063bca4f20dd228f6a8370f614
   SocketRocket: 03f7111df1a343b162bf5b06ead333be808e1e0a
   Yoga: afc9fdda8cd72a3463a1a08e3f3e14aa67250add
 
