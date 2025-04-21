@@ -1,57 +1,52 @@
 import type { ReactotronCore, Plugin } from "reactotron-core-client"
 
-function getXhrInterceptorPath() {
-  const defaultPath = "react-native/Libraries/Network/XHRInterceptor"
-  const newPath = "react-native/src/private/inspector/XHRInterceptor"
-
+// Attempt to require XHRInterceptor using static paths
+let XHRInterceptorModule
+try {
+  // Try the new path first (for RN >= 0.79)
+  XHRInterceptorModule = require("react-native/src/private/inspector/XHRInterceptor")
+} catch (e) {
   try {
-    const reactNativeVersionString = require("react-native/package.json").version
-    const match = reactNativeVersionString.match(/^(\d+)\.(\d+)\./)
-
-    if (match) {
-      const major = parseInt(match[1], 10)
-      const minor = parseInt(match[2], 10)
-      // RN 0.79 introduced the change
-      if (major === 0 && minor < 79) {
-        return defaultPath
-      } else {
-        // >= 0.79 or future versions
-        return newPath
-      }
-    } else {
-      console.error(
-        "Reactotron: Could not parse React Native version string:",
-        reactNativeVersionString
-      )
-      console.error(`Reactotron: Defaulting to import XHRInterceptor from ${defaultPath}`)
-      return defaultPath // Default path on parse error
-    }
-  } catch (e) {
-    console.error("Reactotron: Failed to read React Native version from package.json.", e)
-    console.error(`Reactotron: Defaulting to import XHRInterceptor from ${defaultPath}`)
-    return defaultPath // Default path on require error
+    // Fallback to the old path (for RN < 0.79)
+    XHRInterceptorModule = require("react-native/Libraries/Network/XHRInterceptor")
+  } catch (e2) {
+    console.error("Reactotron: Failed to require XHRInterceptor from both known paths.", e, e2)
+    console.warn(
+      "Reactotron: XHRInterceptor could not be loaded. Network monitoring will be disabled."
+    )
+    // Assign a dummy object later if checks fail
+    XHRInterceptorModule = null // Indicate failure to require
   }
 }
 
-// Dynamically require XHRInterceptor
 let XHRInterceptor
-const xhrInterceptorPath = getXhrInterceptorPath()
-
-try {
-  XHRInterceptor = require(xhrInterceptorPath)
-  // Basic check to ensure the required module looks like the XHRInterceptor
+if (XHRInterceptorModule) {
+  // Check if methods are directly on the module
   if (
-    typeof XHRInterceptor?.setSendCallback !== "function" ||
-    typeof XHRInterceptor?.setResponseCallback !== "function" ||
-    typeof XHRInterceptor?.enableInterception !== "function"
+    typeof XHRInterceptorModule.setSendCallback === "function" &&
+    typeof XHRInterceptorModule.setResponseCallback === "function" &&
+    typeof XHRInterceptorModule.enableInterception === "function"
   ) {
-    throw new Error("Required XHRInterceptor module does not have expected methods.")
+    XHRInterceptor = XHRInterceptorModule
   }
-} catch (e) {
-  console.error(`Reactotron: Failed to require XHRInterceptor from ${xhrInterceptorPath}.`, e)
-  console.warn(
-    "Reactotron: XHRInterceptor could not be loaded. Network monitoring will be disabled."
-  )
+  // Check if methods are on the default export
+  else if (
+    XHRInterceptorModule.default &&
+    typeof XHRInterceptorModule.default.setSendCallback === "function" &&
+    typeof XHRInterceptorModule.default.setResponseCallback === "function" &&
+    typeof XHRInterceptorModule.default.enableInterception === "function"
+  ) {
+    XHRInterceptor = XHRInterceptorModule.default
+  }
+}
+
+// If still no valid XHRInterceptor after checking module and module.default, assign the dummy
+if (!XHRInterceptor) {
+  // Log error only if we initially managed to require *something*
+  if (XHRInterceptorModule) {
+    console.error("Reactotron: Required XHRInterceptor module does not have expected methods.")
+    console.warn("Reactotron: Network monitoring will be disabled.")
+  }
   // Assign a dummy object to prevent crashes later when calling its methods
   XHRInterceptor = {
     setSendCallback: () => {},
