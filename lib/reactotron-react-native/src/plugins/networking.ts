@@ -4,6 +4,7 @@ import type { ReactotronCore, Plugin } from "reactotron-core-client"
 let XHRInterceptorModule
 try {
   // Try the new path first (for RN >= 0.79)
+  // Yay breaking changes :( https://github.com/facebook/react-native/releases/tag/v0.79.0#:~:text=APIs%3A%20Move-,XHRInterceptor,-API%20to%20src
   XHRInterceptorModule = require("react-native/src/private/inspector/XHRInterceptor")
 } catch (e) {
   try {
