@@ -14,7 +14,7 @@ test("features must be an object if they appear", () => {
 
 test("some names are not allowed", () => {
   const client = createClient({ createSocket })
-  const createPlugin = (features) => () => ({ features })
+  const createPlugin = (features) => () => ({ name: "test-plugin", features })
 
   const badPlugins = [
     "options",
@@ -38,7 +38,7 @@ test("features can be added and called", () => {
     const features = {
       magic: () => 42,
     }
-    return { features }
+    return { name: "test-plugin", features }
   }
   const client = createClient({ createSocket }).use(plugin())
   expect(typeof client.magic).toBe("function")
@@ -46,7 +46,10 @@ test("features can be added and called", () => {
 })
 
 test("you can overwrite other feature names", () => {
-  const createPlugin = (number) => () => ({ features: { hello: () => number } })
+  const createPlugin = (number) => () => ({
+    name: "test-plugin",
+    features: { hello: () => number },
+  })
   const client = createClient({ createSocket }).use(createPlugin(69))
   expect(client.hello()).toBe(69)
   expect(client.use(createPlugin(9001)).hello()).toBe(9001)

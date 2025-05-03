@@ -7,6 +7,7 @@ import {
   ReactNativeProvider,
   TimelineProvider,
   StateProvider,
+  ApolloClientProvider,
 } from "reactotron-core-ui"
 
 import KeybindHandler from "./KeybindHandler"
@@ -37,7 +38,9 @@ const ReactotronBrain: FunctionComponent<PropsWithChildren<Props>> = ({
         <StateProvider>
           <CustomCommandsProvider>
             <ReactNativeProvider>
+              <ApolloClientProvider>
               <KeybindHandler>{children}</KeybindHandler>
+              </ApolloClientProvider>
             </ReactNativeProvider>
           </CustomCommandsProvider>
         </StateProvider>

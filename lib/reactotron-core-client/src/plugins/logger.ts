@@ -5,6 +5,7 @@ import type { ReactotronCore, Plugin, InferFeatures } from "../reactotron-core-c
  */
 const logger = () => (reactotron: ReactotronCore) => {
   return {
+    name: "logger",
     features: {
       log: (...args) => {
         const content = args && args.length === 1 ? args[0] : args

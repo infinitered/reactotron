@@ -9,6 +9,6 @@ export default {
 
 export const Default = () => (
   <Router>
-    <SideBar isOpen serverStatus="started" />
+    <SideBar isOpen serverStatus="started" plugins={[]} />
   </Router>
 )
