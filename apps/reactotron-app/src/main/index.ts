@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from "electron"
-import path from "path"
-import { format as formatUrl } from "url"
+import path from "node:path"
+import { format as formatUrl } from "node:url"
 import log from "electron-log"
 import { autoUpdater } from "electron-updater"
 import windowStateKeeper from "electron-window-state"

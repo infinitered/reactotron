@@ -1,4 +1,3 @@
-import "v8-compile-cache"
 import React from "react"
 import { createRoot } from "react-dom/client"
 import { ReactotronAppProvider } from "reactotron-core-ui"
@@ -14,6 +13,3 @@ root.render(
   </ReactotronAppProvider>
 )
 
-if ((module as any).hot) {
-  ;(module as any).hot.accept()
-}

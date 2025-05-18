@@ -66,8 +66,7 @@ if (Platform.OS === "ios") {
     command: "showDevMenu",
     handler: () => {
       Reactotron.log("Showing React Native dev menu")
-      TurboModuleRegistry.get<{ show: () => void; getConstants: () => {} }>("DevMenu")?.show()
-    },
+      TurboModuleRegistry.get<{ show: () => void; getConstants: () => Record<string, never> }>("DevMenu")?.show()    },
   })
 }
 
