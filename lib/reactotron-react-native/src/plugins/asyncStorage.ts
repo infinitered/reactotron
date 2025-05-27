@@ -4,7 +4,7 @@ export interface AsyncStorageOptions {
   ignore?: string[]
 }
 
-const PLUGIN_DEFAULTS: AsyncStorageOptions = {
+const PLUGIN_DEFAULTS: Required<AsyncStorageOptions> = {
   ignore: [],
 }
 
