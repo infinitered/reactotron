@@ -1,7 +1,7 @@
 import type { ReactotronCore, Plugin } from "reactotron-core-client"
 import type { AsyncStorageStatic } from "@react-native-async-storage/async-storage"
 export interface AsyncStorageOptions {
-  ignore?: string[]
+  ignore?: (string | RegExp)[]
 }
 
 const PLUGIN_DEFAULTS: AsyncStorageOptions = {
