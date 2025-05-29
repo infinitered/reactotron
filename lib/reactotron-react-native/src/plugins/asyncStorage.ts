@@ -8,6 +8,18 @@ const PLUGIN_DEFAULTS: AsyncStorageOptions = {
   ignore: [],
 }
 
+function shouldIgnore(key, ignore) {
+  for (const pattern of ignore) {
+    if (typeof pattern === "string") {
+      return key.includes(pattern)
+    }
+    if (pattern instanceof RegExp) {
+      return pattern.test(key)
+    }
+  }
+  return false
+}
+
 const asyncStorage = (options?: AsyncStorageOptions) => (reactotron: ReactotronCore) => {
   // setup configuration
   const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
@@ -28,7 +40,7 @@ const asyncStorage = (options?: AsyncStorageOptions) => (reactotron: ReactotronC
 
   const setItem: AsyncStorageStatic["setItem"] = async (key, value, callback) => {
     try {
-      if (ignore.indexOf(key) < 0) {
+      if (!shouldIgnore(key, ignore)) {
         sendToReactotron("setItem", { key, value })
       }
     } catch (e) {}
@@ -37,7 +49,7 @@ const asyncStorage = (options?: AsyncStorageOptions) => (reactotron: ReactotronC
 
   const removeItem: AsyncStorageStatic["removeItem"] = async (key, callback) => {
     try {
-      if (ignore.indexOf(key) < 0) {
+      if (!shouldIgnore(key, ignore)) {
         sendToReactotron("removeItem", { key })
       }
     } catch (e) {}
@@ -46,7 +58,7 @@ const asyncStorage = (options?: AsyncStorageOptions) => (reactotron: ReactotronC
 
   const mergeItem: AsyncStorageStatic["mergeItem"] = async (key, value, callback) => {
     try {
-      if (ignore.indexOf(key) < 0) {
+      if (!shouldIgnore(key, ignore)) {
         sendToReactotron("mergeItem", { key, value })
       }
     } catch (e) {}
@@ -63,7 +75,7 @@ const asyncStorage = (options?: AsyncStorageOptions) => (reactotron: ReactotronC
   const multiSet: AsyncStorageStatic["multiSet"] = async (pairs, callback) => {
     try {
       const shippablePairs = (pairs || []).filter(
-        (pair) => pair && pair[0] && ignore.indexOf(pair[0]) < 0
+        (pair) => pair && pair[0] && !shouldIgnore(pair[0], ignore)
       )
       if (shippablePairs.length > 0) {
         sendToReactotron("multiSet", { pairs: shippablePairs })
@@ -74,7 +86,7 @@ const asyncStorage = (options?: AsyncStorageOptions) => (reactotron: ReactotronC
 
   const multiRemove: AsyncStorageStatic["multiRemove"] = async (keys, callback) => {
     try {
-      const shippableKeys = (keys || []).filter((key) => ignore.indexOf(key) < 0)
+      const shippableKeys = (keys || []).filter((key) => !shouldIgnore(key, ignore))
       if (shippableKeys.length > 0) {
         sendToReactotron("multiRemove", { keys: shippableKeys })
       }
@@ -85,7 +97,7 @@ const asyncStorage = (options?: AsyncStorageOptions) => (reactotron: ReactotronC
   const multiMerge: AsyncStorageStatic["multiMerge"] = async (pairs, callback) => {
     try {
       const shippablePairs = (pairs || []).filter(
-        (pair) => pair && pair[0] && ignore.indexOf(pair[0]) < 0
+        (pair) => pair && pair[0] && !shouldIgnore(pair[0], ignore)
       )
       if (shippablePairs.length > 0) {
         sendToReactotron("multiMerge", { pairs: shippablePairs })
