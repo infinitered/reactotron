@@ -8,7 +8,6 @@ import {
   Tooltip,
 } from "reactotron-core-ui"
 import type { Snapshot } from "reactotron-core-ui"
-import { clipboard } from "electron"
 import styled from "styled-components"
 import {
   MdCreate,
@@ -19,6 +18,7 @@ import {
   MdCallReceived,
   MdFileDownload,
 } from "react-icons/md"
+import { clipboard } from "../../util/ipc"
 
 const Container = styled.div`
   display: flex;

@@ -1,5 +1,4 @@
 import React from "react"
-import { ipcRenderer } from "electron"
 import styled from "styled-components"
 import { GoGear as SettingsIcon } from "react-icons/go"
 import { MdCompareArrows as ReverseTunnelIcon } from "react-icons/md"
@@ -8,6 +7,7 @@ import { IoReloadOutline as ReloadAppIcon } from "react-icons/io5"
 import { EmptyState, Tooltip } from "reactotron-core-ui"
 import { FaAndroid } from "react-icons/fa"
 import { ItemContainer, ItemIconContainer } from "../SharedStyles"
+import { ipcRenderer } from "../../../util/ipc"
 
 const Container = styled.div`
   margin: 50px 0px;

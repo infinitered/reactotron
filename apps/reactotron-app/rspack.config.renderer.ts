@@ -5,6 +5,7 @@ import path from "node:path"
 import { type ChildProcess, spawn } from "node:child_process"
 // import ReactRefreshRspackPlugin from '@rspack/plugin-react-refresh';
 let mainProcess: ChildProcess | null = null
+let preloadProcess: ChildProcess | null = null
 let isFirstBuild = true
 
 export default defineConfig((env) => {
@@ -36,17 +37,55 @@ export default defineConfig((env) => {
 
           compiler.hooks.afterEmit.tap("AfterEmitPlugin", () => {
             if (isFirstBuild) {
+              // Kill existing processes
+              if (preloadProcess) {
+                preloadProcess.kill()
+              }
               if (mainProcess) {
                 mainProcess.kill()
               }
 
-              mainProcess = spawn("rspack", ["build", "-c", "./rspack.config.main.ts"], {
+              // 1. Build preload script first
+              preloadProcess = spawn("rspack", ["build", "-c", "./rspack.config.preload.ts"], {
                 stdio: "inherit",
                 shell: true,
                 env: {
                   ...process.env,
                   NODE_ENV: "development",
                 },
+              })
+
+              // 2. Build main process after preload build completes
+              preloadProcess.on("close", (code) => {
+                console.log(`🔧 Preload build process exited with code ${code}`)
+
+                if (code === 0) {
+                  // Only build main process if preload build was successful
+                  console.log("✅ Preload build successful, starting main build...")
+                  mainProcess = spawn("rspack", ["build", "-c", "./rspack.config.main.ts"], {
+                    stdio: "inherit",
+                    shell: true,
+                    env: {
+                      ...process.env,
+                      NODE_ENV: "development",
+                    },
+                  })
+
+                  mainProcess.on("close", (mainCode) => {
+                    console.log(`🎯 Main build process exited with code ${mainCode}`)
+                    if (mainCode === 0) {
+                      console.log("🚀 All builds completed successfully!")
+                    } else {
+                      console.error(`❌ Main build failed with code ${mainCode}`)
+                    }
+                  })
+                } else {
+                  console.error(`❌ Preload build failed with code ${code}`)
+                }
+              })
+
+              preloadProcess.on("error", (err) => {
+                console.error("❌ Preload build process error:", err)
               })
 
               isFirstBuild = false
@@ -72,35 +111,15 @@ export default defineConfig((env) => {
       hot: false,
       liveReload: true,
     },
-    externals: [
-      "electron",
-      "fs",
-      "path",
-      "crypto",
-      "stream",
-      "buffer",
-      "util",
-      "assert",
-      "url",
-      "os",
-      "http",
-      "https",
-      "zlib",
-      "constants",
-      "timers",
-      "process",
-      "mitt",
-      "ws",
-    ],
     resolve: {
+      modules: [
+        "node_modules",
+        path.resolve(__dirname, "../../node_modules"), // Root node_modules
+        path.resolve(__dirname, "./node_modules"), // App node_modules
+      ],
       alias: {
         "reactotron-core-server": require.resolve("reactotron-core-server"),
       },
-      modules: [
-        "node_modules",
-        path.resolve(__dirname, "../../node_modules"), // 루트 node_modules
-        path.resolve(__dirname, "./node_modules"), // 앱 node_modules
-      ],
       tsConfig: path.resolve(__dirname, "./tsconfig.json"),
       extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
     },

@@ -1,4 +1,4 @@
-import childProcess from "child_process"
+import childProcess from "node:child_process"
 import { type BrowserWindow, dialog, ipcMain } from "electron"
 
 // This function sets up numerous IPC commands for communicating with android devices.
@@ -92,7 +92,7 @@ export const setupAndroidDeviceIPCCommands = (mainWindow: BrowserWindow) => {
     dialog.showMessageBox({
       title: "Android communication problem",
       type: "warning",
-      message: "Error occurred running adb track-devices.\n" + error,
+      message: `Error occurred running adb track-devices.\n${error}`,
     })
   })
   trackDevicesProcess.stdout.setEncoding("utf8")

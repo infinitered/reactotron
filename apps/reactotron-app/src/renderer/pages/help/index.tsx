@@ -1,5 +1,4 @@
 import React from "react"
-import { shell } from "electron"
 import { Header } from "reactotron-core-ui"
 import styled from "styled-components"
 import {
@@ -12,6 +11,7 @@ import { getApplicationKeyMap } from "react-hotkeys"
 import { ItemContainer, ItemIconContainer } from "./SharedStyles"
 import KeybindGroup from "./components/KeybindGroup"
 import { reactotronLogo } from "../../images"
+import { shell } from "../../util/ipc"
 
 const projectJson = require("../../../../package.json")
 

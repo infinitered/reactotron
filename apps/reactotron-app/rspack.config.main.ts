@@ -5,6 +5,30 @@ import { type ChildProcess, spawn } from "node:child_process"
 
 let electronProcess: ChildProcess | null = null
 
+// Kill Electron process when the process exits
+function cleanup() {
+  if (electronProcess) {
+    console.log("🧹 Cleaning up Electron process...")
+    if (process.platform === "win32" && electronProcess.pid) {
+      try {
+        spawn("taskkill", ["/pid", electronProcess.pid.toString(), "/T", "/F"], {
+          stdio: "inherit",
+          shell: true,
+        })
+      } catch (err) {
+        console.warn("Failed to kill electron process during cleanup:", err)
+      }
+    } else {
+      electronProcess.kill("SIGTERM")
+    }
+    electronProcess = null
+  }
+}
+
+process.on("SIGINT", cleanup)
+process.on("SIGTERM", cleanup)
+process.on("exit", cleanup)
+
 const optionalPlugins: any[] = []
 if (process.platform !== "darwin") {
   optionalPlugins.push(new rspack.IgnorePlugin({ resourceRegExp: /^fsevents$/ }))
@@ -32,6 +56,34 @@ export default defineConfig((env) => {
     resolve: {
       extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
     },
+    externals: [
+      "electron",
+      "fs",
+      "path",
+      "crypto",
+      "stream",
+      "buffer",
+      "util",
+      "assert",
+      "url",
+      "os",
+      "http",
+      "https",
+      "zlib",
+      "constants",
+      "timers",
+      "process",
+      "mitt",
+      "ws",
+      "reactotron-core-server",
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:stream",
+      "node:buffer",
+      "node:util",
+      "node:assert",
+    ],
     module: {
       rules: [
         {
@@ -94,14 +146,49 @@ export default defineConfig((env) => {
         apply(compiler) {
           if (!isDevelopment) return
           compiler.hooks.afterEmit.tap("AfterEmitPlugin", () => {
+            // Force kill existing Electron process
             if (electronProcess) {
-              electronProcess.kill()
+              console.log("🔄 Restarting Electron process...")
+
+              // Kill entire process tree on Windows
+              if (process.platform === "win32" && electronProcess.pid) {
+                try {
+                  spawn("taskkill", ["/pid", electronProcess.pid.toString(), "/T", "/F"], {
+                    stdio: "inherit",
+                    shell: true,
+                  })
+                } catch (err) {
+                  console.warn("Failed to kill process tree:", err)
+                }
+              } else {
+                // SIGTERM followed by SIGKILL on Unix systems
+                electronProcess.kill("SIGTERM")
+                setTimeout(() => {
+                  if (electronProcess && !electronProcess.killed) {
+                    electronProcess.kill("SIGKILL")
+                  }
+                }, 2000)
+              }
+
+              electronProcess = null
             }
 
-            electronProcess = spawn("electron", [path.join(__dirname, "./dist/main/main.js")], {
-              stdio: "inherit",
-              shell: true,
-            })
+            // Start new Electron process (with slight delay)
+            setTimeout(() => {
+              electronProcess = spawn("electron", [path.join(__dirname, "./dist/main/main.js")], {
+                stdio: "inherit",
+                shell: true,
+              })
+
+              electronProcess.on("error", (err) => {
+                console.error("❌ Electron process error:", err)
+              })
+
+              electronProcess.on("exit", (code, signal) => {
+                console.log(`🔄 Electron process exited with code ${code} and signal ${signal}`)
+                electronProcess = null
+              })
+            }, 500)
           })
         },
       },

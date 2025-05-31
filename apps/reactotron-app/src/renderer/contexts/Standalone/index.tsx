@@ -1,10 +1,9 @@
 import React, { useRef, useEffect, useCallback } from "react"
-import Server, { createServer } from "reactotron-core-server"
 
 import ReactotronBrain from "../../ReactotronBrain"
-import config from "../../config"
 
-import useStandalone, { Connection, ServerStatus } from "./useStandalone"
+import useStandalone, { type Connection, type ServerStatus } from "./useStandalone"
+import { ipcRenderer } from "../../util/ipc"
 
 // TODO: Move up to better places like core somewhere!
 interface Context {
@@ -22,7 +21,7 @@ const StandaloneContext = React.createContext<Context>({
 })
 
 const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const reactotronServer = useRef<Server>(null)
+  const reactotronIsServerStarted = useRef<boolean>(false)
 
   const {
     serverStatus,
@@ -41,21 +40,39 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   } = useStandalone()
 
   useEffect(() => {
-    reactotronServer.current = createServer({ port: config.get("serverPort") as number })
+    ipcRenderer.on('start', () => {
+      reactotronIsServerStarted.current = true
+      serverStarted()
+    })
+    ipcRenderer.on('stop', () => {
+      reactotronIsServerStarted.current = false
+      serverStopped()
+    })
+    ipcRenderer.on('connectionEstablished', (_, args) => {
+      connectionEstablished(args)
+    })
+    ipcRenderer.on('command', (_, args) => {
+      commandReceived(args)
+    })
+    ipcRenderer.on('disconnect', (_, args) => {
+      connectionDisconnected(args)
+    })
+    ipcRenderer.on('portUnavailable', () => {
+      portUnavailable()
+    })
 
-    reactotronServer.current.on("start", serverStarted)
-    reactotronServer.current.on("stop", serverStopped)
-    // @ts-expect-error need to sync these types between reactotron-core-server and reactotron-app
-    reactotronServer.current.on("connectionEstablished", connectionEstablished)
-    reactotronServer.current.on("command", commandReceived)
-    // @ts-expect-error need to sync these types between reactotron-core-server and reactotron-app
-    reactotronServer.current.on("disconnect", connectionDisconnected)
-    reactotronServer.current.on("portUnavailable", portUnavailable)
 
-    reactotronServer.current.start()
-
+    ipcRenderer.sendSync('core-server-start');
+    
+    
     return () => {
-      reactotronServer.current.stop()
+      ipcRenderer.removeAllListeners('start')
+      ipcRenderer.removeAllListeners('stop')
+      ipcRenderer.removeAllListeners('connectionEstablished')
+      ipcRenderer.removeAllListeners('command')
+      ipcRenderer.removeAllListeners('disconnect')
+      ipcRenderer.removeAllListeners('portUnavailable')
+      ipcRenderer.sendSync('core-server-stop');
     }
   }, [
     serverStarted,
@@ -68,12 +85,11 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   const sendCommand = useCallback(
     (type: string, payload: any, clientId?: string) => {
-      // TODO: Do better then just throwing these away...
-      if (!reactotronServer.current) return
-
-      reactotronServer.current.send(type, payload, clientId || selectedClientId)
+      if(!reactotronIsServerStarted.current) return;
+      
+      ipcRenderer?.send('core-server-send-command', { type, payload, clientId: clientId || selectedClientId })
     },
-    [reactotronServer, selectedClientId]
+    [selectedClientId]
   )
 
   return (

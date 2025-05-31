@@ -1,8 +1,4 @@
 import React, { useCallback, useContext, useMemo } from "react"
-import { clipboard, shell } from "electron"
-import fs from "fs"
-import os from "os"
-import path from "path"
 import debounce from "lodash.debounce"
 import {
   Header,
@@ -24,6 +20,7 @@ import {
 } from "react-icons/md"
 import { FaTimes } from "react-icons/fa"
 import styled from "styled-components"
+import { clipboard, fs, os, path, shell } from "../../util/ipc"
 
 const Container = styled.div`
   display: flex;

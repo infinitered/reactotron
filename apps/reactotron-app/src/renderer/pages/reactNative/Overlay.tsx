@@ -1,7 +1,5 @@
 import React, { useContext } from "react"
 import styled from "styled-components"
-import fs from "fs"
-import { nativeImage } from "electron"
 import { Header, ReactNativeContext } from "reactotron-core-ui"
 import { MdBook, MdCamera } from "react-icons/md"
 
@@ -17,6 +15,7 @@ import { OverlayMargins } from "./components/OverlayMargins"
 import type { DragEvent } from "react"
 import type { JustifyContent, AlignItems } from "./components/OverlayAlignment"
 import type { ResizeMode } from "./components/OverlayResizeMode"
+import { fs, nativeImage } from "../../util/ipc"
 
 const isDevelopment = process.env.NODE_ENV !== "production"
 
