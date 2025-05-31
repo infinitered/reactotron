@@ -70,6 +70,9 @@ export const reactotronCoreServerInit = (mainWindow: BrowserWindow) => {
   })
 
   ipcMain.on("core-server-start", async (event) => {
+    if(server.started) {
+      await server.stop()
+    }
     await server.start()
     event.returnValue = true
   })
