@@ -12,6 +12,7 @@ import { fsInit } from "./node/fs"
 import { osInit } from "./node/os"
 import { pathInit } from "./node/path"
 import { clipboardInit } from "./node/clipboard"
+import { shellInit } from "./node/shell"
 
 const isDevelopment = process.env.NODE_ENV !== "production"
 Store.initRenderer();
@@ -61,6 +62,7 @@ function createMainWindow() {
     pathInit();
     storeInit();
     clipboardInit()
+    shellInit()
 
     if (isDevelopment) {
       window.webContents.openDevTools()

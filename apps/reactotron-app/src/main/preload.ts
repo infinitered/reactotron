@@ -14,12 +14,7 @@ const electron =  {
     sendSync: (channel: string, ...args: any[]) => ipcRenderer.sendSync(channel, ...args),
   },
   shell: {
-    openExternal: (url: string) => shell.openExternal(url),
-    showItemInFolder: (path: string) => shell.showItemInFolder(path),
-    openPath: (path: string) => shell.openPath(path),
-    readShortcutLink: (path: string) => shell.readShortcutLink(path),
-    trashItem: (path: string) => shell.trashItem(path),
-    beep: () => shell.beep(),
+    openExternal: (url: string) => ipcRenderer.send('shell-openExternal', { url }),
   },
   nativeImage: {
     createEmpty: () => nativeImage.createEmpty(),
