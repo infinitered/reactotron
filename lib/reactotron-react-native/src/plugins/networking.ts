@@ -3,20 +3,25 @@ import type { ReactotronCore, Plugin } from "reactotron-core-client"
 // Attempt to require XHRInterceptor using static paths
 let XHRInterceptorModule
 try {
-  // Try the new path first (for RN >= 0.79)
-  // Yay breaking changes :( https://github.com/facebook/react-native/releases/tag/v0.79.0#:~:text=APIs%3A%20Move-,XHRInterceptor,-API%20to%20src
-  XHRInterceptorModule = require("react-native/src/private/inspector/XHRInterceptor")
+  // Try path first (for RN >= 0.80)
+  XHRInterceptorModule = require("react-native/src/private/devsupport/devmenu/elementinspector/XHRInterceptor")
 } catch (e) {
   try {
-    // Fallback to the old path (for RN < 0.79)
-    XHRInterceptorModule = require("react-native/Libraries/Network/XHRInterceptor")
+    // Try path for RN 0.79
+    // Yay breaking changes :( https://github.com/facebook/react-native/releases/tag/v0.79.0#:~:text=APIs%3A%20Move-,XHRInterceptor,-API%20to%20src
+    XHRInterceptorModule = require("react-native/src/private/inspector/XHRInterceptor")
   } catch (e2) {
-    console.error("Reactotron: Failed to require XHRInterceptor from both known paths.", e, e2)
-    console.warn(
-      "Reactotron: XHRInterceptor could not be loaded. Network monitoring will be disabled."
-    )
-    // Assign a dummy object later if checks fail
-    XHRInterceptorModule = null // Indicate failure to require
+    try {
+      // Fallback to the old path (for RN < 0.79)
+      XHRInterceptorModule = require("react-native/Libraries/Network/XHRInterceptor")
+    } catch (e3) {
+      console.error("Reactotron: Failed to require XHRInterceptor from all known paths.", e, e2, e3)
+      console.warn(
+        "Reactotron: XHRInterceptor could not be loaded. Network monitoring will be disabled."
+      )
+      // Assign a dummy object later if checks fail
+      XHRInterceptorModule = null // Indicate failure to require
+    }
   }
 }
 
