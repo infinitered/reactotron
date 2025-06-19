@@ -11,7 +11,7 @@ import { getApplicationKeyMap } from "react-hotkeys"
 import { ItemContainer, ItemIconContainer } from "./SharedStyles"
 import KeybindGroup from "./components/KeybindGroup"
 import { reactotronLogo } from "../../images"
-import { shell } from "../../util/ipc"
+import { openUrl } from '@tauri-apps/plugin-opener';
 
 const projectJson = require("../../../../package.json")
 
@@ -48,19 +48,19 @@ const ConnectContainer = styled.div`
 `
 
 function openRepo() {
-  shell.openExternal("https://github.com/infinitered/reactotron")
+  openUrl("https://github.com/infinitered/reactotron")
 }
 
 function openFeedback() {
-  shell.openExternal("https://github.com/infinitered/reactotron/issues/new")
+  openUrl("https://github.com/infinitered/reactotron/issues/new")
 }
 
 function openUpdates() {
-  shell.openExternal("https://github.com/infinitered/reactotron/releases")
+  openUrl("https://github.com/infinitered/reactotron/releases")
 }
 
 function openTwitter() {
-  shell.openExternal("https://twitter.com/reactotron")
+  openUrl("https://twitter.com/reactotron")
 }
 
 function Keybinds() {

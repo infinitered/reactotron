@@ -1,0 +1,5 @@
+{
+  "rust-analyzer.linkedProjects": [
+    "${workspaceFolder}/apps/reactotron-app/src-tauri/Cargo.toml"
+  ]
+}

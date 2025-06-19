@@ -1,8 +1,9 @@
 import React, { Fragment } from "react"
 import styled from "styled-components"
+import { platform as osPlatform } from '@tauri-apps/plugin-os';
 
-const platform = window.process.platform
-const mouseTrap = platform === "darwin" ? "command" : "ctrl"
+const platform = window?.process?.platform || osPlatform();
+const mouseTrap = ["darwin", "macos"].includes(platform) ? "command" : "ctrl"
 
 const KEY_REMAPS = {
   command: "⌘",

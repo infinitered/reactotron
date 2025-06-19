@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react"
+import { writeText } from '@tauri-apps/plugin-clipboard-manager';
 import {
   ContentView,
   SnapshotRenameModal,
@@ -172,7 +173,7 @@ function Snapshots() {
             tip: "Copy all snapshots to clipboard",
             icon: MdCallReceived,
             onClick: () => {
-              clipboard.writeText(JSON.stringify(snapshots))
+              writeText(JSON.stringify(snapshots))
             },
           },
           {

@@ -10,6 +10,7 @@ let isFirstBuild = true
 
 export default defineConfig((env) => {
   const isDevelopment = env.RSPACK_SERVE
+  const isTauri = process.env?.TAURI_ENV === "true"
   return {
     mode: env.NODE_ENV === "development" ? "development" : "production",
     devtool: "source-map",
@@ -34,6 +35,7 @@ export default defineConfig((env) => {
       {
         apply(compiler) {
           if (!isDevelopment) return
+          if (isTauri) return
 
           compiler.hooks.afterEmit.tap("AfterEmitPlugin", () => {
             if (isFirstBuild) {

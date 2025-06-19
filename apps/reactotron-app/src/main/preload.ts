@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer, nativeImage, shell } from 'electron'
+import { contextBridge, ipcRenderer, nativeImage } from 'electron'
 
 const electron =  { 
   clipboard: {

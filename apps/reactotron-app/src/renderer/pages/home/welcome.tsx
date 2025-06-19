@@ -2,7 +2,8 @@ import React from "react"
 import styled from "styled-components"
 import { reactotronLogo } from "../../images"
 import { EmptyState } from "reactotron-core-ui"
-import { shell } from "../../util/ipc"
+import { openUrl } from '@tauri-apps/plugin-opener';
+
 
 const WelcomeText = styled.div`
   font-size: 1.25em;
@@ -22,7 +23,7 @@ const Container = styled.div`
 `
 
 function openDocs() {
-  shell.openExternal("https://docs.infinite.red/reactotron/")
+  openUrl("https://docs.infinite.red/reactotron/")
 }
 
 function Welcome() {

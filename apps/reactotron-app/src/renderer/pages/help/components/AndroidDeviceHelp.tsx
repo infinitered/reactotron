@@ -108,22 +108,22 @@ function AndroidDeviceHelp() {
 
   // When the page loads, get the list of devices from ADB to help users debug android issues.
   React.useEffect(() => {
-    ipcRenderer.on("device-list", (_event, arg) => {
-      arg = arg.replace(/(\r\n|\n|\r)/gm, "\n").trim() // Fix newlines
-      const rawDevices = arg.split("\n")
-      rawDevices.shift() // Remove the first line
-      const devices = rawDevices.map((device) => {
-        const [id, state] = device.split("\t")
-        return { id, state }
-      })
-      setAndroidDevices(devices)
-    })
+    // ipcRenderer.on("device-list", (_event, arg) => {
+    //   arg = arg.replace(/(\r\n|\n|\r)/gm, "\n").trim() // Fix newlines
+    //   const rawDevices = arg.split("\n")
+    //   rawDevices.shift() // Remove the first line
+    //   const devices = rawDevices.map((device) => {
+    //     const [id, state] = device.split("\t")
+    //     return { id, state }
+    //   })
+    //   setAndroidDevices(devices)
+    // })
 
-    ipcRenderer.send("get-device-list")
+    // ipcRenderer.send("get-device-list")
 
-    return () => {
-      ipcRenderer.removeAllListeners("device-list")
-    }
+    // return () => {
+    //   ipcRenderer.removeAllListeners("device-list")
+    // }
   }, [])
 
   const TitleComponent = React.useCallback(() => {

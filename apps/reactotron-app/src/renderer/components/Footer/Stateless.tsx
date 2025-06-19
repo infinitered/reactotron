@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { MdSwapVert as ExpandIcon } from "react-icons/md"
 
@@ -9,7 +9,7 @@ import {
 } from "../../util/connectionHelpers"
 import type { Connection, ServerStatus } from "../../contexts/Standalone/useStandalone"
 import ConnectionSelector from "../ConnectionSelector"
-import { config } from "../../util/ipc"
+import { store } from "../../util/store"
 
 const Container = styled.div`
   border-top: 1px solid ${(props) => props.theme.chromeLine};
@@ -53,7 +53,9 @@ function renderExpanded(
   serverStatus: ServerStatus,
   connections: Connection[],
   selectedConnection: Connection | null,
-  onChangeConnection: (clientId: string | null) => void
+  onChangeConnection: (clientId: string | null) => void,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  serverPort?: string
 ) {
   return (
     <ConnectionContainer>
@@ -80,12 +82,14 @@ function renderConnectionInfo(selectedConnection) {
 function renderCollapsed(
   serverStatus: ServerStatus,
   connections: Connection[],
-  selectedConnection: Connection | null
+  selectedConnection: Connection | null,
+  onChangeConnection: (clientId: string | null) => void,
+  serverPort: string
 ) {
   return (
     <>
       <ConnectionInfo>
-        port {config.get("serverPort")} | {connections.length} connections
+        port {serverPort} | {connections.length} connections
       </ConnectionInfo>
       {serverStatus === "portUnavailable" && (
         <ConnectionInfo>Port 9090 unavailable.</ConnectionInfo>
@@ -115,12 +119,19 @@ function Header({
   setIsOpen,
   onChangeConnection,
 }: Props) {
+  const [serverPort, setServerPort] = useState("");
+
+  useEffect(() => {
+    store.get("serverPort").then((port) => {
+      setServerPort(port as string);
+    });
+  }, []);
   const renderMethod = isOpen ? renderExpanded : renderCollapsed
 
   return (
     <Container>
       <ContentContainer onClick={() => !isOpen && setIsOpen(true)} $isOpen={isOpen}>
-        {renderMethod(serverStatus, connections, selectedConnection, onChangeConnection)}
+        {renderMethod(serverStatus, connections, selectedConnection, onChangeConnection, serverPort)}
         <ExpandContainer onClick={() => setIsOpen(!isOpen)}>
           <ExpandIcon size={18} />
         </ExpandContainer>
