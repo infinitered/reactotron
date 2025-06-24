@@ -19,7 +19,6 @@ import {
   MdCallReceived,
   MdFileDownload,
 } from "react-icons/md"
-import { clipboard } from "../../util/ipc"
 
 const Container = styled.div`
   display: flex;
@@ -84,7 +83,7 @@ function SnapshotItem({
           data-for="copy-to-clipboard"
           onClick={(e) => {
             e.stopPropagation()
-            clipboard.writeText(JSON.stringify(snapshot))
+            writeText(JSON.stringify(snapshot))
           }}
         >
           <MdCallReceived size={24} />
