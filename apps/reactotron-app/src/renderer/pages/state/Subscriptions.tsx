@@ -154,7 +154,6 @@ function Subscriptions() {
               autoFocus
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Search in paths and values..."
             />
             <ButtonContainer
               onClick={() => {
@@ -193,7 +192,7 @@ function Subscriptions() {
               <SubscriptionContainer key={`subscription-${subscription.path}-${index}`}>
                 <SubscriptionPath>{subscription.path}</SubscriptionPath>
                 <SubscriptionValue>
-                  <ContentView value={value} />
+                  <ContentView value={value} searchTerm={search} />
                 </SubscriptionValue>
                 <SubscriptionRemove>
                   <MdDelete
