@@ -105,7 +105,7 @@ export default defineConfig((env) => {
     },
     output: {
       filename: "[name].bundle.js",
-      path: path.join(__dirname, "./dist/renderer"),
+      path: path.join(__dirname, "./dist"),
     },
     devServer: {
       static: path.join(__dirname, "./dist/renderer"),
