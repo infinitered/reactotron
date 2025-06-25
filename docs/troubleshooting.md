@@ -55,6 +55,6 @@ As of 1.1.4, the proper IP address is auto-discovered. Simply leave the `configu
 
 ## Web
 
-If you are using Expo and opening your app in a browser, having only integrated Reactotron for the native side, you will see some confusing errors.
+If you are using Expo and open your app in a browser, having only integrated Reactotron for the native side, you will see some confusing errors.
 
 In this case you need to integrate Reactotron for *both* web and native by following this guide: [expo-web-and-native](./quick-start/expo-web-and-native.md)
