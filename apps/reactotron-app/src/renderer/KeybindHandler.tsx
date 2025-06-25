@@ -1,7 +1,8 @@
-import React, { useContext } from "react"
-import { GlobalHotKeys, KeyEventName } from "react-hotkeys"
+import React, { useContext, useRef } from "react"
+import { GlobalHotKeys, type KeyEventName } from "react-hotkeys"
 import { ReactotronContext, StateContext, TimelineContext } from "reactotron-core-ui"
 import LayoutContext from "./contexts/Layout"
+import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow"
 
 const keyMap = {
   // Application wide
@@ -10,11 +11,29 @@ const keyMap = {
     group: "Application",
     sequences: ["command+shift+s", "ctrl+shift+s"],
     action: "keyup" as KeyEventName,
-  },
+  },  
   ToggleSearch: {
     name: "Toggle Timeline Search",
     group: "Application",
     sequences: ["command+shift+l", "ctrl+shift+l"],
+    action: "keyup" as KeyEventName,
+  },
+  ZoomIn: {
+    name: "Zoom In",
+    group: "Application",
+    sequences: ["command+=", "ctrl+="],
+    action: "keyup" as KeyEventName,
+  },
+  ZoomOut: {
+    name: "Zoom Out",
+    group: "Application",
+    sequences: ["command+-", "ctrl+-"],
+    action: "keyup" as KeyEventName,
+  },
+  ZoomReset: {
+    name: "Reset Zoom",
+    group: "Application",
+    sequences: ["command+0", "ctrl+0"],
     action: "keyup" as KeyEventName,
   },
   // Tab Navigation
@@ -94,8 +113,45 @@ function KeybindHandler({ children }) {
   const { openDispatchModal, openSubscriptionModal, clearCommands } = useContext(ReactotronContext)
   const { openSearch, toggleSearch } = useContext(TimelineContext)
   const { createSnapshot } = useContext(StateContext)
+  
+  const currentZoomRef = useRef(1.0)
 
   const handlers = {
+    
+    ZoomIn: async () => {
+      try {
+        const webviewWindow = getCurrentWebviewWindow()
+        
+        const currentZoom = currentZoomRef.current
+        const newZoom = currentZoom + 0.1
+        
+        await webviewWindow.setZoom(newZoom)
+        currentZoomRef.current = newZoom
+      } catch (error) {
+        console.error('Zoom in failed:', error)
+      }
+    },
+    ZoomOut: async () => {
+      try {
+        const webviewWindow = getCurrentWebviewWindow()
+        const currentZoom = currentZoomRef.current
+        const newZoom = Math.max(currentZoom - 0.1, 0.1)
+        await webviewWindow.setZoom(newZoom)
+        currentZoomRef.current = newZoom
+      } catch (error) {
+        console.error('Zoom out failed:', error)
+      }
+    },
+    ZoomReset: async () => {
+      try {
+        const webviewWindow = getCurrentWebviewWindow()
+        await webviewWindow.setZoom(1.0)
+        currentZoomRef.current = 1.0
+      } catch (error) {
+        console.error('Zoom reset failed:', error)
+      }
+    },
+
     // Tab Navigation
     OpenHomeTab: () => {
       window.location.hash = "/"
