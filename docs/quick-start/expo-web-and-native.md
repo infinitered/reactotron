@@ -56,7 +56,7 @@ Reactotron.configure() // we can use plugins here
 
 #### **Step 3 - Add Reactotron to your app**
 
-Finally, we import this the `app/_layout.js` file which is the lowest-level file that Expo Router gives us access to.
+Finally, we import the configuration in the `app/_layout.js` file which is the lowest-level file that Expo Router gives us access to.
 
 After the imports:
 
