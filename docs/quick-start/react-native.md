@@ -5,6 +5,8 @@ title: react-native
 
 # Quick Start for React Native
 
+If you are using Expo *and* targeting *both* the native and web platforms, follow the [expo-web-and-native](./expo-web-and-native.md) guide instead.
+
 ## Installing Reactotron.app
 
 Let’s [download the desktop app](https://github.com/infinitered/reactotron/releases?q=reactotron-app&expanded=true) to start. You can download for Linux, Windows, and Mac.

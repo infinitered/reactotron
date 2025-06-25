@@ -52,3 +52,9 @@ and reload the app on your device.
 This only works on Android 5.x+.
 
 As of 1.1.4, the proper IP address is auto-discovered. Simply leave the `configure` as is.
+
+## Web
+
+If you are using Expo and open your app in a browser, having only integrated Reactotron for the native side, you will see some confusing errors.
+
+In this case you need to integrate Reactotron for *both* web and native by following this guide: [expo-web-and-native](./quick-start/expo-web-and-native.md)
