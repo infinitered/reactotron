@@ -21,9 +21,10 @@ interface Props {
   // value: object | string | number | boolean | null | undefined
   value: any
   treeLevel?: number
+  searchTerm?: string
 }
 
-export default function ContentView({ value, treeLevel }: Props) {
+export default function ContentView({ value, treeLevel, searchTerm = "" }: Props) {
   if (value === null) return <NullContainer>null</NullContainer>
   if (value === undefined) return <UndefinedContainer>undefined</UndefinedContainer>
 
@@ -54,7 +55,7 @@ export default function ContentView({ value, treeLevel }: Props) {
     return isShallow(checkValue) ? (
       makeTable(checkValue)
     ) : (
-      <TreeView value={checkValue} level={treeLevel} />
+      <TreeView value={checkValue} level={treeLevel} searchTerm={searchTerm} />
     )
   }
 
