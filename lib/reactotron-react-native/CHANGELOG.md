@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [5.1.15](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.14...reactotron-react-native@5.1.15) (2025-08-12)
+
+
+### Bug Fixes
+
+* PLUGIN_DEFAULTS type in asyncStorage.ts ([#1558](https://github.com/infinitered/reactotron/issues/1558)) ([7f718b6](https://github.com/infinitered/reactotron/commit/7f718b6dc7da2b304959ef2b7003e64a04b440f9))
+
 ### [5.1.14](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.13...reactotron-react-native@5.1.14) (2025-06-23)
 
 
