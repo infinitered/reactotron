@@ -12,6 +12,7 @@ import type { ReactotronCore, Plugin, InferFeatures } from "../reactotron-core-c
  */
 const stateResponse = () => (reactotron: ReactotronCore) => {
   return {
+    name: "state-response",
     features: {
       stateActionComplete: (
         name: StateActionCompletePayload["name"],

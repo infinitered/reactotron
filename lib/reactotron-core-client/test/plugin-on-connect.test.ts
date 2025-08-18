@@ -22,6 +22,7 @@ test("plugins support onConnect", (done) => {
     onConnect: () => {
       done()
     },
+    name: "test-plugin",
   })
 
   // create a client & add the plugin

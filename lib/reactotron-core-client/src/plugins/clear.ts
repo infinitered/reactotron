@@ -5,6 +5,7 @@ import type { ReactotronCore, Plugin } from "../reactotron-core-client"
  */
 const clear = () => (reactotron: ReactotronCore) => {
   return {
+    name: "clear",
     features: {
       clear: () => reactotron.send("clear"),
     },

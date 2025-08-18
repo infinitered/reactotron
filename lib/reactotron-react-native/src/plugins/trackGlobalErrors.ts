@@ -121,6 +121,7 @@ const trackGlobalErrors = (options?: TrackGlobalErrorsOptions) => (reactotron: R
 
   // the reactotron plugin interface
   return {
+    name: "track-global-errors",
     onConnect: () => {
       LogBox.addException = new Proxy(LogBox.addException, {
         apply: function (target, thisArg, argumentsList: Parameters<typeof LogBox.addException>) {
