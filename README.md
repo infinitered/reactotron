@@ -33,7 +33,7 @@ Reactotron on the left, demo React Native app on the right.
 
 ## Installation
 
-On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotron-app&expanded=true) page, you can find the latest version of:
+On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotron-app&expanded=true) page, navigate to the latest `reactotron-app` release to find the newest version of:
 
 - macOS (x64 & arm64)
 - Linux (32-bit & 64-bit)

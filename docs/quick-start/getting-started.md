@@ -9,7 +9,7 @@ title: Getting Started
 
 Reactotron exists as a desktop application (written in electron) that communicates with your react or react-native app over websockets. It's available for macOS, Linux, and Windows.
 
-First, you'll need to install the Reactotron desktop application. You can find the latest version on the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotron-app&expanded=true) page.
+First, you'll need to install the Reactotron desktop application. On the [Releases](https://github.com/infinitered/reactotron/releases?q=reactotron-app&expanded=true) page, you will find `reactotron-app` release where you can download the latest version.
 
 Once installed, you need to add the Reactotron client to your project. Follow one of these quick start guides to get Reactotron up and running in your project:
 
