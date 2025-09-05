@@ -6,7 +6,7 @@ title: react
 
 ## Installing Reactotron.app
 
-Let’s [download the desktop app](https://github.com/infinitered/reactotron/releases?q=reactotron-app&expanded=true) to start. You can download for Linux, Windows, and Mac.
+Let’s [download the desktop app](https://github.com/infinitered/reactotron/releases?q=reactotron-app&expanded=true) to start. Expand `reactotron-app` release to download the latest version for Linux, Windows, and Mac.
 
 Unzip & run.
 
