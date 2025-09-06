@@ -14,6 +14,7 @@ export interface ImagePayload {
  */
 const image = () => (reactotron: ReactotronCore) => {
   return {
+    name: "image",
     features: {
       // expanded just to show the specs
       image: (payload: ImagePayload) => {

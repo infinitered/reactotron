@@ -5,9 +5,9 @@ import { Button, Text } from "app/components"
 import { Repo } from "app/components/Repo"
 import { AppStackScreenProps } from "app/navigators"
 import { colors, spacing } from "app/theme"
-import type { AppDispatch, RootState } from "app/redux"
-import { fetchAsync, reset as repoReset } from "app/redux/repoSlice"
-import { changeSize, changeSpeed, reset as logoReset } from "app/redux/logoSlice"
+import type { AppDispatch, RootState } from "app/stores/redux"
+import { fetchAsync, reset as repoReset } from "app/stores/redux/repoSlice"
+import { changeSize, changeSpeed, reset as logoReset } from "app/stores/redux/logoSlice"
 import { useSafeAreaInsetsStyle } from "app/utils/useSafeAreaInsetsStyle"
 
 interface ReduxScreenProps extends AppStackScreenProps<"Redux"> {}

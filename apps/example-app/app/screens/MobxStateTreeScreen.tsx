@@ -4,7 +4,7 @@ import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Text } from "app/components"
 import { AppStackScreenProps } from "app/navigators"
 import { colors, spacing } from "app/theme"
-import { useStores } from "app/mobxStateTree"
+import { useStores } from "app/stores/mobxStateTree"
 import { Repo } from "app/components/Repo"
 import { useSafeAreaInsetsStyle } from "app/utils/useSafeAreaInsetsStyle"
 

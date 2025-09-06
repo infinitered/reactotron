@@ -208,6 +208,7 @@ const networking =
     }
 
     return {
+      name: "networking",
       onConnect: () => {
         // register our monkey-patch
         XHRInterceptor.setSendCallback(onSend)

@@ -1,0 +1,8 @@
+{
+  "name": "reactotron-apollo-client",
+  "targets": {
+    "version": {
+      "executor": "@jscutlery/semver:version"
+    }
+  }
+}
