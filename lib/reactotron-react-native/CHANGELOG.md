@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [5.1.16](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.15...reactotron-react-native@5.1.16) (2025-09-09)
+
+
+### Bug Fixes
+
+* **networking:** vendor in XHRInterceptor implementation instead of importing ([#1571](https://github.com/infinitered/reactotron/issues/1571)) ([a8eed61](https://github.com/infinitered/reactotron/commit/a8eed61624865c46c9b0387cb2b9e1a453eeae8c)), closes [#1569](https://github.com/infinitered/reactotron/issues/1569)
+
 ### [5.1.15](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.14...reactotron-react-native@5.1.15) (2025-08-12)
 
 
