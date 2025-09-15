@@ -34,11 +34,9 @@
     "build:dev": "yarn clean && bob build",
     "clean": "rimraf ./dist",
     "lint": "eslint src test --ext .ts,.tsx",
-    "compile": "NODE_ENV=production rollup -c",
-    "compile:dev": "NODE_ENV=dev rollup -c",
     "tsc": "tsc",
     "ci:test": "yarn test --runInBand",
-    "typecheck": "tsc",
+    "typecheck": "tsc --noEmit",
     "prepare": "bob build"
   },
   "dependencies": {
@@ -73,12 +71,6 @@
     "prettier": "^3.0.3",
     "react-native-builder-bob": "^0.40.13",
     "rimraf": "5.0.5",
-    "rollup": "2.52.1",
-    "rollup-plugin-babel": "4.4.0",
-    "rollup-plugin-babel-minify": "10.0.0",
-    "rollup-plugin-filesize": "9.1.1",
-    "rollup-plugin-node-resolve": "5.2.0",
-    "rollup-plugin-resolve": "0.0.1-predev.1",
     "ts-jest": "^29.1.1",
     "typescript": "^4.9.5"
   },
