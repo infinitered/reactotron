@@ -38,7 +38,7 @@
     "lint": "eslint src test --ext .ts,.tsx",
     "tsc": "tsc",
     "ci:test": "yarn test --runInBand",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "prepare": "bob build"
   },
   "dependencies": {

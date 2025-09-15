@@ -38,7 +38,7 @@
     "clean": "rimraf ./dist",
     "lint": "eslint 'src/**/**.{ts,tsx}'",
     "tsc": "tsc",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "ci:test": "yarn test --runInBand",
     "prepare": "bob build"
   },
