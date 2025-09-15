@@ -9,7 +9,7 @@ console.log(
 )
 
 // #region Find lib workspaces
-const ROOT_DIR = path.join(__dirname, "..")
+const ROOT_DIR = path.join(path.dirname(new URL(import.meta.url).pathname), "..")
 
 const workspaceList = await getWorkspaceList()
 
@@ -20,22 +20,40 @@ const workspacePaths = workspaceList
   .filter((workspacePath) => workspacePath.includes("/lib/"))
 
 console.log(`Found ${workspacePaths.length} library workspaces`)
+console.log("")
 // #endregion
 
+// Track results for all packages
+const validationResults = []
+
 for (const workspacePath of workspacePaths) {
-  console.log(`Validating "${workspacePath}"`)
+  const workspaceName = path.basename(workspacePath)
+  const errors = []
+
+  console.log(`🔍 Validating "${workspaceName}"...`)
 
   // #region Parse package.json
   const packageJsonPath = path.join(workspacePath, "package.json")
-  const packageJsonFile = fs.readFileSync(packageJsonPath, "utf-8")
-  if (!packageJsonFile || typeof packageJsonFile !== "string") {
-    console.error(`Failed to read ${packageJsonPath}`)
-    process.exit(1)
+
+  let packageJson
+  try {
+    const packageJsonFile = fs.readFileSync(packageJsonPath, "utf-8")
+    if (!packageJsonFile || typeof packageJsonFile !== "string") {
+      errors.push(`Failed to read ${packageJsonPath}`)
+    } else {
+      packageJson = JSON.parse(packageJsonFile)
+      if (!packageJson || typeof packageJson !== "object" || Array.isArray(packageJson)) {
+        errors.push(`Failed to parse ${packageJsonPath}`)
+      }
+    }
+  } catch (error) {
+    errors.push(`Failed to read or parse ${packageJsonPath}: ${error.message}`)
   }
-  const packageJson = JSON.parse(packageJsonFile)
-  if (!packageJson || typeof packageJson !== "object" || Array.isArray(packageJson)) {
-    console.error(`Failed to parse ${packageJsonPath}`)
-    process.exit(1)
+
+  // Skip validation if we can't parse the package.json
+  if (errors.length > 0 || !packageJson) {
+    validationResults.push({ workspaceName, workspacePath, passed: false, errors })
+    continue
   }
   // #endregion
 
@@ -43,38 +61,35 @@ for (const workspacePath of workspacePaths) {
 
   // assert "author" field is Infinite Red
   if (packageJson.author !== "Infinite Red") {
-    console.error(`Invalid ${packageJsonPath} author field: ${packageJson.author}`)
-    process.exit(1)
+    errors.push(`Invalid author field: "${packageJson.author}" (expected "Infinite Red")`)
   }
 
   // assert "license" field is MIT
   if (packageJson.license !== "MIT") {
-    console.error(`Invalid ${packageJsonPath} license field: ${packageJson.license}`)
-    process.exit(1)
+    errors.push(`Invalid license field: "${packageJson.license}" (expected "MIT")`)
   }
 
   // assert "bugs.url" field is "https://github.com/infinitered/reactotron/issues"
-  if (packageJson.bugs.url !== "https://github.com/infinitered/reactotron/issues") {
-    console.error(`Invalid ${packageJsonPath} bugs.url field: ${packageJson.bugs.url}`)
-    process.exit(1)
+  if (packageJson.bugs?.url !== "https://github.com/infinitered/reactotron/issues") {
+    errors.push(
+      `Invalid bugs.url field: "${packageJson.bugs?.url}" (expected "https://github.com/infinitered/reactotron/issues")`
+    )
   }
 
   // assert "homepage" field is `https://github.com/infinitered/reactotron/tree/master/lib/${workspaceName}`
-  const workspaceName = path.basename(workspacePath)
   const expectedHomepage = `https://github.com/infinitered/reactotron/tree/master/lib/${workspaceName}`
-
   if (packageJson.homepage !== expectedHomepage) {
-    console.error(`Invalid ${packageJsonPath} homepage field: ${packageJson.homepage}`)
-    process.exit(1)
+    errors.push(
+      `Invalid homepage field: "${packageJson.homepage}" (expected "${expectedHomepage}")`
+    )
   }
 
   // assert "repository" field is `https://github.com/infinitered/reactotron/tree/master/lib/${workspaceName}`
-  if (
-    packageJson.repository !==
-    `https://github.com/infinitered/reactotron/tree/master/lib/${workspaceName}`
-  ) {
-    console.error(`Invalid ${packageJsonPath} repository field: ${packageJson.repository}`)
-    process.exit(1)
+  const expectedRepository = `https://github.com/infinitered/reactotron/tree/master/lib/${workspaceName}`
+  if (packageJson.repository !== expectedRepository) {
+    errors.push(
+      `Invalid repository field: "${packageJson.repository}" (expected "${expectedRepository}")`
+    )
   }
 
   // assert "files" field should be ["dist", "src"]
@@ -85,60 +100,57 @@ for (const workspacePath of workspacePaths) {
     packageJson.files[0] !== "dist" ||
     packageJson.files[1] !== "src"
   ) {
-    console.error(`Invalid ${packageJsonPath} files field: ${packageJson.files}`)
-    process.exit(1)
+    errors.push(
+      `Invalid files field: ${JSON.stringify(packageJson.files)} (expected ["dist", "src"])`
+    )
   }
 
   // assert "main" field is "dist/index.js"
   if (packageJson.main !== "dist/index.js") {
-    console.error(`Invalid ${packageJsonPath} main field: ${packageJson.main}`)
-    process.exit(1)
+    errors.push(`Invalid main field: "${packageJson.main}" (expected "dist/index.js")`)
   }
 
   // assert "main" field points to a real file
-  const mainPath = path.join(workspacePath, packageJson.main)
+  const mainPath = path.join(workspacePath, packageJson.main || "")
   if (!fs.existsSync(mainPath)) {
-    console.error(`Missing ${mainPath}`)
-    process.exit(1)
+    errors.push(`Missing main file: ${mainPath}`)
   }
 
   // assert "module" field is "dist/index.esm.js"
   if (packageJson.module !== "dist/index.esm.js") {
-    console.error(`Invalid ${packageJsonPath} module field: ${packageJson.module}`)
-    process.exit(1)
+    errors.push(`Invalid module field: "${packageJson.module}" (expected "dist/index.esm.js")`)
   }
 
   // assert "module" field points to a real file
-  const modulePath = path.join(workspacePath, packageJson.module)
+  const modulePath = path.join(workspacePath, packageJson.module || "")
   if (!fs.existsSync(modulePath)) {
-    console.error(`Missing ${modulePath}`)
-    process.exit(1)
+    errors.push(`Missing module file: ${modulePath}`)
   }
 
   // assert "types" field is "dist/types/src/index.d.ts"
   if (packageJson.types !== "dist/types/src/index.d.ts") {
-    console.error(`Invalid ${packageJsonPath} types field: ${packageJson.types}`)
-    process.exit(1)
+    errors.push(
+      `Invalid types field: "${packageJson.types}" (expected "dist/types/src/index.d.ts")`
+    )
   }
 
   // assert "types" field points to a real file
-  const typesPath = path.join(workspacePath, packageJson.types)
+  const typesPath = path.join(workspacePath, packageJson.types || "")
   if (!fs.existsSync(typesPath)) {
-    console.error(`Missing ${typesPath}`)
-    process.exit(1)
+    errors.push(`Missing types file: ${typesPath}`)
   }
 
   // assert "react-native" field is "src/index.ts"
   if (packageJson["react-native"] !== "src/index.ts") {
-    console.error(`Invalid ${packageJsonPath} react-native field: ${packageJson["react-native"]}`)
-    process.exit(1)
+    errors.push(
+      `Invalid react-native field: "${packageJson["react-native"]}" (expected "src/index.ts")`
+    )
   }
 
   // assert "react-native" field points to a real file
-  const reactNativePath = path.join(workspacePath, packageJson["react-native"])
+  const reactNativePath = path.join(workspacePath, packageJson["react-native"] || "")
   if (!fs.existsSync(reactNativePath)) {
-    console.error(`Missing ${reactNativePath}`)
-    process.exit(1)
+    errors.push(`Missing react-native file: ${reactNativePath}`)
   }
 
   // assert "exports" field is an object with "default", "import", and "types" fields
@@ -150,66 +162,120 @@ for (const workspacePath of workspacePaths) {
     !packageJson.exports.import ||
     !packageJson.exports.types
   ) {
-    console.error(
-      `Invalid ${packageJsonPath} exports field: ${JSON.stringify(packageJson.exports, null, 2)}`
+    errors.push(
+      `Invalid exports field: ${JSON.stringify(packageJson.exports, null, 2)} (must have default, import, and types fields)`
     )
-    process.exit(1)
   }
 
   // assert "exports.react-native" field does not exist
-  if (packageJson.exports["react-native"]) {
-    console.error(
+  if (packageJson.exports?.["react-native"]) {
+    errors.push(
       [
-        `Invalid ${packageJsonPath} exports.react-native field should not exist`,
+        `exports.react-native field should not exist`,
         `Remove this check once typescript types are more stable`,
         `See https://github.com/infinitered/reactotron/issues/1430`,
-      ].join("\n")
+      ].join(" - ")
     )
-    process.exit(1)
   }
 
   // assert "exports.default" field is "./dist/index.js"
-  if (packageJson.exports.default !== "./dist/index.js") {
-    console.error(
-      `Invalid ${packageJsonPath} exports.default field: ${packageJson.exports.default}`
+  if (packageJson.exports?.default !== "./dist/index.js") {
+    errors.push(
+      `Invalid exports.default field: "${packageJson.exports?.default}" (expected "./dist/index.js")`
     )
-    process.exit(1)
   }
 
   // assert "exports.default" field points to a real file
-  const exportsDefaultPath = path.join(workspacePath, packageJson.exports.default)
-  if (!fs.existsSync(exportsDefaultPath)) {
-    console.error(`Missing ${exportsDefaultPath}`)
-    process.exit(1)
+  const exportsDefaultPath = path.join(workspacePath, packageJson.exports?.default || "")
+  if (packageJson.exports?.default && !fs.existsSync(exportsDefaultPath)) {
+    errors.push(`Missing exports.default file: ${exportsDefaultPath}`)
   }
 
   // assert "exports.import" field is "./dist/index.esm.js"
-  if (packageJson.exports.import !== "./dist/index.esm.js") {
-    console.error(`Invalid ${packageJsonPath} exports.import field: ${packageJson.exports.import}`)
-    process.exit(1)
+  if (packageJson.exports?.import !== "./dist/index.esm.js") {
+    errors.push(
+      `Invalid exports.import field: "${packageJson.exports?.import}" (expected "./dist/index.esm.js")`
+    )
   }
 
   // assert "exports.import" field points to a real file
-  const exportsImportPath = path.join(workspacePath, packageJson.exports.import)
-  if (!fs.existsSync(exportsImportPath)) {
-    console.error(`Missing ${exportsImportPath}`)
-    process.exit(1)
+  const exportsImportPath = path.join(workspacePath, packageJson.exports?.import || "")
+  if (packageJson.exports?.import && !fs.existsSync(exportsImportPath)) {
+    errors.push(`Missing exports.import file: ${exportsImportPath}`)
   }
 
   // assert "exports.types" field is "./dist/types/src/index.d.ts"
-  if (packageJson.exports.types !== "./dist/types/src/index.d.ts") {
-    console.error(`Invalid ${packageJsonPath} exports.types field: ${packageJson.exports.types}`)
-    process.exit(1)
+  if (packageJson.exports?.types !== "./dist/types/src/index.d.ts") {
+    errors.push(
+      `Invalid exports.types field: "${packageJson.exports?.types}" (expected "./dist/types/src/index.d.ts")`
+    )
   }
 
   // assert "exports.types" field is a real file
-  const exportsTypesPath = path.join(workspacePath, packageJson.exports.types)
-  if (!fs.existsSync(exportsTypesPath)) {
-    console.error(`Missing ${exportsTypesPath}`)
-    process.exit(1)
+  const exportsTypesPath = path.join(workspacePath, packageJson.exports?.types || "")
+  if (packageJson.exports?.types && !fs.existsSync(exportsTypesPath)) {
+    errors.push(`Missing exports.types file: ${exportsTypesPath}`)
   }
 
   // #endregion
+
+  // Record the results for this package
+  const passed = errors.length === 0
+  validationResults.push({ workspaceName, workspacePath, passed, errors })
+
+  if (passed) {
+    console.log(`  ✅ ${workspaceName} - PASSED`)
+  } else {
+    console.log(
+      `  ❌ ${workspaceName} - FAILED (${errors.length} issue${errors.length === 1 ? "" : "s"})`
+    )
+  }
 }
 
-console.log("All workspaces are valid!")
+// #region Generate Summary Report
+console.log("")
+console.log("=".repeat(80))
+console.log("📊 VALIDATION SUMMARY")
+console.log("=".repeat(80))
+
+const passedPackages = validationResults.filter((result) => result.passed)
+const failedPackages = validationResults.filter((result) => !result.passed)
+
+console.log(`Total packages: ${validationResults.length}`)
+console.log(`✅ Passed: ${passedPackages.length}`)
+console.log(`❌ Failed: ${failedPackages.length}`)
+console.log("")
+
+if (passedPackages.length > 0) {
+  console.log("✅ PASSED PACKAGES:")
+  passedPackages.forEach((result) => {
+    console.log(`  • ${result.workspaceName}`)
+  })
+  console.log("")
+}
+
+if (failedPackages.length > 0) {
+  console.log("❌ FAILED PACKAGES:")
+  failedPackages.forEach((result) => {
+    console.log(
+      `  • ${result.workspaceName} (${result.errors.length} issue${result.errors.length === 1 ? "" : "s"})`
+    )
+    result.errors.forEach((error, index) => {
+      console.log(`    ${index + 1}. ${error}`)
+    })
+    console.log("")
+  })
+}
+
+console.log("=".repeat(80))
+
+if (failedPackages.length === 0) {
+  console.log("🎉 All packages passed validation!")
+  process.exit(0)
+} else {
+  console.log(
+    `💥 ${failedPackages.length} package${failedPackages.length === 1 ? "" : "s"} failed validation.`
+  )
+  process.exit(1)
+}
+// #endregion
