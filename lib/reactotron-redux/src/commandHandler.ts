@@ -1,7 +1,7 @@
 import {
-  InferFeatures,
-  ReactotronCore,
-  StateResponsePlugin,
+  type InferFeatures,
+  type ReactotronCore,
+  type StateResponsePlugin,
   assertHasStateResponsePlugin,
 } from "reactotron-core-client"
 

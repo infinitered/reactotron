@@ -1,9 +1,9 @@
 import {
-  InferFeatures,
-  LoggerPlugin,
-  ReactotronCore,
+  type InferFeatures,
+  type LoggerPlugin,
+  type ReactotronCore,
   assertHasLoggerPlugin,
-  Plugin,
+  type Plugin,
 } from "reactotron-core-client"
 
 /**

@@ -21,11 +21,11 @@ import type {
 } from "mobx-state-tree"
 import type { Command } from "reactotron-core-contract"
 import {
-  ReactotronCore,
-  Plugin,
+  type ReactotronCore,
+  type Plugin,
   assertHasStateResponsePlugin,
-  InferFeatures,
-  StateResponsePlugin,
+  type InferFeatures,
+  type StateResponsePlugin,
 } from "reactotron-core-client"
 
 import {
