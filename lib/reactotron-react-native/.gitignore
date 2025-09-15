@@ -5,3 +5,4 @@ coverage
 dist
 yarn-error.log
 .idea
+lib/

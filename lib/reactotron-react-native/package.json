@@ -13,14 +13,15 @@
     "dist",
     "src"
   ],
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/types/src/index.d.ts",
-  "react-native": "src/index.ts",
+  "main": "./dist/module/index.js",
+  "types": "./dist/typescript/src/index.d.ts",
   "exports": {
-    "import": "./dist/index.esm.js",
-    "types": "./dist/types/src/index.d.ts",
-    "default": "./dist/index.js"
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./dist/typescript/src/index.d.ts",
+      "default": "./dist/module/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "test": "jest",
@@ -29,16 +30,17 @@
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",
     "prebuild": "yarn clean",
-    "build": "yarn tsc && yarn compile",
+    "build": "bob build",
     "prebuild:dev": "yarn clean",
-    "build:dev": "yarn tsc && yarn compile:dev",
+    "build:dev": "bob build",
     "clean": "rimraf dist",
     "lint": "eslint src --ext .ts,.tsx",
     "compile": "NODE_ENV=production rollup -c",
     "compile:dev": "NODE_ENV=development rollup -c",
     "tsc": "tsc",
     "typecheck": "tsc",
-    "ci:test": "yarn test --runInBand"
+    "ci:test": "yarn test --runInBand",
+    "prepare": "bob build"
   },
   "peerDependencies": {
     "react-native": ">=0.40.0"
@@ -77,6 +79,7 @@
     "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-native": "0.73.6",
+    "react-native-builder-bob": "^0.40.13",
     "rimraf": "5.0.5",
     "rollup": "2.60.2",
     "rollup-plugin-babel": "4.4.0",
@@ -131,6 +134,23 @@
     "testEnvironment": "node",
     "testMatch": [
       "**/*.test.ts"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/dist/"
+    ]
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "dist",
+    "exclude": "**/*.test.{tsx,ts}",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      "typescript"
     ]
   }
 }
