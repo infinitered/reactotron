@@ -13,13 +13,15 @@
     "dist",
     "src"
   ],
-  "main": "./dist/module/index.js",
-  "types": "./dist/typescript/src/index.d.ts",
+  "main": "./dist/commonjs/index.js",
+  "module": "./dist/module/index.js",
+  "types": "./dist/typescript/commonjs/src/index.d.ts",
   "exports": {
     ".": {
       "source": "./src/index.ts",
-      "types": "./dist/typescript/src/index.d.ts",
-      "default": "./dist/module/index.js"
+      "types": "./dist/typescript/commonjs/src/index.d.ts",
+      "module": "./dist/module/index.js",
+      "default": "./dist/commonjs/index.js"
     },
     "./package.json": "./package.json"
   },
@@ -80,6 +82,7 @@
     "output": "dist",
     "exclude": "**/*.test.{tsx,ts}",
     "targets": [
+      "commonjs",
       [
         "module",
         {
