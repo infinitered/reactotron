@@ -1,6 +1,7 @@
 import type { LogPayload } from "./log"
 import { EditorOpenPayload } from "./openInEditor"
 import type {
+  ApolloClientCacheUpdatePayload,
   StateActionCompletePayload,
   StateActionDispatchPayload,
   StateBackupRequestPayload,
@@ -45,6 +46,10 @@ export const CommandType = {
   EditorOpen: "editor.open",
   Storybook: "storybook",
   Overlay: "overlay",
+  ApolloClientRequest: "apollo.request",
+  ApolloClientResponse: "apollo.response",
+  ApolloClientAck: "apollo.ack",
+  ApolloClientUpdateCache: "apollo.cache.update",
 } as const
 
 export type CommandTypeKey = (typeof CommandType)[keyof typeof CommandType]
@@ -79,6 +84,10 @@ export interface CommandMap {
   [CommandType.EditorOpen]: EditorOpenPayload
   [CommandType.Storybook]: boolean
   [CommandType.Overlay]: boolean
+  [CommandType.ApolloClientAck]: boolean
+  [CommandType.ApolloClientRequest]: { message: string }
+  [CommandType.ApolloClientResponse]: { message: string }
+  [CommandType.ApolloClientUpdateCache]: ApolloClientCacheUpdatePayload
 }
 
 export interface Command<

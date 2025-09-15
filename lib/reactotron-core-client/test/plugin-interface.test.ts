@@ -39,16 +39,17 @@ test("plugins are invoke and return an object", () => {
   expect(() => client.use(() => "")).toThrow()
   // @ts-ignore should be ts-expect-error but jest doesn't like it for null or undefined values for some reason
   expect(() => client.use(() => undefined)).toThrow()
-  client.use(() => ({}))
+  client.use(() => ({ name: "empty" }))
 })
 
 test("plugins can literally do nothing", () => {
-  const empty = () => ({})
+  const empty = () => ({ name: "empty" })
   client.use(empty)
   expect(client.plugins.length).toBe(corePlugins.length + 1)
 })
 
 test("initialized with the config object", (done) => {
+  // @ts-expect-error ignore name property
   client.use((reactotron) => {
     expect(typeof reactotron).toBe("object")
     expect(reactotron).toBe(client)
@@ -60,7 +61,10 @@ test("initialized with the config object", (done) => {
 })
 
 test("can be added in createClient", () => {
-  const createPlugin = (name, value) => () => ({ features: { [name]: () => value } })
+  const createPlugin = (name, value) => () => ({
+    name: `plugin-${name}`,
+    features: { [name]: () => value },
+  })
   const clientWithPlugins = createClient<
     ReactotronCore & { sayHello: () => void; sayGoodbye: () => void }
   >({

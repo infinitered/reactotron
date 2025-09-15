@@ -188,6 +188,7 @@ const asyncStorage = (options?: AsyncStorageOptions) => (reactotron: ReactotronC
   }
 
   return {
+    name: "async-storage",
     features: {
       trackAsyncStorage,
       untrackAsyncStorage,

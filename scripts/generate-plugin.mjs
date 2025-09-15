@@ -53,7 +53,7 @@ fs.writeFileSync(
 );
 
 fs.writeFileSync(
-  path.join(targetDir, `rollup.config.ts`),
+  path.join(targetDir, `rollup.config.cjs`),
   createTemplateRollupConfig({ pluginName })
 );
 

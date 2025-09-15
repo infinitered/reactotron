@@ -484,6 +484,7 @@ export function mst(opts: MstPluginOptions = {}) {
     // --- Reactotron plugin interface ---------------------------------
 
     return {
+      name: "mst",
       // Fires when we receive a command from the Reactotron app.
       onCommand,
 

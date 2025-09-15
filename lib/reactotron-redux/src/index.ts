@@ -24,6 +24,7 @@ function reactotronRedux(pluginConfig: PluginConfig = {}) {
 
   function plugin<Client extends ReactotronCore = ReactotronCore>(reactotron: Client) {
     return {
+      name: "redux",
       // Fires when we receive a command from the Reactotron app.
       onCommand: createCommandHander(reactotron, mergedPluginConfig, onReduxStoreCreation),
 

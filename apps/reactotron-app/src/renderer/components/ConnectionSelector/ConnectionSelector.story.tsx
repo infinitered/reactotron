@@ -16,6 +16,7 @@ storiesOf("components/ConnectionSelector", module)
         platform: "ios",
         commands: [],
         connected: true,
+        plugins: [],
       }}
       onClick={() => {}}
     />
@@ -31,6 +32,7 @@ storiesOf("components/ConnectionSelector", module)
         platform: "android",
         commands: [],
         connected: true,
+        plugins: [],
       }}
       onClick={() => {}}
     />
@@ -45,6 +47,7 @@ storiesOf("components/ConnectionSelector", module)
         platform: "ios",
         commands: [],
         connected: true,
+        plugins: [],
       }}
       connection={{
         id: 0,
@@ -54,6 +57,7 @@ storiesOf("components/ConnectionSelector", module)
         platform: "ios",
         commands: [],
         connected: true,
+        plugins: [],
       }}
       onClick={() => {}}
     />
@@ -69,6 +73,7 @@ storiesOf("components/ConnectionSelector", module)
         platform: "ios",
         commands: [],
         connected: true,
+        plugins: [],
       }}
       connection={{
         id: 0,
@@ -79,6 +84,7 @@ storiesOf("components/ConnectionSelector", module)
         platform: "ios",
         commands: [],
         connected: true,
+        plugins: [],
       }}
       onClick={() => {}}
     />

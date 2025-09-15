@@ -26,6 +26,7 @@ export interface ReactotronConnection {
   platformVersion?: string
   osRelease?: string
   userAgent?: string
+  plugins: string[]
 }
 
 export interface Connection extends ReactotronConnection {

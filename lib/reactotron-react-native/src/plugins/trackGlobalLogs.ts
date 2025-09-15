@@ -14,6 +14,7 @@ const trackGlobalLogs = () => (reactotron: ReactotronCore) => {
   const client = reactotron as ReactotronCore & InferFeatures<ReactotronCore, LoggerPlugin>
 
   return {
+    name: "track-global-logs",
     onConnect: () => {
       const originalConsoleLog = console.log
       console.log = (...args: Parameters<typeof console.log>) => {

@@ -6,6 +6,7 @@ import ActionButton from "./components/ActionButton"
 import ContentView from "./components/ContentView"
 import EmptyState from "./components/EmptyState"
 import Header from "./components/Header"
+import Checkbox from "./components/Checkbox"
 import Modal from "./components/Modal"
 import RandomJoke from "./components/RandomJoke"
 import ReactotronAppProvider from "./components/ReactotronAppProvider"
@@ -22,8 +23,10 @@ import CustomCommandsContext, { CustomCommandsProvider } from "./contexts/Custom
 import ReactNativeContext, { ReactNativeProvider } from "./contexts/ReactNative"
 import StateContext, { StateProvider } from "./contexts/State"
 import TimelineContext, { TimelineProvider } from "./contexts/Timeline"
+import ApolloClientContext, { ApolloClientProvider } from "./contexts/ApolloClient"
 
 // Modals
+import ApolloUpdateCacheValueModal from "./modals/ApolloUpdateCacheValueModal"
 import DispatchActionModal from "./modals/DispatchActionModal"
 import SnapshotRenameModal from "./modals/SnapshotRenameModal"
 import SubscriptionAddModal from "./modals/SubscriptionAddModal"
@@ -37,8 +40,11 @@ import repairSerialization from "./utils/repair-serialization"
 import filterCommands from "./utils/filterCommands"
 
 export {
-  // Contexts
   ActionButton,
+  ApolloClientContext,
+  ApolloClientProvider,
+  ApolloUpdateCacheValueModal,
+  Checkbox,
   ContentView,
   CustomCommandsContext,
   CustomCommandsProvider,
