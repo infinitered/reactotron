@@ -105,9 +105,9 @@ for (const workspacePath of workspacePaths) {
     )
   }
 
-  // assert "main" field is "dist/index.js"
-  if (packageJson.main !== "dist/index.js") {
-    errors.push(`Invalid main field: "${packageJson.main}" (expected "dist/index.js")`)
+  // assert "main" field is "./dist/module/index.js" (react-native-builder-bob structure)
+  if (packageJson.main !== "./dist/module/index.js") {
+    errors.push(`Invalid main field: "${packageJson.main}" (expected "./dist/module/index.js")`)
   }
 
   // assert "main" field points to a real file
@@ -116,21 +116,10 @@ for (const workspacePath of workspacePaths) {
     errors.push(`Missing main file: ${mainPath}`)
   }
 
-  // assert "module" field is "dist/index.esm.js"
-  if (packageJson.module !== "dist/index.esm.js") {
-    errors.push(`Invalid module field: "${packageJson.module}" (expected "dist/index.esm.js")`)
-  }
-
-  // assert "module" field points to a real file
-  const modulePath = path.join(workspacePath, packageJson.module || "")
-  if (!fs.existsSync(modulePath)) {
-    errors.push(`Missing module file: ${modulePath}`)
-  }
-
-  // assert "types" field is "dist/types/src/index.d.ts"
-  if (packageJson.types !== "dist/types/src/index.d.ts") {
+  // assert "types" field is "./dist/typescript/src/index.d.ts" (react-native-builder-bob structure)
+  if (packageJson.types !== "./dist/typescript/src/index.d.ts") {
     errors.push(
-      `Invalid types field: "${packageJson.types}" (expected "dist/types/src/index.d.ts")`
+      `Invalid types field: "${packageJson.types}" (expected "./dist/typescript/src/index.d.ts")`
     )
   }
 
@@ -140,81 +129,66 @@ for (const workspacePath of workspacePaths) {
     errors.push(`Missing types file: ${typesPath}`)
   }
 
-  // assert "react-native" field is "src/index.ts"
-  if (packageJson["react-native"] !== "src/index.ts") {
+  // assert "module" field does not exist (react-native-builder-bob doesn't use this)
+  if (packageJson.module !== undefined) {
     errors.push(
-      `Invalid react-native field: "${packageJson["react-native"]}" (expected "src/index.ts")`
+      `Unexpected module field: "${packageJson.module}" (should not exist for react-native-builder-bob)`
     )
   }
 
-  // assert "react-native" field points to a real file
-  const reactNativePath = path.join(workspacePath, packageJson["react-native"] || "")
-  if (!fs.existsSync(reactNativePath)) {
-    errors.push(`Missing react-native file: ${reactNativePath}`)
+  // assert "react-native" field does not exist (react-native-builder-bob doesn't use this)
+  if (packageJson["react-native"] !== undefined) {
+    errors.push(
+      `Unexpected react-native field: "${packageJson["react-native"]}" (should not exist for react-native-builder-bob)`
+    )
   }
 
-  // assert "exports" field is an object with "default", "import", and "types" fields
+  // assert "exports" field structure for react-native-builder-bob
   if (
     !packageJson.exports ||
     typeof packageJson.exports !== "object" ||
     Array.isArray(packageJson.exports) ||
-    !packageJson.exports.default ||
-    !packageJson.exports.import ||
-    !packageJson.exports.types
+    !packageJson.exports["."] ||
+    !packageJson.exports["."].default ||
+    !packageJson.exports["."].types ||
+    !packageJson.exports["./package.json"]
   ) {
     errors.push(
-      `Invalid exports field: ${JSON.stringify(packageJson.exports, null, 2)} (must have default, import, and types fields)`
+      `Invalid exports field: ${JSON.stringify(packageJson.exports, null, 2)} (must have ".", "./package.json" with "." containing default and types fields)`
     )
   }
 
-  // assert "exports.react-native" field does not exist
-  if (packageJson.exports?.["react-native"]) {
+  // assert "exports.'.'.default" field is "./dist/module/index.js"
+  if (packageJson.exports?.["."]?.default !== "./dist/module/index.js") {
     errors.push(
-      [
-        `exports.react-native field should not exist`,
-        `Remove this check once typescript types are more stable`,
-        `See https://github.com/infinitered/reactotron/issues/1430`,
-      ].join(" - ")
+      `Invalid exports.".".default field: "${packageJson.exports?.["."]?.default}" (expected "./dist/module/index.js")`
     )
   }
 
-  // assert "exports.default" field is "./dist/index.js"
-  if (packageJson.exports?.default !== "./dist/index.js") {
+  // assert "exports.'.'.default" field points to a real file
+  const exportsDefaultPath = path.join(workspacePath, packageJson.exports?.["."]?.default || "")
+  if (packageJson.exports?.["."]?.default && !fs.existsSync(exportsDefaultPath)) {
+    errors.push(`Missing exports.".".default file: ${exportsDefaultPath}`)
+  }
+
+  // assert "exports.'.'.types" field is "./dist/typescript/src/index.d.ts"
+  if (packageJson.exports?.["."]?.types !== "./dist/typescript/src/index.d.ts") {
     errors.push(
-      `Invalid exports.default field: "${packageJson.exports?.default}" (expected "./dist/index.js")`
+      `Invalid exports.".".types field: "${packageJson.exports?.["."]?.types}" (expected "./dist/typescript/src/index.d.ts")`
     )
   }
 
-  // assert "exports.default" field points to a real file
-  const exportsDefaultPath = path.join(workspacePath, packageJson.exports?.default || "")
-  if (packageJson.exports?.default && !fs.existsSync(exportsDefaultPath)) {
-    errors.push(`Missing exports.default file: ${exportsDefaultPath}`)
+  // assert "exports.'.'.types" field is a real file
+  const exportsTypesPath = path.join(workspacePath, packageJson.exports?.["."]?.types || "")
+  if (packageJson.exports?.["."]?.types && !fs.existsSync(exportsTypesPath)) {
+    errors.push(`Missing exports.".".types file: ${exportsTypesPath}`)
   }
 
-  // assert "exports.import" field is "./dist/index.esm.js"
-  if (packageJson.exports?.import !== "./dist/index.esm.js") {
+  // assert "exports.'./package.json'" field is "./package.json"
+  if (packageJson.exports?.["./package.json"] !== "./package.json") {
     errors.push(
-      `Invalid exports.import field: "${packageJson.exports?.import}" (expected "./dist/index.esm.js")`
+      `Invalid exports."./package.json" field: "${packageJson.exports?.["./package.json"]}" (expected "./package.json")`
     )
-  }
-
-  // assert "exports.import" field points to a real file
-  const exportsImportPath = path.join(workspacePath, packageJson.exports?.import || "")
-  if (packageJson.exports?.import && !fs.existsSync(exportsImportPath)) {
-    errors.push(`Missing exports.import file: ${exportsImportPath}`)
-  }
-
-  // assert "exports.types" field is "./dist/types/src/index.d.ts"
-  if (packageJson.exports?.types !== "./dist/types/src/index.d.ts") {
-    errors.push(
-      `Invalid exports.types field: "${packageJson.exports?.types}" (expected "./dist/types/src/index.d.ts")`
-    )
-  }
-
-  // assert "exports.types" field is a real file
-  const exportsTypesPath = path.join(workspacePath, packageJson.exports?.types || "")
-  if (packageJson.exports?.types && !fs.existsSync(exportsTypesPath)) {
-    errors.push(`Missing exports.types file: ${exportsTypesPath}`)
   }
 
   // #endregion
