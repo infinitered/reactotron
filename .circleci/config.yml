@@ -281,7 +281,7 @@ jobs:
     executor: *node_executor
     <<: *defaults
     docker:
-      - image: electronuserland/builder:20-wine-07.24
+      - image: electronuserland/builder:22-wine-03.25
     resource_class: large
     environment:
       BUILD_TARGET: windows
@@ -311,11 +311,14 @@ jobs:
   build_app_macos:
     <<: *defaults
     macos:
-      xcode: "13.4.1"
+      xcode: "16.4.0"
+      resource_class: m4pro.medium
     environment:
       BUILD_TARGET: macos
     steps:
       - checkout
+      - node/install:
+          node-version: "22"
       - install-packages
       - run:
           name: Decode Certificates
@@ -369,6 +372,39 @@ workflows:
           requires:
             - trust_check
           <<: *ir_docs_config
+          filters:
+            branches:
+              ignore: *release_branch_names
+      # Optional build jobs for testing - require manual approval
+      - hold_for_app_builds:
+          type: approval
+          requires:
+            - build_and_test
+          filters:
+            branches:
+              ignore: *release_branch_names
+      - build_app_windows:
+          context:
+            - infinitered-npm-package
+          requires:
+            - hold_for_app_builds
+          filters:
+            branches:
+              ignore: *release_branch_names
+      - build_app_macos:
+          context:
+            - ReactotronCerts
+            - infinitered-npm-package
+          requires:
+            - hold_for_app_builds
+          filters:
+            branches:
+              ignore: *release_branch_names
+      - build_app_linux:
+          context:
+            - infinitered-npm-package
+          requires:
+            - hold_for_app_builds
           filters:
             branches:
               ignore: *release_branch_names
