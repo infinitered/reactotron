@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.8.0](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.8...reactotron-app@3.8.0) (2025-09-16)
+
+
+### Features
+
+* **reactotron-app:** add exports for timeline logs ([#1533](https://github.com/infinitered/reactotron/issues/1533) by [@denis-remitly](https://github.com/denis-remitly)) ([88be6b8](https://github.com/infinitered/reactotron/commit/88be6b839f9ff807a87a0fef4d9d31ccc3250f79))
+
+
+### Bug Fixes
+
+* **reactotron-core-ui:** Move commandListener callbacks outside of render cycle ([#1544](https://github.com/infinitered/reactotron/issues/1544) by [@jamonholmgren](https://github.com/jamonholmgren)) ([a4bbe6d](https://github.com/infinitered/reactotron/commit/a4bbe6dd302550d16a403d063f2cdd906f048303))
+
 ### [3.7.8](https://github.com/infinitered/reactotron/compare/reactotron-app@3.7.7...reactotron-app@3.7.8) (2025-03-17)
 
 
