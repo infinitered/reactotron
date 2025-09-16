@@ -312,7 +312,7 @@ jobs:
     <<: *defaults
     macos:
       xcode: "16.4.0"
-      resource_class: m4pro.medium
+      resource_class: macos.m1.medium.gen1
     environment:
       BUILD_TARGET: macos
     steps:
