@@ -4,7 +4,6 @@
     "rootDir": ".",
     "allowJs": false,
     "declaration": true,
-    "declarationDir": "dist/types",
     "emitDeclarationOnly": true,
     "allowSyntheticDefaultImports": true,
     "module": "esnext",

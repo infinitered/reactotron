@@ -5,7 +5,6 @@
     "jsx": "react-native",
     "rootDir": ".",
     "declaration": true,
-    "declarationDir": "dist/types",
     "emitDeclarationOnly": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,

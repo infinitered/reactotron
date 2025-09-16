@@ -2,14 +2,14 @@
  * Provides a global error handler to report errors..
  */
 import {
-  InferFeatures,
-  LoggerPlugin,
-  ReactotronCore,
+  type InferFeatures,
+  type LoggerPlugin,
+  type ReactotronCore,
   assertHasLoggerPlugin,
-  Plugin,
+  type Plugin,
 } from "reactotron-core-client"
 import _LogBox, {
-  LogBoxStatic as LogBoxStaticPublic,
+  type LogBoxStatic as LogBoxStaticPublic,
   // eslint-disable-next-line import/default, import/namespace
 } from "react-native/Libraries/LogBox/LogBox"
 // eslint-disable-next-line import/namespace
