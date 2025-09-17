@@ -228,6 +228,10 @@ jobs:
       - run:
           name: Typecheck
           command: yarn typecheck
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - lib/*/dist
   trust_check:
     executor: *node_executor
     steps:
@@ -292,6 +296,8 @@ jobs:
       SKIP_LIB_BUILD: "1"
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/repo
       - install-packages
       - release-reactotron-app:
           os: Windows
