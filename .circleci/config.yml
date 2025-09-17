@@ -294,7 +294,7 @@ jobs:
       - checkout
       - run:
           name: Install packages (skip postinstall)
-          command: yarn install --immutable --ignore-scripts
+          command: YARN_ENABLE_SCRIPTS=0 yarn install --immutable
       - release-reactotron-app:
           os: Windows
 
