@@ -45,7 +45,6 @@ if (skipSigning) {
  * @see https://www.electron.build/configuration/publish#githuboptions
  */
 const processVars = { macos: {}, windows: {}, linux: {} }
-/** @type {any} */
 const env = {
   ...process.env,
   BUILD_TARGET,
@@ -57,23 +56,5 @@ const $ = (cmd) => {
   require("child_process").execSync(cmd, { env, stdio: "inherit" })
 }
 
-// Set Wine-friendly environment when running on Linux (CircleCI builder image)
-const isLinux = process.platform === "linux"
-if (isLinux) {
-  env.XDG_RUNTIME_DIR = env.XDG_RUNTIME_DIR || `/tmp/runtime-${process.getuid?.() || "1000"}`
-  env.WINEDEBUG = env.WINEDEBUG || "-all"
-  env.WINEDLLOVERRIDES = env.WINEDLLOVERRIDES || "mscoree,mshtml="
-  env.WINEARCH = env.WINEARCH || "win64"
-  // Additional Wine stability tweaks for WiX 4
-  env.WINEPREFIX = env.WINEPREFIX || "/tmp/wine-prefix"
-  env.WINEDLLPATH = env.WINEDLLPATH || ""
-}
-
 console.log(`Building app with flags: '${flags}'...`)
-const skipLibBuild = process.env.SKIP_LIB_BUILD === "1"
-if (skipLibBuild) {
-  console.log("SKIP_LIB_BUILD=1, skipping workspace build")
-  $(`electron-builder ${flags}`)
-} else {
-  $(`yarn build && electron-builder ${flags}`)
-}
+$(`yarn build && electron-builder ${flags}`)

@@ -285,23 +285,13 @@ jobs:
   build_app_windows:
     <<: *defaults
     docker:
-      - image: electronuserland/builder:wine
+      - image: electronuserland/builder:20-wine-07.24
     resource_class: large
     environment:
       BUILD_TARGET: windows
       SKIP_LIB_BUILD: "1"
-      XDG_RUNTIME_DIR: /tmp/runtime-root
-      WINEDEBUG: -all
-      DISPLAY: :99
     steps:
       - checkout
-      - run:
-          name: Setup Wine environment
-          command: |
-            mkdir -p $XDG_RUNTIME_DIR
-            chmod 0700 $XDG_RUNTIME_DIR
-            Xvfb :99 -screen 0 1024x768x16 &
-            sleep 2
       - install-packages
       - release-reactotron-app:
           os: Windows
