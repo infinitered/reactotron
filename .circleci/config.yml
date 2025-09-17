@@ -292,7 +292,9 @@ jobs:
       SKIP_LIB_BUILD: "1"
     steps:
       - checkout
-      - install-packages
+      - run:
+          name: Install packages (skip postinstall)
+          command: yarn install --immutable --ignore-scripts
       - release-reactotron-app:
           os: Windows
 
