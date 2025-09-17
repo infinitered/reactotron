@@ -281,7 +281,7 @@ jobs:
     executor: *node_executor
     <<: *defaults
     docker:
-      - image: electronuserland/builder:22-wine-03.25
+      - image: electronuserland/builder:20-wine-chrome # Node 20 + Wine + xvfb
     resource_class: large
     environment:
       BUILD_TARGET: windows
