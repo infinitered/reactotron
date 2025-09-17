@@ -281,7 +281,7 @@ jobs:
     executor: *node_executor
     <<: *defaults
     docker:
-      - image: electronuserland/builder:22-wine-03.25
+      - image: electronuserland/builder:wine-mono
     resource_class: large
     environment:
       BUILD_TARGET: windows
@@ -295,24 +295,8 @@ jobs:
           command: |
             mkdir -p $XDG_RUNTIME_DIR
             chmod 0700 $XDG_RUNTIME_DIR
-
-            # Start virtual display
             Xvfb :99 -screen 0 1024x768x16 &
-
             sleep 2
-
-            # Initialize Wine prefix
-            export WINEDLLOVERRIDES="mscoree,mshtml="
-            wineboot --init
-
-            # Wait for Wine to finish initializing
-            sleep 5
-
-            # Install .NET Framework components that WiX needs
-            winetricks -q dotnet48 || true
-
-            # Verify Wine is working
-            wine --version
       - install-packages
       - release-reactotron-app:
           os: Windows
