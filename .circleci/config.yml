@@ -281,12 +281,22 @@ jobs:
     executor: *node_executor
     <<: *defaults
     docker:
-      - image: electronuserland/builder:20-wine-chrome # Node 20 + Wine + xvfb
+      - image: electronuserland/builder:22-wine-03.25
     resource_class: large
     environment:
       BUILD_TARGET: windows
+      XDG_RUNTIME_DIR: /tmp/runtime-root
+      WINEDEBUG: -all
+      DISPLAY: :99
     steps:
       - checkout
+      - run:
+          name: Setup Wine environment
+          command: |
+            mkdir -p $XDG_RUNTIME_DIR
+            chmod 0700 $XDG_RUNTIME_DIR
+            # Start virtual display
+            Xvfb :99 -screen 0 1024x768x16 &
       - install-packages
       - release-reactotron-app:
           os: Windows

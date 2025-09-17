@@ -45,7 +45,6 @@ if (skipSigning) {
  * @see https://www.electron.build/configuration/publish#githuboptions
  */
 const processVars = { macos: {}, windows: {}, linux: {} }
-/** @type {any} */
 const env = {
   ...process.env,
   BUILD_TARGET,
@@ -57,22 +56,5 @@ const $ = (cmd) => {
   require("child_process").execSync(cmd, { env, stdio: "inherit" })
 }
 
-// Ensure Wine runtime dir on Linux CI and run under a virtual X display
-const isLinux = process.platform === "linux"
-if (isLinux) {
-  // Provide a safe default XDG runtime dir to avoid Wine errors
-  env.XDG_RUNTIME_DIR = env.XDG_RUNTIME_DIR || `/tmp/runtime-${process.getuid?.() || "1000"}`
-  // Reduce Wine GUI/Mono prompts and noise in headless CI
-  env.WINEDEBUG = env.WINEDEBUG || "-all"
-  env.WINEDLLOVERRIDES = env.WINEDLLOVERRIDES || "mscoree,mshtml="
-  env.WINEARCH = env.WINEARCH || "win64"
-  env.WINEPREFIX = env.WINEPREFIX || "/tmp/wine64"
-}
-
 console.log(`Building app with flags: '${flags}'...`)
-if (isCi && isLinux) {
-  // Run packaging with xvfb-run to satisfy GUI requirements of Wine
-  $(`yarn build && xvfb-run -a electron-builder ${flags}`)
-} else {
-  $(`yarn build && electron-builder ${flags}`)
-}
+$(`yarn build && electron-builder ${flags}`)
