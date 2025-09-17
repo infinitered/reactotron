@@ -114,7 +114,12 @@ commands:
           command: yarn install --immutable
       - run:
           name: Build workspace packages
-          command: yarn build
+          command: |
+            if [ "$SKIP_LIB_BUILD" != "1" ]; then
+              yarn build
+            else
+              echo "Skipping workspace build (SKIP_LIB_BUILD=1)"
+            fi
       - save_cache:
           paths:
             - node_modules/
@@ -278,13 +283,13 @@ jobs:
             yarn release:artifacts $CIRCLE_TAG
 
   build_app_windows:
-    executor: *node_executor
     <<: *defaults
     docker:
-      - image: electronuserland/builder:wine-mono
+      - image: electronuserland/builder:wine
     resource_class: large
     environment:
       BUILD_TARGET: windows
+      SKIP_LIB_BUILD: "1"
       XDG_RUNTIME_DIR: /tmp/runtime-root
       WINEDEBUG: -all
       DISPLAY: :99
