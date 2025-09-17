@@ -398,23 +398,23 @@ workflows:
           filters:
             branches:
               ignore: *release_branch_names
-      - build_app_macos:
-          context:
-            - ReactotronCerts
-            - infinitered-npm-package
-          requires:
-            - hold_for_app_builds
-          filters:
-            branches:
-              ignore: *release_branch_names
-      - build_app_linux:
-          context:
-            - infinitered-npm-package
-          requires:
-            - hold_for_app_builds
-          filters:
-            branches:
-              ignore: *release_branch_names
+      # - build_app_macos:
+      #     context:
+      #       - ReactotronCerts
+      #       - infinitered-npm-package
+      #     requires:
+      #       - hold_for_app_builds
+      #     filters:
+      #       branches:
+      #         ignore: *release_branch_names
+      # - build_app_linux:
+      #     context:
+      #       - infinitered-npm-package
+      #     requires:
+      #       - hold_for_app_builds
+      #     filters:
+      #       branches:
+      #         ignore: *release_branch_names
 
   # Allows for manual publishing of docs independent of deployment
   # Use the 'trigger pipeline' button in circle ci and set 'force-publish-docs' to 'true'
