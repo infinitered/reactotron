@@ -114,7 +114,12 @@ commands:
           command: yarn install --immutable
       - run:
           name: Build workspace packages
-          command: yarn build
+          command: |
+            if [ "$SKIP_LIB_BUILD" != "1" ]; then
+              yarn build
+            else
+              echo "Skipping workspace build (SKIP_LIB_BUILD=1)"
+            fi
       - save_cache:
           paths:
             - node_modules/
@@ -223,6 +228,10 @@ jobs:
       - run:
           name: Typecheck
           command: yarn typecheck
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - lib/*/dist
   trust_check:
     executor: *node_executor
     steps:
@@ -278,25 +287,17 @@ jobs:
             yarn release:artifacts $CIRCLE_TAG
 
   build_app_windows:
-    executor: *node_executor
     <<: *defaults
     docker:
-      - image: electronuserland/builder:wine-mono
+      - image: electronuserland/builder:20-wine-07.24
     resource_class: large
     environment:
       BUILD_TARGET: windows
-      XDG_RUNTIME_DIR: /tmp/runtime-root
-      WINEDEBUG: -all
-      DISPLAY: :99
+      SKIP_LIB_BUILD: "1"
     steps:
       - checkout
-      - run:
-          name: Setup Wine environment
-          command: |
-            mkdir -p $XDG_RUNTIME_DIR
-            chmod 0700 $XDG_RUNTIME_DIR
-            Xvfb :99 -screen 0 1024x768x16 &
-            sleep 2
+      - attach_workspace:
+          at: ~/repo
       - install-packages
       - release-reactotron-app:
           os: Windows
