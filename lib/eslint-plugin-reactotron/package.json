@@ -11,14 +11,18 @@
   "repository": "https://github.com/infinitered/reactotron/tree/master/lib/eslint-plugin-reactotron",
   "files": [
     "dist",
-    "src",
-    "index.js"
+    "src"
   ],
-  "main": "./index.js",
+  "main": "./dist/commonjs/index.js",
   "module": "./dist/module/index.js",
   "types": "./dist/typescript/commonjs/src/index.d.ts",
   "exports": {
-    ".": "./index.js",
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/typescript/commonjs/src/index.d.ts",
+      "module": "./dist/module/index.js",
+      "default": "./dist/commonjs/index.js"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -28,7 +32,7 @@
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",
     "prebuild": "yarn clean",
-    "build": "bob build",
+    "build": "bob build && node -e \"const fs = require('fs'); const path = './dist/commonjs/index.js'; let content = fs.readFileSync(path, 'utf8'); if (!content.includes('module.exports = ')) { content += '\\n\\n// Node.js 22 compatibility - ensure plugin is available as module.exports\\nmodule.exports = plugin;\\nmodule.exports.default = plugin;'; fs.writeFileSync(path, content); console.log('✓ Fixed CommonJS exports for Node.js 22 compatibility'); }\"",
     "prebuild:dev": "yarn clean",
     "build:dev": "bob build",
     "clean": "rimraf ./dist",
