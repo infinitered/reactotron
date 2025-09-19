@@ -32,7 +32,7 @@
     "format:check": "yarn format --check",
     "format:write": "yarn format --write",
     "prebuild": "yarn clean",
-    "build": "bob build && node -e \"const fs = require('fs'); const path = './dist/commonjs/index.js'; let content = fs.readFileSync(path, 'utf8'); if (!content.includes('module.exports = ')) { content += '\\n\\n// Node.js 22 compatibility - ensure plugin is available as module.exports\\nmodule.exports = plugin;\\nmodule.exports.default = plugin;'; fs.writeFileSync(path, content); console.log('✓ Fixed CommonJS exports for Node.js 22 compatibility'); }\"",
+    "build": "bob build",
     "prebuild:dev": "yarn clean",
     "build:dev": "bob build",
     "clean": "rimraf ./dist",
