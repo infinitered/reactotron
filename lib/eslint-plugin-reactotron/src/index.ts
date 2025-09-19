@@ -16,10 +16,10 @@ import { noTronInProduction } from "./rules/no-tron-in-production"
     }
   ```
  */
-const eslintPluginReactotron: Linter.Plugin = {
-  rules: {
-    "no-tron-in-production": noTronInProduction,
-  },
-} satisfies Linter.Plugin
+export const rules: Record<string, any> = {
+  "no-tron-in-production": noTronInProduction,
+}
 
-export default eslintPluginReactotron
+// Export the plugin object directly
+const plugin: Linter.Plugin = { rules }
+export default plugin
