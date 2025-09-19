@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.1.9](https://github.com/infinitered/reactotron/compare/eslint-plugin-reactotron@0.1.8...eslint-plugin-reactotron@0.1.9) (2025-09-19)
+
+
+### Bug Fixes
+
+* **eslint-plugin-reactotron:** Fix ESLint Plugin CommonJS Export Compatibility ([#1578](https://github.com/infinitered/reactotron/issues/1578)) ([8c16592](https://github.com/infinitered/reactotron/commit/8c16592fd68be2cfd0c25da02a609f9bb8e5d051)), closes [infinitered/ignite#2997](https://github.com/infinitered/ignite/issues/2997)
+
 ### [0.1.8](https://github.com/infinitered/reactotron/compare/eslint-plugin-reactotron@0.1.7...eslint-plugin-reactotron@0.1.8) (2025-09-16)
 
 ### [0.1.7](https://github.com/infinitered/reactotron/compare/eslint-plugin-reactotron@0.1.6...eslint-plugin-reactotron@0.1.7) (2025-03-01)
