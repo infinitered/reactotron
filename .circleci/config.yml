@@ -387,38 +387,38 @@ workflows:
             branches:
               ignore: *release_branch_names
       # Optional build jobs for testing - require manual approval
-      - hold_for_app_builds:
-          type: approval
-          requires:
-            - build_and_test
-          filters:
-            branches:
-              ignore: *release_branch_names
-      - build_app_windows:
-          context:
-            - infinitered-npm-package
-          requires:
-            - hold_for_app_builds
-          filters:
-            branches:
-              ignore: *release_branch_names
-      - build_app_macos:
-          context:
-            - ReactotronCerts
-            - infinitered-npm-package
-          requires:
-            - hold_for_app_builds
-          filters:
-            branches:
-              ignore: *release_branch_names
-      - build_app_linux:
-          context:
-            - infinitered-npm-package
-          requires:
-            - hold_for_app_builds
-          filters:
-            branches:
-              ignore: *release_branch_names
+      # - hold_for_app_builds:
+      #     type: approval
+      #     requires:
+      #       - build_and_test
+      #     filters:
+      #       branches:
+      #         ignore: *release_branch_names
+      # - build_app_windows:
+      #     context:
+      #       - infinitered-npm-package
+      #     requires:
+      #       - hold_for_app_builds
+      #     filters:
+      #       branches:
+      #         ignore: *release_branch_names
+      # - build_app_macos:
+      #     context:
+      #       - ReactotronCerts
+      #       - infinitered-npm-package
+      #     requires:
+      #       - hold_for_app_builds
+      #     filters:
+      #       branches:
+      #         ignore: *release_branch_names
+      # - build_app_linux:
+      #     context:
+      #       - infinitered-npm-package
+      #     requires:
+      #       - hold_for_app_builds
+      #     filters:
+      #       branches:
+      #         ignore: *release_branch_names
 
   # Allows for manual publishing of docs independent of deployment
   # Use the 'trigger pipeline' button in circle ci and set 'force-publish-docs' to 'true'
