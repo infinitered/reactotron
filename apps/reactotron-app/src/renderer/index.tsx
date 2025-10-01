@@ -14,6 +14,7 @@ root.render(
   </ReactotronAppProvider>
 )
 
+// accept it like it's hot
 if ((module as any).hot) {
   ;(module as any).hot.accept()
 }
