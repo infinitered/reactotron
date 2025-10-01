@@ -114,7 +114,12 @@ commands:
           command: yarn install --immutable
       - run:
           name: Build workspace packages
-          command: yarn build
+          command: |
+            if [ "$SKIP_LIB_BUILD" != "1" ]; then
+              yarn build
+            else
+              echo "Skipping workspace build (SKIP_LIB_BUILD=1)"
+            fi
       - save_cache:
           paths:
             - node_modules/
@@ -223,6 +228,10 @@ jobs:
       - run:
           name: Typecheck
           command: yarn typecheck
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - lib/*/dist
   trust_check:
     executor: *node_executor
     steps:
@@ -278,15 +287,17 @@ jobs:
             yarn release:artifacts $CIRCLE_TAG
 
   build_app_windows:
-    executor: *node_executor
     <<: *defaults
     docker:
       - image: electronuserland/builder:20-wine-07.24
     resource_class: large
     environment:
       BUILD_TARGET: windows
+      SKIP_LIB_BUILD: "1"
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/repo
       - install-packages
       - release-reactotron-app:
           os: Windows
@@ -311,18 +322,21 @@ jobs:
   build_app_macos:
     <<: *defaults
     macos:
-      xcode: "13.4.1"
+      xcode: "16.4.0"
+      resource_class: macos.m1.medium.gen1
     environment:
       BUILD_TARGET: macos
     steps:
       - checkout
+      - node/install:
+          node-version: "22"
       - install-packages
       - run:
           name: Decode Certificates
           command: echo "$ReactotronCerts" | base64 --decode > ~/repo/apps/reactotron-app/Certificates.p12
       - run:
           name: Install Bundler
-          command: gem install bundler:1.16.1
+          command: gem install bundler
       - run:
           name: Install Gems
           command: |
@@ -372,6 +386,39 @@ workflows:
           filters:
             branches:
               ignore: *release_branch_names
+      # Optional build jobs for testing - require manual approval
+      # - hold_for_app_builds:
+      #     type: approval
+      #     requires:
+      #       - build_and_test
+      #     filters:
+      #       branches:
+      #         ignore: *release_branch_names
+      # - build_app_windows:
+      #     context:
+      #       - infinitered-npm-package
+      #     requires:
+      #       - hold_for_app_builds
+      #     filters:
+      #       branches:
+      #         ignore: *release_branch_names
+      # - build_app_macos:
+      #     context:
+      #       - ReactotronCerts
+      #       - infinitered-npm-package
+      #     requires:
+      #       - hold_for_app_builds
+      #     filters:
+      #       branches:
+      #         ignore: *release_branch_names
+      # - build_app_linux:
+      #     context:
+      #       - infinitered-npm-package
+      #     requires:
+      #       - hold_for_app_builds
+      #     filters:
+      #       branches:
+      #         ignore: *release_branch_names
 
   # Allows for manual publishing of docs independent of deployment
   # Use the 'trigger pipeline' button in circle ci and set 'force-publish-docs' to 'true'
