@@ -438,6 +438,8 @@ workflows:
           filters:
             branches:
               only: *release_branch_names
+            tags:
+              only: *release_app_filter
       - release_tags:
           context:
             - infinitered-npm-package
@@ -474,6 +476,8 @@ workflows:
             branches: *release_branch_filter
             tags:
               only: *release_app_filter
+          requires:
+            - build_and_test
       - build_app_macos:
           context:
             - ReactotronCerts
@@ -482,6 +486,8 @@ workflows:
             branches: *release_branch_filter
             tags:
               only: *release_app_filter
+          requires:
+            - build_and_test
       - build_app_linux:
           context:
             - infinitered-npm-package
@@ -489,6 +495,8 @@ workflows:
             branches: *release_branch_filter
             tags:
               only: *release_app_filter
+          requires:
+            - build_and_test
       - release_app:
           context:
             - infinitered-npm-package
