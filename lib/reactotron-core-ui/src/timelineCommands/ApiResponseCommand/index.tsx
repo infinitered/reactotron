@@ -1,6 +1,7 @@
 import React, { useState, FunctionComponent } from "react"
 import styled from "styled-components"
 import { MdCallReceived, MdCallMade, MdReceipt, MdContentCopy } from "react-icons/md"
+import type { ApiResponsePayload } from "reactotron-core-contract"
 
 import TimelineCommand from "../../components/TimelineCommand"
 import TimelineCommandTabButton from "../../components/TimelineCommandTabButton"
@@ -30,22 +31,6 @@ export enum Tab {
   RequestParams = "requestParams",
   ResponseHeaders = "responseHeaders",
   ResponseBody = "responseBody",
-}
-
-interface ApiResponsePayload {
-  duration: number
-  request: {
-    data: any // ¯\_(ツ)_/¯
-    headers: { [key: string]: string }
-    method: string
-    params: any // ¯\_(ツ)_/¯
-    url: string
-  }
-  response: {
-    body: string
-    headers: { [key: string]: string }
-    status: number
-  }
 }
 
 interface Props extends TimelineCommandProps<ApiResponsePayload> {
