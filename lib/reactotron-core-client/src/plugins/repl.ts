@@ -1,3 +1,4 @@
+import type { ReplExecuteResponsePayload, ReplLsResponsePayload } from "reactotron-core-contract"
 import type { ReactotronCore, Plugin } from "../reactotron-core-client"
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -12,7 +13,7 @@ const repl = () => (reactotron: ReactotronCore) => {
 
       switch (type.substr(5)) {
         case "ls":
-          reactotron.send("repl.ls.response", Object.keys(myRepls))
+          reactotron.send("repl.ls.response", Object.keys(myRepls) as ReplLsResponsePayload)
           break
         // case "cd":
         //   const changeTo = myRepls.find(r => r.name === payload)
@@ -40,7 +41,7 @@ const repl = () => (reactotron: ReactotronCore) => {
             "repl.execute.response",
             function () {
               return eval(payload) // eslint-disable-line no-eval
-            }.call(myRepls)
+            }.call(myRepls) as ReplExecuteResponsePayload
           )
           break
       }
