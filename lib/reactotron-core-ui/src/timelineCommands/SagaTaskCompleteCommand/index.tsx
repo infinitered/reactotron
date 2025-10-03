@@ -1,8 +1,9 @@
 import React, { FunctionComponent, useState } from "react"
+import type { SagaTaskCompletePayload } from "reactotron-core-contract"
 
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 
-import StatelessSagaTaskCompleteCommand, { SagaTaskCompletePayload } from "./Stateless"
+import StatelessSagaTaskCompleteCommand from "./Stateless"
 
 interface Props extends TimelineCommandProps<SagaTaskCompletePayload> {}
 

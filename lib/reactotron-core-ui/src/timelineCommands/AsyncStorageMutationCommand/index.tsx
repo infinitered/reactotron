@@ -1,14 +1,10 @@
 import React, { FunctionComponent } from "react"
+import type { AsyncStorageMutationPayload } from "reactotron-core-contract"
 
 import TimelineCommand from "../../components/TimelineCommand"
 import { KeyContainer, RowContainer, ValueContainer } from "../../utils/makeTable"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
 import { makeTableWithContentView } from "../../components/ContentView"
-
-interface AsyncStorageMutationPayload {
-  action: string
-  data: any
-}
 
 interface Props extends TimelineCommandProps<AsyncStorageMutationPayload> {}
 
