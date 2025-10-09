@@ -109,7 +109,7 @@ const trackGlobalErrors = (options?: TrackGlobalErrorsOptions) => (reactotron: R
         }))
         // does the dev want us to keep each frame?
         if (config.veto) {
-          prettyStackFrames = prettyStackFrames.filter((frame) => config?.veto(frame))
+          prettyStackFrames = prettyStackFrames.filter((frame) => !config?.veto(frame))
         }
         client.error(error.message, prettyStackFrames) // TODO: Fix this.
       })
