@@ -40,13 +40,15 @@ Reactotron.configure()
   .use(
     trackGlobalErrors({
       veto: (frame) =>
-        frame.fileName.indexOf("/node_modules/react-native/") >= 0,
+        !frame.fileName.includes("/node_modules/react-native/"),
     })
   )
   .connect();
 ```
 
-`veto` is a function that takes an `object` and returns a `boolean`. `true` = ditch it. `false` = keep it.
+`veto` is a function that takes an `object` and returns a `boolean`. `true` = keep it. `false` = ditch it.
+
+> **Note:** This behavior is inverted from the originally intended design. The function was meant to work as "true = ditch it, false = keep it", but due to a long-standing implementation detail (using `.filter()` which keeps truthy values), the actual behavior has been the opposite. Since this behavior has existed for so long, it's now considered the expected behavior and the documentation has been updated to reflect it.
 
 The frame object passed into `veto` has these properties.
 
