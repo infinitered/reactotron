@@ -25,6 +25,8 @@ export enum ArgType {
 export interface CustomCommandArg {
   name: string
   type: ArgType
+  placeholder?: string
+  hidden?: boolean
 }
 
 // #region Plugin Types
