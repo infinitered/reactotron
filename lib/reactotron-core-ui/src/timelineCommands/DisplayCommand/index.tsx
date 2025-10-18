@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { MdContentCopy } from "react-icons/md"
+import type { DisplayPayload } from "reactotron-core-contract"
 
 import TimelineCommand from "../../components/TimelineCommand"
 import ContentView from "../../components/ContentView"
@@ -12,13 +13,6 @@ const Image = styled.img`
   max-width: 100%;
   max-height: 100%;
 `
-
-interface DisplayPayload {
-  name: string
-  value?: any
-  image?: any
-  preview?: string
-}
 
 interface Props extends TimelineCommandProps<DisplayPayload> {}
 

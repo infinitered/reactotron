@@ -1,13 +1,5 @@
+import type { ImagePayload } from "reactotron-core-contract"
 import type { ReactotronCore, Plugin } from "../reactotron-core-client"
-
-export interface ImagePayload {
-  uri: string
-  preview: string
-  caption?: string
-  width?: number
-  height?: number
-  filename?: string
-}
 
 /**
  * Provides an image.

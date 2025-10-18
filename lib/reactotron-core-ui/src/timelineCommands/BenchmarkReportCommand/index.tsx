@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
+import type { BenchmarkReportPayload } from "reactotron-core-contract"
 
 import TimelineCommand from "../../components/TimelineCommand"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
@@ -38,15 +39,6 @@ const StepGraph = styled.div.attrs(() => ({}))<StepGrapProps>`
   left: ${(props) => props.$startPercent}%;
   right: ${(props) => props.$endPercent}%;
 `
-
-interface BenchmarkReportPayload {
-  title: string
-  steps: {
-    title: string
-    time: number
-    delta: number
-  }[]
-}
 
 interface Props extends TimelineCommandProps<BenchmarkReportPayload> {}
 

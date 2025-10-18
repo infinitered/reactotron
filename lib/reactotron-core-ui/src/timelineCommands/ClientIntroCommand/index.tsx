@@ -1,12 +1,9 @@
 import React, { FunctionComponent } from "react"
+import type { ClientIntroPayload } from "reactotron-core-contract"
 
 import TimelineCommand from "../../components/TimelineCommand"
 import makeTable from "../../utils/makeTable"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
-
-interface ClientIntroPayload {
-  name: string
-}
 
 interface Props extends TimelineCommandProps<ClientIntroPayload> {}
 

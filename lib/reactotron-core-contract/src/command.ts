@@ -1,5 +1,14 @@
+import type { ApiResponsePayload } from "./apiResponse"
+import type { AsyncStorageMutationPayload } from "./asyncStorage"
+import type { BenchmarkReportPayload } from "./benchmark"
+import type { ClientIntroPayload } from "./clientIntro"
+import type { CustomCommandRegisterPayload, CustomCommandUnregisterPayload } from "./customCommand"
+import type { DisplayPayload } from "./display"
+import type { ImagePayload } from "./image"
 import type { LogPayload } from "./log"
 import { EditorOpenPayload } from "./openInEditor"
+import type { ReplExecuteResponsePayload, ReplLsResponsePayload } from "./repl"
+import type { SagaTaskCompletePayload } from "./sagaTaskComplete"
 import type {
   StateActionCompletePayload,
   StateActionDispatchPayload,
@@ -50,14 +59,14 @@ export const CommandType = {
 export type CommandTypeKey = (typeof CommandType)[keyof typeof CommandType]
 
 export interface CommandMap {
-  [CommandType.ApiResponse]: any
-  [CommandType.AsyncStorageMutation]: any
-  [CommandType.Benchmark]: any
-  [CommandType.ClientIntro]: any
-  [CommandType.Display]: any
-  [CommandType.Image]: any
+  [CommandType.ApiResponse]: ApiResponsePayload
+  [CommandType.AsyncStorageMutation]: AsyncStorageMutationPayload
+  [CommandType.Benchmark]: BenchmarkReportPayload
+  [CommandType.ClientIntro]: ClientIntroPayload
+  [CommandType.Display]: DisplayPayload
+  [CommandType.Image]: ImagePayload
   [CommandType.Log]: LogPayload
-  [CommandType.SagaTaskComplete]: any
+  [CommandType.SagaTaskComplete]: SagaTaskCompletePayload
   [CommandType.StateActionComplete]: StateActionCompletePayload
   [CommandType.StateKeysResponse]: StateKeysResponsePayload
   [CommandType.StateValuesChange]: StateValuesChangePayload
@@ -69,11 +78,11 @@ export interface CommandMap {
   [CommandType.StateValuesSubscribe]: StateValuesSubscribePayload
   [CommandType.StateKeysRequest]: StateKeysRequestPayload
   [CommandType.StateValuesRequest]: StateValuesRequestPayload
-  [CommandType.CustomCommandRegister]: any
-  [CommandType.CustomCommandUnregister]: any
+  [CommandType.CustomCommandRegister]: CustomCommandRegisterPayload
+  [CommandType.CustomCommandUnregister]: CustomCommandUnregisterPayload
   [CommandType.Clear]: undefined
-  [CommandType.ReplLsResponse]: any
-  [CommandType.ReplExecuteResponse]: any
+  [CommandType.ReplLsResponse]: ReplLsResponsePayload
+  [CommandType.ReplExecuteResponse]: ReplExecuteResponsePayload
   [CommandType.DevtoolsOpen]: undefined
   [CommandType.DevtoolsReload]: undefined
   [CommandType.EditorOpen]: EditorOpenPayload

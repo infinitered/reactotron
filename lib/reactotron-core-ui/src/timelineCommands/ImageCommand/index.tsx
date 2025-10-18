@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
+import type { ImagePayload } from "reactotron-core-contract"
 
 import TimelineCommand from "../../components/TimelineCommand"
 import { TimelineCommandProps, buildTimelineCommand } from "../BaseCommand"
@@ -19,15 +20,6 @@ const Dimensions = styled.div`
 const Filename = styled.div`
   color: ${(props) => props.theme.highlight};
 `
-
-interface ImagePayload {
-  uri: string
-  preview: string
-  caption?: string
-  width?: number
-  height?: number
-  filename?: string
-}
 
 interface Props extends TimelineCommandProps<ImagePayload> {}
 

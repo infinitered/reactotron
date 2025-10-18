@@ -1,5 +1,5 @@
 import WebSocket from "ws"
-import type { Command, CommandTypeKey } from "reactotron-core-contract"
+import type { Command, CommandTypeKey, DisplayPayload } from "reactotron-core-contract"
 import validate from "./validate"
 import logger from "./plugins/logger"
 import image from "./plugins/image"
@@ -44,11 +44,7 @@ export interface Plugin<Client> extends LifeCycleMethods {
 
 export type PluginCreator<Client> = (client: Client) => Plugin<Client>
 
-interface DisplayConfig {
-  name: string
-  value?: object | string | number | boolean | null | undefined
-  preview?: string
-  image?: string | { uri: string }
+interface DisplayConfig extends DisplayPayload {
   important?: boolean
 }
 
@@ -291,7 +287,7 @@ export class ReactotronImpl
         this.send("client.intro", {
           environment,
           ...client,
-          name,
+          name: name!,
           clientId,
           reactotronCoreClientVersion: "REACTOTRON_CORE_CLIENT_VERSION",
         })
@@ -421,11 +417,11 @@ export class ReactotronImpl
    */
   display(config: DisplayConfig) {
     const { name, value, preview, image: img, important = false } = config
-    const payload = {
+    const payload: DisplayPayload = {
       name,
-      value: value || null,
-      preview: preview || null,
-      image: img || null,
+      value: value || undefined,
+      preview: preview || undefined,
+      image: img || undefined,
     }
     this.send("display", payload, important)
   }
@@ -531,7 +527,7 @@ export class ReactotronImpl
         this.customCommands = this.customCommands.filter((cc) => cc.id !== command.id)
 
         this.send("customCommand.unregister", {
-          id: command.id,
+          id: command.id!,
           command: command.command,
         })
       })
@@ -572,7 +568,7 @@ export class ReactotronImpl
     this.customCommands.push(customHandler)
 
     this.send("customCommand.register", {
-      id: customHandler.id,
+      id: customHandler.id!,
       command: customHandler.command,
       title: customHandler.title,
       description: customHandler.description,
@@ -583,7 +579,7 @@ export class ReactotronImpl
       this.customCommands = this.customCommands.filter((cc) => cc.id !== customHandler.id)
 
       this.send("customCommand.unregister", {
-        id: customHandler.id,
+        id: customHandler.id!,
         command: customHandler.command,
       })
     }

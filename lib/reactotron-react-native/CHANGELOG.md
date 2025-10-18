@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [5.1.18](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.17...reactotron-react-native@5.1.18) (2025-10-13)
+
+
+### Bug Fixes
+
+* parseErrorStack export in reactotron-react-native ([#1588](https://github.com/infinitered/reactotron/issues/1588)) ([65dd6b7](https://github.com/infinitered/reactotron/commit/65dd6b7555c603c9029f6f24729cfbaeafeef0a7)), closes [#1573](https://github.com/infinitered/reactotron/issues/1573)
+
 ### [5.1.17](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.16...reactotron-react-native@5.1.17) (2025-09-16)
 
 ### [5.1.16](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.15...reactotron-react-native@5.1.16) (2025-09-09)

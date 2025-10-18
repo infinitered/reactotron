@@ -1,3 +1,4 @@
+import type { ApiResponsePayload } from "reactotron-core-contract"
 import type { ReactotronCore, Plugin } from "../reactotron-core-client"
 
 /**
@@ -6,7 +7,11 @@ import type { ReactotronCore, Plugin } from "../reactotron-core-client"
 const apiResponse = () => (reactotron: ReactotronCore) => {
   return {
     features: {
-      apiResponse: (request: { status: number }, response: any, duration: number) => {
+      apiResponse: (
+        request: ApiResponsePayload["request"],
+        response: ApiResponsePayload["response"],
+        duration: number
+      ) => {
         const ok =
           response &&
           response.status &&

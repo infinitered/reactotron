@@ -6,6 +6,7 @@ import {
   MdEject as IconStatusCancelled,
   MdError as IconStatusRejected,
 } from "react-icons/md"
+import type { SagaTaskCompleteChild, SagaTaskCompletePayload } from "reactotron-core-contract"
 
 import TimelineCommand from "../../components/TimelineCommand"
 import ContentView from "../../components/ContentView"
@@ -67,27 +68,6 @@ const EffectExtraContainer = styled.div`
 const EffectDescription = styled.div`
   padding-bottom: 4px;
 `
-
-export interface SagaTaskCompleteChild {
-  depth: number
-  description: string
-  duration: number
-  effectId: number
-  extra: { type: string }
-  name: string
-  parentEffectId: number
-  result: { type: string }
-  status: string
-  winner: any
-  loser: any
-}
-
-export interface SagaTaskCompletePayload {
-  children: SagaTaskCompleteChild[]
-  description: any // TODO: ¯\_(ツ)_/¯
-  duration: number
-  triggerType: string
-}
 
 interface Props extends TimelineCommandProps<SagaTaskCompletePayload> {
   isDetailsOpen: boolean

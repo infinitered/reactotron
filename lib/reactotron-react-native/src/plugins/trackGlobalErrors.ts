@@ -71,11 +71,23 @@ const trackGlobalErrors = (options?: TrackGlobalErrorsOptions) => (reactotron: R
   // manually fire an error
   function reportError(error: Parameters<typeof LogBox.addException>[0]) {
     try {
-      parseErrorStack =
-        parseErrorStack || require("react-native/Libraries/Core/Devtools/parseErrorStack")
-      symbolicateStackTrace =
-        symbolicateStackTrace ||
-        require("react-native/Libraries/Core/Devtools/symbolicateStackTrace")
+      if (!parseErrorStack) {
+        const parseErrorStackModule = require("react-native/Libraries/Core/Devtools/parseErrorStack")
+        // Handle both CommonJS (module.exports) and ESM (export default) formats
+        parseErrorStack =
+          typeof parseErrorStackModule === "function"
+            ? parseErrorStackModule
+            : parseErrorStackModule.default
+      }
+
+      if (!symbolicateStackTrace) {
+        const symbolicateStackTraceModule = require("react-native/Libraries/Core/Devtools/symbolicateStackTrace")
+        // Handle both CommonJS (module.exports) and ESM (export default) formats
+        symbolicateStackTrace =
+          typeof symbolicateStackTraceModule === "function"
+            ? symbolicateStackTraceModule
+            : symbolicateStackTraceModule.default
+      }
     } catch (e) {
       client.error(
         'Unable to load "react-native/Libraries/Core/Devtools/parseErrorStack" or "react-native/Libraries/Core/Devtools/symbolicateStackTrace"',
@@ -86,6 +98,29 @@ const trackGlobalErrors = (options?: TrackGlobalErrorsOptions) => (reactotron: R
     }
 
     if (!parseErrorStack || !symbolicateStackTrace) {
+      client.error("parseErrorStack or symbolicateStackTrace is not available", [])
+      client.debug({
+        parseErrorStackAvailable: !!parseErrorStack,
+        symbolicateStackTraceAvailable: !!symbolicateStackTrace,
+      })
+      return
+    }
+
+    if (typeof parseErrorStack !== "function") {
+      client.error("parseErrorStack is not a function", [])
+      client.debug({
+        parseErrorStackType: typeof parseErrorStack,
+        parseErrorStack,
+      })
+      return
+    }
+
+    if (typeof symbolicateStackTrace !== "function") {
+      client.error("symbolicateStackTrace is not a function", [])
+      client.debug({
+        symbolicateStackTraceType: typeof symbolicateStackTrace,
+        symbolicateStackTrace,
+      })
       return
     }
 
