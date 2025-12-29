@@ -3,41 +3,16 @@ import Styles from "./network.styles"
 import { ContentView, ReactotronContext, Header, EmptyState } from "reactotron-core-ui"
 import { MdNetworkCheck } from "react-icons/md"
 import { useDrawerResize } from "./useDrawerResize"
-import { VirtualizedList } from "./virtualized-list"
-
-export interface Command {
-  clientId?: string
-  connectionId: number
-  date: Date
-  deltaTime: number
-  important: boolean
-  messageId: number
-  payload: any
-  type: string
-}
+import { NetworkRequestsList } from "./components/NetworkRequestsList"
+import { NetworkRequestHeader } from "./components/NetworkRequestHeader"
 
 const {
   Container,
   SDrawer,
-  RequestContainer,
   RequestResponseContainer,
-  RequestItem,
-  RequestDataHeader,
   RequestResponseContainerBody,
   ResizeHandle,
-  RequestMethodStatus,
-  HttpMethod,
-  StatusCode,
-  StatusSeparator,
 } = Styles
-
-const AvailableTabs = [
-  "request headers",
-  "request params",
-  "request body",
-  "response headers",
-  "response",
-] as const
 
 export const Network = () => {
   const { commands } = useContext(ReactotronContext)
@@ -89,56 +64,24 @@ export const Network = () => {
 
   return (
     <Container>
-      <Header title="Network" isDraggable />
+      <Header title="Network" isDraggable actions={[]}/>
       <SDrawer ref={containerRef} style={{ gridTemplateColumns: `${leftPanelWidth}px 1fr` }}>
-        <RequestContainer>
-          {containerRef.current && (
-            <VirtualizedList
-              getKey={(item) => item.messageId.toString()}
-              data={filteredCommands}
-              itemHeight={50}
-              height={containerRef.current?.offsetHeight}
-              renderItem={(command) => {
-                return (
-                  <RequestItem
-                    key={command?.messageId}
-                    onClick={() => setCurrentCommandId(command?.messageId)}
-                    className={currentCommandId === command?.messageId ? "active" : ""}
-                  >
-                    <p>{command.payload?.request?.url}</p>
-                  </RequestItem>
-                )
-              }}
-            />
-          )}
-        </RequestContainer>
+        {containerRef.current && (
+          <NetworkRequestsList
+            filteredCommands={filteredCommands}
+            containerHeight={containerRef.current?.offsetHeight}
+            currentCommandId={currentCommandId}
+            onRequestClick={setCurrentCommandId}
+          />
+        )}
         <RequestResponseContainer>
           <ResizeHandle onMouseDown={handleMouseDown} />
-          <RequestDataHeader>
-            <RequestMethodStatus>
-              <HttpMethod method={currentCommand?.payload?.request?.method}>
-                {currentCommand?.payload?.request?.method?.toUpperCase() || "N/A"}
-              </HttpMethod>
-              <StatusSeparator>•</StatusSeparator>
-              <StatusCode status={currentCommand?.payload?.response?.status}>
-                {currentCommand?.payload?.response?.status || "N/A"}
-              </StatusCode>
-            </RequestMethodStatus>
-            {AvailableTabs.map((tab) => {
-              const hasTab = tabResolver(tab)
-              if (!hasTab) return null
-
-              return (
-                <li
-                  key={tab}
-                  onClick={() => setCurrSelectedType(tab)}
-                  className={currSelectedType === tab ? "active" : ""}
-                >
-                  {tab}
-                </li>
-              )
-            })}
-          </RequestDataHeader>
+          <NetworkRequestHeader
+            currentCommand={currentCommand}
+            currSelectedType={currSelectedType}
+            onTabChange={setCurrSelectedType}
+            tabResolver={tabResolver}
+          />
           {currentCommandId && (
             <RequestResponseContainerBody key={currentCommandId}>
               <ContentView value={tabResolver(currSelectedType)} />

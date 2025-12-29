@@ -73,14 +73,14 @@ const RequestResponseContainer = styled.div`
 
 const RequestDataHeader = styled.ul`
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
     border-bottom: 1px solid ${(props) => props.theme.border};
     margin: 0;
-    padding: 0 16px;
+    padding: 0;
     pointer-events: auto;
     background-color: ${(props) => props.theme.backgroundSubtleLight};
-    gap: 8px;
     
     li {
         list-style: none;
@@ -109,13 +109,19 @@ const RequestDataHeader = styled.ul`
 const RequestMethodStatus = styled.div`
     display: flex;
     align-items: center;
+    width: 100%;
     gap: 8px;
     padding: 8px 12px;
+    padding-left: 16px;
     margin-right: 12px;
     border-radius: 4px;
     font-size: 13px;
     font-weight: 600;
 `;
+
+const RequestAvailableTabsContainer = styled.div`
+    display: flex;
+`
 
 const HttpMethod = styled.span<{ method?: string }>`
     color: ${(props) => {
@@ -151,6 +157,12 @@ const StatusSeparator = styled.span`
     opacity: 0.5;
 `;
 
+const Duration = styled.span`
+    color: ${(props) => props.theme.foregroundLight};
+    font-weight: 600;
+    font-size: 12px;
+`;
+
 const RequestResponseContainerBody = styled.div`
     overflow-y: auto;
     padding: 20px;
@@ -184,12 +196,14 @@ const Styles = {
     RequestResponseContainer,
     RequestItem,
     RequestDataHeader,
+    RequestAvailableTabsContainer,
     RequestResponseContainerBody,
     ResizeHandle,
     RequestMethodStatus,
     HttpMethod,
     StatusCode,
     StatusSeparator,
+    Duration,
 }
 
 export default Styles;
