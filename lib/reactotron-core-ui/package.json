@@ -27,6 +27,7 @@
     "build": "bob build",
     "prebuild:dev": "yarn clean",
     "build:dev": "bob build",
+    "build:watch": "bob build --watch",
     "build-storybook": "build-storybook",
     "clean": "rimraf ./dist",
     "lint": "eslint src --ext .ts,.tsx",
