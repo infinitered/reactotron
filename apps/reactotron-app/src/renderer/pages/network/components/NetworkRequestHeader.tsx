@@ -6,7 +6,7 @@ interface NetworkRequestHeaderProps {
   currentCommand?: Command
   currSelectedType: string
   onTabChange: (tab: string) => void
-  tabResolver: (tab: string) => any
+  tabContent: Record<string, object>
 }
 
 const AvailableTabs = [
@@ -17,39 +17,20 @@ const AvailableTabs = [
   "response",
 ] as const
 
-const {
-  RequestDataHeader,
-  RequestMethodStatus,
-  HttpMethod,
-  StatusCode,
-  StatusSeparator,
-  RequestAvailableTabsContainer,
-  Duration,
-} = Styles
+const { RequestDataHeader, RequestAvailableTabsContainer } = Styles
 
 export const NetworkRequestHeader: React.FC<NetworkRequestHeaderProps> = ({
   currentCommand,
   currSelectedType,
   onTabChange,
-  tabResolver,
+  tabContent,
 }) => {
   console.log(currentCommand)
   return (
     <RequestDataHeader>
-      <RequestMethodStatus>
-        <HttpMethod method={currentCommand?.payload?.request?.method}>
-          {currentCommand?.payload?.request?.method?.toUpperCase() || "N/A"}
-        </HttpMethod>
-        <StatusSeparator>•</StatusSeparator>
-        <StatusCode status={currentCommand?.payload?.response?.status}>
-          {currentCommand?.payload?.response?.status || "N/A"}
-        </StatusCode>
-        <StatusSeparator>•</StatusSeparator>
-        <Duration>{currentCommand?.payload?.duration ? `${currentCommand.payload.duration.toFixed(3)}ms` : "N/A"}</Duration>
-      </RequestMethodStatus>
       <RequestAvailableTabsContainer>
         {AvailableTabs.map((tab) => {
-          const hasTab = tabResolver(tab)
+          const hasTab = tabContent[tab]
           if (!hasTab) return null
 
           return (

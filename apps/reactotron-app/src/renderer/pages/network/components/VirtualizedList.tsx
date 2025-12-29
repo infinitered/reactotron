@@ -6,6 +6,7 @@ interface VirtualizedListProps<T> {
   itemHeight: number
   height: number
   getKey: (item: T) => string
+  overscan?: number
 }
 
 export const VirtualizedList = <T,>({
@@ -14,6 +15,8 @@ export const VirtualizedList = <T,>({
   itemHeight,
   height,
   getKey,
+  // extra items before and after visible area
+  overscan = 5,
 }: VirtualizedListProps<T>) => {
   const itemAmount = height / itemHeight
   const totalHeight = data.length * itemHeight
@@ -33,9 +36,12 @@ export const VirtualizedList = <T,>({
     setPositions({ head, tail })
   }
 
+  const overscanHead = Math.max(0, positions.head - overscan)
+  const overscanTail = Math.min(data.length, positions.tail + overscan)
+
   const visibleItems = useMemo(
-    () => data.slice(positions.head, positions.tail),
-    [data, positions.head, positions.tail]
+    () => data.slice(overscanHead, overscanTail),
+    [data, overscanHead, overscanTail]
   )
 
   if (!data.length) return null
@@ -47,7 +53,7 @@ export const VirtualizedList = <T,>({
           style={{
             position: "absolute",
             width: "100%",
-            transform: `translateY(${positions.head * itemHeight}px)`,
+            transform: `translateY(${overscanHead * itemHeight}px)`,
           }}
         >
           {visibleItems.map((item) => (

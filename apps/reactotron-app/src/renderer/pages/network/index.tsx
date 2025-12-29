@@ -6,13 +6,8 @@ import { useDrawerResize } from "./useDrawerResize"
 import { NetworkRequestsList } from "./components/NetworkRequestsList"
 import { NetworkRequestHeader } from "./components/NetworkRequestHeader"
 
-const {
-  Container,
-  SDrawer,
-  RequestResponseContainer,
-  RequestResponseContainerBody,
-  ResizeHandle,
-} = Styles
+const { Container, SDrawer, RequestResponseContainer, RequestResponseContainerBody, ResizeHandle } =
+  Styles
 
 export const Network = () => {
   const { commands } = useContext(ReactotronContext)
@@ -22,9 +17,9 @@ export const Network = () => {
   const [currSelectedType, setCurrSelectedType] = useState<string>("request headers")
 
   const { containerRef, leftPanelWidth, handleMouseDown } = useDrawerResize({
-    initialLeftPanelWidth: 350,
-    minLeftPanelWidth: 200,
-    minRightPanelWidth: 200,
+    initialLeftPanelWidth: 700,
+    minLeftPanelWidth: 600,
+    minRightPanelWidth: 700,
     resizeHandleWidth: 10,
   })
 
@@ -36,19 +31,12 @@ export const Network = () => {
 
   const currentCommand = filteredCommands.find((command) => command.messageId === currentCommandId)
 
-  const tabResolver = (tab: string) => {
-    switch (tab) {
-      case "response":
-        return currentCommand?.payload?.response?.body
-      case "response headers":
-        return currentCommand?.payload?.response?.headers
-      case "request headers":
-        return currentCommand?.payload?.request?.headers
-      case "request params":
-        return currentCommand?.payload?.request?.params
-      case "request body":
-        return currentCommand?.payload?.request?.data
-    }
+  const tabContent = {
+    response: currentCommand?.payload?.response?.body,
+    "response headers": currentCommand?.payload?.response?.headers,
+    "request headers": currentCommand?.payload?.request?.headers,
+    "request params": currentCommand?.payload?.request?.params,
+    "request body": currentCommand?.payload?.request?.data,
   }
 
   if (filteredCommands.length === 0) {
@@ -64,7 +52,7 @@ export const Network = () => {
 
   return (
     <Container>
-      <Header title="Network" isDraggable actions={[]}/>
+      <Header title="Network" isDraggable actions={[]} />
       <SDrawer ref={containerRef} style={{ gridTemplateColumns: `${leftPanelWidth}px 1fr` }}>
         {containerRef.current && (
           <NetworkRequestsList
@@ -80,11 +68,11 @@ export const Network = () => {
             currentCommand={currentCommand}
             currSelectedType={currSelectedType}
             onTabChange={setCurrSelectedType}
-            tabResolver={tabResolver}
+            tabContent={tabContent}
           />
           {currentCommandId && (
             <RequestResponseContainerBody key={currentCommandId}>
-              <ContentView value={tabResolver(currSelectedType)} />
+              <ContentView value={tabContent[currSelectedType]} />
             </RequestResponseContainerBody>
           )}
         </RequestResponseContainer>
@@ -92,4 +80,3 @@ export const Network = () => {
     </Container>
   )
 }
-
