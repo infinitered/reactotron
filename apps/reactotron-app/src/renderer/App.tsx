@@ -15,6 +15,7 @@ import Overlay from "./pages/reactNative/Overlay"
 import Storybook from "./pages/reactNative/Storybook"
 import CustomCommands from "./pages/customCommands"
 import Help from "./pages/help"
+import { Network } from "./pages/network"
 
 const AppContainer = styled.div`
   position: absolute;
@@ -66,6 +67,9 @@ function App() {
 
                 {/* Custom Commands */}
                 <Route path="/customCommands" element={<CustomCommands />} />
+
+                {/* Network */}
+                <Route path="/network" element={<Network />} />
 
                 {/* Help */}
                 <Route path="/help" element={<Help />} />

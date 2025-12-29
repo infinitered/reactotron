@@ -7,6 +7,7 @@ import {
   MdWarning,
   MdOutlineMobileFriendly,
   MdMobiledataOff,
+  MdConnectWithoutContact,
 } from "react-icons/md"
 import { FaMagic } from "react-icons/fa"
 import styled from "styled-components"
@@ -71,6 +72,8 @@ function SideBar({ isOpen, serverStatus }: { isOpen: boolean; serverStatus: Serv
         text="React Native"
       />
       <SideBarButton icon={FaMagic} path="/customCommands" text="Custom Commands" iconSize={25} />
+
+      <SideBarButton icon={MdConnectWithoutContact} path="/network" text="Network" iconSize={25} />
 
       <Spacer />
 
