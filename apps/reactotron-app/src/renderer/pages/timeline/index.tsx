@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo, useState } from "react"
+import React, { useCallback, useContext, useMemo } from "react"
 import { clipboard, shell } from "electron"
 import fs from "fs"
 import os from "os"
@@ -8,11 +8,11 @@ import {
   Header,
   filterCommands,
   TimelineFilterModal,
+  timelineCommandResolver,
   EmptyState,
   ReactotronContext,
   TimelineContext,
   RandomJoke,
-  timelineCommandResolver,
 } from "reactotron-core-ui"
 import {
   MdSearch,
@@ -21,28 +21,69 @@ import {
   MdSwapVert,
   MdReorder,
   MdDownload,
-  MdConnectWithoutContact,
 } from "react-icons/md"
 import { FaTimes } from "react-icons/fa"
-import Styles from "./components/timeline.styles"
-import { Command, BetterNetwork } from "./components/better-network"
+import styled from "styled-components"
 
-const {
-  Container,
-  TimelineContainer,
-  SearchContainer,
-  SearchLabel,
-  SearchInput,
-  ButtonContainer,
-  HelpMessage,
-  QuickStartButtonContainer,
-  Divider,
-} = Styles
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`
+const TimelineContainer = styled.div`
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+`
+const SearchContainer = styled.div`
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+  padding-top: 4px;
+  padding-right: 10px;
+`
+const SearchLabel = styled.p`
+  padding: 0 10px;
+  font-size: 14px;
+  color: ${(props) => props.theme.foregroundDark};
+`
+const SearchInput = styled.input`
+  border-radius: 4px;
+  padding: 10px;
+  flex: 1;
+  background-color: ${(props) => props.theme.backgroundSubtleDark};
+  border: none;
+  color: ${(props) => props.theme.foregroundDark};
+  font-size: 14px;
+`
+const HelpMessage = styled.div`
+  margin: 0 40px;
+`
+const QuickStartButtonContainer = styled.div`
+  display: flex;
+  padding: 4px 8px;
+  margin: 30px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: ${(props) => props.theme.backgroundLighter};
+  color: ${(props) => props.theme.foreground};
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`
+const Divider = styled.div`
+  height: 1px;
+  background-color: ${(props) => props.theme.foregroundDark};
+  margin: 40px 10px;
+`
+
+export const ButtonContainer = styled.div`
+  padding: 10px;
+  cursor: pointer;
+`
 
 function Timeline() {
   const { sendCommand, clearCommands, commands, openDispatchModal } = useContext(ReactotronContext)
-  const [isNetworkModalOpen, setIsNetworkModalOpen] = useState(true)
-
   const {
     isSearchOpen,
     toggleSearch,
@@ -70,9 +111,9 @@ function Timeline() {
     filteredCommands = filteredCommands.reverse()
   }
 
-  const dispatchAction = useCallback((action: any) => {
+  const dispatchAction = (action: any) => {
     sendCommand("state.action.dispatch", { action })
-  }, [sendCommand])
+  }
 
   function openDocs() {
     shell.openExternal("https://docs.infinite.red/reactotron/quick-start/react-native/")
@@ -91,52 +132,12 @@ function Timeline() {
 
   const { searchString, handleInputChange } = useDebouncedSearchInput(search, setSearch, 300)
 
-  const renderCommandList = useMemo(() => {
-    return filteredCommands.map((command) => {
-      const CommandComponent = timelineCommandResolver(command.type)
-
-      if (CommandComponent) {
-        return (
-          <CommandComponent
-            key={command.messageId}
-            command={command}
-            copyToClipboard={clipboard.writeText}
-            readFile={(path) => {
-              return new Promise((resolve, reject) => {
-                fs.readFile(path, "utf-8", (err, data) => {
-                  if (err || !data) reject(new Error("Something failed"))
-                  else resolve(data)
-                })
-              })
-            }}
-            sendCommand={sendCommand}
-            dispatchAction={dispatchAction}
-            openDispatchDialog={openDispatchModal}
-          />
-        )
-      }
-
-      return null
-    })
-  }, [dispatchAction, filteredCommands, openDispatchModal, sendCommand])
-
-  const shouldRenderNoContent = filteredCommands.length === 0
-  const shouldRenderCustomNetwork = isNetworkModalOpen && filteredCommands.length > 0
-  const shouldRenderCommandList = !isNetworkModalOpen && filteredCommands.length > 0
-
   return (
     <Container>
       <Header
         title="Timeline"
         isDraggable
         actions={[
-          {
-            tip: "Network",
-            icon: MdConnectWithoutContact,
-            onClick: () => {
-              setIsNetworkModalOpen((prev) => !prev)
-            },
-          },
           {
             tip: "Export Log",
             icon: MdDownload,
@@ -193,7 +194,7 @@ function Timeline() {
         )}
       </Header>
       <TimelineContainer>
-        {shouldRenderNoContent && (
+        {filteredCommands.length === 0 ? (
           <EmptyState icon={MdReorder} title="No Activity">
             <HelpMessage>
               Once your app connects and starts sending events, they will appear here.
@@ -204,9 +205,34 @@ function Timeline() {
             <Divider />
             <RandomJoke />
           </EmptyState>
+        ) : (
+          filteredCommands.map((command) => {
+            const CommandComponent = timelineCommandResolver(command.type)
+
+            if (CommandComponent) {
+              return (
+                <CommandComponent
+                  key={command.messageId}
+                  command={command}
+                  copyToClipboard={clipboard.writeText}
+                  readFile={(path) => {
+                    return new Promise((resolve, reject) => {
+                      fs.readFile(path, "utf-8", (err, data) => {
+                        if (err || !data) reject(new Error("Something failed"))
+                        else resolve(data)
+                      })
+                    })
+                  }}
+                  sendCommand={sendCommand}
+                  dispatchAction={dispatchAction}
+                  openDispatchDialog={openDispatchModal}
+                />
+              )
+            }
+
+            return null
+          })
         )}
-        {shouldRenderCustomNetwork && <BetterNetwork commands={filteredCommands as Command[]} />}
-        {shouldRenderCommandList && renderCommandList}
       </TimelineContainer>
       <TimelineFilterModal
         isOpen={isFilterOpen}
