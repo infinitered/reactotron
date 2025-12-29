@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import Styles from "./network.styles"
 import { ContentView, ReactotronContext, Header, EmptyState } from "reactotron-core-ui"
 import { MdNetworkCheck } from "react-icons/md"
@@ -6,37 +6,73 @@ import { useDrawerResize } from "./useDrawerResize"
 import { NetworkRequestsList } from "./components/NetworkRequestsList"
 import { NetworkRequestHeader } from "./components/NetworkRequestHeader"
 
-const { Container, SDrawer, RequestResponseContainer, RequestResponseContainerBody, ResizeHandle } =
-  Styles
+const {
+  Container,
+  ResizableSectionWrapper,
+  RequestResponseContainer,
+  RequestResponseContainerBody,
+  ResizeHandle,
+} = Styles
 
 export const Network = () => {
+  const hasUserResizedRef = useRef(false)
+  const resizeTimeoutRef = useRef<NodeJS.Timeout>()
+
   const { commands } = useContext(ReactotronContext)
-  const filteredCommands = commands.filter((command) => command.type === "api.response")
 
   const [currentCommandId, setCurrentCommandId] = useState<number>()
   const [currSelectedType, setCurrSelectedType] = useState<string>("request headers")
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+
+  const filteredCommands = commands.filter((command) => command.type === "api.response")
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (hasUserResizedRef.current) return
+      if (resizeTimeoutRef.current) clearTimeout(resizeTimeoutRef.current)
+
+      resizeTimeoutRef.current = setTimeout(() => {
+        setScreenWidth(window.innerWidth)
+      }, 150)
+    }
+
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+      if (resizeTimeoutRef.current) {
+        clearTimeout(resizeTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  const initialLeftPanelWidth = Math.floor((screenWidth * 7) / 12)
+  const minRightPanelWidth = Math.floor(screenWidth / 12)
 
   const { containerRef, leftPanelWidth, handleMouseDown } = useDrawerResize({
-    initialLeftPanelWidth: 700,
-    minLeftPanelWidth: 600,
-    minRightPanelWidth: 700,
+    initialLeftPanelWidth,
+    minLeftPanelWidth: 400,
+    minRightPanelWidth,
     resizeHandleWidth: 10,
+    onUserResize: () => {
+      hasUserResizedRef.current = true
+    },
   })
 
   useEffect(() => {
-    if (!currentCommandId && !!commands.length) {
-      setCurrentCommandId(commands[0].messageId)
+    if (!currentCommandId && filteredCommands.length > 0) {
+      setCurrentCommandId(filteredCommands[0].messageId)
     }
-  }, [commands, commands.length, currentCommandId])
+  }, [currentCommandId, filteredCommands])
 
   const currentCommand = filteredCommands.find((command) => command.messageId === currentCommandId)
 
   const tabContent = {
-    response: currentCommand?.payload?.response?.body,
-    "response headers": currentCommand?.payload?.response?.headers,
     "request headers": currentCommand?.payload?.request?.headers,
     "request params": currentCommand?.payload?.request?.params,
     "request body": currentCommand?.payload?.request?.data,
+    "response body": currentCommand?.payload?.response?.body,
+    "response headers": currentCommand?.payload?.response?.headers,
   }
 
   if (filteredCommands.length === 0) {
@@ -53,7 +89,10 @@ export const Network = () => {
   return (
     <Container>
       <Header title="Network" isDraggable actions={[]} />
-      <SDrawer ref={containerRef} style={{ gridTemplateColumns: `${leftPanelWidth}px 1fr` }}>
+      <ResizableSectionWrapper
+        ref={containerRef}
+        style={{ gridTemplateColumns: `${leftPanelWidth}px 1fr` }}
+      >
         {containerRef.current && (
           <NetworkRequestsList
             filteredCommands={filteredCommands}
@@ -65,7 +104,6 @@ export const Network = () => {
         <RequestResponseContainer>
           <ResizeHandle onMouseDown={handleMouseDown} />
           <NetworkRequestHeader
-            currentCommand={currentCommand}
             currSelectedType={currSelectedType}
             onTabChange={setCurrSelectedType}
             tabContent={tabContent}
@@ -76,7 +114,7 @@ export const Network = () => {
             </RequestResponseContainerBody>
           )}
         </RequestResponseContainer>
-      </SDrawer>
+      </ResizableSectionWrapper>
     </Container>
   )
 }

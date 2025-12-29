@@ -5,6 +5,7 @@ interface UsePanelResizeOptions {
   minLeftPanelWidth?: number
   minRightPanelWidth?: number
   resizeHandleWidth?: number
+  onUserResize?: () => void
 }
 
 export const useDrawerResize = (options: UsePanelResizeOptions = {}) => {
@@ -13,6 +14,7 @@ export const useDrawerResize = (options: UsePanelResizeOptions = {}) => {
     minLeftPanelWidth = 200,
     minRightPanelWidth = 200,
     resizeHandleWidth = 10,
+    onUserResize,
   } = options
 
   const [isResizing, setIsResizing] = useState(false)
@@ -26,6 +28,10 @@ export const useDrawerResize = (options: UsePanelResizeOptions = {}) => {
   }
 
   useEffect(() => {
+    setLeftPanelWidth(initialLeftPanelWidth)
+  }, [initialLeftPanelWidth])
+
+  useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!isResizing || !containerRef.current) return
 
@@ -36,6 +42,8 @@ export const useDrawerResize = (options: UsePanelResizeOptions = {}) => {
 
       if (newWidth >= minLeftPanelWidth && newWidth <= maxWidth) {
         setLeftPanelWidth(newWidth)
+
+        if (onUserResize) onUserResize()
       }
     }
 
@@ -52,7 +60,7 @@ export const useDrawerResize = (options: UsePanelResizeOptions = {}) => {
       document.removeEventListener("mousemove", handleMouseMove)
       document.removeEventListener("mouseup", handleMouseUp)
     }
-  }, [isResizing, minLeftPanelWidth, minRightPanelWidth, resizeHandleWidth])
+  }, [isResizing, minLeftPanelWidth, minRightPanelWidth, resizeHandleWidth, onUserResize])
 
   return {
     containerRef,
@@ -60,4 +68,3 @@ export const useDrawerResize = (options: UsePanelResizeOptions = {}) => {
     handleMouseDown,
   }
 }
-
