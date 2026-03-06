@@ -167,7 +167,9 @@ const ApiResponseCommand: FunctionComponent<Props> = ({
         {!!request.params && tabBuilder(Tab.RequestParams, "Request Params")}
         {tabBuilder(Tab.RequestHeaders, "Request Headers")}
       </TabsContainer>
-      {onTab === Tab.ResponseBody && <ContentView value={response.body} />}
+      {onTab === Tab.ResponseBody && (
+        <ContentView value={response.body} copyToClipboard={copyToClipboard} />
+      )}
       {onTab === Tab.ResponseHeaders && <ContentView value={response.headers} />}
       {onTab === Tab.RequestBody && <ContentView value={request.data} treeLevel={1} />}
       {onTab === Tab.RequestParams && <ContentView value={request.params} />}

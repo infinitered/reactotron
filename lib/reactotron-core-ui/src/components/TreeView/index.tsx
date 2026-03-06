@@ -29,6 +29,22 @@ const theme = {
 
 const MutedContainer = styled.span`
   color: ${(props) => props.theme.highlight};
+  display: inline-flex;
+`
+
+const ButtonCopy = styled.button`
+  margin-left: 6px;
+  padding: 0 6px;
+  font-size: 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  color: ${(props) => props.theme.background};
+  background-color: ${(props) => props.theme.highlight};
+
+  &:hover {
+    opacity: 0.85;
+  }
 `
 
 const getTreeTheme = (baseTheme: ReactotronTheme) => ({
@@ -41,9 +57,10 @@ interface Props {
   // value: object
   value: any
   level?: number
+  copyToClipboard?: (text: string) => void
 }
 
-export default function TreeView({ value, level = 1 }: Props) {
+export default function TreeView({ value, level = 1, copyToClipboard }: Props) {
   const colorScheme = useColorScheme()
 
   return (
@@ -54,7 +71,18 @@ export default function TreeView({ value, level = 1 }: Props) {
       theme={getTreeTheme(themes[colorScheme])}
       getItemString={(type, data, itemType, itemString) => {
         if (type === "Object") {
-          return <MutedContainer>{itemType}</MutedContainer>
+          const handleCopy = copyToClipboard
+            ? (event: React.MouseEvent) => {
+                event.stopPropagation()
+                copyToClipboard(JSON.stringify(data, null, 2))
+              }
+            : undefined
+          return (
+            <MutedContainer>
+              {itemType}
+              {handleCopy && <ButtonCopy onClick={handleCopy}>Copy</ButtonCopy>}
+            </MutedContainer>
+          )
         }
 
         return (
