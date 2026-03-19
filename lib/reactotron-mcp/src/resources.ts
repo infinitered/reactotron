@@ -1,36 +1,108 @@
 import type ReactotronServer from "reactotron-core-server"
 import type { Command } from "reactotron-core-contract"
 
+interface AppInfo {
+  id: number
+  clientId: string
+  name: string
+  platform: string
+  platformVersion?: string
+}
+
+function getApps(server: ReactotronServer): AppInfo[] {
+  return (server.connections as any[]).map((c) => ({
+    id: c.id,
+    clientId: c.clientId,
+    name: c.name,
+    platform: c.platform,
+    platformVersion: c.platformVersion,
+  }))
+}
+
+/**
+ * Build connection context metadata. Helps Claude decide whether to ask
+ * the user which app to focus on or just use the only connected one.
+ */
+function connectionMeta(server: ReactotronServer): Record<string, unknown> {
+  const apps = getApps(server)
+
+  if (apps.length === 0) {
+    return {
+      connection: "no_apps_connected",
+      hint: "No apps are connected to Reactotron. Start your React Native / React app with Reactotron configured.",
+    }
+  }
+
+  if (apps.length === 1) {
+    return {
+      connection: "single_app",
+      app: apps[0],
+      hint: `Connected to ${apps[0].name} (${apps[0].platform}). All data is from this app.`,
+    }
+  }
+
+  return {
+    connection: "multiple_apps",
+    apps,
+    hint: "Multiple apps are connected. If the user hasn't specified which app, ask them. Then pass clientId to filter data. Check the workspace's package.json name to see if it matches one of these app names.",
+  }
+}
+
+/**
+ * Filter commands by clientId. If no clientId given and only one app
+ * is connected, auto-filter to that app.
+ */
+function filterByClient(
+  commands: Command[],
+  server: ReactotronServer,
+  clientId?: string
+): Command[] {
+  const apps = getApps(server)
+
+  // Explicit clientId — filter to it
+  if (clientId) {
+    return commands.filter((c) => c.clientId === clientId)
+  }
+
+  // Single app — auto-filter
+  if (apps.length === 1) {
+    return commands.filter((c) => c.clientId === apps[0].clientId)
+  }
+
+  // Multiple apps, no filter — return all
+  return commands
+}
+
 export function getResources() {
   return [
     {
       uri: "reactotron://timeline",
       name: "Reactotron Timeline",
-      description: "Recent debug events from connected apps. Each event has type, date, clientId, and payload.",
+      description: "Recent debug events from connected apps. Append ?clientId=<id> to filter to a specific app.",
       mimeType: "application/json",
     },
     {
       uri: "reactotron://state/current",
       name: "Current App State",
-      description: "Latest Redux/MST state snapshot from the connected app.",
+      description: "Latest Redux/MST state snapshot. Append ?clientId=<id> to target a specific app.",
       mimeType: "application/json",
     },
     {
       uri: "reactotron://network/log",
       name: "Network Request Log",
-      description: "Recent network requests/responses from connected apps.",
+      description: "Recent network requests/responses. Append ?clientId=<id> to filter to a specific app.",
       mimeType: "application/json",
     },
     {
       uri: "reactotron://apps",
       name: "Connected Apps",
-      description: "Apps currently connected to Reactotron.",
+      description: "Apps currently connected to Reactotron. Read this first to find the clientId for the app you're debugging.",
       mimeType: "application/json",
     },
     {
       uri: "reactotron://benchmarks",
       name: "Benchmark Results",
-      description: "Performance benchmark results from connected apps.",
+      description: "Performance benchmark results. Append ?clientId=<id> to filter to a specific app.",
       mimeType: "application/json",
     },
   ]
@@ -47,26 +119,49 @@ export function getResourceTemplates() {
   ]
 }
 
+function parseUri(uri: string): { path: string; params: Record<string, string> } {
+  const [path, query] = uri.split("?", 2)
+  const params: Record<string, string> = {}
+  if (query) {
+    for (const part of query.split("&")) {
+      const [k, v] = part.split("=", 2)
+      if (k && v) params[decodeURIComponent(k)] = decodeURIComponent(v)
+    }
+  }
+  return { path, params }
+}
+
 export async function readResource(
   uri: string,
   server: ReactotronServer,
   commandBuffer: Command[]
 ): Promise<unknown> {
-  if (uri === "reactotron://timeline") {
+  const { path, params } = parseUri(uri)
+  const clientId = params.clientId
+  const meta = connectionMeta(server)
+
+  if (path === "reactotron://timeline") {
+    const events = filterByClient(commandBuffer, server, clientId)
     return {
       _meta: {
-        description: "Array of Reactotron debug events, newest first. Each has 'type', 'date', 'clientId', and 'payload'.",
+        description: "Debug events, newest first. Each has 'type' (log, api.response, state.values.response, etc.), 'date', 'clientId', and 'payload'.",
+        ...meta,
       },
-      events: [...commandBuffer].reverse(),
+      events: [...events].reverse(),
     }
   }
 
-  if (uri === "reactotron://state/current") {
-    const stateCommands = commandBuffer.filter((c) => c.type === "state.values.response")
+  if (path === "reactotron://state/current") {
+    const stateCommands = filterByClient(
+      commandBuffer.filter((c) => c.type === "state.values.response"),
+      server,
+      clientId
+    )
     const latest = stateCommands[stateCommands.length - 1]
     return {
       _meta: {
         description: "Most recent state snapshot. Use the request_state tool to request a fresh one.",
+        ...meta,
       },
       state: latest?.payload?.value ?? {
         status: "no_state_received",
@@ -75,11 +170,16 @@ export async function readResource(
     }
   }
 
-  if (uri === "reactotron://network/log") {
-    const networkCommands = commandBuffer.filter((c) => c.type === "api.response")
+  if (path === "reactotron://network/log") {
+    const networkCommands = filterByClient(
+      commandBuffer.filter((c) => c.type === "api.response"),
+      server,
+      clientId
+    )
     return {
       _meta: {
-        description: "Array of network requests. Each has request (url, method) and response (status, body, duration).",
+        description: "Network requests. Each has request (url, method) and response (status, body, duration).",
+        ...meta,
       },
       entries: networkCommands.map((c) => ({
         messageId: c.messageId,
@@ -90,8 +190,8 @@ export async function readResource(
     }
   }
 
-  if (uri.startsWith("reactotron://network/")) {
-    const id = uri.replace("reactotron://network/", "")
+  if (path.startsWith("reactotron://network/")) {
+    const id = path.replace("reactotron://network/", "")
     const entry = commandBuffer.find(
       (c) => c.type === "api.response" && String(c.messageId) === id
     )
@@ -101,25 +201,30 @@ export async function readResource(
     return { messageId: entry.messageId, clientId: entry.clientId, date: entry.date, ...entry.payload }
   }
 
-  if (uri === "reactotron://apps") {
+  if (path === "reactotron://apps") {
+    const apps = getApps(server)
     return {
       _meta: {
-        description: "Connected apps. Use clientId when calling tools with multiple apps connected.",
+        description: apps.length <= 1
+          ? "Connected apps."
+          : "Multiple apps connected. Check the workspace's package.json name — if it matches one of these app names, use that clientId. Otherwise, ask the user which app they're debugging.",
+        ...meta,
       },
-      apps: (server.connections as any[]).map((c) => ({
-        id: c.id,
-        clientId: c.clientId,
-        name: c.name,
-        platform: c.platform,
-        platformVersion: c.platformVersion,
-      })),
+      apps,
     }
   }
 
-  if (uri === "reactotron://benchmarks") {
-    const benchmarks = commandBuffer.filter((c) => c.type === "benchmark.report")
+  if (path === "reactotron://benchmarks") {
+    const benchmarks = filterByClient(
+      commandBuffer.filter((c) => c.type === "benchmark.report"),
+      server,
+      clientId
+    )
     return {
-      _meta: { description: "Benchmark results sorted by time." },
+      _meta: {
+        description: "Benchmark results sorted by time.",
+        ...meta,
+      },
       benchmarks: benchmarks.map((c) => ({
         date: c.date,
         clientId: c.clientId,
