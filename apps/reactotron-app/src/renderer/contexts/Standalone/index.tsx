@@ -1,10 +1,13 @@
-import React, { useRef, useEffect, useCallback } from "react"
+import React, { useRef, useEffect, useCallback, useState } from "react"
 import Server, { createServer } from "reactotron-core-server"
+import { createMcpServer, type ReactotronMcpServer } from "reactotron-mcp"
 
 import ReactotronBrain from "../../ReactotronBrain"
 import config from "../../config"
 
 import useStandalone, { Connection, ServerStatus } from "./useStandalone"
+
+export type McpStatus = "stopped" | "started" | "error"
 
 // TODO: Move up to better places like core somewhere!
 interface Context {
@@ -12,6 +15,9 @@ interface Context {
   connections: Connection[]
   selectedConnection: Connection
   selectConnection: (clientId: string) => void
+  mcpStatus: McpStatus
+  mcpPort: number | null
+  toggleMcp: () => void
 }
 
 const StandaloneContext = React.createContext<Context>({
@@ -19,6 +25,9 @@ const StandaloneContext = React.createContext<Context>({
   connections: [],
   selectedConnection: null,
   selectConnection: null,
+  mcpStatus: "stopped",
+  mcpPort: null,
+  toggleMcp: () => {},
 })
 
 const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -66,6 +75,30 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     portUnavailable,
   ])
 
+  const mcpServerRef = useRef<ReactotronMcpServer>(null)
+  const [mcpStatus, setMcpStatus] = useState<McpStatus>("stopped")
+  const [mcpPort, setMcpPort] = useState<number | null>(null)
+
+  const toggleMcp = useCallback(() => {
+    if (!reactotronServer.current) return
+
+    if (mcpStatus === "started") {
+      if (mcpServerRef.current) {
+        mcpServerRef.current.stop()
+        mcpServerRef.current = null
+      }
+      setMcpStatus("stopped")
+      setMcpPort(null)
+    } else {
+      const port = 4567
+      const mcp = createMcpServer(reactotronServer.current)
+      mcp.start(port)
+      mcpServerRef.current = mcp
+      setMcpStatus("started")
+      setMcpPort(port)
+    }
+  }, [mcpStatus])
+
   const sendCommand = useCallback(
     (type: string, payload: any, clientId?: string) => {
       // TODO: Do better then just throwing these away...
@@ -83,6 +116,9 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         connections,
         selectedConnection,
         selectConnection,
+        mcpStatus,
+        mcpPort,
+        toggleMcp,
       }}
     >
       <ReactotronBrain

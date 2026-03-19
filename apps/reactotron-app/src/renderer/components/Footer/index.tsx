@@ -5,7 +5,7 @@ import StandaloneContext from "../../contexts/Standalone"
 import Footer from "./Stateless"
 
 export default function ConnectedFooter() {
-  const { serverStatus, connections, selectedConnection, selectConnection } =
+  const { serverStatus, connections, selectedConnection, selectConnection, mcpStatus, mcpPort, toggleMcp } =
     useContext(StandaloneContext)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -17,6 +17,9 @@ export default function ConnectedFooter() {
       onChangeConnection={selectConnection}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
+      mcpStatus={mcpStatus}
+      mcpPort={mcpPort}
+      onToggleMcp={toggleMcp}
     />
   )
 }
