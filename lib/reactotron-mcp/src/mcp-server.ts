@@ -7,22 +7,8 @@ import type { Command } from "reactotron-core-contract"
 import { registerResources } from "./resources"
 import { registerTools } from "./tools"
 
-import { appendFileSync } from "fs"
-
-const LOG_FILE = "/tmp/reactotron-mcp.log"
-const log = (...args: any[]) => {
-  const msg = `[${new Date().toISOString()}] ${args.map(a => typeof a === "string" ? a : JSON.stringify(a)).join(" ")}\n`
-  try { appendFileSync(LOG_FILE, msg) } catch {}
-  console.log("[reactotron-mcp]", ...args)
-}
-const logError = (...args: any[]) => {
-  const msg = `[${new Date().toISOString()}] ERROR: ${args.map(a => typeof a === "string" ? a : (a?.stack || JSON.stringify(a))).join(" ")}\n`
-  try { appendFileSync(LOG_FILE, msg) } catch {}
-  console.error("[reactotron-mcp]", ...args)
-}
-
 export interface ReactotronMcpServer {
-  start(port?: number): void
+  start(port?: number): Promise<void>
   stop(): void
   readonly started: boolean
   readonly port: number | null
@@ -72,16 +58,14 @@ export function createMcpServer(reactotronServer: ReactotronServer): ReactotronM
     get port() { return listenPort },
 
     start(port = 4567) {
-      if (started) return
+      if (started) return Promise.resolve()
+
+      started = true
+      listenPort = port
 
       startBuffering()
 
       httpServer = createHttpServer(async (req, res) => {
-        // CORS
-        res.setHeader("Access-Control-Allow-Origin", "*")
-        res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, DELETE")
-        res.setHeader("Access-Control-Allow-Headers", "Content-Type, mcp-session-id")
-
         if (req.method === "OPTIONS") {
           res.writeHead(204)
           res.end()
@@ -91,7 +75,6 @@ export function createMcpServer(reactotronServer: ReactotronServer): ReactotronM
         const url = new URL(req.url ?? "/", `http://${req.headers.host}`)
 
         if (url.pathname === "/mcp" && req.method === "POST") {
-          log("incoming request")
           // Stateless: new server + transport per request
           const mcp = createMcp()
           const transport = new StreamableHTTPServerTransport({
@@ -101,15 +84,13 @@ export function createMcpServer(reactotronServer: ReactotronServer): ReactotronM
           try {
             await mcp.connect(transport)
             await transport.handleRequest(req, res)
-            log("request handled successfully")
 
             res.on("close", () => {
-              log("response closed, cleaning up")
               transport.close()
               mcp.close()
             })
           } catch (err) {
-            logError("request handler error:", err)
+            console.error("[reactotron-mcp] request handler error:", err)
             if (!res.headersSent) {
               res.writeHead(500, { "Content-Type": "application/json" })
               res.end(JSON.stringify({
@@ -132,14 +113,16 @@ export function createMcpServer(reactotronServer: ReactotronServer): ReactotronM
         }
       })
 
-      httpServer.on("error", (err) => {
-        logError("HTTP server error:", err)
-      })
+      return new Promise<void>((resolve, reject) => {
+        httpServer!.on("error", (err) => {
+          started = false
+          listenPort = null
+          reject(err)
+        })
 
-      httpServer.listen(port, () => {
-        started = true
-        listenPort = port
-        log(`started on port ${port}`)
+        httpServer!.listen(port, "127.0.0.1", () => {
+          resolve()
+        })
       })
     },
 
@@ -155,7 +138,6 @@ export function createMcpServer(reactotronServer: ReactotronServer): ReactotronM
 
       started = false
       listenPort = null
-      log("stopped")
     },
   }
 }

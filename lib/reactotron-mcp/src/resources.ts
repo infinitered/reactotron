@@ -63,8 +63,8 @@ function filterByClient(
   return commands
 }
 
-function json(data: unknown) {
-  return { contents: [{ uri: "", mimeType: "application/json" as const, text: JSON.stringify(data, null, 2) }] }
+function json(uri: URL, data: unknown) {
+  return { contents: [{ uri: uri.href, mimeType: "application/json" as const, text: JSON.stringify(data, null, 2) }] }
 }
 
 export function registerResources(
@@ -78,7 +78,7 @@ export function registerResources(
   }, async (uri) => {
     const meta = connectionMeta(server)
     const events = filterByClient(commandBuffer, server)
-    return json({ _meta: meta, events: [...events].reverse() })
+    return json(uri, { _meta: meta, events: [...events].reverse() })
   })
 
   mcp.registerResource("state", "reactotron://state/current", {
@@ -91,7 +91,7 @@ export function registerResources(
       server
     )
     const latest = stateCommands[stateCommands.length - 1]
-    return json({
+    return json(uri, {
       _meta: meta,
       state: latest?.payload?.value ?? {
         status: "no_state_received",
@@ -109,7 +109,7 @@ export function registerResources(
       commandBuffer.filter((c) => c.type === "api.response"),
       server
     )
-    return json({
+    return json(uri, {
       _meta: meta,
       entries: networkCommands.map((c) => ({
         messageId: c.messageId,
@@ -126,7 +126,7 @@ export function registerResources(
   }, async (uri) => {
     const apps = getApps(server)
     const meta = connectionMeta(server)
-    return json({ _meta: meta, apps })
+    return json(uri, { _meta: meta, apps })
   })
 
   mcp.registerResource("benchmarks", "reactotron://benchmarks", {
@@ -138,7 +138,7 @@ export function registerResources(
       commandBuffer.filter((c) => c.type === "benchmark.report"),
       server
     )
-    return json({
+    return json(uri, {
       _meta: meta,
       benchmarks: benchmarks.map((c) => ({
         date: c.date,
@@ -157,7 +157,7 @@ export function registerResources(
       commandBuffer.filter((c) => c.type === "state.values.change"),
       server
     )
-    return json({
+    return json(uri, {
       _meta: meta,
       activeSubscriptions: (server as any).subscriptions || [],
       changes: changes.map((c) => ({
@@ -177,7 +177,7 @@ export function registerResources(
       commandBuffer.filter((c) => c.type === "asyncStorage.mutation"),
       server
     )
-    return json({
+    return json(uri, {
       _meta: meta,
       mutations: mutations.map((c) => ({
         date: c.date,

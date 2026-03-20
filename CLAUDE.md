@@ -74,7 +74,8 @@ All resources include `_meta` with connection context (single app auto-selected,
 - **Dynamic `import()` crashes Electron renderer.** Use static imports only in tools.ts/resources.ts. tsup bundles them at build time.
 - **zod v3/v4 type mismatch in IDE.** The MCP SDK uses zod v4 internally but our `import { z } from "zod"` resolves to v3 for types. Build works fine (tsup bundles the right version). IDE errors are cosmetic.
 - **Overlay image formats:** Only PNG, JPEG, GIF supported. WebP crashes Reactotron (Electron's nativeImage limitation).
-- **Debug logging** goes to `/tmp/reactotron-mcp.log` — keep this until implementation is stable.
+- **MCP port** is configurable via electron-store (`mcpPort`, default 4567). No hardcoded ports.
+- **HTTP server binds to 127.0.0.1 only** — not exposed on the network.
 
 ## Key files
 

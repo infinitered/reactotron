@@ -79,6 +79,16 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [mcpStatus, setMcpStatus] = useState<McpStatus>("stopped")
   const [mcpPort, setMcpPort] = useState<number | null>(null)
 
+  // Clean up MCP server on unmount
+  useEffect(() => {
+    return () => {
+      if (mcpServerRef.current) {
+        mcpServerRef.current.stop()
+        mcpServerRef.current = null
+      }
+    }
+  }, [])
+
   const toggleMcp = useCallback(() => {
     if (!reactotronServer.current) return
 
@@ -90,12 +100,16 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       setMcpStatus("stopped")
       setMcpPort(null)
     } else {
-      const port = 4567
+      const port = config.get("mcpPort") as number
       const mcp = createMcpServer(reactotronServer.current)
-      mcp.start(port)
-      mcpServerRef.current = mcp
-      setMcpStatus("started")
-      setMcpPort(port)
+      mcp.start(port).then(() => {
+        mcpServerRef.current = mcp
+        setMcpStatus("started")
+        setMcpPort(port)
+      }).catch(() => {
+        setMcpStatus("error")
+        setMcpPort(null)
+      })
     }
   }, [mcpStatus])
 

@@ -2,10 +2,8 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import type ReactotronServer from "reactotron-core-server"
 import type { Command } from "reactotron-core-contract"
 import { z } from "zod/v4"
-import { appendFileSync, promises as fsPromises } from "fs"
+import { promises as fsPromises } from "fs"
 import { extname } from "path"
-
-const toolLog = (msg: string) => { try { appendFileSync("/tmp/reactotron-mcp.log", `[${new Date().toISOString()}] ${msg}\n`) } catch {} }
 
 /** Extract width/height from PNG or JPEG buffer */
 function getImageSize(buf: Buffer, ext: string): { width: number; height: number } | null {
@@ -17,6 +15,8 @@ function getImageSize(buf: Buffer, ext: string): { width: number; height: number
       return { width, height }
     }
     if ((ext === "jpg" || ext === "jpeg") && buf.length > 2) {
+      // Validate JPEG magic bytes
+      if (buf[0] !== 0xFF || buf[1] !== 0xD8) return null
       // JPEG: scan for SOF0 (0xFFC0) or SOF2 (0xFFC2) marker
       let offset = 2
       while (offset < buf.length - 8) {
@@ -211,7 +211,7 @@ export function registerTools(
     ].join(" "),
     inputSchema: {
       uri: z.string().nullable().describe("Image to display. Accepts a local file path (/path/to/image.png), file:// URI, http/https URL, or data: URI. Local files are automatically converted to base64. Pass null to clear the overlay."),
-      opacity: z.number().optional().describe("Overlay opacity from 0 to 1 (default: 0.25)"),
+      opacity: z.number().optional().describe("Overlay opacity from 0 to 1 (default: 0.5)"),
       growToWindow: z.boolean().optional().describe("Scale image to fill the entire window (default: false)"),
       resizeMode: z.enum(["cover", "contain", "stretch", "center"]).optional().describe("How to resize the image when growToWindow is true (default: cover)"),
       width: z.number().optional().describe("Image width in pixels (ignored if growToWindow is true)"),
@@ -226,27 +226,19 @@ export function registerTools(
       clientId: z.string().optional().describe("Target app clientId (required when multiple apps connected)."),
     },
   }, async (args) => {
-    toolLog("show_overlay: handler entered")
-    toolLog(`show_overlay: args keys = ${Object.keys(args).join(", ")}`)
     const { clientId, error } = resolveClientId(server, args.clientId)
-    toolLog(`show_overlay: resolved clientId=${clientId}, error=${error}`)
     if (error) return textResult({ status: "error", message: error })
 
-    toolLog("show_overlay: building payload")
     const { clientId: _, ...overlayArgs } = args as any
     const payload: Record<string, unknown> = {}
     for (const [key, value] of Object.entries(overlayArgs)) {
       if (value !== undefined) payload[key] = value
     }
-    toolLog(`show_overlay: payload keys = ${Object.keys(payload).join(", ")}, uri = ${String(payload.uri).substring(0, 100)}`)
 
     // Convert local file paths to data: URIs
     if (typeof payload.uri === "string" && !payload.uri.startsWith("data:") && !payload.uri.startsWith("http")) {
-      toolLog(`show_overlay: converting file to base64`)
       const filePath = (payload.uri as string).replace(/^file:\/\//, "")
-      toolLog(`show_overlay: filePath = ${filePath}`)
       const ext = extname(filePath).slice(1).toLowerCase()
-      toolLog(`show_overlay: ext = ${ext}`)
       const supportedFormats: Record<string, string> = { png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", gif: "image/gif" }
       const mime = supportedFormats[ext]
       if (!mime) {
@@ -283,12 +275,9 @@ export function registerTools(
     payload.alignItems = payload.alignItems ?? "center"
 
     const uriLen = typeof payload.uri === "string" ? payload.uri.length : 0
-    toolLog(`show_overlay: uri=${uriLen} chars, ${payload.width}x${payload.height}, clientId=${clientId}`)
     try {
       server.send("overlay", payload, clientId)
-      toolLog("show_overlay: send complete")
     } catch (e) {
-      toolLog(`show_overlay error: ${e}`)
       return textResult({ status: "error", message: `Failed to send overlay: ${e}` })
     }
     return textResult({ status: "sent", overlay: { ...payload, uri: uriLen > 0 ? `(${uriLen} chars)` : null } })

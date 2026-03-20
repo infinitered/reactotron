@@ -3,6 +3,7 @@ import Store from "electron-store"
 type StoreType = {
   serverPort: number
   commandHistory: number
+  mcpPort: number
 }
 
 const config = new Store<StoreType>({
@@ -15,6 +16,10 @@ const config = new Store<StoreType>({
       type: "number",
       default: 500,
     },
+    mcpPort: {
+      type: "number",
+      default: 4567,
+    },
   },
 })
 
@@ -24,6 +29,9 @@ if (!config.has("serverPort")) {
 }
 if (!config.has("commandHistory")) {
   config.set("commandHistory", 500)
+}
+if (!config.has("mcpPort")) {
+  config.set("mcpPort", 4567)
 }
 
 export default config
