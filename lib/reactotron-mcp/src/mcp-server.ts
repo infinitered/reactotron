@@ -1,13 +1,13 @@
 import { createServer as createHttpServer, type Server as HttpServer } from "http"
-import { Server } from "@modelcontextprotocol/sdk/server/index.js"
-import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js"
+import { Server } from "@modelcontextprotocol/sdk/server/index"
+import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp"
 import {
   ListResourcesRequestSchema,
   ReadResourceRequestSchema,
   ListResourceTemplatesRequestSchema,
   ListToolsRequestSchema,
   CallToolRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js"
+} from "@modelcontextprotocol/sdk/types"
 import type ReactotronServer from "reactotron-core-server"
 import type { Command } from "reactotron-core-contract"
 
