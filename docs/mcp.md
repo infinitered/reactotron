@@ -1,93 +1,92 @@
-# Reactotron MCP Integration
+---
+sidebar_position: 6
+title: MCP Server (Claude Code)
+---
 
-## What this is
+Reactotron includes a built-in [MCP](https://modelcontextprotocol.io/) server that lets AI coding assistants like [Claude Code](https://claude.ai/claude-code) read your app's debug events and send commands — all within a coding conversation.
 
-MCP (Model Context Protocol) support embedded in the Reactotron desktop app, allowing Claude Code to read debug events and send commands to connected React Native / React apps.
+## Getting started
 
-## Architecture
-
-```
-React Native app
-    | WebSocket (unchanged, port 9090)
-    v
-Reactotron Desktop (Electron app)
-    ├── relay server (reactotron-core-server, port 9090)
-    └── MCP server (reactotron-mcp, HTTP on port 4567)
-          ↑ Claude Code connects directly via HTTP MCP transport
-          |
-Claude Code
-```
-
-**Separation of concerns:**
-
-- `lib/reactotron-core-server` — relay, connections, commands, event emitter. Unchanged.
-- `lib/reactotron-mcp` — MCP resource/tool definitions, `@modelcontextprotocol/sdk` HTTP transport. Receives the Server instance, reads connections/commands, sends commands through it. Built with **tsup** (not react-native-builder-bob — this is a Node.js server, not a React Native lib). Bundles `@modelcontextprotocol/sdk` because its CJS exports are broken.
-- `apps/reactotron-app` — imports `reactotron-mcp`, passes it the Server instance, wires the MCP toggle button in the footer.
-
-**Key pattern:** Stateless per-request MCP transport. Each HTTP POST to `/mcp` creates a new `McpServer` + `StreamableHTTPServerTransport` instance, handles the request, then cleans up on response close. This is required by the MCP SDK for stateless mode.
-
-## Claude Code config
+1. Open Reactotron and connect your app as usual.
+2. Click the **MCP** button in the footer bar. A green dot indicates the server is running.
+3. In your terminal, add the MCP server to Claude Code:
 
 ```bash
 claude mcp add --transport http reactotron http://localhost:4567/mcp
 ```
 
-## How to run locally
+That's it. Claude Code can now read your app's timeline, inspect state, dispatch actions, and more.
 
-```bash
-yarn install
-yarn start        # launches Electron dev app
+## What can Claude Code do?
+
+### Read debug data
+
+Claude Code can read these resources on demand:
+
+- **Timeline** — the last 500 debug events (logs, state changes, network requests, benchmarks, custom commands)
+- **App State** — the latest cached Redux/MST state snapshot
+- **Network Log** — all captured HTTP requests and responses
+- **Connected Apps** — which apps are connected, with their platform and version
+- **Benchmarks** — performance benchmark results
+- **State Subscriptions** — values at subscribed state paths whenever they change
+- **AsyncStorage** — all AsyncStorage mutations (setItem, removeItem, etc.)
+
+### Send commands
+
+Claude Code can also interact with your running app:
+
+- **Dispatch Redux actions** — e.g. "dispatch a RESET action"
+- **Request a fresh state snapshot** — asks the app for current state
+- **Replace app state** — hot-swap the entire state tree
+- **Send custom commands** — trigger any custom command registered in your app
+- **Show image overlay** — overlay a design mockup on the running app (supports local files)
+- **Subscribe to state paths** — watch specific parts of state for changes
+- **Clear the event buffer** — reset what Claude sees to focus on new interactions
+
+### Multi-app support
+
+If multiple apps are connected to Reactotron, Claude Code will ask which app you're working on. It can auto-detect the right app when only one is connected.
+
+## Configuration
+
+The MCP port defaults to **4567** and can be changed in Reactotron's settings (stored via electron-store as `mcpPort`).
+
+The server only binds to `127.0.0.1` (localhost) and is not accessible from other machines on your network.
+
+## Image overlay
+
+The `show_overlay` tool lets Claude Code overlay an image on your running app — useful for comparing a design mockup against the actual UI.
+
+```text
+"Show the design mockup from ~/Downloads/design.png as an overlay on the app"
 ```
 
-Click the "MCP" button in the footer bar to start the MCP server on port 4567.
+- Accepts local file paths, `file://` URIs, `http://` URLs, or `data:` URIs
+- Local files are automatically converted to base64
+- Image dimensions are extracted from PNG/JPEG/GIF headers
+- Supported formats: **PNG, JPEG, GIF**
 
-## MCP Resources
+## Example conversation
 
-| Resource | URI | Description |
-|----------|-----|-------------|
-| Timeline | `reactotron://timeline` | Last 500 debug events (logs, state, network, etc.) |
-| State | `reactotron://state/current` | Latest cached state snapshot |
-| Network | `reactotron://network/log` | HTTP request/response log |
-| Apps | `reactotron://apps` | Connected apps with clientIds |
-| Benchmarks | `reactotron://benchmarks` | Performance benchmark results |
-| Subscriptions | `reactotron://state/subscriptions` | Active state subscriptions and change events |
-| AsyncStorage | `reactotron://asyncstorage` | AsyncStorage mutations (setItem, removeItem, etc.) |
+> **You:** "Look at the Reactotron timeline and tell me what's happening"
+>
+> **Claude:** _reads the timeline resource_ "I can see 3 API calls failing with 401 errors. Your auth token might be expired. Want me to check the current state?"
+>
+> **You:** "Yes, check the auth state"
+>
+> **Claude:** _calls request_state_ "The auth token in state is empty. It looks like the login flow isn't saving the token. Let me look at the Redux actions..."
 
-All resources include `_meta` with connection context (single app auto-selected, multiple apps listed with guidance to ask user).
+## Architecture
 
-## MCP Tools
+The MCP server runs inside the Reactotron desktop app as a separate package (`reactotron-mcp`). It reads directly from the relay server's connections and event stream — no proxy, no separate process, and no changes to your React Native app.
 
-| Tool | Description |
-|------|-------------|
-| `dispatch_action` | Dispatch Redux action, polls for confirmation |
-| `request_state` | Request fresh state snapshot (1.5s timeout) |
-| `swap_state` | Replace entire app state tree |
-| `send_custom_command` | Send named custom command to app |
-| `list_custom_commands` | List commands registered by the app |
-| `show_overlay` | Image overlay on app (file→base64, dimension extraction) |
-| `clear_timeline` | Clear MCP event buffer (not desktop app timeline) |
-| `subscribe_state` | Subscribe to state path changes |
-| `unsubscribe_state` | Unsubscribe from state path |
-
-## Known issues / gotchas
-
-- **Dynamic `import()` crashes Electron renderer.** Use static imports only in tools.ts/resources.ts. tsup bundles them at build time.
-- **zod v3/v4 type mismatch in IDE.** The MCP SDK uses zod v4 internally but our `import { z } from "zod"` resolves to v3 for types. Build works fine (tsup bundles the right version). IDE errors are cosmetic.
-- **Overlay image formats:** Only PNG, JPEG, GIF supported. WebP crashes Reactotron (Electron's nativeImage limitation).
-- **MCP port** is configurable via electron-store (`mcpPort`, default 4567). No hardcoded ports.
-- **HTTP server binds to 127.0.0.1 only** — not exposed on the network.
-
-## Key files
-
-- `lib/reactotron-mcp/src/mcp-server.ts` — HTTP server, per-request MCP transport
-- `lib/reactotron-mcp/src/resources.ts` — MCP resource definitions
-- `lib/reactotron-mcp/src/tools.ts` — MCP tool definitions
-- `lib/reactotron-mcp/tsup.config.ts` — build config (bundles MCP SDK, externalizes reactotron packages)
-- `apps/reactotron-app/src/renderer/contexts/Standalone/index.tsx` — MCP state/toggle
-- `apps/reactotron-app/src/renderer/components/Footer/Stateless.tsx` — MCP button UI
-
-## Repository
-
-- Branch: `feat/mcp-server`
-- Origin: `kbrandwijk/reactotron` (fork)
-- Upstream: `infinitered/reactotron`
+```text
+React Native app
+    | WebSocket (port 9090, unchanged)
+    v
+Reactotron Desktop
+    ├── relay server (reactotron-core-server)
+    └── MCP server (reactotron-mcp, HTTP on configurable port)
+          ↑
+Claude Code
+```
