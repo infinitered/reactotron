@@ -16,13 +16,18 @@ module.exports = function (config) {
   // (optional chaining, nullish coalescing) that webpack 4's acorn parser can't handle.
   const mcpBabelRule = {
     test: /\.js$/,
-    include: /node_modules[\\/]@modelcontextprotocol/,
+    include: [
+      /node_modules[\\/]@modelcontextprotocol/,
+      /node_modules[\\/]zod/,
+      /node_modules[\\/]zod-to-json-schema/,
+    ],
     use: {
       loader: "babel-loader",
       options: {
         plugins: [
           "@babel/plugin-transform-optional-chaining",
           "@babel/plugin-transform-nullish-coalescing-operator",
+          "@babel/plugin-transform-export-namespace-from",
         ],
       },
     },
