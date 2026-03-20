@@ -39,8 +39,6 @@
   "electronWebpack": {
     "whiteListedModules": [
       "reactotron-core-ui",
-      "reactotron-mcp",
-      "@modelcontextprotocol/sdk",
       "react-router-dom",
       "styled-components"
     ],
@@ -77,9 +75,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
-    "@babel/plugin-transform-export-namespace-from": "^7.23.4",
-    "@babel/plugin-transform-nullish-coalescing-operator": "^7.23.4",
-    "@babel/plugin-transform-optional-chaining": "^7.23.4",
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.23.2",
     "@electron/notarize": "^2.1.0",
