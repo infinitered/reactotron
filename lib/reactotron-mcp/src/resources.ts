@@ -1,5 +1,4 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
-import type { ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js"
 import type ReactotronServer from "reactotron-core-server"
 import type { Command } from "reactotron-core-contract"
 
@@ -74,7 +73,7 @@ export function registerResources(
   commandBuffer: Command[]
 ) {
   mcp.registerResource("timeline", "reactotron://timeline", {
-    description: "Recent debug events from connected apps (last 500). Each has type, date, clientId, and payload.",
+    description: "Read this first to understand what's happening in the app. Shows the last 500 debug events (logs, state changes, network requests, benchmarks, custom commands) newest-first. Each event has a type, timestamp, clientId, and payload.",
     mimeType: "application/json",
   }, async (uri) => {
     const meta = connectionMeta(server)
@@ -83,7 +82,7 @@ export function registerResources(
   })
 
   mcp.registerResource("state", "reactotron://state/current", {
-    description: "Latest Redux/MST state snapshot. Use the request_state tool to get a fresh one.",
+    description: "Latest cached Redux/MST state snapshot. May be stale — use the request_state tool for a fresh snapshot. Returns no_state_received if the app hasn't sent state yet.",
     mimeType: "application/json",
   }, async (uri) => {
     const meta = connectionMeta(server)
@@ -102,7 +101,7 @@ export function registerResources(
   })
 
   mcp.registerResource("network", "reactotron://network/log", {
-    description: "Recent network requests/responses with URL, method, status, duration.",
+    description: "All captured HTTP requests and responses. Each entry has URL, method, status code, duration, headers, and body. Useful for debugging API issues.",
     mimeType: "application/json",
   }, async (uri) => {
     const meta = connectionMeta(server)
@@ -122,7 +121,7 @@ export function registerResources(
   })
 
   mcp.registerResource("apps", "reactotron://apps", {
-    description: "Apps currently connected to Reactotron. Read this first to find clientIds.",
+    description: "Apps currently connected to Reactotron with their clientId, name, platform, and version. Read this to find the clientId needed for multi-app filtering.",
     mimeType: "application/json",
   }, async (uri) => {
     const apps = getApps(server)
@@ -131,7 +130,7 @@ export function registerResources(
   })
 
   mcp.registerResource("benchmarks", "reactotron://benchmarks", {
-    description: "Performance benchmark results from connected apps.",
+    description: "Performance benchmark results from connected apps, sorted by time. Each has title, steps, and durations.",
     mimeType: "application/json",
   }, async (uri) => {
     const meta = connectionMeta(server)
