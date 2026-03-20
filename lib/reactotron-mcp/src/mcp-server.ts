@@ -3,7 +3,6 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js"
 import type ReactotronServer from "reactotron-core-server"
 import type { Command } from "reactotron-core-contract"
-import { z } from "zod"
 
 import { registerResources } from "./resources"
 import { registerTools } from "./tools"
@@ -17,8 +16,6 @@ export interface ReactotronMcpServer {
 
 export function createMcpServer(reactotronServer: ReactotronServer): ReactotronMcpServer {
   let httpServer: HttpServer | null = null
-  let transport: StreamableHTTPServerTransport | null = null
-  let mcp: McpServer | null = null
   let started = false
   let listenPort: number | null = null
 
@@ -45,6 +42,17 @@ export function createMcpServer(reactotronServer: ReactotronServer): ReactotronM
     commandBuffer.length = 0
   }
 
+  /** Create a fresh McpServer instance with all resources/tools registered */
+  function createMcp(): McpServer {
+    const mcp = new McpServer(
+      { name: "reactotron", version: "0.1.0" },
+      { capabilities: { resources: {}, tools: {} } }
+    )
+    registerResources(mcp, reactotronServer, commandBuffer)
+    registerTools(mcp, reactotronServer, commandBuffer)
+    return mcp
+  }
+
   return {
     get started() { return started },
     get port() { return listenPort },
@@ -53,19 +61,6 @@ export function createMcpServer(reactotronServer: ReactotronServer): ReactotronM
       if (started) return
 
       startBuffering()
-
-      mcp = new McpServer(
-        { name: "reactotron", version: "0.1.0" },
-        { capabilities: { resources: {}, tools: {} } }
-      )
-
-      registerResources(mcp, reactotronServer, commandBuffer)
-      registerTools(mcp, reactotronServer, commandBuffer)
-
-      // HTTP transport
-      transport = new StreamableHTTPServerTransport({
-        sessionIdGenerator: undefined, // stateless
-      })
 
       httpServer = createHttpServer(async (req, res) => {
         // CORS
@@ -80,15 +75,45 @@ export function createMcpServer(reactotronServer: ReactotronServer): ReactotronM
         }
 
         const url = new URL(req.url ?? "/", `http://${req.headers.host}`)
-        if (url.pathname === "/mcp") {
-          await transport!.handleRequest(req, res)
+
+        if (url.pathname === "/mcp" && req.method === "POST") {
+          // Stateless: new server + transport per request
+          const mcp = createMcp()
+          const transport = new StreamableHTTPServerTransport({
+            sessionIdGenerator: undefined,
+          })
+
+          try {
+            await mcp.connect(transport)
+            await transport.handleRequest(req, res)
+
+            res.on("close", () => {
+              transport.close()
+              mcp.close()
+            })
+          } catch (err) {
+            console.error("[reactotron-mcp] error:", err)
+            if (!res.headersSent) {
+              res.writeHead(500, { "Content-Type": "application/json" })
+              res.end(JSON.stringify({
+                jsonrpc: "2.0",
+                error: { code: -32603, message: "Internal server error" },
+                id: null,
+              }))
+            }
+          }
+        } else if (url.pathname === "/mcp") {
+          res.writeHead(405, { "Content-Type": "application/json" })
+          res.end(JSON.stringify({
+            jsonrpc: "2.0",
+            error: { code: -32000, message: "Method not allowed." },
+            id: null,
+          }))
         } else {
           res.writeHead(404)
           res.end("Not found")
         }
       })
-
-      mcp.connect(transport)
 
       httpServer.listen(port, () => {
         started = true
@@ -101,14 +126,6 @@ export function createMcpServer(reactotronServer: ReactotronServer): ReactotronM
 
       stopBuffering()
 
-      if (transport) {
-        transport.close()
-        transport = null
-      }
-      if (mcp) {
-        mcp.close()
-        mcp = null
-      }
       if (httpServer) {
         httpServer.close()
         httpServer = null

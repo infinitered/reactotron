@@ -58,15 +58,15 @@ export function registerTools(
 
     const start = Date.now()
     const startLen = commandBuffer.length
-    while (Date.now() - start < 3000) {
-      await new Promise((r) => setTimeout(r, 200))
+    while (Date.now() - start < 1500) {
+      await new Promise((r) => setTimeout(r, 100))
       for (let i = startLen; i < commandBuffer.length; i++) {
         if (commandBuffer[i].type === "state.values.response") {
           return { content: [{ type: "text", text: JSON.stringify({ status: "success", state: commandBuffer[i].payload?.value ?? commandBuffer[i].payload }) }] }
         }
       }
     }
-    return { content: [{ type: "text", text: JSON.stringify({ status: "timeout", message: "No state response within 3 seconds." }) }] }
+    return { content: [{ type: "text", text: JSON.stringify({ status: "no_response", message: "The app did not respond to the state request. It likely doesn't have a state management plugin (Redux or MST) configured in Reactotron." }) }] }
   })
 
   mcp.registerTool("swap_state", {
