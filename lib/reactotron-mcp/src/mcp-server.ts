@@ -28,12 +28,7 @@ export interface ReactotronMcpServer {
   readonly port: number | null
 }
 
-export interface ReactotronMcpOptions {
-  /** Called when MCP requests clearing the desktop app's timeline */
-  onClearTimeline?: () => void
-}
-
-export function createMcpServer(reactotronServer: ReactotronServer, options?: ReactotronMcpOptions): ReactotronMcpServer {
+export function createMcpServer(reactotronServer: ReactotronServer): ReactotronMcpServer {
   let httpServer: HttpServer | null = null
   let started = false
   let listenPort: number | null = null
@@ -80,14 +75,6 @@ export function createMcpServer(reactotronServer: ReactotronServer, options?: Re
       if (started) return
 
       startBuffering()
-
-      // Catch uncaught errors in the process
-      process.on("uncaughtException", (err) => {
-        logError("uncaughtException:", err)
-      })
-      process.on("unhandledRejection", (err) => {
-        logError("unhandledRejection:", err)
-      })
 
       httpServer = createHttpServer(async (req, res) => {
         // CORS

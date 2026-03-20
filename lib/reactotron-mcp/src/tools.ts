@@ -1,7 +1,7 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import type ReactotronServer from "reactotron-core-server"
 import type { Command } from "reactotron-core-contract"
-import { z } from "zod"
+import { z } from "zod/v4"
 import { appendFileSync, promises as fsPromises } from "fs"
 import { extname } from "path"
 
@@ -75,17 +75,15 @@ export function registerTools(
       "Example: { type: 'user/setName', payload: { name: 'Alice' } }",
     ].join(" "),
     inputSchema: {
-      type: z.object({
-        type: z.string().describe("Action type, e.g. 'counter/increment' or 'RESET'"),
-        payload: z.any().optional().describe("Optional action payload, e.g. { name: 'Alice' }"),
-      }),
+      actionType: z.string().describe("Action type, e.g. 'counter/increment' or 'RESET'"),
+      actionPayload: z.any().optional().describe("Optional action payload, e.g. { name: 'Alice' }"),
       clientId: z.string().optional().describe("Target app clientId (required when multiple apps connected). Get from the apps resource."),
     },
   }, async (args) => {
     const { clientId, error } = resolveClientId(server, args.clientId)
     if (error) return textResult({ status: "error", message: error })
 
-    const action = { type: args.type, payload: args.payload }
+    const action = { type: args.actionType, payload: args.actionPayload }
     server.send("state.action.dispatch", { action }, clientId)
 
     // Poll for confirmation (state.action.complete)
@@ -142,7 +140,7 @@ export function registerTools(
       "Use request_state first to get the current state, modify it, then swap.",
     ].join(" "),
     inputSchema: {
-      state: z.record(z.any()).describe("The complete replacement state tree as a JSON object."),
+      state: z.record(z.string(), z.any()).describe("The complete replacement state tree as a JSON object."),
       clientId: z.string().optional().describe("Target app clientId (required when multiple apps connected)."),
     },
   }, async (args) => {
