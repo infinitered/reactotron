@@ -1,3 +1,5 @@
+import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
+import type { ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js"
 import type ReactotronServer from "reactotron-core-server"
 import type { Command } from "reactotron-core-contract"
 
@@ -19,10 +21,6 @@ function getApps(server: ReactotronServer): AppInfo[] {
   }))
 }
 
-/**
- * Build connection context metadata. Helps Claude decide whether to ask
- * the user which app to focus on or just use the only connected one.
- */
 function connectionMeta(server: ReactotronServer): Record<string, unknown> {
   const apps = getApps(server)
 
@@ -48,10 +46,6 @@ function connectionMeta(server: ReactotronServer): Record<string, unknown> {
   }
 }
 
-/**
- * Filter commands by clientId. If no clientId given and only one app
- * is connected, auto-filter to that app.
- */
 function filterByClient(
   commands: Command[],
   server: ReactotronServer,
@@ -59,179 +53,99 @@ function filterByClient(
 ): Command[] {
   const apps = getApps(server)
 
-  // Explicit clientId — filter to it
   if (clientId) {
     return commands.filter((c) => c.clientId === clientId)
   }
 
-  // Single app — auto-filter
   if (apps.length === 1) {
     return commands.filter((c) => c.clientId === apps[0].clientId)
   }
 
-  // Multiple apps, no filter — return all
   return commands
 }
 
-export function getResources() {
-  return [
-    {
-      uri: "reactotron://timeline",
-      name: "Reactotron Timeline",
-      description: "Recent debug events from connected apps. Append ?clientId=<id> to filter to a specific app.",
-      mimeType: "application/json",
-    },
-    {
-      uri: "reactotron://state/current",
-      name: "Current App State",
-      description: "Latest Redux/MST state snapshot. Append ?clientId=<id> to target a specific app.",
-      mimeType: "application/json",
-    },
-    {
-      uri: "reactotron://network/log",
-      name: "Network Request Log",
-      description: "Recent network requests/responses. Append ?clientId=<id> to filter to a specific app.",
-      mimeType: "application/json",
-    },
-    {
-      uri: "reactotron://apps",
-      name: "Connected Apps",
-      description: "Apps currently connected to Reactotron. Read this first to find the clientId for the app you're debugging.",
-      mimeType: "application/json",
-    },
-    {
-      uri: "reactotron://benchmarks",
-      name: "Benchmark Results",
-      description: "Performance benchmark results. Append ?clientId=<id> to filter to a specific app.",
-      mimeType: "application/json",
-    },
-  ]
+function json(data: unknown) {
+  return { contents: [{ uri: "", mimeType: "application/json" as const, text: JSON.stringify(data, null, 2) }] }
 }
 
-export function getResourceTemplates() {
-  return [
-    {
-      uriTemplate: "reactotron://network/{id}",
-      name: "Network Request Detail",
-      description: "Full detail for a single network request by message ID.",
-      mimeType: "application/json",
-    },
-  ]
-}
-
-function parseUri(uri: string): { path: string; params: Record<string, string> } {
-  const [path, query] = uri.split("?", 2)
-  const params: Record<string, string> = {}
-  if (query) {
-    for (const part of query.split("&")) {
-      const [k, v] = part.split("=", 2)
-      if (k && v) params[decodeURIComponent(k)] = decodeURIComponent(v)
-    }
-  }
-  return { path, params }
-}
-
-export async function readResource(
-  uri: string,
+export function registerResources(
+  mcp: McpServer,
   server: ReactotronServer,
   commandBuffer: Command[]
-): Promise<unknown> {
-  const { path, params } = parseUri(uri)
-  const clientId = params.clientId
-  const meta = connectionMeta(server)
+) {
+  mcp.registerResource("timeline", "reactotron://timeline", {
+    description: "Recent debug events from connected apps (last 500). Each has type, date, clientId, and payload.",
+    mimeType: "application/json",
+  }, async (uri) => {
+    const meta = connectionMeta(server)
+    const events = filterByClient(commandBuffer, server)
+    return json({ _meta: meta, events: [...events].reverse() })
+  })
 
-  if (path === "reactotron://timeline") {
-    const events = filterByClient(commandBuffer, server, clientId)
-    return {
-      _meta: {
-        description: "Debug events, newest first. Each has 'type' (log, api.response, state.values.response, etc.), 'date', 'clientId', and 'payload'.",
-        ...meta,
-      },
-      events: [...events].reverse(),
-    }
-  }
-
-  if (path === "reactotron://state/current") {
+  mcp.registerResource("state", "reactotron://state/current", {
+    description: "Latest Redux/MST state snapshot. Use the request_state tool to get a fresh one.",
+    mimeType: "application/json",
+  }, async (uri) => {
+    const meta = connectionMeta(server)
     const stateCommands = filterByClient(
       commandBuffer.filter((c) => c.type === "state.values.response"),
-      server,
-      clientId
+      server
     )
     const latest = stateCommands[stateCommands.length - 1]
-    return {
-      _meta: {
-        description: "Most recent state snapshot. Use the request_state tool to request a fresh one.",
-        ...meta,
-      },
+    return json({
+      _meta: meta,
       state: latest?.payload?.value ?? {
         status: "no_state_received",
         message: "No state snapshot received yet. Use the request_state tool to request one.",
       },
-    }
-  }
+    })
+  })
 
-  if (path === "reactotron://network/log") {
+  mcp.registerResource("network", "reactotron://network/log", {
+    description: "Recent network requests/responses with URL, method, status, duration.",
+    mimeType: "application/json",
+  }, async (uri) => {
+    const meta = connectionMeta(server)
     const networkCommands = filterByClient(
       commandBuffer.filter((c) => c.type === "api.response"),
-      server,
-      clientId
+      server
     )
-    return {
-      _meta: {
-        description: "Network requests. Each has request (url, method) and response (status, body, duration).",
-        ...meta,
-      },
+    return json({
+      _meta: meta,
       entries: networkCommands.map((c) => ({
         messageId: c.messageId,
         clientId: c.clientId,
         date: c.date,
         ...c.payload,
       })),
-    }
-  }
+    })
+  })
 
-  if (path.startsWith("reactotron://network/")) {
-    const id = path.replace("reactotron://network/", "")
-    const entry = commandBuffer.find(
-      (c) => c.type === "api.response" && String(c.messageId) === id
-    )
-    if (!entry) {
-      return { error: `Network entry '${id}' not found` }
-    }
-    return { messageId: entry.messageId, clientId: entry.clientId, date: entry.date, ...entry.payload }
-  }
-
-  if (path === "reactotron://apps") {
+  mcp.registerResource("apps", "reactotron://apps", {
+    description: "Apps currently connected to Reactotron. Read this first to find clientIds.",
+    mimeType: "application/json",
+  }, async (uri) => {
     const apps = getApps(server)
-    return {
-      _meta: {
-        description: apps.length <= 1
-          ? "Connected apps."
-          : "Multiple apps connected. Check the workspace's package.json name — if it matches one of these app names, use that clientId. Otherwise, ask the user which app they're debugging.",
-        ...meta,
-      },
-      apps,
-    }
-  }
+    const meta = connectionMeta(server)
+    return json({ _meta: meta, apps })
+  })
 
-  if (path === "reactotron://benchmarks") {
+  mcp.registerResource("benchmarks", "reactotron://benchmarks", {
+    description: "Performance benchmark results from connected apps.",
+    mimeType: "application/json",
+  }, async (uri) => {
+    const meta = connectionMeta(server)
     const benchmarks = filterByClient(
       commandBuffer.filter((c) => c.type === "benchmark.report"),
-      server,
-      clientId
+      server
     )
-    return {
-      _meta: {
-        description: "Benchmark results sorted by time.",
-        ...meta,
-      },
+    return json({
+      _meta: meta,
       benchmarks: benchmarks.map((c) => ({
         date: c.date,
         clientId: c.clientId,
         ...c.payload,
       })),
-    }
-  }
-
-  return { error: `Unknown resource: ${uri}` }
+    })
+  })
 }

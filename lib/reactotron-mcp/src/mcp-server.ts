@@ -1,18 +1,12 @@
 import { createServer as createHttpServer, type Server as HttpServer } from "http"
-import { Server } from "@modelcontextprotocol/sdk/server/index"
-import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp"
-import {
-  ListResourcesRequestSchema,
-  ReadResourceRequestSchema,
-  ListResourceTemplatesRequestSchema,
-  ListToolsRequestSchema,
-  CallToolRequestSchema,
-} from "@modelcontextprotocol/sdk/types"
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
+import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js"
 import type ReactotronServer from "reactotron-core-server"
 import type { Command } from "reactotron-core-contract"
+import { z } from "zod"
 
-import { getResources, getResourceTemplates, readResource } from "./resources"
-import { getTools, callTool } from "./tools"
+import { registerResources } from "./resources"
+import { registerTools } from "./tools"
 
 export interface ReactotronMcpServer {
   start(port?: number): void
@@ -24,7 +18,7 @@ export interface ReactotronMcpServer {
 export function createMcpServer(reactotronServer: ReactotronServer): ReactotronMcpServer {
   let httpServer: HttpServer | null = null
   let transport: StreamableHTTPServerTransport | null = null
-  let mcpServer: Server | null = null
+  let mcp: McpServer | null = null
   let started = false
   let listenPort: number | null = null
 
@@ -60,54 +54,13 @@ export function createMcpServer(reactotronServer: ReactotronServer): ReactotronM
 
       startBuffering()
 
-      mcpServer = new Server(
+      mcp = new McpServer(
         { name: "reactotron", version: "0.1.0" },
         { capabilities: { resources: {}, tools: {} } }
       )
 
-      // Resources
-      mcpServer.setRequestHandler(ListResourcesRequestSchema, async () => ({
-        resources: getResources(),
-      }))
-
-      mcpServer.setRequestHandler(ListResourceTemplatesRequestSchema, async () => ({
-        resourceTemplates: getResourceTemplates(),
-      }))
-
-      mcpServer.setRequestHandler(ReadResourceRequestSchema, async (request) => {
-        const data = await readResource(
-          request.params.uri,
-          reactotronServer,
-          commandBuffer
-        )
-        return {
-          contents: [{
-            uri: request.params.uri,
-            mimeType: "application/json",
-            text: JSON.stringify(data, null, 2),
-          }],
-        }
-      })
-
-      // Tools
-      mcpServer.setRequestHandler(ListToolsRequestSchema, async () => ({
-        tools: getTools(),
-      }))
-
-      mcpServer.setRequestHandler(CallToolRequestSchema, async (request) => {
-        const result = await callTool(
-          request.params.name,
-          request.params.arguments ?? {},
-          reactotronServer,
-          commandBuffer
-        )
-        return {
-          content: [{
-            type: "text" as const,
-            text: typeof result === "string" ? result : JSON.stringify(result, null, 2),
-          }],
-        }
-      })
+      registerResources(mcp, reactotronServer, commandBuffer)
+      registerTools(mcp, reactotronServer, commandBuffer)
 
       // HTTP transport
       transport = new StreamableHTTPServerTransport({
@@ -135,7 +88,7 @@ export function createMcpServer(reactotronServer: ReactotronServer): ReactotronM
         }
       })
 
-      mcpServer.connect(transport)
+      mcp.connect(transport)
 
       httpServer.listen(port, () => {
         started = true
@@ -152,9 +105,9 @@ export function createMcpServer(reactotronServer: ReactotronServer): ReactotronM
         transport.close()
         transport = null
       }
-      if (mcpServer) {
-        mcpServer.close()
-        mcpServer = null
+      if (mcp) {
+        mcp.close()
+        mcp = null
       }
       if (httpServer) {
         httpServer.close()

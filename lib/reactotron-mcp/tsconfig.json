@@ -1,20 +1,16 @@
 {
-  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "allowJs": false,
-    "declaration": true,
-    "rootDir": ".",
-    "emitDeclarationOnly": true,
-    "allowSyntheticDefaultImports": true,
-    "module": "es2015",
-    "moduleResolution": "node",
-    "noImplicitAny": false,
-    "noImplicitReturns": true,
-    "sourceMap": true,
     "target": "es2020",
+    "module": "es2020",
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "strict": false,
+    "noImplicitAny": false,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "rootDir": "src"
   },
-  "exclude": ["node_modules"],
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

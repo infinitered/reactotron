@@ -10,52 +10,35 @@
   "homepage": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-mcp",
   "repository": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-mcp",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
-  "main": "./dist/commonjs/index.js",
-  "module": "./dist/module/index.js",
-  "types": "./dist/typescript/commonjs/src/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "source": "./src/index.ts",
-      "types": "./dist/typescript/commonjs/src/index.d.ts",
-      "module": "./dist/module/index.js",
-      "default": "./dist/commonjs/index.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "prebuild": "yarn clean",
-    "build": "bob build",
+    "build": "tsup",
     "clean": "rimraf ./dist",
-    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
-    "prepare": "bob build"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.27.0",
+    "@modelcontextprotocol/sdk": "^1.27.0"
+  },
+  "peerDependencies": {
     "reactotron-core-contract": "workspace:*",
     "reactotron-core-server": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^18.18.8",
-    "react-native-builder-bob": "^0.40.13",
+    "reactotron-core-contract": "workspace:*",
+    "reactotron-core-server": "workspace:*",
     "rimraf": "5.0.5",
+    "tsup": "^8.0.0",
     "typescript": "^5.1.3"
-  },
-  "react-native-builder-bob": {
-    "source": "src",
-    "output": "dist",
-    "exclude": "**/*.test.{tsx,ts}",
-    "targets": [
-      "commonjs",
-      [
-        "module",
-        {
-          "esm": true
-        }
-      ],
-      "typescript"
-    ]
   }
 }
