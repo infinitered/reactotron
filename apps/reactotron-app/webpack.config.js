@@ -12,22 +12,22 @@
 const path = require("path")
 
 module.exports = function (config) {
-  // Add a babel rule for @modelcontextprotocol/sdk which uses ES2020+ syntax
-  // (optional chaining, nullish coalescing) that webpack 4's acorn parser can't handle.
+  // The MCP SDK and its dependencies (zod, @hono/node-server, etc.) use modern
+  // JS syntax that webpack 4's acorn parser can't handle. Transpile them all
+  // through @babel/preset-env targeting the Electron version we ship.
   const mcpBabelRule = {
     test: /\.js$/,
     include: [
       /node_modules[\\/]@modelcontextprotocol/,
       /node_modules[\\/]zod/,
       /node_modules[\\/]zod-to-json-schema/,
+      /node_modules[\\/]@hono/,
     ],
     use: {
       loader: "babel-loader",
       options: {
-        plugins: [
-          "@babel/plugin-transform-optional-chaining",
-          "@babel/plugin-transform-nullish-coalescing-operator",
-          "@babel/plugin-transform-export-namespace-from",
+        presets: [
+          ["@babel/preset-env", { targets: { electron: "27" } }],
         ],
       },
     },
