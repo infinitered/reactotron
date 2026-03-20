@@ -9,12 +9,31 @@
 // If this breaks again, you search webpack in node_modules for `createHash\(('|")md4('|")\)`,
 // replace it with `createHash("sha256")`, then run patch-package again.
 
+const path = require("path")
+
 module.exports = function (config) {
   return {
     ...config,
     output: {
       ...config.output,
       hashFunction: "sha256",
+    },
+    resolve: {
+      ...config.resolve,
+      alias: {
+        ...config.resolve?.alias,
+        // @modelcontextprotocol/sdk uses package.json "exports" for subpath resolution
+        // which webpack 4 doesn't support. Map subpaths to actual file locations.
+        "@modelcontextprotocol/sdk/server/index": path.resolve(
+          __dirname, "../../node_modules/@modelcontextprotocol/sdk/dist/esm/server/index.js"
+        ),
+        "@modelcontextprotocol/sdk/server/streamableHttp": path.resolve(
+          __dirname, "../../node_modules/@modelcontextprotocol/sdk/dist/esm/server/streamableHttp.js"
+        ),
+        "@modelcontextprotocol/sdk/types": path.resolve(
+          __dirname, "../../node_modules/@modelcontextprotocol/sdk/dist/esm/types.js"
+        ),
+      },
     },
   }
 }
