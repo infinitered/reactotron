@@ -297,7 +297,7 @@ export function registerTools(
   })
 
   mcp.registerTool("clear_timeline", {
-    description: "Clear all buffered events from the timeline. Useful to reset context before investigating a specific interaction.",
+    description: "Clear the MCP event buffer. This only affects what you see via MCP resources — the Reactotron desktop app's timeline is not affected. Useful to discard old events and focus on what happens next.",
     inputSchema: {},
   }, async () => {
     const count = commandBuffer.length

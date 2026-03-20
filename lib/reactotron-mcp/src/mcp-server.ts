@@ -28,7 +28,12 @@ export interface ReactotronMcpServer {
   readonly port: number | null
 }
 
-export function createMcpServer(reactotronServer: ReactotronServer): ReactotronMcpServer {
+export interface ReactotronMcpOptions {
+  /** Called when MCP requests clearing the desktop app's timeline */
+  onClearTimeline?: () => void
+}
+
+export function createMcpServer(reactotronServer: ReactotronServer, options?: ReactotronMcpOptions): ReactotronMcpServer {
   let httpServer: HttpServer | null = null
   let started = false
   let listenPort: number | null = null
