@@ -147,4 +147,44 @@ export function registerResources(
       })),
     })
   })
+
+  mcp.registerResource("subscriptions", "reactotron://state/subscriptions", {
+    description: "State subscription changes. Shows values at subscribed paths whenever they change. Use the subscribe_state tool to add subscriptions.",
+    mimeType: "application/json",
+  }, async (uri) => {
+    const meta = connectionMeta(server)
+    const changes = filterByClient(
+      commandBuffer.filter((c) => c.type === "state.values.change"),
+      server
+    )
+    return json({
+      _meta: meta,
+      activeSubscriptions: (server as any).subscriptions || [],
+      changes: changes.map((c) => ({
+        date: c.date,
+        clientId: c.clientId,
+        ...c.payload,
+      })),
+    })
+  })
+
+  mcp.registerResource("asyncstorage", "reactotron://asyncstorage", {
+    description: "AsyncStorage mutations captured from the app. Shows setItem, removeItem, mergeItem, multiSet, multiRemove, multiMerge, and clear operations with their keys and values.",
+    mimeType: "application/json",
+  }, async (uri) => {
+    const meta = connectionMeta(server)
+    const mutations = filterByClient(
+      commandBuffer.filter((c) => c.type === "asyncStorage.mutation"),
+      server
+    )
+    return json({
+      _meta: meta,
+      mutations: mutations.map((c) => ({
+        date: c.date,
+        clientId: c.clientId,
+        action: c.payload?.action,
+        data: c.payload?.data,
+      })),
+    })
+  })
 }

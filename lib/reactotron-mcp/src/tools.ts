@@ -304,4 +304,36 @@ export function registerTools(
     commandBuffer.length = 0
     return textResult({ status: "cleared", eventsRemoved: count })
   })
+
+  mcp.registerTool("subscribe_state", {
+    description: [
+      "Subscribe to a state path. The app will send state.values.change events whenever the value at this path changes.",
+      "Read the state/subscriptions resource to see changes.",
+      "Requires Redux or MST plugin. Example path: 'user.profile.name'",
+    ].join(" "),
+    inputSchema: {
+      path: z.string().describe("Dot-separated state path to subscribe to, e.g. 'user.profile' or 'cart.items'"),
+    },
+  }, async (args) => {
+    const path = args.path
+    if (!path) return textResult({ status: "error", message: "path is required" })
+
+    ;(server as any).stateValuesSubscribe(path)
+    const active = (server as any).subscriptions || []
+    return textResult({ status: "subscribed", path, activeSubscriptions: active })
+  })
+
+  mcp.registerTool("unsubscribe_state", {
+    description: "Unsubscribe from a state path. Stops receiving change events for this path.",
+    inputSchema: {
+      path: z.string().describe("State path to unsubscribe from"),
+    },
+  }, async (args) => {
+    const path = args.path
+    if (!path) return textResult({ status: "error", message: "path is required" })
+
+    ;(server as any).stateValuesUnsubscribe(path)
+    const active = (server as any).subscriptions || []
+    return textResult({ status: "unsubscribed", path, activeSubscriptions: active })
+  })
 }
