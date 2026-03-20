@@ -26085,9 +26085,6 @@ __metadata:
   resolution: "reactotron-app@workspace:apps/reactotron-app"
   dependencies:
     "@babel/core": "npm:^7.23.2"
-    "@babel/plugin-transform-export-namespace-from": "npm:^7.23.4"
-    "@babel/plugin-transform-nullish-coalescing-operator": "npm:^7.23.4"
-    "@babel/plugin-transform-optional-chaining": "npm:^7.23.4"
     "@babel/preset-react": "npm:^7.22.15"
     "@babel/preset-typescript": "npm:^7.23.2"
     "@electron/notarize": "npm:^2.1.0"

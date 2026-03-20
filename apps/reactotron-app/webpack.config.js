@@ -16,13 +16,5 @@ module.exports = function (config) {
       ...config.output,
       hashFunction: "sha256",
     },
-    // Exclude reactotron-mcp and its MCP SDK dependencies from webpack bundling.
-    // The MCP SDK uses modern JS syntax that webpack 4 can't parse.
-    // Since nodeIntegration is enabled, these modules load fine via Node.js require() at runtime.
-    externals: [
-      ...(Array.isArray(config.externals) ? config.externals : config.externals ? [config.externals] : []),
-      "reactotron-mcp",
-      "@modelcontextprotocol/sdk",
-    ],
   }
 }
