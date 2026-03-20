@@ -12,6 +12,22 @@
 const path = require("path")
 
 module.exports = function (config) {
+  // Add a babel rule for @modelcontextprotocol/sdk which uses ES2020+ syntax
+  // (optional chaining, nullish coalescing) that webpack 4's acorn parser can't handle.
+  const mcpBabelRule = {
+    test: /\.js$/,
+    include: /node_modules[\\/]@modelcontextprotocol/,
+    use: {
+      loader: "babel-loader",
+      options: {
+        plugins: [
+          "@babel/plugin-transform-optional-chaining",
+          "@babel/plugin-transform-nullish-coalescing-operator",
+        ],
+      },
+    },
+  }
+
   return {
     ...config,
     output: {
@@ -34,6 +50,13 @@ module.exports = function (config) {
           __dirname, "../../node_modules/@modelcontextprotocol/sdk/dist/esm/types.js"
         ),
       },
+    },
+    module: {
+      ...config.module,
+      rules: [
+        ...(config.module?.rules || []),
+        mcpBabelRule,
+      ],
     },
   }
 }
