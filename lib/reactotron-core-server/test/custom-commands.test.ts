@@ -24,7 +24,7 @@ beforeEach(async () => {
   port = await getPort({ random: true })
   server = createServer({ port })
   server.start()
-  await new Promise((r) => setTimeout(r, 100))
+  await new Promise((resolve) => setTimeout(resolve, 100))
 })
 
 afterEach(() => {
@@ -40,7 +40,7 @@ test("stores custom commands on register", async () => {
         payload: { id: 1, command: "reload", title: "Reload App", description: "Reloads" },
       })
     )
-    await new Promise((r) => setTimeout(r, 100))
+    await new Promise((resolve) => setTimeout(resolve, 100))
 
     const commands = server.customCommands.get("client-1")
     expect(commands).toBeDefined()
@@ -67,7 +67,7 @@ test("accumulates multiple commands", async () => {
         payload: { id: 2, command: "reset", title: "Reset Store" },
       })
     )
-    await new Promise((r) => setTimeout(r, 100))
+    await new Promise((resolve) => setTimeout(resolve, 100))
 
     const commands = server.customCommands.get("client-2")
     expect(commands!.length).toBe(2)
@@ -92,7 +92,7 @@ test("removes command on unregister", async () => {
         payload: { id: 2, command: "reset", title: "Reset" },
       })
     )
-    await new Promise((r) => setTimeout(r, 100))
+    await new Promise((resolve) => setTimeout(resolve, 100))
 
     client.send(
       JSON.stringify({
@@ -100,7 +100,7 @@ test("removes command on unregister", async () => {
         payload: { id: 1 },
       })
     )
-    await new Promise((r) => setTimeout(r, 100))
+    await new Promise((resolve) => setTimeout(resolve, 100))
 
     const commands = server.customCommands.get("client-3")
     expect(commands!.length).toBe(1)
@@ -118,11 +118,11 @@ test("clears commands on disconnect", async () => {
       payload: { id: 1, command: "reload", title: "Reload" },
     })
   )
-  await new Promise((r) => setTimeout(r, 100))
+  await new Promise((resolve) => setTimeout(resolve, 100))
   expect(server.customCommands.get("client-4")!.length).toBe(1)
 
   client.close()
-  await new Promise((r) => setTimeout(r, 200))
+  await new Promise((resolve) => setTimeout(resolve, 200))
 
   expect(server.customCommands.has("client-4")).toBe(false)
 })
