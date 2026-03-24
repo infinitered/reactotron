@@ -352,6 +352,48 @@ describe("tools", () => {
     }
   })
 
+  test("list_custom_commands returns commands registered before MCP started", async () => {
+    // Stop MCP server, connect app and register commands, then restart MCP
+    mcp.stop()
+
+    const app = await connectMockApp(relayPort)
+    try {
+      app.send(
+        JSON.stringify({
+          type: "customCommand.register",
+          payload: { id: 1, command: "navigateTo", title: "Navigate To Screen" },
+        })
+      )
+      app.send(
+        JSON.stringify({
+          type: "customCommand.register",
+          payload: { id: 2, command: "resetStore", title: "Reset Root Store" },
+        })
+      )
+      await new Promise((r) => setTimeout(r, 100))
+
+      // Now start MCP — commands were registered before it was listening
+      const newMcpPort = await getPort({ random: true })
+      mcp = createMcpServer(relay)
+      await mcp.start(newMcpPort)
+      await new Promise((r) => setTimeout(r, 200))
+
+      const res = await mcpRequest(newMcpPort, {
+        jsonrpc: "2.0",
+        method: "tools/call",
+        id: 30,
+        params: { name: "list_custom_commands", arguments: {} },
+      })
+      const result = parseSSE(res.body)
+      const data = JSON.parse(result.result.content[0].text)
+      expect(data.status).toBe("success")
+      expect(data.commands.length).toBe(2)
+      expect(data.commands.map((c: any) => c.command)).toEqual(["navigateTo", "resetStore"])
+    } finally {
+      app.close()
+    }
+  })
+
   test("clear_timeline clears the buffer", async () => {
     const app = await connectMockApp(relayPort)
     try {

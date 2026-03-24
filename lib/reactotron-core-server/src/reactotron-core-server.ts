@@ -89,6 +89,14 @@ export default class Server {
   subscriptions: string[] = []
 
   /**
+   * Registered custom commands per clientId.
+   */
+  customCommands: Map<
+    string,
+    { id: number; command: string; title?: string; description?: string; args?: any[] }[]
+  > = new Map()
+
+  /**
    * Clients who are in the process of connecting but haven't yet handshaked.
    */
   partialConnections: PartialConnection[] = []
@@ -204,6 +212,7 @@ export default class Server {
         const severingConnection = find(propEq("id", thisConnectionId), this.connections)
         if (severingConnection) {
           this.connections = reject(propEq("id", severingConnection.id), this.connections)
+          this.customCommands.delete((severingConnection as any).clientId)
           this.emitter.emit("disconnect", severingConnection)
         }
       })
@@ -303,6 +312,26 @@ export default class Server {
         // refresh subscriptions
         if (type === "state.values.change") {
           this.subscriptions = pluck("path", (payload.changes || []) as { path: string }[])
+        }
+
+        // track custom command registrations
+        if (type === "customCommand.register" && fullCommand.clientId) {
+          const list = this.customCommands.get(fullCommand.clientId) ?? []
+          list.push({
+            id: payload.id,
+            command: payload.command,
+            title: payload.title,
+            description: payload.description,
+            args: payload.args,
+          })
+          this.customCommands.set(fullCommand.clientId, list)
+        }
+        if (type === "customCommand.unregister" && fullCommand.clientId) {
+          const list = this.customCommands.get(fullCommand.clientId) ?? []
+          this.customCommands.set(
+            fullCommand.clientId,
+            list.filter((c) => c.id !== payload.id)
+          )
         }
 
         // assign a name to the backups since the client doesn't pass one.  without it, we have to

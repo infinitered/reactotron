@@ -117,6 +117,58 @@ reactotron.onCustomCommand({
   },
 })
 
+reactotron.onCustomCommand<[{ name: "message"; type: ArgType.String }]>({
+  command: "showAlert",
+  title: "Show Alert",
+  description: "Displays an alert dialog on the device with a custom message",
+  args: [{ name: "message", type: ArgType.String }],
+  handler: (args) => {
+    const { message } = args ?? {}
+    const { Alert } = require("react-native")
+    Alert.alert("Reactotron", message || "Hello from Reactotron!")
+    Reactotron.log(`Alert shown: ${message || "Hello from Reactotron!"}`)
+  },
+})
+
+reactotron.onCustomCommand<[{ name: "key"; type: ArgType.String }, { name: "value"; type: ArgType.String }]>({
+  command: "setAsyncStorage",
+  title: "Set AsyncStorage Value",
+  description: "Sets a key/value pair in AsyncStorage",
+  args: [
+    { name: "key", type: ArgType.String },
+    { name: "value", type: ArgType.String },
+  ],
+  handler: async (args) => {
+    const { key, value } = args ?? {}
+    if (key && value) {
+      await AsyncStorage.setItem(key, value)
+      Reactotron.log(`AsyncStorage set: ${key} = ${value}`)
+    } else {
+      Reactotron.log("Missing key or value")
+    }
+  },
+})
+
+reactotron.onCustomCommand<[{ name: "key"; type: ArgType.String }]>({
+  command: "getAsyncStorage",
+  title: "Get AsyncStorage Value",
+  description: "Reads a value from AsyncStorage and logs it to the timeline",
+  args: [{ name: "key", type: ArgType.String }],
+  handler: async (args) => {
+    const { key } = args ?? {}
+    if (key) {
+      const value = await AsyncStorage.getItem(key)
+      Reactotron.display({
+        name: "AsyncStorage",
+        preview: `${key} = ${value}`,
+        value: { key, value },
+      })
+    } else {
+      Reactotron.log("Missing key")
+    }
+  },
+})
+
 /**
  * We're going to add `console.tron` to the Reactotron object.
  * Now, anywhere in our app in development, we can use Reactotron like so:

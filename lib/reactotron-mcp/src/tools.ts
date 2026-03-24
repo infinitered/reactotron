@@ -184,15 +184,11 @@ export function registerTools(
     const { clientId, error } = resolveClientId(server, args.clientId)
     if (error) return textResult({ status: "error", message: error })
 
-    const registrations = commandBuffer.filter(
-      (c) => c.type === "customCommand.register" && c.clientId === clientId
-    )
-
-    const commands = registrations.map((c) => ({
-      id: c.payload?.id,
-      command: c.payload?.command,
-      title: c.payload?.title,
-      description: c.payload?.description,
+    const commands = (server.customCommands?.get(clientId) ?? []).map((c) => ({
+      id: c.id,
+      command: c.command,
+      title: c.title,
+      description: c.description,
     }))
 
     if (commands.length === 0) {
