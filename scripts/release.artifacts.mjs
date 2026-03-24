@@ -53,6 +53,13 @@ if (!fs.existsSync(npmWorkspacePath)) {
 }
 
 console.log(`Found workspace '${npmWorkspace}' at '${npmWorkspacePath}'`)
+
+// Skip private packages (not published to npm)
+const workspacePkg = JSON.parse(fs.readFileSync(path.join(npmWorkspacePath, "package.json"), "utf-8"))
+if (workspacePkg.private) {
+  console.log(`Skipping '${npmWorkspace}' because it is marked as private`)
+  process.exit(0)
+}
 // #endregion
 
 // #region assert NPM_TOKEN is set

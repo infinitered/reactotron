@@ -13,11 +13,30 @@ const ROOT_DIR = path.join(path.dirname(new URL(import.meta.url).pathname), ".."
 
 const workspaceList = await getWorkspaceList()
 
-const workspacePaths = workspaceList
+const allLibPaths = workspaceList
   // create absolute paths
   .map((workspace) => path.join(ROOT_DIR, workspace.location))
   // filter out workspaces without /lib/ in the path
   .filter((workspacePath) => workspacePath.includes("/lib/"))
+
+const { workspacePaths, privatePaths } = allLibPaths.reduce(
+  (acc, workspacePath) => {
+    const pkg = JSON.parse(fs.readFileSync(path.join(workspacePath, "package.json"), "utf-8"))
+    if (pkg.private) {
+      acc.privatePaths.push(workspacePath)
+    } else {
+      acc.workspacePaths.push(workspacePath)
+    }
+    return acc
+  },
+  { workspacePaths: [], privatePaths: [] }
+)
+
+if (privatePaths.length > 0) {
+  console.log(`Skipping ${privatePaths.length} private package${privatePaths.length === 1 ? "" : "s"} (not published to npm):`)
+  privatePaths.forEach((p) => console.log(`  ⏭️  ${path.basename(p)}`))
+  console.log("")
+}
 
 console.log(`Found ${workspacePaths.length} library workspaces`)
 console.log("")

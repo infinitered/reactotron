@@ -1,6 +1,7 @@
 {
   "name": "reactotron-mcp",
   "version": "0.1.0",
+  "private": true,
   "description": "MCP server for Reactotron — lets Claude Code read debug events and send commands to connected apps.",
   "author": "Infinite Red",
   "license": "MIT",
