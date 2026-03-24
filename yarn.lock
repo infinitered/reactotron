@@ -16440,7 +16440,7 @@ __metadata:
     expo-font: "npm:~12.0.10"
     expo-linear-gradient: "npm:~13.0.2"
     expo-linking: "npm:~6.3.1"
-    expo-localization: "npm:~15.0.3"
+    expo-localization: "patch:expo-localization@npm%3A15.0.3#~/.yarn/patches/expo-localization-npm-15.0.3-6e534a2836.patch"
     expo-splash-screen: "npm:~0.27.7"
     expo-status-bar: "npm:~1.12.1"
     i18n-js: "npm:3.9.2"
@@ -16665,7 +16665,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-localization@npm:~15.0.3":
+"expo-localization@npm:15.0.3":
   version: 15.0.3
   resolution: "expo-localization@npm:15.0.3"
   dependencies:
@@ -16673,6 +16673,17 @@ __metadata:
   peerDependencies:
     expo: "*"
   checksum: 10/33315abc13f1a4435a98f0252b6967cf0f8c4b5a6f52bbc4a23fcfee01c4c1b429964b526fcf6d6374c35e0664b9170fdec05ce156abfcc8ba5304e9cf0af52f
+  languageName: node
+  linkType: hard
+
+"expo-localization@patch:expo-localization@npm%3A15.0.3#~/.yarn/patches/expo-localization-npm-15.0.3-6e534a2836.patch":
+  version: 15.0.3
+  resolution: "expo-localization@patch:expo-localization@npm%3A15.0.3#~/.yarn/patches/expo-localization-npm-15.0.3-6e534a2836.patch::version=15.0.3&hash=a17976"
+  dependencies:
+    rtl-detect: "npm:^1.0.2"
+  peerDependencies:
+    expo: "*"
+  checksum: 10/aaf898e25cc31bdb76c2f340240763dd8831e93c77ed0326303407b5c22a2c54b7c4cb35d8b0d474089756412c60e732a0e20d7815c9c660e1491560f8f69e5c
   languageName: node
   linkType: hard
 
