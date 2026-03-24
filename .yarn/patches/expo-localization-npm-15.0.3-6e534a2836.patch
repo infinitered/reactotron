@@ -1,0 +1,13 @@
+diff --git a/ios/LocalizationModule.swift b/ios/LocalizationModule.swift
+index 17c9cb78a927db705f331827f4f48e894317c42f..26bbc58d567a8a69df1fdf25413d04e2fc433480 100644
+--- a/ios/LocalizationModule.swift
++++ b/ios/LocalizationModule.swift
+@@ -123,6 +123,8 @@ public class LocalizationModule: Module {
+       return "roc"
+     case .iso8601:
+       return "iso8601"
++    @unknown default:
++      return calendar.identifier.debugDescription
+     }
+   }
+ 
