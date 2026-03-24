@@ -63,6 +63,9 @@ storiesOf("components/Footer", module)
       isOpen={false}
       setIsOpen={() => {}}
       onChangeConnection={() => {}}
+      mcpStatus="stopped"
+      mcpPort={null}
+      onToggleMcp={() => {}}
     />
   ))
   .add("Collpased w/ connections", () => (
@@ -73,6 +76,9 @@ storiesOf("components/Footer", module)
       isOpen={false}
       setIsOpen={() => {}}
       onChangeConnection={() => {}}
+      mcpStatus="stopped"
+      mcpPort={null}
+      onToggleMcp={() => {}}
     />
   ))
   .add("Expanded", () => (
@@ -83,6 +89,9 @@ storiesOf("components/Footer", module)
       isOpen
       setIsOpen={() => {}}
       onChangeConnection={() => {}}
+      mcpStatus="stopped"
+      mcpPort={null}
+      onToggleMcp={() => {}}
     />
   ))
   .add("Expanded w/ connections", () => (
@@ -93,6 +102,9 @@ storiesOf("components/Footer", module)
       isOpen
       setIsOpen={() => {}}
       onChangeConnection={() => {}}
+      mcpStatus="started"
+      mcpPort={4567}
+      onToggleMcp={() => {}}
     />
   ))
   .add("Expanded w/ lots connections", () => (
@@ -103,5 +115,8 @@ storiesOf("components/Footer", module)
       isOpen
       setIsOpen={() => {}}
       onChangeConnection={() => {}}
+      mcpStatus="started"
+      mcpPort={4567}
+      onToggleMcp={() => {}}
     />
   ))
