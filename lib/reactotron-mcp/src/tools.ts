@@ -5,6 +5,8 @@ import { z } from "zod/v4"
 import { promises as fsPromises } from "fs"
 import { extname } from "path"
 
+import { MAX_RESPONSE_CHARS, safeSerialize } from "./serialization"
+
 /** Extract width/height from PNG or JPEG buffer */
 function getImageSize(buf: Buffer, ext: string): { width: number; height: number } | null {
   try {
@@ -59,8 +61,8 @@ function resolveClientId(
   return { clientId: requestedClientId || connections[0]?.clientId }
 }
 
-function textResult(data: unknown) {
-  return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] }
+function textResult(data: unknown, guidance?: string) {
+  return { content: [{ type: "text" as const, text: safeSerialize(data, MAX_RESPONSE_CHARS, guidance) }] }
 }
 
 export function registerTools(
@@ -105,11 +107,13 @@ export function registerTools(
     description: [
       "Request a fresh state snapshot from the connected app.",
       "Requires Redux or MST plugin configured in the app.",
-      "Returns the full state tree or a subtree if path is specified.",
+      "IMPORTANT: Always specify a path to avoid oversized responses.",
+      "The full state tree can be millions of characters.",
+      "Use request_state_keys first to explore the state shape, then request specific slices.",
       "Example path: 'user.profile' to get just that slice.",
     ].join(" "),
     inputSchema: {
-      path: z.string().optional().describe("Dot-separated state path, e.g. 'user.profile'. Omit for full state tree."),
+      path: z.string().optional().describe("Dot-separated state path, e.g. 'user.profile'. STRONGLY RECOMMENDED — omitting this returns the full state tree which may be too large."),
       clientId: z.string().optional().describe("Target app clientId (required when multiple apps connected)."),
     },
   }, async (args) => {
@@ -126,11 +130,51 @@ export function registerTools(
       for (let i = startLen; i < commandBuffer.length; i++) {
         const cmd = commandBuffer[i]
         if (cmd.type === "state.values.response" && cmd.clientId === clientId) {
-          return textResult({ status: "success", state: cmd.payload?.value ?? cmd.payload })
+          return textResult(
+            { status: "success", state: cmd.payload?.value ?? cmd.payload },
+            "State response is too large. Use request_state with a more specific path (e.g. 'user.profile') to narrow the response. Use request_state_keys to explore the state shape."
+          )
         }
       }
     }
     return textResult({ status: "no_response", message: "The app did not respond to the state request. It likely doesn't have a state management plugin (Redux or MST) configured in Reactotron." })
+  })
+
+  mcp.registerTool("request_state_keys", {
+    description: [
+      "List the keys at a state path without fetching values.",
+      "Use this to explore the state tree structure before requesting specific slices with request_state.",
+      "Returns an array of key names at the given path.",
+      "Example: path='' returns root keys, path='user' returns keys under user.",
+    ].join(" "),
+    inputSchema: {
+      path: z.string().optional().describe("Dot-separated state path. Omit or pass empty string for root keys."),
+      clientId: z.string().optional().describe("Target app clientId (required when multiple apps connected)."),
+    },
+  }, async (args) => {
+    const { clientId, error } = resolveClientId(server, args.clientId)
+    if (error) return textResult({ status: "error", message: error })
+
+    const path = args.path ?? ""
+    server.send("state.keys.request", { path }, clientId)
+
+    const start = Date.now()
+    const startLen = commandBuffer.length
+    while (Date.now() - start < 1500) {
+      await new Promise((r) => setTimeout(r, 100))
+      for (let i = startLen; i < commandBuffer.length; i++) {
+        const cmd = commandBuffer[i]
+        if (cmd.type === "state.keys.response" && cmd.clientId === clientId) {
+          return textResult({
+            status: "success",
+            path: (cmd.payload as any)?.path ?? path,
+            keys: (cmd.payload as any)?.keys ?? [],
+            valid: (cmd.payload as any)?.valid ?? true,
+          })
+        }
+      }
+    }
+    return textResult({ status: "no_response", message: "The app did not respond to the keys request. It likely doesn't have a state management plugin (Redux or MST) configured in Reactotron." })
   })
 
   mcp.registerTool("swap_state", {

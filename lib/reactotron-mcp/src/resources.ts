@@ -1,6 +1,15 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
+import { ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js"
 import type ReactotronServer from "reactotron-core-server"
 import type { Command } from "reactotron-core-contract"
+
+import {
+  MAX_RESPONSE_CHARS,
+  MAX_BODY_PREVIEW_CHARS,
+  safeSerialize,
+  summarizeCommand,
+  summarizeNetworkEntry,
+} from "./serialization"
 
 interface AppInfo {
   id: number
@@ -63,8 +72,14 @@ function filterByClient(
   return commands
 }
 
-function json(uri: URL, data: unknown) {
-  return { contents: [{ uri: uri.href, mimeType: "application/json" as const, text: JSON.stringify(data, null, 2) }] }
+function json(uri: URL, data: unknown, guidance?: string) {
+  return {
+    contents: [{
+      uri: uri.href,
+      mimeType: "application/json" as const,
+      text: safeSerialize(data, MAX_RESPONSE_CHARS, guidance),
+    }],
+  }
 }
 
 export function registerResources(
@@ -73,13 +88,46 @@ export function registerResources(
   commandBuffer: Command[]
 ) {
   mcp.registerResource("timeline", "reactotron://timeline", {
-    description: "Read this first to understand what's happening in the app. Shows the last 500 debug events (logs, state changes, network requests, benchmarks, custom commands) newest-first. Each event has a type, timestamp, clientId, and payload.",
+    description: "Read this first to understand what's happening in the app. Returns summarized debug events (type, timestamp, and a short preview) newest-first. Payloads are stripped to keep the response small. Use the timeline_by_type resource template to get full event data filtered by type (e.g. reactotron://timeline/api.response).",
     mimeType: "application/json",
   }, async (uri) => {
     const meta = connectionMeta(server)
     const events = filterByClient(commandBuffer, server)
-    return json(uri, { _meta: meta, events: [...events].reverse() })
+    const summarized = [...events].reverse().map(summarizeCommand)
+    return json(uri, { _meta: meta, eventCount: events.length, events: summarized },
+      "Events are summarized. Use the timeline_by_type resource (e.g. reactotron://timeline/api.response) to get full payloads for a specific event type.")
   })
+
+  mcp.registerResource("timeline_by_type",
+    new ResourceTemplate("reactotron://timeline/{type}", {
+      list: async () => {
+        const types = [...new Set(commandBuffer.map((c) => c.type))]
+        return {
+          resources: types.map((t) => ({
+            uri: `reactotron://timeline/${t}`,
+            name: `timeline:${t}`,
+          })),
+        }
+      },
+      complete: {
+        type: async (value) => {
+          const types = [...new Set(commandBuffer.map((c) => c.type))]
+          return types.filter((t) => t.startsWith(value))
+        },
+      },
+    }),
+    {
+      description: "Timeline events filtered by command type, with full payloads. Available types depend on what the app has sent (e.g. api.response, log, state.values.response, benchmark.report). Read the timeline resource first to see which types are present.",
+      mimeType: "application/json",
+    },
+    async (uri, { type }) => {
+      const meta = connectionMeta(server)
+      const events = filterByClient(commandBuffer, server)
+        .filter((c) => c.type === type)
+      return json(uri, { _meta: meta, type, eventCount: events.length, events: [...events].reverse() },
+        `Too many ${type} events to return in full. Try clear_timeline to reset, then reproduce the issue to capture fewer events.`)
+    }
+  )
 
   mcp.registerResource("state", "reactotron://state/current", {
     description: "Latest cached Redux/MST state snapshot. May be stale — use the request_state tool for a fresh snapshot. Returns no_state_received if the app hasn't sent state yet.",
@@ -97,11 +145,11 @@ export function registerResources(
         status: "no_state_received",
         message: "No state snapshot received yet. Use the request_state tool to request one.",
       },
-    })
+    }, "State is too large. Use the request_state tool with a path like 'user.profile' to fetch a specific slice. Use request_state_keys to explore the state shape first.")
   })
 
   mcp.registerResource("network", "reactotron://network/log", {
-    description: "All captured HTTP requests and responses. Each entry has URL, method, status code, duration, headers, and body. Useful for debugging API issues.",
+    description: "Captured HTTP requests and responses. Each entry shows URL, method, status, duration, headers, and previews of request/response bodies (truncated to 500 chars). Use timeline_by_type with type 'api.response' for full request/response data.",
     mimeType: "application/json",
   }, async (uri) => {
     const meta = connectionMeta(server)
@@ -111,13 +159,8 @@ export function registerResources(
     )
     return json(uri, {
       _meta: meta,
-      entries: networkCommands.map((c) => ({
-        messageId: c.messageId,
-        clientId: c.clientId,
-        date: c.date,
-        ...c.payload,
-      })),
-    })
+      entries: networkCommands.map(summarizeNetworkEntry),
+    }, "Network log is too large. Use timeline_by_type with type 'api.response' for full data, or clear_timeline to reset and capture fewer events.")
   })
 
   mcp.registerResource("apps", "reactotron://apps", {
@@ -165,7 +208,7 @@ export function registerResources(
         clientId: c.clientId,
         ...c.payload,
       })),
-    })
+    }, "Subscription changes are too large. Consider unsubscribing from paths with large values, or use request_state with a specific path instead.")
   })
 
   mcp.registerResource("asyncstorage", "reactotron://asyncstorage", {
@@ -185,6 +228,6 @@ export function registerResources(
         action: c.payload?.action,
         data: c.payload?.data,
       })),
-    })
+    }, "AsyncStorage mutations are too large. Try clear_timeline to reset, then reproduce the specific interaction you want to inspect.")
   })
 }

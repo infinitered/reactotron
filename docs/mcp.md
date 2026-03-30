@@ -23,9 +23,10 @@ That's it. Claude Code can now read your app's timeline, inspect state, dispatch
 
 Claude Code can read these resources on demand:
 
-- **Timeline** — the last 500 debug events (logs, state changes, network requests, benchmarks, custom commands)
+- **Timeline** — summarized debug events (type, timestamp, and a short preview) newest-first. Payloads are kept small so the response stays within token limits.
+- **Timeline by Type** — full event data filtered by command type (e.g. `api.response`, `log`). Use this to drill into specific event types after reading the timeline summary.
 - **App State** — the latest cached Redux/MST state snapshot
-- **Network Log** — all captured HTTP requests and responses
+- **Network Log** — HTTP requests and responses with truncated body previews
 - **Connected Apps** — which apps are connected, with their platform and version
 - **Benchmarks** — performance benchmark results
 - **State Subscriptions** — values at subscribed state paths whenever they change
@@ -36,7 +37,8 @@ Claude Code can read these resources on demand:
 Claude Code can also interact with your running app:
 
 - **Dispatch Redux actions** — e.g. "dispatch a RESET action"
-- **Request a fresh state snapshot** — asks the app for current state
+- **Explore state keys** — list keys at any state path without fetching values (lightweight way to navigate the state tree)
+- **Request a fresh state snapshot** — asks the app for current state at a specific path
 - **Replace app state** — hot-swap the entire state tree
 - **Send custom commands** — trigger any custom command registered in your app
 - **Show image overlay** — overlay a design mockup on the running app (supports local files)
@@ -70,11 +72,13 @@ The `show_overlay` tool lets Claude Code overlay an image on your running app �
 
 > **You:** "Look at the Reactotron timeline and tell me what's happening"
 >
-> **Claude:** _reads the timeline resource_ "I can see 3 API calls failing with 401 errors. Your auth token might be expired. Want me to check the current state?"
+> **Claude:** _reads the timeline summary_ "I can see 3 API calls failing with 401 errors and some state changes. Let me get the full details on those failed requests."
+>
+> **Claude:** _reads timeline/api.response_ "All three requests to `/api/users`, `/api/orders`, and `/api/profile` are returning 401 Unauthorized. Your auth token might be expired. Want me to check the current state?"
 >
 > **You:** "Yes, check the auth state"
 >
-> **Claude:** _calls request_state_ "The auth token in state is empty. It looks like the login flow isn't saving the token. Let me look at the Redux actions..."
+> **Claude:** _calls request_state_keys, then request_state with path='auth'_ "The auth token in state is empty. It looks like the login flow isn't saving the token. Let me look at the Redux actions..."
 
 ## Architecture
 

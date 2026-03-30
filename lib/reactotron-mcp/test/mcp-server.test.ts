@@ -217,7 +217,8 @@ describe("resources", () => {
       expect(data.events.length).toBeGreaterThanOrEqual(2)
       const logEvent = data.events.find((e: any) => e.type === "log")
       expect(logEvent).toBeDefined()
-      expect(logEvent.payload.message).toBe("hello")
+      // Timeline events are now summarized — payload is replaced with payloadPreview
+      expect(logEvent.payloadPreview).toContain("hello")
     } finally {
       app.close()
     }
@@ -275,6 +276,7 @@ describe("tools", () => {
     const names = result.result.tools.map((t: any) => t.name)
     expect(names).toContain("dispatch_action")
     expect(names).toContain("request_state")
+    expect(names).toContain("request_state_keys")
     expect(names).toContain("swap_state")
     expect(names).toContain("send_custom_command")
     expect(names).toContain("list_custom_commands")
@@ -505,5 +507,198 @@ describe("tools", () => {
     const data = JSON.parse(result.result.content[0].text)
     expect(data.status).toBe("unsubscribed")
     expect(data.activeSubscriptions).not.toContain("user.name")
+  })
+
+  test("request_state_keys returns no_response when app has no state plugin", async () => {
+    const app = await connectMockApp(relayPort)
+    try {
+      const res = await mcpRequest(mcpPort, {
+        jsonrpc: "2.0",
+        method: "tools/call",
+        id: 21,
+        params: { name: "request_state_keys", arguments: { path: "" } },
+      })
+      const result = parseSSE(res.body)
+      const data = JSON.parse(result.result.content[0].text)
+      expect(data.status).toBe("no_response")
+    } finally {
+      app.close()
+    }
+  })
+})
+
+describe("timeline summarization", () => {
+  test("timeline events have payloadPreview instead of full payload", async () => {
+    const app = await connectMockApp(relayPort)
+    try {
+      app.send(JSON.stringify({
+        type: "api.response",
+        payload: {
+          duration: 100,
+          request: { method: "GET", url: "/api/users", data: null, headers: {}, params: {} },
+          response: { status: 200, body: "x".repeat(10_000), headers: {} },
+        },
+      }))
+      await new Promise((r) => setTimeout(r, 100))
+
+      const res = await mcpRequest(mcpPort, {
+        jsonrpc: "2.0",
+        method: "resources/read",
+        id: 30,
+        params: { uri: "reactotron://timeline" },
+      })
+      const result = parseSSE(res.body)
+      const data = JSON.parse(result.result.contents[0].text)
+      const apiEvent = data.events.find((e: any) => e.type === "api.response")
+      expect(apiEvent).toBeDefined()
+      expect(apiEvent.payloadPreview).toBe("GET /api/users -> 200 (100ms)")
+      // Full payload should NOT be present
+      expect(apiEvent.payload).toBeUndefined()
+    } finally {
+      app.close()
+    }
+  })
+
+  test("network resource returns summarized entries with truncated bodies", async () => {
+    const app = await connectMockApp(relayPort)
+    try {
+      app.send(JSON.stringify({
+        type: "api.response",
+        payload: {
+          duration: 50,
+          request: { method: "POST", url: "/api/data", data: { key: "value" }, headers: {}, params: {} },
+          response: { status: 201, body: "y".repeat(10_000), headers: {} },
+        },
+      }))
+      await new Promise((r) => setTimeout(r, 100))
+
+      const res = await mcpRequest(mcpPort, {
+        jsonrpc: "2.0",
+        method: "resources/read",
+        id: 31,
+        params: { uri: "reactotron://network/log" },
+      })
+      const result = parseSSE(res.body)
+      const data = JSON.parse(result.result.contents[0].text)
+      expect(data.entries.length).toBeGreaterThanOrEqual(1)
+      const entry = data.entries.find((e: any) => e.request.url === "/api/data")
+      expect(entry).toBeDefined()
+      expect(entry.request.method).toBe("POST")
+      expect(entry.response.status).toBe(201)
+      expect(entry.duration).toBe(50)
+      // Body should be truncated
+      expect(entry.response.body.length).toBeLessThanOrEqual(503)
+    } finally {
+      app.close()
+    }
+  })
+
+  test("timeline_by_type resource template returns filtered events with full payloads", async () => {
+    const app = await connectMockApp(relayPort)
+    try {
+      app.send(JSON.stringify({ type: "log", payload: { message: "test log" } }))
+      app.send(JSON.stringify({
+        type: "api.response",
+        payload: {
+          duration: 50,
+          request: { method: "GET", url: "/api/test", data: null, headers: {}, params: {} },
+          response: { status: 200, body: "ok", headers: {} },
+        },
+      }))
+      await new Promise((r) => setTimeout(r, 100))
+
+      const res = await mcpRequest(mcpPort, {
+        jsonrpc: "2.0",
+        method: "resources/read",
+        id: 32,
+        params: { uri: "reactotron://timeline/log" },
+      })
+      const result = parseSSE(res.body)
+      const data = JSON.parse(result.result.contents[0].text)
+      expect(data.type).toBe("log")
+      // Should only have log events (plus possibly other log events from connection)
+      expect(data.events.every((e: any) => e.type === "log")).toBe(true)
+      // Should have full payload, not just preview
+      const logEvent = data.events.find((e: any) => e.payload?.message === "test log")
+      expect(logEvent).toBeDefined()
+    } finally {
+      app.close()
+    }
+  })
+})
+
+describe("large response truncation", () => {
+  test("request_state truncates oversized state with guidance message", async () => {
+    const app = await connectMockApp(relayPort)
+    try {
+      // Mock app replies to state.values.request with a huge state tree
+      app.on("message", (msg) => {
+        const parsed = JSON.parse(msg.toString())
+        if (parsed.type === "state.values.request") {
+          // Build a state tree that exceeds MAX_RESPONSE_CHARS (800K)
+          const bigState: Record<string, any> = {}
+          for (let i = 0; i < 2000; i++) {
+            bigState[`key_${i}`] = {
+              id: i,
+              data: "x".repeat(500),
+              nested: { a: { b: { c: `value-${i}` } } },
+            }
+          }
+          app.send(JSON.stringify({
+            type: "state.values.response",
+            payload: { path: "", value: bigState, valid: true },
+          }))
+        }
+      })
+
+      const res = await mcpRequest(mcpPort, {
+        jsonrpc: "2.0",
+        method: "tools/call",
+        id: 40,
+        params: { name: "request_state", arguments: {} },
+      })
+      const result = parseSSE(res.body)
+      const text = result.result.content[0].text
+
+      // Should be truncated to MAX_RESPONSE_CHARS (800K)
+      expect(text.length).toBeLessThanOrEqual(800_000)
+      // Should contain the truncation guidance message
+      expect(text).toContain("[TRUNCATED")
+      expect(text).toContain("request_state")
+      expect(text).toContain("path")
+    } finally {
+      app.close()
+    }
+  }, 10000)
+
+  test("state resource truncates oversized cached state with guidance message", async () => {
+    const app = await connectMockApp(relayPort)
+    try {
+      // Inject a huge state.values.response directly into the buffer
+      const bigState: Record<string, any> = {}
+      for (let i = 0; i < 2000; i++) {
+        bigState[`key_${i}`] = { data: "y".repeat(500) }
+      }
+      app.send(JSON.stringify({
+        type: "state.values.response",
+        payload: { path: "", value: bigState, valid: true },
+      }))
+      await new Promise((r) => setTimeout(r, 100))
+
+      const res = await mcpRequest(mcpPort, {
+        jsonrpc: "2.0",
+        method: "resources/read",
+        id: 41,
+        params: { uri: "reactotron://state/current" },
+      })
+      const result = parseSSE(res.body)
+      const text = result.result.contents[0].text
+
+      expect(text.length).toBeLessThanOrEqual(800_000)
+      expect(text).toContain("[TRUNCATED")
+      expect(text).toContain("request_state")
+    } finally {
+      app.close()
+    }
   })
 })

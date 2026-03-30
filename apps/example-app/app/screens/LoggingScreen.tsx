@@ -106,6 +106,44 @@ export const LoggingScreen: React.FC<LoggingScreenProps> = function LoggingScree
           />
         </View>
         <View style={$topContainer}>
+          <Text style={$text} text="Stress Test" />
+        </View>
+        <View style={{ marginTop: spacing.lg }}>
+          <Button
+            text="Spam 100 logs"
+            textStyle={$darkText}
+            style={$button}
+            onPress={() => {
+              for (let i = 0; i < 100; i++) {
+                console.log(`Spam log #${i}`, {
+                  index: i,
+                  timestamp: Date.now(),
+                  data: "x".repeat(500),
+                  nested: { a: { b: { c: { d: `deep-value-${i}` } } } },
+                })
+              }
+            }}
+          />
+          <Button
+            text="Log huge object"
+            textStyle={$darkText}
+            style={$button}
+            onPress={() => {
+              const bigState: Record<string, any> = {}
+              for (let i = 0; i < 200; i++) {
+                bigState[`key_${i}`] = {
+                  id: i,
+                  name: `Item ${i}`,
+                  description: `This is a description for item ${i} with some padding ${"x".repeat(200)}`,
+                  tags: Array.from({ length: 10 }, (_, j) => `tag-${i}-${j}`),
+                  metadata: { created: new Date().toISOString(), updated: new Date().toISOString() },
+                }
+              }
+              console.log("Huge state dump:", bigState)
+            }}
+          />
+        </View>
+        <View style={$topContainer}>
           <Text style={$text} tx="loggingsScreen.subtitle" />
         </View>
         <View style={{ marginTop: spacing.lg }}>
