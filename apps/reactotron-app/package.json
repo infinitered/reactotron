@@ -2,7 +2,7 @@
   "name": "reactotron-app",
   "productName": "Reactotron",
   "version": "3.8.2",
-  "description": "Reactotron desktop mode engage!",
+  "description": "A desktop app for inspecting your React JS and React Native projects. macOS, Linux, and Windows.",
   "author": {
     "name": "Infinite Red",
     "email": "hello@infinite.red",
