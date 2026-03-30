@@ -396,7 +396,7 @@ workflows:
       #         ignore: *release_branch_names
       # - build_app_windows:
       #     context:
-      #       - infinitered-npm-package
+      #       - reactotron-npm-context
       #     requires:
       #       - hold_for_app_builds
       #     filters:
@@ -405,7 +405,7 @@ workflows:
       # - build_app_macos:
       #     context:
       #       - ReactotronCerts
-      #       - infinitered-npm-package
+      #       - reactotron-npm-context
       #     requires:
       #       - hold_for_app_builds
       #     filters:
@@ -413,7 +413,7 @@ workflows:
       #         ignore: *release_branch_names
       # - build_app_linux:
       #     context:
-      #       - infinitered-npm-package
+      #       - reactotron-npm-context
       #     requires:
       #       - hold_for_app_builds
       #     filters:
@@ -442,7 +442,7 @@ workflows:
               only: *release_app_filter
       - release_tags:
           context:
-            - infinitered-npm-package
+            - reactotron-npm-context
           filters:
             branches:
               only: *release_branch_names
@@ -463,7 +463,7 @@ workflows:
                 - master
       - release_package:
           context:
-            - infinitered-npm-package
+            - reactotron-npm-context
           filters:
             branches: *release_branch_filter
             tags:
@@ -471,7 +471,7 @@ workflows:
                 - /^(?!reactotron-app)(reactotron-.*|eslint-plugin-reactotron)@.*/ # matches 'reactotron-core-ui@2.0.1', 'eslint-plugin-reactotron@0.1.0' but not 'reactotron-app@3.0.0'
       - build_app_windows:
           context:
-            - infinitered-npm-package
+            - reactotron-npm-context
           filters:
             branches: *release_branch_filter
             tags:
@@ -481,7 +481,7 @@ workflows:
       - build_app_macos:
           context:
             - ReactotronCerts
-            - infinitered-npm-package
+            - reactotron-npm-context
           filters:
             branches: *release_branch_filter
             tags:
@@ -490,7 +490,7 @@ workflows:
             - build_and_test
       - build_app_linux:
           context:
-            - infinitered-npm-package
+            - reactotron-npm-context
           filters:
             branches: *release_branch_filter
             tags:
@@ -499,7 +499,7 @@ workflows:
             - build_and_test
       - release_app:
           context:
-            - infinitered-npm-package
+            - reactotron-npm-context
           filters:
             branches: *release_branch_filter
             tags:
