@@ -8,7 +8,7 @@ Reactotron includes a built-in [MCP](https://modelcontextprotocol.io/) server th
 ## Getting started
 
 1. Open Reactotron and connect your app as usual.
-2. Click the **MCP** button in the footer bar. A green dot indicates the server is running.
+2. Click the **MCP** button in the footer bar to start the server. The MCP server is **off by default** — you need to toggle it on before Claude Code can connect. A green dot indicates the server is running.
 3. In your terminal, add the MCP server to Claude Code:
 
 ```bash
