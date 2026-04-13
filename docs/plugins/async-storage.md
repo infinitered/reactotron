@@ -26,10 +26,12 @@ And you're done! Now you can see your AsyncStorage in Reactotron.
 
 ## Advanced Usage
 
-`asyncStorage()` also accepts an object with an `ignore` key. The value is an array of strings you would like to prevent sending to Reactotron.
+`asyncStorage()` also accepts an object with an `ignore` key to filter against. The value of `ignore` is an array of string or RegExp patterns that match against AsyncStorage keys you want to prevent from being sent to Reactotron.
+
+> String patterns match any key containing that text, while RegExp patterns use standard regex matching.
 
 ```js
 asyncStorage({
-  ignore: ["secret"],
+  ignore: ["secret", /^debug_/, "temp"],
 })
 ```
