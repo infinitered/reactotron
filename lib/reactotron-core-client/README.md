@@ -247,7 +247,7 @@ and is a `data-uri`. This means, an ordinary http link will work, but as will em
 
 ```json
 {
-  "uri": "http://placekitten.com/g/400/400",
+  "uri": "https://cataas.com/cat?width=400&height=400",
   "preview": "placekitten.com!",
   "filename": "cat.jpg",
   "width": 400,
@@ -423,7 +423,7 @@ Sent from the client to the server to provide a way to show "custom" commands.
     "salad": true
   },
   "image": {
-    "uri": "http://placekitten.com/g/400/400"
+    "uri": "https://cataas.com/cat?width=400&height=400"
   },
   "important": true,
   "preview": "What's in my appetizer?"
