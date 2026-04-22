@@ -6,6 +6,7 @@ export enum ActionTypes {
   ServerStopped = "SERVER_STOPPED",
   AddConnection = "ADD_CONNECTION",
   RemoveConnection = "REMOVE_CONNECTION",
+  DeleteConnection = "DELETE_CONNECTION",
   ClearConnectionCommands = "CLEAR_CONNECTION_COMMANDS",
   CommandReceived = "COMMAND_RECEIVED",
   ChangeSelectedClientId = "CHANGE_SELECTED_CLIENT_ID",
@@ -49,6 +50,7 @@ type Action =
       type: ActionTypes.AddConnection | ActionTypes.RemoveConnection
       payload: ReactotronConnection
     }
+  | { type: ActionTypes.DeleteConnection; payload: string }
   | { type: ActionTypes.ChangeSelectedClientId; payload: string }
   | { type: ActionTypes.CommandReceived; payload: any } // TODO: Type this better!
   | { type: ActionTypes.ClearConnectionCommands }
@@ -126,6 +128,26 @@ export function reducer(state: State, action: Action) {
           } else {
             draftState.selectedClientId = null
           }
+        }
+      })
+    case ActionTypes.DeleteConnection:
+      return produce(state, (draftState) => {
+        const connectionIndex = draftState.connections.findIndex(
+          (c) => c.clientId === action.payload
+        )
+
+        if (connectionIndex === -1) return
+
+        const connection = draftState.connections[connectionIndex]
+
+        if (connection.connected) return
+
+        draftState.connections.splice(connectionIndex, 1)
+        if (draftState.selectedClientId === action.payload) {
+          const remainingConnections = draftState.connections.filter((c) => c.connected)
+          draftState.selectedClientId = remainingConnections.length > 0
+            ? remainingConnections[0].clientId
+            : null
         }
       })
     case ActionTypes.CommandReceived:
@@ -240,6 +262,10 @@ function useStandalone() {
     dispatch({ type: ActionTypes.PortUnavailable, payload: undefined })
   }, [])
 
+  const deleteConnection = useCallback((clientId: string) => {
+    dispatch({ type: ActionTypes.DeleteConnection, payload: clientId })
+  }, [])
+
   return {
     ...state,
     selectedConnection: state.connections.find((c) => c.clientId === state.selectedClientId),
@@ -252,6 +278,7 @@ function useStandalone() {
     clearSelectedConnectionCommands,
     addCommandListener,
     portUnavailable,
+    deleteConnection,
   }
 }
 

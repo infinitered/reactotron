@@ -82,7 +82,8 @@ function renderExpanded(
   serverStatus: ServerStatus,
   connections: Connection[],
   selectedConnection: Connection | null,
-  onChangeConnection: (clientId: string | null) => void
+  onChangeConnection: (clientId: string | null) => void,
+  onDeleteConnection?: (clientId: string) => void
 ) {
   return (
     <ConnectionContainer>
@@ -92,6 +93,7 @@ function renderExpanded(
           selectedConnection={selectedConnection}
           connection={c}
           onClick={() => onChangeConnection(c.clientId)}
+          onDelete={onDeleteConnection}
         />
       ))}
     </ConnectionContainer>
@@ -111,10 +113,12 @@ function renderCollapsed(
   connections: Connection[],
   selectedConnection: Connection | null
 ) {
+  const activeConnections = connections.filter((c) => c.connected).length
+  const totalConnections = connections.length
   return (
     <>
       <ConnectionInfo>
-        port {config.get("serverPort")} | {connections.length} connections
+        port {config.get("serverPort")} | {activeConnections}/{totalConnections} connections
       </ConnectionInfo>
       {serverStatus === "portUnavailable" && (
         <ConnectionInfo>Port 9090 unavailable.</ConnectionInfo>
@@ -134,6 +138,7 @@ interface Props {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
   onChangeConnection: (clientId: string | null) => void
+  onDeleteConnection?: (clientId: string) => void
   mcpStatus: McpStatus
   mcpPort: number | null
   onToggleMcp: () => void
@@ -146,16 +151,22 @@ function Header({
   isOpen,
   setIsOpen,
   onChangeConnection,
+  onDeleteConnection,
   mcpStatus,
   mcpPort,
   onToggleMcp,
 }: Props) {
-  const renderMethod = isOpen ? renderExpanded : renderCollapsed
+  const renderContent = () => {
+    if (isOpen) {
+      return renderExpanded(serverStatus, connections, selectedConnection, onChangeConnection, onDeleteConnection)
+    }
+    return renderCollapsed(serverStatus, connections, selectedConnection)
+  }
 
   return (
     <Container>
       <ContentContainer onClick={() => !isOpen && setIsOpen(true)} $isOpen={isOpen}>
-        {renderMethod(serverStatus, connections, selectedConnection, onChangeConnection)}
+        {renderContent()}
         <McpButton
           $active={mcpStatus === "started"}
           onClick={(e) => { e.stopPropagation(); onToggleMcp() }}
