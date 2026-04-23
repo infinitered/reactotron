@@ -6,15 +6,28 @@ import type { Command } from "reactotron-core-contract"
 
 import { registerResources } from "./resources"
 import { registerTools } from "./tools"
+import { DEFAULT_SERVER_CONFIG, type McpRedactionServerConfig } from "./redaction"
 
 export interface ReactotronMcpServer {
   start(port?: number): Promise<void>
   stop(): void
   readonly started: boolean
   readonly port: number | null
+  /** Update the redaction configuration at runtime (e.g. from settings UI) */
+  updateRedactionConfig(config: Partial<McpRedactionServerConfig>): void
+  /** Current redaction server config */
+  readonly redactionConfig: McpRedactionServerConfig
 }
 
-export function createMcpServer(reactotronServer: ReactotronServer): ReactotronMcpServer {
+export function createMcpServer(
+  reactotronServer: ReactotronServer,
+  redactionConfig?: Partial<McpRedactionServerConfig>
+): ReactotronMcpServer {
+  let serverRedactionConfig: McpRedactionServerConfig = {
+    ...DEFAULT_SERVER_CONFIG,
+    ...redactionConfig,
+    defaults: { ...DEFAULT_SERVER_CONFIG.defaults, ...redactionConfig?.defaults },
+  }
   let httpServer: HttpServer | null = null
   let started = false
   let listenPort: number | null = null
@@ -48,14 +61,25 @@ export function createMcpServer(reactotronServer: ReactotronServer): ReactotronM
       { name: "reactotron", version: "0.1.0" },
       { capabilities: { resources: {}, tools: {} } }
     )
-    registerResources(mcp, reactotronServer, commandBuffer)
-    registerTools(mcp, reactotronServer, commandBuffer)
+    registerResources(mcp, reactotronServer, commandBuffer, serverRedactionConfig)
+    registerTools(mcp, reactotronServer, commandBuffer, serverRedactionConfig)
     return mcp
   }
 
   return {
     get started() { return started },
     get port() { return listenPort },
+    get redactionConfig() { return serverRedactionConfig },
+
+    updateRedactionConfig(config: Partial<McpRedactionServerConfig>) {
+      serverRedactionConfig = {
+        ...serverRedactionConfig,
+        ...config,
+        defaults: config.defaults
+          ? { ...serverRedactionConfig.defaults, ...config.defaults }
+          : serverRedactionConfig.defaults,
+      }
+    },
 
     start(port = 4567) {
       if (started) return Promise.resolve()

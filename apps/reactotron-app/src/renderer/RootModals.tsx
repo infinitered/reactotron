@@ -5,6 +5,8 @@ import {
   ReactotronContext,
   StateContext,
 } from "reactotron-core-ui"
+import StandaloneContext from "./contexts/Standalone"
+import McpSettingsModal from "./components/McpSettingsModal"
 
 function RootModals() {
   const {
@@ -19,6 +21,8 @@ function RootModals() {
     closeSubscriptionModal,
   } = useContext(ReactotronContext)
   const { addSubscription } = useContext(StateContext)
+  const { mcpSettingsOpen, closeMcpSettings, mcpRedactionConfig, updateMcpRedactionConfig } =
+    useContext(StandaloneContext)
 
   const dispatchAction = (action: any) => {
     sendCommand("state.action.dispatch", { action })
@@ -45,6 +49,12 @@ function RootModals() {
           closeSubscriptionModal()
           addSubscription(path)
         }}
+      />
+      <McpSettingsModal
+        isOpen={mcpSettingsOpen}
+        onClose={closeMcpSettings}
+        config={mcpRedactionConfig}
+        onUpdate={updateMcpRedactionConfig}
       />
     </>
   )
