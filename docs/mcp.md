@@ -49,6 +49,56 @@ Claude Code can also interact with your running app:
 
 If multiple apps are connected to Reactotron, Claude Code will ask which app you're working on. It can auto-detect the right app when only one is connected.
 
+## Redaction
+
+By default, Reactotron redacts sensitive data from all MCP responses so that tokens, passwords, and API keys are never exposed to AI assistants. You'll see a green shield icon next to the MCP button when redaction is active.
+
+### What gets redacted
+
+Out of the box, the following are replaced with `[REDACTED]`:
+
+- **HTTP headers** — `Authorization`, `Cookie`, `Set-Cookie`, `X-Api-Key`, `X-Auth-Token`, `Proxy-Authorization`
+- **Object keys** — `password`, `secret`, `api_key`, `access_token`, `refresh_token`, `private_key`, `credentials`, `ssn`, `creditcard`, and variants
+- **String values** matching common token formats — Bearer tokens, JWTs (`eyJ...`), OpenAI keys (`sk-...`), GitHub PATs (`ghp_...`), Slack tokens (`xoxb-...`)
+- **URL query parameters** whose names match any sensitive key (e.g. `?api_key=abc` becomes `?api_key=[REDACTED]`)
+
+### Configuring redaction in Reactotron
+
+Click the gear icon next to the MCP button to open the redaction settings modal. From there you can:
+
+- Add or remove **header names**, **sensitive key names**, **state path patterns**, and **value patterns** (regex)
+- Toggle whether connected apps are allowed to **disable redaction entirely** (off by default)
+- Toggle whether connected apps are allowed to **remove default rules** (off by default)
+
+State path patterns use dot-separated paths and support a trailing wildcard. For example, `auth.tokens.*` redacts every key under `auth.tokens` in your app state.
+
+Changes take effect on the next MCP request — no restart needed.
+
+### Client-side configuration
+
+Apps can send redaction preferences during the Reactotron connection handshake via the `mcpRedaction` option:
+
+```js
+Reactotron.configure({
+  // ... other options
+  mcpRedaction: {
+    // Merge additional rules on top of server defaults (always allowed)
+    additionalRules: {
+      sensitiveKeys: ["myInternalField"],
+      headerNames: ["x-internal-auth"],
+    },
+    // Request removal of specific default rules (requires server permission)
+    removeRules: {
+      headerNames: ["cookie"],
+    },
+    // Request disabling redaction entirely (requires server permission)
+    disableRedaction: true,
+  },
+})
+```
+
+This uses a **two-key model**: the server always applies its default rules unless *both* the client requests a relaxation *and* the server has enabled the corresponding permission in the settings modal. This prevents a misconfigured app from accidentally exposing secrets.
+
 ## Configuration
 
 The MCP port defaults to **4567** and can be changed in Reactotron's settings (stored via electron-store as `mcpPort`).

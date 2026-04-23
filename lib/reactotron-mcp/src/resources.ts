@@ -10,6 +10,7 @@ import {
   summarizeCommand,
   summarizeNetworkEntry,
 } from "./serialization"
+import { resolveEffectiveRules, redact, type McpRedactionServerConfig } from "./redaction"
 
 interface AppInfo {
   id: number
@@ -72,6 +73,35 @@ function filterByClient(
   return commands
 }
 
+/**
+ * Get the client's McpRedactionConfig from the connection object.
+ * Uses the first connected app's config (single-app case) or undefined if none.
+ */
+function getClientRedactionConfig(server: ReactotronServer, clientId?: string): any {
+  const connections = server.connections as any[]
+  if (clientId) {
+    const conn = connections.find((c) => c.clientId === clientId)
+    return conn?.mcpRedaction
+  }
+  if (connections.length === 1) {
+    return connections[0]?.mcpRedaction
+  }
+  return undefined
+}
+
+/** Apply redaction to data based on server config and connected client config. */
+function applyRedaction(
+  data: unknown,
+  server: ReactotronServer,
+  serverRedactionConfig: McpRedactionServerConfig,
+  clientId?: string
+): unknown {
+  const clientConfig = getClientRedactionConfig(server, clientId)
+  const rules = resolveEffectiveRules(serverRedactionConfig, clientConfig)
+  if (!rules) return data // redaction disabled
+  return redact(data, rules)
+}
+
 function json(uri: URL, data: unknown, guidance?: string) {
   return {
     contents: [{
@@ -85,7 +115,8 @@ function json(uri: URL, data: unknown, guidance?: string) {
 export function registerResources(
   mcp: McpServer,
   server: ReactotronServer,
-  commandBuffer: Command[]
+  commandBuffer: Command[],
+  serverRedactionConfig: McpRedactionServerConfig
 ) {
   mcp.registerResource("timeline", "reactotron://timeline", {
     description: "Read this first to understand what's happening in the app. Returns summarized debug events (type, timestamp, and a short preview) newest-first. Payloads are stripped to keep the response small. Use the timeline_by_type resource template to get full event data filtered by type (e.g. reactotron://timeline/api.response).",
@@ -94,7 +125,11 @@ export function registerResources(
     const meta = connectionMeta(server)
     const events = filterByClient(commandBuffer, server)
     const summarized = [...events].reverse().map(summarizeCommand)
-    return json(uri, { _meta: meta, eventCount: events.length, events: summarized },
+    const data = applyRedaction(
+      { _meta: meta, eventCount: events.length, events: summarized },
+      server, serverRedactionConfig
+    )
+    return json(uri, data,
       "Events are summarized. Use the timeline_by_type resource (e.g. reactotron://timeline/api.response) to get full payloads for a specific event type.")
   })
 
@@ -124,7 +159,11 @@ export function registerResources(
       const meta = connectionMeta(server)
       const events = filterByClient(commandBuffer, server)
         .filter((c) => c.type === type)
-      return json(uri, { _meta: meta, type, eventCount: events.length, events: [...events].reverse() },
+      const data = applyRedaction(
+        { _meta: meta, type, eventCount: events.length, events: [...events].reverse() },
+        server, serverRedactionConfig
+      )
+      return json(uri, data,
         `Too many ${type} events to return in full. Try clear_timeline to reset, then reproduce the issue to capture fewer events.`)
     }
   )
@@ -139,13 +178,16 @@ export function registerResources(
       server
     )
     const latest = stateCommands[stateCommands.length - 1]
-    return json(uri, {
-      _meta: meta,
-      state: latest?.payload?.value ?? {
-        status: "no_state_received",
-        message: "No state snapshot received yet. Use the request_state tool to request one.",
-      },
-    }, "State is too large. Use the request_state tool with a path like 'user.profile' to fetch a specific slice. Use request_state_keys to explore the state shape first.")
+    const stateValue = latest?.payload?.value ?? {
+      status: "no_state_received",
+      message: "No state snapshot received yet. Use the request_state tool to request one.",
+    }
+    const data = applyRedaction(
+      { _meta: meta, state: stateValue },
+      server, serverRedactionConfig
+    )
+    return json(uri, data,
+      "State is too large. Use the request_state tool with a path like 'user.profile' to fetch a specific slice. Use request_state_keys to explore the state shape first.")
   })
 
   mcp.registerResource("network", "reactotron://network/log", {
@@ -157,10 +199,12 @@ export function registerResources(
       commandBuffer.filter((c) => c.type === "api.response"),
       server
     )
-    return json(uri, {
-      _meta: meta,
-      entries: networkCommands.map(summarizeNetworkEntry),
-    }, "Network log is too large. Use timeline_by_type with type 'api.response' for full data, or clear_timeline to reset and capture fewer events.")
+    const data = applyRedaction(
+      { _meta: meta, entries: networkCommands.map(summarizeNetworkEntry) },
+      server, serverRedactionConfig
+    )
+    return json(uri, data,
+      "Network log is too large. Use timeline_by_type with type 'api.response' for full data, or clear_timeline to reset and capture fewer events.")
   })
 
   mcp.registerResource("apps", "reactotron://apps", {
@@ -181,14 +225,18 @@ export function registerResources(
       commandBuffer.filter((c) => c.type === "benchmark.report"),
       server
     )
-    return json(uri, {
-      _meta: meta,
-      benchmarks: benchmarks.map((c) => ({
-        date: c.date,
-        clientId: c.clientId,
-        ...c.payload,
-      })),
-    })
+    const data = applyRedaction(
+      {
+        _meta: meta,
+        benchmarks: benchmarks.map((c) => ({
+          date: c.date,
+          clientId: c.clientId,
+          ...c.payload,
+        })),
+      },
+      server, serverRedactionConfig
+    )
+    return json(uri, data)
   })
 
   mcp.registerResource("subscriptions", "reactotron://state/subscriptions", {
@@ -200,15 +248,20 @@ export function registerResources(
       commandBuffer.filter((c) => c.type === "state.values.change"),
       server
     )
-    return json(uri, {
-      _meta: meta,
-      activeSubscriptions: (server as any).subscriptions || [],
-      changes: changes.map((c) => ({
-        date: c.date,
-        clientId: c.clientId,
-        ...c.payload,
-      })),
-    }, "Subscription changes are too large. Consider unsubscribing from paths with large values, or use request_state with a specific path instead.")
+    const data = applyRedaction(
+      {
+        _meta: meta,
+        activeSubscriptions: (server as any).subscriptions || [],
+        changes: changes.map((c) => ({
+          date: c.date,
+          clientId: c.clientId,
+          ...c.payload,
+        })),
+      },
+      server, serverRedactionConfig
+    )
+    return json(uri, data,
+      "Subscription changes are too large. Consider unsubscribing from paths with large values, or use request_state with a specific path instead.")
   })
 
   mcp.registerResource("asyncstorage", "reactotron://asyncstorage", {
@@ -220,14 +273,19 @@ export function registerResources(
       commandBuffer.filter((c) => c.type === "asyncStorage.mutation"),
       server
     )
-    return json(uri, {
-      _meta: meta,
-      mutations: mutations.map((c) => ({
-        date: c.date,
-        clientId: c.clientId,
-        action: c.payload?.action,
-        data: c.payload?.data,
-      })),
-    }, "AsyncStorage mutations are too large. Try clear_timeline to reset, then reproduce the specific interaction you want to inspect.")
+    const data = applyRedaction(
+      {
+        _meta: meta,
+        mutations: mutations.map((c) => ({
+          date: c.date,
+          clientId: c.clientId,
+          action: c.payload?.action,
+          data: c.payload?.data,
+        })),
+      },
+      server, serverRedactionConfig
+    )
+    return json(uri, data,
+      "AsyncStorage mutations are too large. Try clear_timeline to reset, then reproduce the specific interaction you want to inspect.")
   })
 }

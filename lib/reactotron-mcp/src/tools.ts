@@ -6,6 +6,7 @@ import { promises as fsPromises } from "fs"
 import { extname } from "path"
 
 import { MAX_RESPONSE_CHARS, safeSerialize } from "./serialization"
+import { resolveEffectiveRules, redact, type McpRedactionServerConfig } from "./redaction"
 
 /** Extract width/height from PNG or JPEG buffer */
 function getImageSize(buf: Buffer, ext: string): { width: number; height: number } | null {
@@ -65,10 +66,35 @@ function textResult(data: unknown, guidance?: string) {
   return { content: [{ type: "text" as const, text: safeSerialize(data, MAX_RESPONSE_CHARS, guidance) }] }
 }
 
+function getClientRedactionConfig(server: ReactotronServer, clientId?: string): any {
+  const connections = server.connections as any[]
+  if (clientId) {
+    const conn = connections.find((c) => c.clientId === clientId)
+    return conn?.mcpRedaction
+  }
+  if (connections.length === 1) {
+    return connections[0]?.mcpRedaction
+  }
+  return undefined
+}
+
+function applyRedaction(
+  data: unknown,
+  server: ReactotronServer,
+  serverRedactionConfig: McpRedactionServerConfig,
+  clientId?: string
+): unknown {
+  const clientConfig = getClientRedactionConfig(server, clientId)
+  const rules = resolveEffectiveRules(serverRedactionConfig, clientConfig)
+  if (!rules) return data
+  return redact(data, rules)
+}
+
 export function registerTools(
   mcp: McpServer,
   server: ReactotronServer,
-  commandBuffer: Command[]
+  commandBuffer: Command[],
+  serverRedactionConfig: McpRedactionServerConfig
 ) {
   mcp.registerTool("dispatch_action", {
     description: [
@@ -96,11 +122,13 @@ export function registerTools(
       for (let i = startLen; i < commandBuffer.length; i++) {
         const cmd = commandBuffer[i]
         if (cmd.type === "state.action.complete" && cmd.clientId === clientId) {
-          return textResult({ status: "dispatched", action, confirmed: true })
+          const redactedAction = applyRedaction(action, server, serverRedactionConfig, clientId)
+          return textResult({ status: "dispatched", action: redactedAction, confirmed: true })
         }
       }
     }
-    return textResult({ status: "dispatched", action, confirmed: false, note: "Action was sent but no confirmation received. The app may not have the Redux plugin configured." })
+    const redactedAction = applyRedaction(action, server, serverRedactionConfig, clientId)
+    return textResult({ status: "dispatched", action: redactedAction, confirmed: false, note: "Action was sent but no confirmation received. The app may not have the Redux plugin configured." })
   })
 
   mcp.registerTool("request_state", {
@@ -130,8 +158,10 @@ export function registerTools(
       for (let i = startLen; i < commandBuffer.length; i++) {
         const cmd = commandBuffer[i]
         if (cmd.type === "state.values.response" && cmd.clientId === clientId) {
+          const stateValue = cmd.payload?.value ?? cmd.payload
+          const redactedState = applyRedaction(stateValue, server, serverRedactionConfig, clientId)
           return textResult(
-            { status: "success", state: cmd.payload?.value ?? cmd.payload },
+            { status: "success", state: redactedState },
             "State response is too large. Use request_state with a more specific path (e.g. 'user.profile') to narrow the response. Use request_state_keys to explore the state shape."
           )
         }

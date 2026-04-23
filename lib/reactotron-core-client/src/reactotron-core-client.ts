@@ -264,6 +264,7 @@ export class ReactotronImpl
       name,
       client = {},
       getClientId,
+      mcpRedaction,
     } = this.options
     const { onCommand, onConnect, onDisconnect } = this.options
 
@@ -290,6 +291,7 @@ export class ReactotronImpl
           name: name!,
           clientId,
           reactotronCoreClientVersion: "REACTOTRON_CORE_CLIENT_VERSION",
+          ...(mcpRedaction ? { mcpRedaction } : {}),
         })
 
         // flush the send queue

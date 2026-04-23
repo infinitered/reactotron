@@ -1,3 +1,4 @@
+import type { McpRedactionConfig } from "reactotron-core-contract"
 import type { LifeCycleMethods, PluginCreator } from "./reactotron-core-client"
 import NodeWebSocket from "ws"
 
@@ -88,4 +89,10 @@ export interface ClientOptions<Client> extends Omit<LifeCycleMethods, "onCommand
   getClientId?: (name: string) => Promise<string>
 
   proxyHack?: boolean
+
+  /**
+   * MCP redaction configuration sent to the server during client.intro.
+   * Controls how sensitive data is filtered when exposed via MCP.
+   */
+  mcpRedaction?: McpRedactionConfig
 }
