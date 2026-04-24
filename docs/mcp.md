@@ -57,10 +57,11 @@ By default, Reactotron redacts sensitive data from all MCP responses so that tok
 
 Out of the box, the following are replaced with `[REDACTED]`:
 
-- **HTTP headers** — `Authorization`, `Cookie`, `Set-Cookie`, `X-Api-Key`, `X-Auth-Token`, `Proxy-Authorization`
-- **Object keys** — `password`, `secret`, `api_key`, `access_token`, `refresh_token`, `private_key`, `credentials`, `ssn`, `creditcard`, and variants
-- **String values** matching common token formats — Bearer tokens, JWTs (`eyJ...`), OpenAI keys (`sk-...`), GitHub PATs (`ghp_...`), Slack tokens (`xoxb-...`)
+- **HTTP headers** — `Authorization`, `Cookie`, `Set-Cookie`, `X-Api-Key`, `X-Auth-Token`, `Proxy-Authorization`, `X-CSRF-Token`, `X-XSRF-Token`, `CSRF-Token`, `X-Forwarded-For`, `X-Real-IP`
+- **Object keys** — `password`, `passwd`, `pwd`, `secret`, `client_secret`, `api_key`, `token`, `bearer`, `jwt`, `access_token`, `refresh_token`, `id_token`, `session`, `sessionid`, `csrf`, `xsrf`, `private_key`, `credentials`, `ssn`, `creditcard`, and variants
+- **String values** matching common token formats — Bearer tokens, JWTs (`eyJ...`), OpenAI keys (`sk-...`), Anthropic keys (`sk-ant-...`), GitHub PATs/OAuth/user-to-server tokens (`ghp_/ghs_/gho_/ghu_/ghr_...`), Slack tokens (`xoxb-...`), AWS access key IDs (`AKIA...`), Google API keys (`AIza...`), Stripe keys (`sk_live_/pk_test_/...`), and PEM-encoded private key blocks
 - **URL query parameters** whose names match any sensitive key (e.g. `?api_key=abc` becomes `?api_key=[REDACTED]`)
+- **Form-urlencoded bodies** — strings shaped like `k=v&k=v` (e.g. `application/x-www-form-urlencoded` request bodies) get the same per-field redaction as URL query parameters
 
 ### Configuring redaction in Reactotron
 
