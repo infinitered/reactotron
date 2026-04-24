@@ -3,6 +3,8 @@ import type { GetDefaultEnhancers } from "@reduxjs/toolkit/dist/getDefaultEnhanc
 import logoReducer from "../redux/logoSlice"
 import repoReducer from "../redux/repoSlice"
 import errorReducer from "../redux/errorSlice"
+// REDACTION TEST
+import redactionTestReducer from "../redux/redactionSlice"
 
 const createEnhancers = (getDefaultEnhancers: GetDefaultEnhancers<any>) => {
   if (__DEV__) {
@@ -18,6 +20,8 @@ export const store = configureStore({
     logo: logoReducer,
     repo: repoReducer,
     error: errorReducer,
+    // REDACTION TEST
+    redactionTest: redactionTestReducer,
   },
   enhancers: createEnhancers,
 })

@@ -72,6 +72,12 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = function WelcomeScree
               navigation.navigate("Redux")
             }}
           />
+          <ListItem
+            text="Redaction Test"
+            onPress={() => {
+              navigation.navigate("RedactionTest")
+            }}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
