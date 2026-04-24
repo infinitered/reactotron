@@ -319,10 +319,50 @@ describe("DEFAULT_REDACTION_RULES", () => {
     expect(DEFAULT_REDACTION_RULES.headerNames).toContain("x-api-key")
   })
 
+  test("includes CSRF/XSRF header variants", () => {
+    expect(DEFAULT_REDACTION_RULES.headerNames).toContain("x-csrf-token")
+    expect(DEFAULT_REDACTION_RULES.headerNames).toContain("x-xsrf-token")
+    expect(DEFAULT_REDACTION_RULES.headerNames).toContain("csrf-token")
+  })
+
+  test("includes IP-forwarding PII headers", () => {
+    expect(DEFAULT_REDACTION_RULES.headerNames).toContain("x-forwarded-for")
+    expect(DEFAULT_REDACTION_RULES.headerNames).toContain("x-real-ip")
+  })
+
   test("has expected default sensitive keys", () => {
     expect(DEFAULT_REDACTION_RULES.sensitiveKeys).toContain("password")
     expect(DEFAULT_REDACTION_RULES.sensitiveKeys).toContain("secret")
     expect(DEFAULT_REDACTION_RULES.sensitiveKeys).toContain("access_token")
+  })
+
+  test("includes common auth-token key variants", () => {
+    const keys = DEFAULT_REDACTION_RULES.sensitiveKeys ?? []
+    expect(keys).toContain("token")
+    expect(keys).toContain("bearer")
+    expect(keys).toContain("jwt")
+    expect(keys).toContain("id_token")
+    expect(keys).toContain("idtoken")
+  })
+
+  test("includes session and CSRF key variants", () => {
+    const keys = DEFAULT_REDACTION_RULES.sensitiveKeys ?? []
+    expect(keys).toContain("session")
+    expect(keys).toContain("sessionid")
+    expect(keys).toContain("csrf")
+    expect(keys).toContain("xsrf")
+  })
+
+  test("includes password aliases", () => {
+    const keys = DEFAULT_REDACTION_RULES.sensitiveKeys ?? []
+    expect(keys).toContain("passwd")
+    expect(keys).toContain("pwd")
+  })
+
+  test("includes OAuth client_secret variants", () => {
+    const keys = DEFAULT_REDACTION_RULES.sensitiveKeys ?? []
+    expect(keys).toContain("client_secret")
+    expect(keys).toContain("clientsecret")
   })
 
   test("value patterns match common token formats", () => {
@@ -347,5 +387,123 @@ describe("DEFAULT_REDACTION_RULES", () => {
     // Non-matching string
     const plainResult = redact("hello world", rules)
     expect(plainResult).toBe("hello world")
+  })
+
+  test("value patterns match Anthropic API keys", () => {
+    const rules: McpRedactionRules = { valuePatterns: DEFAULT_REDACTION_RULES.valuePatterns }
+    // Built at runtime so GitHub secret scanning doesn't flag the test file.
+    const fakeKey = ["sk", "ant"].join("-") + "-" + "x".repeat(32)
+    expect(redact(fakeKey, rules)).toBe(REDACTED)
+  })
+
+  test("value patterns match AWS access key IDs", () => {
+    const rules: McpRedactionRules = { valuePatterns: DEFAULT_REDACTION_RULES.valuePatterns }
+    const fakeKey = "AKI" + "A" + "X".repeat(16)
+    expect(redact(fakeKey, rules)).toBe(REDACTED)
+  })
+
+  test("value patterns match Google API keys", () => {
+    const rules: McpRedactionRules = { valuePatterns: DEFAULT_REDACTION_RULES.valuePatterns }
+    // Google API keys are 39 chars: prefix + 35 more.
+    const fakeKey = "AIz" + "a" + "X".repeat(35)
+    expect(redact(fakeKey, rules)).toBe(REDACTED)
+  })
+
+  test("value patterns match Stripe keys", () => {
+    const rules: McpRedactionRules = { valuePatterns: DEFAULT_REDACTION_RULES.valuePatterns }
+    const body = "X".repeat(28)
+    expect(redact(["sk", "live", body].join("_"), rules)).toBe(REDACTED)
+    expect(redact(["pk", "test", body].join("_"), rules)).toBe(REDACTED)
+    expect(redact(["rk", "live", body].join("_"), rules)).toBe(REDACTED)
+  })
+
+  test("value patterns match PEM private key blocks", () => {
+    const rules: McpRedactionRules = { valuePatterns: DEFAULT_REDACTION_RULES.valuePatterns }
+    const pem = "-----BEGIN RSA PRIVATE KEY-----\nMIIEpAIBAAKCAQEA...\n-----END RSA PRIVATE KEY-----"
+    const result = redact(pem, rules)
+    expect(result).toBe(REDACTED)
+
+    const openssh = "-----BEGIN OPENSSH PRIVATE KEY-----\nb3BlbnNzaC1rZXktdjE=\n-----END OPENSSH PRIVATE KEY-----"
+    expect(redact(openssh, rules)).toBe(REDACTED)
+
+    const generic = "-----BEGIN PRIVATE KEY-----\nMIIEv...\n-----END PRIVATE KEY-----"
+    expect(redact(generic, rules)).toBe(REDACTED)
+  })
+
+  test("GitHub PAT pattern covers all prefix variants", () => {
+    const rules: McpRedactionRules = { valuePatterns: DEFAULT_REDACTION_RULES.valuePatterns }
+    // Built at runtime so GitHub secret scanning doesn't flag the test file.
+    const body = "X".repeat(36)
+    for (const prefix of ["ghp", "ghs", "gho", "ghu", "ghr"]) {
+      expect(redact(`${prefix}_${body}`, rules)).toBe(REDACTED)
+    }
+  })
+})
+
+describe("form-urlencoded body redaction", () => {
+  test("redacts sensitive values in form-encoded body strings", () => {
+    const rules: McpRedactionRules = {
+      sensitiveKeys: ["password", "token"],
+      valuePatterns: [],
+    }
+    const body = "username=alice&password=s3cret&token=abc123&remember=1"
+    const result = redact(body, rules)
+    expect(result).toBe(`username=alice&password=${REDACTED}&token=${REDACTED}&remember=1`)
+  })
+
+  test("redacts form-encoded inside a request.data string", () => {
+    const rules: McpRedactionRules = {
+      sensitiveKeys: ["password"],
+      valuePatterns: [],
+    }
+    const data = {
+      request: {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        data: "user=alice&password=hunter2",
+      },
+    }
+    const result = redact(data, rules) as any
+    expect(result.request.data).toBe(`user=alice&password=${REDACTED}`)
+  })
+
+  test("does not false-positive on casual strings with '=' ", () => {
+    const rules: McpRedactionRules = {
+      sensitiveKeys: ["password"],
+      valuePatterns: [],
+    }
+    // Must NOT be treated as form-encoded — it's just prose with an equals sign.
+    const data = { note: "The setting x=5 was applied, and the count is 3" }
+    const result = redact(data, rules) as any
+    expect(result.note).toBe("The setting x=5 was applied, and the count is 3")
+  })
+
+  test("does not alter form-encoded strings when no sensitive key matches", () => {
+    const rules: McpRedactionRules = {
+      sensitiveKeys: ["password"],
+      valuePatterns: [],
+    }
+    const body = "page=1&limit=10&sort=desc"
+    expect(redact(body, rules)).toBe(body)
+  })
+
+  test("URL with query params still uses URL path, not form-encoded path", () => {
+    // Regression guard: a string containing '?' should go through the URL branch,
+    // not the form-encoded branch.
+    const rules: McpRedactionRules = {
+      sensitiveKeys: ["token"],
+      valuePatterns: [],
+    }
+    const url = "https://api.example.com/x?token=abc&page=1"
+    expect(redact(url, rules)).toBe(`https://api.example.com/x?token=${REDACTED}&page=1`)
+  })
+
+  test("handles bracketed and percent-encoded keys", () => {
+    const rules: McpRedactionRules = {
+      sensitiveKeys: ["password"],
+      valuePatterns: [],
+    }
+    const body = "user[name]=alice&password=hunter2"
+    const result = redact(body, rules)
+    expect(result).toBe(`user[name]=alice&password=${REDACTED}`)
   })
 })

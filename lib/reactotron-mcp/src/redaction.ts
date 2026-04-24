@@ -6,19 +6,44 @@ export const DEFAULT_REDACTION_RULES: McpRedactionRules = {
   headerNames: [
     "authorization", "cookie", "set-cookie",
     "x-api-key", "x-auth-token", "proxy-authorization",
+    "x-csrf-token", "x-xsrf-token", "csrf-token",
+    "x-forwarded-for", "x-real-ip",
   ],
   sensitiveKeys: [
-    "password", "secret", "apikey", "api_key", "accesstoken",
-    "access_token", "refreshtoken", "refresh_token", "privatekey",
-    "private_key", "credentials", "ssn", "creditcard",
+    "password", "passwd", "pwd",
+    "secret", "client_secret", "clientsecret",
+    "apikey", "api_key", "x-api-key",
+    "accesstoken", "access_token",
+    "refreshtoken", "refresh_token",
+    "idtoken", "id_token",
+    "token", "bearer", "jwt",
+    "session", "sessionid", "session_id",
+    "csrf", "xsrf", "csrf_token", "xsrf_token",
+    "privatekey", "private_key",
+    "credentials", "ssn", "creditcard",
   ],
   statePathPatterns: [],
   valuePatterns: [
+    // Bearer tokens
     "Bearer\\s+[A-Za-z0-9\\-._~+/]+=*",
+    // JWTs (header.payload[.signature])
     "eyJ[A-Za-z0-9_-]{10,}\\.[A-Za-z0-9_-]{10,}",
-    "sk-[a-zA-Z0-9]{20,}",
-    "ghp_[a-zA-Z0-9]{30,}",
+    // OpenAI-style keys (also matches our legacy "sk-..." pattern)
+    "sk-[a-zA-Z0-9_-]{20,}",
+    // Anthropic API keys
+    "sk-ant-[a-zA-Z0-9_-]{20,}",
+    // GitHub PATs / fine-grained tokens
+    "gh[pousr]_[A-Za-z0-9]{30,}",
+    // Slack tokens
     "xox[bpoas]-[a-zA-Z0-9\\-]{10,}",
+    // AWS access key IDs
+    "AKIA[0-9A-Z]{16}",
+    // Google API keys
+    "AIza[0-9A-Za-z\\-_]{35}",
+    // Stripe keys (live/test, secret/publishable/restricted)
+    "(?:sk|pk|rk)_(?:test|live)_[A-Za-z0-9]{24,}",
+    // PEM-encoded private key blocks (RSA, EC, DSA, OPENSSH, or generic)
+    "-----BEGIN (?:RSA |EC |DSA |OPENSSH |PGP )?PRIVATE KEY-----[\\s\\S]+?-----END (?:RSA |EC |DSA |OPENSSH |PGP )?PRIVATE KEY-----",
   ],
 }
 
@@ -222,7 +247,11 @@ function redactStringValue(value: string, rules: McpRedactionRules): string {
   // Redact URL query parameters whose names match sensitiveKeys
   const sensitiveKeys = rules.sensitiveKeys ?? []
   if (sensitiveKeys.length > 0) {
-    result = redactUrlQueryParams(result, sensitiveKeys)
+    if (result.includes("?")) {
+      result = redactUrlQueryParams(result, sensitiveKeys)
+    } else if (looksLikeFormEncoded(result)) {
+      result = redactFormEncodedParams(result, sensitiveKeys)
+    }
   }
 
   // Redact value patterns
@@ -236,6 +265,30 @@ function redactStringValue(value: string, rules: McpRedactionRules): string {
     }
   }
   return result
+}
+
+/**
+ * Detect a form-urlencoded body string (e.g. "user=alice&password=x"). Must be the whole
+ * string — `foo=bar` mid-sentence won't match. We require at least one "=" and that the
+ * full string is `k=v(&k=v)*` shape to avoid false positives on casual strings.
+ */
+function looksLikeFormEncoded(value: string): boolean {
+  if (!value || value.length > 8192) return false
+  return /^[\w.\-[\]%]+=[^&]*(?:&[\w.\-[\]%]+=[^&]*)*$/.test(value)
+}
+
+/** Redact values in a form-urlencoded body where the param name matches sensitiveKeys. */
+function redactFormEncodedParams(value: string, sensitiveKeys: string[]): string {
+  const sensitiveSet = new Set(sensitiveKeys.map((k) => k.toLowerCase()))
+  return value.split("&").map((param) => {
+    const eqIndex = param.indexOf("=")
+    if (eqIndex === -1) return param
+    const name = param.slice(0, eqIndex)
+    if (sensitiveSet.has(name.toLowerCase())) {
+      return `${name}=${REDACTED}`
+    }
+    return param
+  }).join("&")
 }
 
 /** Redact query parameter values in URLs where the param name matches sensitiveKeys. */
