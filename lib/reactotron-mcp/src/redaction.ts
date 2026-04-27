@@ -158,59 +158,78 @@ function dedupe(arr: string[]): string[] {
   return [...new Set(arr)]
 }
 
+/** Precomputed lookups and shared state threaded through the recursion. */
+interface RedactionContext {
+  rules: McpRedactionRules
+  sensitiveKeysLower: Set<string>
+  headerNamesLower: Set<string>
+  statePathPatterns: string[]
+  seen: Set<unknown>
+}
+
+function buildContext(rules: McpRedactionRules): RedactionContext {
+  return {
+    rules,
+    sensitiveKeysLower: new Set((rules.sensitiveKeys ?? []).map((k) => k.toLowerCase())),
+    headerNamesLower: new Set((rules.headerNames ?? []).map((h) => h.toLowerCase())),
+    statePathPatterns: rules.statePathPatterns ?? [],
+    seen: new Set<unknown>(),
+  }
+}
+
 /**
- * Deep-walk an object and redact sensitive values in place (returns a new object).
+ * Deep-walk an object and redact sensitive values (returns a new object).
  * Handles circular references by tracking seen objects.
  */
 export function redact(data: unknown, rules: McpRedactionRules, currentPath = ""): unknown {
+  const ctx = buildContext(rules)
+  return redactValue(data, ctx, currentPath)
+}
+
+function redactValue(data: unknown, ctx: RedactionContext, currentPath: string): unknown {
   if (data === null || data === undefined) return data
 
   if (typeof data === "string") {
-    return redactStringValue(data, rules)
+    return redactStringValue(data, ctx.rules)
   }
 
   if (typeof data !== "object") return data
 
   if (Array.isArray(data)) {
-    return data.map((item, i) => redact(item, rules, currentPath ? `${currentPath}.${i}` : String(i)))
+    return data.map((item, i) => redactValue(item, ctx, currentPath ? `${currentPath}.${i}` : String(i)))
   }
 
-  // Object — deep walk with circular reference protection
-  const seen = new Set<unknown>()
-  return redactObject(data as Record<string, unknown>, rules, currentPath, seen)
+  return redactObject(data as Record<string, unknown>, ctx, currentPath)
 }
 
 function redactObject(
   obj: Record<string, unknown>,
-  rules: McpRedactionRules,
+  ctx: RedactionContext,
   currentPath: string,
-  seen: Set<unknown>
 ): Record<string, unknown> {
-  if (seen.has(obj)) return { _circular: REDACTED }
-  seen.add(obj)
+  if (ctx.seen.has(obj)) return { _circular: REDACTED }
+  ctx.seen.add(obj)
 
   const result: Record<string, unknown> = {}
-  const sensitiveKeysLower = new Set((rules.sensitiveKeys ?? []).map((k) => k.toLowerCase()))
-  const headerNamesLower = new Set((rules.headerNames ?? []).map((h) => h.toLowerCase()))
 
   for (const [key, value] of Object.entries(obj)) {
     const childPath = currentPath ? `${currentPath}.${key}` : key
 
     // Check state path patterns
-    if (matchesStatePath(childPath, rules.statePathPatterns ?? [])) {
+    if (matchesStatePath(childPath, ctx.statePathPatterns)) {
       result[key] = REDACTED
       continue
     }
 
     // Check sensitive key names (case-insensitive)
-    if (sensitiveKeysLower.has(key.toLowerCase())) {
+    if (ctx.sensitiveKeysLower.has(key.toLowerCase())) {
       result[key] = REDACTED
       continue
     }
 
     // Header-specific redaction: if the key is "headers", redact matching header names inside
     if (key.toLowerCase() === "headers" && value && typeof value === "object" && !Array.isArray(value)) {
-      result[key] = redactHeaders(value as Record<string, unknown>, headerNamesLower, rules, childPath, seen)
+      result[key] = redactHeaders(value as Record<string, unknown>, ctx, childPath)
       continue
     }
 
@@ -218,17 +237,11 @@ function redactObject(
     if (value === null || value === undefined) {
       result[key] = value
     } else if (typeof value === "string") {
-      result[key] = redactStringValue(value, rules)
+      result[key] = redactStringValue(value, ctx.rules)
     } else if (Array.isArray(value)) {
-      result[key] = value.map((item, i) => {
-        if (item && typeof item === "object") {
-          return redactObject(item as Record<string, unknown>, rules, `${childPath}.${i}`, seen)
-        }
-        if (typeof item === "string") return redactStringValue(item, rules)
-        return item
-      })
+      result[key] = value.map((item, i) => redactValue(item, ctx, `${childPath}.${i}`))
     } else if (typeof value === "object") {
-      result[key] = redactObject(value as Record<string, unknown>, rules, childPath, seen)
+      result[key] = redactObject(value as Record<string, unknown>, ctx, childPath)
     } else {
       result[key] = value
     }
@@ -239,31 +252,25 @@ function redactObject(
 
 function redactHeaders(
   headers: Record<string, unknown>,
-  headerNamesLower: Set<string>,
-  rules: McpRedactionRules,
+  ctx: RedactionContext,
   currentPath: string,
-  seen: Set<unknown>
 ): Record<string, unknown> {
-  if (seen.has(headers)) return { _circular: REDACTED }
-  seen.add(headers)
+  if (ctx.seen.has(headers)) return { _circular: REDACTED }
+  ctx.seen.add(headers)
 
   const result: Record<string, unknown> = {}
-  const sensitiveKeysLower = new Set((rules.sensitiveKeys ?? []).map((k) => k.toLowerCase()))
 
   for (const [key, value] of Object.entries(headers)) {
-    // Redact header names from the headerNames list
-    if (headerNamesLower.has(key.toLowerCase())) {
+    if (ctx.headerNamesLower.has(key.toLowerCase())) {
       result[key] = REDACTED
       continue
     }
-    // Also check sensitiveKeys for headers
-    if (sensitiveKeysLower.has(key.toLowerCase())) {
+    if (ctx.sensitiveKeysLower.has(key.toLowerCase())) {
       result[key] = REDACTED
       continue
     }
-    // Apply value pattern matching to header values
     if (typeof value === "string") {
-      result[key] = redactStringValue(value, rules)
+      result[key] = redactStringValue(value, ctx.rules)
     } else {
       result[key] = value
     }
