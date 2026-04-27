@@ -100,6 +100,10 @@ Reactotron.configure({
 
 This uses a **two-key model**: the server always applies its default rules unless *both* the client requests a relaxation *and* the server has enabled the corresponding permission in the settings modal. This prevents a misconfigured app from accidentally exposing secrets.
 
+### Multi-app redaction
+
+When multiple apps are connected, **each app's data is redacted with that app's own configuration**, even within a single MCP response that aggregates events from several apps (timeline, network, asyncstorage, etc.). One app's `additionalRules` won't redact another app's data, and one app's `removeRules` won't weaken redaction for any other app's data.
+
 ## Configuration
 
 The MCP port defaults to **4567** and can be changed in Reactotron's settings (stored via electron-store as `mcpPort`).

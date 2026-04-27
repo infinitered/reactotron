@@ -102,12 +102,10 @@ export function registerResources(
   }, async (uri) => {
     const meta = connectionMeta(server)
     const events = filterByClient(commandBuffer, server)
-    const summarized = [...events].reverse().map(summarizeCommand)
-    const data = applyRedaction(
-      { _meta: meta, eventCount: events.length, events: summarized },
-      server, serverRedactionConfig
+    const summarized = [...events].reverse().map((cmd) =>
+      applyRedaction(summarizeCommand(cmd), server, serverRedactionConfig, cmd.clientId)
     )
-    return json(uri, data,
+    return json(uri, { _meta: meta, eventCount: events.length, events: summarized },
       "Events are summarized. Use the timeline_by_type resource (e.g. reactotron://timeline/api.response) to get full payloads for a specific event type.")
   })
 
@@ -137,11 +135,10 @@ export function registerResources(
       const meta = connectionMeta(server)
       const events = filterByClient(commandBuffer, server)
         .filter((c) => c.type === type)
-      const data = applyRedaction(
-        { _meta: meta, type, eventCount: events.length, events: [...events].reverse() },
-        server, serverRedactionConfig
+      const redactedEvents = [...events].reverse().map((cmd) =>
+        applyRedaction(cmd, server, serverRedactionConfig, cmd.clientId)
       )
-      return json(uri, data,
+      return json(uri, { _meta: meta, type, eventCount: events.length, events: redactedEvents },
         `Too many ${type} events to return in full. Try clear_timeline to reset, then reproduce the issue to capture fewer events.`)
     }
   )
@@ -160,11 +157,10 @@ export function registerResources(
       status: "no_state_received",
       message: "No state snapshot received yet. Use the request_state tool to request one.",
     }
-    const data = applyRedaction(
-      { _meta: meta, state: stateValue },
-      server, serverRedactionConfig
-    )
-    return json(uri, data,
+    // Redact with the originating client's config so each app's state is
+    // governed by its own rules even when multiple apps are connected.
+    const redactedState = applyRedaction(stateValue, server, serverRedactionConfig, latest?.clientId)
+    return json(uri, { _meta: meta, state: redactedState },
       "State is too large. Use the request_state tool with a path like 'user.profile' to fetch a specific slice. Use request_state_keys to explore the state shape first.")
   })
 
@@ -177,11 +173,10 @@ export function registerResources(
       commandBuffer.filter((c) => c.type === "api.response"),
       server
     )
-    const data = applyRedaction(
-      { _meta: meta, entries: networkCommands.map(summarizeNetworkEntry) },
-      server, serverRedactionConfig
+    const entries = networkCommands.map((cmd) =>
+      applyRedaction(summarizeNetworkEntry(cmd), server, serverRedactionConfig, cmd.clientId)
     )
-    return json(uri, data,
+    return json(uri, { _meta: meta, entries },
       "Network log is too large. Use timeline_by_type with type 'api.response' for full data, or clear_timeline to reset and capture fewer events.")
   })
 
@@ -202,19 +197,13 @@ export function registerResources(
     const benchmarks = filterByClient(
       commandBuffer.filter((c) => c.type === "benchmark.report"),
       server
+    ).map((c) =>
+      applyRedaction(
+        { date: c.date, clientId: c.clientId, ...c.payload },
+        server, serverRedactionConfig, c.clientId
+      )
     )
-    const data = applyRedaction(
-      {
-        _meta: meta,
-        benchmarks: benchmarks.map((c) => ({
-          date: c.date,
-          clientId: c.clientId,
-          ...c.payload,
-        })),
-      },
-      server, serverRedactionConfig
-    )
-    return json(uri, data)
+    return json(uri, { _meta: meta, benchmarks })
   })
 
   mcp.registerResource("subscriptions", "reactotron://state/subscriptions", {
@@ -225,20 +214,17 @@ export function registerResources(
     const changes = filterByClient(
       commandBuffer.filter((c) => c.type === "state.values.change"),
       server
+    ).map((c) =>
+      applyRedaction(
+        { date: c.date, clientId: c.clientId, ...c.payload },
+        server, serverRedactionConfig, c.clientId
+      )
     )
-    const data = applyRedaction(
-      {
-        _meta: meta,
-        activeSubscriptions: (server as any).subscriptions || [],
-        changes: changes.map((c) => ({
-          date: c.date,
-          clientId: c.clientId,
-          ...c.payload,
-        })),
-      },
-      server, serverRedactionConfig
-    )
-    return json(uri, data,
+    return json(uri, {
+      _meta: meta,
+      activeSubscriptions: (server as any).subscriptions || [],
+      changes,
+    },
       "Subscription changes are too large. Consider unsubscribing from paths with large values, or use request_state with a specific path instead.")
   })
 
@@ -250,24 +236,23 @@ export function registerResources(
     const mutations = filterByClient(
       commandBuffer.filter((c) => c.type === "asyncStorage.mutation"),
       server
-    )
-
-    // Resolve rules once and use for both AsyncStorage key-based pre-processing
-    // and the general deep-walk redaction pass.
-    const clientConfig = getClientRedactionConfig(server)
-    const rules = resolveEffectiveRules(serverRedactionConfig, clientConfig)
-
-    const wrapped = {
-      _meta: meta,
-      mutations: mutations.map((c) => ({
+    ).map((c) => {
+      // Resolve per-mutation so each app's storage is redacted with its own rules.
+      const clientConfig = getClientRedactionConfig(server, c.clientId)
+      const rules = resolveEffectiveRules(serverRedactionConfig, clientConfig)
+      const base = {
         date: c.date,
         clientId: c.clientId,
         action: c.payload?.action,
-        data: rules ? redactAsyncStorageData(c.payload?.data, rules) : c.payload?.data,
-      })),
-    }
-    const data = rules ? redact(wrapped, rules) : wrapped
-    return json(uri, data,
+        data: c.payload?.data,
+      }
+      if (!rules) return base
+      // Two-pass: AsyncStorage key heuristic catches positional payloads
+      // ({0:key,1:value}) the generic walk can't, then the deep walk handles
+      // the rest (sensitive keys, value patterns, embedded JSON).
+      return redact({ ...base, data: redactAsyncStorageData(base.data, rules) }, rules)
+    })
+    return json(uri, { _meta: meta, mutations },
       "AsyncStorage mutations are too large. Try clear_timeline to reset, then reproduce the specific interaction you want to inspect.")
   })
 }
