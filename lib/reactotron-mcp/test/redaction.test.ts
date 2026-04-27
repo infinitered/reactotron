@@ -1,5 +1,6 @@
 import {
   redact,
+  redactAsyncStorageData,
   resolveEffectiveRules,
   DEFAULT_REDACTION_RULES,
   DEFAULT_SERVER_CONFIG,
@@ -505,5 +506,187 @@ describe("form-urlencoded body redaction", () => {
     const body = "user[name]=alice&password=hunter2"
     const result = redact(body, rules)
     expect(result).toBe(`user[name]=alice&password=${REDACTED}`)
+  })
+})
+
+describe("JSON string body redaction", () => {
+  const rules: McpRedactionRules = {
+    sensitiveKeys: ["password", "api_key", "accessToken"],
+    valuePatterns: ["sk-[a-zA-Z0-9_-]{20,}"],
+  }
+
+  test("redacts sensitive keys inside JSON-stringified request body", () => {
+    const body = JSON.stringify({ password: "hunter2", api_key: "x", username: "alice" })
+    const result = redact(body, rules) as string
+    const parsed = JSON.parse(result)
+    expect(parsed.password).toBe(REDACTED)
+    expect(parsed.api_key).toBe(REDACTED)
+    expect(parsed.username).toBe("alice")
+  })
+
+  test("redacts sensitive keys in nested JSON string body", () => {
+    const data = {
+      request: {
+        data: JSON.stringify({ password: "hunter2", accessToken: "y", note: "hello" }),
+      },
+    }
+    const result = redact(data, rules) as any
+    const parsed = JSON.parse(result.request.data)
+    expect(parsed.password).toBe(REDACTED)
+    expect(parsed.accessToken).toBe(REDACTED)
+    expect(parsed.note).toBe("hello")
+  })
+
+  test("applies value patterns inside JSON string bodies", () => {
+    const body = JSON.stringify({ note: "embedded sk-ABCDEFGHIJKLMNOPQRSTUVWX" })
+    const result = redact(body, rules) as string
+    const parsed = JSON.parse(result)
+    expect(parsed.note).toContain(REDACTED)
+    expect(parsed.note).not.toContain("sk-ABCDE")
+  })
+
+  test("falls through to value patterns when string is not valid JSON", () => {
+    const value = "{not valid json sk-ABCDEFGHIJKLMNOPQRSTUVWX"
+    const result = redact(value, rules) as string
+    expect(result).toContain(REDACTED)
+    expect(result).not.toContain("sk-ABCDE")
+  })
+
+  test("handles JSON array strings", () => {
+    const body = JSON.stringify([{ password: "s1" }, { api_key: "s2" }])
+    const result = redact(body, rules) as string
+    const parsed = JSON.parse(result)
+    expect(parsed[0].password).toBe(REDACTED)
+    expect(parsed[1].api_key).toBe(REDACTED)
+  })
+
+  test("does not alter non-JSON strings that happen to start with {", () => {
+    // Not valid JSON — should fall through
+    const value = "{this is not json}"
+    const result = redact(value, rules)
+    expect(result).toBe("{this is not json}")
+  })
+})
+
+describe("redact() with basePath for subtree requests", () => {
+  const rules: McpRedactionRules = {
+    sensitiveKeys: [],
+    statePathPatterns: ["redactionTest.auth.tokens.*"],
+    valuePatterns: [],
+  }
+
+  test("absolute state path patterns match when basePath is provided", () => {
+    // Simulates request_state({ path: "redactionTest.auth" }) returning a subtree
+    const subtree = {
+      username: "alice",
+      tokens: { access: "raw-access", refresh: "raw-refresh" },
+    }
+    const result = redact(subtree, rules, "redactionTest.auth") as any
+    expect(result.username).toBe("alice")
+    expect(result.tokens.access).toBe(REDACTED)
+    expect(result.tokens.refresh).toBe(REDACTED)
+  })
+
+  test("patterns still work without basePath (full tree)", () => {
+    const fullTree = {
+      redactionTest: {
+        auth: {
+          username: "alice",
+          tokens: { access: "raw-access", refresh: "raw-refresh" },
+        },
+      },
+    }
+    const result = redact(fullTree, rules) as any
+    expect(result.redactionTest.auth.username).toBe("alice")
+    expect(result.redactionTest.auth.tokens.access).toBe(REDACTED)
+    expect(result.redactionTest.auth.tokens.refresh).toBe(REDACTED)
+  })
+
+  test("basePath does not cause false positives", () => {
+    const subtree = { name: "alice", email: "alice@example.com" }
+    const result = redact(subtree, rules, "redactionTest.auth") as any
+    expect(result.name).toBe("alice")
+    expect(result.email).toBe("alice@example.com")
+  })
+})
+
+describe("redactAsyncStorageData()", () => {
+  const rules: McpRedactionRules = {
+    sensitiveKeys: ["password", "api_key", "accessToken"],
+    valuePatterns: ["Bearer\\s+[A-Za-z0-9\\-._~+/]+=*"],
+  }
+
+  test("redacts values when storage key contains a sensitive segment (colon separator)", () => {
+    const data = [
+      { "0": "auth:password", "1": "hunter2" },
+      { "0": "auth:api_key", "1": "leaked-api-key" },
+      { "0": "settings:theme", "1": "dark" },
+    ]
+    const result = redactAsyncStorageData(data, rules) as any[]
+    expect(result[0]["1"]).toBe(REDACTED)
+    expect(result[1]["1"]).toBe(REDACTED)
+    expect(result[2]["1"]).toBe("dark")
+  })
+
+  test("redacts values when storage key uses dot separator", () => {
+    const data = [{ "0": "user.accessToken", "1": "secret-token" }]
+    const result = redactAsyncStorageData(data, rules) as any[]
+    expect(result[0]["1"]).toBe(REDACTED)
+  })
+
+  test("redacts values when storage key contains sensitive key as substring", () => {
+    const data = [
+      { "0": "auth_password", "1": "hunter2" },
+      { "0": "persist:api_key", "1": "leaked" },
+      { "0": "myAccessToken", "1": "secret" },
+    ]
+    const result = redactAsyncStorageData(data, rules) as any[]
+    expect(result[0]["1"]).toBe(REDACTED)
+    expect(result[1]["1"]).toBe(REDACTED)
+    expect(result[2]["1"]).toBe(REDACTED)
+  })
+
+  test("redacts values when storage key uses slash separator", () => {
+    const data = [{ "0": "auth/password", "1": "hunter2" }]
+    const result = redactAsyncStorageData(data, rules) as any[]
+    expect(result[0]["1"]).toBe(REDACTED)
+  })
+
+  test("applies JSON string redaction to values when storage key is not sensitive", () => {
+    const jsonValue = JSON.stringify({ password: "hunter2", api_key: "leaked", note: "Bearer abcdef1234567890ABCDEFGH" })
+    const data = [{ "0": "auth:session_data", "1": jsonValue }]
+    const result = redactAsyncStorageData(data, rules) as any[]
+    // Storage key "auth:session_data" doesn't match sensitiveKeys, but JSON contents do
+    const parsed = JSON.parse(result[0]["1"])
+    expect(parsed.password).toBe(REDACTED)
+    expect(parsed.api_key).toBe(REDACTED)
+    expect(parsed.note).toBe(REDACTED) // Bearer pattern match
+  })
+
+  test("redacts JSON string values when storage key is not sensitive", () => {
+    const jsonValue = JSON.stringify({ password: "hunter2", name: "alice" })
+    const data = [{ "0": "cached:data", "1": jsonValue }]
+    const result = redactAsyncStorageData(data, rules) as any[]
+    const parsed = JSON.parse(result[0]["1"])
+    expect(parsed.password).toBe(REDACTED)
+    expect(parsed.name).toBe("alice")
+  })
+
+  test("handles key-value shape with 'key' and 'value' fields", () => {
+    const data = { key: "auth:password", value: "hunter2" }
+    const result = redactAsyncStorageData(data, rules) as any
+    expect(result.value).toBe(REDACTED)
+  })
+
+  test("handles null and undefined", () => {
+    expect(redactAsyncStorageData(null, rules)).toBeNull()
+    expect(redactAsyncStorageData(undefined, rules)).toBeUndefined()
+  })
+
+  test("returns data unchanged when no sensitiveKeys configured", () => {
+    const emptyRules: McpRedactionRules = { sensitiveKeys: [], valuePatterns: [] }
+    const data = [{ "0": "auth:password", "1": "hunter2" }]
+    const result = redactAsyncStorageData(data, emptyRules) as any[]
+    expect(result[0]["1"]).toBe("hunter2")
   })
 })

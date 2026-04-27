@@ -10,7 +10,7 @@ import {
   summarizeCommand,
   summarizeNetworkEntry,
 } from "./serialization"
-import { resolveEffectiveRules, redact, type McpRedactionServerConfig } from "./redaction"
+import { resolveEffectiveRules, redact, redactAsyncStorageData, type McpRedactionServerConfig } from "./redaction"
 
 interface AppInfo {
   id: number
@@ -94,12 +94,13 @@ function applyRedaction(
   data: unknown,
   server: ReactotronServer,
   serverRedactionConfig: McpRedactionServerConfig,
-  clientId?: string
+  clientId?: string,
+  basePath = ""
 ): unknown {
   const clientConfig = getClientRedactionConfig(server, clientId)
   const rules = resolveEffectiveRules(serverRedactionConfig, clientConfig)
   if (!rules) return data // redaction disabled
-  return redact(data, rules)
+  return redact(data, rules, basePath)
 }
 
 function json(uri: URL, data: unknown, guidance?: string) {
@@ -273,6 +274,13 @@ export function registerResources(
       commandBuffer.filter((c) => c.type === "asyncStorage.mutation"),
       server
     )
+
+    // Pre-process AsyncStorage data to redact values whose storage keys contain
+    // sensitive segments (e.g. "auth:password" → redact the value). The generic
+    // redactor can't catch these because the payload uses positional keys (0, 1).
+    const clientConfig = getClientRedactionConfig(server)
+    const rules = resolveEffectiveRules(serverRedactionConfig, clientConfig)
+
     const data = applyRedaction(
       {
         _meta: meta,
@@ -280,7 +288,7 @@ export function registerResources(
           date: c.date,
           clientId: c.clientId,
           action: c.payload?.action,
-          data: c.payload?.data,
+          data: rules ? redactAsyncStorageData(c.payload?.data, rules) : c.payload?.data,
         })),
       },
       server, serverRedactionConfig

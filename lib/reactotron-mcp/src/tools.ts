@@ -82,12 +82,13 @@ function applyRedaction(
   data: unknown,
   server: ReactotronServer,
   serverRedactionConfig: McpRedactionServerConfig,
-  clientId?: string
+  clientId?: string,
+  basePath = ""
 ): unknown {
   const clientConfig = getClientRedactionConfig(server, clientId)
   const rules = resolveEffectiveRules(serverRedactionConfig, clientConfig)
   if (!rules) return data
-  return redact(data, rules)
+  return redact(data, rules, basePath)
 }
 
 export function registerTools(
@@ -159,7 +160,7 @@ export function registerTools(
         const cmd = commandBuffer[i]
         if (cmd.type === "state.values.response" && cmd.clientId === clientId) {
           const stateValue = cmd.payload?.value ?? cmd.payload
-          const redactedState = applyRedaction(stateValue, server, serverRedactionConfig, clientId)
+          const redactedState = applyRedaction(stateValue, server, serverRedactionConfig, clientId, path)
           return textResult(
             { status: "success", state: redactedState },
             "State response is too large. Use request_state with a more specific path (e.g. 'user.profile') to narrow the response. Use request_state_keys to explore the state shape."

@@ -244,6 +244,21 @@ function redactHeaders(
 function redactStringValue(value: string, rules: McpRedactionRules): string {
   let result = value
 
+  // Detect JSON strings and redact their contents by parsing → redacting → re-stringifying.
+  // This catches request bodies like JSON.stringify({ password: "hunter2" }) and
+  // AsyncStorage values that contain serialized JSON with sensitive keys.
+  const trimmed = result.trim()
+  if ((trimmed.startsWith("{") && trimmed.endsWith("}")) || (trimmed.startsWith("[") && trimmed.endsWith("]"))) {
+    try {
+      const parsed = JSON.parse(result)
+      if (typeof parsed === "object" && parsed !== null) {
+        return JSON.stringify(redact(parsed, rules))
+      }
+    } catch {
+      // Not valid JSON — fall through to other redaction strategies
+    }
+  }
+
   // Redact URL query parameters whose names match sensitiveKeys
   const sensitiveKeys = rules.sensitiveKeys ?? []
   if (sensitiveKeys.length > 0) {
@@ -331,4 +346,64 @@ function matchesStatePath(currentPath: string, patterns: string[]): boolean {
     }
   }
   return false
+}
+
+/**
+ * Check whether a storage key (e.g. "auth:password", "auth_password", "user.api_key")
+ * contains any sensitive key name as a case-insensitive substring.
+ */
+function storageKeyIsSensitive(storageKey: string, sensitiveKeysLower: Set<string>): boolean {
+  const keyLower = storageKey.toLowerCase()
+  for (const sensitive of sensitiveKeysLower) {
+    if (keyLower.includes(sensitive)) return true
+  }
+  return false
+}
+
+/**
+ * Redact AsyncStorage mutation data. Storage payloads use positional keys
+ * ("0" = storage key, "1" = value) that the generic redactor can't match.
+ * This function splits storage keys on common separators and redacts the value
+ * when any segment matches sensitiveKeys.
+ */
+export function redactAsyncStorageData(data: unknown, rules: McpRedactionRules): unknown {
+  if (data === null || data === undefined) return data
+
+  const sensitiveKeysLower = new Set((rules.sensitiveKeys ?? []).map((k) => k.toLowerCase()))
+  if (sensitiveKeysLower.size === 0) return data
+
+  // multiSet / multiGet / multiRemove: array of pairs [{0: key, 1: value}, ...]
+  if (Array.isArray(data)) {
+    return data.map((item) => redactAsyncStorageData(item, rules))
+  }
+
+  if (typeof data === "object") {
+    const obj = data as Record<string, unknown>
+
+    // Pair shape: { 0: "auth:password", 1: "hunter2" }
+    if ("0" in obj && typeof obj["0"] === "string") {
+      const storageKey = obj["0"]
+      if (storageKeyIsSensitive(storageKey, sensitiveKeysLower) && "1" in obj) {
+        return { ...obj, "1": REDACTED }
+      }
+      // Even if the key isn't sensitive, the value might contain JSON with sensitive keys
+      if ("1" in obj && typeof obj["1"] === "string") {
+        return { ...obj, "1": redactStringValue(obj["1"], rules) }
+      }
+      return obj
+    }
+
+    // setItem / mergeItem: { key: "auth:password", value: "hunter2" }
+    if ("key" in obj && typeof obj.key === "string") {
+      const result = { ...obj }
+      if (storageKeyIsSensitive(obj.key, sensitiveKeysLower) && "value" in obj) {
+        result.value = REDACTED
+      } else if ("value" in obj && typeof obj.value === "string") {
+        result.value = redactStringValue(obj.value as string, rules)
+      }
+      return result
+    }
+  }
+
+  return data
 }
