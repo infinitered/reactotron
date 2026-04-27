@@ -6,7 +6,7 @@ import { promises as fsPromises } from "fs"
 import { extname } from "path"
 
 import { MAX_RESPONSE_CHARS, safeSerialize } from "./serialization"
-import { resolveEffectiveRules, redact, type McpRedactionServerConfig } from "./redaction"
+import { applyRedaction, type McpRedactionServerConfig } from "./redaction"
 
 /** Extract width/height from PNG or JPEG buffer */
 function getImageSize(buf: Buffer, ext: string): { width: number; height: number } | null {
@@ -64,31 +64,6 @@ function resolveClientId(
 
 function textResult(data: unknown, guidance?: string) {
   return { content: [{ type: "text" as const, text: safeSerialize(data, MAX_RESPONSE_CHARS, guidance) }] }
-}
-
-function getClientRedactionConfig(server: ReactotronServer, clientId?: string): any {
-  const connections = server.connections as any[]
-  if (clientId) {
-    const conn = connections.find((c) => c.clientId === clientId)
-    return conn?.mcpRedaction
-  }
-  if (connections.length === 1) {
-    return connections[0]?.mcpRedaction
-  }
-  return undefined
-}
-
-function applyRedaction(
-  data: unknown,
-  server: ReactotronServer,
-  serverRedactionConfig: McpRedactionServerConfig,
-  clientId?: string,
-  basePath = ""
-): unknown {
-  const clientConfig = getClientRedactionConfig(server, clientId)
-  const rules = resolveEffectiveRules(serverRedactionConfig, clientConfig)
-  if (!rules) return data
-  return redact(data, rules, basePath)
 }
 
 export function registerTools(

@@ -10,7 +10,13 @@ import {
   summarizeCommand,
   summarizeNetworkEntry,
 } from "./serialization"
-import { resolveEffectiveRules, redact, redactAsyncStorageData, type McpRedactionServerConfig } from "./redaction"
+import {
+  resolveEffectiveRules,
+  redactAsyncStorageData,
+  applyRedaction,
+  getClientRedactionConfig,
+  type McpRedactionServerConfig,
+} from "./redaction"
 
 interface AppInfo {
   id: number
@@ -71,36 +77,6 @@ function filterByClient(
   }
 
   return commands
-}
-
-/**
- * Get the client's McpRedactionConfig from the connection object.
- * Uses the first connected app's config (single-app case) or undefined if none.
- */
-function getClientRedactionConfig(server: ReactotronServer, clientId?: string): any {
-  const connections = server.connections as any[]
-  if (clientId) {
-    const conn = connections.find((c) => c.clientId === clientId)
-    return conn?.mcpRedaction
-  }
-  if (connections.length === 1) {
-    return connections[0]?.mcpRedaction
-  }
-  return undefined
-}
-
-/** Apply redaction to data based on server config and connected client config. */
-function applyRedaction(
-  data: unknown,
-  server: ReactotronServer,
-  serverRedactionConfig: McpRedactionServerConfig,
-  clientId?: string,
-  basePath = ""
-): unknown {
-  const clientConfig = getClientRedactionConfig(server, clientId)
-  const rules = resolveEffectiveRules(serverRedactionConfig, clientConfig)
-  if (!rules) return data // redaction disabled
-  return redact(data, rules, basePath)
 }
 
 function json(uri: URL, data: unknown, guidance?: string) {
