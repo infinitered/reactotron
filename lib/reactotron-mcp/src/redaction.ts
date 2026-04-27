@@ -92,7 +92,11 @@ export function resolveEffectiveRules(
 
 /**
  * Get the client's McpRedactionConfig from the connection object.
- * Uses the first connected app's config (single-app case) or undefined if none.
+ *
+ * Callers that aggregate data across multiple connected apps (resource reads)
+ * MUST pass a clientId per event so each app's data is redacted with that
+ * app's own config — see resources.ts. The single-app convenience path here
+ * only kicks in when exactly one app is connected.
  */
 export function getClientRedactionConfig(server: ReactotronServer, clientId?: string): McpRedactionConfig | undefined {
   const connections = server.connections as any[]
@@ -231,55 +235,23 @@ function redactObject(
 
   for (const [key, value] of Object.entries(obj)) {
     const childPath = currentPath ? `${currentPath}.${key}` : key
+    const keyLower = key.toLowerCase()
 
-    // Check state path patterns
     if (matchesStatePath(childPath, ctx.statePathPatterns)) {
       result[key] = REDACTED
       continue
     }
 
-    // Check sensitive key names (case-insensitive)
-    if (ctx.sensitiveKeysLower.has(key.toLowerCase())) {
+    // Sensitive keys and header names redact at any nesting level. Treating
+    // header names universally avoids leaks when API payloads are stored
+    // under non-canonical keys (requestHeaders, lastResponse, etc.) — we'd
+    // rather over-redact a stray field named "cookie" than leak a real one.
+    if (ctx.sensitiveKeysLower.has(keyLower) || ctx.headerNamesLower.has(keyLower)) {
       result[key] = REDACTED
-      continue
-    }
-
-    // Header-specific redaction: if the key is "headers", redact matching header names inside
-    if (key.toLowerCase() === "headers" && value && typeof value === "object" && !Array.isArray(value)) {
-      result[key] = redactHeaders(value as Record<string, unknown>, ctx, childPath)
       continue
     }
 
     result[key] = redactValue(value, ctx, childPath)
-  }
-
-  return result
-}
-
-function redactHeaders(
-  headers: Record<string, unknown>,
-  ctx: RedactionContext,
-  currentPath: string,
-): Record<string, unknown> {
-  if (ctx.seen.has(headers)) return { _circular: REDACTED }
-  ctx.seen.add(headers)
-
-  const result: Record<string, unknown> = {}
-
-  for (const [key, value] of Object.entries(headers)) {
-    if (ctx.headerNamesLower.has(key.toLowerCase())) {
-      result[key] = REDACTED
-      continue
-    }
-    if (ctx.sensitiveKeysLower.has(key.toLowerCase())) {
-      result[key] = REDACTED
-      continue
-    }
-    if (typeof value === "string") {
-      result[key] = redactStringValue(value, ctx)
-    } else {
-      result[key] = value
-    }
   }
 
   return result
@@ -326,10 +298,15 @@ function redactStringValue(value: string, ctx: RedactionContext): string {
  * Detect a form-urlencoded body string (e.g. "user=alice&password=x"). Must be the whole
  * string — `foo=bar` mid-sentence won't match. We require at least one "=" and that the
  * full string is `k=v(&k=v)*` shape to avoid false positives on casual strings.
+ *
+ * Key chars accepted: word chars, `.`, `-`, `+` (space encoding), `~`, `*`, `[`, `]`, `%`
+ * (percent-encoding). This covers RFC-3986 unreserved/sub-delims commonly used in form
+ * keys. The strict ^...$ anchor still keeps prose like "x=5" out.
  */
+const FORM_ENCODED_RE = /^[\w.\-+~*[\]%]+=[^&]*(?:&[\w.\-+~*[\]%]+=[^&]*)*$/
 function looksLikeFormEncoded(value: string): boolean {
   if (!value || value.length > 8192) return false
-  return /^[\w.\-[\]%]+=[^&]*(?:&[\w.\-[\]%]+=[^&]*)*$/.test(value)
+  return FORM_ENCODED_RE.test(value)
 }
 
 /** Redact values in a form-urlencoded body where the param name matches sensitiveKeys. */

@@ -52,6 +52,42 @@ describe("redact()", () => {
     expect(result.request.headers.Cookie).toBe(REDACTED)
   })
 
+  test("redacts header names anywhere they appear, not just under 'headers' keys", () => {
+    // Real-world leak path: redux state caches an API response under a non-canonical
+    // key (requestHeaders / lastResponse / etc.) — header-name rules must still fire,
+    // because Cookie values like "session=xyz" don't match any default value pattern.
+    const data = {
+      lastResponse: {
+        requestHeaders: {
+          Authorization: "Bearer abc123",
+          Cookie: "session=xyz",
+          "Content-Type": "application/json",
+        },
+      },
+    }
+    const result = redact(data, rules) as any
+    expect(result.lastResponse.requestHeaders.Authorization).toBe(REDACTED)
+    expect(result.lastResponse.requestHeaders.Cookie).toBe(REDACTED)
+    expect(result.lastResponse.requestHeaders["Content-Type"]).toBe("application/json")
+  })
+
+  test("redacts a Set-Cookie array value (not just string)", () => {
+    // Pre-fix regression: redactHeaders only handled string values, so an array of
+    // cookies under Set-Cookie slipped through.
+    const data = {
+      headers: {
+        "Set-Cookie": ["session=xyz; HttpOnly", "remember=1"],
+      },
+    }
+    const setCookieRules: McpRedactionRules = {
+      headerNames: ["set-cookie"],
+      sensitiveKeys: [],
+      valuePatterns: [],
+    }
+    const result = redact(data, setCookieRules) as any
+    expect(result.headers["Set-Cookie"]).toBe(REDACTED)
+  })
+
   test("redacts values matching value patterns", () => {
     const data = {
       message: "Token is Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0 and more",
@@ -506,6 +542,21 @@ describe("form-urlencoded body redaction", () => {
     const body = "user[name]=alice&password=hunter2"
     const result = redact(body, rules)
     expect(result).toBe(`user[name]=alice&password=${REDACTED}`)
+  })
+
+  test("handles plus-encoded values (form spaces)", () => {
+    // Form bodies frequently use + for spaces in values, e.g. "name=Alice+Smith".
+    // Pre-fix the key char class excluded +, so a key like "x+1" would skip the
+    // form-encoded path entirely. Values with + always worked because [^&]* was permissive.
+    const rules: McpRedactionRules = {
+      sensitiveKeys: ["password"],
+      valuePatterns: [],
+    }
+    expect(redact("name=Alice+Smith&password=hunter2", rules))
+      .toBe(`name=Alice+Smith&password=${REDACTED}`)
+    // Key with +
+    expect(redact("a+b=1&password=hunter2", rules))
+      .toBe(`a+b=1&password=${REDACTED}`)
   })
 })
 
