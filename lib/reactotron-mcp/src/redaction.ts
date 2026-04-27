@@ -126,9 +126,6 @@ export function createRedactor(
   server: ReactotronServer,
   serverRedactionConfig: McpRedactionServerConfig,
 ): Redactor {
-  // Cache the parsed bundle (lowered Set + compiled regex) per clientId, not
-  // the raw rules — so a 500-event read does one parse per distinct app
-  // instead of one per event.
   const cache = new Map<string, ParsedRules | null>()
 
   function parsedFor(clientId?: string): ParsedRules | null {
@@ -195,11 +192,7 @@ function dedupe(arr: string[]): string[] {
 const MAX_JSON_STRING_DEPTH = 5
 const MAX_JSON_PARSE_LENGTH = 1_000_000
 
-/**
- * Precomputed form of a rules object — built once per ruleset, reused across
- * every redact() call that uses those rules. Holds the lowered key Set and
- * the combined value-pattern regex so the hot path doesn't rebuild them.
- */
+/** Precomputed form of a rules object, reused across redact() calls. */
 interface ParsedRules {
   sensitiveKeysLower: Set<string>
   /** All valuePatterns folded into a single alternation; null when no valid patterns. */
@@ -241,7 +234,7 @@ function parseRules(rules: McpRedactionRules): ParsedRules {
   }
 }
 
-/** Per-call state threaded through recursion. The parsed bundle stays shared. */
+/** Per-call state threaded through recursion. */
 interface RedactionContext {
   parsed: ParsedRules
   seen: Set<unknown>
@@ -296,8 +289,7 @@ function redactObject(
   const trackPaths = ctx.parsed.trackPaths
 
   for (const [key, value] of Object.entries(obj)) {
-    // Set lookup is O(1) and matches the common case; check it before the
-    // O(N) state-path scan.
+    // Common case first — most keys aren't path-pattern matches.
     if (sensitiveKeysLower.has(key.toLowerCase())) {
       result[key] = REDACTED
       continue
