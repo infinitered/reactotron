@@ -12,6 +12,7 @@ import {
 } from "./serialization"
 import {
   resolveEffectiveRules,
+  redact,
   redactAsyncStorageData,
   applyRedaction,
   getClientRedactionConfig,
@@ -251,24 +252,21 @@ export function registerResources(
       server
     )
 
-    // Pre-process AsyncStorage data to redact values whose storage keys contain
-    // sensitive segments (e.g. "auth:password" → redact the value). The generic
-    // redactor can't catch these because the payload uses positional keys (0, 1).
+    // Resolve rules once and use for both AsyncStorage key-based pre-processing
+    // and the general deep-walk redaction pass.
     const clientConfig = getClientRedactionConfig(server)
     const rules = resolveEffectiveRules(serverRedactionConfig, clientConfig)
 
-    const data = applyRedaction(
-      {
-        _meta: meta,
-        mutations: mutations.map((c) => ({
-          date: c.date,
-          clientId: c.clientId,
-          action: c.payload?.action,
-          data: rules ? redactAsyncStorageData(c.payload?.data, rules) : c.payload?.data,
-        })),
-      },
-      server, serverRedactionConfig
-    )
+    const wrapped = {
+      _meta: meta,
+      mutations: mutations.map((c) => ({
+        date: c.date,
+        clientId: c.clientId,
+        action: c.payload?.action,
+        data: rules ? redactAsyncStorageData(c.payload?.data, rules) : c.payload?.data,
+      })),
+    }
+    const data = rules ? redact(wrapped, rules) : wrapped
     return json(uri, data,
       "AsyncStorage mutations are too large. Try clear_timeline to reset, then reproduce the specific interaction you want to inspect.")
   })

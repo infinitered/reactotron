@@ -158,6 +158,9 @@ function dedupe(arr: string[]): string[] {
   return [...new Set(arr)]
 }
 
+const MAX_JSON_STRING_DEPTH = 5
+const MAX_JSON_PARSE_LENGTH = 1_000_000
+
 /** Precomputed lookups and shared state threaded through the recursion. */
 interface RedactionContext {
   rules: McpRedactionRules
@@ -165,15 +168,17 @@ interface RedactionContext {
   headerNamesLower: Set<string>
   statePathPatterns: string[]
   seen: Set<unknown>
+  jsonStringDepth: number
 }
 
-function buildContext(rules: McpRedactionRules): RedactionContext {
+function buildContext(rules: McpRedactionRules, jsonStringDepth = 0): RedactionContext {
   return {
     rules,
     sensitiveKeysLower: new Set((rules.sensitiveKeys ?? []).map((k) => k.toLowerCase())),
     headerNamesLower: new Set((rules.headerNames ?? []).map((h) => h.toLowerCase())),
     statePathPatterns: rules.statePathPatterns ?? [],
     seen: new Set<unknown>(),
+    jsonStringDepth,
   }
 }
 
@@ -190,7 +195,7 @@ function redactValue(data: unknown, ctx: RedactionContext, currentPath: string):
   if (data === null || data === undefined) return data
 
   if (typeof data === "string") {
-    return redactStringValue(data, ctx.rules)
+    return redactStringValue(data, ctx.rules, ctx.jsonStringDepth)
   }
 
   if (typeof data !== "object") return data
@@ -237,7 +242,7 @@ function redactObject(
     if (value === null || value === undefined) {
       result[key] = value
     } else if (typeof value === "string") {
-      result[key] = redactStringValue(value, ctx.rules)
+      result[key] = redactStringValue(value, ctx.rules, ctx.jsonStringDepth)
     } else if (Array.isArray(value)) {
       result[key] = value.map((item, i) => redactValue(item, ctx, `${childPath}.${i}`))
     } else if (typeof value === "object") {
@@ -270,7 +275,7 @@ function redactHeaders(
       continue
     }
     if (typeof value === "string") {
-      result[key] = redactStringValue(value, ctx.rules)
+      result[key] = redactStringValue(value, ctx.rules, ctx.jsonStringDepth)
     } else {
       result[key] = value
     }
@@ -279,21 +284,23 @@ function redactHeaders(
   return result
 }
 
-function redactStringValue(value: string, rules: McpRedactionRules): string {
+function redactStringValue(value: string, rules: McpRedactionRules, jsonStringDepth = 0): string {
   let result = value
 
   // Detect JSON strings and redact their contents by parsing → redacting → re-stringifying.
-  // This catches request bodies like JSON.stringify({ password: "hunter2" }) and
-  // AsyncStorage values that contain serialized JSON with sensitive keys.
-  const trimmed = result.trim()
-  if ((trimmed.startsWith("{") && trimmed.endsWith("}")) || (trimmed.startsWith("[") && trimmed.endsWith("]"))) {
-    try {
-      const parsed = JSON.parse(result)
-      if (typeof parsed === "object" && parsed !== null) {
-        return JSON.stringify(redact(parsed, rules))
+  // Guarded by depth limit (nested JSON.stringify layers) and size limit (avoid parsing huge strings).
+  if (jsonStringDepth < MAX_JSON_STRING_DEPTH && result.length <= MAX_JSON_PARSE_LENGTH) {
+    const trimmed = result.trim()
+    if ((trimmed.startsWith("{") && trimmed.endsWith("}")) || (trimmed.startsWith("[") && trimmed.endsWith("]"))) {
+      try {
+        const parsed = JSON.parse(result)
+        if (typeof parsed === "object" && parsed !== null) {
+          const ctx = buildContext(rules, jsonStringDepth + 1)
+          return JSON.stringify(redactValue(parsed, ctx, ""))
+        }
+      } catch {
+        // Not valid JSON — fall through to other redaction strategies
       }
-    } catch {
-      // Not valid JSON — fall through to other redaction strategies
     }
   }
 
