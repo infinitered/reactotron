@@ -1,4 +1,5 @@
 import Store from "electron-store"
+import { DEFAULT_REDACTION_RULES, DEFAULT_SERVER_CONFIG } from "reactotron-mcp"
 
 type StoreType = {
   serverPort: number
@@ -29,43 +30,30 @@ const config = new Store<StoreType>({
     mcpRedactionHeaderNames: {
       type: "array",
       items: { type: "string" },
-      default: [
-        "authorization", "cookie", "set-cookie",
-        "x-api-key", "x-auth-token", "proxy-authorization",
-      ],
+      default: DEFAULT_REDACTION_RULES.headerNames,
     },
     mcpRedactionSensitiveKeys: {
       type: "array",
       items: { type: "string" },
-      default: [
-        "password", "secret", "apikey", "api_key", "accesstoken",
-        "access_token", "refreshtoken", "refresh_token", "privatekey",
-        "private_key", "credentials", "ssn", "creditcard",
-      ],
+      default: DEFAULT_REDACTION_RULES.sensitiveKeys,
     },
     mcpRedactionStatePathPatterns: {
       type: "array",
       items: { type: "string" },
-      default: [],
+      default: DEFAULT_REDACTION_RULES.statePathPatterns,
     },
     mcpRedactionValuePatterns: {
       type: "array",
       items: { type: "string" },
-      default: [
-        "Bearer\\s+[A-Za-z0-9\\-._~+/]+=*",
-        "eyJ[A-Za-z0-9_-]{10,}\\.[A-Za-z0-9_-]{10,}",
-        "sk-[a-zA-Z0-9]{20,}",
-        "ghp_[a-zA-Z0-9]{30,}",
-        "xox[bpoas]-[a-zA-Z0-9\\-]{10,}",
-      ],
+      default: DEFAULT_REDACTION_RULES.valuePatterns,
     },
     mcpAllowClientDisable: {
       type: "boolean",
-      default: false,
+      default: DEFAULT_SERVER_CONFIG.allowClientDisable,
     },
     mcpAllowClientRemoveRules: {
       type: "boolean",
-      default: false,
+      default: DEFAULT_SERVER_CONFIG.allowClientRemoveRules,
     },
   },
 })
