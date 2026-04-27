@@ -51,7 +51,7 @@ If multiple apps are connected to Reactotron, Claude Code will ask which app you
 
 ## Redaction
 
-By default, Reactotron redacts sensitive data from all MCP responses so that tokens, passwords, and API keys are never exposed to AI assistants. You'll see a green shield icon next to the MCP button when redaction is active.
+Reactotron applies a default-on redaction pass to every MCP response, replacing well-known sensitive field names and token formats with `[REDACTED]` before they leave the server. A shield icon next to the MCP button reflects the live state: **green** while redaction is fully enforced, **amber** when at least one connected client has opted out via a permission you've granted. Redaction is defence in depth — see the [Limitations and gotchas](#limitations-and-gotchas) section for the audit you should do before connecting an LLM.
 
 ### What gets redacted
 
@@ -118,9 +118,11 @@ A few specific things worth knowing:
 
 ## Configuration
 
-The MCP port defaults to **4567** and can be changed in Reactotron's settings (stored via electron-store as `mcpPort`).
+The MCP port defaults to **4567**. There's no in-app UI to change it; the value is stored as `mcpPort` in Reactotron's electron-store config — at `~/Library/Application Support/Reactotron/config.json` on macOS, `%APPDATA%\Reactotron\config.json` on Windows, or `~/.config/Reactotron/config.json` on Linux. Edit the JSON and restart Reactotron to pick up the new port.
 
 The server only binds to `127.0.0.1` (localhost) and is not accessible from other machines on your network.
+
+The MCP buffer holds the most recent **500 commands** from the relay. Once that fills, the oldest events drop off — the timeline / network / state resources only reflect what's still in the buffer. Use the `clear_timeline` tool to reset it before reproducing a specific issue.
 
 ## Image overlay
 
