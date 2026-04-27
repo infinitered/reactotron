@@ -26,7 +26,6 @@ const TagContainer = styled.div`
   flex-wrap: wrap;
   gap: 4px;
   margin-bottom: 8px;
-  min-height: 28px;
   padding: 4px;
   border: 1px solid ${(props) => props.theme.chromeLine};
   border-radius: 4px;
@@ -67,6 +66,7 @@ const AddInput = styled.input`
   font-size: 12px;
   font-family: monospace;
   width: 100%;
+  box-sizing: border-box;
   margin-bottom: 12px;
   &::placeholder {
     color: ${(props) => props.theme.foregroundDark};
@@ -90,16 +90,18 @@ const Description = styled.span`
 `
 
 const ResetButton = styled.button`
+  display: block;
+  margin-left: auto;
+  margin-top: -28px;
   background: none;
   border: 1px solid ${(props) => props.theme.chromeLine};
   border-radius: 4px;
-  color: ${(props) => props.theme.foregroundDark};
+  color: ${(props) => props.theme.foreground};
   font-size: 12px;
-  padding: 6px 12px;
+  padding: 4px 10px;
   cursor: pointer;
-  margin-top: 16px;
   &:hover {
-    color: ${(props) => props.theme.foreground};
+    background-color: rgba(255, 255, 255, 0.06);
     border-color: ${(props) => props.theme.foreground};
   }
 `
@@ -132,14 +134,16 @@ function TagListEditor({ label, placeholder, values, onChange }: TagListEditorPr
   return (
     <div>
       <Label>{label}</Label>
-      <TagContainer>
-        {values.map((v, i) => (
-          <Tag key={i}>
-            {v}
-            <TagRemove onClick={() => removeTag(i)}>&times;</TagRemove>
-          </Tag>
-        ))}
-      </TagContainer>
+      {values.length > 0 && (
+        <TagContainer>
+          {values.map((v, i) => (
+            <Tag key={i}>
+              {v}
+              <TagRemove onClick={() => removeTag(i)}>&times;</TagRemove>
+            </Tag>
+          ))}
+        </TagContainer>
+      )}
       <AddInput
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
@@ -165,20 +169,16 @@ export default function McpSettingsModal({ isOpen, onClose, config, onUpdate }: 
   }, [isOpen, config])
 
   const updateDefaults = useCallback((patch: Partial<McpRedactionServerConfig["defaults"]>) => {
-    setLocalConfig((prev) => {
-      const next = { ...prev, defaults: { ...prev.defaults, ...patch } }
-      onUpdate(next)
-      return next
-    })
-  }, [onUpdate])
+    const next = { ...localConfig, defaults: { ...localConfig.defaults, ...patch } }
+    setLocalConfig(next)
+    onUpdate(next)
+  }, [localConfig, onUpdate])
 
   const updatePermission = useCallback((key: "allowClientDisable" | "allowClientRemoveRules", value: boolean) => {
-    setLocalConfig((prev) => {
-      const next = { ...prev, [key]: value }
-      onUpdate(next)
-      return next
-    })
-  }, [onUpdate])
+    const next = { ...localConfig, [key]: value }
+    setLocalConfig(next)
+    onUpdate(next)
+  }, [localConfig, onUpdate])
 
   const resetToDefaults = useCallback(() => {
     setLocalConfig(DEFAULT_SERVER_CONFIG)
@@ -187,6 +187,7 @@ export default function McpSettingsModal({ isOpen, onClose, config, onUpdate }: 
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="MCP Redaction Settings">
+      <ResetButton onClick={resetToDefaults}>Reset to defaults</ResetButton>
       <Section>
         <SectionTitle>Redacted Header Names</SectionTitle>
         <Description>HTTP header names redacted in MCP responses (case-insensitive)</Description>
@@ -250,8 +251,6 @@ export default function McpSettingsModal({ isOpen, onClose, config, onUpdate }: 
           Allow apps to remove default rules
         </CheckboxRow>
       </Section>
-
-      <ResetButton onClick={resetToDefaults}>Reset to defaults</ResetButton>
     </Modal>
   )
 }
