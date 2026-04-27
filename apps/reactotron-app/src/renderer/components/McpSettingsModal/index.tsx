@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react"
 import styled from "styled-components"
 import { Modal } from "reactotron-core-ui"
-import type { McpRedactionServerConfig } from "reactotron-mcp"
+import { DEFAULT_SERVER_CONFIG, type McpRedactionServerConfig } from "reactotron-mcp"
 
 const Section = styled.div`
   margin-top: 16px;
@@ -89,6 +89,21 @@ const Description = styled.span`
   font-size: 11px;
 `
 
+const ResetButton = styled.button`
+  background: none;
+  border: 1px solid ${(props) => props.theme.chromeLine};
+  border-radius: 4px;
+  color: ${(props) => props.theme.foregroundDark};
+  font-size: 12px;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-top: 16px;
+  &:hover {
+    color: ${(props) => props.theme.foreground};
+    border-color: ${(props) => props.theme.foreground};
+  }
+`
+
 interface TagListEditorProps {
   label: string
   placeholder: string
@@ -165,6 +180,11 @@ export default function McpSettingsModal({ isOpen, onClose, config, onUpdate }: 
     })
   }, [onUpdate])
 
+  const resetToDefaults = useCallback(() => {
+    setLocalConfig(DEFAULT_SERVER_CONFIG)
+    onUpdate(DEFAULT_SERVER_CONFIG)
+  }, [onUpdate])
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="MCP Redaction Settings">
       <Section>
@@ -230,6 +250,8 @@ export default function McpSettingsModal({ isOpen, onClose, config, onUpdate }: 
           Allow apps to remove default rules
         </CheckboxRow>
       </Section>
+
+      <ResetButton onClick={resetToDefaults}>Reset to defaults</ResetButton>
     </Modal>
   )
 }
