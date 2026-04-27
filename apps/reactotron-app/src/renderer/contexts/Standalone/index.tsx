@@ -1,6 +1,7 @@
-import React, { useRef, useEffect, useCallback, useState } from "react"
+import React, { useRef, useEffect, useCallback, useState, useMemo } from "react"
 import Server, { createServer } from "reactotron-core-server"
 import { createMcpServer, type ReactotronMcpServer, type McpRedactionServerConfig } from "reactotron-mcp"
+import type { McpRedactionConfig } from "reactotron-core-contract"
 
 import ReactotronBrain from "../../ReactotronBrain"
 import config from "../../config"
@@ -106,7 +107,20 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [mcpSettingsOpen, setMcpSettingsOpen] = useState(false)
   const [mcpRedactionConfig, setMcpRedactionConfig] = useState<McpRedactionServerConfig>(readRedactionConfig)
 
-  const mcpRedactionEnforced = !mcpRedactionConfig.allowClientDisable
+  // "Enforced" = no connected client has actually weakened redaction. Granting
+  // the permission alone (allowClientDisable / allowClientRemoveRules) doesn't
+  // flip this — only an actual client opt-out that the server is honoring does.
+  const mcpRedactionEnforced = useMemo(() => {
+    const { allowClientDisable, allowClientRemoveRules } = mcpRedactionConfig
+    if (!allowClientDisable && !allowClientRemoveRules) return true
+    return !connections.some((c) => {
+      const cfg = (c as unknown as { mcpRedaction?: McpRedactionConfig }).mcpRedaction
+      if (!cfg) return false
+      if (allowClientDisable && cfg.disableRedaction) return true
+      if (allowClientRemoveRules && cfg.removeRules) return true
+      return false
+    })
+  }, [connections, mcpRedactionConfig.allowClientDisable, mcpRedactionConfig.allowClientRemoveRules])
 
   const openMcpSettings = useCallback(() => setMcpSettingsOpen(true), [])
   const closeMcpSettings = useCallback(() => setMcpSettingsOpen(false), [])

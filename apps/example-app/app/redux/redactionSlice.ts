@@ -1,4 +1,3 @@
-// REDACTION TEST — scratch slice for exercising MCP redaction. Drop before merge.
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export interface RedactionTestState {
