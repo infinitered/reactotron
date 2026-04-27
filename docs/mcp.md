@@ -102,6 +102,20 @@ This uses a **two-key model**: the server always applies its default rules unles
 
 When multiple apps are connected, **each app's data is redacted with that app's own configuration**, even within a single MCP response that aggregates events from several apps (timeline, network, asyncstorage, etc.). One app's `additionalRules` won't redact another app's data, and one app's `removeRules` won't weaken redaction for any other app's data.
 
+### Limitations and gotchas
+
+> **Audit your app's payloads before pointing an LLM at the MCP server.** Redaction is defence in depth, not a guarantee. The default rules catch widely-used names and token formats, but anything app-specific (custom field names, homegrown token shapes, bare values without a recognisable shape) passes through unredacted. Do the audit *before* connecting any LLM — once an LLM has seen a secret, you can't unsend it. Two practical ways to audit: search your codebase for the field names you store credentials, tokens, or PII under, and inspect a normal Reactotron desktop session (the desktop UI is unredacted, so what you see there is roughly what an LLM would see minus the default-rule matches). Add anything sensitive to `additionalRules` (or to the desktop's settings modal) before the first LLM connection.
+
+A few specific things worth knowing:
+
+- **The Reactotron desktop UI is not redacted.** Redaction only happens at the MCP boundary. The desktop UI shows captured data verbatim — that's by design, since you're debugging your own app.
+- **Redaction is a blocklist, not an allowlist.** Field names that aren't in `sensitiveKeys` and string values that don't match any `valuePatterns` regex pass through verbatim. A field literally called `mySpecialSecret` or a homegrown token format like `xz-…-…` is invisible to the default rules. Add them via the settings modal or `additionalRules`.
+- **AsyncStorage values rely on the storage key carrying the sensitive name.** `AsyncStorage.setItem("auth:password", "hunter2")` redacts because the storage key contains `password`. `AsyncStorage.setItem("appData", "hunter2")` does *not* — neither the key nor the bare value match any default rule, so the value passes through verbatim. If your app stores secrets under non-descriptive storage keys, redaction won't help. Use the `ignore` option on the AsyncStorage plugin to skip those keys entirely.
+- **State path patterns only fire at known anchors.** The `reactotron://state/current` resource and the `request_state` tool both pass the originating state path so absolute patterns (e.g. `auth.tokens.*`) match correctly. Other resources don't carry that anchor and can't apply path-based rules. If a sensitive subtree never matches by key name or value pattern, path patterns alone may not catch it.
+- **State path patterns support trailing wildcard only.** `auth.tokens.*` works. `users.*.password` does not — you'd need to add `password` to `sensitiveKeys` (it already is by default) or list each path explicitly.
+- **Custom commands and `display` payloads are walked generically.** If you emit free-form data via `Reactotron.display(...)` or a custom command, only key-name and value-pattern rules apply. Sensitive content in arbitrary shapes is on you.
+- **Server defaults apply at the boundary, not at storage.** The relay server still receives the full payload over the WebSocket and stores it in the in-memory event buffer. Anyone with desktop access (or who can attach a debugger to the Reactotron process) can see the unredacted data. Redaction stops the data from reaching the MCP client; it does not encrypt anything at rest.
+
 ## Configuration
 
 The MCP port defaults to **4567** and can be changed in Reactotron's settings (stored via electron-store as `mcpPort`).
