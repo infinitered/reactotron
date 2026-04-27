@@ -153,9 +153,8 @@ export function registerResources(
       status: "no_state_received",
       message: "No state snapshot received yet. Use the request_state tool to request one.",
     }
-    // The cached state is the most recent state.values.response, which may be
-    // a full tree or a subtree depending on what the last request_state asked
-    // for. payload.path carries the anchor when present.
+    // payload.path anchors state-path patterns when the cached snapshot is a
+    // subtree (from a prior request_state with a path).
     const statePath = (latest?.payload as { path?: string } | undefined)?.path ?? ""
     const redactedState = redactor.redactState(stateValue, latest?.clientId, statePath)
     return json(uri, { _meta: meta, state: redactedState },

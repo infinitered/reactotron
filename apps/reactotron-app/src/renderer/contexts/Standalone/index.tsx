@@ -106,9 +106,8 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [mcpSettingsOpen, setMcpSettingsOpen] = useState(false)
   const [mcpRedactionConfig, setMcpRedactionConfig] = useState<McpRedactionServerConfig>(readRedactionConfig)
 
-  // "Enforced" = no connected client has actually weakened redaction. Granting
-  // the permission alone (allowClientDisable / allowClientRemoveRules) doesn't
-  // flip this — only an actual client opt-out that the server is honoring does.
+  // True unless a connected client has actually opted out via a permission
+  // the server is honoring. Toggling permissions alone doesn't flip this.
   const mcpRedactionEnforced = useMemo(() => {
     const { allowClientDisable, allowClientRemoveRules } = mcpRedactionConfig
     if (!allowClientDisable && !allowClientRemoveRules) return true

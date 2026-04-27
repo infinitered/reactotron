@@ -4,9 +4,6 @@ import type ReactotronServer from "reactotron-core-server"
 export const REDACTED = "[REDACTED]"
 
 export const DEFAULT_REDACTION_RULES: McpRedactionRules = {
-  // Universal denylist: any matching key (case-insensitive) is redacted at any
-  // nesting level. Includes both payload field names (password, api_key, etc.)
-  // and HTTP header names (authorization, cookie, etc.) — they share semantics.
   sensitiveKeys: [
     // Credentials
     "password", "passwd", "pwd",
@@ -66,8 +63,9 @@ export const DEFAULT_SERVER_CONFIG: McpRedactionServerConfig = {
 }
 
 /**
- * Compute the effective redaction rules by merging server defaults with client config,
- * respecting server permissions.
+ * Resolve effective rules by merging server defaults with client config.
+ * `additionalRules` apply unconditionally; `disableRedaction` and `removeRules`
+ * require the matching server-side permission.
  */
 export function resolveEffectiveRules(
   serverConfig: McpRedactionServerConfig,
@@ -75,19 +73,16 @@ export function resolveEffectiveRules(
 ): McpRedactionRules | null {
   if (!clientConfig) return serverConfig.defaults
 
-  // Client wants to disable redaction entirely
   if (clientConfig.disableRedaction && serverConfig.allowClientDisable) {
     return null
   }
 
   let rules = deepCopyRules(serverConfig.defaults)
 
-  // Remove rules only if server allows
   if (clientConfig.removeRules && serverConfig.allowClientRemoveRules) {
     rules = subtractRules(rules, clientConfig.removeRules)
   }
 
-  // Additional rules are always allowed
   if (clientConfig.additionalRules) {
     rules = mergeRules(rules, clientConfig.additionalRules)
   }
@@ -96,12 +91,9 @@ export function resolveEffectiveRules(
 }
 
 /**
- * Get the client's McpRedactionConfig from the connection object.
- *
- * Callers that aggregate data across multiple connected apps (resource reads)
- * MUST pass a clientId per event so each app's data is redacted with that
- * app's own config — see resources.ts. The single-app convenience path here
- * only kicks in when exactly one app is connected.
+ * Get a client's McpRedactionConfig. With no clientId, returns the lone
+ * client's config when exactly one is connected, otherwise undefined —
+ * resource reads that aggregate across apps must pass clientId per event.
  */
 export function getClientRedactionConfig(server: ReactotronServer, clientId?: string): McpRedactionConfig | undefined {
   const connections = server.connections as any[]
@@ -116,23 +108,15 @@ export function getClientRedactionConfig(server: ReactotronServer, clientId?: st
 }
 
 /**
- * A scoped redactor that resolves rules once per (server, clientId) and reuses
- * them across many calls. Create one per MCP request handler and call its
- * methods for each event/payload — each call costs one Map lookup instead of a
- * full rule resolve + Set/RegExp build per event.
+ * Scoped redactor that caches resolved rules per clientId. Create one per
+ * MCP request so a multi-event read does one resolve per distinct app.
  */
 export interface Redactor {
-  /** Generic payload (network entry, log event, action, etc.). */
+  /** Redact a generic payload (network entry, log event, action, etc.). */
   redact(data: unknown, clientId?: string): unknown
-  /**
-   * State payload anchored at `statePath`. Pass "" for a full state tree.
-   * Path patterns are absolute, so subtree responses must pass the request path.
-   */
+  /** Redact a state payload anchored at `statePath` (pass "" for full tree). */
   redactState(data: unknown, clientId: string | undefined, statePath: string): unknown
-  /**
-   * AsyncStorage mutation payload. Runs the storage-key heuristic for
-   * positional `{0:key,1:value}` payloads, then the generic deep walk.
-   */
+  /** Redact an AsyncStorage mutation payload (storage-key heuristic + deep walk). */
   redactAsyncStorage(data: unknown, clientId?: string): unknown
 }
 
@@ -142,9 +126,6 @@ export function createRedactor(
   server: ReactotronServer,
   serverRedactionConfig: McpRedactionServerConfig,
 ): Redactor {
-  // Cache resolved rules per clientId for the lifetime of the redactor.
-  // Per-MCP-request scope means a 500-event timeline read shares one entry per
-  // distinct clientId instead of resolving 500 times.
   const cache = new Map<string, McpRedactionRules | null>()
 
   function rulesFor(clientId?: string): McpRedactionRules | null {
@@ -285,10 +266,6 @@ function redactObject(
       continue
     }
 
-    // Universal key denylist: matches at any nesting level. HTTP header names
-    // (authorization, cookie, etc.) are folded into this list so they redact
-    // even when nested under a non-canonical key like `requestHeaders`. We'd
-    // rather over-redact a stray field named "cookie" than leak a real one.
     if (ctx.sensitiveKeysLower.has(keyLower)) {
       result[key] = REDACTED
       continue
@@ -338,13 +315,8 @@ function redactStringValue(value: string, ctx: RedactionContext): string {
 }
 
 /**
- * Detect a form-urlencoded body string (e.g. "user=alice&password=x"). Must be the whole
- * string — `foo=bar` mid-sentence won't match. We require at least one "=" and that the
- * full string is `k=v(&k=v)*` shape to avoid false positives on casual strings.
- *
- * Key chars accepted: word chars, `.`, `-`, `+` (space encoding), `~`, `*`, `[`, `]`, `%`
- * (percent-encoding). This covers RFC-3986 unreserved/sub-delims commonly used in form
- * keys. The strict ^...$ anchor still keeps prose like "x=5" out.
+ * Detect a form-urlencoded body string (e.g. "user=alice&password=x"). The
+ * strict `^k=v(&k=v)*$` anchor avoids false positives on prose like "x=5".
  */
 const FORM_ENCODED_RE = /^[\w.\-+~*[\]%]+=[^&]*(?:&[\w.\-+~*[\]%]+=[^&]*)*$/
 function looksLikeFormEncoded(value: string): boolean {
