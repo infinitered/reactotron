@@ -7,6 +7,8 @@ export {
   redact,
   resolveEffectiveRules,
   applyRedaction,
+  applyStateRedaction,
+  applyAsyncStorageRedaction,
   getClientRedactionConfig,
 } from "./redaction"
 export type { McpRedactionServerConfig } from "./redaction"

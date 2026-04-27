@@ -110,18 +110,66 @@ export function getClientRedactionConfig(server: ReactotronServer, clientId?: st
   return undefined
 }
 
-/** Apply redaction to data based on server config and connected client config. */
+/** Resolve the rules that apply to a given client (or undefined for "no redaction"). */
+function rulesFor(
+  server: ReactotronServer,
+  serverRedactionConfig: McpRedactionServerConfig,
+  clientId?: string,
+): McpRedactionRules | null {
+  const clientConfig = getClientRedactionConfig(server, clientId)
+  return resolveEffectiveRules(serverRedactionConfig, clientConfig)
+}
+
+/**
+ * Apply redaction to a generic payload (network entry, log event, action, etc.)
+ * using the rules that govern `clientId`.
+ */
 export function applyRedaction(
   data: unknown,
   server: ReactotronServer,
   serverRedactionConfig: McpRedactionServerConfig,
   clientId?: string,
-  basePath = ""
 ): unknown {
-  const clientConfig = getClientRedactionConfig(server, clientId)
-  const rules = resolveEffectiveRules(serverRedactionConfig, clientConfig)
+  const rules = rulesFor(server, serverRedactionConfig, clientId)
   if (!rules) return data
-  return redact(data, rules, basePath)
+  return redact(data, rules)
+}
+
+/**
+ * Apply redaction to a state payload that is anchored at `statePath` within the
+ * full state tree (e.g. the result of `request_state({path: "user.profile"})`).
+ *
+ * State path patterns are absolute (anchored at the state root), so the caller
+ * MUST pass the path the subtree was requested at — otherwise pattern matching
+ * will silently no-op for subtrees. Pass "" for a full-tree response.
+ */
+export function applyStateRedaction(
+  data: unknown,
+  server: ReactotronServer,
+  serverRedactionConfig: McpRedactionServerConfig,
+  clientId: string | undefined,
+  statePath: string,
+): unknown {
+  const rules = rulesFor(server, serverRedactionConfig, clientId)
+  if (!rules) return data
+  return redact(data, rules, statePath)
+}
+
+/**
+ * Apply redaction to an AsyncStorage mutation payload. Encapsulates the
+ * two-pass redaction this shape requires: first a storage-key heuristic that
+ * matches positional `{0: key, 1: value}` payloads (which the generic deep
+ * walk can't reason about), then the deep walk for everything else.
+ */
+export function applyAsyncStorageRedaction(
+  data: unknown,
+  server: ReactotronServer,
+  serverRedactionConfig: McpRedactionServerConfig,
+  clientId?: string,
+): unknown {
+  const rules = rulesFor(server, serverRedactionConfig, clientId)
+  if (!rules) return data
+  return redact(redactAsyncStorageData(data, rules), rules)
 }
 
 function deepCopyRules(rules: McpRedactionRules): McpRedactionRules {

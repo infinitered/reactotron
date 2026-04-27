@@ -11,11 +11,9 @@ import {
   summarizeNetworkEntry,
 } from "./serialization"
 import {
-  resolveEffectiveRules,
-  redact,
-  redactAsyncStorageData,
   applyRedaction,
-  getClientRedactionConfig,
+  applyStateRedaction,
+  applyAsyncStorageRedaction,
   type McpRedactionServerConfig,
 } from "./redaction"
 
@@ -157,9 +155,13 @@ export function registerResources(
       status: "no_state_received",
       message: "No state snapshot received yet. Use the request_state tool to request one.",
     }
-    // Redact with the originating client's config so each app's state is
-    // governed by its own rules even when multiple apps are connected.
-    const redactedState = applyRedaction(stateValue, server, serverRedactionConfig, latest?.clientId)
+    // The cached state is the most recent state.values.response, which may be
+    // a full tree or a subtree depending on what the last request_state asked
+    // for. payload.path carries the anchor when present.
+    const statePath = (latest?.payload as { path?: string } | undefined)?.path ?? ""
+    const redactedState = applyStateRedaction(
+      stateValue, server, serverRedactionConfig, latest?.clientId, statePath
+    )
     return json(uri, { _meta: meta, state: redactedState },
       "State is too large. Use the request_state tool with a path like 'user.profile' to fetch a specific slice. Use request_state_keys to explore the state shape first.")
   })
@@ -236,22 +238,12 @@ export function registerResources(
     const mutations = filterByClient(
       commandBuffer.filter((c) => c.type === "asyncStorage.mutation"),
       server
-    ).map((c) => {
-      // Resolve per-mutation so each app's storage is redacted with its own rules.
-      const clientConfig = getClientRedactionConfig(server, c.clientId)
-      const rules = resolveEffectiveRules(serverRedactionConfig, clientConfig)
-      const base = {
-        date: c.date,
-        clientId: c.clientId,
-        action: c.payload?.action,
-        data: c.payload?.data,
-      }
-      if (!rules) return base
-      // Two-pass: AsyncStorage key heuristic catches positional payloads
-      // ({0:key,1:value}) the generic walk can't, then the deep walk handles
-      // the rest (sensitive keys, value patterns, embedded JSON).
-      return redact({ ...base, data: redactAsyncStorageData(base.data, rules) }, rules)
-    })
+    ).map((c) => ({
+      date: c.date,
+      clientId: c.clientId,
+      action: c.payload?.action,
+      data: applyAsyncStorageRedaction(c.payload?.data, server, serverRedactionConfig, c.clientId),
+    }))
     return json(uri, { _meta: meta, mutations },
       "AsyncStorage mutations are too large. Try clear_timeline to reset, then reproduce the specific interaction you want to inspect.")
   })

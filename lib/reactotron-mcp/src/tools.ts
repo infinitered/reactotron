@@ -6,7 +6,7 @@ import { promises as fsPromises } from "fs"
 import { extname } from "path"
 
 import { MAX_RESPONSE_CHARS, safeSerialize } from "./serialization"
-import { applyRedaction, type McpRedactionServerConfig } from "./redaction"
+import { applyRedaction, applyStateRedaction, type McpRedactionServerConfig } from "./redaction"
 
 /** Extract width/height from PNG or JPEG buffer */
 function getImageSize(buf: Buffer, ext: string): { width: number; height: number } | null {
@@ -135,7 +135,7 @@ export function registerTools(
         const cmd = commandBuffer[i]
         if (cmd.type === "state.values.response" && cmd.clientId === clientId) {
           const stateValue = cmd.payload?.value ?? cmd.payload
-          const redactedState = applyRedaction(stateValue, server, serverRedactionConfig, clientId, path)
+          const redactedState = applyStateRedaction(stateValue, server, serverRedactionConfig, clientId, path)
           return textResult(
             { status: "success", state: redactedState },
             "State response is too large. Use request_state with a more specific path (e.g. 'user.profile') to narrow the response. Use request_state_keys to explore the state shape."
