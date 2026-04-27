@@ -189,22 +189,11 @@ export default function McpSettingsModal({ isOpen, onClose, config, onUpdate }: 
     <Modal isOpen={isOpen} onClose={onClose} title="MCP Redaction Settings">
       <ResetButton onClick={resetToDefaults}>Reset to defaults</ResetButton>
       <Section>
-        <SectionTitle>Redacted Header Names</SectionTitle>
-        <Description>HTTP header names redacted in MCP responses (case-insensitive)</Description>
+        <SectionTitle>Sensitive Keys</SectionTitle>
+        <Description>Field and HTTP header names redacted wherever found in payloads (case-insensitive)</Description>
         <TagListEditor
           label=""
-          placeholder="Type header name and press Enter"
-          values={localConfig.defaults.headerNames ?? []}
-          onChange={(v) => updateDefaults({ headerNames: v })}
-        />
-      </Section>
-
-      <Section>
-        <SectionTitle>Sensitive Key Names</SectionTitle>
-        <Description>Object keys redacted wherever found in payloads (case-insensitive)</Description>
-        <TagListEditor
-          label=""
-          placeholder="Type key name and press Enter"
+          placeholder="Type key or header name and press Enter"
           values={localConfig.defaults.sensitiveKeys ?? []}
           onChange={(v) => updateDefaults({ sensitiveKeys: v })}
         />

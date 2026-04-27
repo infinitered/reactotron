@@ -5,7 +5,6 @@ type StoreType = {
   serverPort: number
   commandHistory: number
   mcpPort: number
-  mcpRedactionHeaderNames: string[]
   mcpRedactionSensitiveKeys: string[]
   mcpRedactionStatePathPatterns: string[]
   mcpRedactionValuePatterns: string[]
@@ -26,11 +25,6 @@ const config = new Store<StoreType>({
     mcpPort: {
       type: "number",
       default: 4567,
-    },
-    mcpRedactionHeaderNames: {
-      type: "array",
-      items: { type: "string" },
-      default: DEFAULT_REDACTION_RULES.headerNames,
     },
     mcpRedactionSensitiveKeys: {
       type: "array",

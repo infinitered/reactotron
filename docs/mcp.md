@@ -57,8 +57,7 @@ By default, Reactotron redacts sensitive data from all MCP responses so that tok
 
 Out of the box, the following are replaced with `[REDACTED]`:
 
-- **HTTP headers** — `Authorization`, `Cookie`, `Set-Cookie`, `X-Api-Key`, `X-Auth-Token`, `Proxy-Authorization`, `X-CSRF-Token`, `X-XSRF-Token`, `CSRF-Token`, `X-Forwarded-For`, `X-Real-IP`
-- **Object keys** — `password`, `passwd`, `pwd`, `secret`, `client_secret`, `api_key`, `token`, `bearer`, `jwt`, `access_token`, `refresh_token`, `id_token`, `session`, `sessionid`, `csrf`, `xsrf`, `private_key`, `credentials`, `ssn`, `creditcard`, and variants
+- **Sensitive keys** (matched at any nesting level, case-insensitive) — credentials like `password`/`passwd`/`pwd`, `secret`, `client_secret`, `private_key`, `credentials`, `ssn`, `creditcard`; API keys like `api_key`/`apikey`/`x-api-key`; auth tokens like `token`, `bearer`, `jwt`, `access_token`, `refresh_token`, `id_token`; session/CSRF like `session`/`sessionid`, `csrf`/`xsrf`; HTTP header names like `Authorization`, `Cookie`, `Set-Cookie`, `Proxy-Authorization`, `X-Auth-Token`, `X-CSRF-Token`, `X-XSRF-Token`, `X-Forwarded-For`, `X-Real-IP`; and common variants
 - **String values** matching common token formats — Bearer tokens, JWTs (`eyJ...`), OpenAI keys (`sk-...`), Anthropic keys (`sk-ant-...`), GitHub PATs/OAuth/user-to-server tokens (`ghp_/ghs_/gho_/ghu_/ghr_...`), Slack tokens (`xoxb-...`), AWS access key IDs (`AKIA...`), Google API keys (`AIza...`), Stripe keys (`sk_live_/pk_test_/...`), and PEM-encoded private key blocks
 - **URL query parameters** whose names match any sensitive key (e.g. `?api_key=abc` becomes `?api_key=[REDACTED]`)
 - **Form-urlencoded bodies** — strings shaped like `k=v&k=v` (e.g. `application/x-www-form-urlencoded` request bodies) get the same per-field redaction as URL query parameters
@@ -67,7 +66,7 @@ Out of the box, the following are replaced with `[REDACTED]`:
 
 Click the gear icon next to the MCP button to open the redaction settings modal. From there you can:
 
-- Add or remove **header names**, **sensitive key names**, **state path patterns**, and **value patterns** (regex)
+- Add or remove **sensitive keys** (covers both payload field names and HTTP header names), **state path patterns**, and **value patterns** (regex)
 - Toggle whether connected apps are allowed to **disable redaction entirely** (off by default)
 - Toggle whether connected apps are allowed to **remove default rules** (off by default)
 
@@ -85,12 +84,11 @@ Reactotron.configure({
   mcpRedaction: {
     // Merge additional rules on top of server defaults (always allowed)
     additionalRules: {
-      sensitiveKeys: ["myInternalField"],
-      headerNames: ["x-internal-auth"],
+      sensitiveKeys: ["myInternalField", "x-internal-auth"],
     },
     // Request removal of specific default rules (requires server permission)
     removeRules: {
-      headerNames: ["cookie"],
+      sensitiveKeys: ["cookie"],
     },
     // Request disabling redaction entirely (requires server permission)
     disableRedaction: true,

@@ -12,8 +12,7 @@ import type { McpRedactionRules, McpRedactionConfig } from "reactotron-core-cont
 
 describe("redact()", () => {
   const rules: McpRedactionRules = {
-    headerNames: ["authorization", "cookie"],
-    sensitiveKeys: ["password", "secret", "api_key"],
+    sensitiveKeys: ["password", "secret", "api_key", "authorization", "cookie"],
     statePathPatterns: ["auth.tokens.*", "user.ssn"],
     valuePatterns: [
       "Bearer\\s+[A-Za-z0-9\\-._~+/]+=*",
@@ -73,16 +72,16 @@ describe("redact()", () => {
   })
 
   test("redacts a Set-Cookie array value (not just string)", () => {
-    // Pre-fix regression: redactHeaders only handled string values, so an array of
-    // cookies under Set-Cookie slipped through.
+    // Pre-unification regression: when headers had a separate code path, only
+    // string values got redacted — an array of cookies under Set-Cookie slipped
+    // through. Universal-key matching now drops the whole value at the key.
     const data = {
       headers: {
         "Set-Cookie": ["session=xyz; HttpOnly", "remember=1"],
       },
     }
     const setCookieRules: McpRedactionRules = {
-      headerNames: ["set-cookie"],
-      sensitiveKeys: [],
+      sensitiveKeys: ["set-cookie"],
       valuePatterns: [],
     }
     const result = redact(data, setCookieRules) as any
@@ -218,7 +217,6 @@ describe("redact()", () => {
 
   test("returns empty rules when no rules match", () => {
     const emptyRules: McpRedactionRules = {
-      headerNames: [],
       sensitiveKeys: [],
       statePathPatterns: [],
       valuePatterns: [],
@@ -256,25 +254,24 @@ describe("resolveEffectiveRules()", () => {
   test("merges additional rules from client", () => {
     const clientConfig: McpRedactionConfig = {
       additionalRules: {
-        sensitiveKeys: ["myCustomField"],
-        headerNames: ["x-custom-auth"],
+        sensitiveKeys: ["myCustomField", "x-custom-auth"],
       },
     }
     const result = resolveEffectiveRules(DEFAULT_SERVER_CONFIG, clientConfig)!
     expect(result.sensitiveKeys).toContain("myCustomField")
+    expect(result.sensitiveKeys).toContain("x-custom-auth")
     expect(result.sensitiveKeys).toContain("password") // default still present
-    expect(result.headerNames).toContain("x-custom-auth")
-    expect(result.headerNames).toContain("authorization") // default still present
+    expect(result.sensitiveKeys).toContain("authorization") // default header still present
   })
 
   test("ignores removeRules when server disallows", () => {
     const clientConfig: McpRedactionConfig = {
       removeRules: {
-        headerNames: ["authorization"],
+        sensitiveKeys: ["authorization"],
       },
     }
     const result = resolveEffectiveRules(DEFAULT_SERVER_CONFIG, clientConfig)!
-    expect(result.headerNames).toContain("authorization")
+    expect(result.sensitiveKeys).toContain("authorization")
   })
 
   test("honors removeRules when server allows", () => {
@@ -284,13 +281,13 @@ describe("resolveEffectiveRules()", () => {
     }
     const clientConfig: McpRedactionConfig = {
       removeRules: {
-        headerNames: ["authorization"],
+        sensitiveKeys: ["authorization"],
       },
     }
     const result = resolveEffectiveRules(serverConfig, clientConfig)!
-    expect(result.headerNames).not.toContain("authorization")
+    expect(result.sensitiveKeys).not.toContain("authorization")
     // Other defaults should remain
-    expect(result.headerNames).toContain("cookie")
+    expect(result.sensitiveKeys).toContain("cookie")
   })
 
   test("ignores disableRedaction when server disallows", () => {
@@ -332,40 +329,42 @@ describe("resolveEffectiveRules()", () => {
     expect(result.sensitiveKeys).toContain("secret") // other defaults intact
   })
 
-  test("removeRules are case-insensitive for header names and sensitive keys", () => {
+  test("removeRules are case-insensitive", () => {
     const serverConfig: McpRedactionServerConfig = {
       ...DEFAULT_SERVER_CONFIG,
       allowClientRemoveRules: true,
     }
     const clientConfig: McpRedactionConfig = {
       removeRules: {
-        headerNames: ["AUTHORIZATION"],
-        sensitiveKeys: ["PASSWORD"],
+        sensitiveKeys: ["AUTHORIZATION", "PASSWORD"],
       },
     }
     const result = resolveEffectiveRules(serverConfig, clientConfig)!
-    expect(result.headerNames).not.toContain("authorization")
+    expect(result.sensitiveKeys).not.toContain("authorization")
     expect(result.sensitiveKeys).not.toContain("password")
   })
 })
 
 describe("DEFAULT_REDACTION_RULES", () => {
-  test("has expected default header names", () => {
-    expect(DEFAULT_REDACTION_RULES.headerNames).toContain("authorization")
-    expect(DEFAULT_REDACTION_RULES.headerNames).toContain("cookie")
-    expect(DEFAULT_REDACTION_RULES.headerNames).toContain("set-cookie")
-    expect(DEFAULT_REDACTION_RULES.headerNames).toContain("x-api-key")
+  test("has expected default HTTP header names in sensitiveKeys", () => {
+    const keys = DEFAULT_REDACTION_RULES.sensitiveKeys ?? []
+    expect(keys).toContain("authorization")
+    expect(keys).toContain("cookie")
+    expect(keys).toContain("set-cookie")
+    expect(keys).toContain("x-api-key")
   })
 
   test("includes CSRF/XSRF header variants", () => {
-    expect(DEFAULT_REDACTION_RULES.headerNames).toContain("x-csrf-token")
-    expect(DEFAULT_REDACTION_RULES.headerNames).toContain("x-xsrf-token")
-    expect(DEFAULT_REDACTION_RULES.headerNames).toContain("csrf-token")
+    const keys = DEFAULT_REDACTION_RULES.sensitiveKeys ?? []
+    expect(keys).toContain("x-csrf-token")
+    expect(keys).toContain("x-xsrf-token")
+    expect(keys).toContain("csrf-token")
   })
 
   test("includes IP-forwarding PII headers", () => {
-    expect(DEFAULT_REDACTION_RULES.headerNames).toContain("x-forwarded-for")
-    expect(DEFAULT_REDACTION_RULES.headerNames).toContain("x-real-ip")
+    const keys = DEFAULT_REDACTION_RULES.sensitiveKeys ?? []
+    expect(keys).toContain("x-forwarded-for")
+    expect(keys).toContain("x-real-ip")
   })
 
   test("has expected default sensitive keys", () => {

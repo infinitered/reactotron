@@ -282,7 +282,7 @@ export const RedactionTestScreen: React.FC<RedactionTestScreenProps> = function 
         is the safer merge strategy across apps that may disagree.
       */}
       <Text style={$code}>disableRedaction: true</Text>
-      <Text style={$code}>removeRules.headerNames: [&quot;authorization&quot;]</Text>
+      <Text style={$code}>removeRules.sensitiveKeys: [&quot;authorization&quot;]</Text>
       <Text style={$code}>additionalRules.sensitiveKeys: [&quot;myInternalField&quot;]</Text>
 
       {/*

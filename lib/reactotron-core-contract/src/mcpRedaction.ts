@@ -1,6 +1,4 @@
 export interface McpRedactionRules {
-  /** HTTP header names to redact (case-insensitive match) */
-  headerNames?: string[]
   /** Object key names to redact wherever found (case-insensitive match) */
   sensitiveKeys?: string[]
   /** State paths to redact (dot-separated, supports trailing wildcard "auth.tokens.*") */

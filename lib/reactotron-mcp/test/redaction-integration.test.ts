@@ -208,8 +208,7 @@ describe("redaction integration — client config merging", () => {
   test("client additional rules are merged with server defaults", () => {
     const clientConfig: McpRedactionConfig = {
       additionalRules: {
-        sensitiveKeys: ["myCustomField", "internalId"],
-        headerNames: ["x-internal-auth"],
+        sensitiveKeys: ["myCustomField", "internalId", "x-internal-auth"],
       },
     }
 
@@ -217,11 +216,11 @@ describe("redaction integration — client config merging", () => {
 
     // Server defaults still present
     expect(rules.sensitiveKeys).toContain("password")
-    expect(rules.headerNames).toContain("authorization")
+    expect(rules.sensitiveKeys).toContain("authorization")
     // Client additions present
     expect(rules.sensitiveKeys).toContain("myCustomField")
     expect(rules.sensitiveKeys).toContain("internalId")
-    expect(rules.headerNames).toContain("x-internal-auth")
+    expect(rules.sensitiveKeys).toContain("x-internal-auth")
 
     // Verify it actually redacts the custom fields
     const data = {
@@ -265,10 +264,10 @@ describe("redaction integration — client config merging", () => {
 
   test("client remove rules blocked by default", () => {
     const clientConfig: McpRedactionConfig = {
-      removeRules: { headerNames: ["authorization"] },
+      removeRules: { sensitiveKeys: ["authorization"] },
     }
     const rules = resolveEffectiveRules(DEFAULT_SERVER_CONFIG, clientConfig)!
-    expect(rules.headerNames).toContain("authorization")
+    expect(rules.sensitiveKeys).toContain("authorization")
   })
 
   test("client remove rules honored when server allows", () => {
@@ -277,11 +276,11 @@ describe("redaction integration — client config merging", () => {
       allowClientRemoveRules: true,
     }
     const clientConfig: McpRedactionConfig = {
-      removeRules: { headerNames: ["authorization"] },
+      removeRules: { sensitiveKeys: ["authorization"] },
     }
     const rules = resolveEffectiveRules(serverConfig, clientConfig)!
-    expect(rules.headerNames).not.toContain("authorization")
-    expect(rules.headerNames).toContain("cookie") // other defaults intact
+    expect(rules.sensitiveKeys).not.toContain("authorization")
+    expect(rules.sensitiveKeys).toContain("cookie") // other defaults intact
   })
 })
 

@@ -25,7 +25,7 @@ const reactotron = Reactotron.configure({
   // REDACTION TEST — exercises the two-key permission model.
   mcpRedaction: {
     disableRedaction: true,
-    removeRules: { headerNames: ["authorization"] },
+    removeRules: { sensitiveKeys: ["authorization"] },
     additionalRules: { sensitiveKeys: ["myInternalField"] },
   },
 })

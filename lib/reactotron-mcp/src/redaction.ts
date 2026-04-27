@@ -4,24 +4,29 @@ import type ReactotronServer from "reactotron-core-server"
 export const REDACTED = "[REDACTED]"
 
 export const DEFAULT_REDACTION_RULES: McpRedactionRules = {
-  headerNames: [
-    "authorization", "cookie", "set-cookie",
-    "x-api-key", "x-auth-token", "proxy-authorization",
-    "x-csrf-token", "x-xsrf-token", "csrf-token",
-    "x-forwarded-for", "x-real-ip",
-  ],
+  // Universal denylist: any matching key (case-insensitive) is redacted at any
+  // nesting level. Includes both payload field names (password, api_key, etc.)
+  // and HTTP header names (authorization, cookie, etc.) — they share semantics.
   sensitiveKeys: [
+    // Credentials
     "password", "passwd", "pwd",
     "secret", "client_secret", "clientsecret",
+    "credentials", "ssn", "creditcard",
+    "privatekey", "private_key",
+    // API keys
     "apikey", "api_key", "x-api-key",
+    // Auth tokens
     "accesstoken", "access_token",
     "refreshtoken", "refresh_token",
     "idtoken", "id_token",
     "token", "bearer", "jwt",
+    // Session / CSRF
     "session", "sessionid", "session_id",
     "csrf", "xsrf", "csrf_token", "xsrf_token",
-    "privatekey", "private_key",
-    "credentials", "ssn", "creditcard",
+    // HTTP headers
+    "authorization", "cookie", "set-cookie", "proxy-authorization",
+    "x-auth-token", "x-csrf-token", "x-xsrf-token", "csrf-token",
+    "x-forwarded-for", "x-real-ip",
   ],
   statePathPatterns: [],
   valuePatterns: [
@@ -170,7 +175,6 @@ export function createRedactor(
 
 function deepCopyRules(rules: McpRedactionRules): McpRedactionRules {
   return {
-    headerNames: rules.headerNames ? [...rules.headerNames] : [],
     sensitiveKeys: rules.sensitiveKeys ? [...rules.sensitiveKeys] : [],
     statePathPatterns: rules.statePathPatterns ? [...rules.statePathPatterns] : [],
     valuePatterns: rules.valuePatterns ? [...rules.valuePatterns] : [],
@@ -179,7 +183,6 @@ function deepCopyRules(rules: McpRedactionRules): McpRedactionRules {
 
 function mergeRules(base: McpRedactionRules, additional: McpRedactionRules): McpRedactionRules {
   return {
-    headerNames: dedupe([...(base.headerNames ?? []), ...(additional.headerNames ?? [])]),
     sensitiveKeys: dedupe([...(base.sensitiveKeys ?? []), ...(additional.sensitiveKeys ?? [])]),
     statePathPatterns: dedupe([...(base.statePathPatterns ?? []), ...(additional.statePathPatterns ?? [])]),
     valuePatterns: dedupe([...(base.valuePatterns ?? []), ...(additional.valuePatterns ?? [])]),
@@ -189,13 +192,11 @@ function mergeRules(base: McpRedactionRules, additional: McpRedactionRules): Mcp
 function subtractRules(base: McpRedactionRules, remove: McpRedactionRules): McpRedactionRules {
   const removeLower = (arr: string[]) => new Set(arr.map((s) => s.toLowerCase()))
 
-  const removeHeaders = removeLower(remove.headerNames ?? [])
   const removeKeys = removeLower(remove.sensitiveKeys ?? [])
   const removePaths = new Set(remove.statePathPatterns ?? [])
   const removePatterns = new Set(remove.valuePatterns ?? [])
 
   return {
-    headerNames: (base.headerNames ?? []).filter((h) => !removeHeaders.has(h.toLowerCase())),
     sensitiveKeys: (base.sensitiveKeys ?? []).filter((k) => !removeKeys.has(k.toLowerCase())),
     statePathPatterns: (base.statePathPatterns ?? []).filter((p) => !removePaths.has(p)),
     valuePatterns: (base.valuePatterns ?? []).filter((p) => !removePatterns.has(p)),
@@ -212,7 +213,6 @@ const MAX_JSON_PARSE_LENGTH = 1_000_000
 /** Precomputed lookups and shared state threaded through the recursion. */
 interface RedactionContext {
   sensitiveKeysLower: Set<string>
-  headerNamesLower: Set<string>
   statePathPatterns: string[]
   compiledValuePatterns: RegExp[]
   seen: Set<unknown>
@@ -234,7 +234,6 @@ function compileValuePatterns(patterns: string[]): RegExp[] {
 function buildContext(rules: McpRedactionRules, jsonStringDepth = 0): RedactionContext {
   return {
     sensitiveKeysLower: new Set((rules.sensitiveKeys ?? []).map((k) => k.toLowerCase())),
-    headerNamesLower: new Set((rules.headerNames ?? []).map((h) => h.toLowerCase())),
     statePathPatterns: rules.statePathPatterns ?? [],
     compiledValuePatterns: compileValuePatterns(rules.valuePatterns ?? []),
     seen: new Set<unknown>(),
@@ -286,11 +285,11 @@ function redactObject(
       continue
     }
 
-    // Sensitive keys and header names redact at any nesting level. Treating
-    // header names universally avoids leaks when API payloads are stored
-    // under non-canonical keys (requestHeaders, lastResponse, etc.) — we'd
+    // Universal key denylist: matches at any nesting level. HTTP header names
+    // (authorization, cookie, etc.) are folded into this list so they redact
+    // even when nested under a non-canonical key like `requestHeaders`. We'd
     // rather over-redact a stray field named "cookie" than leak a real one.
-    if (ctx.sensitiveKeysLower.has(keyLower) || ctx.headerNamesLower.has(keyLower)) {
+    if (ctx.sensitiveKeysLower.has(keyLower)) {
       result[key] = REDACTED
       continue
     }

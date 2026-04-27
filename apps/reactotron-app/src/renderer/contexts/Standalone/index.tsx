@@ -13,7 +13,6 @@ export type McpStatus = "stopped" | "started" | "error"
 function readRedactionConfig(): McpRedactionServerConfig {
   return {
     defaults: {
-      headerNames: config.get("mcpRedactionHeaderNames") as string[],
       sensitiveKeys: config.get("mcpRedactionSensitiveKeys") as string[],
       statePathPatterns: config.get("mcpRedactionStatePathPatterns") as string[],
       valuePatterns: config.get("mcpRedactionValuePatterns") as string[],
@@ -133,7 +132,6 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         defaults: cfg.defaults ? { ...prev.defaults, ...cfg.defaults } : prev.defaults,
       }
       // Persist to electron-store
-      config.set("mcpRedactionHeaderNames", next.defaults.headerNames ?? [])
       config.set("mcpRedactionSensitiveKeys", next.defaults.sensitiveKeys ?? [])
       config.set("mcpRedactionStatePathPatterns", next.defaults.statePathPatterns ?? [])
       config.set("mcpRedactionValuePatterns", next.defaults.valuePatterns ?? [])
