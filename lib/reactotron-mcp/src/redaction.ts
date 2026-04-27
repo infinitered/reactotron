@@ -432,10 +432,10 @@ function storageKeyIsSensitive(storageKey: string, sensitiveKeysLower: Set<strin
 }
 
 /**
- * Redact AsyncStorage mutation data. Storage payloads use positional keys
- * ("0" = storage key, "1" = value) that the generic redactor can't match.
- * This function splits storage keys on common separators and redacts the value
- * when any segment matches sensitiveKeys.
+ * Redact AsyncStorage mutation payloads. The storage key carries the
+ * sensitive name (not any payload field), so this branches by wire shape
+ * (`{ key, value }`, `{ pairs: [[k, v], ...] }`) and tests the key against
+ * sensitiveKeys before redacting the corresponding value.
  */
 export function redactAsyncStorageData(data: unknown, rules: McpRedactionRules): unknown {
   if (data === null || data === undefined) return data
@@ -448,29 +448,25 @@ function redactAsyncStorageWithParsed(data: unknown, parsed: ParsedRules): unkno
 }
 
 function redactAsyncStorageItem(data: unknown, ctx: RedactionContext): unknown {
-  // multiSet / multiGet / multiRemove: array of pairs [{0: key, 1: value}, ...]
-  if (Array.isArray(data)) {
-    return data.map((item) => redactAsyncStorageItem(item, ctx))
+  const sensitiveKeysLower = ctx.parsed.sensitiveKeysLower
+
+  // [key, value] tuple from a multiSet/multiMerge `pairs` entry.
+  if (Array.isArray(data) && data.length === 2 && typeof data[0] === "string") {
+    const [key, value] = data as [string, unknown]
+    if (storageKeyIsSensitive(key, sensitiveKeysLower)) return [key, REDACTED]
+    if (typeof value === "string") return [key, redactStringValue(value, ctx)]
+    return data
   }
 
   if (typeof data === "object" && data !== null) {
     const obj = data as Record<string, unknown>
-    const sensitiveKeysLower = ctx.parsed.sensitiveKeysLower
 
-    // Pair shape: { 0: "auth:password", 1: "hunter2" }
-    if ("0" in obj && typeof obj["0"] === "string") {
-      const storageKey = obj["0"]
-      if (storageKeyIsSensitive(storageKey, sensitiveKeysLower) && "1" in obj) {
-        return { ...obj, "1": REDACTED }
-      }
-      // Even if the key isn't sensitive, the value might contain JSON with sensitive keys
-      if ("1" in obj && typeof obj["1"] === "string") {
-        return { ...obj, "1": redactStringValue(obj["1"], ctx) }
-      }
-      return obj
+    // multiSet / multiMerge: { pairs: [[key, value], ...] }
+    if (Array.isArray(obj.pairs)) {
+      return { ...obj, pairs: obj.pairs.map((p) => redactAsyncStorageItem(p, ctx)) }
     }
 
-    // setItem / mergeItem: { key: "auth:password", value: "hunter2" }
+    // setItem / mergeItem: { key, value }
     if ("key" in obj && typeof obj.key === "string") {
       const result = { ...obj }
       if (storageKeyIsSensitive(obj.key, sensitiveKeysLower) && "value" in obj) {

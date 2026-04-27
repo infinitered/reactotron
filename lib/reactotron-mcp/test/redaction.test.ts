@@ -667,66 +667,80 @@ describe("redactAsyncStorageData()", () => {
     valuePatterns: ["Bearer\\s+[A-Za-z0-9\\-._~+/]+=*"],
   }
 
-  test("redacts values when storage key contains a sensitive segment (colon separator)", () => {
-    const data = [
-      { "0": "auth:password", "1": "hunter2" },
-      { "0": "auth:api_key", "1": "leaked-api-key" },
-      { "0": "settings:theme", "1": "dark" },
-    ]
-    const result = redactAsyncStorageData(data, rules) as any[]
-    expect(result[0]["1"]).toBe(REDACTED)
-    expect(result[1]["1"]).toBe(REDACTED)
-    expect(result[2]["1"]).toBe("dark")
+  describe("setItem / mergeItem", () => {
+    test("redacts value when storage key carries a sensitive segment", () => {
+      const data = { key: "auth:password", value: "hunter2" }
+      const result = redactAsyncStorageData(data, rules) as any
+      expect(result.value).toBe(REDACTED)
+    })
+
+    test("redacts JSON string values when storage key is not sensitive", () => {
+      const jsonValue = JSON.stringify({ password: "hunter2", name: "alice" })
+      const data = { key: "cached:data", value: jsonValue }
+      const result = redactAsyncStorageData(data, rules) as any
+      const parsed = JSON.parse(result.value)
+      expect(parsed.password).toBe(REDACTED)
+      expect(parsed.name).toBe("alice")
+    })
   })
 
-  test("redacts values when storage key uses dot separator", () => {
-    const data = [{ "0": "user.accessToken", "1": "secret-token" }]
-    const result = redactAsyncStorageData(data, rules) as any[]
-    expect(result[0]["1"]).toBe(REDACTED)
-  })
+  describe("multiSet / multiMerge", () => {
+    test("redacts values when storage key carries a sensitive segment (colon)", () => {
+      const data = {
+        pairs: [
+          ["auth:password", "hunter2"],
+          ["auth:api_key", "leaked-api-key"],
+          ["settings:theme", "dark"],
+        ],
+      }
+      const result = redactAsyncStorageData(data, rules) as any
+      expect(result.pairs[0]).toEqual(["auth:password", REDACTED])
+      expect(result.pairs[1]).toEqual(["auth:api_key", REDACTED])
+      expect(result.pairs[2]).toEqual(["settings:theme", "dark"])
+    })
 
-  test("redacts values when storage key contains sensitive key as substring", () => {
-    const data = [
-      { "0": "auth_password", "1": "hunter2" },
-      { "0": "persist:api_key", "1": "leaked" },
-      { "0": "myAccessToken", "1": "secret" },
-    ]
-    const result = redactAsyncStorageData(data, rules) as any[]
-    expect(result[0]["1"]).toBe(REDACTED)
-    expect(result[1]["1"]).toBe(REDACTED)
-    expect(result[2]["1"]).toBe(REDACTED)
-  })
+    test("redacts when storage key uses dot separator", () => {
+      const data = { pairs: [["user.accessToken", "secret-token"]] }
+      const result = redactAsyncStorageData(data, rules) as any
+      expect(result.pairs[0][1]).toBe(REDACTED)
+    })
 
-  test("redacts values when storage key uses slash separator", () => {
-    const data = [{ "0": "auth/password", "1": "hunter2" }]
-    const result = redactAsyncStorageData(data, rules) as any[]
-    expect(result[0]["1"]).toBe(REDACTED)
-  })
+    test("redacts when storage key uses slash separator", () => {
+      const data = { pairs: [["auth/password", "hunter2"]] }
+      const result = redactAsyncStorageData(data, rules) as any
+      expect(result.pairs[0][1]).toBe(REDACTED)
+    })
 
-  test("applies JSON string redaction to values when storage key is not sensitive", () => {
-    const jsonValue = JSON.stringify({ password: "hunter2", api_key: "leaked", note: "Bearer abcdef1234567890ABCDEFGH" })
-    const data = [{ "0": "auth:session_data", "1": jsonValue }]
-    const result = redactAsyncStorageData(data, rules) as any[]
-    // Storage key "auth:session_data" doesn't match sensitiveKeys, but JSON contents do
-    const parsed = JSON.parse(result[0]["1"])
-    expect(parsed.password).toBe(REDACTED)
-    expect(parsed.api_key).toBe(REDACTED)
-    expect(parsed.note).toBe(REDACTED) // Bearer pattern match
-  })
+    test("redacts when storage key contains sensitive key as substring", () => {
+      const data = {
+        pairs: [
+          ["auth_password", "hunter2"],
+          ["persist:api_key", "leaked"],
+          ["myAccessToken", "secret"],
+        ],
+      }
+      const result = redactAsyncStorageData(data, rules) as any
+      expect(result.pairs[0][1]).toBe(REDACTED)
+      expect(result.pairs[1][1]).toBe(REDACTED)
+      expect(result.pairs[2][1]).toBe(REDACTED)
+    })
 
-  test("redacts JSON string values when storage key is not sensitive", () => {
-    const jsonValue = JSON.stringify({ password: "hunter2", name: "alice" })
-    const data = [{ "0": "cached:data", "1": jsonValue }]
-    const result = redactAsyncStorageData(data, rules) as any[]
-    const parsed = JSON.parse(result[0]["1"])
-    expect(parsed.password).toBe(REDACTED)
-    expect(parsed.name).toBe("alice")
-  })
+    test("applies JSON-string redaction to non-sensitive pair values", () => {
+      const jsonValue = JSON.stringify({ password: "hunter2", api_key: "leaked", note: "Bearer abcdef1234567890ABCDEFGH" })
+      const data = { pairs: [["auth:session_data", jsonValue]] }
+      const result = redactAsyncStorageData(data, rules) as any
+      const parsed = JSON.parse(result.pairs[0][1])
+      expect(parsed.password).toBe(REDACTED)
+      expect(parsed.api_key).toBe(REDACTED)
+      expect(parsed.note).toBe(REDACTED) // Bearer pattern match
+    })
 
-  test("handles key-value shape with 'key' and 'value' fields", () => {
-    const data = { key: "auth:password", value: "hunter2" }
-    const result = redactAsyncStorageData(data, rules) as any
-    expect(result.value).toBe(REDACTED)
+    test("preserves non-pair fields on the wrapper", () => {
+      const data = { pairs: [["auth:password", "hunter2"]], extra: "preserved" }
+      const result = redactAsyncStorageData(data, rules) as any
+      expect(result.extra).toBe("preserved")
+      expect(result.pairs[0][1]).toBe(REDACTED)
+    })
   })
 
   test("handles null and undefined", () => {
@@ -736,9 +750,9 @@ describe("redactAsyncStorageData()", () => {
 
   test("returns data unchanged when no sensitiveKeys configured", () => {
     const emptyRules: McpRedactionRules = { sensitiveKeys: [], valuePatterns: [] }
-    const data = [{ "0": "auth:password", "1": "hunter2" }]
-    const result = redactAsyncStorageData(data, emptyRules) as any[]
-    expect(result[0]["1"]).toBe("hunter2")
+    const data = { pairs: [["auth:password", "hunter2"]] }
+    const result = redactAsyncStorageData(data, emptyRules) as any
+    expect(result.pairs[0][1]).toBe("hunter2")
   })
 })
 
@@ -797,9 +811,9 @@ describe("createRedactor()", () => {
 
   test("redactAsyncStorage applies storage-key heuristic", () => {
     const redactor = createRedactor(mockServer([]), DEFAULT_SERVER_CONFIG)
-    const data = [{ "0": "auth:password", "1": "hunter2" }]
-    const result = redactor.redactAsyncStorage(data) as any[]
-    expect(result[0]["1"]).toBe(REDACTED)
+    const data = { pairs: [["auth:password", "hunter2"]] }
+    const result = redactor.redactAsyncStorage(data) as any
+    expect(result.pairs[0][1]).toBe(REDACTED)
   })
 
   test("returns data unchanged when client has fully disabled redaction", () => {
