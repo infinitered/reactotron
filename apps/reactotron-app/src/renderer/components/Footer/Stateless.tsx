@@ -162,7 +162,7 @@ interface Props {
   mcpStatus: McpStatus
   mcpPort: number | null
   onToggleMcp: () => void
-  mcpRedactionEnabled: boolean
+  mcpRedactionEnforced: boolean
   onOpenMcpSettings: () => void
 }
 
@@ -176,7 +176,7 @@ function Header({
   mcpStatus,
   mcpPort,
   onToggleMcp,
-  mcpRedactionEnabled,
+  mcpRedactionEnforced,
   onOpenMcpSettings,
 }: Props) {
   const renderMethod = isOpen ? renderExpanded : renderCollapsed
@@ -194,7 +194,7 @@ function Header({
             <McpDot $active={mcpStatus === "started"} />
             {mcpStatus === "started" ? `MCP :${mcpPort}` : "MCP"}
             {mcpStatus === "started" && (
-              mcpRedactionEnabled
+              mcpRedactionEnforced
                 ? <RedactionBadge title="Sensitive data is redacted"><ShieldIcon size={10} /></RedactionBadge>
                 : <RedactionBadge $warning title="Redaction disabled — sensitive data exposed"><ShieldIcon size={10} /></RedactionBadge>
             )}

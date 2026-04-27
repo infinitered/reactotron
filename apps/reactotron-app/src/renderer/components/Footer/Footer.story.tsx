@@ -66,7 +66,7 @@ storiesOf("components/Footer", module)
       mcpStatus="stopped"
       mcpPort={null}
       onToggleMcp={() => {}}
-      mcpRedactionEnabled
+      mcpRedactionEnforced
       onOpenMcpSettings={() => {}}
     />
   ))
@@ -81,7 +81,7 @@ storiesOf("components/Footer", module)
       mcpStatus="stopped"
       mcpPort={null}
       onToggleMcp={() => {}}
-      mcpRedactionEnabled
+      mcpRedactionEnforced
       onOpenMcpSettings={() => {}}
     />
   ))
@@ -96,7 +96,7 @@ storiesOf("components/Footer", module)
       mcpStatus="stopped"
       mcpPort={null}
       onToggleMcp={() => {}}
-      mcpRedactionEnabled
+      mcpRedactionEnforced
       onOpenMcpSettings={() => {}}
     />
   ))
@@ -111,7 +111,7 @@ storiesOf("components/Footer", module)
       mcpStatus="started"
       mcpPort={4567}
       onToggleMcp={() => {}}
-      mcpRedactionEnabled
+      mcpRedactionEnforced
       onOpenMcpSettings={() => {}}
     />
   ))
@@ -126,7 +126,7 @@ storiesOf("components/Footer", module)
       mcpStatus="started"
       mcpPort={4567}
       onToggleMcp={() => {}}
-      mcpRedactionEnabled
+      mcpRedactionEnforced
       onOpenMcpSettings={() => {}}
     />
   ))

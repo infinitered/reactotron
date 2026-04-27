@@ -31,7 +31,7 @@ interface Context {
   mcpStatus: McpStatus
   mcpPort: number | null
   toggleMcp: () => void
-  mcpRedactionEnabled: boolean
+  mcpRedactionEnforced: boolean
   openMcpSettings: () => void
   closeMcpSettings: () => void
   mcpSettingsOpen: boolean
@@ -47,7 +47,7 @@ const StandaloneContext = React.createContext<Context>({
   mcpStatus: "stopped",
   mcpPort: null,
   toggleMcp: () => {},
-  mcpRedactionEnabled: true,
+  mcpRedactionEnforced: true,
   openMcpSettings: () => {},
   closeMcpSettings: () => {},
   mcpSettingsOpen: false,
@@ -106,7 +106,7 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [mcpSettingsOpen, setMcpSettingsOpen] = useState(false)
   const [mcpRedactionConfig, setMcpRedactionConfig] = useState<McpRedactionServerConfig>(readRedactionConfig)
 
-  const mcpRedactionEnabled = !mcpRedactionConfig.allowClientDisable
+  const mcpRedactionEnforced = !mcpRedactionConfig.allowClientDisable
 
   const openMcpSettings = useCallback(() => setMcpSettingsOpen(true), [])
   const closeMcpSettings = useCallback(() => setMcpSettingsOpen(false), [])
@@ -187,7 +187,7 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         mcpStatus,
         mcpPort,
         toggleMcp,
-        mcpRedactionEnabled,
+        mcpRedactionEnforced,
         openMcpSettings,
         closeMcpSettings,
         mcpSettingsOpen,

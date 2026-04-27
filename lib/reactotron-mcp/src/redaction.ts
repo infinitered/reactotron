@@ -163,20 +163,32 @@ const MAX_JSON_PARSE_LENGTH = 1_000_000
 
 /** Precomputed lookups and shared state threaded through the recursion. */
 interface RedactionContext {
-  rules: McpRedactionRules
   sensitiveKeysLower: Set<string>
   headerNamesLower: Set<string>
   statePathPatterns: string[]
+  compiledValuePatterns: RegExp[]
   seen: Set<unknown>
   jsonStringDepth: number
 }
 
+function compileValuePatterns(patterns: string[]): RegExp[] {
+  const compiled: RegExp[] = []
+  for (const pattern of patterns) {
+    try {
+      compiled.push(new RegExp(pattern, "g"))
+    } catch {
+      // Invalid regex — skip
+    }
+  }
+  return compiled
+}
+
 function buildContext(rules: McpRedactionRules, jsonStringDepth = 0): RedactionContext {
   return {
-    rules,
     sensitiveKeysLower: new Set((rules.sensitiveKeys ?? []).map((k) => k.toLowerCase())),
     headerNamesLower: new Set((rules.headerNames ?? []).map((h) => h.toLowerCase())),
     statePathPatterns: rules.statePathPatterns ?? [],
+    compiledValuePatterns: compileValuePatterns(rules.valuePatterns ?? []),
     seen: new Set<unknown>(),
     jsonStringDepth,
   }
@@ -195,7 +207,7 @@ function redactValue(data: unknown, ctx: RedactionContext, currentPath: string):
   if (data === null || data === undefined) return data
 
   if (typeof data === "string") {
-    return redactStringValue(data, ctx.rules, ctx.jsonStringDepth)
+    return redactStringValue(data, ctx)
   }
 
   if (typeof data !== "object") return data
@@ -238,18 +250,7 @@ function redactObject(
       continue
     }
 
-    // Recurse
-    if (value === null || value === undefined) {
-      result[key] = value
-    } else if (typeof value === "string") {
-      result[key] = redactStringValue(value, ctx.rules, ctx.jsonStringDepth)
-    } else if (Array.isArray(value)) {
-      result[key] = value.map((item, i) => redactValue(item, ctx, `${childPath}.${i}`))
-    } else if (typeof value === "object") {
-      result[key] = redactObject(value as Record<string, unknown>, ctx, childPath)
-    } else {
-      result[key] = value
-    }
+    result[key] = redactValue(value, ctx, childPath)
   }
 
   return result
@@ -275,7 +276,7 @@ function redactHeaders(
       continue
     }
     if (typeof value === "string") {
-      result[key] = redactStringValue(value, ctx.rules, ctx.jsonStringDepth)
+      result[key] = redactStringValue(value, ctx)
     } else {
       result[key] = value
     }
@@ -284,19 +285,19 @@ function redactHeaders(
   return result
 }
 
-function redactStringValue(value: string, rules: McpRedactionRules, jsonStringDepth = 0): string {
+function redactStringValue(value: string, ctx: RedactionContext): string {
   let result = value
 
   // Detect JSON strings and redact their contents by parsing → redacting → re-stringifying.
   // Guarded by depth limit (nested JSON.stringify layers) and size limit (avoid parsing huge strings).
-  if (jsonStringDepth < MAX_JSON_STRING_DEPTH && result.length <= MAX_JSON_PARSE_LENGTH) {
+  if (ctx.jsonStringDepth < MAX_JSON_STRING_DEPTH && result.length <= MAX_JSON_PARSE_LENGTH) {
     const trimmed = result.trim()
     if ((trimmed.startsWith("{") && trimmed.endsWith("}")) || (trimmed.startsWith("[") && trimmed.endsWith("]"))) {
       try {
         const parsed = JSON.parse(result)
         if (typeof parsed === "object" && parsed !== null) {
-          const ctx = buildContext(rules, jsonStringDepth + 1)
-          return JSON.stringify(redactValue(parsed, ctx, ""))
+          const innerCtx: RedactionContext = { ...ctx, seen: new Set(), jsonStringDepth: ctx.jsonStringDepth + 1 }
+          return JSON.stringify(redactValue(parsed, innerCtx, ""))
         }
       } catch {
         // Not valid JSON — fall through to other redaction strategies
@@ -305,24 +306,18 @@ function redactStringValue(value: string, rules: McpRedactionRules, jsonStringDe
   }
 
   // Redact URL query parameters whose names match sensitiveKeys
-  const sensitiveKeys = rules.sensitiveKeys ?? []
-  if (sensitiveKeys.length > 0) {
+  if (ctx.sensitiveKeysLower.size > 0) {
     if (result.includes("?")) {
-      result = redactUrlQueryParams(result, sensitiveKeys)
+      result = redactUrlQueryParams(result, ctx.sensitiveKeysLower)
     } else if (looksLikeFormEncoded(result)) {
-      result = redactFormEncodedParams(result, sensitiveKeys)
+      result = redactFormEncodedParams(result, ctx.sensitiveKeysLower)
     }
   }
 
-  // Redact value patterns
-  const patterns = rules.valuePatterns ?? []
-  for (const pattern of patterns) {
-    try {
-      const regex = new RegExp(pattern, "g")
-      result = result.replace(regex, REDACTED)
-    } catch {
-      // Invalid regex — skip
-    }
+  // Redact value patterns (regexes precompiled in buildContext)
+  for (const regex of ctx.compiledValuePatterns) {
+    regex.lastIndex = 0
+    result = result.replace(regex, REDACTED)
   }
   return result
 }
@@ -338,13 +333,12 @@ function looksLikeFormEncoded(value: string): boolean {
 }
 
 /** Redact values in a form-urlencoded body where the param name matches sensitiveKeys. */
-function redactFormEncodedParams(value: string, sensitiveKeys: string[]): string {
-  const sensitiveSet = new Set(sensitiveKeys.map((k) => k.toLowerCase()))
+function redactFormEncodedParams(value: string, sensitiveKeysLower: Set<string>): string {
   return value.split("&").map((param) => {
     const eqIndex = param.indexOf("=")
     if (eqIndex === -1) return param
     const name = param.slice(0, eqIndex)
-    if (sensitiveSet.has(name.toLowerCase())) {
+    if (sensitiveKeysLower.has(name.toLowerCase())) {
       return `${name}=${REDACTED}`
     }
     return param
@@ -352,11 +346,10 @@ function redactFormEncodedParams(value: string, sensitiveKeys: string[]): string
 }
 
 /** Redact query parameter values in URLs where the param name matches sensitiveKeys. */
-function redactUrlQueryParams(value: string, sensitiveKeys: string[]): string {
+function redactUrlQueryParams(value: string, sensitiveKeysLower: Set<string>): string {
   const qIndex = value.indexOf("?")
   if (qIndex === -1) return value
 
-  const sensitiveSet = new Set(sensitiveKeys.map((k) => k.toLowerCase()))
   const base = value.slice(0, qIndex + 1)
   const queryString = value.slice(qIndex + 1)
 
@@ -369,7 +362,7 @@ function redactUrlQueryParams(value: string, sensitiveKeys: string[]): string {
     const eqIndex = param.indexOf("=")
     if (eqIndex === -1) return param
     const name = param.slice(0, eqIndex)
-    if (sensitiveSet.has(name.toLowerCase())) {
+    if (sensitiveKeysLower.has(name.toLowerCase())) {
       return `${name}=${REDACTED}`
     }
     return param
@@ -414,26 +407,30 @@ function storageKeyIsSensitive(storageKey: string, sensitiveKeysLower: Set<strin
 export function redactAsyncStorageData(data: unknown, rules: McpRedactionRules): unknown {
   if (data === null || data === undefined) return data
 
-  const sensitiveKeysLower = new Set((rules.sensitiveKeys ?? []).map((k) => k.toLowerCase()))
-  if (sensitiveKeysLower.size === 0) return data
+  const ctx = buildContext(rules)
+  if (ctx.sensitiveKeysLower.size === 0) return data
 
+  return redactAsyncStorageItem(data, ctx)
+}
+
+function redactAsyncStorageItem(data: unknown, ctx: RedactionContext): unknown {
   // multiSet / multiGet / multiRemove: array of pairs [{0: key, 1: value}, ...]
   if (Array.isArray(data)) {
-    return data.map((item) => redactAsyncStorageData(item, rules))
+    return data.map((item) => redactAsyncStorageItem(item, ctx))
   }
 
-  if (typeof data === "object") {
+  if (typeof data === "object" && data !== null) {
     const obj = data as Record<string, unknown>
 
     // Pair shape: { 0: "auth:password", 1: "hunter2" }
     if ("0" in obj && typeof obj["0"] === "string") {
       const storageKey = obj["0"]
-      if (storageKeyIsSensitive(storageKey, sensitiveKeysLower) && "1" in obj) {
+      if (storageKeyIsSensitive(storageKey, ctx.sensitiveKeysLower) && "1" in obj) {
         return { ...obj, "1": REDACTED }
       }
       // Even if the key isn't sensitive, the value might contain JSON with sensitive keys
       if ("1" in obj && typeof obj["1"] === "string") {
-        return { ...obj, "1": redactStringValue(obj["1"], rules) }
+        return { ...obj, "1": redactStringValue(obj["1"], ctx) }
       }
       return obj
     }
@@ -441,10 +438,10 @@ export function redactAsyncStorageData(data: unknown, rules: McpRedactionRules):
     // setItem / mergeItem: { key: "auth:password", value: "hunter2" }
     if ("key" in obj && typeof obj.key === "string") {
       const result = { ...obj }
-      if (storageKeyIsSensitive(obj.key, sensitiveKeysLower) && "value" in obj) {
+      if (storageKeyIsSensitive(obj.key, ctx.sensitiveKeysLower) && "value" in obj) {
         result.value = REDACTED
       } else if ("value" in obj && typeof obj.value === "string") {
-        result.value = redactStringValue(obj.value as string, rules)
+        result.value = redactStringValue(obj.value as string, ctx)
       }
       return result
     }

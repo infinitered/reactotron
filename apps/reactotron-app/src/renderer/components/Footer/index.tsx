@@ -7,7 +7,7 @@ import Footer from "./Stateless"
 export default function ConnectedFooter() {
   const {
     serverStatus, connections, selectedConnection, selectConnection,
-    mcpStatus, mcpPort, toggleMcp, mcpRedactionEnabled, openMcpSettings,
+    mcpStatus, mcpPort, toggleMcp, mcpRedactionEnforced, openMcpSettings,
   } = useContext(StandaloneContext)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -22,7 +22,7 @@ export default function ConnectedFooter() {
       mcpStatus={mcpStatus}
       mcpPort={mcpPort}
       onToggleMcp={toggleMcp}
-      mcpRedactionEnabled={mcpRedactionEnabled}
+      mcpRedactionEnforced={mcpRedactionEnforced}
       onOpenMcpSettings={openMcpSettings}
     />
   )
