@@ -2,6 +2,7 @@ import {
   redact,
   redactAsyncStorageData,
   resolveEffectiveRules,
+  createRedactor,
   DEFAULT_REDACTION_RULES,
   DEFAULT_SERVER_CONFIG,
   REDACTED,
@@ -739,5 +740,76 @@ describe("redactAsyncStorageData()", () => {
     const data = [{ "0": "auth:password", "1": "hunter2" }]
     const result = redactAsyncStorageData(data, emptyRules) as any[]
     expect(result[0]["1"]).toBe("hunter2")
+  })
+})
+
+describe("createRedactor()", () => {
+  // Minimal mock: connections is the only field createRedactor reaches into.
+  function mockServer(connections: Array<{ clientId: string; mcpRedaction?: McpRedactionConfig }>) {
+    return { connections } as any
+  }
+
+  test("memoizes rule resolution per clientId", () => {
+    // Spy on resolveEffectiveRules by counting how many times the underlying
+    // server.connections lookup runs. Since we can't spy on the internal helper
+    // directly, drive a connections array whose `.find` we instrument.
+    const conn = { clientId: "app-A", mcpRedaction: { additionalRules: { sensitiveKeys: ["foo"] } } }
+    let findCalls = 0
+    const connections: any = [conn]
+    const origFind = connections.find.bind(connections)
+    connections.find = (predicate: any) => { findCalls++; return origFind(predicate) }
+
+    const redactor = createRedactor({ connections } as any, DEFAULT_SERVER_CONFIG)
+    redactor.redact({ foo: "x", password: "y" }, "app-A")
+    redactor.redact({ foo: "x", password: "y" }, "app-A")
+    redactor.redact({ foo: "x", password: "y" }, "app-A")
+
+    // Only one connection lookup despite three redact calls.
+    expect(findCalls).toBe(1)
+  })
+
+  test("separate cache entries per clientId", () => {
+    const connections = [
+      { clientId: "app-A", mcpRedaction: { additionalRules: { sensitiveKeys: ["fooA"] } } },
+      { clientId: "app-B", mcpRedaction: { additionalRules: { sensitiveKeys: ["fooB"] } } },
+    ]
+    const redactor = createRedactor({ connections } as any, DEFAULT_SERVER_CONFIG)
+
+    const dataA = redactor.redact({ fooA: "leak", fooB: "ok" }, "app-A") as any
+    const dataB = redactor.redact({ fooA: "ok", fooB: "leak" }, "app-B") as any
+
+    expect(dataA.fooA).toBe(REDACTED)
+    expect(dataA.fooB).toBe("ok")
+    expect(dataB.fooA).toBe("ok")
+    expect(dataB.fooB).toBe(REDACTED)
+  })
+
+  test("redactState anchors path patterns at statePath", () => {
+    const config: McpRedactionServerConfig = {
+      ...DEFAULT_SERVER_CONFIG,
+      defaults: { ...DEFAULT_SERVER_CONFIG.defaults, statePathPatterns: ["auth.tokens.*"] },
+    }
+    const redactor = createRedactor(mockServer([]), config)
+
+    const subtree = { tokens: { access: "raw" } }
+    const result = redactor.redactState(subtree, undefined, "auth") as any
+    expect(result.tokens.access).toBe(REDACTED)
+  })
+
+  test("redactAsyncStorage applies storage-key heuristic", () => {
+    const redactor = createRedactor(mockServer([]), DEFAULT_SERVER_CONFIG)
+    const data = [{ "0": "auth:password", "1": "hunter2" }]
+    const result = redactor.redactAsyncStorage(data) as any[]
+    expect(result[0]["1"]).toBe(REDACTED)
+  })
+
+  test("returns data unchanged when client has fully disabled redaction", () => {
+    const config: McpRedactionServerConfig = { ...DEFAULT_SERVER_CONFIG, allowClientDisable: true }
+    const redactor = createRedactor(
+      mockServer([{ clientId: "app-A", mcpRedaction: { disableRedaction: true } }]),
+      config
+    )
+    const data = { password: "hunter2" }
+    expect(redactor.redact(data, "app-A")).toBe(data)
   })
 })

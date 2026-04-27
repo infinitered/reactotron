@@ -6,9 +6,7 @@ export {
   REDACTED,
   redact,
   resolveEffectiveRules,
-  applyRedaction,
-  applyStateRedaction,
-  applyAsyncStorageRedaction,
+  createRedactor,
   getClientRedactionConfig,
 } from "./redaction"
-export type { McpRedactionServerConfig } from "./redaction"
+export type { McpRedactionServerConfig, Redactor } from "./redaction"

@@ -110,66 +110,62 @@ export function getClientRedactionConfig(server: ReactotronServer, clientId?: st
   return undefined
 }
 
-/** Resolve the rules that apply to a given client (or undefined for "no redaction"). */
-function rulesFor(
-  server: ReactotronServer,
-  serverRedactionConfig: McpRedactionServerConfig,
-  clientId?: string,
-): McpRedactionRules | null {
-  const clientConfig = getClientRedactionConfig(server, clientId)
-  return resolveEffectiveRules(serverRedactionConfig, clientConfig)
+/**
+ * A scoped redactor that resolves rules once per (server, clientId) and reuses
+ * them across many calls. Create one per MCP request handler and call its
+ * methods for each event/payload — each call costs one Map lookup instead of a
+ * full rule resolve + Set/RegExp build per event.
+ */
+export interface Redactor {
+  /** Generic payload (network entry, log event, action, etc.). */
+  redact(data: unknown, clientId?: string): unknown
+  /**
+   * State payload anchored at `statePath`. Pass "" for a full state tree.
+   * Path patterns are absolute, so subtree responses must pass the request path.
+   */
+  redactState(data: unknown, clientId: string | undefined, statePath: string): unknown
+  /**
+   * AsyncStorage mutation payload. Runs the storage-key heuristic for
+   * positional `{0:key,1:value}` payloads, then the generic deep walk.
+   */
+  redactAsyncStorage(data: unknown, clientId?: string): unknown
 }
 
-/**
- * Apply redaction to a generic payload (network entry, log event, action, etc.)
- * using the rules that govern `clientId`.
- */
-export function applyRedaction(
-  data: unknown,
-  server: ReactotronServer,
-  serverRedactionConfig: McpRedactionServerConfig,
-  clientId?: string,
-): unknown {
-  const rules = rulesFor(server, serverRedactionConfig, clientId)
-  if (!rules) return data
-  return redact(data, rules)
-}
+const NO_CLIENT = "\0__no_client__"
 
-/**
- * Apply redaction to a state payload that is anchored at `statePath` within the
- * full state tree (e.g. the result of `request_state({path: "user.profile"})`).
- *
- * State path patterns are absolute (anchored at the state root), so the caller
- * MUST pass the path the subtree was requested at — otherwise pattern matching
- * will silently no-op for subtrees. Pass "" for a full-tree response.
- */
-export function applyStateRedaction(
-  data: unknown,
+export function createRedactor(
   server: ReactotronServer,
   serverRedactionConfig: McpRedactionServerConfig,
-  clientId: string | undefined,
-  statePath: string,
-): unknown {
-  const rules = rulesFor(server, serverRedactionConfig, clientId)
-  if (!rules) return data
-  return redact(data, rules, statePath)
-}
+): Redactor {
+  // Cache resolved rules per clientId for the lifetime of the redactor.
+  // Per-MCP-request scope means a 500-event timeline read shares one entry per
+  // distinct clientId instead of resolving 500 times.
+  const cache = new Map<string, McpRedactionRules | null>()
 
-/**
- * Apply redaction to an AsyncStorage mutation payload. Encapsulates the
- * two-pass redaction this shape requires: first a storage-key heuristic that
- * matches positional `{0: key, 1: value}` payloads (which the generic deep
- * walk can't reason about), then the deep walk for everything else.
- */
-export function applyAsyncStorageRedaction(
-  data: unknown,
-  server: ReactotronServer,
-  serverRedactionConfig: McpRedactionServerConfig,
-  clientId?: string,
-): unknown {
-  const rules = rulesFor(server, serverRedactionConfig, clientId)
-  if (!rules) return data
-  return redact(redactAsyncStorageData(data, rules), rules)
+  function rulesFor(clientId?: string): McpRedactionRules | null {
+    const key = clientId ?? NO_CLIENT
+    const cached = cache.get(key)
+    if (cached !== undefined) return cached
+    const clientConfig = getClientRedactionConfig(server, clientId)
+    const rules = resolveEffectiveRules(serverRedactionConfig, clientConfig)
+    cache.set(key, rules)
+    return rules
+  }
+
+  return {
+    redact(data, clientId) {
+      const rules = rulesFor(clientId)
+      return rules ? redact(data, rules) : data
+    },
+    redactState(data, clientId, statePath) {
+      const rules = rulesFor(clientId)
+      return rules ? redact(data, rules, statePath) : data
+    },
+    redactAsyncStorage(data, clientId) {
+      const rules = rulesFor(clientId)
+      return rules ? redact(redactAsyncStorageData(data, rules), rules) : data
+    },
+  }
 }
 
 function deepCopyRules(rules: McpRedactionRules): McpRedactionRules {

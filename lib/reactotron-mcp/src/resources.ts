@@ -10,12 +10,7 @@ import {
   summarizeCommand,
   summarizeNetworkEntry,
 } from "./serialization"
-import {
-  applyRedaction,
-  applyStateRedaction,
-  applyAsyncStorageRedaction,
-  type McpRedactionServerConfig,
-} from "./redaction"
+import { createRedactor, type McpRedactionServerConfig } from "./redaction"
 
 interface AppInfo {
   id: number
@@ -98,10 +93,11 @@ export function registerResources(
     description: "Read this first to understand what's happening in the app. Returns summarized debug events (type, timestamp, and a short preview) newest-first. Payloads are stripped to keep the response small. Use the timeline_by_type resource template to get full event data filtered by type (e.g. reactotron://timeline/api.response).",
     mimeType: "application/json",
   }, async (uri) => {
+    const redactor = createRedactor(server, serverRedactionConfig)
     const meta = connectionMeta(server)
     const events = filterByClient(commandBuffer, server)
     const summarized = [...events].reverse().map((cmd) =>
-      applyRedaction(summarizeCommand(cmd), server, serverRedactionConfig, cmd.clientId)
+      redactor.redact(summarizeCommand(cmd), cmd.clientId)
     )
     return json(uri, { _meta: meta, eventCount: events.length, events: summarized },
       "Events are summarized. Use the timeline_by_type resource (e.g. reactotron://timeline/api.response) to get full payloads for a specific event type.")
@@ -130,11 +126,12 @@ export function registerResources(
       mimeType: "application/json",
     },
     async (uri, { type }) => {
+      const redactor = createRedactor(server, serverRedactionConfig)
       const meta = connectionMeta(server)
       const events = filterByClient(commandBuffer, server)
         .filter((c) => c.type === type)
       const redactedEvents = [...events].reverse().map((cmd) =>
-        applyRedaction(cmd, server, serverRedactionConfig, cmd.clientId)
+        redactor.redact(cmd, cmd.clientId)
       )
       return json(uri, { _meta: meta, type, eventCount: events.length, events: redactedEvents },
         `Too many ${type} events to return in full. Try clear_timeline to reset, then reproduce the issue to capture fewer events.`)
@@ -145,6 +142,7 @@ export function registerResources(
     description: "Latest cached Redux/MST state snapshot. May be stale — use the request_state tool for a fresh snapshot. Returns no_state_received if the app hasn't sent state yet.",
     mimeType: "application/json",
   }, async (uri) => {
+    const redactor = createRedactor(server, serverRedactionConfig)
     const meta = connectionMeta(server)
     const stateCommands = filterByClient(
       commandBuffer.filter((c) => c.type === "state.values.response"),
@@ -159,9 +157,7 @@ export function registerResources(
     // a full tree or a subtree depending on what the last request_state asked
     // for. payload.path carries the anchor when present.
     const statePath = (latest?.payload as { path?: string } | undefined)?.path ?? ""
-    const redactedState = applyStateRedaction(
-      stateValue, server, serverRedactionConfig, latest?.clientId, statePath
-    )
+    const redactedState = redactor.redactState(stateValue, latest?.clientId, statePath)
     return json(uri, { _meta: meta, state: redactedState },
       "State is too large. Use the request_state tool with a path like 'user.profile' to fetch a specific slice. Use request_state_keys to explore the state shape first.")
   })
@@ -170,13 +166,14 @@ export function registerResources(
     description: "Captured HTTP requests and responses. Each entry shows URL, method, status, duration, headers, and previews of request/response bodies (truncated to 500 chars). Use timeline_by_type with type 'api.response' for full request/response data.",
     mimeType: "application/json",
   }, async (uri) => {
+    const redactor = createRedactor(server, serverRedactionConfig)
     const meta = connectionMeta(server)
     const networkCommands = filterByClient(
       commandBuffer.filter((c) => c.type === "api.response"),
       server
     )
     const entries = networkCommands.map((cmd) =>
-      applyRedaction(summarizeNetworkEntry(cmd), server, serverRedactionConfig, cmd.clientId)
+      redactor.redact(summarizeNetworkEntry(cmd), cmd.clientId)
     )
     return json(uri, { _meta: meta, entries },
       "Network log is too large. Use timeline_by_type with type 'api.response' for full data, or clear_timeline to reset and capture fewer events.")
@@ -195,15 +192,13 @@ export function registerResources(
     description: "Performance benchmark results from connected apps, sorted by time. Each has title, steps, and durations.",
     mimeType: "application/json",
   }, async (uri) => {
+    const redactor = createRedactor(server, serverRedactionConfig)
     const meta = connectionMeta(server)
     const benchmarks = filterByClient(
       commandBuffer.filter((c) => c.type === "benchmark.report"),
       server
     ).map((c) =>
-      applyRedaction(
-        { date: c.date, clientId: c.clientId, ...c.payload },
-        server, serverRedactionConfig, c.clientId
-      )
+      redactor.redact({ date: c.date, clientId: c.clientId, ...c.payload }, c.clientId)
     )
     return json(uri, { _meta: meta, benchmarks })
   })
@@ -212,15 +207,13 @@ export function registerResources(
     description: "State subscription changes. Shows values at subscribed paths whenever they change. Use the subscribe_state tool to add subscriptions.",
     mimeType: "application/json",
   }, async (uri) => {
+    const redactor = createRedactor(server, serverRedactionConfig)
     const meta = connectionMeta(server)
     const changes = filterByClient(
       commandBuffer.filter((c) => c.type === "state.values.change"),
       server
     ).map((c) =>
-      applyRedaction(
-        { date: c.date, clientId: c.clientId, ...c.payload },
-        server, serverRedactionConfig, c.clientId
-      )
+      redactor.redact({ date: c.date, clientId: c.clientId, ...c.payload }, c.clientId)
     )
     return json(uri, {
       _meta: meta,
@@ -234,6 +227,7 @@ export function registerResources(
     description: "AsyncStorage mutations captured from the app. Shows setItem, removeItem, mergeItem, multiSet, multiRemove, multiMerge, and clear operations with their keys and values.",
     mimeType: "application/json",
   }, async (uri) => {
+    const redactor = createRedactor(server, serverRedactionConfig)
     const meta = connectionMeta(server)
     const mutations = filterByClient(
       commandBuffer.filter((c) => c.type === "asyncStorage.mutation"),
@@ -242,7 +236,7 @@ export function registerResources(
       date: c.date,
       clientId: c.clientId,
       action: c.payload?.action,
-      data: applyAsyncStorageRedaction(c.payload?.data, server, serverRedactionConfig, c.clientId),
+      data: redactor.redactAsyncStorage(c.payload?.data, c.clientId),
     }))
     return json(uri, { _meta: meta, mutations },
       "AsyncStorage mutations are too large. Try clear_timeline to reset, then reproduce the specific interaction you want to inspect.")
