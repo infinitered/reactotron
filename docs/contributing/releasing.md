@@ -68,3 +68,36 @@ CircleCi is used to run the release tasks. The `config.yml` file is located in t
 CircleCi is configured to check for whether new release commits and tags are needed on every commit to a release branch: `master`, `beta`, and `alpha`.
 
 Once a new release tag is created, CircleCi will run a job to publish the artifacts for the workspace.
+
+## npm Authentication (Trusted Publishing via OIDC)
+
+npm packages are published using [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/) — CircleCI mints a short-lived OIDC token that Yarn 4.14+ exchanges for a single-use publish token. There is no long-lived `NPM_TOKEN` to rotate.
+
+### How it works in CI
+
+The `release_package` job in `.circleci/config.yml` runs two steps:
+
+1. **Mint npm OIDC token** — runs `circleci run oidc get --claims '{"aud":"npm:registry.npmjs.org"}'` and exports the result as `NPM_ID_TOKEN`.
+2. **Release to npm and github** — `yarn release:artifacts $CIRCLE_TAG` calls `scripts/release.artifacts.mjs`. The script (not Yarn) exchanges `NPM_ID_TOKEN` for a single-use npm publish token via a direct `POST` to `https://registry.npmjs.org/-/npm/v1/oidc/token/exchange/package/<name>`, then exposes the result as `NPM_TOKEN` so `.yarnrc.yml`'s `npmAuthToken: "${NPM_TOKEN-}"` picks it up at config-load time. Finally it invokes `yarn npm publish`.
+
+The reason the script does the exchange rather than Yarn: Yarn 4.14.1's `yarn npm publish` gates the OIDC code path on `GITHUB_ACTIONS || GITLAB_CI`, even though its `getOidcToken` helper already handles `CIRCLECI`. The companion fix is tracked upstream at [yarnpkg/berry#7122](https://github.com/yarnpkg/berry/pull/7122). Once Yarn ships the one-line gate fix and we bump, the exchange block in `release.artifacts.mjs` can be deleted and `yarn npm publish` will pick up `NPM_ID_TOKEN` directly.
+
+The job still requires the `reactotron-npm-context` CircleCI context for `$GITHUB_TOKEN` (used to create the GitHub release).
+
+### Adding a trusted publisher to a new package
+
+When publishing a new `reactotron-*` package, configure its Trusted Publisher on npm before the first release tag, otherwise the publish will fail with a "no trusted publisher configured" error.
+
+For each package:
+
+1. Navigate to `https://www.npmjs.com/package/<pkg>/access`.
+2. Scroll to "Trusted Publisher" and select **CircleCI**.
+3. Fill in the org/project/context IDs (ask a maintainer for current values; they live in the CircleCI project settings, not in this repo).
+4. Save.
+
+`npm trust` (npm v11.10.0+) supports batch configuration after `npm login`. See [npm bulk trusted publishing config](https://github.blog/changelog/2026-02-18-npm-bulk-trusted-publishing-config-and-script-security-now-generally-available/).
+
+### Out-of-scope packages
+
+- `reactotron-app` is published as GitHub release artifacts, not to npm.
+- `reactotron-mcp` is private (`"private": true`) and intentionally not on npm. Note that an unrelated `reactotron-mcp` package is squatted by `steve228uk` on npm — not affiliated with Infinite Red.

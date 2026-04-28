@@ -280,11 +280,13 @@ jobs:
       - checkout
       - install-packages
       - run:
-          name: Release to npm and github
+          name: Mint npm OIDC token
           command: |
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-            npm whoami
-            yarn release:artifacts $CIRCLE_TAG
+            NPM_ID_TOKEN=$(circleci run oidc get --claims '{"aud":"npm:registry.npmjs.org"}')
+            echo "export NPM_ID_TOKEN=$NPM_ID_TOKEN" >> $BASH_ENV
+      - run:
+          name: Release to npm and github
+          command: yarn release:artifacts $CIRCLE_TAG
 
   build_app_windows:
     <<: *defaults
