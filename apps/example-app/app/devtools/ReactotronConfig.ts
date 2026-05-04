@@ -22,6 +22,12 @@ const reactotron = Reactotron.configure({
     /** since this file gets hot reloaded, let's clear the past logs every time we connect */
     Reactotron.clear()
   },
+  // REDACTION TEST — exercises the two-key permission model.
+  mcpRedaction: {
+    disableRedaction: true,
+    removeRules: { sensitiveKeys: ["authorization"] },
+    additionalRules: { sensitiveKeys: ["myInternalField"] },
+  },
 })
   .use(apisaucePlugin({ ignoreContentTypes: /^(image)\/.*$/i }))
   .use(reactotronRedux())

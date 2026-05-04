@@ -1,6 +1,7 @@
-import React, { useRef, useEffect, useCallback, useState } from "react"
+import React, { useRef, useEffect, useCallback, useState, useMemo } from "react"
 import Server, { createServer } from "reactotron-core-server"
-import { createMcpServer, type ReactotronMcpServer } from "reactotron-mcp"
+import { createMcpServer, type ReactotronMcpServer, type McpRedactionServerConfig } from "reactotron-mcp"
+import type { McpRedactionConfig } from "reactotron-core-contract"
 
 import ReactotronBrain from "../../ReactotronBrain"
 import config from "../../config"
@@ -8,6 +9,18 @@ import config from "../../config"
 import useStandalone, { Connection, ServerStatus } from "./useStandalone"
 
 export type McpStatus = "stopped" | "started" | "error"
+
+function readRedactionConfig(): McpRedactionServerConfig {
+  return {
+    defaults: {
+      sensitiveKeys: config.get("mcpRedactionSensitiveKeys") as string[],
+      statePathPatterns: config.get("mcpRedactionStatePathPatterns") as string[],
+      valuePatterns: config.get("mcpRedactionValuePatterns") as string[],
+    },
+    allowClientDisable: config.get("mcpAllowClientDisable") as boolean,
+    allowClientRemoveRules: config.get("mcpAllowClientRemoveRules") as boolean,
+  }
+}
 
 // TODO: Move up to better places like core somewhere!
 interface Context {
@@ -18,6 +31,12 @@ interface Context {
   mcpStatus: McpStatus
   mcpPort: number | null
   toggleMcp: () => void
+  mcpRedactionEnforced: boolean
+  openMcpSettings: () => void
+  closeMcpSettings: () => void
+  mcpSettingsOpen: boolean
+  updateMcpRedactionConfig: (cfg: Partial<McpRedactionServerConfig>) => void
+  mcpRedactionConfig: McpRedactionServerConfig
 }
 
 const StandaloneContext = React.createContext<Context>({
@@ -28,6 +47,12 @@ const StandaloneContext = React.createContext<Context>({
   mcpStatus: "stopped",
   mcpPort: null,
   toggleMcp: () => {},
+  mcpRedactionEnforced: true,
+  openMcpSettings: () => {},
+  closeMcpSettings: () => {},
+  mcpSettingsOpen: false,
+  updateMcpRedactionConfig: () => {},
+  mcpRedactionConfig: readRedactionConfig(),
 })
 
 const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -78,6 +103,46 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const mcpServerRef = useRef<ReactotronMcpServer>(null)
   const [mcpStatus, setMcpStatus] = useState<McpStatus>("stopped")
   const [mcpPort, setMcpPort] = useState<number | null>(null)
+  const [mcpSettingsOpen, setMcpSettingsOpen] = useState(false)
+  const [mcpRedactionConfig, setMcpRedactionConfig] = useState<McpRedactionServerConfig>(readRedactionConfig)
+
+  // True unless a connected client has actually opted out via a permission
+  // the server is honoring. Toggling permissions alone doesn't flip this.
+  const mcpRedactionEnforced = useMemo(() => {
+    const { allowClientDisable, allowClientRemoveRules } = mcpRedactionConfig
+    if (!allowClientDisable && !allowClientRemoveRules) return true
+    return !connections.some((c) => {
+      const cfg = (c as unknown as { mcpRedaction?: McpRedactionConfig }).mcpRedaction
+      if (!cfg) return false
+      if (allowClientDisable && cfg.disableRedaction) return true
+      if (allowClientRemoveRules && cfg.removeRules) return true
+      return false
+    })
+  }, [connections, mcpRedactionConfig.allowClientDisable, mcpRedactionConfig.allowClientRemoveRules])
+
+  const openMcpSettings = useCallback(() => setMcpSettingsOpen(true), [])
+  const closeMcpSettings = useCallback(() => setMcpSettingsOpen(false), [])
+
+  const updateMcpRedactionConfig = useCallback((cfg: Partial<McpRedactionServerConfig>) => {
+    setMcpRedactionConfig((prev) => {
+      const next: McpRedactionServerConfig = {
+        ...prev,
+        ...cfg,
+        defaults: cfg.defaults ? { ...prev.defaults, ...cfg.defaults } : prev.defaults,
+      }
+      // Persist to electron-store
+      config.set("mcpRedactionSensitiveKeys", next.defaults.sensitiveKeys ?? [])
+      config.set("mcpRedactionStatePathPatterns", next.defaults.statePathPatterns ?? [])
+      config.set("mcpRedactionValuePatterns", next.defaults.valuePatterns ?? [])
+      config.set("mcpAllowClientDisable", next.allowClientDisable)
+      config.set("mcpAllowClientRemoveRules", next.allowClientRemoveRules)
+      // Update running MCP server if active
+      if (mcpServerRef.current) {
+        mcpServerRef.current.updateRedactionConfig(next)
+      }
+      return next
+    })
+  }, [])
 
   // Clean up MCP server on unmount
   useEffect(() => {
@@ -101,7 +166,7 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       setMcpPort(null)
     } else {
       const port = config.get("mcpPort") as number
-      const mcp = createMcpServer(reactotronServer.current)
+      const mcp = createMcpServer(reactotronServer.current, mcpRedactionConfig)
       mcp.start(port).then(() => {
         mcpServerRef.current = mcp
         setMcpStatus("started")
@@ -111,7 +176,7 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         setMcpPort(null)
       })
     }
-  }, [mcpStatus])
+  }, [mcpStatus, mcpRedactionConfig])
 
   const sendCommand = useCallback(
     (type: string, payload: any, clientId?: string) => {
@@ -133,6 +198,12 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         mcpStatus,
         mcpPort,
         toggleMcp,
+        mcpRedactionEnforced,
+        openMcpSettings,
+        closeMcpSettings,
+        mcpSettingsOpen,
+        updateMcpRedactionConfig,
+        mcpRedactionConfig,
       }}
     >
       <ReactotronBrain

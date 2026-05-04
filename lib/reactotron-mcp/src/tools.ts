@@ -6,6 +6,7 @@ import { promises as fsPromises } from "fs"
 import { extname } from "path"
 
 import { MAX_RESPONSE_CHARS, safeSerialize } from "./serialization"
+import { createRedactor, type McpRedactionServerConfig } from "./redaction"
 
 /** Extract width/height from PNG or JPEG buffer */
 function getImageSize(buf: Buffer, ext: string): { width: number; height: number } | null {
@@ -68,7 +69,8 @@ function textResult(data: unknown, guidance?: string) {
 export function registerTools(
   mcp: McpServer,
   server: ReactotronServer,
-  commandBuffer: Command[]
+  commandBuffer: Command[],
+  serverRedactionConfig: McpRedactionServerConfig
 ) {
   mcp.registerTool("dispatch_action", {
     description: [
@@ -88,6 +90,8 @@ export function registerTools(
     const action = { type: args.actionType, payload: args.actionPayload }
     server.send("state.action.dispatch", { action }, clientId)
 
+    const redactor = createRedactor(server, serverRedactionConfig)
+
     // Poll for confirmation (state.action.complete)
     const start = Date.now()
     const startLen = commandBuffer.length
@@ -96,11 +100,11 @@ export function registerTools(
       for (let i = startLen; i < commandBuffer.length; i++) {
         const cmd = commandBuffer[i]
         if (cmd.type === "state.action.complete" && cmd.clientId === clientId) {
-          return textResult({ status: "dispatched", action, confirmed: true })
+          return textResult({ status: "dispatched", action: redactor.redact(action, clientId), confirmed: true })
         }
       }
     }
-    return textResult({ status: "dispatched", action, confirmed: false, note: "Action was sent but no confirmation received. The app may not have the Redux plugin configured." })
+    return textResult({ status: "dispatched", action: redactor.redact(action, clientId), confirmed: false, note: "Action was sent but no confirmation received. The app may not have the Redux plugin configured." })
   })
 
   mcp.registerTool("request_state", {
@@ -130,8 +134,11 @@ export function registerTools(
       for (let i = startLen; i < commandBuffer.length; i++) {
         const cmd = commandBuffer[i]
         if (cmd.type === "state.values.response" && cmd.clientId === clientId) {
+          const stateValue = cmd.payload?.value ?? cmd.payload
+          const redactor = createRedactor(server, serverRedactionConfig)
+          const redactedState = redactor.redactState(stateValue, clientId, path)
           return textResult(
-            { status: "success", state: cmd.payload?.value ?? cmd.payload },
+            { status: "success", state: redactedState },
             "State response is too large. Use request_state with a more specific path (e.g. 'user.profile') to narrow the response. Use request_state_keys to explore the state shape."
           )
         }

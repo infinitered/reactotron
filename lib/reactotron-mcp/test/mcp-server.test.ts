@@ -702,3 +702,103 @@ describe("large response truncation", () => {
     }
   })
 })
+
+describe("per-client redaction across multiple connected apps", () => {
+  function connectAppWithConfig(
+    port: number,
+    name: string,
+    mcpRedaction: any
+  ): Promise<WebSocket> {
+    return new Promise((resolve) => {
+      const ws = new WebSocket(`ws://localhost:${port}`)
+      ws.on("open", () => {
+        ws.send(
+          JSON.stringify({
+            type: "client.intro",
+            payload: {
+              name,
+              platform: "ios",
+              platformVersion: "17.0",
+              clientId: `${name}-ios-test`,
+              mcpRedaction,
+            },
+          })
+        )
+        setTimeout(() => resolve(ws), 100)
+      })
+    })
+  }
+
+  test("each app's events are redacted with its own additionalRules", async () => {
+    // App A redacts "fooSecret"; App B redacts "barSecret". Each emits a log
+    // containing both keys. Verify cross-app rules don't leak: app A's log
+    // should still show "barSecret" (only fooSecret redacted), and vice versa.
+    const appA = await connectAppWithConfig(relayPort, "AppA", {
+      additionalRules: { sensitiveKeys: ["fooSecret"] },
+    })
+    const appB = await connectAppWithConfig(relayPort, "AppB", {
+      additionalRules: { sensitiveKeys: ["barSecret"] },
+    })
+
+    try {
+      const sensitivePayload = { fooSecret: "leak-foo", barSecret: "leak-bar", note: "hi" }
+      appA.send(JSON.stringify({ type: "log", payload: sensitivePayload }))
+      appB.send(JSON.stringify({ type: "log", payload: sensitivePayload }))
+      await new Promise((r) => setTimeout(r, 150))
+
+      const res = await mcpRequest(mcpPort, {
+        jsonrpc: "2.0",
+        method: "resources/read",
+        id: 100,
+        params: { uri: "reactotron://timeline/log" },
+      })
+      const result = parseSSE(res.body)
+      const data = JSON.parse(result.result.contents[0].text)
+
+      const appAEvent = data.events.find((e: any) => e.clientId === "AppA-ios-test")
+      const appBEvent = data.events.find((e: any) => e.clientId === "AppB-ios-test")
+      expect(appAEvent).toBeDefined()
+      expect(appBEvent).toBeDefined()
+
+      // App A: fooSecret redacted (its own rule), barSecret leaks through (not its rule)
+      expect(appAEvent.payload.fooSecret).toBe("[REDACTED]")
+      expect(appAEvent.payload.barSecret).toBe("leak-bar")
+
+      // App B: opposite
+      expect(appBEvent.payload.fooSecret).toBe("leak-foo")
+      expect(appBEvent.payload.barSecret).toBe("[REDACTED]")
+    } finally {
+      appA.close()
+      appB.close()
+    }
+  })
+
+  test("server defaults still apply per-event in multi-app mode", async () => {
+    // Without any per-client overrides, both apps' password fields must redact.
+    const appA = await connectMockApp(relayPort, "DefaultAppA")
+    const appB = await connectMockApp(relayPort, "DefaultAppB")
+
+    try {
+      appA.send(JSON.stringify({ type: "log", payload: { password: "pw-a", name: "alice" } }))
+      appB.send(JSON.stringify({ type: "log", payload: { password: "pw-b", name: "bob" } }))
+      await new Promise((r) => setTimeout(r, 150))
+
+      const res = await mcpRequest(mcpPort, {
+        jsonrpc: "2.0",
+        method: "resources/read",
+        id: 101,
+        params: { uri: "reactotron://timeline/log" },
+      })
+      const result = parseSSE(res.body)
+      const data = JSON.parse(result.result.contents[0].text)
+
+      const events = data.events.filter((e: any) => e.type === "log")
+      for (const ev of events) {
+        expect(ev.payload.password).toBe("[REDACTED]")
+      }
+    } finally {
+      appA.close()
+      appB.close()
+    }
+  })
+})

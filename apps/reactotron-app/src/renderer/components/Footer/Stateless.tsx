@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { MdSwapVert as ExpandIcon } from "react-icons/md"
+import { MdSwapVert as ExpandIcon, MdSettings as SettingsIcon, MdShield as ShieldIcon } from "react-icons/md"
 
 import config from "../../config"
 import {
@@ -54,6 +54,12 @@ interface McpButtonProps {
   $active: boolean
 }
 
+const McpGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2px;
+`
+
 const McpButton = styled.div.attrs(() => ({}))<McpButtonProps>`
   display: flex;
   align-items: center;
@@ -76,6 +82,25 @@ const McpDot = styled.div<McpButtonProps>`
   height: 6px;
   border-radius: 50%;
   background-color: ${(props) => props.$active ? "#50c878" : props.theme.foregroundDark};
+`
+
+const McpSettingsButton = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  color: ${(props) => props.theme.foregroundDark};
+  &:hover {
+    color: ${(props) => props.theme.foreground};
+    background-color: rgba(255,255,255,0.05);
+  }
+`
+
+const RedactionBadge = styled.span<{ $warning?: boolean }>`
+  display: flex;
+  align-items: center;
+  color: ${(props) => props.$warning ? "#e8a838" : "inherit"};
 `
 
 function renderExpanded(
@@ -137,6 +162,8 @@ interface Props {
   mcpStatus: McpStatus
   mcpPort: number | null
   onToggleMcp: () => void
+  mcpRedactionEnforced: boolean
+  onOpenMcpSettings: () => void
 }
 
 function Header({
@@ -149,6 +176,8 @@ function Header({
   mcpStatus,
   mcpPort,
   onToggleMcp,
+  mcpRedactionEnforced,
+  onOpenMcpSettings,
 }: Props) {
   const renderMethod = isOpen ? renderExpanded : renderCollapsed
 
@@ -156,14 +185,29 @@ function Header({
     <Container>
       <ContentContainer onClick={() => !isOpen && setIsOpen(true)} $isOpen={isOpen}>
         {renderMethod(serverStatus, connections, selectedConnection, onChangeConnection)}
-        <McpButton
-          $active={mcpStatus === "started"}
-          onClick={(e) => { e.stopPropagation(); onToggleMcp() }}
-          title={mcpStatus === "started" ? `MCP running on port ${mcpPort}` : "Start MCP server"}
-        >
-          <McpDot $active={mcpStatus === "started"} />
-          {mcpStatus === "started" ? `MCP :${mcpPort}` : "MCP"}
-        </McpButton>
+        <McpGroup>
+          <McpButton
+            $active={mcpStatus === "started"}
+            onClick={(e) => { e.stopPropagation(); onToggleMcp() }}
+            title={mcpStatus === "started" ? `MCP running on port ${mcpPort}` : "Start MCP server"}
+          >
+            <McpDot $active={mcpStatus === "started"} />
+            {mcpStatus === "started" ? `MCP :${mcpPort}` : "MCP"}
+            {mcpStatus === "started" && (
+              mcpRedactionEnforced
+                ? <RedactionBadge title="Sensitive data is redacted"><ShieldIcon size={10} /></RedactionBadge>
+                : <RedactionBadge $warning title="Redaction disabled — sensitive data exposed"><ShieldIcon size={10} /></RedactionBadge>
+            )}
+          </McpButton>
+          {mcpStatus === "started" && (
+            <McpSettingsButton
+              onClick={(e) => { e.stopPropagation(); onOpenMcpSettings() }}
+              title="MCP redaction settings"
+            >
+              <SettingsIcon size={14} />
+            </McpSettingsButton>
+          )}
+        </McpGroup>
         <ExpandContainer onClick={() => setIsOpen(!isOpen)}>
           <ExpandIcon size={18} />
         </ExpandContainer>
