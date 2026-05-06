@@ -11,8 +11,10 @@
   "repository": "https://github.com/infinitered/reactotron/tree/master/lib/reactotron-core-server",
   "files": [
     "dist",
-    "src"
+    "src",
+    "bin"
   ],
+  "bin": "./bin/reactotron-core-server.js",
   "main": "./dist/commonjs/index.js",
   "module": "./dist/module/index.js",
   "types": "./dist/typescript/commonjs/src/index.d.ts",
