@@ -98,6 +98,7 @@ const Header: FunctionComponent<React.PropsWithChildren<HeaderComponentProps>> =
               <ActionButton
                 tip={a.tip}
                 tipProps={{
+                  id: `tip-${idx}`,
                   effect: "float",
                 }}
                 icon={a.icon}
