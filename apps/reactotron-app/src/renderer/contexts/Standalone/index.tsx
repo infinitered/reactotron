@@ -15,6 +15,7 @@ interface Context {
   connections: Connection[]
   selectedConnection: Connection
   selectConnection: (clientId: string) => void
+  deleteConnection: (clientId: string) => void
   mcpStatus: McpStatus
   mcpPort: number | null
   toggleMcp: () => void
@@ -25,6 +26,7 @@ const StandaloneContext = React.createContext<Context>({
   connections: [],
   selectedConnection: null,
   selectConnection: null,
+  deleteConnection: () => {},
   mcpStatus: "stopped",
   mcpPort: null,
   toggleMcp: () => {},
@@ -39,6 +41,7 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     selectedClientId,
     selectedConnection,
     selectConnection,
+    deleteConnection,
     clearSelectedConnectionCommands,
     serverStarted,
     serverStopped,
@@ -130,6 +133,7 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         connections,
         selectedConnection,
         selectConnection,
+        deleteConnection,
         mcpStatus,
         mcpPort,
         toggleMcp,
