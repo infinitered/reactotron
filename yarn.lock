@@ -27104,6 +27104,7 @@ __metadata:
     react-native: "npm:0.73.6"
     react-native-builder-bob: "npm:^0.40.13"
     reactotron-core-client: "workspace:*"
+    reactotron-core-contract: "workspace:*"
     rimraf: "npm:5.0.5"
     ts-jest: "npm:^29.1.1"
     typescript: "npm:^4.9.5"

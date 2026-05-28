@@ -200,5 +200,6 @@ export {
 }
 
 export type { ClientOptions }
+export type { McpRedactionConfig, McpRedactionRules } from "reactotron-core-contract"
 
 export default reactotron
