@@ -118,11 +118,24 @@ export const FetchInterceptor = {
     return originalFetch !== null
   },
 
-  enableInterception() {
-    const current = globalThis.fetch as ReactotronFetch | undefined
-    // Only wrap expo/fetch. RN's XHR-backed fetch is already covered by
-    // `XHRInterceptor`, and wrapping it here too would double-report.
-    if (!current || !isExpoFetch(current) || current.__reactotronWrapped) {
+  /**
+   * Wraps the global fetch and reassigns `globalThis.fetch`.
+   *
+   * With no argument, only expo/fetch is wrapped (detected by the
+   * `expo.builtin` symbol). RN's XHR-backed fetch is already covered by
+   * `XHRInterceptor`, and wrapping it here too would double-report.
+   *
+   * Pass `fetchToWrap` to skip the detection and wrap that function instead —
+   * for runtimes where the expo/fetch global has been re-wrapped and lost the
+   * symbol (e.g. expo-router's window.location polyfill). The caller is
+   * asserting the function does not go through XMLHttpRequest.
+   */
+  enableInterception(fetchToWrap?: typeof fetch) {
+    if (originalFetch) {
+      return
+    }
+    const current = (fetchToWrap ?? globalThis.fetch) as ReactotronFetch | undefined
+    if (!current || current.__reactotronWrapped || (!fetchToWrap && !isExpoFetch(current))) {
       return
     }
 
@@ -164,7 +177,9 @@ export const FetchInterceptor = {
 
     wrapped.__reactotronWrapped = true
     // Keep it detectable as the expo builtin fetch for anything else that checks.
-    wrapped[EXPO_BUILTIN] = true
+    if (isExpoFetch(current)) {
+      wrapped[EXPO_BUILTIN] = true
+    }
     globalThis.fetch = wrapped
   },
 
