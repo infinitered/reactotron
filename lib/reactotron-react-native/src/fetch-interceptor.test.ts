@@ -101,6 +101,37 @@ describe("FetchInterceptor", () => {
     expect(globalThis.fetch).toBe(wrapped)
   })
 
+  it("wraps an explicitly provided fetch even without the expo symbol", async () => {
+    const response = makeResponse(200, { "content-type": "application/json" })
+    // no expo.builtin symbol — e.g. expo-router's re-wrapped global fetch
+    const routerWrapped: any = jest.fn(() => Promise.resolve(response))
+    globalThis.fetch = routerWrapped
+
+    const open = jest.fn()
+    FetchInterceptor.setOpenCallback(open)
+    FetchInterceptor.enableInterception(routerWrapped)
+
+    expect(FetchInterceptor.isInterceptorEnabled()).toBe(true)
+    expect(globalThis.fetch).not.toBe(routerWrapped)
+    // the wrapper must not pretend to be the expo builtin
+    expect((globalThis.fetch as any)[EXPO_BUILTIN]).toBeUndefined()
+
+    const result = await (globalThis.fetch as any)("https://example.com/y")
+    expect(result).toBe(response)
+    expect(routerWrapped).toHaveBeenCalledTimes(1)
+    expect(open).toHaveBeenCalledTimes(1)
+    expect(open.mock.calls[0][1]).toBe("https://example.com/y")
+  })
+
+  it("does not wrap an explicitly provided fetch twice", () => {
+    const fn: any = jest.fn()
+    globalThis.fetch = fn
+    FetchInterceptor.enableInterception(fn)
+    const wrapped = globalThis.fetch
+    FetchInterceptor.enableInterception(fn)
+    expect(globalThis.fetch).toBe(wrapped)
+  })
+
   it("restores the original fetch on disable", () => {
     const original = makeExpoFetch(() => Promise.resolve(makeResponse(200, {})))
     globalThis.fetch = original

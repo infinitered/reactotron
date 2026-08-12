@@ -22,6 +22,18 @@ export interface NetworkingOptions {
    * where the global fetch is XHR-backed and already covered by XHR tracking.
    */
   ignoreExpoFetch?: boolean
+  /**
+   * Explicitly pass the fetch function to track; it will be wrapped and
+   * installed as `globalThis.fetch` on connect, with no environment
+   * detection. Use this when the expo/fetch global has been re-wrapped and no
+   * longer carries the `expo.builtin` symbol (e.g. expo-router apps):
+   *
+   *   .useReactNative({ networking: { fetch: globalThis.fetch } })
+   *
+   * Only pass a fetch that does NOT go through XMLHttpRequest — an XHR-backed
+   * fetch is already tracked by the XHR interceptor and would double-report.
+   */
+  fetch?: typeof fetch
 }
 
 const DEFAULTS: NetworkingOptions = {}
@@ -262,7 +274,13 @@ const networking =
         XHRInterceptor.enableInterception()
 
         // expo/fetch (Expo SDK 56+) bypasses XHR, so instrument it too.
-        if (!options.ignoreExpoFetch) {
+        // An explicitly passed fetch skips detection; otherwise expo/fetch is
+        // auto-detected unless opted out.
+        if (options.fetch) {
+          FetchInterceptor.setOpenCallback(onFetchOpen)
+          FetchInterceptor.setResponseCallback(onFetchResponse)
+          FetchInterceptor.enableInterception(options.fetch)
+        } else if (!options.ignoreExpoFetch) {
           FetchInterceptor.setOpenCallback(onFetchOpen)
           FetchInterceptor.setResponseCallback(onFetchResponse)
           FetchInterceptor.enableInterception()
