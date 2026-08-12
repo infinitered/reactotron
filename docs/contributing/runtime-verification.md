@@ -5,7 +5,7 @@ sidebar_position: 98
 
 # Verifying Fixes at Runtime
 
-Unit tests catch regressions in the mechanism, but many Reactotron bugs live in the seams between the client library, the app's runtime environment, and the desktop app. This guide documents an end-to-end flow for verifying a fix against a **real app on a real simulator talking to a real Reactotron desktop build** — the flow used to review [#1613](https://github.com/infinitered/reactotron/pull/1613), where runtime testing surfaced an environment gap that unit tests and static review could not have caught.
+Unit tests catch regressions in the mechanism, but many Reactotron bugs live in the seams between the client library, the app's runtime environment, and the desktop app. This guide documents an end-to-end flow for verifying a fix against a **real app on a real simulator talking to a real Reactotron desktop build**. Beyond bug verification, this is a general recipe for testing full end-to-end interactions between a real development build of the desktop app and an app running on a simulator — both sides scriptable, so the whole loop (app fires an event → client reports it → desktop renders it) can be exercised and asserted without manual clicking.
 
 The core idea: run the Reactotron desktop app from the PR branch with a Chrome DevTools Protocol (CDP) port open so you can read its timeline programmatically, run a test app with the PR's client library installed from packed tarballs, and compare **baseline** (published packages, bug reproduced) against **fix** (PR tarballs, bug gone).
 
@@ -78,7 +78,7 @@ which shows connections ("port 9090 | 1 connections") and timeline entries ("API
 
 ## 4. Build a test app that reproduces the bug's environment
 
-**Match the environment the bug report describes, not just any app.** The repo's `apps/example-app` is handy for generic checks, but it may not reproduce environment-specific bugs (at the time of writing it's Expo SDK 51, which predates `expo/fetch` as the global fetch). For #1613 we scaffolded a fresh `create-expo-app` — which also, crucially, meant testing on **expo-router**, where the fix behaved differently than in the author's setup.
+**Match the environment the bug report describes, not just any app.** The repo's `apps/example-app` is handy for generic checks, but it may not reproduce environment-specific bugs (its Expo SDK version can lag well behind current). Scaffolding a fresh `create-expo-app` gets you the current SDK *and* the default template's runtime setup (e.g. expo-router), which can behave differently from the environment a fix was developed against — that difference is often where the bugs are.
 
 Give the test app:
 
@@ -88,7 +88,7 @@ Give the test app:
 
 ## 5. Baseline first, then the fix
 
-1. **Baseline:** install the currently *published* client (`npm install reactotron-react-native@latest`), run the app on the simulator, exercise both buttons, and confirm the bug in the timeline via `cdp.js` (in #1613: XHR appears, fetch is missing). If you can't reproduce the bug, stop — you're not testing the right environment.
+1. **Baseline:** install the currently *published* client (`npm install reactotron-react-native@latest`), run the app on the simulator, exercise both buttons, and confirm the bug in the timeline via `cdp.js` (e.g. the control request appears, the affected one is missing). If you can't reproduce the bug, stop — you're not testing the right environment.
 2. **Fix:** install the PR tarballs (all of them, so workspace deps resolve to the PR versions, not npm), restart Metro with `--clear`, relaunch the app, exercise the same buttons.
 3. **Assert precisely:** the previously-missing entry now appears with correct method/URL/params/status/body *and* the control still appears exactly once (guards against double-reporting). Also confirm the app itself still works — e.g. the response body still reaches the caller.
 4. Screenshot the simulator and capture the timeline text for the PR review, for both phases.
@@ -108,4 +108,4 @@ plus an accessibility-based driver (e.g. idb, or an iOS-simulator MCP server) to
 
 ## Why bother: what this catches that tests don't
 
-In #1613 the interceptor's unit tests all passed and the implementation was correct — but runtime verification revealed that `expo-router` apps (the default Expo template) re-wrap `globalThis.fetch` and drop the `expo.builtin` symbol the fix keyed on, so the fix silently no-oped in the very scenario the linked issue described. That class of bug — correct mechanism, wrong environment assumption — is only visible with the full stack running.
+A fix's unit tests can all pass while the fix silently does nothing in the very scenario its issue describes — for example, when a runtime environment wraps or replaces a global that the fix keys its detection on. That class of bug — correct mechanism, wrong environment assumption — is only visible with the full stack running.
