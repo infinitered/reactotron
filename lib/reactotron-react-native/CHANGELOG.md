@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [5.3.1](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.3.0...reactotron-react-native@5.3.1) (2026-08-13)
+
+
+### Bug Fixes
+
+* **reactotron-react-native:** harden fetch interceptor error isolation and restore ([#1615](https://github.com/infinitered/reactotron/issues/1615)) ([11162d7](https://github.com/infinitered/reactotron/commit/11162d76b450d2edf15532bb88034bda88ab917e)), closes [#1613](https://github.com/infinitered/reactotron/issues/1613) [#1613](https://github.com/infinitered/reactotron/issues/1613) [#1613](https://github.com/infinitered/reactotron/issues/1613) [#1613](https://github.com/infinitered/reactotron/issues/1613) [expo#46397](https://github.com/infinitered/expo/issues/46397)
+
 ## [5.3.0](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.2.0...reactotron-react-native@5.3.0) (2026-08-13)
 
 
