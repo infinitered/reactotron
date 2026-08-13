@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [5.3.0](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.2.0...reactotron-react-native@5.3.0) (2026-08-13)
+
+
+### Features
+
+* **reactotron-react-native:** track Expo expo/fetch in the networking plugin ([#1613](https://github.com/infinitered/reactotron/issues/1613)) ([78d7258](https://github.com/infinitered/reactotron/commit/78d7258b3b162902f3334c10ee13da6d10bf7093)), closes [#1612](https://github.com/infinitered/reactotron/issues/1612)
+
 ## [5.2.0](https://github.com/infinitered/reactotron/compare/reactotron-react-native@5.1.18...reactotron-react-native@5.2.0) (2026-05-28)
 
 
