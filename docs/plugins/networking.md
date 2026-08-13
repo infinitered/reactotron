@@ -33,6 +33,7 @@ And you're done! Now you can see your XMLHttpRequests in Reactotron.
 - `ignoreContentTypes`: a regular expression which, when matched against the `Content-Type` response header, will prevent the data from being displayed in Reactotron. You typically want to do this for images (which is the default). `text/event-stream` response bodies are always skipped so streaming responses are not buffered.
 - `ignoreUrls`: a regular expression which, when matched against the URL of the request, will prevent the request from being tracked in Reactotron. Can be useful for ignoring noisy logging requests.
 - `ignoreExpoFetch`: set to `true` to skip instrumenting Expo's `expo/fetch` (the default `globalThis.fetch` on Expo SDK 56+). Has no effect on non-Expo runtimes, where the global fetch is XHR-backed and already covered by XHR tracking.
+- `fetch`: explicitly pass the fetch function to track; it is wrapped and installed as `globalThis.fetch` on connect, skipping the automatic `expo/fetch` detection. Takes precedence over `ignoreExpoFetch`.
 
 ```js
 networking({
@@ -40,3 +41,22 @@ networking({
   ignoreUrls: /\/(logs|symbolicate)$/,
 });
 ```
+
+### Tracking fetch in expo-router apps
+
+Expo Router (the default `create-expo-app` template) re-wraps `globalThis.fetch` at startup with its `window.location` polyfill, which drops the marker the automatic `expo/fetch` detection looks for — so on expo-router apps fetch requests are silently not tracked. Automatic detection for expo-router apps is in the works (tracked in [#1612](https://github.com/infinitered/reactotron/issues/1612)); until then, use the `fetch` option to track them:
+
+```js
+Reactotron.configure()
+  .useReactNative({
+    networking: { fetch: globalThis.fetch },
+  })
+  .connect();
+```
+
+Two caveats:
+
+- **Ordering**: capture `globalThis.fetch` in code that runs _after_ `expo-router/entry` has set up its wrapper (any module imported from your app code qualifies — the router entry runs first). Capturing it too early passes the pre-router fetch, and the router's wrapper will be bypassed or clobbered.
+- **No XHR-backed fetch**: only pass a fetch that does _not_ go through `XMLHttpRequest` (e.g. don't use this with `EXPO_PUBLIC_USE_RN_FETCH=1`). XHR-backed fetch is already tracked by the XHR interceptor, so wrapping it here would double-report every request.
+
+Also note: Expo SDK 56 releases before 56.0.19 have a `Response.clone()` bug ([expo#46397](https://github.com/expo/expo/pull/46397)) where cloning a response twice can throw a spurious "body already used" error. Reactotron reads response bodies off a clone while tracking is active, so if your app also clones responses, upgrade to expo 56.0.19+ (or SDK 57).
