@@ -49,6 +49,9 @@ interface ReactotronFetch {
 let openCallback: FetchInterceptorOpenCallback | null
 let responseCallback: FetchInterceptorResponseCallback | null
 let originalFetch: typeof fetch | null = null
+let wrappedFetch: ReactotronFetch | null = null
+let previousGlobalFetch: typeof fetch | null = null
+let wrapperState: { stopped: boolean } | null = null
 let requestId = 0
 
 function isExpoFetch(fn: unknown): boolean {
@@ -140,35 +143,65 @@ export const FetchInterceptor = {
     }
 
     originalFetch = current as typeof fetch
+    previousGlobalFetch = globalThis.fetch
+
+    // Closed over (rather than reading module state) so the wrapper keeps
+    // working as a plain pass-through even after disableInterception, when a
+    // third party has wrapped fetch on top of us and we can't restore the global.
+    const original = current as typeof fetch
+    const state = { stopped: false }
 
     const wrapped: ReactotronFetch = function (input: any, init?: any) {
-      const id = (requestId += 1)
-      const requestHeaders = headersToObject(
-        (init && init.headers) || (isRequest(input) ? input.headers : null)
-      )
-      const data =
-        init && typeof init.body === "string"
-          ? init.body
-          : init && init.body
-            ? "[non-string body]"
-            : null
-
-      if (openCallback) {
-        openCallback(getMethod(input, init), getUrl(input), requestHeaders, data, id)
+      if (state.stopped) {
+        return original(input, init)
       }
 
-      return (originalFetch as typeof fetch)(input, init).then(
+      const id = (requestId += 1)
+      // Reactotron-internal failures must never alter the app's fetch — parse
+      // and report inside try/catch, and always defer to the real fetch.
+      try {
+        if (openCallback) {
+          const requestHeaders = headersToObject(
+            (init && init.headers) || (isRequest(input) ? input.headers : null)
+          )
+          const data =
+            init && typeof init.body === "string"
+              ? init.body
+              : init && init.body
+                ? "[non-string body]"
+                : null
+          openCallback(getMethod(input, init), getUrl(input), requestHeaders, data, id)
+        }
+      } catch (instrumentationError) {
+        // swallow: reporting is best-effort, the request itself must proceed
+      }
+
+      return original(input, init).then(
         (response) => {
           // Fire synchronously and return the original response untouched, so
           // the caller is never blocked and streaming bodies stay intact.
-          if (responseCallback) {
-            responseCallback(id, response.status, headersToObject(response.headers), response, null)
+          try {
+            if (responseCallback) {
+              responseCallback(
+                id,
+                response.status,
+                headersToObject(response.headers),
+                response,
+                null
+              )
+            }
+          } catch (instrumentationError) {
+            // swallow: a reporting failure must not reject a successful response
           }
           return response
         },
         (error) => {
-          if (responseCallback) {
-            responseCallback(id, -1, null, null, error)
+          try {
+            if (responseCallback) {
+              responseCallback(id, -1, null, null, error)
+            }
+          } catch (instrumentationError) {
+            // swallow: the app's own network error must propagate unchanged
           }
           throw error
         }
@@ -180,16 +213,30 @@ export const FetchInterceptor = {
     if (isExpoFetch(current)) {
       wrapped[EXPO_BUILTIN] = true
     }
+    wrappedFetch = wrapped
+    wrapperState = state
     globalThis.fetch = wrapped
   },
 
-  // Unpatch the global fetch and remove the callbacks.
+  // Unpatch the global fetch and remove the callbacks. If something else has
+  // wrapped fetch on top of us since, the global is left alone and our wrapper
+  // just goes inert (pass-through) — ripping out a later wrapper isn't ours to do.
   disableInterception() {
     if (!originalFetch) {
       return
     }
-    globalThis.fetch = originalFetch
+    if (wrapperState) {
+      wrapperState.stopped = true
+    }
+    if (globalThis.fetch === wrappedFetch && previousGlobalFetch) {
+      // Restore what was global when we wrapped — not necessarily the wrapped
+      // function itself (an explicitly passed fetch may never have been global).
+      globalThis.fetch = previousGlobalFetch
+    }
     originalFetch = null
+    wrappedFetch = null
+    previousGlobalFetch = null
+    wrapperState = null
     openCallback = null
     responseCallback = null
   },

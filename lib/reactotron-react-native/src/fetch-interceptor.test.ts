@@ -141,4 +141,105 @@ describe("FetchInterceptor", () => {
     expect(globalThis.fetch).toBe(original)
     expect(FetchInterceptor.isInterceptorEnabled()).toBe(false)
   })
+
+  it("does not break the caller's fetch when the open callback throws", async () => {
+    const response = makeResponse(200, {})
+    globalThis.fetch = makeExpoFetch(() => Promise.resolve(response))
+    FetchInterceptor.setOpenCallback(() => {
+      throw new Error("reactotron bug")
+    })
+    FetchInterceptor.enableInterception()
+
+    const result = await (globalThis.fetch as any)("https://x.test/?q=%E0%A4%A")
+    expect(result).toBe(response)
+  })
+
+  it("does not reject a successful response when the response callback throws", async () => {
+    const response = makeResponse(200, {})
+    globalThis.fetch = makeExpoFetch(() => Promise.resolve(response))
+    FetchInterceptor.setResponseCallback(() => {
+      throw new Error("reactotron bug")
+    })
+    FetchInterceptor.enableInterception()
+
+    const result = await (globalThis.fetch as any)("https://x.test")
+    expect(result).toBe(response)
+  })
+
+  it("propagates the app's own network error even when the response callback throws", async () => {
+    const boom = new Error("offline")
+    globalThis.fetch = makeExpoFetch(() => Promise.reject(boom))
+    FetchInterceptor.setResponseCallback(() => {
+      throw new Error("reactotron bug")
+    })
+    FetchInterceptor.enableInterception()
+
+    await expect((globalThis.fetch as any)("https://x.test")).rejects.toBe(boom)
+  })
+
+  it("leaves the global alone on disable when a third party wrapped fetch after us", async () => {
+    const response = makeResponse(200, {})
+    const original = makeExpoFetch(() => Promise.resolve(response))
+    globalThis.fetch = original
+    FetchInterceptor.enableInterception()
+    const ours = globalThis.fetch
+
+    // a third party wraps on top of us
+    const thirdParty: any = (...args: any[]) => (ours as any)(...args)
+    globalThis.fetch = thirdParty
+
+    FetchInterceptor.disableInterception()
+
+    // the third party's wrapper must survive, and ours must pass through inert
+    expect(globalThis.fetch).toBe(thirdParty)
+    const open = jest.fn()
+    FetchInterceptor.setOpenCallback(open)
+    const result = await (globalThis.fetch as any)("https://x.test")
+    expect(result).toBe(response)
+    expect(open).not.toHaveBeenCalled()
+  })
+
+  it("does not install an explicit non-global fetch onto the global on disable", () => {
+    const globalBefore: any = jest.fn()
+    globalThis.fetch = globalBefore
+    const explicit: any = jest.fn(() => Promise.resolve(makeResponse(200, {})))
+
+    FetchInterceptor.enableInterception(explicit)
+    expect(globalThis.fetch).not.toBe(globalBefore)
+
+    FetchInterceptor.disableInterception()
+    // restore what was global when we wrapped — never the explicit function
+    expect(globalThis.fetch).toBe(globalBefore)
+  })
+
+  it("extracts method and url from Request-object input", async () => {
+    const response = makeResponse(200, {})
+    globalThis.fetch = makeExpoFetch(() => Promise.resolve(response))
+    const open = jest.fn()
+    FetchInterceptor.setOpenCallback(open)
+    FetchInterceptor.enableInterception()
+
+    const request = new Request("https://example.com/req", { method: "PUT" })
+    await (globalThis.fetch as any)(request)
+
+    expect(open).toHaveBeenCalledTimes(1)
+    const [method, url] = open.mock.calls[0]
+    expect(method).toBe("PUT")
+    expect(url).toBe("https://example.com/req")
+  })
+
+  it("extracts the url from URL-object input", async () => {
+    const response = makeResponse(200, {})
+    globalThis.fetch = makeExpoFetch(() => Promise.resolve(response))
+    const open = jest.fn()
+    FetchInterceptor.setOpenCallback(open)
+    FetchInterceptor.enableInterception()
+
+    await (globalThis.fetch as any)(new URL("https://example.com/from-url"))
+
+    expect(open).toHaveBeenCalledTimes(1)
+    const [method, url] = open.mock.calls[0]
+    expect(method).toBe("GET")
+    expect(url).toBe("https://example.com/from-url")
+  })
 })

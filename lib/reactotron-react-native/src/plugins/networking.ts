@@ -38,6 +38,18 @@ export interface NetworkingOptions {
 
 const DEFAULTS: NetworkingOptions = {}
 
+/**
+ * decodeURIComponent that falls back to the raw string on malformed
+ * percent-encoding (e.g. `?q=%E0%A4%A`) instead of throwing.
+ */
+function tryDecodeURIComponent(value: string): string {
+  try {
+    return decodeURIComponent(value)
+  } catch (malformedUri) {
+    return value
+  }
+}
+
 const networking =
   (pluginConfig: NetworkingOptions = {}) =>
   (reactotron: ReactotronCore) => {
@@ -203,7 +215,7 @@ const networking =
           .forEach((pair) => {
             const [key, value] = pair.split("=")
             if (key && value !== undefined) {
-              params[key] = decodeURIComponent(value.replace(/\+/g, " "))
+              params[key] = tryDecodeURIComponent(value.replace(/\+/g, " "))
             }
           })
       }
@@ -249,9 +261,16 @@ const networking =
       }
 
       // Clone synchronously (before the caller consumes the body), then read
-      // asynchronously so we don't block the request.
-      response
-        .clone()
+      // asynchronously so we don't block the request. clone() itself can throw
+      // if the body is already disturbed (e.g. another tool consumed it first).
+      let clone: Response
+      try {
+        clone = response.clone()
+      } catch (cloneError) {
+        report("~~~ unreadable ~~~")
+        return
+      }
+      clone
         .text()
         .then((text) => {
           let body
