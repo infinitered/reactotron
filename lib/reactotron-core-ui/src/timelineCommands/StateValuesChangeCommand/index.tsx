@@ -13,12 +13,16 @@ interface StateValuesChangePayload {
 
 interface Props extends TimelineCommandProps<StateValuesChangePayload> {}
 
+function isObject(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === "object" && !Array.isArray(value)
+}
+
 const StateValuesChangeCommand: FunctionComponent<Props> = ({ command, isOpen, setIsOpen }) => {
   const { payload, date, deltaTime } = command
 
-  const hasChanged = !!payload.changed && !Array.isArray(payload.changed)
-  const hasAdded = !!payload.added && !Array.isArray(payload.added)
-  const hasRemoved = !!payload.removed && !Array.isArray(payload.removed)
+  const hasChanged = isObject(payload.changed)
+  const hasAdded = isObject(payload.added)
+  const hasRemoved = isObject(payload.removed)
 
   const changes = []
 
