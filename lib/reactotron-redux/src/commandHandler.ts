@@ -48,9 +48,9 @@ export default function createCommandHandler<Client extends ReactotronCore = Rea
             responseMethod(
               payload.path,
               type === "state.keys.request"
-                ? typeof filteredObj === "object"
+                ? filteredObj !== null && typeof filteredObj === "object"
                   ? Object.keys(filteredObj)
-                  : undefined
+                  : []
                 : filteredObj
             )
           }
