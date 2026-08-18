@@ -6,6 +6,54 @@ It is used by [`reactotron-app`](https://github.com/infinitered/reactotron) and 
 
 # Usage
 
+## CLI
+
+You can run the Reactotron server directly via npx:
+
+```bash
+npx reactotron-core-server --port 9090
+```
+
+### Options
+
+- `-p, --port <number>` - Port to listen on (default: 9090)
+- `-h, --help` - Show help message
+
+### TLS/WSS Options
+
+- `--wss-pfx <path>` - Path to PFX certificate file
+- `--wss-cert <path>` - Path to certificate file
+- `--wss-key <path>` - Path to key file
+- `--wss-passphrase <passphrase>` - Passphrase for certificate
+
+### Examples
+
+**Basic usage:**
+
+```bash
+npx reactotron-core-server --port 9090
+```
+
+**TLS with PFX certificate:**
+
+```bash
+npx reactotron-core-server --port 9090 --wss-pfx ./server.pfx --wss-passphrase mypassphrase
+```
+
+**TLS with certificate and key files:**
+
+```bash
+npx reactotron-core-server --port 9090 --wss-cert ./cert.pem --wss-key ./key.pem
+```
+
+**TLS with certificate, key, and passphrase:**
+
+```bash
+npx reactotron-core-server --port 9090 --wss-cert ./cert.pem --wss-key ./key.pem --wss-passphrase mypassphrase
+```
+
+## Programmatic Usage
+
 ```js
 import { createServer } from "reactotron-core-server"
 

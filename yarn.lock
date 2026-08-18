@@ -26875,6 +26875,8 @@ __metadata:
     ts-jest: "npm:^29.1.1"
     typescript: "npm:^4.9.5"
     ws: "npm:^8.14.2"
+  bin:
+    reactotron-core-server: ./bin/reactotron-core-server.js
   languageName: unknown
   linkType: soft
 
