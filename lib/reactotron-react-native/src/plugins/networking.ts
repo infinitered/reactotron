@@ -187,7 +187,11 @@ const networking =
     // expo/fetch request tracker (keyed by the interceptor's request id).
     // `null` marks a request we deliberately skipped (ignoreUrls).
     const fetchCache: {
-      [id: number]: { tronRequest: any; stopTimer: () => number } | null
+      [id: number]: {
+        tronRequest: any
+        stopTimer: () => number
+        dataPromise?: Promise<string | null> | null
+      } | null
     } = {}
 
     /**
@@ -198,7 +202,8 @@ const networking =
       url: string,
       headers: FetchHeaders,
       data: string | null,
-      id: number
+      id: number,
+      dataPromise?: Promise<string | null> | null
     ) {
       if (options.ignoreUrls && options.ignoreUrls.test(url)) {
         fetchCache[id] = null
@@ -223,6 +228,7 @@ const networking =
       fetchCache[id] = {
         tronRequest: { url, method, data, headers, params },
         stopTimer: reactotron.startTimer(),
+        dataPromise,
       }
     }
 
@@ -245,8 +251,23 @@ const networking =
       }
 
       const { tronRequest, stopTimer } = cached
-      const report = (body) =>
+      const emit = (body) =>
         (reactotron as any).apiResponse(tronRequest, { body, status, headers }, stopTimer())
+      // A Request-carried body only resolves after the fact; fold it into the
+      // request we are about to report, then emit.
+      const report = (body) => {
+        if (!cached.dataPromise) {
+          emit(body)
+          return
+        }
+        cached.dataPromise.then(
+          (requestBody) => {
+            if (requestBody != null) tronRequest.data = requestBody
+            emit(body)
+          },
+          () => emit(body)
+        )
+      }
 
       if (error || !response) {
         report(error instanceof Error ? error.message : String(error))
