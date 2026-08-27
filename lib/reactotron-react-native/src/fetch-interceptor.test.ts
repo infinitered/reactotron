@@ -242,4 +242,81 @@ describe("FetchInterceptor", () => {
     expect(method).toBe("GET")
     expect(url).toBe("https://example.com/from-url")
   })
+  it("reads the body off a Request-object input", async () => {
+    const response = makeResponse(200, {})
+    globalThis.fetch = makeExpoFetch(() => Promise.resolve(response))
+    const open = jest.fn()
+    FetchInterceptor.setOpenCallback(open)
+    FetchInterceptor.enableInterception()
+
+    const request = new Request("https://example.com/req", {
+      method: "POST",
+      body: '{"orderId":42}',
+    })
+    await (globalThis.fetch as any)(request)
+
+    const [, , , data, , dataPromise] = open.mock.calls[0]
+    // a Request carries its body out of band from init, so it arrives late
+    expect(data).toBeNull()
+    await expect(dataPromise).resolves.toBe('{"orderId":42}')
+  })
+
+  it("leaves the caller's Request body readable", async () => {
+    const response = makeResponse(200, {})
+    globalThis.fetch = makeExpoFetch(() => Promise.resolve(response))
+    FetchInterceptor.setOpenCallback(jest.fn())
+    FetchInterceptor.enableInterception()
+
+    const request = new Request("https://example.com/req", { method: "POST", body: "payload" })
+    await (globalThis.fetch as any)(request)
+
+    expect(request.bodyUsed).toBe(false)
+    await expect(request.text()).resolves.toBe("payload")
+  })
+
+  it("does not read a body for GET and HEAD requests", async () => {
+    const response = makeResponse(200, {})
+    globalThis.fetch = makeExpoFetch(() => Promise.resolve(response))
+    const open = jest.fn()
+    FetchInterceptor.setOpenCallback(open)
+    FetchInterceptor.enableInterception()
+
+    await (globalThis.fetch as any)(new Request("https://example.com/get"))
+    await (globalThis.fetch as any)(new Request("https://example.com/head", { method: "HEAD" }))
+
+    expect(open.mock.calls[0][5]).toBeNull()
+    expect(open.mock.calls[1][5]).toBeNull()
+  })
+
+  it("still sends the request when the Request body cannot be cloned", async () => {
+    const response = makeResponse(200, {})
+    const original = makeExpoFetch(() => Promise.resolve(response))
+    globalThis.fetch = original
+    const open = jest.fn()
+    FetchInterceptor.setOpenCallback(open)
+    FetchInterceptor.enableInterception()
+
+    const request = new Request("https://example.com/req", { method: "POST", body: "gone" })
+    await request.text() // consume it — clone() now throws
+
+    const result = await (globalThis.fetch as any)(request)
+
+    expect(result).toBe(response)
+    expect(open.mock.calls[0][5]).toBeNull()
+  })
+
+  it("prefers an init body over the Request body", async () => {
+    const response = makeResponse(200, {})
+    globalThis.fetch = makeExpoFetch(() => Promise.resolve(response))
+    const open = jest.fn()
+    FetchInterceptor.setOpenCallback(open)
+    FetchInterceptor.enableInterception()
+
+    const request = new Request("https://example.com/req", { method: "POST", body: "from-request" })
+    await (globalThis.fetch as any)(request, { method: "POST", body: "from-init" })
+
+    const [, , , data, , dataPromise] = open.mock.calls[0]
+    expect(data).toBe("from-init")
+    expect(dataPromise).toBeNull()
+  })
 })
