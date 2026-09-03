@@ -55,6 +55,9 @@ const files = fs
   .filter((file) => !file.endsWith(".yaml"))
   // filter out .blockmap files
   .filter((file) => !file.endsWith(".blockmap"))
+  // filter out electron-builder's `default._` prefixed duplicates of the macOS
+  // dmg artifacts, which should not be published to GitHub releases
+  .filter((file) => !file.startsWith("default._"))
 if (files.length === 0) {
   console.error(`Folder '${folder}' is empty`)
   process.exit(1)
