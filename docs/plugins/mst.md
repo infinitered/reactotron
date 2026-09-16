@@ -8,7 +8,7 @@ Behold! A plugin for Reactotron for working with mobx-state-tree.
 
 # Prerequisites
 
-This is a plugin for Reactotron, so you'll need either `reactotron-react-native` or `reactotron-react-dom` installed first.
+This is a plugin for Reactotron, so you'll need either `reactotron-react-native` or `reactotron-react-js` installed first.
 
 This is also a plugin for `mobx-state-tree`, so you'll also need that installed as well.
 
