@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: Reactotron
+description: "Reactotron is a free, open-source debugger for React and React Native apps that lets you monitor state, network requests, and performance metrics."
 ---
 
 ## What is Reactotron?
