@@ -470,7 +470,7 @@ workflows:
             branches: *release_branch_filter
             tags:
               only:
-                - /^(?!reactotron-app)(reactotron-.*|eslint-plugin-reactotron)@.*/ # matches 'reactotron-core-ui@2.0.1', 'eslint-plugin-reactotron@0.1.0' but not 'reactotron-app@3.0.0'
+                - /^(reactotron-([^a]|a[^p]|ap[^p])[^@]*|eslint-plugin-reactotron)@.*/ # matches 'reactotron-core-ui@2.0.1', 'eslint-plugin-reactotron@0.1.0' but not 'reactotron-app@3.0.0'
       - build_app_windows:
           context:
             - reactotron-npm-context
