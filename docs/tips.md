@@ -8,7 +8,7 @@ sidebar_position: 888
 
 You can clear Reactotron by calling `clear()`.
 
-For example, let's say in React Native you want to clear the logs everytime you start up? Add this to your app's `ReactotronConfig.js`:
+For example, let's say in React Native you want to clear the logs every time you start up? Add this to your app's `ReactotronConfig.js`:
 
 ```js
 Reactotron.clear()

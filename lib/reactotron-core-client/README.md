@@ -1,8 +1,8 @@
 # reactotron-core-client
 
-This provides the core functionality of the clients allowing it talk to talk to the server.
+This provides the core functionality of the clients allowing it to talk to the server.
 
-It is used by `reactotron-react-dom` and `reactotron-react-native`.
+It is used by `reactotron-react-js` and `reactotron-react-native`.
 
 # Usage
 
@@ -433,7 +433,7 @@ Sent from the client to the server to provide a way to show "custom" commands.
 # Plugins
 
 Reactotron is extensible via plugins. You add plugins by calling the `use`
-function on the the client.
+function on the client.
 
 A plugin looks like this:
 
