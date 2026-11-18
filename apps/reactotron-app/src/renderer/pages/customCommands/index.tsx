@@ -6,6 +6,8 @@ import { MdSearch } from "react-icons/md"
 import { FaMagic } from "react-icons/fa"
 import { produce } from "immer"
 
+import StandaloneContext from "../../contexts/Standalone"
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -170,17 +172,21 @@ function CustomCommands() {
   const [search, setSearch] = useState("")
 
   const { customCommands, sendCustomCommand } = useContext(CustomCommandsContext)
+  const { selectedConnection } = useContext(StandaloneContext)
+  const selectedCustomCommands = customCommands.filter(
+    (customCommand) => customCommand.clientId === selectedConnection?.clientId
+  )
 
   const lowerSearch = search.toLowerCase()
   const filteredCustomCommands =
     search !== ""
-      ? customCommands.filter(
+      ? selectedCustomCommands.filter(
           (cc) =>
             cc.command.toLowerCase().indexOf(lowerSearch) > -1 ||
             (cc.title || "").toLowerCase().indexOf(lowerSearch) > -1 ||
             (cc.description || "").toLowerCase().indexOf(lowerSearch) > -1
         )
-      : customCommands
+      : selectedCustomCommands
 
   return (
     <Container>
@@ -205,7 +211,7 @@ function CustomCommands() {
         )}
       </Header>
       <CommandsContainer>
-        {customCommands.length === 0 ? (
+        {selectedCustomCommands.length === 0 ? (
           <EmptyState icon={FaMagic} title="No Custom Commands">
             When your app registers a custom command it will show here!
           </EmptyState>
