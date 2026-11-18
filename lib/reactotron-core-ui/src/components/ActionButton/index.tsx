@@ -17,10 +17,12 @@ interface Props {
 }
 
 function ActionButton({ icon: Icon, tip, tipProps = {}, onClick }: Props) {
+  const tooltipId = tipProps.id || "tooltip-default"
+
   return (
-    <Container data-tip={tip} onClick={onClick}>
+    <Container data-tip={tip} data-for={tooltipId} onClick={onClick}>
       <Icon size={24} />
-      <Tooltip {...tipProps} />
+      <Tooltip {...tipProps} id={tooltipId} />
     </Container>
   )
 }
