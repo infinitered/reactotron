@@ -12,8 +12,9 @@ const AsyncStorageMutationCommand: FunctionComponent<Props> = ({ command, isOpen
   const { payload, date, deltaTime } = command
 
   let preview = payload.action
+  const hasKey = payload.data !== null && typeof payload.data === "object" && "key" in payload.data
 
-  if (["setItem", "removeItem", "mergeItem"].indexOf(payload.action) > -1) {
+  if (["setItem", "removeItem", "mergeItem"].indexOf(payload.action) > -1 && hasKey) {
     preview = `${payload.action}: ${payload.data.key}`
   }
 

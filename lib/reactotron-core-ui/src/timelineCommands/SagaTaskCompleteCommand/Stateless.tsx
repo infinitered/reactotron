@@ -125,8 +125,9 @@ const SagaTaskCompleteCommand: FunctionComponent<Props> = ({
   const { payload, date, deltaTime } = command
 
   const toolbar = buildToolbar(isDetailsOpen, setIsDetailsOpen)
+  const children = Array.isArray(payload.children) ? payload.children : []
 
-  const effectTitle = `${payload.children.length} Effect${payload.children.length === 1 ? "" : "s"}`
+  const effectTitle = `${children.length} Effect${children.length === 1 ? "" : "s"}`
 
   return (
     <TimelineCommand
@@ -146,7 +147,7 @@ const SagaTaskCompleteCommand: FunctionComponent<Props> = ({
           <DurationMs>ms</DurationMs>
         </Duration>
       </EffectTitle>
-      {payload.children.map((effect) => renderEffect(effect, isDetailsOpen))}
+      {children.map((effect) => renderEffect(effect, isDetailsOpen))}
     </TimelineCommand>
   )
 }

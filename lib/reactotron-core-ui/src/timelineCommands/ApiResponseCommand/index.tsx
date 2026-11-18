@@ -37,6 +37,17 @@ interface Props extends TimelineCommandProps<ApiResponsePayload> {
   initialTab?: Tab
 }
 
+type ApiRequest = Partial<ApiResponsePayload["request"]>
+type ApiResponse = Partial<ApiResponsePayload["response"]>
+type SafeApiResponsePayload = Omit<ApiResponsePayload, "request" | "response"> & {
+  request: ApiRequest
+  response: ApiResponse
+}
+
+function isObject(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === "object" && !Array.isArray(value)
+}
+
 function createTabBuilder(onTab: Tab, setOnTab: (tab: Tab) => void) {
   const tabBuilder = (currentTab: Tab, text: string) => {
     return (
@@ -57,7 +68,10 @@ function createTabBuilder(onTab: Tab, setOnTab: (tab: Tab) => void) {
   return tabBuilder
 }
 
-function buildToolbar(commandPayload, copyToClipboard: (text: string) => void) {
+function buildToolbar(
+  commandPayload: SafeApiResponsePayload,
+  copyToClipboard: (text: string) => void
+) {
   if (!copyToClipboard) return []
 
   const toolbarItems = []
@@ -128,12 +142,22 @@ const ApiResponseCommand: FunctionComponent<Props> = ({
   const [onTab, setOnTab] = useState<Tab>(initialTab || null)
 
   const { payload, date, deltaTime } = command
-  const { duration, request, response } = payload
+  const { duration } = payload
+  const request: ApiRequest = isObject(payload.request) ? payload.request : {}
+  const response: ApiResponse = isObject(payload.response) ? payload.response : {}
+  const safePayload = { ...payload, request, response }
 
-  const cleanedUrl = request.url.replace(/^http(s):\/\/[^/]+/i, "").replace(/\?.*$/i, "")
-  const operationName = formatOperationName(request.data)
+  const cleanedUrl =
+    typeof request.url === "string"
+      ? request.url.replace(/^http(s):\/\/[^/]+/i, "").replace(/\?.*$/i, "")
+      : ""
+  const operationName = typeof request.data === "string" ? formatOperationName(request.data) : ""
 
-  const preview = [(request.method || "").toUpperCase(), cleanedUrl, operationName]
+  const preview = [
+    typeof request.method === "string" ? request.method.toUpperCase() : "",
+    cleanedUrl,
+    operationName,
+  ]
     .filter(Boolean)
     .join(" ")
 
@@ -145,7 +169,7 @@ const ApiResponseCommand: FunctionComponent<Props> = ({
 
   const tabBuilder = createTabBuilder(onTab, setOnTab)
 
-  const toolbar = buildToolbar(payload, copyToClipboard)
+  const toolbar = buildToolbar(safePayload, copyToClipboard)
 
   return (
     <TimelineCommand
@@ -156,9 +180,9 @@ const ApiResponseCommand: FunctionComponent<Props> = ({
       toolbar={toolbar}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      responseStatusCode={payload.response?.status}
+      responseStatusCode={response.status}
     >
-      <NameContainer>{payload.request.url}</NameContainer>
+      <NameContainer>{request.url}</NameContainer>
       <ContentView value={summary} />
       <TabsContainer>
         {tabBuilder(Tab.ResponseBody, "Response")}

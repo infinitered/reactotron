@@ -45,19 +45,25 @@ interface Props extends TimelineCommandProps<BenchmarkReportPayload> {}
 const BenchmarkReportCommand: FunctionComponent<Props> = ({ command, isOpen, setIsOpen }) => {
   const { payload, date, deltaTime } = command
 
-  const totalDuration = payload.steps[payload.steps.length - 1].time
+  const steps = Array.isArray(payload.steps) ? payload.steps : []
+  const lastStep = steps[steps.length - 1]
+  const totalDuration = typeof lastStep?.time === "number" ? lastStep.time : null
+  const preview =
+    totalDuration === null
+      ? payload.title
+      : `${payload.title} in ${(totalDuration / 1000).toFixed(3)}s`
 
   return (
     <TimelineCommand
       date={date}
       deltaTime={deltaTime}
       title="BENCHMARK"
-      preview={`${payload.title} in ${(totalDuration / 1000).toFixed(3)}s`}
+      preview={preview}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
     >
       <NameContainer>{payload.title}</NameContainer>
-      {payload.steps.map((step, idx) => {
+      {steps.map((step, idx) => {
         if (idx === 0) return null
 
         const startPercent = Number((((step.time - step.delta) / totalDuration) * 100).toFixed(0))
