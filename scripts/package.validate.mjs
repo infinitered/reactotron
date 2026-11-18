@@ -113,14 +113,17 @@ for (const workspacePath of workspacePaths) {
 
   // assert "files" field should be ["dist", "src"]
   // LICENSE, README, and package.json are implicitly included https://docs.npmjs.com/cli/v10/configuring-npm/package-json#files
+  // Exception: reactotron-core-server also includes "bin" directory
+  const expectedFiles =
+    workspaceName === "reactotron-core-server" ? ["dist", "src", "bin"] : ["dist", "src"]
+
   if (
     !Array.isArray(packageJson.files) ||
-    packageJson.files.length !== 2 ||
-    packageJson.files[0] !== "dist" ||
-    packageJson.files[1] !== "src"
+    packageJson.files.length !== expectedFiles.length ||
+    !expectedFiles.every((file, index) => packageJson.files[index] === file)
   ) {
     errors.push(
-      `Invalid files field: ${JSON.stringify(packageJson.files)} (expected ["dist", "src"])`
+      `Invalid files field: ${JSON.stringify(packageJson.files)} (expected ${JSON.stringify(expectedFiles)})`
     )
   }
 
