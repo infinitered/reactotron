@@ -92,7 +92,24 @@ describe("commandHandler", () => {
 
     commandHandler({ type: "state.keys.request", payload: { path: "topLevel.here.nested" } })
 
-    expect(reactotronMock.stateKeysResponse).toHaveBeenCalledWith("topLevel.here.nested", undefined)
+    expect(reactotronMock.stateKeysResponse).toHaveBeenCalledWith("topLevel.here.nested", [])
+  })
+
+  it("should handle a 'state.keys.request' command type for a null path", () => {
+    const reactotronMock = {
+      ...defaultReactotronMock,
+      reduxStore: {
+        getState: jest.fn().mockReturnValue({ topLevel: { here: null } }),
+        subscribe: jest.fn(),
+      },
+      stateKeysResponse: jest.fn(),
+    }
+
+    const commandHandler = createCommandHandler(reactotronMock, defaultPluginConfig, () => {})
+
+    commandHandler({ type: "state.keys.request", payload: { path: "topLevel.here" } })
+
+    expect(reactotronMock.stateKeysResponse).toHaveBeenCalledWith("topLevel.here", [])
   })
 
   it("should handle a 'state.keys.request' command type for a path that is invalid", () => {
@@ -109,10 +126,7 @@ describe("commandHandler", () => {
 
     commandHandler({ type: "state.keys.request", payload: { path: "topLevel2.here.nested" } })
 
-    expect(reactotronMock.stateKeysResponse).toHaveBeenCalledWith(
-      "topLevel2.here.nested",
-      undefined
-    )
+    expect(reactotronMock.stateKeysResponse).toHaveBeenCalledWith("topLevel2.here.nested", [])
   })
 
   it("should handle a 'state.values.request' command type for a single level", () => {
@@ -166,6 +180,23 @@ describe("commandHandler", () => {
     commandHandler({ type: "state.values.request", payload: { path: "topLevel.here.nested" } })
 
     expect(reactotronMock.stateValuesResponse).toHaveBeenCalledWith("topLevel.here.nested", true)
+  })
+
+  it("should handle a 'state.values.request' command type for a null path", () => {
+    const reactotronMock = {
+      ...defaultReactotronMock,
+      reduxStore: {
+        getState: jest.fn().mockReturnValue({ topLevel: { here: null } }),
+        subscribe: jest.fn(),
+      },
+      stateValuesResponse: jest.fn(),
+    }
+
+    const commandHandler = createCommandHandler(reactotronMock, defaultPluginConfig, () => {})
+
+    commandHandler({ type: "state.values.request", payload: { path: "topLevel.here" } })
+
+    expect(reactotronMock.stateValuesResponse).toHaveBeenCalledWith("topLevel.here", null)
   })
 
   it("should handle a 'state.values.request' command type for a path that is invalid", () => {
