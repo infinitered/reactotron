@@ -129,4 +129,35 @@ describe("networking plugin (expo/fetch path)", () => {
 
     expect(reactotron.apiResponse).not.toHaveBeenCalled()
   })
+  it("reports the body of a Request-object input", async () => {
+    connect(makeResponse(200, { "content-type": "application/json" }, '{"ok":true}'))
+
+    await (globalThis.fetch as any)(
+      new Request("https://example.com/orders?page=2", {
+        method: "POST",
+        body: '{"orderId":42}',
+      })
+    )
+    await flushPromises()
+
+    expect(reactotron.apiResponse).toHaveBeenCalledTimes(1)
+    const [tronRequest, tronResponse] = reactotron.apiResponse.mock.calls[0]
+    expect(tronRequest.method).toBe("POST")
+    expect(tronRequest.data).toBe('{"orderId":42}')
+    expect(tronRequest.params).toEqual({ page: "2" })
+    expect(tronResponse.body).toEqual({ ok: true })
+  })
+
+  it("reports a Request-object body even when the response body is skipped", async () => {
+    connect(makeResponse(200, { "content-type": "image/png" }))
+
+    await (globalThis.fetch as any)(
+      new Request("https://example.com/upload", { method: "PUT", body: "raw-bytes" })
+    )
+    await flushPromises()
+
+    const [tronRequest, tronResponse] = reactotron.apiResponse.mock.calls[0]
+    expect(tronRequest.data).toBe("raw-bytes")
+    expect(tronResponse.body).toBe("~~~ skipped ~~~")
+  })
 })

@@ -22,7 +22,8 @@ type FetchInterceptorOpenCallback = (
   url: string,
   headers: FetchHeaders,
   data: string | null,
-  id: number
+  id: number,
+  dataPromise: Promise<string | null> | null
 ) => void
 
 /**
@@ -170,7 +171,26 @@ export const FetchInterceptor = {
               : init && init.body
                 ? "[non-string body]"
                 : null
-          openCallback(getMethod(input, init), getUrl(input), requestHeaders, data, id)
+          // A Request carries its body out of band from `init`; its body can only be
+          // read asynchronously, so hand the reader a promise to resolve later.
+          let dataPromise: Promise<string | null> | null = null
+          if (data === null && isRequest(input)) {
+            const bodyMethod = getMethod(input, init)
+            if (bodyMethod !== "GET" && bodyMethod !== "HEAD") {
+              try {
+                dataPromise = input
+                  .clone()
+                  .text()
+                  .then(
+                    (text) => text || null,
+                    () => null
+                  )
+              } catch (bodyError) {
+                // body already consumed — nothing to report
+              }
+            }
+          }
+          openCallback(getMethod(input, init), getUrl(input), requestHeaders, data, id, dataPromise)
         }
       } catch (instrumentationError) {
         // swallow: reporting is best-effort, the request itself must proceed
