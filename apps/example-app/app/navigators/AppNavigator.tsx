@@ -4,10 +4,10 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
-import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native"
+import { DarkTheme, NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
-import React from "react"
-import { useColorScheme, StyleSheet } from "react-native"
+import React, { useEffect } from "react"
+import { Appearance, StyleSheet } from "react-native"
 import * as Screens from "app/screens"
 import Config from "../config"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
@@ -64,6 +64,7 @@ const AppStack = function AppStack() {
       <Stack.Group
         screenOptions={{
           headerShown: true,
+          headerShadowVisible: false,
           headerBackground: () => (
             <LinearGradient
               colors={["#d3261f", "#ed6d19"]}
@@ -115,19 +116,17 @@ const AppStack = function AppStack() {
 }
 
 export interface NavigationProps
-  extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
+  extends Partial<React.ComponentProps<typeof NavigationContainer<AppStackParamList>>> {}
 
 export const AppNavigator = function AppNavigator(props: NavigationProps) {
-  const colorScheme = useColorScheme()
+  useEffect(() => {
+    Appearance.setColorScheme("dark")
+  }, [])
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
 
   return (
-    <NavigationContainer
-      ref={navigationRef}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-      {...props}
-    >
+    <NavigationContainer ref={navigationRef} theme={DarkTheme} {...props}>
       <AppStack />
     </NavigationContainer>
   )

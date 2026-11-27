@@ -35,8 +35,8 @@
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
     "@react-native-async-storage/async-storage": "2.2.0",
-    "@react-navigation/native": "^6.0.2",
-    "@react-navigation/native-stack": "^6.0.2",
+    "@react-navigation/native": "^7.5.2",
+    "@react-navigation/native-stack": "^7.21.1",
     "@reduxjs/toolkit": "^2.1.0",
     "@shopify/flash-list": "~2.3.2",
     "apisauce": "3.0.1",
