@@ -22,7 +22,6 @@ config.resolver.nodeModulesPaths = [
 
 config.transformer.getTransformOptions = async () => ({
   transform: {
-    experimentalImportSupport: false,
     inlineRequires: true,
   },
 })

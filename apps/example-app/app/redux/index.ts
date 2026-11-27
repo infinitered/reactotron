@@ -1,19 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit"
-import type { GetDefaultEnhancers } from "@reduxjs/toolkit/dist/getDefaultEnhancers"
 import logoReducer from "../redux/logoSlice"
 import repoReducer from "../redux/repoSlice"
 import errorReducer from "../redux/errorSlice"
 // REDACTION TEST
 import redactionTestReducer from "../redux/redactionSlice"
-
-const createEnhancers = (getDefaultEnhancers: GetDefaultEnhancers<any>) => {
-  if (__DEV__) {
-    const reactotron = require("../devtools/ReactotronConfig").default
-    return getDefaultEnhancers().concat(reactotron.createEnhancer())
-  } else {
-    return getDefaultEnhancers()
-  }
-}
 
 export const store = configureStore({
   reducer: {
@@ -23,7 +13,13 @@ export const store = configureStore({
     // REDACTION TEST
     redactionTest: redactionTestReducer,
   },
-  enhancers: createEnhancers,
+  enhancers: (getDefaultEnhancers) => {
+    if (__DEV__) {
+      const reactotron = require("../devtools/ReactotronConfig").default
+      return getDefaultEnhancers().concat(reactotron.createEnhancer())
+    }
+    return getDefaultEnhancers()
+  },
 })
 
 export type RootState = ReturnType<typeof store.getState>

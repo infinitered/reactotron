@@ -50,7 +50,7 @@ export const RepoStoreModel = types
         // ... including try/catch error handling
         console.error("Failed to fetch projects", error)
         store.fetching = false
-        store.error = error.message
+        store.error = error instanceof Error ? error.message : String(error)
       }
       return true
     })
