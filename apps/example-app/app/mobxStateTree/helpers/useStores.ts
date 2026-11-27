@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, use, useEffect, useState } from "react"
 import { RootStore, RootStoreModel } from "../RootStore"
 import { setupRootStore } from "./setupRootStore"
 /**
@@ -27,7 +27,7 @@ const RootStoreContext = createContext<RootStore>(_rootStore)
  * this Provider & custom RootStore instances would only be used in
  * testing scenarios.
  */
-export const RootStoreProvider = RootStoreContext.Provider
+export const RootStoreProvider = RootStoreContext
 
 /**
  * A hook that screens and other components can use to gain access to
@@ -39,7 +39,7 @@ export const RootStoreProvider = RootStoreContext.Provider
  *
  * const { someStore, someOtherStore } = useStores()
  */
-export const useStores = () => useContext(RootStoreContext)
+export const useStores = () => use(RootStoreContext)
 
 /**
  * Used only in the app.tsx file, this hook sets up the RootStore
@@ -60,7 +60,7 @@ export const useInitialRootStore = (callback: () => void | Promise<void>) => {
 
       // reactotron integration with the MST root store (DEV only)
       if (__DEV__) {
-        console.tron.trackMstNode(rootStore)
+        console.tron.trackMstNode(rootStore as any)
       }
 
       // let the app know we've finished rehydrating

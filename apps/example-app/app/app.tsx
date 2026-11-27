@@ -117,7 +117,7 @@ function App(props: AppProps) {
 }
 
 // eslint-disable-next-line reactotron/no-tron-in-production
-export default __DEV__ ? console.tron.overlay(App) : App
+export default __DEV__ ? (console.tron as any).overlay(App) : App
 
 const $container: ViewStyle = {
   flex: 1,

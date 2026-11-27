@@ -9,7 +9,7 @@ import { useSafeAreaInsetsStyle } from "app/utils/useSafeAreaInsetsStyle"
 interface LoggingScreenProps extends AppStackScreenProps<"Logging"> {}
 
 export const LoggingScreen: React.FC<LoggingScreenProps> = function LoggingScreen() {
-  const ref = React.useRef<ViewShot>(null)
+  const ref = React.useRef<React.ComponentRef<typeof ViewShot>>(null)
 
   const handleScreenshot = () => {
     captureRef(ref, {
